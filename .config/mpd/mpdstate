@@ -1,0 +1,15 @@
+sw_volume: 25
+audio_device_state:1:My Pulse Output
+state: play
+current: 0
+time: 4.120000
+random: 0
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Climbing Through Air 2 by Tomas Skyldeberg - _Electro Music_.mp3
+playlist_end
