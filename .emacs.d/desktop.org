@@ -78,6 +78,10 @@ Workspaces:
   (require 'exwm-randr)
   (use-package exwm
     :straight t
+    :custom
+    (exwm-manage-configurations
+     '(((string-equal exwm-class-name "Nyxt")
+        char-mode t)))
     :config
     ;; Set the default number of workspaces
     (setq exwm-workspace-number 6)

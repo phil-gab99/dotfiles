@@ -2244,7 +2244,7 @@ Allows automatic tangling on save of these configuration files.
     ;; (when (string-equal (file-name-directory (buffer-file-name))
     ;;                     (expand-file-name "~/.emacs.d/"))
       (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+        (org-babel-tangle)))
 
   (add-hook 'org-mode-hook (lambda ()
                              (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
