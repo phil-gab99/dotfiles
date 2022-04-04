@@ -72,6 +72,7 @@ Starting a server for displaying polybar info
   (show-paren-mode 1)                   ; Enable delimiters matching
   (save-place-mode 1)                   ; Remembers last cursor placement in file
   (column-number-mode)                  ; Show column numbers
+  (mouse-avoidance-mode 'banish)        ; No mouse allowed
   (global-display-line-numbers-mode 1)  ; Show line numbers
   (setq display-line-numbers-type 'relative)
   (setq-default fill-column 80)         ; 80 caracter column indicator
@@ -1395,6 +1396,31 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+end_src
 
+**** Common Lisp
+
+***** Package | slime
+
+#+begin_src emacs-lisp
+
+  (use-package slime
+    :config
+    (setq inferior-lisp-program "sbcl"))
+
+
+#+end_src
+
+**** Css/LessCSS/SASS/SCSS
+
+***** Package | lsp-css
+
+#+begin_src emacs-lisp
+
+  (use-package lsp-css
+    :straight nil
+    :hook ((css-mode less-css-mode scss-mode) . lsp-deferred))
+
+#+end_src
+
 **** Git
 
 #+begin_src emacs-lisp
@@ -2215,8 +2241,8 @@ Allows automatic tangling on save of these configuration files.
 #+begin_src emacs-lisp
 
   (defun pg/org-babel-tangle-config () ; Automatic tangle of emacs config file
-    (when (string-equal (file-name-directory (buffer-file-name))
-                        (expand-file-name "~/.emacs.d/"))
+    ;; (when (string-equal (file-name-directory (buffer-file-name))
+    ;;                     (expand-file-name "~/.emacs.d/"))
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle))))
 
@@ -2451,13 +2477,12 @@ Front-end for the MPD (Music Player Daemon).
 
   (use-package simple-mpc
     :commands simple-mpc
+    :init (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
     :bind
     (:map simple-mpc-mode-map
           ("<normal-state> r" . simple-mpc-toggle-repeat))
     (:map simple-mpc-mode-map
           ("r" . simple-mpc-toggle-repeat))
-    :config
-    (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
     :custom
     (simple-mpc-playlist-format "#| [%id%] \t #| [%time%] \t #| [%file%]"))
 
