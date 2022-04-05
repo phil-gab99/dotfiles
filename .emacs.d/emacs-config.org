@@ -2475,9 +2475,10 @@ Front-end for the MPD (Music Player Daemon).
               (propertize "\n   * misc\n" 'face 'simple-mpc-main-headers)
               "      * [q]uit")))
 
+  (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
+
   (use-package simple-mpc
     :commands simple-mpc
-    :init (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
     :bind
     (:map simple-mpc-mode-map
           ("<normal-state> r" . simple-mpc-toggle-repeat))
@@ -2706,6 +2707,7 @@ Allows for general custom keybindings definition to create own set of various ke
       "lio" '(lsp-treemacs-symbols :which-key "outline")
       "lie" '(lsp-treemacs-errors-list :which-key "errors")
 
+      "y" '(describe-face :which-key "face")
 
       ;; Org mode
       "o" '(:ignore t :which-key "org")

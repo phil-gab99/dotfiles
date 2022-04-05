@@ -159,6 +159,9 @@
   (nusmv-font-lock-directive-face     ( :inherit 'font-lock-preprocessor-face))
   (nusmv-font-lock-separator-face     ( :inherit 'font-lock-builtin-face))
 
+  ;; vterm
+  (which-func ( :foreground onedark-variant-blue))
+
   ;; General font locks
   (font-lock-function-name-face ( :foreground onedark-variant-blue))
   (font-lock-preprocessor-face  ( :foreground onedark-variant-preproc))
