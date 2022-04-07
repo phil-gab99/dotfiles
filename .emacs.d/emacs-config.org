@@ -67,7 +67,7 @@ Starting a server for displaying polybar info
   (define-key global-map (kbd "<Multi_key>") iso-transl-ctl-x-8-map) ; Bind compose key in case emacs captures it
 
   (setq tab-width 4)                    ; Set tab length
-
+  (setq custom-buffer-indent 2)
   (setq-default indent-tabs-mode nil)   ; Disable tab caracter
   (show-paren-mode 1)                   ; Enable delimiters matching
   (save-place-mode 1)                   ; Remembers last cursor placement in file
@@ -500,6 +500,43 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
   (use-package autothemer
     :config
     (load-theme 'onedark-variant t))
+
+#+end_src
+
+*** Package | dashboard
+
+#+begin_src emacs-lisp
+
+  (defun pg/dashboard-setup-startup-hook ()
+    "Setup post initialization hooks."
+    (add-hook 'after-init-hook (lambda ()
+                                 ;; Display useful lists of items
+                                 (dashboard-insert-startupify-lists)))
+    (add-hook 'emacs-startup-hook (lambda ()
+                                    (switch-to-buffer dashboard-buffer-name)
+                                    (goto-char (point-min))
+                                    (redisplay)
+                                    (run-hooks 'dashboard-after-initialize-hook))))
+
+  (use-package dashboard
+    :straight t
+    :custom
+    (dashboard-set-file-icons t)
+    (dashboard-items '((recents . 5)
+                       (bookmarks . 5)
+                       (projects . 10)
+                       (agenda . 5)))
+    :config
+    (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
+    (pg/dashboard-setup-startup-hook))
+
+#+end_src
+
+*** Package | page-break-lines
+
+#+begin_src emacs-lisp
+
+  (use-package page-break-lines)
 
 #+end_src
 
@@ -955,8 +992,13 @@ Keybindings for other useful operations:
 
    (use-package dired
      :straight nil
+     :after evil-collection
      :commands (dired dired-jump)
      :bind (("C-x C-j" . dired-jump)) ; Open dired at current directory
+     :config
+     (evil-collection-define-key 'normal 'dired-mode-map
+       "h" 'dired-single-up-directory
+       "l" 'dired-single-buffer)
      :custom ((dired-listing-switches "-agho --group-directories-first")))
 
 #+end_src
@@ -969,12 +1011,8 @@ Keeps a single dired buffer open at a time (to not have multiple buried buffers)
 
   (use-package dired-single
     :straight t
-    :after (dired evil-collection)
-    :commands (dired dired-jump)
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      "h" 'dired-single-up-directory
-      "l" 'dired-single-buffer))
+    :after dired
+    :commands (dired dired-jump))
 
 #+end_src
 
@@ -1434,6 +1472,7 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package groovy-emacs-mode
+    :disabled
     :straight '(groovy-emacs-modes :type git
                                    :host github
                                    :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
@@ -1586,6 +1625,8 @@ Custom syntax highlighting for LMC assembly language.
     :custom
     (nusmv-indent 4)
     :config
+    (menu-bar-mode 0)
+    (add-hook 'nusmv-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
     (put 'nusmv-mode 'derived-mode-parent 'prog-mode))
 
 #+end_src
@@ -1953,6 +1994,8 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 #+begin_src emacs-lisp
 
   (defun pg/diminish-all ()
+    (diminish 'which-key-mode)
+    (diminish 'org-indent-mode)
     (diminish 'auto-revert-mode)
     (diminish 'buffer-face-mode)
     (diminish 'visual-line-mode))
@@ -2432,6 +2475,7 @@ Front-end for the MPD (Music Player Daemon).
     (interactive)
     (shell-command "mpd")
     (pg/update-mpd-db)
+    (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
     (simple-mpc)
     (message "MPD Started!"))
 
@@ -2474,8 +2518,6 @@ Front-end for the MPD (Music Player Daemon).
               "      * [s]earch database\n"
               (propertize "\n   * misc\n" 'face 'simple-mpc-main-headers)
               "      * [q]uit")))
-
-  (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
 
   (use-package simple-mpc
     :commands simple-mpc
@@ -2707,7 +2749,6 @@ Allows for general custom keybindings definition to create own set of various ke
       "lio" '(lsp-treemacs-symbols :which-key "outline")
       "lie" '(lsp-treemacs-errors-list :which-key "errors")
 
-      "y" '(describe-face :which-key "face")
 
       ;; Org mode
       "o" '(:ignore t :which-key "org")

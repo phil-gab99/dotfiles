@@ -4450,3 +4450,256 @@ Apr 04 23:02 : client: [52] opened from 127.0.0.1:33008
 Apr 04 23:02 : client: [52] closed
 Apr 04 23:03 : client: [53] opened from 127.0.0.1:33010
 Apr 04 23:03 : client: [53] closed
+Apr 05 00:14 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:02 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 05 11:02 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 05 11:02 : client: [0] opened from 127.0.0.1:37222
+Apr 05 11:02 : client: [0] closed
+Apr 05 11:02 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 05 11:02 : client: [1] opened from 127.0.0.1:37224
+Apr 05 11:02 : client: [1] closed
+Apr 05 11:03 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:04 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 05 11:04 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 05 11:04 : client: [0] opened from 127.0.0.1:37226
+Apr 05 11:04 : client: [0] closed
+Apr 05 11:04 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 05 11:04 : client: [1] opened from 127.0.0.1:37228
+Apr 05 11:04 : client: [1] closed
+Apr 05 11:09 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:15 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:21 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:27 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:33 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:40 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:46 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:52 : player: played "croft-manor-anniversary.mp3"
+Apr 05 11:58 : player: played "croft-manor-anniversary.mp3"
+Apr 05 12:03 : exception: Failed to play on "My Pulse Output" (pulse): suspended
+Apr 05 12:03 : exception: Failed to open audio output
+Apr 05 19:27 : client: [2] opened from 127.0.0.1:37230
+Apr 05 19:27 : client: [2] closed
+Apr 05 19:27 : client: [3] opened from 127.0.0.1:37232
+Apr 05 19:27 : client: [3] closed
+Apr 05 19:28 : player: played "croft-manor-anniversary.mp3"
+Apr 05 19:34 : player: played "croft-manor-anniversary.mp3"
+Apr 05 19:41 : player: played "croft-manor-anniversary.mp3"
+Apr 05 19:47 : player: played "croft-manor-anniversary.mp3"
+Apr 05 19:53 : player: played "croft-manor-anniversary.mp3"
+Apr 05 19:59 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:05 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:11 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:18 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:24 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:30 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:36 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:42 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:49 : player: played "croft-manor-anniversary.mp3"
+Apr 05 20:55 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:01 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:07 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:13 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:20 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:26 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:32 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:38 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:44 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:51 : player: played "croft-manor-anniversary.mp3"
+Apr 05 21:57 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:03 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:09 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:15 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:21 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:28 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:34 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:40 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:46 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:52 : player: played "croft-manor-anniversary.mp3"
+Apr 05 22:59 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:05 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:11 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:17 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:23 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:30 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:36 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:42 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:48 : player: played "croft-manor-anniversary.mp3"
+Apr 05 23:54 : player: played "croft-manor-anniversary.mp3"
+Apr 06 00:01 : player: played "croft-manor-anniversary.mp3"
+Apr 06 00:02 : player: played "croft-manor-anniversary.mp3"
+Apr 06 21:48 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 06 21:48 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 06 21:48 : client: [0] opened from 127.0.0.1:36544
+Apr 06 21:48 : client: [0] closed
+Apr 06 21:48 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 06 21:49 : client: [1] opened from 127.0.0.1:36546
+Apr 06 21:49 : client: [1] closed
+Apr 06 21:49 : client: [2] opened from 127.0.0.1:36548
+Apr 06 21:49 : client: [2] closed
+Apr 06 21:49 : client: [3] opened from 127.0.0.1:36550
+Apr 06 21:49 : client: [3] closed
+Apr 06 21:49 : client: [4] opened from 127.0.0.1:36552
+Apr 06 21:49 : client: [4] closed
+Apr 06 21:49 : client: [5] opened from 127.0.0.1:36554
+Apr 06 21:49 : client: [5] closed
+Apr 06 21:49 : client: [6] opened from 127.0.0.1:36556
+Apr 06 21:49 : client: [6] closed
+Apr 06 21:49 : client: [7] opened from 127.0.0.1:36558
+Apr 06 21:49 : client: [7] closed
+Apr 06 21:49 : client: [8] opened from 127.0.0.1:36560
+Apr 06 21:49 : client: [8] closed
+Apr 06 21:49 : client: [9] opened from 127.0.0.1:36562
+Apr 06 21:49 : client: [9] closed
+Apr 06 21:49 : client: [10] opened from 127.0.0.1:36564
+Apr 06 21:49 : client: [10] closed
+Apr 06 21:49 : client: [11] opened from 127.0.0.1:36566
+Apr 06 21:49 : client: [11] closed
+Apr 06 21:49 : client: [12] opened from 127.0.0.1:36568
+Apr 06 21:49 : client: [12] closed
+Apr 06 21:49 : client: [13] opened from 127.0.0.1:36570
+Apr 06 21:49 : client: [13] closed
+Apr 06 21:49 : client: [14] opened from 127.0.0.1:36572
+Apr 06 21:49 : client: [14] closed
+Apr 06 21:49 : client: [15] opened from 127.0.0.1:36574
+Apr 06 21:49 : client: [15] closed
+Apr 06 21:49 : client: [16] opened from 127.0.0.1:36576
+Apr 06 21:49 : client: [16] closed
+Apr 06 21:49 : client: [17] opened from 127.0.0.1:36578
+Apr 06 21:49 : client: [17] closed
+Apr 06 21:49 : client: [18] opened from 127.0.0.1:36582
+Apr 06 21:49 : client: [18] closed
+Apr 06 21:49 : client: [19] opened from 127.0.0.1:36584
+Apr 06 21:49 : client: [19] closed
+Apr 06 21:49 : client: [20] opened from 127.0.0.1:36586
+Apr 06 21:49 : client: [20] closed
+Apr 06 21:49 : client: [21] opened from 127.0.0.1:36588
+Apr 06 21:49 : client: [21] closed
+Apr 06 21:49 : client: [22] opened from 127.0.0.1:36590
+Apr 06 21:49 : client: [22] closed
+Apr 06 21:49 : client: [23] opened from 127.0.0.1:36592
+Apr 06 21:49 : client: [23] closed
+Apr 06 21:49 : client: [24] opened from 127.0.0.1:36594
+Apr 06 21:49 : client: [24] closed
+Apr 06 21:49 : client: [25] opened from 127.0.0.1:36596
+Apr 06 21:49 : client: [25] closed
+Apr 06 21:49 : client: [26] opened from 127.0.0.1:36598
+Apr 06 21:49 : client: [26] closed
+Apr 06 21:49 : client: [27] opened from 127.0.0.1:36602
+Apr 06 21:49 : client: [27] closed
+Apr 06 21:49 : client: [28] opened from 127.0.0.1:36606
+Apr 06 21:49 : client: [28] closed
+Apr 06 21:49 : client: [29] opened from 127.0.0.1:36608
+Apr 06 21:49 : client: [29] closed
+Apr 06 21:49 : client: [30] opened from 127.0.0.1:36610
+Apr 06 21:49 : client: [30] closed
+Apr 06 21:49 : player: played "croft-manor-anniversary.mp3"
+Apr 06 21:49 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 06 21:49 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 06 21:49 : client: [0] opened from 127.0.0.1:36614
+Apr 06 21:49 : client: [0] closed
+Apr 06 21:49 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 06 21:49 : client: [1] opened from 127.0.0.1:36616
+Apr 06 21:49 : client: [1] closed
+Apr 06 21:50 : client: [2] opened from 127.0.0.1:36618
+Apr 06 21:50 : client: [2] closed
+Apr 06 21:50 : client: [3] opened from 127.0.0.1:36620
+Apr 06 21:50 : client: [3] closed
+Apr 06 21:50 : client: [4] opened from 127.0.0.1:36622
+Apr 06 21:50 : client: [4] closed
+Apr 06 21:50 : client: [5] opened from 127.0.0.1:36624
+Apr 06 21:50 : client: [5] closed
+Apr 06 21:50 : client: [6] opened from 127.0.0.1:36626
+Apr 06 21:50 : client: [6] closed
+Apr 06 21:50 : client: [7] opened from 127.0.0.1:36628
+Apr 06 21:50 : client: [7] closed
+Apr 06 21:50 : client: [8] opened from 127.0.0.1:36630
+Apr 06 21:50 : client: [8] closed
+Apr 06 21:50 : client: [9] opened from 127.0.0.1:36632
+Apr 06 21:50 : client: [9] closed
+Apr 06 21:50 : client: [10] opened from 127.0.0.1:36634
+Apr 06 21:50 : client: [10] closed
+Apr 06 21:50 : client: [11] opened from 127.0.0.1:36636
+Apr 06 21:50 : client: [11] closed
+Apr 06 21:50 : client: [12] opened from 127.0.0.1:36638
+Apr 06 21:50 : client: [12] closed
+Apr 06 21:50 : client: [13] opened from 127.0.0.1:36642
+Apr 06 21:50 : player: played "croft-manor-anniversary.mp3"
+Apr 06 21:50 : client: [13] closed
+Apr 06 21:50 : client: [14] opened from 127.0.0.1:36644
+Apr 06 21:50 : client: [14] closed
+Apr 06 21:50 : client: [15] opened from 127.0.0.1:36646
+Apr 06 21:50 : client: [15] closed
+Apr 06 21:50 : client: [16] opened from 127.0.0.1:36648
+Apr 06 21:50 : client: [16] closed
+Apr 06 21:50 : client: [17] opened from 127.0.0.1:36652
+Apr 06 21:50 : client: [17] closed
+Apr 06 21:50 : client: [18] opened from 127.0.0.1:36654
+Apr 06 21:50 : client: [18] closed
+Apr 06 21:50 : client: [19] opened from 127.0.0.1:36656
+Apr 06 21:50 : client: [19] closed
+Apr 06 21:50 : client: [20] opened from 127.0.0.1:36658
+Apr 06 21:50 : client: [20] closed
+Apr 06 21:50 : client: [21] opened from 127.0.0.1:36660
+Apr 06 21:50 : client: [21] closed
+Apr 06 21:50 : client: [22] opened from 127.0.0.1:36662
+Apr 06 21:50 : client: [22] closed
+Apr 06 21:50 : client: [23] opened from 127.0.0.1:36664
+Apr 06 21:50 : client: [23] closed
+Apr 06 21:50 : client: [24] opened from 127.0.0.1:36666
+Apr 06 21:50 : client: [24] closed
+Apr 06 21:50 : client: [25] opened from 127.0.0.1:36668
+Apr 06 21:50 : client: [25] closed
+Apr 06 21:50 : client: [26] opened from 127.0.0.1:36670
+Apr 06 21:50 : client: [26] closed
+Apr 06 21:50 : client: [27] opened from 127.0.0.1:36672
+Apr 06 21:50 : client: [27] closed
+Apr 06 21:50 : client: [28] opened from 127.0.0.1:36674
+Apr 06 21:50 : client: [28] closed
+Apr 06 21:50 : client: [29] opened from 127.0.0.1:36676
+Apr 06 21:50 : client: [29] closed
+Apr 06 21:51 : client: [30] opened from 127.0.0.1:36678
+Apr 06 21:51 : client: [30] closed
+Apr 06 21:52 : client: [31] opened from 127.0.0.1:36680
+Apr 06 21:52 : client: [31] closed
+Apr 06 21:52 : client: [32] opened from 127.0.0.1:36684
+Apr 06 21:52 : client: [32] closed
+Apr 06 21:52 : client: [33] opened from 127.0.0.1:36686
+Apr 06 21:52 : client: [33] closed
+Apr 06 21:52 : client: [34] opened from 127.0.0.1:36688
+Apr 06 21:52 : client: [34] closed
+Apr 06 21:52 : client: [35] opened from 127.0.0.1:36690
+Apr 06 21:52 : client: [35] closed
+Apr 06 21:52 : client: [36] opened from 127.0.0.1:36692
+Apr 06 21:52 : client: [36] closed
+Apr 06 21:57 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:03 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:05 : client: [37] opened from 127.0.0.1:36694
+Apr 06 22:06 : client: [38] opened from 127.0.0.1:36696
+Apr 06 22:06 : client: [38] closed
+Apr 06 22:06 : client: [39] opened from 127.0.0.1:36698
+Apr 06 22:06 : client: [39] closed
+Apr 06 22:06 : client: [40] opened from 127.0.0.1:36700
+Apr 06 22:06 : client: [40] closed
+Apr 06 22:06 : client: [37] closed
+Apr 06 22:09 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:15 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:21 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:28 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:34 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:40 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:46 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:52 : player: played "croft-manor-anniversary.mp3"
+Apr 06 22:59 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:05 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:11 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:17 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:23 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:30 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:36 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:42 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:48 : player: played "croft-manor-anniversary.mp3"
+Apr 06 23:54 : player: played "croft-manor-anniversary.mp3"
+Apr 07 00:01 : player: played "croft-manor-anniversary.mp3"
+Apr 07 00:01 : exception: Failed to play on "My Pulse Output" (pulse): suspended
+Apr 07 00:01 : exception: Failed to open audio output
+Apr 07 00:01 : player: played "croft-manor-anniversary.mp3"

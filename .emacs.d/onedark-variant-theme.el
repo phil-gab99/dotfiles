@@ -42,6 +42,7 @@
   (onedark-variant-error      "#ff6666")
   (onedark-variant-warn       "#f2db05")
   (onedark-variant-minibuf    "#f0fff0")
+  (onedark-variant-eviln      "#818ff4")
   )
 
  (
@@ -113,9 +114,9 @@
   (doom-modeline-buffer-modified   ( :foreground onedark-variant-modelndiff))
   (doom-modeline-urgent            ( :foreground onedark-variant-error))
   (doom-modeline-lsp-success       ( :foreground onedark-variant-docs))
-  (doom-modeline-info              ( :foreground onedark-variant-green
-                                     :weight 'bold))
   (doom-modeline-buffer-major-mode ( :foreground onedark-variant-blue))
+  (doom-modeline-evil-normal-state ( :foreground onedark-variant-eviln
+                                     :weight 'bold))
 
   ;; mu4e
   (mu4e-header-key-face ( :foreground onedark-variant-mu4eheader))
