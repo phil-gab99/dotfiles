@@ -4703,3 +4703,217 @@ Apr 07 00:01 : player: played "croft-manor-anniversary.mp3"
 Apr 07 00:01 : exception: Failed to play on "My Pulse Output" (pulse): suspended
 Apr 07 00:01 : exception: Failed to open audio output
 Apr 07 00:01 : player: played "croft-manor-anniversary.mp3"
+Apr 07 21:46 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 07 21:46 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 07 21:46 : client: [0] opened from 127.0.0.1:43492
+Apr 07 21:46 : client: [0] closed
+Apr 07 21:46 : update: added /Mitis - Expose.mp3
+Apr 07 21:46 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 07 21:46 : player: played "croft-manor-anniversary.mp3"
+Apr 07 21:46 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 07 21:46 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 07 21:46 : client: [0] opened from 127.0.0.1:43494
+Apr 07 21:46 : client: [0] closed
+Apr 07 21:46 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 07 21:46 : client: [1] opened from 127.0.0.1:43496
+Apr 07 21:46 : client: [1] closed
+Apr 07 21:46 : client: [2] opened from 127.0.0.1:43498
+Apr 07 21:46 : client: [2] closed
+Apr 07 21:46 : client: [3] opened from 127.0.0.1:43500
+Apr 07 21:46 : client: [3] closed
+Apr 07 21:46 : client: [4] opened from 127.0.0.1:43502
+Apr 07 21:46 : client: [4] closed
+Apr 07 21:46 : client: [5] opened from 127.0.0.1:43504
+Apr 07 21:46 : client: [5] closed
+Apr 07 21:46 : client: [6] opened from 127.0.0.1:43506
+Apr 07 21:46 : client: [6] closed
+Apr 07 21:46 : client: [7] opened from 127.0.0.1:43508
+Apr 07 21:46 : client: [7] closed
+Apr 07 21:46 : client: [8] opened from 127.0.0.1:43510
+Apr 07 21:46 : client: [8] closed
+Apr 07 21:46 : client: [9] opened from 127.0.0.1:43512
+Apr 07 21:46 : client: [9] closed
+Apr 07 21:46 : client: [10] opened from 127.0.0.1:43514
+Apr 07 21:46 : client: [10] closed
+Apr 07 21:46 : client: [11] opened from 127.0.0.1:43516
+Apr 07 21:46 : client: [11] closed
+Apr 07 21:46 : client: [12] opened from 127.0.0.1:43520
+Apr 07 21:46 : client: [12] closed
+Apr 07 21:46 : client: [13] opened from 127.0.0.1:43522
+Apr 07 21:46 : client: [13] closed
+Apr 07 21:46 : client: [14] opened from 127.0.0.1:43524
+Apr 07 21:46 : client: [14] closed
+Apr 07 21:46 : client: [15] opened from 127.0.0.1:43526
+Apr 07 21:46 : client: [15] closed
+Apr 07 21:46 : client: [16] opened from 127.0.0.1:43528
+Apr 07 21:46 : client: [16] closed
+Apr 07 21:46 : client: [17] opened from 127.0.0.1:43530
+Apr 07 21:46 : client: [17] closed
+Apr 07 21:46 : client: [18] opened from 127.0.0.1:43532
+Apr 07 21:46 : client: [18] closed
+Apr 07 21:46 : client: [19] opened from 127.0.0.1:43534
+Apr 07 21:46 : client: [19] closed
+Apr 07 21:46 : client: [20] opened from 127.0.0.1:43536
+Apr 07 21:46 : client: [20] closed
+Apr 07 21:46 : client: [21] opened from 127.0.0.1:43538
+Apr 07 21:46 : client: [21] closed
+Apr 07 21:46 : client: [22] opened from 127.0.0.1:43540
+Apr 07 21:46 : client: [22] closed
+Apr 07 21:46 : client: [23] opened from 127.0.0.1:43542
+Apr 07 21:46 : client: [23] closed
+Apr 07 21:46 : client: [24] opened from 127.0.0.1:43544
+Apr 07 21:46 : client: [24] closed
+Apr 07 21:46 : client: [25] opened from 127.0.0.1:43546
+Apr 07 21:46 : client: [25] closed
+Apr 07 21:46 : client: [26] opened from 127.0.0.1:43548
+Apr 07 21:46 : client: [26] closed
+Apr 07 21:46 : client: [27] opened from 127.0.0.1:43550
+Apr 07 21:46 : client: [27] closed
+Apr 07 21:46 : client: [28] opened from 127.0.0.1:43554
+Apr 07 21:46 : client: [28] closed
+Apr 07 21:47 : client: [29] opened from 127.0.0.1:43556
+Apr 07 21:47 : client: [29] closed
+Apr 07 21:47 : client: [30] opened from 127.0.0.1:43558
+Apr 07 21:47 : client: [30] closed
+Apr 07 21:47 : client: [31] opened from 127.0.0.1:43560
+Apr 07 21:47 : client: [31] closed
+Apr 07 21:47 : client: [32] opened from 127.0.0.1:43562
+Apr 07 21:47 : client: [32] closed
+Apr 07 21:47 : client: [33] opened from 127.0.0.1:43564
+Apr 07 21:47 : client: [33] closed
+Apr 07 21:51 : player: played "Mitis - Expose.mp3"
+Apr 07 21:51 : client: [34] opened from 127.0.0.1:43566
+Apr 07 21:51 : client: [34] closed
+Apr 07 21:51 : client: [35] opened from 127.0.0.1:43568
+Apr 07 21:51 : client: [35] closed
+Apr 07 21:51 : client: [36] opened from 127.0.0.1:43570
+Apr 07 21:51 : client: [36] closed
+Apr 07 21:51 : client: [37] opened from 127.0.0.1:43572
+Apr 07 21:51 : client: [37] closed
+Apr 07 21:51 : client: [38] opened from 127.0.0.1:43574
+Apr 07 21:51 : client: [38] closed
+Apr 07 21:51 : client: [39] opened from 127.0.0.1:43576
+Apr 07 21:51 : client: [39] closed
+Apr 07 21:56 : player: played "Mitis - Expose.mp3"
+Apr 07 22:01 : player: played "Mitis - Expose.mp3"
+Apr 07 22:05 : player: played "Mitis - Expose.mp3"
+Apr 07 22:10 : player: played "Mitis - Expose.mp3"
+Apr 07 22:15 : player: played "Mitis - Expose.mp3"
+Apr 07 22:18 : client: [40] opened from 127.0.0.1:43578
+Apr 07 22:18 : client: [40] closed
+Apr 07 22:29 : client: [41] opened from 127.0.0.1:43580
+Apr 07 22:29 : client: [41] closed
+Apr 07 22:29 : client: [42] opened from 127.0.0.1:43582
+Apr 07 22:29 : client: [42] closed
+Apr 07 22:29 : client: [43] opened from 127.0.0.1:43584
+Apr 07 22:29 : client: [43] closed
+Apr 07 22:29 : client: [44] opened from 127.0.0.1:43586
+Apr 07 22:29 : client: [44] closed
+Apr 07 22:29 : client: [45] opened from 127.0.0.1:43588
+Apr 07 22:29 : client: [45] closed
+Apr 07 22:31 : player: played "Mitis - Expose.mp3"
+Apr 07 22:35 : player: played "Mitis - Expose.mp3"
+Apr 07 22:40 : player: played "Mitis - Expose.mp3"
+Apr 07 22:44 : player: played "Mitis - Expose.mp3"
+Apr 07 22:49 : player: played "Mitis - Expose.mp3"
+Apr 07 22:54 : player: played "Mitis - Expose.mp3"
+Apr 07 22:58 : player: played "Mitis - Expose.mp3"
+Apr 07 23:03 : player: played "Mitis - Expose.mp3"
+Apr 07 23:08 : player: played "Mitis - Expose.mp3"
+Apr 07 23:09 : client: [46] opened from 127.0.0.1:43590
+Apr 07 23:09 : client: [46] closed
+Apr 07 23:09 : client: [47] opened from 127.0.0.1:43592
+Apr 07 23:09 : client: [47] closed
+Apr 07 23:09 : client: [48] opened from 127.0.0.1:43594
+Apr 07 23:09 : client: [48] closed
+Apr 07 23:09 : client: [49] opened from 127.0.0.1:43596
+Apr 07 23:09 : player: played "Mitis - Expose.mp3"
+Apr 07 23:09 : client: [49] closed
+Apr 07 23:09 : client: [50] opened from 127.0.0.1:43598
+Apr 07 23:09 : client: [50] closed
+Apr 07 23:09 : client: [51] opened from 127.0.0.1:43600
+Apr 07 23:09 : client: [51] closed
+Apr 07 23:10 : client: [52] opened from 127.0.0.1:43602
+Apr 07 23:10 : client: [52] closed
+Apr 07 23:10 : client: [53] opened from 127.0.0.1:43604
+Apr 07 23:10 : client: [53] closed
+Apr 07 23:10 : client: [54] opened from 127.0.0.1:43606
+Apr 07 23:10 : client: [54] closed
+Apr 07 23:10 : client: [55] opened from 127.0.0.1:43608
+Apr 07 23:10 : client: [55] closed
+Apr 07 23:10 : client: [56] opened from 127.0.0.1:43610
+Apr 07 23:10 : client: [56] closed
+Apr 07 23:10 : client: [57] opened from 127.0.0.1:43614
+Apr 07 23:10 : client: [57] closed
+Apr 07 23:10 : client: [58] opened from 127.0.0.1:43616
+Apr 07 23:10 : client: [58] closed
+Apr 07 23:10 : client: [59] opened from 127.0.0.1:43618
+Apr 07 23:10 : client: [59] closed
+Apr 07 23:10 : client: [60] opened from 127.0.0.1:43620
+Apr 07 23:10 : client: [60] closed
+Apr 07 23:10 : client: [61] opened from 127.0.0.1:43622
+Apr 07 23:10 : client: [61] closed
+Apr 07 23:10 : client: [62] opened from 127.0.0.1:43624
+Apr 07 23:10 : client: [62] closed
+Apr 07 23:10 : client: [63] opened from 127.0.0.1:43626
+Apr 07 23:10 : client: [63] closed
+Apr 07 23:10 : client: [64] opened from 127.0.0.1:43628
+Apr 07 23:10 : client: [64] closed
+Apr 07 23:10 : client: [65] opened from 127.0.0.1:43630
+Apr 07 23:10 : client: [65] closed
+Apr 07 23:10 : client: [66] opened from 127.0.0.1:43632
+Apr 07 23:10 : client: [66] closed
+Apr 07 23:10 : client: [67] opened from 127.0.0.1:43634
+Apr 07 23:10 : client: [67] closed
+Apr 07 23:10 : client: [68] opened from 127.0.0.1:43636
+Apr 07 23:10 : client: [68] closed
+Apr 07 23:10 : client: [69] opened from 127.0.0.1:43638
+Apr 07 23:10 : client: [69] closed
+Apr 07 23:10 : client: [70] opened from 127.0.0.1:43640
+Apr 07 23:10 : client: [70] closed
+Apr 07 23:10 : client: [71] opened from 127.0.0.1:43642
+Apr 07 23:10 : client: [71] closed
+Apr 07 23:10 : client: [72] opened from 127.0.0.1:43644
+Apr 07 23:10 : client: [72] closed
+Apr 07 23:10 : client: [73] opened from 127.0.0.1:43646
+Apr 07 23:10 : client: [73] closed
+Apr 07 23:10 : client: [74] opened from 127.0.0.1:43648
+Apr 07 23:10 : client: [74] closed
+Apr 07 23:10 : client: [75] opened from 127.0.0.1:43650
+Apr 07 23:10 : client: [75] closed
+Apr 07 23:10 : client: [76] opened from 127.0.0.1:43652
+Apr 07 23:10 : client: [76] closed
+Apr 07 23:10 : client: [77] opened from 127.0.0.1:43654
+Apr 07 23:10 : client: [77] closed
+Apr 07 23:10 : client: [78] opened from 127.0.0.1:43656
+Apr 07 23:10 : client: [78] closed
+Apr 07 23:10 : client: [79] opened from 127.0.0.1:43658
+Apr 07 23:10 : client: [79] closed
+Apr 07 23:10 : client: [80] opened from 127.0.0.1:43660
+Apr 07 23:10 : client: [80] closed
+Apr 07 23:10 : client: [81] opened from 127.0.0.1:43662
+Apr 07 23:10 : client: [81] closed
+Apr 07 23:10 : client: [82] opened from 127.0.0.1:43664
+Apr 07 23:10 : client: [82] closed
+Apr 07 23:10 : client: [83] opened from 127.0.0.1:43666
+Apr 07 23:10 : client: [83] closed
+Apr 07 23:10 : client: [84] opened from 127.0.0.1:43668
+Apr 07 23:10 : client: [84] closed
+Apr 07 23:10 : client: [85] opened from 127.0.0.1:43670
+Apr 07 23:10 : client: [85] closed
+Apr 07 23:16 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:22 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:27 : client: [86] opened from 127.0.0.1:43672
+Apr 07 23:27 : client: [86] closed
+Apr 07 23:27 : client: [87] opened from 127.0.0.1:43674
+Apr 07 23:27 : client: [87] closed
+Apr 07 23:28 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:34 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:41 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:47 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:53 : player: played "croft-manor-anniversary.mp3"
+Apr 07 23:59 : player: played "croft-manor-anniversary.mp3"
+Apr 08 00:05 : player: played "croft-manor-anniversary.mp3"
+Apr 08 00:05 : client: [88] opened from 127.0.0.1:43676
+Apr 08 00:05 : client: [88] closed
+Apr 08 01:34 : player: played "croft-manor-anniversary.mp3"

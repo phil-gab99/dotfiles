@@ -2531,6 +2531,17 @@ Front-end for the MPD (Music Player Daemon).
 
 #+end_src
 
+*** Package | sudoku
+
+#+begin_src emacs-lisp
+
+  (use-package sudoku
+    :custom
+    (sudoku-style 'unicode)
+    (sudoku-level 'hard))
+
+#+end_src
+
 ** Keybindings
 
 *** Package | evil
