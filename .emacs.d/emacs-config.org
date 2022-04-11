@@ -522,8 +522,7 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
     :straight t
     :custom
     (dashboard-set-file-icons t)
-    (dashboard-items '((recents . 5)
-                       (bookmarks . 5)
+    (dashboard-items '((recents . 10)
                        (projects . 10)
                        (agenda . 5)))
     :config
@@ -1165,6 +1164,11 @@ Allows for git commands to be applied to the current repository using the comman
     :diminish git-gutter-mode
     :hook ((text-mode . git-gutter-mode)
            (prog-mode . git-gutter-mode))
+    :custom
+    (git-gutter:added-sign nil)
+    (git-gutter:modified-sign nil)
+    (git-gutter:deleted-sign nil)
+    (git-gutter-fr:side 'right-fringe)
     :config
     (require 'git-gutter-fringe)
     (set-face-foreground 'git-gutter-fr:added "LightGreen")
@@ -1440,10 +1444,9 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+begin_src emacs-lisp
 
-  (use-package slime
-    :config
-    (setq inferior-lisp-program "sbcl"))
-
+  (use-package sly
+    :custom
+    (inferior-lisp-program "sbcl"))
 
 #+end_src
 
@@ -1593,8 +1596,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (use-package markdown-mode
     :straight nil
-    :hook (gfm-view-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) default))))))
-    
+    :hook (gfm-view-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch))))))
 
 #+end_src
 

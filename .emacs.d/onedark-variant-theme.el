@@ -167,6 +167,11 @@
   (sudoku-value-face ( :foreground onedark-variant-mu4eheader
                        :height 2.0))
 
+  ;; slack
+  (slack-message-output-text    ( :inherit 'variable-pitch))
+  (slack-mrkdwn-code-face       ( :inherit 'org-code))
+  (slack-mrkdwn-code-block-face ( :inherit 'org-verbatim))
+
   ;; General font locks
   (font-lock-function-name-face ( :foreground onedark-variant-blue))
   (font-lock-preprocessor-face  ( :foreground onedark-variant-preproc))

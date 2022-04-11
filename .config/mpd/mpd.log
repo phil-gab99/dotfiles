@@ -4917,3 +4917,117 @@ Apr 08 00:05 : player: played "croft-manor-anniversary.mp3"
 Apr 08 00:05 : client: [88] opened from 127.0.0.1:43676
 Apr 08 00:05 : client: [88] closed
 Apr 08 01:34 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:02 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 10 14:02 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 10 14:02 : client: [0] opened from 127.0.0.1:47944
+Apr 10 14:02 : client: [0] closed
+Apr 10 14:02 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 10 14:02 : client: [1] opened from 127.0.0.1:47946
+Apr 10 14:02 : client: [1] closed
+Apr 10 14:02 : client: [2] opened from 127.0.0.1:47948
+Apr 10 14:02 : client: [2] closed
+Apr 10 14:02 : client: [3] opened from 127.0.0.1:47950
+Apr 10 14:02 : client: [3] closed
+Apr 10 14:02 : client: [4] opened from 127.0.0.1:47952
+Apr 10 14:02 : client: [4] closed
+Apr 10 14:02 : client: [5] opened from 127.0.0.1:47954
+Apr 10 14:02 : client: [5] closed
+Apr 10 14:02 : client: [6] opened from 127.0.0.1:47956
+Apr 10 14:02 : client: [6] closed
+Apr 10 14:02 : client: [7] opened from 127.0.0.1:47958
+Apr 10 14:02 : client: [7] closed
+Apr 10 14:02 : client: [8] opened from 127.0.0.1:47960
+Apr 10 14:02 : client: [8] closed
+Apr 10 14:02 : client: [9] opened from 127.0.0.1:47962
+Apr 10 14:02 : client: [9] closed
+Apr 10 14:08 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:14 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:20 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:26 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:32 : client: [10] opened from 127.0.0.1:47964
+Apr 10 14:32 : client: [10] closed
+Apr 10 14:32 : client: [11] opened from 127.0.0.1:47968
+Apr 10 14:32 : client: [11] closed
+Apr 10 14:32 : client: [12] opened from 127.0.0.1:47970
+Apr 10 14:32 : client: [12] closed
+Apr 10 14:32 : client: [13] opened from 127.0.0.1:47972
+Apr 10 14:32 : client: [13] closed
+Apr 10 14:32 : client: [14] opened from 127.0.0.1:47974
+Apr 10 14:32 : client: [14] closed
+Apr 10 14:32 : client: [15] opened from 127.0.0.1:47976
+Apr 10 14:32 : client: [15] closed
+Apr 10 14:32 : client: [16] opened from 127.0.0.1:47978
+Apr 10 14:32 : client: [16] closed
+Apr 10 14:32 : client: [17] opened from 127.0.0.1:47980
+Apr 10 14:32 : client: [17] closed
+Apr 10 14:33 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:39 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:45 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:51 : player: played "croft-manor-anniversary.mp3"
+Apr 10 14:58 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:04 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:10 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:16 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:22 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:29 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:35 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:41 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:47 : player: played "croft-manor-anniversary.mp3"
+Apr 10 15:53 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:00 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:06 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:12 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:18 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:24 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:30 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:37 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:43 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:49 : player: played "croft-manor-anniversary.mp3"
+Apr 10 16:55 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:01 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:08 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:14 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:20 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:26 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:32 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:39 : player: played "croft-manor-anniversary.mp3"
+Apr 10 17:43 : exception: Failed to play on "My Pulse Output" (pulse): suspended
+Apr 10 17:43 : exception: Failed to open audio output
+Apr 10 18:17 : client: [18] opened from 127.0.0.1:47982
+Apr 10 18:17 : client: [18] closed
+Apr 10 18:17 : client: [19] opened from 127.0.0.1:47984
+Apr 10 18:17 : client: [19] closed
+Apr 10 18:19 : player: played "croft-manor-anniversary.mp3"
+Apr 10 18:25 : player: played "croft-manor-anniversary.mp3"
+Apr 10 18:31 : player: played "croft-manor-anniversary.mp3"
+Apr 10 18:37 : player: played "croft-manor-anniversary.mp3"
+Apr 10 18:43 : player: played "croft-manor-anniversary.mp3"
+Apr 10 18:50 : player: played "croft-manor-anniversary.mp3"
+Apr 10 18:56 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:02 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:08 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:14 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:21 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:27 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:33 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:39 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:45 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:52 : player: played "croft-manor-anniversary.mp3"
+Apr 10 19:58 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:04 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:10 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:16 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:23 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:29 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:35 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:41 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:47 : player: played "croft-manor-anniversary.mp3"
+Apr 10 20:53 : player: played "croft-manor-anniversary.mp3"
+Apr 10 21:00 : player: played "croft-manor-anniversary.mp3"
+Apr 10 21:06 : player: played "croft-manor-anniversary.mp3"
+Apr 10 21:12 : player: played "croft-manor-anniversary.mp3"
+Apr 10 21:18 : player: played "croft-manor-anniversary.mp3"
+Apr 10 21:24 : player: played "croft-manor-anniversary.mp3"
+Apr 10 21:25 : client: [20] opened from 127.0.0.1:47990
+Apr 10 21:25 : client: [20] closed
+Apr 10 23:12 : player: played "croft-manor-anniversary.mp3"
