@@ -1,0 +1,3 @@
+[submodule ".emacs.d/lsp-servers/python-language-server"]
+	path = .emacs.d/lsp-servers/python-language-server
+	url = https://github.com/Microsoft/python-language-server.git
