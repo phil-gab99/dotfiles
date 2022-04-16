@@ -1,0 +1,9 @@
+;;; emms history -*- mode: emacs-lisp; coding: utf-8; -*-
+(
+;; active playlist
+nil
+;; playlists: ((BUFFER_NAME SELECT_POSITION TRACKS) ...)
+nil
+;; play method
+((emms-repeat-track) (emms-repeat-playlist . t))
+)

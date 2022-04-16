@@ -1,0 +1,123 @@
+ls
+man 7z
+man 7zip
+apt search 7zip
+man p7zip
+p7zip -d Devoir1_IFT1227.7z 
+ls
+cd Devoir1_IFT1227/
+ls
+xournal Devoir1_IFT1227.pdf 
+alloy.jar --help
+alloy version
+alloy.jar version
+alloy.jar --version
+alloy.jar --solver minisat shell
+normal-charge 
+man youtube-dl 
+mpc
+*mpc
+mpc repeat
+*mpc repeat
+normal-charge 
+a
+b
+h
+s
+a
+man youtube-dl
+cd Music/
+youtube-dl -x --audio-format "mp3" https://www.youtube.com/watch?v=RRQrLHtuESc
+youtube-dl --rm-cache-dir -x --audio-format "mp3" https://www.youtube.com/watch?v=RRQrLHtuESc
+ls
+mv MitiS\ -\ Expose-RRQrLHtuESc.mp3 Mitis\ -\ Expose.mp3
+ls
+Mars4_5.jar 
+ls
+mv 2022\ Updated\ Personal\ Tax\ Credits\ Return\ Canada\ -\ EN.pdf Documents/Jobs/
+mv 2022\ Quebec\ Source\ Deductions\ Return\ -\ EN.pdf Documents/Jobs/
+ls
+cd Documents/Jobs/
+l
+ls
+*l
+man getopts
+apt search getopts
+getopts --help
+getopts
+cd Packages/
+ls
+git clone git@github.com:motemen/kt-alloy-cli.git
+ls
+cd kt-alloy-cli/
+ls
+cat README.md 
+man echo
+man printf
+alloy.jar 
+cd Documents/Notes/IFT-6755/hw/project/ls
+cd Documents/Notes/IFT-6755/hw/project/src/ 
+ls
+cd ../
+cd p3script/
+ls
+cat washingmachineFSM.smt2 
+*echo --help
+alloy.jar 
+ls
+bash --version
+ls
+cd hw/
+ls
+cd a3/ ls
+cd a3/
+ls
+cd lib/
+ls
+man fread
+ls
+cd Projects/tp4-tp4-simon-philippe/
+ls
+zipinfo floppy.zip 
+zipinfo -l floppy.zip 
+man zipinfo
+zipinfo -1 floppy.zip 
+cd test/
+ls
+tree floppy.zip 
+ls
+cd ../
+ls
+unzip floppy.zip 
+ls
+tree floppy.img 
+man fsck
+man mount
+htop
+ls
+cd Projects/
+ls
+cd tp4-tp4-simon-philippe/
+ls
+rm floppy.img 
+ls
+unzip floppy.zip 
+ls
+man docker build
+man docker run
+ls
+man docker cp
+lpstat -s
+man docker run
+normal-charge 
+ls
+mv 2022-QC-Sourc-\ Deduction-\ Return.pdf 2022-QC-Source-Deduction-Return.pdf
+ls
+gradle build
+cd ../../../
+ls
+cd ..
+ls
+gradle build
+gradle run
+exit

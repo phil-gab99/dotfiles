@@ -1,0 +1,2 @@
+alias quartus quartus --64bit
+alias sudo eshell/sudo $*
