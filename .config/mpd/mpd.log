@@ -5031,3 +5031,206 @@ Apr 10 21:24 : player: played "croft-manor-anniversary.mp3"
 Apr 10 21:25 : client: [20] opened from 127.0.0.1:47990
 Apr 10 21:25 : client: [20] closed
 Apr 10 23:12 : player: played "croft-manor-anniversary.mp3"
+Apr 11 12:53 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 11 12:53 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 11 12:53 : client: [0] opened from 127.0.0.1:35624
+Apr 11 12:53 : client: [0] closed
+Apr 11 12:53 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 11 12:53 : player: played "croft-manor-anniversary.mp3"
+Apr 11 12:53 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 11 12:53 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 11 12:53 : client: [0] opened from 127.0.0.1:35626
+Apr 11 12:53 : client: [0] closed
+Apr 11 12:53 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 11 12:53 : client: [1] opened from 127.0.0.1:35628
+Apr 11 12:53 : client: [1] closed
+Apr 11 12:58 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:04 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:11 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:17 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:23 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:29 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:35 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:42 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:48 : player: played "croft-manor-anniversary.mp3"
+Apr 11 13:54 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:00 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:06 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:13 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:19 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:25 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:31 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:33 : exception: Failed to play on "My Pulse Output" (pulse): suspended
+Apr 11 14:33 : exception: Failed to open audio output
+Apr 11 14:33 : client: [2] opened from 127.0.0.1:35630
+Apr 11 14:33 : client: [2] closed
+Apr 11 14:38 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:44 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:50 : player: played "croft-manor-anniversary.mp3"
+Apr 11 14:55 : exception: Failed to play on "My Pulse Output" (pulse): suspended
+Apr 11 14:55 : exception: Failed to open audio output
+Apr 11 15:15 : client: [3] opened from 127.0.0.1:35632
+Apr 11 15:15 : client: [3] closed
+Apr 11 15:15 : client: [4] opened from 127.0.0.1:35634
+Apr 11 15:15 : client: [4] closed
+Apr 11 15:15 : client: [5] opened from 127.0.0.1:35636
+Apr 11 15:15 : client: [5] closed
+Apr 11 15:15 : client: [6] opened from 127.0.0.1:35638
+Apr 11 15:15 : client: [6] closed
+Apr 11 15:15 : client: [7] opened from 127.0.0.1:35640
+Apr 11 15:15 : client: [7] closed
+Apr 11 15:15 : client: [8] opened from 127.0.0.1:35642
+Apr 11 15:15 : client: [8] closed
+Apr 11 23:43 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:17 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 12 13:17 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 12 13:17 : client: [0] opened from 127.0.0.1:37204
+Apr 12 13:17 : client: [0] closed
+Apr 12 13:17 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 12 13:17 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:17 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 12 13:17 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 12 13:17 : client: [0] opened from 127.0.0.1:37206
+Apr 12 13:17 : client: [0] closed
+Apr 12 13:17 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 12 13:17 : client: [1] opened from 127.0.0.1:37208
+Apr 12 13:17 : client: [1] closed
+Apr 12 13:17 : client: [2] opened from 127.0.0.1:37210
+Apr 12 13:17 : client: [2] closed
+Apr 12 13:17 : client: [3] opened from 127.0.0.1:37212
+Apr 12 13:17 : client: [3] closed
+Apr 12 13:17 : client: [4] opened from 127.0.0.1:37214
+Apr 12 13:17 : client: [4] closed
+Apr 12 13:17 : client: [5] opened from 127.0.0.1:37216
+Apr 12 13:17 : client: [5] closed
+Apr 12 13:17 : client: [6] opened from 127.0.0.1:37220
+Apr 12 13:17 : client: [6] closed
+Apr 12 13:18 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:24 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:26 : client: [7] opened from 127.0.0.1:37222
+Apr 12 13:26 : client: [7] closed
+Apr 12 13:26 : client: [8] opened from 127.0.0.1:37224
+Apr 12 13:26 : client: [8] closed
+Apr 12 13:30 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:36 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:43 : player: played "croft-manor-anniversary.mp3"
+Apr 12 13:43 : client: [9] opened from 127.0.0.1:37226
+Apr 12 13:43 : client: [9] closed
+Apr 12 15:32 : player: played "croft-manor-anniversary.mp3"
+Apr 12 23:19 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 12 23:19 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 12 23:19 : client: [0] opened from 127.0.0.1:37228
+Apr 12 23:19 : client: [0] closed
+Apr 12 23:19 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 12 23:19 : client: [1] opened from 127.0.0.1:37230
+Apr 12 23:19 : client: [1] closed
+Apr 12 23:19 : client: [2] opened from 127.0.0.1:37232
+Apr 12 23:19 : client: [2] closed
+Apr 12 23:19 : client: [3] opened from 127.0.0.1:37236
+Apr 12 23:19 : client: [3] closed
+Apr 12 23:19 : client: [4] opened from 127.0.0.1:37238
+Apr 12 23:19 : client: [4] closed
+Apr 12 23:19 : client: [5] opened from 127.0.0.1:37240
+Apr 12 23:19 : player: played "croft-manor-anniversary.mp3"
+Apr 12 23:19 : client: [5] closed
+Apr 12 23:19 : client: [6] opened from 127.0.0.1:37244
+Apr 12 23:19 : client: [6] closed
+Apr 12 23:19 : client: [7] opened from 127.0.0.1:37246
+Apr 12 23:19 : client: [7] closed
+Apr 12 23:19 : client: [8] opened from 127.0.0.1:37248
+Apr 12 23:19 : client: [8] closed
+Apr 12 23:19 : client: [9] opened from 127.0.0.1:37250
+Apr 12 23:19 : client: [9] closed
+Apr 12 23:19 : client: [10] opened from 127.0.0.1:37252
+Apr 12 23:19 : client: [10] closed
+Apr 12 23:19 : client: [11] opened from 127.0.0.1:37254
+Apr 12 23:19 : client: [11] closed
+Apr 12 23:19 : client: [12] opened from 127.0.0.1:37256
+Apr 12 23:19 : client: [12] closed
+Apr 12 23:19 : client: [13] opened from 127.0.0.1:37258
+Apr 12 23:19 : client: [13] closed
+Apr 12 23:19 : client: [14] opened from 127.0.0.1:37260
+Apr 12 23:19 : client: [14] closed
+Apr 12 23:19 : client: [15] opened from 127.0.0.1:37262
+Apr 12 23:19 : client: [15] closed
+Apr 12 23:19 : client: [16] opened from 127.0.0.1:37264
+Apr 12 23:19 : client: [16] closed
+Apr 12 23:20 : client: [17] opened from 127.0.0.1:37266
+Apr 12 23:20 : client: [17] closed
+Apr 12 23:20 : client: [18] opened from 127.0.0.1:37268
+Apr 12 23:20 : client: [18] closed
+Apr 12 23:24 : player: played "Mitis - Expose.mp3"
+Apr 12 23:29 : player: played "Mitis - Expose.mp3"
+Apr 12 23:31 : client: [19] opened from 127.0.0.1:37270
+Apr 12 23:31 : client: [19] closed
+Apr 12 23:31 : client: [20] opened from 127.0.0.1:37272
+Apr 12 23:31 : client: [20] closed
+Apr 12 23:31 : client: [21] opened from 127.0.0.1:37274
+Apr 12 23:31 : client: [21] closed
+Apr 12 23:31 : client: [22] opened from 127.0.0.1:37278
+Apr 12 23:31 : client: [22] closed
+Apr 12 23:31 : client: [23] opened from 127.0.0.1:37282
+Apr 12 23:31 : client: [23] closed
+Apr 12 23:31 : client: [24] opened from 127.0.0.1:37284
+Apr 12 23:31 : client: [24] closed
+Apr 12 23:31 : client: [25] opened from 127.0.0.1:37286
+Apr 12 23:31 : client: [25] closed
+Apr 12 23:31 : client: [26] opened from 127.0.0.1:37288
+Apr 12 23:31 : client: [26] closed
+Apr 12 23:33 : player: played "Mitis - Expose.mp3"
+Apr 12 23:38 : player: played "Mitis - Expose.mp3"
+Apr 12 23:43 : player: played "Mitis - Expose.mp3"
+Apr 12 23:47 : player: played "Mitis - Expose.mp3"
+Apr 12 23:52 : player: played "Mitis - Expose.mp3"
+Apr 12 23:57 : player: played "Mitis - Expose.mp3"
+Apr 13 00:01 : player: played "Mitis - Expose.mp3"
+Apr 13 00:06 : player: played "Mitis - Expose.mp3"
+Apr 13 00:07 : player: played "Mitis - Expose.mp3"
+Apr 15 15:49 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 15 15:49 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 15 15:49 : client: [0] opened from 127.0.0.1:56210
+Apr 15 15:49 : client: [0] closed
+Apr 15 15:49 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 15 15:49 : client: [1] opened from 127.0.0.1:56214
+Apr 15 15:49 : client: [1] closed
+Apr 15 15:50 : client: [2] opened from 127.0.0.1:56216
+Apr 15 15:50 : client: [2] closed
+Apr 15 15:50 : client: [3] opened from 127.0.0.1:56218
+Apr 15 15:50 : client: [3] closed
+Apr 15 15:50 : client: [4] opened from 127.0.0.1:56220
+Apr 15 15:50 : client: [4] closed
+Apr 15 15:50 : client: [5] opened from 127.0.0.1:56222
+Apr 15 15:50 : client: [5] closed
+Apr 15 15:50 : client: [6] opened from 127.0.0.1:56224
+Apr 15 15:50 : client: [6] closed
+Apr 15 15:50 : client: [7] opened from 127.0.0.1:56228
+Apr 15 15:50 : client: [7] closed
+Apr 15 15:50 : client: [8] opened from 127.0.0.1:56230
+Apr 15 15:50 : client: [8] closed
+Apr 15 15:54 : player: played "Mitis - Expose.mp3"
+Apr 15 15:59 : player: played "Mitis - Expose.mp3"
+Apr 15 16:03 : player: played "Mitis - Expose.mp3"
+Apr 15 16:08 : player: played "Mitis - Expose.mp3"
+Apr 15 16:13 : player: played "Mitis - Expose.mp3"
+Apr 15 16:17 : player: played "Mitis - Expose.mp3"
+Apr 15 16:22 : player: played "Mitis - Expose.mp3"
+Apr 15 16:27 : player: played "Mitis - Expose.mp3"
+Apr 15 16:31 : player: played "Mitis - Expose.mp3"
+Apr 15 16:36 : player: played "Mitis - Expose.mp3"
+Apr 15 16:41 : player: played "Mitis - Expose.mp3"
+Apr 15 16:45 : player: played "Mitis - Expose.mp3"
+Apr 15 16:50 : player: played "Mitis - Expose.mp3"
+Apr 15 16:55 : player: played "Mitis - Expose.mp3"
+Apr 15 16:59 : player: played "Mitis - Expose.mp3"
+Apr 15 17:04 : player: played "Mitis - Expose.mp3"
+Apr 15 17:09 : player: played "Mitis - Expose.mp3"
+Apr 15 17:13 : player: played "Mitis - Expose.mp3"
+Apr 15 17:18 : player: played "Mitis - Expose.mp3"
+Apr 15 17:23 : player: played "Mitis - Expose.mp3"
+Apr 15 17:27 : player: played "Mitis - Expose.mp3"
+Apr 15 17:32 : player: played "Mitis - Expose.mp3"
+Apr 15 17:37 : player: played "Mitis - Expose.mp3"
+Apr 15 17:41 : player: played "Mitis - Expose.mp3"
+Apr 15 17:42 : exception: Failed to play on "My Pulse Output" (pulse): suspended
+Apr 15 17:42 : exception: Failed to open audio output
+Apr 16 01:30 : player: played "Mitis - Expose.mp3"

@@ -419,12 +419,13 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package helm
+    :after lsp-java
     :bind
     (:map helm-map
           ("C-k" . helm-previous-line)
           ("C-j" . helm-next-line))
     :config
-    (helm-mode -1))
+    (helm-mode 1))
 
 #+end_src
 
@@ -1318,6 +1319,8 @@ For auto-completions while coding.
     :custom
     (company-minimum-prefix-length 1)
     (company-idle-delay 0.0)
+    (company-tooltip-minimum-width 40)
+    (company-tooltip-maximum-width 60)
     :config
     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
@@ -1331,8 +1334,8 @@ Includes icons for company mode suggestions.
 
   (use-package company-box
     :straight t
-    :hook (company-mode . company-box-mode)
-    :after company)
+    :after company
+    :hook (company-mode . company-box-mode))
 
 #+end_src
 
@@ -1462,6 +1465,14 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+end_src
 
+**** Docker
+
+#+begin_src emacs-lisp
+
+  (use-package dockerfile-mode)
+
+#+end_src
+
 **** Git
 
 #+begin_src emacs-lisp
@@ -1475,7 +1486,7 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package groovy-emacs-mode
-    :disabled
+    ;; :disabled
     :straight '(groovy-emacs-modes :type git
                                    :host github
                                    :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
@@ -1596,7 +1607,8 @@ Custom syntax highlighting for LMC assembly language.
 
   (use-package markdown-mode
     :straight nil
-    :hook (gfm-view-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch))))))
+    :hook (gfm-view-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                                                         (markdown-code-face (:height 1.5) fixed-pitch))))))
 
 #+end_src
 
@@ -2355,7 +2367,10 @@ Allows for viewing of pdfs.
 
   (use-package pdf-tools
     :straight t
-    :mode ("\\.pdf\\'" . pdf-view-mode))
+    :mode ("\\.pdf\\'" . pdf-view-mode)
+    :custom
+    (pdf-misc-print-programm "/usr/bin/lpr")
+    (pdf-misc-print-programm-args '("-o sides=two-sided-long-edge")))
 
 #+end_src
 
@@ -2375,13 +2390,18 @@ Allows for printing of emacs buffers.
 
   (use-package ps-print
     :straight nil
+    :bind
+    (:map pdf-view-mode-map
+          ("C-c C-p" . pdf-misc-print-document))
+    :config
+    (require 'pdf-misc)
     :custom ;; Printing double-sided
     (ps-lpr-switches '("-o sides=two-sided-long-edge"))
     (ps-spool-duplex t))
 
 #+end_src
 
-*** Package | opewwith
+*** Package | openwith
 
 #+begin_src emacs-lisp
 
@@ -2396,6 +2416,33 @@ Allows for printing of emacs buffers.
             "vlc"
             '(file))))
     (openwith-mode 1))
+
+#+end_src
+
+** Bible
+
+*** Package | dtk
+
+#+begin_src emacs-lisp
+
+  (use-package dtk
+    :commands dtk
+    :after evil-collection
+    :config
+    (evil-collection-define-key 'normal 'dtk-mode-map
+      (kbd "C-j") 'dtk-forward-verse
+      (kbd "C-k") 'dtk-backward-verse
+      (kbd "C-f") 'dtk-forward-chapter
+      (kbd "C-b") 'dtk-backward-chapter
+      "q" 'dtk-quit
+      "c" 'dtk-clear-dtk-buffer
+      "s" 'dtk-search)
+    :hook
+    (dtk-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)))))
+    :custom
+    (dtk-module "KJV")
+    (dtk-module-category "Biblical Texts")
+    (dtk-word-wrap t))
 
 #+end_src
 
@@ -2437,6 +2484,15 @@ Allows for printing of emacs buffers.
     :custom
     (slack-buffer-emojify t)
     (slack-prefer-current-team t))
+
+#+end_src
+
+*** Package | sx
+
+#+begin_src emacs-lisp
+
+  (use-package sx
+    :commands sx-search)
 
 #+end_src
 
@@ -2541,6 +2597,20 @@ Front-end for the MPD (Music Player Daemon).
     :custom
     (sudoku-style 'unicode)
     (sudoku-level 'hard))
+
+#+end_src
+
+*** Package | sokoban
+
+#+begin_src emacs-lisp
+
+  (use-package sokoban
+    :bind
+    (:map sokoban-mode-map
+          ("<normal-state> h" . sokoban-move-left)
+          ("<normal-state> l" . sokoban-move-right)
+          ("<normal-state> k" . sokoban-move-up)
+          ("<normal-state> j" . sokoban-move-down)))
 
 #+end_src
 

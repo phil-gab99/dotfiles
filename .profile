@@ -27,6 +27,7 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 export QUARTUS_ROOTDIR="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
-export PRINTER="Canon_MF642C_643C_644C"
+# export PRINTER="Canon_MF642C_643C_644C"
+export PRINTER="Canon_MF642C_643C_644C_aa_7c_a2_8_"
 # export QUARTUS_ROOTDIR_OVERRIDE="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
 PATH="$PATH:$QUARTUS_ROOTDIR/bin:$QUARTUS_ROOTDIR_OVERRIDE/bin"

@@ -167,6 +167,9 @@
   (sudoku-value-face ( :foreground onedark-variant-mu4eheader
                        :height 2.0))
 
+  ;; Makefile
+  (makefile-space ( :background onedark-variant-black))
+
   ;; slack
   (slack-message-output-text    ( :inherit 'variable-pitch))
   (slack-mrkdwn-code-face       ( :inherit 'org-code))
