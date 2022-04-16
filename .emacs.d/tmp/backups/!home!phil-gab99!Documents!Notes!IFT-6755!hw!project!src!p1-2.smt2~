@@ -1,0 +1,11 @@
+(declare-const Wash Bool)
+(declare-const Delay Bool)
+(declare-const Heat Bool)
+(declare-const Dry Bool)
+
+;; Feature Model constraints
+(assert Wash)
+(assert (not (and Delay Heat)))
+(assert (or Dry (not Dry)))
+
+(check-sat)

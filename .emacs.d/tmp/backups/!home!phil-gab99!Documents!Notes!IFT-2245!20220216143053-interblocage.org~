@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       32b3b3b4-21b5-4bc1-9b22-0eefbf35c19f
+:END:
+#+title: ift2245-interblocage
+#+filetags: :ift2245-toc:
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-02-16 Wed 14:30]
+
+* Contenu
+- [[id:f0459364-7c8c-4223-aa75-3cb6e1bc6921][interblocage-intro]]
+- [[id:a94aaebe-68a5-4089-891e-74aefb05f3b6][gestion-interblocage]]
+
+Évitement - Analyse l'état courant pour éviter un cas d'interblocage
+
+Préemption - Risque de famine, jamais toutes les ressources à un moment donné
+Circular wait, garantie un ordre dans les ressources
+
+If exists séquence possible then état sûr
+Sinon, état pas sûr

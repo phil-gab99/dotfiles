@@ -1,0 +1,51 @@
+:PROPERTIES:
+:ID:       7ed067d5-f999-49e6-a8cd-743d4f32b6d2
+:END:
+#+title: ift6755-metamodels-semantics
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-12 Wed 22:25]
+
+* Metamodels
+
+Metamodels *define* a modelling language - Models are not necessarily diagrams.
+
+Example - defining state machines diagram:
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220112222519-metamodels_semantics.org_20220112_222740_0JIuF6.png]]
+
+Example - defining state machine language:
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220112222519-metamodels_semantics.org_20220112_224106_rhPoiy.png]]
+
+- Given a metamodel, we can instantiate a simple state machine
+
+In the world of meta-modelling, we talk about *meta-layers*
+- Allows the description of the instanciatiion relationship between models
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220112222519-metamodels_semantics.org_20220112_223203_TZdJgD.png]]  
+
+- Layer M0 describes the real world objects
+- Layer M1 describes the  high-level model of the the particular real world object of interest
+  - To differentiate between the instance of a video in the real-world and the model, we talk instead about a *snapshot*.
+- Layer M2 describes the M1 model, it is a meta-model
+  - At this level, instances are given a classifier via another object-type class
+- Layer M3 describes the M2 meta-model, it is a meta-meta-model
+  - Language that allows definition of meta-models - API that allows for defining other models
+
+** Semantics
+
+What does the model mean?
+The semantics of a state machine could be defined as the set of all the traces that it allows.
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220112222519-metamodels_semantics.org_20220112_224609_IKBBZL.png]]
+
+The same approach can be used to define a meta-model.
+- A meta-model is just another model, a model for describing models.
+- The semantics of a meta-model is the set of all instance models that can be instanciated from this meta-model
+- This means that semantics can be defined for all sorts of meta-layers
+
+  [[/home/phil-gab99/Documents/Notes/IFT-6755/20220112222519-metamodels_semantics.org_20220112_224815_JWtjHb.png]]
+
+  Semantics can be though of as sets:
+
+  [[/home/phil-gab99/Documents/Notes/IFT-6755/20220112222519-metamodels_semantics.org_20220112_225146_XrtwUs.png]]

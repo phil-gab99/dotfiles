@@ -1,0 +1,138 @@
+# Karen-Fae Laurin	Matricule : 20019033
+# Assya ElJeddaoui	Matricule : 20224861
+# Alexandre Hamila	Matricule : 20181634
+
+
+   #  DEVOIR #3 - IFT1215
+   # remise : 22 mars 2022
+
+
+---------------------------------
+Racine carre : Methode de Newton
+---------------------------------
+ 
+
+	LDA	one
+	STO	yn
+	IN
+	STO	x
+	
+loopYn1
+	LDA	yn
+	MUL	yn
+	STO 	ynCarre
+	LDA	x
+	SUB	ynCarre
+	STO	top
+
+	LDA	yn
+	MUL	deux
+	STO	ynFois2
+	
+	LDA	top
+	DIV	ynFois2
+	ADD	yn
+	STO	ynPlus1
+
+compare	
+	SUB	yn 
+	BRZ	END
+	LDA	ynPlus1
+	STO	yn
+	BR	loopYn1
+
+END	
+	LDA	ynPlus1
+	OUT
+	HLT
+
+
+
+one		DAT	001
+deux		DAT	002
+x 		DAT	000
+yn		DAT	000	
+ynPlus1		DAT	000
+ynCarre		DAT	000
+ynFois2		DAT	000
+top		DAT	000
+ 
+
+
+ 
+
+-----------------------------------
+Racine carre : Methode de Dijkstra
+-----------------------------------
+
+
+ 
+INPUT
+	IN
+	STO	x
+
+reset	
+	LDA	zero
+	STO	y
+	
+	LDA	one
+	STO	delta
+
+	LDA	quinze
+	STO	n
+
+setDelta
+	LDA	delta
+	MUL	deux
+	STO	delta
+
+	LDA	n
+	SUB	one
+	STO 	n
+
+	BRZ	loop
+	BR	setDelta
+
+loop
+	LDA	y
+	ADD	delta
+	STO	tmp	
+	MUL	tmp	
+	
+	SUB	x
+	BRZ	loopIf
+	BRP	loopElse
+
+loopIf	
+	LDA	tmp
+	STO	y
+	BR	conditionLoop
+	
+
+
+loopElse
+	LDA	delta
+	DIV	deux
+	STO	delta
+
+conditionLoop
+	LDA	delta
+	BRZ	END
+	BR	loop
+
+END	
+	LDA	y
+	OUT
+	HTL
+
+
+zero 		DAT	000
+one		DAT 	001
+deux		DAT	002
+quinze		DAT	015
+
+x		DAT	000
+y		DAT	000
+n		DAT	000
+delta		DAT	000
+tmp		DAT	000

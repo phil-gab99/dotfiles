@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       a69b1eff-9c23-47e2-92cf-7be670f2814c
+:END:
+#+title: ift2245-memoire-adresses
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-14 Mon 22:27]
+
+* Registres "base" et "limit"
+
+Chaque processus reçoit une partie de la mémoire
+- Le kernel contrôle les registres ~base~ et ~limit~
+- Le CPU vérifie que chaque accès mémoire est entre ~base~ et ~limit~
+- Le SE peut accéder à toute la mémoire pour accomplir ses tâches
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314215502-memoire.org_20220314_220702_DR6MEj.png]]
+
+Système de protection d'adresse matérielle:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314215502-memoire.org_20220314_220805_UItI4k.png]]
+
+* "Binding" des instructions et les données à la mémoire
+
+Le "binding" d'adresse des instructions et des données à des adresse de mémoire peut se produire à trois différentes étapes:
+- *Moment de la compilation* - Si l'adresse est connue a priori, le code absolu peut être généré et le "binding" est fait lors de la compilation (doit recompiler le code si l'adresse change)
+- *Moment du chargement (load)* - Le compilateur doit générer du code relocalisable si l'adresse n'est pas connu au moment de la compilation, et la liaison est effectuée lors du chargement (doit recharger si l'adresse de départ change)
+- *Moment d'exécution* - "Binding" reporté jusqu'à l'exécution si le processus peut être déplacé pendant son exécution d'un segment de mémoire à un autre
+
+* Adresses
+
+Différentes addresse à différentes étapes d'un programme
+- Code source - Adresse généralement symbolique (identificateur)
+- Code compilé - Adresses relocalisables
+  - i.e. "14 bytes après le début de ce module"
+- Le linker se combine des modules en un programme
+  - i.e. "74014 bytes après le début du programme"
+- Le loader converti en adresse d'exécution
+  - i.e. "adresse 75014" (si base vaut 1000)
+
+Vie d'un programme:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314215502-memoire.org_20220314_222009_V2EF2R.png]]
+
+** Adresses logiques vs physiques
+
+Adresses logiques (virtuelles) - Les adresses utilisées par les processus
+- Espace d'adressage logique $\to$ Toutes les adresses logiques
+Adresses physiques - La vraie adresse en mémoire
+- Espace d'adressage physique $\to$ Toutes les adresses physiques
+
+** Memory-Management Unit (MMU)
+
+Traduire les adresses logiques en adresses physiques
+- Différentes façons de faire les traductions
+- Compromis entre flexibilité et exécution "instantanée"
+- Inclut généralement vérification de droit d'accès
+
+Ex/: Registre de relocation
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314215502-memoire.org_20220314_222319_suNRCw.png]]
+
+MMU avec ~base~ + ~limit~ (relocation)
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314222745-memoire_adresses.org_20220314_231107_mtUpGY.png]]
+
+** Swapping
+
+Un processus peut être temporairement "swapped" hors de la mémoire vers un "backing store" (hard disk), puis remis en mémoire pour que l'exécution continue
+- L'espace mémoire logique total des processus peut dépasser la mémoire physique
+La majeure partie du temps d'échange est le temps de transfert - Le temps de transfert total est directement proportionnel à la quantité de mémoire échangée
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314215502-memoire.org_20220314_222550_Sf9mWW.png]]
+

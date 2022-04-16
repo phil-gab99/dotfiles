@@ -1,0 +1,107 @@
+:PROPERTIES:
+:ID:       d84cb02b-56d5-415f-9304-2129faf4c67a
+:END:
+#+title: phi2005-calcul-propositionnel
+#+filetags: :phi2005-toc:
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-14 Fri 09:18]
+
+Logique $\rightarrow$ Étude des arguments valide, des raisonnements, qu'est-ce qu'un _bon_ raisonnement
+
+- Proposition $\rightarrow$ Phrase qui peut être vraie ou fausse
+  - Les phrases qui ne prétendent pas connaître de la connaissance ne sont pas des propositions
+
+- Argument $\rightarrow$ Dans son sens restreint, est une suite de propositions ou d’énoncés qui comprend:
+  - Une ou plusieurs prémisses et
+  - Une conclusion.
+  - Notation
+    - À l'horizontale - +>$A_{1},..., A_{n} / B$
+    - À la verticale, comme en logique 1
+
+Argument déductif:
+- (1) Tout ce que nous imaginons est fini
+- (C) Nous ne pouvons concevoir l'infini
+
+Argument inductif:
+- (1) 75% des hommes qui fument développent un cancer de poumon
+- (2) Jean fume
+- (C) Jean a 75% des chances de développer un cancer du poumon
+
+Forme modus tolens (énoncé conditionnelle, nié (1))
+Argument par induction
+
+Argument "déductivement" valide (forme de l'argument correcte)
+- Si la conclusion est vraie dans tous les cas où les prémisses sont vraies
+- S'il est impossible que les prémisses soient vraies et que la conclusion soit fausse en même temps
+La validité est indépendante de la vérité
+
+- Contre-exemple d'un argument $\rightarrow$ Situation dans laquelle toutes les prémisses sont vraies et la conclusion fausse
+  - Un argument est invalide s'il existe un contre-exemple
+
+Cohérence - Ensemble de propositions cohérent s'il est possible que toutes les propositions de l'ensemble soit vraies en même temps
+- incohérent is impossible
+
+Procédure pour étudier la validité:
+- Les arguments apparaissent dans la langue naturelle (parfois enrichie de symboles)
+- Arguments sont traduits dans un langage formel, une syntaxe est développée pour ce langage
+  - Langage formel contenant des symboles pour désigner propositions et opérateurs logiques et fournit des règles de manipulation de symboles
+  - Purement au niveau syntaxique
+- Une sémantique est élaborée (théorie de la signification et vérité d'un langage) afin de pouvoir faire des affirmations qui ont un sens et qui peuvent, dans certaines circonstances être vraies ou fausse.
+  - Déterminer si les énoncés ont un sens
+
+Vocabulaire LPC (Logique propositionnelle)
+- Symboles
+  - Un ensemble infini $L$ de propositions élémentaires $p, q, r, p_{1}, p_{2}, ..., p'$
+  - Opérateurs ou connecteurs logiques: $\implies, \perp$
+    - $\perp$ est l'absurde (pas exactement un connecteur)
+    
+- Règles de formation syntaxique
+  - Toute lettre propositionnelle est une proposition, et $\perp$ est un proposition
+  - Si $A$ et $B$ sont des propositions, alors $A \implies B$ est une proposition
+  - Il n'y a pas d'autres propositions
+
+Exemples - Suites de symboles suivantes sont des propositions de $\mathcal{LPC}$
+- $p \implies \perp$
+- $\perp \implies \perp$
+- $\perp \implies (p \implies ((q \implies \perp) \implies (\perp \implies r)))$
+
+Ne sont pas des propositions:
+- $p \perp \implies q$
+- $\implies \perp$
+
+Définition de d'autres connecteurs:
+
+- Raccourcis, abbréviations syntaxiques
+[[/home/phil-gab99/Documents/Notes/PHI-2005/20220114091830-calcul_propositionnel.org_20220114_103334_WgAcr7.png]]
+
+Notation primitive $\rightarrow$ Toute formule peut être écrite de manière à ne contenir que les symboles $\implies$ et $\perp$
+- Exemple:
+
+  [[/home/phil-gab99/Documents/Notes/PHI-2005/20220114091830-calcul_propositionnel.org_20220114_104302_CMtzag.png]]
+  
+Propositions élémentaires et complexes
+- Proposition peut être élémentaire
+- Ou commencer par une négation ou faisant partie de d'autres propositions connectés par connecteurs
+Dans une proposition qui n'est pas élémentaire, le connecteur qui apparaît à la fin de la construction de la proposition est son connecteur principal
+
+Postulats à la base de la sémantique de LPC
+- Postulat de bivalence - Proposition ne peut avoir qu'une seule valeur de vérité, soit le vrai ou le faux
+- Postulat de vérifonctionnalité - Valeur de vérité d'une proposition complexe est entièrement fonction des valeurs de vérité des énoncés élémentaires qui la composent
+
+Sémantique de LPC:
+
+[[/home/phil-gab99/Documents/Notes/PHI-2005/20220114091830-calcul_propositionnel.org_20220114_105629_ON3yli.png]]
+
+Symbole $\perp$ est overloaded, deux contextes d'utilisation
+
+Notion d'assignation - Assignation $\alpha$ est l'attribution à toute lettre propositionnelle d'un langage $L$ d'une et d'une seule valeur de vérité
+Une ligne de la table de vérité s'agit d'une assignation, assignation des propositions élémentaires - Map une valeur de vérité à une proposition
+
+Un contre exemple est donc une assignations des prémisses la valeur de vraie et la conclusion fausse
+Un argument est valide s'il n'a pas de contre-exemple
+
+Table de vérité - Méthode sémantique pour tester la validité d'un argument
+- Traduire l'argument dans le langage LPC
+- Construire la table contenant toutes les prémisses et la conclusion de l'argument
+- Vérifier s'il existe un contre exemple,
+- Si oui invalide, sinon valide

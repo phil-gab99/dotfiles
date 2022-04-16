@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       8d36c1ce-f3f2-4280-8ac0-733222fbd89a
+:END:
+#+title: ift2245-memoire-masse
+#+filetags: :ift2245-toc:
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-04-01 Fri 23:47]
+
+* Introduction
+
+- Les systèmes de fichiers sont placés sur des périphériques de stockage de masse
+- Le stockage secondaire est le périphérique avec lequel le système d'exploitation interagit le plus fréquemment
+- Étant donné que le travail du système d'exploitation est d'optimiser les ressources de l'ensemble du système informatique, cela inclut le stockage secondaire
+
+* Contenu
+- [[id:73628fec-e69a-4f04-b9d9-f07c3fe7eedf][disques]]
+- [[id:8b2343ca-d80a-4e63-be30-b4104b897607][algorithmes-ordonnancement]]
+
+* Conclusion
+
+- Sur la plupart des ordinateurs, les disques durs sont utilisés pour le stockage secondaire
+- Les performances d'un disque sont spécifiées par des mesures telles que les IOPS, le temps de réponse et le throughput
+- Un algorithme de planification est utilisé pour gérer les demandes de disque
+- Les systèmes RAID assurent l'efficacité et la redondance grâce au “striping”, “mirroring” et à l'utilisation de bits de parité

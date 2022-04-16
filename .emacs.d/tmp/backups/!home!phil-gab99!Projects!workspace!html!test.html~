@@ -1,0 +1,32 @@
+<p>
+  <strong>
+    <span style="color: rgb(239, 69, 64);">
+      Chargée de cours: 
+    </span>
+    Alena Tsikhanovich,
+  </strong>
+  <span style="font-size: 1rem;" lang="FR-CA">
+    <a href="mailto:tsikhana@iro.umontreal.ca" target="_blank">
+      <span style="color: rgb(125, 159, 211);">
+        tsikhana@iro.umontreal.ca
+      </span>
+    </a>
+    <br>
+  </span>
+
+  <br>
+
+  <strong>
+    <span style="color: rgb(239, 69, 64);">
+      Démonstrateurs: 
+    </span>
+    Philippe Gabriel,
+  </strong>
+  <span style="font-size: 1rem; lang=FR-CA">
+    <a href="mailto:philippe.gabriel.1@umontreal.ca" target="_blank">
+      <span class="" style="color: rgb(125, 159, 211);">
+        philippe.gabriel.1@umontreal.ca
+      </span>
+    </a>
+  </span>
+</p>

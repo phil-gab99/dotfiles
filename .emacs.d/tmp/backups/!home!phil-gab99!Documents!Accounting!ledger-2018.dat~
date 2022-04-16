@@ -1,0 +1,47 @@
+2018-01-01 Open Credit Scotia
+    Liabilities:CreditCards:SceneVISA        1000.00 CAD
+    Equity:Scotia
+    
+2018-01-02 Credit Scotia Total Expenses
+    Expenses:Other                            676.22 CAD
+    Liabilities:CreditCards:SceneVISA
+
+2018-02-05 Transfer to Savings
+    Assets:Cash:Bank:Savings                  200.00 CAD
+    Assets:Cash:Bank:Checkings
+    
+2018-02-05 ABM Deposit
+    Assets:Cash:Bank:Checkings                350.00 CAD
+    Equity:KirklandPQ
+
+2018-03-17 Quality Cuts Purchase
+    Expenses:Aesthetics:QualityCuts             5.00 CAD
+    Assets:Cash:Bank:Checkings
+
+2018-07-05 Solidarity Provincial Tax
+    Assets:Cash:Bank:Checkings                 71.75 CAD
+    Equity:Government:Quebec
+
+2018-07-14 Solidarity Federal Tax
+    Assets:Cash:Bank:Checkings                 71.00 CAD
+    Equity:Government:Canada
+
+2018-08-25 Transfer to Savings
+    Assets:Cash:Bank:Savings                  587.75 CAD         
+    Assets:Cash:Bank:Checkings
+
+2018-08-27 Transfer to Checkings
+    Assets:Cash:Bank:Checkings                208.11 CAD
+    Assets:Cash:Bank:Savings
+
+2018-09-20 Solidarity Federal Tax
+    Assets:Cash:Bank:Checkings                 71.00 CAD
+    Equity:Government:Canada
+
+2018-10-05 Solidarity Provincial Tax
+    Assets:Cash:Bank:Checkings                 71.75 CAD
+    Equity:Government:Quebec
+
+2018-11-24 ABM Deposit
+    Assets:Cash:Bank:Checkings                250.00 CAD
+    Equity:KirklandPQ

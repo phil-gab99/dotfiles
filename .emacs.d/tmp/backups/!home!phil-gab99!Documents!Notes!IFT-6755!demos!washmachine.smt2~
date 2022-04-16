@@ -1,0 +1,4 @@
+(declare-const Wash Bool)
+(declare-const Delay Bool)
+(declare-const Heat Bool)
+(declare-const Dry Bool)

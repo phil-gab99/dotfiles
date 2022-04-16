@@ -1,0 +1,10 @@
+(declare-const p Bool)
+(declare-const q Bool)
+
+(assert (not p))
+(assert (or p q))
+
+(assert (not q)) ;; Negation of conclusion
+
+(check-sat)
+;; unsat therefore the sequent is valid

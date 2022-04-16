@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       866d648b-64a9-4ded-a25a-7d87d3f34385
+:END:
+#+title: ift2935-panne-memoire-intro
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-31 Thu 22:51]
+
+
+* Trois de types de mémoires
+
+*Mémoire volatile*
+- Ne survit pas à une panne système (mémoire centrale, mémoire cache)
+
+*Mémoire non-volatile*
+- Survit à une panne système (mémoire flash, disques, rubans)
+
+*Mémoire (stockage) stable*
+- Une abstraction capable de résister à toute panne
+- Réalisée avec plusieurs copie de stockage non-volatile (des disques distincts)
+
+* Accès aux données
+
+- L'unité de transfert entre mémoire centrale et disque est le bloc
+- Les *blocs physiques* sont ceux qui résident sur disque
+- Les *blocs tampons* sont des blocs qui résident en mémoire centrale
+
+Il y a deux opérations de transfert disque-tampon
+- *Input(B)* - Copie le bloc disque $B$ vers le tampon en mémoire
+- *Output(B)* - Copie le bloc tampon $B$ vers le bloc disque en l'écrasant
+
+Chaque transaction $T_i$ a son espace de travail où sont conservées les copies des données qu'elle a lues ou modifiées
+- La copie de la transaction $T_i$ de l'entrée de donnée $X$ sera notée $x_i$
+
+On suppose que chaque entrée de donnée (chaque tuple) tient dans un seul bloc
+
+* Manipulation de données
+
+Les transactions transfèrent les entrées de données entre les tampons système et leur espace de travail avec les opérations
+- ~read(X)~ - Assigne à la variable locale ~x_i~ la valeur de l’entrée ~X~ du bloc tampon ~B_X~
+- ~write(X)~ - Assigne à l’entrée ~X~ du bloc tampon ~B_X~ la valeur de l’entrée locale ~x_i~
+- ~read(X)~ et ~write(X)~ peuvent nécessiter un ~input(B_X)~ s’il n’y a pas de bloc ~B_X~ contenant ~X~ en mémoire tampon
+
+La transaction $T_i$
+- Exécute ~read(X)~ lors du premier accès à ~X~
+- Fait ses mises à jour de ~X~ sur ~x_i~
+- Exécute le ~write(X)~ quand elle veut que le changement soit fait à la base
+  - Il est impératif d’exécuter ~write(X)~ après la dernière mise à jour de ~x_i~
+
+Le ~write(X)~ n’est pas nécessairement suivi d’un ~output(B_X)~
+- Le bloc ~B_X~ peut contenir d’autres données en traitement
+- Le système synchronise la mémoire quand il juge bon
+
+[[/home/phil-gab99/Documents/Notes/IFT-2935/20220331225118-panne_memoire_intro.org_20220331_230157_AWyiWT.png]]

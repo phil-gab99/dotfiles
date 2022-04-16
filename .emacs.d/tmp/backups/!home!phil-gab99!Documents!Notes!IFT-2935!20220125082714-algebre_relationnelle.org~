@@ -1,0 +1,399 @@
+:PROPERTIES:
+:ID:       be786a1d-7d59-45b0-b5b3-94e2f6d7c81f
+:END:
+#+title: ift2935-algebre-relationnelle
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-25 Tue 08:27]
+
+* Algèbre relationnelle
+
+- Fournit un cadre théorique pour le modèle relationnel
+- L’algèbre relationnelle fournit des opérations qui permettent à l’usager de faire des *requêtes* sous forme *d’expressions de l’algèbre relationnelle*
+- Le résultat est une nouvelle relation
+- Toute requête correspond à une expression de cette algèbre
+- En analysant les arbres de telles expression, on peut optimiser les requêtes
+- Les opérations de l’algèbre relationnelle sont
+  - Cinq opérations de base:
+    1. La sélection $\sigma$
+    2. La projection $\pi$
+    3. L’union $\cup$
+    4. Le produit $\times$
+    5. La différence
+  - Un opérateur syntaxique sur le schéma - Le renommage des attributs
+  - Des opérateurs déduits - La jointure naturelle, la thêta jointure, et la division
+
+** Sélection
+
+$\sigma_p(R)$ prend en entrée une relation $R$ (ensemble de tuples) et un prédicat $p$ et retourne le sous-ensemble de tous les tuples qui satisfont $p$
+
+\[\sigma_p(R) = \{t \in R \ | \ p(t)\}\]
+
+- Le scheḿa de $\sigma_p(R)$ (les attributs et leurs domaines) est identique à celui de $R$
+- Exemple - $\sigma_{\mathrm{Dno} = 4}$ (employee) *sélectionne* dans l’ensemble des tuples d’employés pour lesquels /Dno/ est 4
+  - Ici $p$ est Dno = 4
+  - $\sigma_{\mathrm{Salary} > 30000}$ (employee) sélectionne ceux de salaire supérieur à 30000
+- Les conditions *atomique* sont du type <attribut><comparateur><constante> ou <attribut><comparateur><attribut>
+- Les comparateurs sont: $=, \neq, <, \leq, >, \geq$
+- Ces conditions peuvent former des conditions complexes avec les opérateurs logiques ~AND, OR, NOT~
+
+Exemple:
+
+employee
+| fname    | lname   |       ssn |      bdate | address                 | sex | salary |  supersen | dno |
+|----------+---------+-----------+------------+-------------------------+-----+--------+-----------+-----|
+| John     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M   |  30000 | 333445555 |   5 |
+| Franklin | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M   |  40000 | 888665555 |   5 |
+| Alicia   | Zelaya  |  99887777 | 1968-01-19 | 3321 Castle, Spring TX  | F   |  25000 | 987654321 |   4 |
+| Jennifer | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX  | F   |  43000 | 888665555 |   4 |
+| Ramesh   | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble TX | M   |  38000 | 333445555 |   5 |
+| Joyce    | English | 453453453 | 1972-07-31 | 5631 Rice, Houston TX   | F   |  25000 | 333445555 |   5 |
+| Ahmad    | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston TX  | M   |  25000 | 987654321 |   4 |
+| James    | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston TX   | M   |  55000 |      NULL |   1 |
+
+$\sigma_{(\mathrm{dno} = 4 \ \mathtt{AND} \ \mathrm{salary} > 25000) \ \mathtt{OR} \ (\mathrm{dno} = 5 \ \mathtt{AND} \ \mathrm{salary} > 30000)}$ (employee)
+
+Retour:
+| fname    | lname   |       ssn |      bdate | address                 | sex | salary |  supersen | dno |
+|----------+---------+-----------+------------+-------------------------+-----+--------+-----------+-----|
+| Franklin | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M   |  40000 | 888665555 |   5 |
+| Jennifer | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX  | F   |  43000 | 888665555 |   4 |
+| Ramesh   | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble TX | M   |  38000 | 333445555 |   5 |
+
+En SQL:
+
+#+begin_src sql
+
+  select * from employee where
+      (dno = 4 and salary > 25000) or (dno = 5 and salary > 30000)
+
+#+end_src
+
+Propriétés de la sélection:
+- L’opérateur de sélection est *unaire* en ce sens qu’il ne prend qu’une relation en entrée
+- La condition *p* s’applique un tuple à la fois et ne peut donc pas faire intervenir plus d’un tuple (plus d’une ligne de la table)
+- La sélection est commutative : $\sigma_{p_1}(\sigma_{p_2}(R)) = \sigma_{p_2}(\sigma_{p_1}(R))$
+- $\sigma_{p_n}(\sigma_{p_{n-1}}(\dots(\sigma_{p_1}(R))\dots)) = $\sigma_{(p_1 \ \mathtt{AND} \ p_2 \ \mathtt{AND} \ \dots \ \mathtt{AND} \ p_n)}(R)$
+
+** Projection
+
+Soit $R(A_1 : D_1, \dots, A_n : D_n)$ une relation
+- Un tuple $t$ de $R$ est de la forme $t = (A_1 : t_1, \dots, A_n : t_n)$ avec $t_i \in D_i$
+Soit $A_{i_1}, \dots, A_{i_k}$ un sous-ensemble d'attributs de $R$
+- $\pi_{A_{i_1}, \dots, A_{i_k}}(R)$ est la relation de schéma $(A_{i_1} : D_{i_1}, \dots, A_{i_k} : D_{i_k})$ qui contient les tuples $t = (A_{i_1} : t_{i_1}, \dots, A_{i_k} : t_{i_k})$ pour tous les tuples $t$ de $R$
+La table de $\pi_{A_{i_1}, \dots, A_{i_k}}(R)$ est celle obtenue en gardant de $R$ que les colonnes $A_{i_1}, \dots, A_{i_k}$ et en enlevant les duplications
+En SQL: ~select DISTINCT Ai1, ..., Aik from R~
+
+Exemple:
+
+employee
+| fname    | lname   |       ssn |      bdate | address                 | sex | salary |  supersen | dno |
+|----------+---------+-----------+------------+-------------------------+-----+--------+-----------+-----|
+| John     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston TX | M   |  30000 | 333445555 |   5 |
+| Franklin | Wong    | 333445555 | 1965-12-08 | 638 Voss, Houston TX    | M   |  40000 | 888665555 |   5 |
+| Alicia   | Zelaya  |  99887777 | 1968-01-19 | 3321 Castle, Spring TX  | F   |  25000 | 987654321 |   4 |
+| Jennifer | Wallace | 987654321 | 1941-06-20 | 291 Berry, Bellaire TX  | F   |  43000 | 888665555 |   4 |
+| Ramesh   | Narayan | 666884444 | 1962-09-15 | 975 Fire Oak, Humble TX | M   |  38000 | 333445555 |   5 |
+| Joyce    | English | 453453453 | 1972-07-31 | 5631 Rice, Houston TX   | F   |  25000 | 333445555 |   5 |
+| Ahmad    | Jabbar  | 987987987 | 1969-03-29 | 980 Dallas, Houston TX  | M   |  25000 | 987654321 |   4 |
+| James    | Borg    | 888665555 | 1937-11-10 | 450 Stone, Houston TX   | M   |  55000 |      NULL |   1 |
+
+$\pi_\mathrm{lname, fname, salary}$ (employee)
+| lname   | fname    | salary |
+|---------+----------+--------|
+| Smith   | John     |  30000 |
+| Wong    | Franklin |  40000 |
+| Zelaya  | Alicia   |  25000 |
+| Wallace | Jennifer |  43000 |
+| Narayan | Ramesh   |  38000 |
+| English | Joyce    |  25000 |
+| Jabbar  | Ahmad    |  25000 |
+| Borg    | James    |  55000 |
+
+$\pi_\mathrm{sex, salary}$ (employee)
+| sex | salary |
+|-----+--------|
+| M   |  30000 |
+| M   |  40000 |
+| F   |  25000 |
+| F   |  43000 |
+| M   |  38000 |
+| M   |  25000 |
+| M   |  55000 |
+
+Remarque - Il y a une ligne en moins car deux femmes ont le même salaire ~(sex: F, salary: 25000)~
+
+Propriétés de la projection:
+- La projection contient au plus le nombre de tuples de $R$
+- Un modèle formel avec multi-ensembles (ce qui correspond à associer à chaque élément de l’ensemble sa multiplicité) permet de formaliser SQL, lequel permet les répétitions de lignes avec une requête ~select <attributs> from R~
+- On a toujours $\pi_{\langle \mathrm{liste}_1 \rangle} \big( \pi_{\langle \mathrm{liste}_2 \rangle} (R) \big) = \pi_{\langle \mathrm{liste}_1 \rangle} (R)$ car le membre de gauche est défini si et seulement si $\langle \mathrm{liste}_1 \rangle$ ne contient que des attributs dans $\langle \mathrm{liste}_2 \rangle$
+
+** Renommage et séquence d'opérations
+
+On peut souvent écrire une "requête" en une seule formule
+- Ex.: $\pi_\mathrm{fname, lname, salary}\big(\sigma_{\mathrm{dno} = 5} (employee))$, les prénoms, noms et salaires des employés du département 5
+  
+Il est souvent plus commode de procéder par étape en donnant un nom aux tables intermédiaires.
+- Ex.:
+  $\mathrm{dep5\_emps} \leftarrow \sigma_{\mathrm{dno} = 5}$ (employee)
+  $\mathrm{result} \leftarrow \pi_\mathrm{fname, lname, salary}$ (dep5_emps)
+
+Le renommage des attributs servira non seulement pour la lisibilité mais pour éventuellement permettre des *jointures*
+- Ex.:
+  $\mathrm{dep5\_emps} \leftarrow \sigma_{\mathrm{dno} = 5}$ (employee)
+  $R(\mathrm{First\_name, Last\_name, Salary}) \leftarrow \pi_\mathrm{fname, lname, salary}$ (dep5_emps) - Renomme les colonnes First_name, Last_name et Salary
+
+** Renommage Notations
+
+Soit $R(A_1 : D_1, \dots, A_n : D_n)$ de nom $R$ et d'attributs de noms $A_1, \dots, A_n$
+- La relation où l'attribut $A_i$ est renommé $B_i$ peut s'écrire:
+  \[\alpha_{[A_i : B_i]} (R)\]
+  
+- La notation $\rho$ est souvent utilisé aussi:
+  - $\rho_S(R)$ représente la relation $R$ renommée $S$
+  - $\rho_S(B_1, \dots, B_n) (R)$ représente la relation $R$ renommée $S$ et les attributs $A_1, \dots, A_n$ renommés $B_1, \dots B_n$
+  - $\rho(B_1, \dots, B_n)(R)$ représente la relation $R$ dont seulement les attributs $A_1, \dots, A_n$ sont renommés $B_1, \dots B_n$
+- La notation $\rho$ est utile pour nommer les colonnes en particulier quand certaines sont le résultat de calculs
+
+** Réunion, intersection, différence
+
+Ces trois opérations sont les *opérations ensemblistes standards*
+
+- Pour obtenir le ~ssn~ ("social security number") des employés qui sont du département numéro 5 (~dno = 5~) ou qui supervisent directement un tel employé - On peut faire les opérations suivantes:
+
+\begin{align*}
+  \mathrm{dep5\_emps} & \leftarrow \sigma_{\mathrm{dno} = 5} (\mathrm{employee}) \\
+  \mathrm{result1} & \leftarrow \pi_\mathrm{ssn}(\mathrm{dep5\_emps}) \\
+  \mathrm{result2} & \leftarrow \rho_\mathrm{ssn} \pi_\mathrm{superssn}(\mathrm{dep5\_emps}) \\
+  \mathrm{result} & \leftarrow \mathrm{result1} \cup \mathrm{result2}
+\end{align*}
+
+- Le $\cup$ correspond au ~UNION~ de SQL
+- La différence correspond au ~MINUS~ de Oracle et au ~EXCEPT~ de PostgreSQL
+- Pour que les opérations soient possibles, il faut que les relations aient des types compatibles - Même nombre d'attributs et les domaines des attributs sont les mêmes
+
+Les opérations ensemblistes ont une traduction un peu spéciale en SQL - Il n'est pas possible de faire ~select * from R union S~
+Il faut plutôt faire ceci: ~select * from R union select * from S~
+
+Avec ces contraintes, la requête de l'exemple précédent en SQL donne:
+
+#+begin_src sql
+
+  with dept5_emps as (select * from employee where dno=5),
+      result1 as (select ssn from dep5_emps),
+      result2 as (select superssn as ssn from dep5_emps)
+  select * from result1 union select * from result2
+
+#+end_src
+
+** Produit cartésien
+
+Si $R(A_1, \dots, A_n)$ et $S(B_1, \dots, B_m)$ sont deux relations leur *produit* $R \times S$ est la relation $Q(A_1, \dots, A_n, B_1, \dots, B_m)$ formée à partir de tous les tuples de $n + m$ attributs dont les $n$ premiers sont pris dans $R$ et les $m$ suivants dans $S$
+- S'il y a $n_R$ tuples dans $R$ et $n_S$ tuples dans $S$ $\to$ Il y a au total $n_R \times n_S$ tuples dans le produit - *Produit ensembliste*
+- On peut devoir renommer les attributs en cas d'ambiguité (cas où même nom d'attribut figure dans les deux relations)
+- SQL peut permettre de simplifier les choses en considérant que les noms des attributs de $R \times S$ sont $R.A_1, \dots, R.A_n, S.B_1, \dots, S.B_n$
+- L'opération produit correspond au ~CROSS JOIN~ de SQL
+- En pratique on aura besoin de sous-ensembles de projection de $R \times S$ déterminés par des sélections - C'est ainsi qu'on obtient les *jointures*
+
+** Jointure
+
+La *jointure* $R \Join_C S$ de deux relations $R$ et $S$ avec la condition $C$ est le sous-ensembles du produit cartésien qui satisfait la condition $C$
+- Pour obtenir les noms des gérants de chaque département (avec le nom de leur département), il faut d'abord obtenir leur ~mgrssn~ dans la table ~department~:
+
+| dname          | dnumber |    mgrssn | mgrstartdate |
+|----------------+---------+-----------+--------------|
+| Research       |       5 | 333445555 |   1988-05-22 |
+| Administration |       4 | 987654321 |   1995-01-01 |
+| Headquarters   |       1 | 888665555 |   1981-06-19 |
+  
+La table ~employee~ donne le nom des employés d'un ~ssn~ donné: ~employee(fname, lname, ssn, bdate, address, sex, salary, supeprssn, dno)~
+$\mathrm{dept_mgr} \leftarrow \mathrm{department} \Join_{\mathrm{mgrssn} = \mathrm{ssn}} \mathrm{employee}$
+$\mathrm{result} \leftarrow \pi_\mathrm{dname, lname, fname}(\mathrm{dept\_mgr})$
+
+Requête SQL équivalente:
+
+#+begin_src sql
+
+  select dname, lname, fname from department join employee on (mgrssn = ssn)
+
+#+end_src
+
+*** Équi-jointure et jointure naturelle
+
+Les jointures les plus fréquentes sont celles où la condition est du type ~<attribut>=<constante>~ ou ~<attribut>=<attribut>~ - Elles sont appelées *équi-jointures*
+La *jointure naturelle* est notée simplement avec le symbole $\Join$ sans condition $C$
+- La condition implicite est l'égalité des valeurs des attributs de même nom dans $R$ et $S$
+- Les attributs de la table résultante sont la réunion des attributs de $R$ et de $S$
+Exemple:
+Soit $R(A, B, C)$ et $S(B, C, D, E)$ - $R \Join S$ a comme attributs $A, B, C, D, E$ et contient les tuples $(t_A, t_B, t_C, t_D, t_E)$ tels que $(t_A, t_B, t_C)$ est tuple de $R$ et $(t_B, t_C, t_D, t_E)$ est tuple de $S$
+
+Exemple:
+
+~department~
+| dname          | dnumber |    mgrssn | mgrstartdate |
+|----------------+---------+-----------+--------------|
+| Research       |       5 | 333445555 |   1988-05-22 |
+| Administration |       4 | 987654321 |   1995-01-01 |
+| Headquarters   |       1 | 888665555 |   1981-06-19 |
+
+~dept_locations~
+| dnumber | dlocation |
+|---------+-----------|
+|       1 | Houston   |
+|       4 | Stafford  |
+|       5 | Bellaire  |
+|       5 | Sugarland |
+|       5 | Houston   |
+
+$\mathrm{department} \Join \mathrm{dept\_locations}$
+| dname          | dnumber |    mgrssn | mgrstartdate | dlocation |
+|----------------+---------+-----------+--------------+-----------|
+| Headquarters   |       1 | 888665555 |   1981-06-19 | Houston   |
+| Administration |       4 | 987654321 |   1995-01-01 | Stafford  |
+| Research       |       5 | 333445555 |   1988-05-22 | Bellaire  |
+| Research       |       5 | 333445555 |   1988-05-22 | Sugarland |
+| Research       |       5 | 333445555 |   1988-05-22 | Houston   |
+
+Pour bien profiter de la jointure naturelle, il faut renommer les attributs
+
+** La division
+
+Cette opération sert à répondre à des questions du type "trouver les employés sur tous les projets sur lesquels 'John Smith' travaille"
+Pour $R_1(A_1, \dots, A_f, \dots, A_n)$ et $R_2(A_1, \dots, A_f) \quad (f < n)$
+$R_1 \div R_2 = \big \{(t_{f + 1}, \dots, t_n) \ | \ R_2 \times \{(t_{f + 1}, \dots, t_n)\} \subseteq R_1 \big \}$
+
+Exemple:
+
+Soit $\mathrm{PROJ} = \pi_\mathrm{pno, essn} (\mathrm{works\_on})$
+| pno |      essn |
+|-----+-----------|
+|   1 | 123456789 |
+|   2 | 123456789 |
+|   2 | 333445555 |
+|   3 | 333445555 |
+|  10 | 333445555 |
+|  20 | 333445555 |
+|   1 | 453453453 |
+|   2 | 453453453 |
+|   3 | 666884444 |
+|  20 | 888665555 |
+|  20 | 987654321 |
+|  30 | 987654321 |
+|  10 | 987987987 |
+|  30 | 987987987 |
+|  10 | 999887777 |
+|  30 | 999887777 |
+
+- Le ~ssn~ de John Smith est ~123456789~
+- Les numéros de projets de John Smith sont donc ~1~ et ~2~ ce qui donne la table ~PJS~ suivante
+
+| pno |
+|-----|
+|   1 |
+|   2 |
+
+- $\mathrm{PROJ} \div \mathrm{PJS}$ est la table des ~essn~ qui ont travaillé sur les projets ~1~ et ~2~, donc tels que ~(1, essn)~ et ~(2, essn)~ est dans la table ~PROJ~:
+
+|      essn |
+|-----------|
+| 123456789 |
+| 453453453 |
+
+** Jointures externes
+
+Les *jointures* introduites jusqu'à présent sont dites *internes*
+- Un tuple de $R$ n'a aucun correspondant dans $R \Join_C S$ s'il n'y a pas de tuple de $S$ qui "match"
+- Par exemple, avec $R(A, B, C)$ et $S(B, C, D, E)$, $R \Join S$ a comme attributs $A, B, C, D, E$ et contient les tuples $(t_A, t_B, t_C, t_D, t_E)$ tels que $(t_A, t_B, t_C)$ est tuple de $R$ et $(t_B, t_C, t_D, t_E)$ est tuple de $S$
+- S'il n'y a pas de tuples correspondant dans $S$, il n'y aura aucun $(t_A, t_B, t_C, ?, ?)$ dans $R \Join S$
+- L'opération qui en plus de retourner les éléments de $R \Join S$, retourne aussi les $(t_A, t_B, t_C, \mathtt{NULL}, \mathtt{NULL})$ pour les $(t_A, t_B, t_C)$ sans correspondant dans $S$ est appelée le ~LEFT OUTER JOIN~
+- Si on fait ainsi, mas pour $S$, on parle de ~RIGHT OUTER JOIN~
+- Si on complète des deux côtés, c'est le ~FULL OUTER JOIN~
+
+Exemple
+
+Notons $\Join^L$ le ~LEFT OUTER JOIN~
+- On obtient une table qui indique pour chaque employé le département qu'il dirige, avec ~NULL~ s'il ne dirige rien avec
+  $\mathrm{temp} \leftarrow \mathrm{employee} \Join^L_{\mathrm{ssn} = \mathrm{mgrssn}} \mathrm{department}$
+  $\mathrm{result} \leftarrow \pi_\mathrm{fname, lname, dname}(\mathrm{temp})$
+
+En SQL:
+
+#+begin_src sql
+
+  select fname as "First name", lname as "Last name", dname as "Head of"
+      from employee left outer join department on ssn = mgrssn
+
+#+end_src
+
+| First name | Last name | Head of        |
+|------------+-----------+----------------|
+| John       | Smith     | NULL           |
+| Franklin   | Wong      | Research       |
+| Alicia     | Zelaya    | NULL           |
+| Jennifer   | Wallace   | Administration |
+| Ramesh     | Narayan   | NULL           |
+| ...        | ...       | ...            |
+
+** Fonction d'agrégats et groupements
+
+Les fonctions dites *d'agrégats* opèrent sur une colonne ou des parties d'une colonne - Ce sont la somme, la moyenne, le maximum, le minimum, le nombre d'éléments, etc...
+- Pour partitionner on fixe un ou des attributs de groupement
+- Chacune des valeurs possibles de ces attributs fixe les tuples ayant ces valeurs d'attributs - Ceci donne une *partition*
+
+Exemple:
+
+Choisissons ~dno~ dans la table des employés pour partitionner les tuples selon le département
+Avec la fonction d'agrégation $\mathrm{dno}^\mathcal{A} \ \mathrm{count(ssn)}, \mathrm{average(salary)}$
+$\mathrm{dno}^\mathcal{A} \ \mathrm{count(ssn)}, \mathrm{average(salary)} (\mathrm{employee})$
+- Retourne 3 colonnes:
+  - Une avec chaque numéro de département
+  - Une deuxième avec le décompte du nombre des ~ssn~ pour chaque numéro
+  - Une troisième avec la moyenne des salaires de ce département
+Intérêt à *renommer* les colonnes
+
+Donnons à ~count(ssn)~ le nom ~nb_employes~ et à ~avg(salary)~ le nom ~salaire_moyen~
+La table précédente devient:
+$\rho_{(\mathrm{dno, nb\_employees, salaire\_moyen})} \big(\mathrm{dno}^\mathcal{A} \ \mathrm{count}(\mathrm{ssn}), \mathrm{average(salary)} (\mathrm{employee})\big)$
+
+- Les regroupements se font avec ~group by~ en SQL
+- On obtient la table précédente avec la requête SQL suivante qui donne
+
+#+begin_src sql
+
+  select dno, count(ssn) as nb_employes, avg(salary) as salaire_moyen
+      from employee
+      group by dno;
+
+#+end_src
+
+| dno | nb_employes | salaire_moyen |
+|-----+-------------+---------------|
+|   1 |           1 |       55000.0 |
+|   4 |           3 |       31000.0 |
+|   5 |           4 |       33250.0 |
+
+
+De façon générale si $R_1(A_1, \dots, A_f, \dots, A_n)$ et $R_2(A_1, \dots, A_f) \quad (f < n)$ alors
+$R_1 \div R_2 = \big\{(t_{f + 1}, \dots, t_n) \ | \ R_2 \times \{(t_{f + 1}, \dots, t_n)\} \subseteq R_1 \big\}$
+
+- $R_1 \Join R_2 = \big\{(t_1, \dots, t_f, t_{f + 1}, \dots, t_n) \in R_1 \ | \ (t_1, \dots, t_f) \in R_1 \big\}$
+- $\mathrm{count}_{t_{f + 1}, \dots, t_n}^\mathcal{A}(*) (R_1 \Join R_2)$ donne les $(t_{f + 1}, \dots, t_n, \mathrm{count})$ où $\mathrm{count}$ est le nombre d'éléments $(t_1, \dots, t_f) \in R_1$ t.q. $(t_1, \dots, t_n) \in R_2$
+- Reste à sélectionner ceux pour lesquels ce nombre est égal au nombre d’éléments de $R_2$
+- $\mathrm{count}^\mathcal{A}(∗) (R_2)$ donne une table avec une entrée, le nombre d’éléments de $R_2$
+- Rappel - $R_1(A_1, \dots, A_f, \dots, A_n)$ et $R_2(A_1, \dots, A_f) \quad (f < n)$
+  $R_1 \div R_2 = \big\{(t_{f + 1}, \dots, t_n) \ | \ R_2 \times \{(t_{f + 1}, \dots, t_n)\} \subseteq R_1 \big\}$
+  
+- On peut obtenir $R_1 \div R_2$ comme suit:
+  $\mathrm{tab\_nb\_matches} \leftarrow \mathrm{count}_{t_{f + 1}, \dots, t_n}^\mathcal{A}(*) (R_1 \Join R_2)$
+  $\mathrm{tab\_nb\_R2} \leftarrow \mathrm{count}^\mathcal{A}(*) (R_2)$
+  $\mathrm{result} \leftarrow \pi_{t_{f + 1}, \dots, t_n} (\mathrm{tab\_nb\_matches} \Join \mathrm{tab\_nb\_R2})$
+
+Exemples:
+- Trouver les noms et adresses de tous les employés qui travaillent pour le département "research"
+  $\mathrm{res\_dept\_no} \leftarrow \rho_\mathrm{dno} (\pi_\mathrm{dnumber}(\sigma_{\mathrm{dname} = \mathrm{'Research'}}(\mathrm{department})))$
+  $\mathrm{result} \leftarrow \pi_\mathrm{fname, lname, address} (\mathrm{res\_dept\_no} \Join \mathrm{employee})$
+
+- Donner les noms des gérants (managers) qui ont au moins un dépendant
+  $\mathrm{mgrs} \leftarrow \rho_\mathrm{ssn}(\pi_\mathrm{mgrssn}(\mathrm{department}))$
+  $\mathrm{emps\_with\_deps} \leftarrow \rho_\mathrm{ssn}(\pi_\mathrm{essn}(\mathrm{dependent}))$
+  $\mathrm{mgrs\_with\_deps} \leftarrow \mathrm{mgrs} \cap \mathrm{emps\_with\_deps}$
+  $\mathrm{result} \leftarrow \pi_\mathrm{lname, fname} (\mathrm{mgrs\_with\_deps} \Join \mathrm{employee})$

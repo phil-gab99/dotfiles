@@ -1,0 +1,20 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ 'nil)
+(setq url-cookie-secure-storage
+ '((".reddit.com"
+  [url-cookie "loid" "0000000000i9fm9ffl.2.1641360723914.Z0FBQUFBQmgxUzFUZ3VISVVzUS16MUNyZklMa19yQW9WM2d6U2VKTFpoQmo0V3gzQ296cnNET1dENmdVa1diczdpMXRhVEVQRkU1NXZSX2dISGhEU0VNc1dTSUdGWkNOb2w0QVBqRDJOQ0FYTC0xcXhDTWx5c3VKYUdGRExXSzdBaUtiYVAwa1VFYk4" "Fri, 05 Jan 2024 05:32:03 GMT" "/" ".reddit.com" t]
+  [url-cookie "csv" "2" "Fri Jan 05 05:32:05 2024 GMT" "/" ".reddit.com" t])
+ ("reddit.com"
+  [url-cookie "token_v2" "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEzNjQyMDMsInN1YiI6Ii1PcmRwcHFqLTYwamstVnluUGJZTjFBYmxxb2JrUUEiLCJsb2dnZWRJbiI6ZmFsc2UsInNjb3BlcyI6WyIqIiwiZW1haWwiLCJwaWkiXX0.GdI7BTbVYkoJDiDmH0exnxxn4NKmvPizmp_8KnUb0Ho" "Fri, 05 Jan 2024 05:32:03 GMT" "/" "reddit.com" t]
+  [url-cookie "edgebucket" "eMgxXm6D5LBnFbfo4N" "Fri Jan 05 05:32:04 2024 GMT" "/" "reddit.com" t])
+ (".youtube.com"
+  [url-cookie "VISITOR_INFO1_LIVE" "0JuAkAJP87Q" "Mon, 04-Jul-2022 05:30:47 GMT" "/" ".youtube.com" t]))
+)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:

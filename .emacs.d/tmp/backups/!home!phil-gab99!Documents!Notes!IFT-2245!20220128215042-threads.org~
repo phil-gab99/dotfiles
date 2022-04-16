@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       9fe43426-3f8c-4106-b1d7-e61b37c9e5b7
+:END:
+#+title: ift2245-threads
+#+filetags: :ift2245-toc:
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-01-28 Fri 21:50]
+
+* Contenu
+- [[id:dfef35ec-f393-4d26-abc9-8ea1711c3511][threads-intro]]
+- [[id:a5ad6850-d20d-42e4-908d-98cc9beb8695][threads]]
+- [[id:60916aa4-ce84-4415-a491-38ee855b55c8][librairie-threads]]
+
+  Questions
+  - Attribut ~joignable~
+
+* Résumé
+
+- Les threads peuvent donner plusieurs chemins d’exécution dans un processus
+  
+- Les avantages potentiels des threads sont
+  - Accélération grâce à la parallélisation
+  - De meilleures performances grâce à la spécialisation
+  - La communication est plus facile
+  - Meilleure eﬃcacité de l'utilisation de mémoire
+    
+- Par contre
+  - Il y a plus de responsabilités pour le programmeur et le système peut être plus diﬃcile à débogguer
+  - D'autres éléments du système deviennent plus compliqués, tels que
+    - Gérer les signaux
+    - Questions de scope
+    - Stockage thread-local
+    - La relation entre les ~forks~ et les ~threads~
+
+- Les threads noyaux - 3 modèles: un à un, plusieurs à un, plusieurs à plusieurs
+- Pthreads est la librairie de threads standard sous UNIX qui fournit des mécanismes pour la création, la gestion et l'arrêt des threads

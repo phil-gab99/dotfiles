@@ -1,0 +1,24 @@
+module ColoredGraphs
+
+sig Color {}
+
+sig Element {
+    color: Color
+}
+
+sig AboutColoredGraphs {
+    nodes: set Element,
+    edges: nodes -> nodes
+} {
+    // Symmetric edges relation
+    edges = ~edges
+
+    // No adjacent nodes with same color
+    all x, y : nodes | x in y.edges => x.color != y.color
+}
+
+fun TwoColorable(): AboutColoredGraphs {
+	{G: AboutColoredGraphs | #(G.nodes.color) = 2 &&
+        (all x: Element | x in G.nodes) &&
+        (all x: G.nodes | some x.(G.edges))}
+} run TwoColorable for 10 but 1 AboutColoredGraphs

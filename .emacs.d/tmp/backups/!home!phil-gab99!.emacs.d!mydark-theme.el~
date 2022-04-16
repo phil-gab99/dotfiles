@@ -1,0 +1,39 @@
+(require 'autothemer)
+
+(autothemer-deftheme
+ mydark
+ "My custom dark theme"
+ ((((class color) (min-colors #xFFFFFF))) ;; Concerned with GUI emacs
+
+  (mywhite     "#ffffff")
+  (myblack     "#282C34")
+  (myregionbg  "#595959")
+  (myregionds  "#828997")
+  (myfuncs     "#00bfff")
+  (mykeywords  "#c678dd")
+  (mystrings   "#98c379")
+  (mydocs      "#98f979")
+  (mycomments  "#696969")
+  (mytypes     "#ecbe7b")
+  (myvars      "#ef4c35")
+  (mylink      "#61afef")
+  (myconstants "#eead0e")
+  (mytags      "#00eeee")
+  )
+
+ ((cursor                       (:background mywhite))
+  (default                      (:foreground mywhite :background myblack))
+  (button                       (:foreground mylink :weight 'bold :underline t))
+  (region                       (:background myregionbg :distant-background myregionds))
+  (font-lock-function-name-face (:foreground myfuncs))
+  (font-lock-keyword-face       (:foreground mykeywords))
+  (font-lock-string-face        (:foreground mystrings))
+  (font-lock-doc-face           (:foreground mydocs))
+  (font-lock-comment-face       (:foreground mycomments))
+  (font-lock-type-face          (:foreground mytypes))
+  (font-lock-variable-name-face (:foreground myvars))
+  (font-lock-constant-face      (:foreground myconstants))
+  (font-lock-doc-markup-face    (:foreground mytags))
+ ))
+
+(provide-theme 'mydark)

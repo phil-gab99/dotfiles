@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       c87524e5-424e-45e2-9726-f8dced5610a6
+:END:
+#+title: ift2935-sgbd
+#+date: [2022-01-10 Mon 20:52]
+
+Système de gestion de base de données (SGBD) $\Rightarrow$ C'est un logiciel spécialisé pour la gestion de base de données permettant de:
+- *Définir* la BD
+  - Spécifier les types de données, la structure, contraintes...
+- *Construire* la BD
+  - Stocker les données sur disque
+- *Manipuler* la BD
+  - Récupérer des données stockées (requêtes sur la BD)
+  - Mettre à jour les données
+- *Maintenir/administrer* la BD
+  - Gestion de l'accès aux données (concurrence) et gestion des utilisateurs (droits)
+
+- Langage de définitions des données (LDD, data definition language - DDL)
+  - Permet la définition des types des données de la BD
+  - Structure des données définie à l'aide du LDD
+    
+- Langage de manipulation des données (LMD, data manipulation language - DML)
+  - *Lire* (Sélectionner)
+  - *Ajouter*
+  - *Supprimer*
+  - *Modifier*
+
+Architecture:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2935/20220110205205-sgbd.org_20220110_213412_FFnnfo.png]]
+
+Historique:
+- 1ère génération (années 70) - Modèles hiérarchique et réseaux (travaux de CODASYL)
+  - LMD navigationnel
+- 2ième génération (années 80) - Modèle relationnel (Oracle, Ingres, DB2, SQL server, ...)
+  - LMD non-procédural
+- 3ième génération (années 90)
+  - Extension du relationnel (Oracle 8, DB2 Universal Database, etc.)
+- 4ième génération ?
+  - Internet, les informations non structurées, le multimédia, la découverte des données (entrepôt de données, data mining)

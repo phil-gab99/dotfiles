@@ -1,0 +1,13 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity full_adder_comp is
+  port(A, B: in STD_LOGIC;
+       C_out, S: out STD_LOGIC);
+end full_adder_comp;
+
+architecture synth of full_adder_comp is
+begin
+  C_out <= A and B;
+  S <= A xor B;
+end synth;

@@ -1,0 +1,10 @@
+module AboutProductLines
+
+sig BallPorts {}
+sig Socket {}
+
+sig Component {
+    sockets: set Socket
+    ballPorts: set BallPorts
+    links: sockets -> ballPorts
+}

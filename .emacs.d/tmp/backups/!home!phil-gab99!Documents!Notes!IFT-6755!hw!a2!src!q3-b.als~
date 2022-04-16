@@ -1,0 +1,22 @@
+module KripkeModel
+
+sig Prop {}
+
+sig State {
+    props: set Prop
+}
+
+sig StateMachine {
+    states: set State,
+    init: set states,
+    next: states -> states,
+    final: set states
+} {
+    // Non-empty set of initial states
+    #init > 0
+
+    // Final states are states with no next state
+    all s: states | #(s.^next) = 0 <=> s in final
+}
+
+fun Reaches(S: StateMachine, s: set State)

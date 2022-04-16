@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+/**
+ * Recursive version.
+ */
+int fibRec(int n) {
+  return (n <= 1 ? n : fibRec(n - 1) + fibRec(n - 2));
+}
+
+/**
+ * Iterative version.
+ */
+int fibIt(int n) {
+  if (n <= 1) return n;
+  int prev = 0, curr = 1, tmp;
+  for (int i = 1; i < n; i++) {
+    tmp = prev;
+    prev = curr;
+    curr += tmp;
+  }
+  return curr;
+}

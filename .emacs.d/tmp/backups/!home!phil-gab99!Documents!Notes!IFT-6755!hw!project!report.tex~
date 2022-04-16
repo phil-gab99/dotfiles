@@ -1,0 +1,53 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage[margin=0.75in]{geometry}
+
+% Code snippets
+\usepackage{listings}
+\usepackage{color}
+\usepackage{lstautogobble}  % Fix relative indenting
+
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{bluekeywords}{rgb}{0.13, 0.13, 1}
+\definecolor{greencomments}{rgb}{0, 0.5, 0}
+\definecolor{redstrings}{rgb}{0.9, 0, 0}
+\definecolor{graynumbers}{rgb}{0.5, 0.5, 0.5}
+
+\lstset{frame=tb,
+    framesep=12pt,
+    xleftmargin=12pt,
+    autogobble,
+    columns=fullflexible,
+    language=Lisp,
+    columns=flexible,
+    basicstyle=\ttfamily\footnotesize,
+    numbers=none,
+    emph={declare-const, check-sat, get-model},
+    emphstyle=\color{bluekeywords},
+    emph={[2], Bool},
+    emphstyle={[2]\color{mauve}},
+    numberstyle=\color{graynumbers},
+    keywordstyle=\color{bluekeywords},
+    commentstyle=\color{greencomments},
+    stringstyle=\color{redstrings},
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    captionpos=b,
+    escapeinside={(*@}{@*)}
+}
+
+\title{\textbf{IFT6755 - Homework 1} \\ Propositional Logic}
+\author{Philippe Gabriel - 20120600}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\section*{Phase 1 - Understanding Product Line Modelling}

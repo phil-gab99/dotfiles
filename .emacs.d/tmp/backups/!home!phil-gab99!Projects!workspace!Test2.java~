@@ -1,0 +1,22 @@
+import java.util.Map;
+import java.util.HashMap;
+
+public class Test2 {
+    public static void main(String[] args) {
+        String input1 = "12321"; // 2
+
+        String input2 = "12";    // 0
+
+        System.out.println(numPairs(input1));
+        System.out.println(numPairs(input2));
+    }
+
+    public static int numPairs(String in) {
+        int pairs = 0; // 1
+        Map<Character, Integer> seenSocks = new HashMap<>();
+        for (char c : in) { // in.length
+            
+        }
+        // n^2
+    }
+}

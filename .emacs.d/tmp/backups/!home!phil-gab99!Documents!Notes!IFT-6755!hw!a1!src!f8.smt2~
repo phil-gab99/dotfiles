@@ -1,0 +1,12 @@
+;; f8.smt2
+
+(declare-const p Bool)
+(declare-const q Bool)
+(declare-const s Bool)
+(declare-const t Bool)
+
+(assert (=> p q))
+(assert (=> s t))
+
+;; Negation of conclusion
+(assert (not (=> (or p s) (and q t))))

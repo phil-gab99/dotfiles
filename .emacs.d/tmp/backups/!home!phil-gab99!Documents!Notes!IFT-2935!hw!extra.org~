@@ -1,0 +1,11 @@
+#+begin_src sql
+
+  -- a)
+  WITH med AS (SELECT numsecsoc, codehopital
+               FROM medecin NATURAL JOIN consulter
+               WHERE specialitemedecin = 'gynecologie')
+  SELECT nompatient, nomhopital
+  FROM patient NATURAL JOIN hopital NATURAL JOIN med;
+
+#+end_src
+

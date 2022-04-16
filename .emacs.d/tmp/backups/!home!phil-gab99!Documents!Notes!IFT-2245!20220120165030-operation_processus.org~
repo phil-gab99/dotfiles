@@ -1,0 +1,156 @@
+:PROPERTIES:
+:ID:       10ed5bad-c8d4-4ac4-b842-b96ba32c64d0
+:END:
+#+title: ift2245-operation-processus
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-20 Thu 16:50]
+
+* Création des Processus
+
+- Les *processus parents* créent des *processus enfants* qui, à leur tour, créent d'autres *processus*, formant un *arbre de processus*
+- Généralement, un processus est identifié et géré via un *identifiant de processus* ~pid~
+
+Options pour partager des ressources (i.e. fichiers ouverts, mémoire allouée):
+1. *Parent* et *enfants* partagent *toutes les ressources*
+2. Les *enfants* partagent un *sous-ensemble des ressources parentales*
+3. *Parent* et *enfant* ne partagent *aucune ressource*
+
+Options pour exécution:
+1. Le *parent* et les *enfants* s'exécutent simultanément (*concurremment*)
+2. *Parent* attend jusqu'à ce que les enfants se terminent
+
+Arbre de processus en Linux:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220120164824-ordonnancement_processus.org_20220121_015023_cocQgd.png]]
+
+- Le processus ~init~ est à la racine, est exécuté en tout temps et a un ~pid~ de 1
+
+Possibilités *d'espace d’adressage*:
+- L'enfant est un *copie* du parent
+- L'enfant est un *nouveau* processus
+
+Exemple POSIX:
+- ~fork()~ - Appel système pour créer un nouveau processus
+- ~exec()~ - Appel système utilisé après ~fork()~ pour remplacer l'espace mémoire du processus par un nouveau programme
+
+  [[/home/phil-gab99/Documents/Notes/IFT-2245/20220120165030-operation_processus.org_20220121_015624_EkTlwg.png]]
+
+- Le parent, après l'appel à ~fork()~, a une copie exact de lui-même
+  - Le SE prend le PCB du parent est en fait une copie exacte (deep copy)
+- L'enfant peut choisir de faire un appel à ~exec()~ pour remplacer tout son espace d'adressage avec un nouveau processus chargé du disque dur par exemple
+- Le parent peut décider d'attendre que l'exécution de l'enfant se termine à l'aide de ~wait~
+- Suite à l'appel ~exit()~ de l'enfant, le parent continue son exécution.
+Si l'enfant n'appelle pas (via ~exec()~) un autre programme, une copie du parent continue son exécution dans son propre espace (variables, etc..)
+
+** Unix ~fork()~
+
+#+begin_src c :tangle ~/Projects/workspace/c/newproc-posic.c
+
+  // newproc-posix.c
+
+  #include <stdio.h>
+  #include <unistd.h>
+  #include <sys/types.h>
+  #include <sys/wait.h>
+
+  int main() {
+      pid_t pid;
+
+      // fork a child process
+      pid = fork();
+
+      // error occurred
+      if (pid < 0) {
+          fprintf(stderr, "Fork Failed\n");
+          return 1;
+      }
+      // child process
+      else if (pid == 0)
+          printf("I am the child %d\n", pid);
+
+      // parent process
+      // parent will wait for the child to complete
+      else {
+          printf("I am the parent %d\n", pid);
+          // Pas de contrôle sur l'ordre d'exécution entre le parent et l'enfant
+          // C'est aléatoire
+          wait(NULL);
+          printf("Child Complete\n");
+      }
+
+      printf("After the if \n");
+      return 0;
+  }
+
+#+end_src
+
+- La fonction ~fork()~ est utiliser pour créer des nouveau processus
+  - Garder en tête le fait qu'à partir de l'appel à ~fork()~, il y a deux instances de programmes qui vont exécuter le bloc ~if~ - Deux exécutions de ce bloc
+  - L'enfant fait un copie de la mémoire du parent
+  - Le parent et l'enfant continuent d’exécuter dans leur espace
+- ~fork()~ retourne des valeurs différentes selon si la fontion est appelée par l'enfant ou le parent - Utile pour brancher l'exécution:
+  - Enfant $\to$ Retourne 0
+  - Parent $\to$ Retourne le ~pid~ de l'enfant
+    
+Un processus faisant plusieurs ~fork()~ est un processus ~shell~ par exemple
+
+** Unix ~exec*()~
+
+Remplace l’image d’un processus avec une nouvelle image en mémoire
+- Dans C - ça cherche une ligne come ceci: ~int main (int argc, char* argv[])~
+
+Différentes versions de ~exec()~ - Note que l'astérisque ici dénote que ça peut être tout autre caractère valide de la fonction, i.e. on discute ici de chaque lettre individuelle
+- ~execl*()~ - Passe les arguments dans une liste:
+  ~int execl(const char* path, const char* arg0, .../*, (char*) 0 */);~
+
+- ~execv*()~ - Passe les arguments dans une “array”:
+  ~int execv(const char* path, char* const argv[]);~
+  
+- ~exec*e~ - Une autre array va être inclus comme variable d’environment
+  
+- ~exec*p~ - Utilise le variable environment ~$PATH~ pour chercher l’executable
+
+Exemple:
+
+#+begin_src c :tangle ~/Projects/workspace/c/execproc-posix.c
+
+  #include <stdio.h>
+  #include <unistd.h>
+  #include <sys/types.h>
+  #include <sys/wait.h>
+
+  int main() {
+      pid_t pid;
+
+      // fork a child process
+      pid = fork();
+
+      // error occurred
+      if (pid < 0) {
+          fprintf(stderr, "Fork Failed\n");
+          return 1;
+      }
+      // child process
+      else if (pid == 0) {
+          printf("I am the child %d\n", pid);
+          execlp("ls", "ls", NULL); // Appel à exec
+      }
+      // parent process
+      // parent will wait for the child to complete
+      else {
+          printf("I am the parent %d\n", pid);
+          // Pas de contrôle sur l'ordre d'exécution entre le parent et l'enfant
+          // C'est aléatoire
+          wait(NULL);
+          printf("Child Complete\n");
+      }
+
+      printf("After the if \n");
+      return 0;
+  }
+
+#+end_src
+
+** Unix ~wait()~
+
+

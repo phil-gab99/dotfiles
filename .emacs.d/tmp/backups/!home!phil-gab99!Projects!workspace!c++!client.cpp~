@@ -1,0 +1,115 @@
+#include <iostream>
+#include <list>
+#include <string>
+
+#include "client.h"
+#include "compte.h"
+
+using namespace std;
+
+/**
+ * Defines the set of operations of the client class as well as tests the
+ * implementation.
+ *
+ * 2021-12-09
+ * Philippe Gabriel
+ * Étienne Ameye 
+ */
+
+
+// client definitions
+client::client(int num, string lastName, string firstName,
+               list<comptBanq*> listComptes) :
+    num(num), lastName(lastName), firstName(firstName),
+    listComptes(listComptes) {}
+
+void client::afficheInfosClient() const {
+    cout << "\n************************************************************\n";
+    cout << "Client\n\tNuméro: " << num << "\n\tNom: " << lastName
+         << "\n\tPrénom: " << firstName << "\n\tComptes:\n";
+    for (list<comptBanq*>::const_iterator it = listComptes.begin();
+         it != listComptes.end(); it++) (*it)->displayAccountInfo();
+}
+
+
+/**
+ * Tests the application.
+ */
+int main() {
+
+	cout << "Debut du porgramme" << endl;
+
+	list<comptBanq*> a_accounts;
+	comptCheque aCheque(1);
+    a_accounts.push_back(&aCheque);
+    client a(111, "Aa", "aa", a_accounts);
+
+	list<comptBanq*> b_accounts;
+	comptEpargne bEpargne(2);
+	b_accounts.push_back(&bEpargne);
+	client b(222, "Bb", "bb", b_accounts);
+
+	list<comptBanq*> c_accounts;
+	comptCheque cCheque(31, 100, 200, 10, 10);
+	comptEpargne cEpargne(32, 100, 5);
+	c_accounts.push_back(&cCheque);
+	c_accounts.push_back(&cEpargne);
+	client c(333, "Cc", "cc", c_accounts);
+
+	list<comptBanq*> d_accounts;
+	comptEpargne dEpargne1(41);
+	comptEpargne dEpargne2(42);
+	d_accounts.push_back(&dEpargne1);
+	d_accounts.push_back(&dEpargne2);
+	client d(444, "Dd", "dd", d_accounts);
+
+	list<comptBanq*> e_accounts;
+	comptCheque eCheque1(51, 1000, 100, 5, 5);
+	comptCheque eCheque2(52);
+	e_accounts.push_back(&eCheque1);
+	e_accounts.push_back(&eCheque2);
+	client e(555, "Ee", "ee", e_accounts);
+
+	list<client> alphabet = {a, b, c, d, e};
+
+	list<client>::iterator it_client;
+
+	cout << "Comptes clients avant operations \n\n";
+	for(it_client = alphabet.begin(); it_client != alphabet.end(); it_client++)
+        (*it_client).afficheInfosClient();
+
+    //set num
+    list<comptBanq*>::iterator it_comptes;
+    it_comptes = a.listComptes.begin();
+    (*it_comptes)->setNum(123);
+
+    //depot retrait
+    it_comptes = b.listComptes.begin();
+    (*it_comptes)->depotRetrait(-10);
+    (*it_comptes)->depotRetrait(20);
+    (*it_comptes)->depotRetrait(-5);
+
+    it_comptes = c.listComptes.begin();
+    (*it_comptes) -> depotRetrait(-100);
+    (*it_comptes) -> depotRetrait(100);
+
+    //set interets
+    it_comptes = d.listComptes.begin();
+    (*it_comptes++);
+    static_cast<comptEpargne*> (*it_comptes)->setInterets(3);
+
+    //set marge, frais
+    it_comptes = e.listComptes.begin();
+    (*it_comptes++);
+    static_cast<comptCheque*> (*it_comptes)->setSoldeMin(200);
+    static_cast<comptCheque*> (*it_comptes)->setFrais(100, 100);
+
+    cout << "\nComptes clients apres operations \n";
+
+    for(it_client = alphabet.begin(); it_client != alphabet.end(); it_client++)
+        (*it_client).afficheInfosClient();
+
+    cout << "Fin du porgramme" << endl;
+
+	return 0;
+}

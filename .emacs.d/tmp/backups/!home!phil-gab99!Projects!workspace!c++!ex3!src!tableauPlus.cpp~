@@ -1,0 +1,217 @@
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+
+#include "tableauPlus.h"
+
+using namespace std;
+
+/**
+ * Defines the set of operations of the generic container class as well as tests
+ * the implementation.
+ *
+ * 2021-12-09
+ * Philippe Gabriel
+ * �tienne Ameye
+ */
+
+/**
+ * Ends the program after displaying appropriate error message.
+ *
+ * @param message Error message to display
+ */
+void terminate(string message) {
+    cout << message << endl;
+    exit(EXIT_FAILURE);
+}
+
+// generic container definitions
+template <class Type> tableauPlus<Type>::tableauPlus(int debut, int fin) {
+    if (fin < debut) terminate("Index incoh�rents - debut > fin");
+    container = new Type[(this->fin = fin) - (this->debut = debut)];
+}
+
+template <class Type> tableauPlus<Type>::tableauPlus(int fin) :
+    tableauPlus(0, fin) {}
+
+template <class Type> tableauPlus<Type>::tableauPlus(const tableauPlus& tab) {
+    int length;
+    container = new Type[length = (fin = tab.fin) - (debut = tab.debut)];
+    for (int i = 0; i < length; i++) container[i] = tab.container[i];
+}
+
+template <class Type> tableauPlus<Type>::~tableauPlus() {
+    delete [] container;
+}
+
+template <class Type> int tableauPlus<Type>::getDebut() const {
+    return debut;
+}
+
+template <class Type> int tableauPlus<Type>::getFin() const {
+    return fin;
+}
+
+template <class Type> Type& tableauPlus<Type>::operator [](int i)  const {
+    if (i < debut || i >= fin) terminate("Index hors limite");
+    return container[i - debut];
+}
+
+template <class Type> bool tableauPlus<Type>::operator ==(tableauPlus tab)
+    const {
+    if (debut != tab.debut || fin != tab.fin) return false;
+    for (int i = 0, length = fin - debut; i < length; i++)
+        if (container[i] != tab.container[i]) return false;
+    return true;
+}
+
+template <class Type> bool tableauPlus<Type>::operator !=(tableauPlus tab)
+    const {
+    return !(*this == tab);
+}
+
+template <class Type> template <class T2> tableauPlus<Type>::operator
+tableauPlus<T2>() const {
+    tableauPlus<T2> castedTab(debut, fin);
+    for (int i = 0, length = fin - debut; i < length; i++)
+        castedTab[debut + i] = (T2)container[i];
+    return castedTab;
+}
+
+/**
+ * Tests the implementation
+ */
+int main() {
+	cout << "Debut du programme" << endl;
+
+	tableauPlus<bool> tabBool1(3);
+	tableauPlus<bool> tabBool2(0, 3);
+	tableauPlus<bool> tabBool3(1, 4);
+    
+	cout << "tabBool1(3) == tabBool2(0, 3): " << (tabBool1 == tabBool2) << "\n";
+   	cout << "tabBool1(3) != tabBool2(0, 3): " << (tabBool1 != tabBool2) << "\n";
+	cout << "tabBool1(3) == tabBool3(1, 4): " << (tabBool1 == tabBool3) << "\n";
+	cout << "tabBool1(3) != tabBool3(1, 4): " << (tabBool1 != tabBool3) << "\n";
+	cout << "\n";
+
+	tableauPlus<char> tabChar1(-2, 3);
+	tableauPlus<char> tabChar2(-3, 3);
+
+    cout << "tabChar1(-2, 3) == tabChar2(-3, 3): " << (tabChar1 == tabChar2) << "\n";
+	cout << "tabChar1(-2, 3) != tabChar2(-3, 3): " << (tabChar1 != tabChar2) << "\n";
+	cout << "\n";
+
+    tableauPlus<double> tabDouble1(-2, 3);
+	tableauPlus<double> tabDouble2(-2, 4);
+
+    cout << "tabDouble1(-2, 3) == tabDouble2(-2, 4): " << (tabDouble1 == tabDouble2) << "\n";
+	cout << "tabDouble1(-2, 3) != tabDouble2(-2, 4): " << (tabDouble1 != tabDouble2) << "\n";
+	cout << "\n";
+
+
+    tableauPlus<int> tabInt1(-4, -1);
+    tableauPlus<int> tabInt2(-4, -1);
+    tableauPlus<int> tabInt3(-4, -1);
+    tableauPlus<double> tabDouble3(-4, -1);
+    tableauPlus<short> tabShort(-4, -1);
+
+
+
+	tabInt1[-4] = -1;
+	tabInt1[-3] = 12;
+	tabInt1[-2] = 123;
+
+
+    tabInt2[-4] = -1;
+	tabInt2[-3] = 12;
+	tabInt2[-2] = 123;
+
+
+    tabInt3[-4] = -1;
+	tabInt3[-3] = 12;
+	tabInt3[-2] = 1234;
+
+    tabDouble3[-4] = -1;
+	tabDouble3[-3] = 12;
+	tabDouble3[-2] = 123;
+
+    tabShort[-4] = -1;
+	tabShort[-3] = 12;
+	tabShort[-2] = 123;
+
+	int i;
+
+	for(i = tabShort.getDebut(); i <= tabShort.getFin(); i++)
+	{
+	    cout << "tabInt1[" << i <<"]: " << tabInt1[i] << "\t";
+	    cout << "tabInt2[" << i <<"]: " << tabInt2[i] << "\t";
+	    cout << "tabInt3[" << i <<"]: " << tabInt3[i] << "\n";
+	}
+
+    cout << "\n";
+
+    for(i = -4; i < -1; i++)
+	{
+	    cout << "tabShort[" << i <<"]: " << tabShort[i] << "\t";
+	    cout << "tabDouble3[" << i <<"]: " << tabDouble3[i] << "\n";
+
+	}
+
+	cout << "\n";
+
+    cout << "tabIntl == tabInt2: " << (tabInt1 == tabInt2) << "\n";
+	cout << "tabIntl != tabInt2: " << (tabInt1 != tabInt2) << "\n";
+	cout << "\n";
+
+
+    cout << "tabIntl == tabInt3: " << (tabInt1 == tabInt3) << "\n";
+	cout << "tabIntl != tabInt3: " << (tabInt1 != tabInt3) << "\n";
+	cout << "\n";
+
+	cout << "tabIntl == tabDouble3: " << (tabInt1 == tabDouble3) << "\n";
+    cout << "tabIntl != tabDouble3: " << (tabInt1 != tabDouble3) << "\n\n";
+
+    cout << "tabIntl == tabShort: " << (tabInt1 == tabShort) << "\n";
+    cout << "tabIntl != tabShort: " << (tabInt1 != tabShort) << "\n\n";
+
+    cout << "tabDouble3 == tabShort: " << (tabDouble3 == tabShort) << "\n";
+    cout << "tabDouble3 != tabShort: " << (tabDouble3 != tabShort) << "\n\n";
+
+    tableauPlus<int> tabInt4(3);
+    tableauPlus<char> tabChar3(3);
+
+
+    cout << "tabInt4 == tabChar3: " << (tabInt4 == tabChar3) << "\n";
+    cout << "tabInt4 != tabChar3: " << (tabInt4 != tabChar3) << "\n\n";
+
+	cout << "Si on accede a tabChar1[0]\n";
+	tabChar1[0];
+//	cout << "\nSi on accede a tabInt3[-1]\n";
+//	tabInt3[-1];
+
+	cout << "Fin du programme" << endl;
+
+	return 0;
+
+}
+
+/**
+ * Tests:
+ *
+ * Debut du programme
+ * tabBool1(3) == tabBool2(0, 3): 1
+ * tabBool1(3) != tabBool2(0, 3): 0
+ * tabBool1(3) == tabBool3(1, 4): 0
+ * tabBool1(3) != tabBool3(1, 4): 1
+ * 
+ * tabChar1(-2, 3) == tabChar2(-3, 3): 0
+ * tabChar1(-2, 3) != tabChar2(-3, 3): 1
+ * 
+ * tabDouble1(-2, 3) == tabDouble2(-2, 4): 0
+ * tabDouble1(-2, 3) != tabDouble2(-2, 4): 1
+ * 
+ * tabInt1[-4]: -1	tabInt2[-4]: -1	tabInt3[-4]: -1
+ * tabInt1[-3]: 12	tabInt2[-3]: 12	tabInt3[-3]: 12
+ * tabInt1[-2]: 123	tabInt2[-2]: 123	tabInt3[-2]: 1234
+ * tabInt1[-1]: Index hors limite
+ */

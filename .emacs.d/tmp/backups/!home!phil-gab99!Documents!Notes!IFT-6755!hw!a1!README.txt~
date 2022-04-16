@@ -1,0 +1,6 @@
+The solutions for the different parts of the assignment can all be viewed in the
+LaTeX report named `report.pdf`. For specifically viewing some of the source
+files used in parts 2 and 3 of the work, refer to the `src/` directory
+containing 4 `.dimacs` files, containing the formulas from part 2 in DIMACS
+format, and 12 `.smt2` files, containing the formulas from part 3 in SMT-LIB
+format. These source files have also been included in the report.

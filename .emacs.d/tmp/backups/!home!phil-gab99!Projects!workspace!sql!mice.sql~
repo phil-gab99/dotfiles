@@ -1,0 +1,81 @@
+BEGIN TRANSACTION;
+DROP SCHEMA IF EXISTS souris CASCADE;
+CREATE SCHEMA souris;
+SET SEARCH_PATH TO souris;
+
+CREATE TABLE Souris(
+    nom TEXT UNIQUE,
+    age INT,
+    poids INT
+);
+
+CREATE TABLE Recolteur(
+    employe INT UNIQUE,
+    nom TEXT,
+    salaire INT,
+    anciennete INT
+);
+
+CREATE TABLE Fromage(
+    id INT PRIMARY KEY,
+    employe INT,
+    type TEXT,
+    FOREIGN KEY (employe) REFERENCES Recolteur(employe)
+);
+
+CREATE TABLE Manger(
+    nom TEXT,
+    id INT,
+    FOREIGN KEY (nom) REFERENCES Souris(nom),
+    FOREIGN KEY (id) REFERENCES Fromage(id)
+);
+
+INSERT INTO Souris(nom, age, poids)
+VALUES ('nom1', 10, 40),
+       ('nom2', 5, 32),
+       ('nom3', 25, 50);
+
+INSERT INTO Recolteur(employe, nom, salaire, anciennete)
+VALUES (1, 'nom1', 12, 1),
+       (2, 'nom2', 2, 1),
+       (3, 'nom3', 20, 10);
+
+INSERT INTO Fromage(id, employe, type)
+VALUES (1, 1, 'f1'),
+       (2, 3, 'f2'),
+       (3, 3, 'Crottin de Chavignol');
+
+INSERT INTO Manger(nom, id)
+VALUES ('nom2', 1),
+       ('nom2', 2),
+       ('nom3', 3);
+
+-- WITH r1 AS (SELECT nom, COUNT(id) AS nb_fromages
+--             FROM Recolteur LEFT OUTER JOIN Fromage USING (employe)
+--             GROUP BY nom),
+--      r2 AS (SELECT MIN(nb_fromages) AS min_fromages
+--             FROM r1)
+-- SELECT nom
+-- FROM r1 JOIN r2 ON (nb_fromages = min_fromages);
+
+-- SELECT nom
+-- FROM Souris NATURAL JOIN Recolteur
+-- WHERE age > 5 AND anciennete > 3 AND salaire >= 10;
+
+-- WITH r1 AS (SELECT id, employe
+--             FROM Fromage
+--             WHERE type = 'Crottin de Chavignol'),
+--      r2 AS (SELECT nom, id
+--             FROM r1 NATURAL JOIN Recolteur)
+-- SELECT id
+-- FROM r2 NATURAL JOIN Manger;
+
+WITH r1 AS (SELECT nom
+            FROM Souris
+            WHERE poids > 20)
+SELECT nom
+FROM r1 NATURAL JOIN Manger
+GROUP BY nom
+HAVING (COUNT(id) > 1);
+
+ROLLBACK;

@@ -1,0 +1,148 @@
+#!/bin/bash
+
+# Step 1 - Input
+HEAT=false
+DRY=false
+DELAY=false
+
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help)
+            echo "Model checking product lines script"
+            echo
+            echo "./modelcheck.sh [options]"
+            echo
+            echo "options:"
+            echo "-h, --help                show this help message and exit"
+            echo "-t, --heat                select the 'heat' feature"
+            echo "-d, --dry                 select the 'dry' feature"
+            echo "-l, --delay               select the 'delay' feature"
+            exit 0;;
+        -t|--heat)
+            shift
+            HEAT=true;;
+        -d|--dry)
+            shift
+            DRY=true;;
+        -l|--delay)
+            shift
+            DELAY=true;;
+        *)
+            break;;
+    esac
+done
+
+# Step 2 - Generate component diagram
+# Base code
+echo "module AboutProductLines" > test.als 
+echo >> test.als 
+echo "abstract sig Feature {}" >> test.als 
+echo >> test.als 
+echo "abstract sig BallPort {} {" >> test.als 
+echo "    some c: Component | this in c.ballPorts" >> test.als 
+echo "}" >> test.als 
+echo >> test.als
+echo "abstract sig Socket {} {" >> test.als
+echo "    some c: Component | this in c.sockets" >> test.als
+echo "}" >> test.als
+echo >> test.als
+echo "abstract sig Component {" >> test.als
+echo "    sockets: set Socket," >> test.als
+echo "    ballPorts: set BallPort" >> test.als
+echo "} {" >> test.als
+echo "    all c: Component |" >> test.als
+echo "        this != c => (no c.@sockets & sockets) && (no c.@ballPorts & ballPorts)" >> test.als
+echo "}" >> test.als
+echo >> test.als
+echo "abstract sig ComponentDiagram {" >> test.als
+echo "    components: set Component," >> test.als
+echo "    delegLinks: Socket lone->lone BallPort" >> test.als
+echo "} {" >> test.als
+echo "    all c1, c2: components |" >> test.als
+echo "        some (c1.sockets.delegLinks & c2.ballPorts) => c1 != c2" >> test.als
+echo "} " >> test.als
+echo >> test.als
+echo "one sig Wash, Heat, Delay, Dry extends Feature {}" >> test.als
+echo >> test.als
+echo "lone sig dpi, hpi, tpi, tdpi extends BallPort {} {" >> test.als
+echo "    Heat in SPLWashingMachine.activeFeatures" >> test.als
+echo "        implies dpi in Heater.ballPorts" >> test.als
+echo "        else no dpi" >> test.als
+echo >> test.als
+echo "    Dry in SPLWashingMachine.activeFeatures" >> test.als
+echo "        implies (hpi in Dryer.ballPorts and tdpi in Timer.ballPorts)" >> test.als
+echo "        else (no hpi and no tdpi)" >> test.als
+echo >> test.als
+echo "    Delay in SPLWashingMachine.activeFeatures" >> test.als
+echo "        implies tpi in Timer.ballPorts" >> test.als
+echo "        else no tpi" >> test.als
+echo "}" >> test.als
+echo >> test.als
+echo "lone sig dri, hri, tri, tdri extends Socket {} {" >> test.als
+echo "    Heat in SPLWashingMachine.activeFeatures" >> test.als
+echo "        implies dri in MainController.sockets" >> test.als
+echo "        else no dri" >> test.als
+echo >> test.als
+echo "    Dry in SPLWashingMachine.activeFeatures" >> test.als
+echo "        implies (hri in MainController.sockets and tdri in Dryer.sockets)" >> test.als
+echo "        else no hri and no tdri" >> test.als
+echo >> test.als
+echo "    Delay in SPLWashingMachine.activeFeatures" >> test.als
+echo "        implies tri in MainController.sockets" >> test.als
+echo "        else no tri" >> test.als
+echo "}" >> test.als
+echo >> test.als
+echo "one sig MainController, Heater, Timer, Dryer extends Component {}" >> test.als
+echo >> test.als
+echo "one sig SPLWashingMachine extends ComponentDiagram {" >> test.als
+echo "    activeFeatures: set Feature," >> test.als
+echo "    cd, ch, ct, dt: delegLinks" >> test.als
+echo "} {" >> test.als
+echo "    // Constraint on relations" >> test.als
+echo "    #cd <= 1" >> test.als
+echo "    #ch <= 1" >> test.als
+echo "    #ct <= 1" >> test.als
+echo "    #dt <= 1" >> test.als
+echo >> test.als
+echo "    // Feature Model constraints" >> test.als
+echo "    Wash in activeFeatures" >> test.als
+echo "    not (Delay in activeFeatures and Heat in activeFeatures)" >> test.als
+echo "    Dry in activeFeatures or Dry not in activeFeatures" >> test.als
+echo >> test.als
+echo "    // Domain Model constraints" >> test.als
+echo "    #cd = 1 => MainController + Heater in components and {dri -> dpi} = cd" >> test.als
+echo "    #ch = 1 => MainController + Dryer in components and {hri -> hpi} = ch" >> test.als
+echo "    #ct = 1 => MainController + Timer in components and {tri -> tpi} = ct" >> test.als
+echo "    #dt = 1 => Dryer + Timer in components and {tdri -> tdpi} = dt" >> test.als
+echo >> test.als
+echo "    // Presence Conditions - Feature Mapping" >> test.als
+echo "    Wash in activeFeatures <=> MainController in components" >> test.als
+echo >> test.als
+echo "    Heat in activeFeatures <=> #cd = 1" >> test.als
+echo "    Heat in activeFeatures <=> Heater in components" >> test.als
+echo >> test.als
+echo "    Dry in activeFeatures <=> #ch = 1" >> test.als
+echo "    Dry in activeFeatures <=> #dt = 1" >> test.als
+echo "    Dry in activeFeatures <=> Dryer in components" >> test.als
+echo >> test.als
+echo "    Delay in activeFeatures <=> #ct = 1" >> test.als
+echo >> test.als
+echo "    Dry in activeFeatures or Delay in activeFeatures <=> Timer in components" >> test.als
+echo "}" >> test.als
+echo >> test.als
+
+# Activated features
+echo "pred WashingMachineModel(W: SPLWashingMachine) {" >> test.als
+if $HEAT; then echo "    Heat in W.activeFeatures" >> test.als
+else echo "    Heat not in W.activeFeatures" >> test.als
+fi
+
+if $DRY; then echo "    Dry in W.activeFeatures" >> test.als
+else echo "    Dry not in W.activeFeatures" >> test.als
+fi
+
+if $DELAY; then echo "    Delay in W.activeFeatures" >> test.als
+else echo "    Delay not in W.activeFeatures" >> test.als
+fi
+
+echo "} run WashingMachineModel for 1" >> test.als

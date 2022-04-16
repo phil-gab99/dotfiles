@@ -1,0 +1,17 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity myfunc is
+  port(A3, A2, A1, A0: in std_logic;
+       Y3, Y2, Y1, Y0: out std_logic);
+end myfunc;
+
+architecture synth of myfunc is
+  type state is (A, B, C, D, E);
+  signal current: state;
+begin
+  Y3 <= A2 or A1;
+  
+end synth;
+
+

@@ -1,0 +1,337 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{logicproof}
+\usepackage{tikz}
+
+% Code snippets
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+    language=python,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    emph={declare-const},
+    emphstyle=\color{blue},
+    emph={[2], Bool},
+    emphstyle={[2]\color{mauve}},
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2
+}
+
+\title{\textbf{IFT6755 - Homework 1} \\ Propositional Logic}
+\author{Philippe Gabriel - 20120600}
+
+\begin{document}
+
+\maketitle
+
+\section{Part 1}
+
+Solve the following exercises from the book (Huth \& Ryan, Logic in Computer
+Science, Second Edition):
+
+\begin{enumerate}
+\item Page 78 1.1.1
+
+Use $\lnot$, $\to$, $\land$ and $\lor$ to express the following declarative
+sentences in propositional logic; in each case state what your respective
+propositional atoms $p$, $q$, etc. mean
+
+  \begin{itemize}
+  \item[a)] If the sun shines today, then it won't shine tomorrow. \\
+    $p$: The sun shines today \\
+    $q$: The sun will shine tomorrow
+    \[p \to \lnot q\] \\
+
+  \item[d)] If a request occurs, then either it will eventually be acknowledged,
+    or the requesting process won’t ever be able to make progress. \\
+    $p$: A request occurs \\
+    $q$: The request is acknowledged \\
+    $r$: The requesting process will be able to make progress
+    \[p \to (q \lor r)\] \\
+
+  \item[i)] If Dick met Jane yesterday, they had a cup of coﬀee together, or
+    they took a walk in the park. \\
+    $p$: Dick met Jane yesterday \\
+    $q$: Dick and Jane had a cup of coffee together \\
+    $r$: Dick and Jane took a walk in the park
+    \[p \to (q \lor r)\] \\
+  \end{itemize}
+
+  \pagebreak
+
+\item Page 78 1.2.1 \\
+  Prove the validity of the following sequents:
+  \begin{itemize}
+  \item[c)] $(p \land q) \land r \vdash p \land (q \land r)$ \\
+    \begin{logicproof}{0}
+      (p \land q) \land r & premise \\
+      p \land q & $\land e_1 \ 1$ \\
+      r & $\land e_2 \ 1$ \\
+      p & $\land e_1 \ 2$ \\
+      q & $\land e_2 \ 2$ \\
+      q \land r & $\land i \ 5, 3$ \\
+      p \land (q \land r) & $\land i \ 4, 6$
+    \end{logicproof}
+
+  \item[f)] $\vdash (p \land q) \to p$ \\
+    \begin{logicproof}{1}
+      \begin{subproof}
+        p \land q & assumption \\
+        p & $\land e_1 \ 1$
+      \end{subproof}
+      (p \land q) \to p & $\to i \ 1 \textrm - 2$
+    \end{logicproof}
+
+  \item[r)] $p \to q \land r \vdash (p \to q) \land (p \to r)$ \\
+    \begin{logicproof}{1}
+      p \to q \land r & premise \\
+      \begin{subproof}
+        p & assumption \\
+        p \to q \land r & copy 1 \\
+        q \land r & $\to e \ 2, 3$ \\
+        q & $\land e_1 \ 4 $
+      \end{subproof}
+      p \to q & $\to i \ 2 \textrm - 5$ \\
+      \begin{subproof}
+        p & assumption \\
+        p \to q \land r & copy 1 \\
+        q \land r & $\to e \ 7, 8$ \\
+        r & $\land e_2 \ 9$
+      \end{subproof}
+      p \to r & $\to i \ 7 \textrm - 10$ \\
+      (p \to q) \land (p \to r) & $\to i \ 6, 11$
+    \end{logicproof}
+  \end{itemize}
+
+\pagebreak
+\item Page 79 1.2.2 \\
+  For the sequents below, show which ones are valid and which ones aren’t:
+  \begin{itemize}
+  \item[b)] $\lnot p \lor \lnot q \vdash \lnot (p \land q)$ \\
+    \begin{logicproof}{2}
+      \lnot p \lor \lnot q & premise \\
+      \begin{subproof}
+        p \land q & assumption \\
+        \lnot p \lor \lnot q & copy 1 \\
+        \begin{subproof}
+          \lnot p & assumption \\
+          p & $\land e_1 \ 2$ \\
+          \bot & $\lnot e \ 4, 5$
+        \end{subproof}
+        \begin{subproof}
+          \lnot q & assumption \\
+          q & $\land e_2 \ 2$ \\
+          \bot & $\lnot e \ 7, 8$
+        \end{subproof}
+        \bot & $\lor e \ 3, 4 \textrm - 6, 7 \textrm - 9$
+      \end{subproof}
+      \lnot(p \land q) & $\lnot i 2 \textrm - 10$
+    \end{logicproof}
+
+    The argument $\lnot p \lor \lnot q \vdash \lnot (p \land q)$ is thus valid.
+    \\
+
+  \item[c)] $\lnot p, p \lor q \vdash q$ \\
+    \begin{logicproof}{2}
+      \lnot p & premise \\
+      p \lor q & premise \\
+      \begin{subproof}
+        \lnot q & assumption \\
+        p \lor q & copy 2 \\
+        \begin{subproof}
+          p & assumption \\
+          \lnot p & copy 1 \\
+          \bot & $\lnot e \ 5, 6$
+        \end{subproof}
+        \begin{subproof}
+          q & assumption \\
+          \lnot q & copy 3 \\
+          \bot & $\lnot e \ 8, 9$
+        \end{subproof}
+        \bot & $\lor e \ 4, 5 \textrm - 7, 8 \textrm - 10$
+      \end{subproof}
+      q & PBC 3-11
+    \end{logicproof}
+    The argument $\lnot p, p \lor q \vdash q$ is thus valid.
+  \end{itemize}
+
+  \pagebreak
+\item page 81 1.3.1 \\
+  Given the following formulas, produce their corresponding SMT-LIB encoding.
+  \begin{itemize}
+  \item[c)] $p \land \lnot q \to \lnot p$ \\
+    \begin{lstlisting}
+      (declare-const p Bool)
+      (declare-const q Bool)
+
+      (assert
+        (=>
+          (and p (not q))
+          (not p)))
+    \end{lstlisting}
+
+  \item[h)] $(p \land q) \to (\lnot r \lor (q \to r))$
+  \item[j)] $(s \lor ((\lnot p) \to (\lnot p)))$
+  \item[k)] $(((s \to (r \lor l)) \lor ((\lnot q) \land r)) \to
+    ((\lnot (p \to s)) \to r))$
+  \end{itemize}
+
+  \pagebreak
+\item page 82 1.3.5 \\
+  For the parse tree in Figure 1.22 find the logical formula it represents.
+
+  \renewcommand{\thefigure}{1.22}
+  \begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[nodes = {draw, circle}, -]
+      \node{$\lnot$}
+      child { node {$\to$} 
+        child { node {$\lnot$}
+          child { node {$\lor$}
+            child { node {$p$} }
+            child { node {$\land$}
+              child { node {$q$} }
+              child { node {$\lnot$}
+                child { node {$p$} }
+              }
+            }
+          }
+        }
+        child { node {$r$} }
+      };
+    \end{tikzpicture}
+    \caption{A parse tree of a negated implication.}
+  \end{figure}
+
+  Starting from the root of the tree, we can determine the associated logical
+  formula to be as such:
+  \[\lnot ((\lnot (p \lor (q \land \lnot p))) \to r)\]
+  
+  \pagebreak
+\item page 87 1.4.17 \\
+  Does $\vDash \phi$ hold for the $\phi$ below? Please justify your answer.
+  \begin{itemize}
+  \item[a)] $(p \to q) \lor (q \to r)$ \\
+    Because propositional logic is \textbf{sound}, if it can be shown that a
+    proof exists for $\vdash (p \to q) \lor (q \to r)$, then it can be inferred
+    that $\vDash (p \to q) \lor (q \to r)$ holds.
+
+    Below is such a proof:
+    
+    \begin{logicproof}{3}
+      \begin{subproof}
+        \lnot ((p \to q) \lor (q \to r)) & assumption \\
+        \begin{subproof}
+          \lnot (\lnot (p \to q) \land \lnot (q \to r)) & assumption \\
+          \begin{subproof}
+            p \to q & assumption \\
+            (p \to q) \lor (q \to r) & $\lor i_1 \ 3$ \\
+            \lnot ((p \to q) \lor (q \to r)) & copy 1 \\
+            \bot & $\lnot e \ 4, 5$
+          \end{subproof}
+          \lnot (p \to q) & $\lnot i \ 3 \textrm - 6$ \\
+          \begin{subproof}
+            q \to r & assumption \\
+            (p \to q) \lor (q \to r) & $\lor i_2 \ 8$ \\
+            \lnot ((p \to q) \lor (q \to r)) & copy 1 \\
+            \bot & $\lnot e \ 9, 10$
+          \end{subproof}
+          \lnot (q \to r) & $\lnot i \ 8 \textrm - 11$ \\
+          (\lnot (p \to q)) \land (\lnot (q \to r)) & $\land i \ 7, 12$ \\
+          \bot & $\lnot e \ 2, 13$
+        \end{subproof}
+        \lnot (p \to q) \land \lnot (q \to r) & PBC 2-14 \\
+        \begin{subproof}
+          q & assumption \\
+          \begin{subproof}
+            p & assumption \\
+            q & copy 16
+          \end{subproof}
+          p \to q & $\to i \ 17, 18$ \\
+          \lnot (p \to q) & $\land e_1 \ 15$ \\
+          \bot & $\lnot e \ 19, 20$
+        \end{subproof}
+        \lnot q & $\lnot i \ 16 \textrm - 21$ \\
+        \begin{subproof}
+          \lnot q & assumption \\
+          \begin{subproof}
+            \lnot r & assumption \\
+            \lnot q & copy 23
+          \end{subproof}
+          \lnot r \to \lnot q & $\to i \ 24, 25$ \\
+          \begin{subproof}
+            q & assumption \\
+            \lnot \lnot q & $\lnot \lnot i \ 27$ \\
+            \lnot \lnot r & MT 27, 28 \\
+            r & $\lnot \lnot e \ 29$
+          \end{subproof}
+          q \to r & $\to i \ 27 \textrm - 30$ \\
+          \lnot (q \to r) & $\land e_2 \ 15$ \\
+          \bot & $\lnot e \ 31, 32$
+        \end{subproof}
+        q & PBC 23-33 \\
+        \bot & $\lnot e \ 22, 34$
+      \end{subproof}
+      (p \to q) \lor (q \to r) & PBC 1-35
+    \end{logicproof}
+
+    \pagebreak
+  \item[b)] $((q \to (p \lor (q \to p))) \lor \lnot (p \to q)) \to p$ \\
+    By using a truth table approach, an assignment for the elementary
+    propositions can be determined to construct a counter-example for this
+    formula (the bolded truth values indicate the truth values of the overall
+    formula under its line assignment):
+
+    \begin{center}
+      \begin{tabular}{| c | c || c c c c c c c c c |}
+        \hline
+        $p$ & $q$ & $((q$ & $\to$ & $(p \lor (q \to p)))$ & $\lor$
+        & $\lnot (p$ & $\to$ & $q))$ & $\to$ & $p$ \\
+        [0.5ex]
+        \hline
+        \hline
+        $\top$ & $\top$ & & $\top$ & & $\top$ & & $\bot$& & $\pmb{\top}$ & \\
+        \hline
+        $\top$ & $\bot$ & & $\top$ & & $\top$ & & $\top$& & $\pmb{\top}$ & \\
+        \hline
+        $\bot$ & $\top$ & & $\bot$ & & $\bot$ & & $\bot$& & $\pmb{\top}$ & \\
+        \hline
+        $\bot$ & $\bot$ & & $\top$ & & $\top$ & & $\bot$& & $\pmb{\bot}$ & \\
+        \hline
+      \end{tabular}
+    \end{center}
+
+    The counter-example is thus defined with the following assignment:
+    $\alpha(p) = \bot$ and $\alpha(q) = \bot$ under which the formula becomes
+    false also thus meaning that
+    $\vDash ((q \to (p \lor (q \to p))) \lor \lnot (p \to q)) \to p$ does not
+    hold.
+  \end{itemize}
+
+  \pagebreak
+\item Page 89 1.5.15 \\
+  Apply algorithm \texttt{HORN} from page 66 to each of these Horn formulas:
+  \begin{itemize}
+  \item[a)] $(p \land q \land w \to \bot) \land (t \to \bot) \land (r \to p)
+    \land (\top \to r) \land (\top \to q) \land (u \to s) \land (\top \to u)$ \\
+  \item[g)] $(\top \to q) \land (\top \to s) \land (w \to \bot) \land (p \land q
+    \land s \to v) \land (v \to s) \land (\top \to r) \land (r \to p)$ \\
+  \end{itemize}
+\end{enumerate}
+
+\end{document}

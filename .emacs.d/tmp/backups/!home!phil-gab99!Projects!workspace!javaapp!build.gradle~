@@ -1,0 +1,39 @@
+plugins {
+        id 'java-library'
+        id 'eclipse'
+}
+
+java {
+     sourceCompatibility = JavaVersion.toVersion("15")
+}
+
+repositories {
+     mavenCentral()
+}
+
+
+dependencies {
+     testImplementation(platform('org.junit:junit-bom:5.7.0'))
+     testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
+test {
+     jvmArgs += '--enable-preview'
+     useJUnitPlatform()
+     testLogging {
+     events "passed", "skipped", "failed"
+     }
+}
+
+tasks.withType(JavaCompile) {
+   options.compilerArgs += "--enable-preview"
+   options.compilerArgs += "-Xlint:preview"
+   options.release = 15
+}
+
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec) {
+    jvmArgs += "--enable-preview"
+}

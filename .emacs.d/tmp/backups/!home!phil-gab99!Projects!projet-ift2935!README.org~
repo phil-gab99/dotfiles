@@ -1,0 +1,45 @@
+* Projet - Base de donnée IFT2935
+
+** Tâches
+
+***  La modélisation (20%)
+
+- Faire le modèle E/A qui correspond au sujet choisi.
+- Ajouter dans chaque entité tous les éléments réalistes possibles avec des justifications.
+
+*** La transformation (10%)
+
+- Faire le passage du modèle E/A vers le modèle relationnel.
+- Expliquer l’application des règles du passage.
+
+*** La normalisation (20%)
+
+- Définir l’ensemble des dépendances fonctionnelles pour chaque relation. (avec justification)
+- Normaliser chaque table.
+- Écrire le schéma final de la base de données obtenu après la normalisation de toutes les relations.
+
+*** L’implémentation (10%)
+
+- Écrire le code SQL nécessaire pour définir le schéma normalisé de l’étape 3. (sur postgres)
+- Remplir les relations avec des données de votre choix (plus de 10 tuples dans chaque table).
+
+*** Question/Réponse (20%)
+
+- Choisir 4 questions de votre choix.
+- Écrire les réponses en algèbre relationnelle et en SQL.
+- Exprimer l’aspect de l’optimisation des requêtes dans les réponses aux questions.
+- La complexité des requêtes est un facteur d'appréciation
+  - Toutes ces requêtes doivent avoir un résultat supérieur à 0 ou ne pas avoir un ensemble vide des tuples pour le résultat!
+  - Cela signifie que vous devez peupler vos tables de manière à ce que ces requêtes offrent des résultats intéressants.
+- Si la majorité de vos requêtes sont jugées trop simples ou pas assez créatives, vous allez ne pas obtenir la note complète.
+
+*** +Interaction avec un langage 3G (JAVA) (20%)+
+
+- Utiliser l’interface logicielle JDBC dans Java pour faire une petite application graphique qui permet de répondre à l’ensemble des questions choisis dans l’étape 5
+- L’interface graphique contient 4 boutons, chaque bouton permet d’afficher la réponse de l’une des 4 questions
+- Vous pouvez afficher la réponse dans un simple JTextArea
+- Vous pouvez utiliser Swing/Awt ou JavaFX pour faire l’interface graphique
+
+*** BONUS (10%)
+
+- L’utilisation d’un ORM (Object-Relational Mapping) comme Hibernate ou JPA à la place de JDBC.

@@ -1,0 +1,75 @@
+:PROPERTIES:
+:ID:       7afff058-1f30-4415-aebb-7dcf5ef4db76
+:END:
+#+title: ift2245-responsabilite-SE
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-13 Thu 15:05]
+
+* Opérations d'un système informatique
+
+- CPUs et périphériques d'E/S peuvent exécuter concurremment
+- Chaque contrôleur de périphérique se charge d'un type de périphérique particulier
+- Chaque contrôleur de périphérique a un tampon local pour y mettre les données utilisées par ce périphérique
+  - Le tampon local peut être défini comme la mémoire centrale associée à ces périphériques
+- CPU déplace les données de/vers la mémoire centrale vers/de les tampons locaux
+- Les E/S se font entre le périphérique et le tampon local du contrôleur
+- Le contrôleur de périphérique informe le CPU qu'il a terminé une opération en signalant une interruption
+
+Fonctionnement d'un ordinateur - Architecture Von Neumann:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220113141730-integration_systeme_informatique.org_20220113_143645_A9lfFq.png]]
+
+4 étapes:
+  1. Instruction fetch - La mettre dans un registre
+  2. Recherche des instructions pour entreprendre une opération - Les mettre dans un registre
+  3. Exécuter une instruction - Mettre le résultat dans un registre
+  4. Transférer le résultat du registre à la mémoire cenrale
+
+** Gérer le temps - Les interruptions
+
+Les ressources allouées en *temps* sont gérées par des *interruptions* - Les interruptions sont nécessaires pour gérer le temps pris par les différents processus
+
+- Une interruption cause un transfert de contrôle à la routine de service d'interruptions, généralement via un vecteur d'interruptions, qui contient les adresses des diﬀérentes routines de service
+- Le CPU sauve l'adresse de l'instruction interrompue pour pouvoir ensuite reprendre le fil d'exécution
+- Une *“trap“* ou une *exception* est une sorte d'interruption générée par logiciel causée par une erreur ou une requête
+- Un système d'exploitation est guidé par les interruptions
+
+- Le système d'exploitation préserve l'état antérieur du CPU, tel qu'en est le contenu des registres (“context switch”)
+- Détermine quel type d'interruption est arrivée
+- Diﬀérents segments de code déterminent l'action à prendre pour chaque type d’interruption (“interrupt service routine”)
+  
+*** Les Entrées/Sorties (E/S)
+
+- Option 1 - Après le début d'une E/S, le contrôle retourne au programme seulement quand l'E/S est complétée:
+  - Des instructions d'attente mettent le CPU en pause jusqu'à la prochaine interruption
+    - Pas efficace dans le cas d'imprimantes
+  - Boucle d'attente active
+  - Pas plus qu’une requête d'E/S en attente à la fois, pas d'E/S simultanées
+    
+- Option 2: Après le début d'une E/S, le contrôle retourne au programme sans attendre la fin de l'E/S:
+  - *Appels systèmes* - Requêtes au SE pour permettre au programme d'attendre la fin de l'E/S
+  - *Table d'état des périphériques* contient le type, l'adresse, et l'état de chaque périphérique
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220113141730-integration_systeme_informatique.org_20220113_145449_NIXczg.png]]
+
+- Exécution dans le CPU
+- Arrivée de transfert d'un périphérique I/O
+- Signal d'interruption envoyé au CPU à la fin du transfert I/O
+- Génère une interruption, transfert au mode noyau pour gérer l'interruption
+- Reprise du fil d'exécution par le CPU
+
+Un des objectifs du SE est de cacher (hide) les particularités des périphériques matériels à l’utilisateur
+  - Système E/S doit faire
+    - Gestion de mémoire incluant:
+      - Mise en *mémoire tampon* - Stockage temporaire des données pendant les transfert
+      - Mis en *cache* - Stocker des parties de données dans un stockage plus rapide pour améliorer les performances
+      - *“spool"* - Le chevauchement de la sortie d'un travail avec l'entrée de d'autres travaux
+
+    - Interface générale du pilote de périphérique
+
+    - Interface pour le périphérique spécifique (firmware)
+
+** Gérer l'espace - Stockage
+
+Les données (incluant les instructions) sont stockées en mémoire et nécessitent de l'epace
+

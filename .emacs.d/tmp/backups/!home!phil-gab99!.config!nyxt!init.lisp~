@@ -1,0 +1,6 @@
+
+(defvar evil (make-scheme-name "evil" emacs))
+
+(define-scheme "evil-mode"
+  scheme:evil '("C-j"
+		"C-k"))

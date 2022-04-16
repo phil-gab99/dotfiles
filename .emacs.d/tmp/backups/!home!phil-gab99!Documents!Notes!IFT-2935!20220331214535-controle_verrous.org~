@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       4d91a57f-6e2f-47db-80ee-649f8a37528e
+:END:
+#+title: ift2935-controle-verrous
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-31 Thu 21:45]
+
+* Estampillage
+
+On donne à chaque objet $O$ une estampille de lecture $RTS(O)$ et un estampille d'écriture $WTS(O)$
+- Chaque transaction $T$ reçoit l'estampille $TS(T)$ à son démarrage
+- Si $T$ veut lire l'objet $O$
+  - Si $TS(T) < WTS(O)$ $\to$ Annuler $T$ (qui devra redémarrer avec une estampille plus grande)
+  - Sinon $\to$ Permettre à $T$ de lire $O$, $RTS(O) := \max(RTS(O), TS(T))$
+- Si $T$ veut écrire $O$
+  - Si ($TS(T) < RTS(O)$) ou ($TS(T) < WTS(O)$) $\to$ Annuler la transaction $T$
+  - Sinon $\to$ Permettre à $T$ de faire l'écriture, $WTS(O) := TS(T)$
+
+* Recouvrabilité
+
+Soit $O$ avec $TS(T_1) = 1$, $TS(T_2) = 2$, et $RTS(A), RTS(B), WTS(A), WTS(B) < 1$
+
+$O = \begin{cases} T_1 \quad W(A) \\ T_2 \qquad \qquad R(A), W(B), C \end{cases}$
+
+- $T_1 : W(A)$ s'exécute et $WTS(A)$ devient 1
+- $T_2 : R(A)$ s'exécute et $RTS(A)$ devient 2
+- $T_2 : W(B)$ s'exécute et $WTS(B)$ devient 2
+- $T_2$ est ensuite confirmée
+- Si $T_1$ est annulée plus tard, ce n'est pas recouvrable
+- Il faut modifier le protocole pour éviter le problème
+
+* Estampillage modifié
+
+- On met dans un tampon toutes les écritures sur $O$ jusqu’à confirmation de $T$
+- On fait la mise à jour de $WTS(O)$ même si l’écriture à la BD n’est pas faite
+- On bloque les lecteurs $T’$ (t.q $TS(T’) > WTS(O)$) jusqu’à confirmation
+- Ce protocole sert surtout pour les bases distribuées
+  
+* Multiversion
+
+- Associe à chaque transaction une estampille $TS(T_i)$
+- Pour chaque objet une suite de versions $\langle Q_1, Q_2, \dots, Q_n \rangle$
+  - Chaque $Q_i$ contient
+    - La valeur de $Q_i$
+    - $WTS(Q_i)$ l’estampille de la transaction qui a créé $Q_i$
+    - $RTS(Q_i)$ la plus grande estampille de toute transaction qui a lu $Q_i$
+- Sur un $R(Q)$ ou $W(Q)$, soit $Q_k$ la version avec le $WTS(Q_k)$ le plus récent tel que que $WTS(Q_k) < TS(T)$
+  - Sur $R(Q)$, $T$ obtient la valeur de $Q_k$ - il n’y a pas d’attente
+  - Sur $W(Q)$, si $TS(T) < RTS(Q_k)$, $T$ est annulée, si $TS(T) = WTS(Q_k)$ il y a mise à jour de la valeur de $Q_k$, sinon il y a création de $Q_{n + 1}$ avec $WTS(Q_{n+1}) = RTS(Q_{n+1}) = TS(T)$
+
+Le protocole doit aussi être modifié pour éviter les ordonnancements non recouvrables (et les annulations en cascade)
+
+* En pratique
+
+- Le 2PL strict est utilisé par IBM D2, Informix, Microsoft SQL Server et Sybase ASE
+- Oracle et PostgreSQL utilisent un contrôle multiversion
+- Tous ces systèmes supportent des verrous sur la hiérarchie table, page, tuple

@@ -1,0 +1,12 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity and_gate is
+  port(A, B: in STD_LOGIC;
+       Y: out STD_LOGIC);
+end and_gate;
+
+architecture synth of and_gate is
+begin
+  Y <= A and B
+end synth;

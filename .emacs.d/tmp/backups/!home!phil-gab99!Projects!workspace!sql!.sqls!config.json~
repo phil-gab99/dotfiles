@@ -1,0 +1,18 @@
+{
+  "sqls": {
+    "connections": [
+      {
+        "driver": "postgresql",
+        "dataSourceName": "host=127.0.0.1 port=5432 user=phil-gab99 password=Linux+!=EPIC dbname=phil-gab99 sslmode=disable"
+      },
+      {
+        "driver": "postgresql",
+        "dataSourceName": "host=127.0.0.1 port=5432 user=phil-gab99 password=Linux+!=EPIC dbname=ift2935 sslmode=disable"
+      }
+    ]
+  }
+}
+
+    (lsp-sqls-connections
+       ((driver . "postgresql")
+        (dataSourceName . "host=127.0.0.1 port=5432 user=phil-gab99 password= dbname=ift2935 sslmode=disable")))))

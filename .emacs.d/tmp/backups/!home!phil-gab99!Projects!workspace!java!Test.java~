@@ -1,0 +1,14 @@
+public class LLDictionary<Key, E> implements ADTDictionary<Key, E> {
+    private LList<Key> klist;
+    private LList<E> vlist;
+
+    public void insert(Key k, E v) {
+        if (klist.find(K)) {
+            // Modify value in vlist at same index
+        } else {
+            // add key and add element.
+            klist.add(k);
+            vlist.add(v);
+        }
+    }
+}

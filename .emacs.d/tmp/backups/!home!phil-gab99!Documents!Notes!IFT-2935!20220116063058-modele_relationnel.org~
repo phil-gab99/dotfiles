@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       ad95b768-1e4e-46e5-8d48-955fb73032e0
+:END:
+#+title: ift2935-modele-relationnel
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-16 Sun 06:30]
+
+* Modèle relationnel
+
+Le modèle relationnel est souvent considéré comme le plus simple et le plus élégant des modèles
+  - Sa simplicité provient de sa représentation tabulaire des données
+  - Son élégance résulte de ses bases formelles - Ensembles et relations
+Ce modèle est à la base de beaucoup de SGBD commerciaux, dits *relationnels* (Oracle, MySQL, etc...)
+
+Deux approches:
+  1. Le modèle *formel*
+     - Relations - attributs, tuples, identifiants ...
+     - Algèbre relationnelle
+     - Calculs relationnels
+     - Normalisation
+       
+  2. Modèle SQL *implémenté*
+     - Tables - colonnes, lignes, clés
+     - SQL - Définition et modification du schéma de la base
+     - SQL - Spécification de contraintes d'intégrité
+     - SQL - Entrée, suppression et mise à jour des données
+     - SQL - Requêtes
+
+** Domaines de valeurs
+
+- La spécification du domaine des valeurs pour une colonne est fate en spécifiant son type
+- Des types scalaires sont prédéfinies:
+  - Entiers
+  - Réels
+  - Chaînes de caractères
+- Existent aussi des types énumérés et des intervalles:
+  - ~jours = {dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi}~
+  - ~ages = [0, 125]~
+- Les entrées d'une colonne d'une table doivent toutes avoir le même type
+    

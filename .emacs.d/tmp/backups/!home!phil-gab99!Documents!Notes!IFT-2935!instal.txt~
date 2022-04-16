@@ -1,0 +1,27 @@
+-- Creation du compte usager
+-- Variation sur des indications de Raouf Bencheraiet 
+--   qui a fait l'installation sur ens
+--
+-- Dans ce qui suit vous devez remplacer
+--      boyer par votre username sur arcade
+--
+
+create user gabrieph password 'achanger';
+-- creation de la BD de l'usager
+create database boyer;
+-- fermer la BD pour les autre usagers
+REVOKE ALL on database boyer FROM PUBLIC;
+-- on donne tous les droits sur la BD a l'usager
+GRANT ALL  on database boyer to boyer;
+
+-- le role boyer_app avec mot de passe
+create role boyer_app  password 'achanger' login;
+
+-- on donne le seul et unique droit de connection a usager_app sur la BD
+grant connect on database boyer to boyer_app;
+-- on se connect a la DB de l'usager boyer
+\c boyer
+-- on cree le SCHEMA  boyer
+CREATE SCHEMA boyer AUTHORIZATION boyer;
+-- on ferme le SCHEMA public
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;

@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       b9db39be-f89a-4f0f-98a6-db70d96abd2c
+:END:
+#+title: ift6755-propositional-logic
+#+filetags: :ift6755-toc:
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-01-27 Thu 14:49]
+
+* Content
+- [[id:b4450002-aac4-417c-bd06-371d302e2e3a][prop-logic-intro]]
+- [[id:71533fe8-c555-4865-9e3f-56d9b60703d8][sat-problem]]
+- [[id:d4f04f9e-64b1-42be-80f1-6aeaa8a2daab][proofs]]
+- [[id:cc99cb43-9586-44b2-8dcc-4218209e2029][prop-logic-modelling]]
+- [[id:2cabcd17-14e7-4fa9-beb0-ab0c4aa5d33d][normal-forms]]
+
+Questions:
+- Example 2 - Has me realize how the language of propositional logic is somewhat limited considering how logical quantifiers (for all, exist, etc...) are not specifically taken into account, which I presume would result in too many propositions
+
+Language SMTlib, z3 download

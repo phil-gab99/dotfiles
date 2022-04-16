@@ -1,0 +1,81 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage[margin=1in]{geometry}
+% \usepackage{logicproof}
+
+\title{\textbf{IFT6755 - Homework 1} \\ Propositional Logic}
+\author{Philippe Gabriel - 20120600}
+
+\begin{document}
+
+\maketitle
+
+\section{Part 1}
+
+Solve the following exercises from the book (Huth \& Ryan, Logic in Computer
+Science, Second Edition):
+
+\begin{enumerate}
+\item Page 78 1.1.1
+
+Use $\lnot$, $\to$, $\land$ and $\lor$ to express the following declarative
+sentences in propositional logic; in each case state what your respective
+propositional atoms $p$, $q$, etc. mean
+
+  \begin{itemize}
+  \item[a)] If the sun shines today, then it won't shine tomorrow. \\
+    $p$: The sun shines today \\
+    $q$: The sun will shine tomorrow
+    \[p \to \lnot q\] \\
+
+  \item[d)] If a request occurs, then either it will eventually be acknowledged,
+    or the requesting process won’t ever be able to make progress. \\
+    $p$: A request occurs \\
+    $q$: The request is acknowledged \\
+    $r$: The requesting process will be able to make progress
+    \[p \to (q \lor r)\] \\
+    
+  \item[i)] If Dick met Jane yesterday, they had a cup of coﬀee together, or
+    they took a walk in the park. \\
+    $p$: Dick met Jane yesterday \\
+    $q$: Dick and Jane had a cup of coffee together \\
+    $r$: Dick and Jane took a walk in the park
+    \[p \to (q \lor r)\] \\
+  \end{itemize}
+
+\item Page 78 1.2.1 \\
+  Prove the validity of the following sequents:
+  \begin{itemize}
+  \item[c)] $(p \land q) \land r \vdash p \land (q \land r)$ \\
+
+    % \begin{logicproof}{2}
+    %   (p\lor q)\lor r & premise\\
+    %   \begin{subproof}
+    %     (p\lor q) & assumption\\
+    %     \begin{subproof}
+    %       p & assumption\\
+    %       p\lor (q\lor r) & $\lor\mathrm{i}_1$, 3
+    %     \end{subproof}
+    %     \begin{subproof}
+    %       q & assumption\\
+    %       q\lor r & $\lor\mathrm{i}_1$, 5\\
+    %       p\lor (q\lor r) & $\lor\mathrm{i}_2$, 6
+    %     \end{subproof}
+    %     p\lor (q\lor r) & $\lor$e, 2, 3--4, 5--7
+    %   \end{subproof}
+    %   \begin{subproof}
+    %     r & assumption\\
+    %     q\lor r & $\lor\mathrm{i}_2$, 9\\
+    %     p\lor (q\lor r) & $\lor\mathrm{i}_2$, 10
+    %   \end{subproof}
+    %   p\lor (q\lor r) & $\lor$e, 1, 2--8, 9--11
+    % \end{logicproof}
+
+  \item[f)] \\
+    
+  \item[r)] \\
+  \end{itemize}
+\end{enumerate}
+
+\end{document}
+

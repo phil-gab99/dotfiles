@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       f70a13f5-a84c-464e-87f9-26376f07953f
+:END:
+#+title: ift2935-contrainte-integrite
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-16 Sun 06:31]
+
+* Contraintes d'intégrité
+
+À tout instant la base (l'ensemble des valeurs des tables) représente la réalité courante
+- Certaines valeurs des domaines spécifiés peuvent ne pas avoir de sens (ex.: un âge ne peut pas valoir -35)
+  
+Des règles d'intégrité doivent être spécifiées pour:
+- S’assurer que des contraintes du monde réel sont satisfaites
+- Garantir des contraintes de cohérence liées à l’application
+- Garantir les contraintes du modèle
+  - Par exemple qu’un matricule dans une table d’inscription correspond bien au matricule d’un étudiant
+
+Exemples:
+  - Code permanent doit être de la forme ~NOMPJJMMAAX~:
+    - ~MM~ est de ~01~ à ~12~ (mois de naissance) pour les hommes, et de ~51 à 62~ pour les femmes
+  - Une professeur recruté il y a plus de 6 ans ne peut pas être adjoint
+
+** Clé candidate
+
+Une *clé candidate* est un ensemble minimal d’attributs qui peut servir d’identificateur
+
+- Formellement, pour qu’un ensemble $K = \{A_{i_1}, \dots, A_{i_k}\}$ d’attributs de $R(A_1 : D_1, \dots, A_n : D_n)$ soit une clé candidate il faut que
+  - Si on sélectionne uniquement les colonnes $A_{i_1}, \dots, A_{i_k}$ de $R$, on n’aura jamais deux lignes identiques dans une table satisfaisant le schéma
+  - Minimalité $\rightarrow$ Si on enlève une colonne quelconque parmi les colonnes $A_{i_1}, \dots, A_{i_k}$, on aura deux lignes identiques dans au moins une table satisfaisant le schéma
+
+Chaque relation contient au moins une clé candidate
+- Au pire, c’est l’ensemble de tous les attributs car il n’y a jamais deux tuples identiques dans une relation

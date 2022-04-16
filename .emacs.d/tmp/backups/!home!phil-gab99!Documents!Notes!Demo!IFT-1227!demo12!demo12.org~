@@ -1,0 +1,279 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline \n:t
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: IFT-1227 Demo 12
+#+date: <2022-04-14 Thu>
+#+author: Philippe Gabriel
+#+email: philippe.gabriel.1@umontreal.ca
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.91 (Org mode 9.5.2)
+#+cite_export:
+
+* Examen Final A15
+
+** Question 1 - Architecture MIPS
+
+*** a)
+
+Traduire le code de haut niveau présenté plus bas en langage d’assemblage MIPS. Respecter toutes les conventions MIPS.
+
+#+begin_src c
+
+  int main(void) {
+      return S(4);
+  }
+
+  int S(int a) {
+      if (a < 0) return 0;
+      else return a + S(a - 1);
+  }
+
+#+end_src
+
+#+begin_src mips
+
+          
+
+#+end_src
+
+**** Solution
+
+#+begin_src mips
+
+  main:   li          $a0, 4              # Argument
+          jal         S
+
+          add         $a0, $v0, $0
+          li          $v0, 1
+          syscall                         # Print à stdout
+
+          li          $v0, 10
+          syscall                         # Exit
+
+  S:      subi        $sp, $sp, 8
+          sw          $ra, 4($sp)
+          sw          $a0, 0($sp)
+
+          bge         $a0, $0, else       # a >= 0
+          li          $v0, 0              # return 0
+          addi        $sp, $sp, 8
+          jr          $ra
+
+  else:   subi        $a0, $a0, 1         # Correct puisque a est stocké dans $sp
+          jal         S                   # S(a - 1)
+
+          lw          $ra, 4($sp)
+          lw          $a0, 0($sp)         # On rapelle a
+          addi        $sp, $sp, 8
+
+          add         $v0, $v0, $a0       # return a + S(a - 1)
+          jr          $ra
+
+#+end_src
+
+*** b)
+
+#+begin_src c
+
+  void f() {
+      unsigned int i = 129;
+      unsigned int j = 6534;
+      unsigned int k;
+      int c = 1;
+      int d = 1;
+      k = i * j;
+      k++;
+      d = c * d;
+      d++;
+      return;
+  }
+
+#+end_src
+
+#+begin_src mips
+
+          
+
+#+end_src
+
+**** Solution
+
+#+begin_src mips
+
+  f:      addiu       $t0, $0, 129        # i <- 129
+          addiu       $t1, $0, 6534       # j <- 6534
+
+          li          $t3, 1              # c <- 1
+          li          $t4, 1              # d <- 1
+
+          multu       $t0, $t1            # {Hi, Lo} <- i * j
+          mflo        $t2                 # k <- Lo
+
+          addiu       $t2, $t2, 1         # k++
+
+          mult        $t3, $t4            # {Hi, Lo} <- c * d
+          mflo        $t4                 # d <- Lo
+
+          addi        $t4, $t4, 1         # d++
+
+          jr          $ra                 # return
+
+#+end_src
+
+*** c)
+
+Traduire le code du langage d’assemblage MIPS en code machine en supposant que votre programme est placé en mémoire à partir de l’adresse ~00400000~ (base 16).
+L’encodage des instructions MIPS ainsi que la table des registres sont donnés dans l’annexe.
+Compléter les colonnes "Adresse", "Code en binaire", "Code machine en base 16" et "Mode d’adressage", en indiquant le mode d’adressage utilisé pour chaque instruction.
+
+|  Adresse | Code en mnémonique    | Code en binaire | Code machine en base 16 | Mode d'adressage |
+|----------+-----------------------+-----------------+-------------------------+------------------|
+| 00400000 | =addi $a0, $0, -5=      |                 |                         |                  |
+|          | =jal f=                 |                 |                         |                  |
+|          | =add $s0, $0, $v0=      |                 |                         |                  |
+|          | =f: add $t0, $0, $a0=   |                 |                         |                  |
+|          | =loop: sll $t0, $t0, 1= |                 |                         |                  |
+|          | =beq $t0, $0, fin=      |                 |                         |                  |
+|          | =j loop=                |                 |                         |                  |
+|          | =fin: add $v0, $0, $0=  |                 |                         |                  |
+|          | =jr $ra=                |                 |                         |                  |
+
+**** Solution
+
+|    Adresse | Code en mnémonique    | Code en binaire                         | Code machine en base 16 | Mode d'adressage |
+|------------+-----------------------+-----------------------------------------+-------------------------+------------------|
+| 0x00400000 | =addi $a0, $0, -5=      | 001000 00000 00100 1111111111111011     |              0x2004FFFB | I                |
+| 0x00400004 | =jal f=                 | 000011 00 0100 0000 0000 0000 0000 1100 |              0x0C40000C | J                |
+| 0x00400008 | =add $s0, $0, $v0=      | 000000 00000 00010 10000 00000 010100   |              0x00028014 | R                |
+| 0x0040000C | =f: add $t0, $0, $a0=   | 000000 00000 00100 01000 00000 010100   |              0x00044014 | R                |
+| 0x00400010 | =loop: sll $t0, $t0, 1= | 000000 00000 01000 01000 00001 000000   |              0x00084040 | R                |
+| 0x00400014 | =beq $t0, $0, fin=      | 000100 01000 00000 0000000000000100     |              0x11000004 | I                |
+| 0x00400018 | =j loop=                | 000010 00 0100 0000 0000 0000 0010 0000 |              0x08400020 | J                |
+| 0x0040001C | =fin: add $v0, $0, $0=  | 000000 00000 00000 00010 00000 010100   |              0x00001014 | R                |
+| 0x00400020 | =jr $ra=                | 000000 11111 00000 00000 00000 001000   |              0x03E00008 | R                |
+
+** Question 2 - Microarchitecture
+
+*** a)
+
+Modifier le chemin de données MIPS (sans toucher de l’ALU), implémentation multi cycle (si nécessaire) pour implémenter l’instruction ~srav~ (shift right arithmetic variable) – un décalage arithmétique variable à droite
+
+#+begin_src mips
+
+          srav        rd, rt, rs          # Charger dans un registre de destination la valeur de registre source décalée à droite de N
+                                          # N est une valeur représentée sur 5 bits, les moins significatifs du registre rs ([rs]_4:0)
+
+#+end_src
+
+Champs du code machine:
+
+| opcode | rs | rt | rd | shamt |  funct |
+|--------+----+----+----+-------+--------|
+| 000000 |    |    |    |       | 000111 |
+
+~[rd] = [rt] >>> [rs]_4:0~
+
+[[/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org_20220413_201954_w0Pt2n.png]]
+
+**** Solution
+
+[[/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org_20220413_202445_PG2vTd.png]]
+
+*** b)
+
+Modifier la machine à états finis de la version MIPS multi cycle pour compléter l’implémentation de l’instruction ~srav~
+
+[[/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org_20220413_203159_wEpi58.png]]
+
+**** Solution
+
+[[/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org_20220413_204008_0jHTIN.png]]
+
+** Question 3
+
+[[/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org_20220413_204116_0mBxcO.png]]
+
+
+Écrire en VHDL un module combinatoire "Unité de gestion des aléas" avec les fonctionnalités spécifiées plus bas
+
+Logique de "Forwarding":
+~if ((rsE != 0) AND (rsE ===  WriteRegM) AND RegWriteM) then ForwardAE = 10~
+~else if ((rsE != 0) AND (rsE == WriteRegW) AND RegWriteW) then ForwardAE = 01~
+~else ForwardAE = 00~
+
+Logique de "Stall":
+~wstall = ((rsD ===  rtE) OR (rtD == rtE)) AND MemtoRegE~
+~StallF = StallD = FlushE = lwstall~
+
+#+begin_src vhdl
+
+  library IEEE;
+  use IEEE.std_logic_1164.all;
+
+  entity hazard_unit is
+
+  end hazard_unit;
+
+  architecture synth of hazard_unit is
+  begin
+    
+  end synth;
+
+
+#+end_src
+
+*** Solution
+
+#+begin_src vhdl
+
+  library IEEE;
+  use IEEE.STD_LOGIC_1164.all; 
+  use IEEE.STD_LOGIC_ARITH.all;
+
+  entity hazardUnit is -- MIPS Hazard Unit
+    port(rsE, rtE, rsD, rtD, WriteRegM, WriteRegW: in STD_LOGIC_VECTOR(4 downto 0);
+         RegWriteM, RegWriteW, MemtoRegE: in STD_LOGIC;
+         StallF, StallD, FlushE, lwstall: out STD_LOGIC;
+         ForwardAE: out STD_LOGIC_VECTOR (1 downto 0));
+  end;
+
+  architecture behav of hazardUnit is
+    signal stall: STD_LOGIC;
+  begin
+    ForwardAE <= "10" when (rsE /= "00000") and (rsE = WriteRegM) and RegWriteM = '1' else
+                 "01" when (rsE /= "00000") and (rsE = WriteRegW) and RegWriteW = '1' else
+                 "00";
+
+    stall <= '1' when ((rsD = rtE) or (rtD = rtE)) and MemtoRegE ='1';
+
+    lwstall <= stall;
+    StallF <= stall;
+    StallD <= stall;
+    FlushE <= stall;
+  end;
+
+#+end_src
+
+** Question 4
+
+Considérons la version de MIPS avec pipeline vue en classe.
+Indiquez les dépendances existantes en encerclant un registre de dépendance et en dessinant une flèche montrant le registre source de dépendance.
+Dessinez directement dans la table, colonne gauche
+
+[[/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org_20220413_205218_QKzCz4.png]]
+
+#+begin_src mips
+
+          lw          $t0, 40($s0)        # M[40 + $s0] = 25
+          add         $t1, $t0, $s1       # $s1 = 45
+          addi        $t0, $t0, -2
+          and         $t2, $s4, $t0       # $s4 = 0x0000000F
+          beq         $t2, $0, end
+          ori         $s4, $s4, 0xF000
+  end:    sw          $s4, 80($t1)
+
+#+end_src

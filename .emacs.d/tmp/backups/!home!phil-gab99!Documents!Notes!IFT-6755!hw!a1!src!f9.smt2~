@@ -1,0 +1,11 @@
+;; f9.smt2
+
+(declare-const p Bool)
+(declare-const q Bool)
+
+(assert (not (or (not p) q)))
+
+;; Negation of conclusion
+(assert (not p))
+
+(check-sat)

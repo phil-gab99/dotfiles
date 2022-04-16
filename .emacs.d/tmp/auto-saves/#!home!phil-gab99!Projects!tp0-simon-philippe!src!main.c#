@@ -1,0 +1,418 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include "main.h"
+
+typedef unsigned char byte;
+typedef int error_code;
+
+#define ERROR (-1)                 // Erreur d'exécution
+#define ACCEPT (1)                 // État acceptant
+#define REJECT (0)                 // État rejetant
+#define MACHINE_FILE_DEF_LINES (3) // Lignes n'étant pas des transitions
+#define STATE_MAX_LENGTH (5)       // Longueur maximale du nom d'un état
+#define STATE_MIN_LENGTH (1)       // Longueur minimale du nom d'un état
+#define ALPHA (2)                  // Facteur d'allocation dynamique
+#define HAS_ERROR(code) ((code) < 0)
+#define HAS_NO_ERROR(code) ((code) >= 0)
+
+/**
+ * Cette fonction compare deux chaînes de caractères.
+ * @param p1 la première chaîne
+ * @param p2 la deuxième chaîne
+ * @return le résultat de la comparaison entre p1 et p2. Un nombre plus petit que
+ * 0 dénote que la première chaîne est lexicographiquement inférieure à la deuxième.
+ * Une valeur nulle indique que les deux chaînes sont égales tandis qu'une valeur positive
+ * indique que la première chaîne est lexicographiquement supérieure à la deuxième.
+ */
+int strcmp(char *p1, char *p2) {
+    char *s1 = (char *) p1;
+    char *s2 = (char *) p2;
+    char c1, c2;
+    do {
+        c1 = (char) *s1++;
+        c2 = (char) *s2++;
+        if (c1 == '\0')
+            return c1 - c2;
+    } while (c1 == c2);
+    return c1 - c2;
+}
+
+/**
+ * Ex.1: Calcul la longueur de la chaîne passée en paramètre selon la
+ * spécification de la fonction strlen standard
+ *
+ * @param s Un pointeur vers le premier caractère de la chaîne
+ * @return Nombre de caractères de la chaîne
+ */
+error_code strlen2(char *s) {
+    if (!s) return ERROR;
+
+    // Itération pour éviter de retester la première condition
+    size_t i = 0, length = 0;
+    while (s[i++]) length++;
+    return length;
+}
+
+/**
+ * Ex.2: Retourne le nombre de lignes d'un fichier sans changer la position
+ * courante dans le fichier.
+ *
+ * @param fp un pointeur vers le descripteur de fichier
+ * @return le nombre de lignes, ou -1 si une erreur s'est produite
+ */
+error_code no_of_lines(FILE *fp) {
+    // Cas spécial, erreur
+    // 0 ou False est le pointeur nul dans le langage des pointeurs
+    if (!fp) return ERROR;
+    
+    // Garder position courante
+    long currPos = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    // Traverser le fichier
+    char c = '\0';
+    size_t lines = 0;
+    while ((c = getc(fp)) != EOF) if (c == '\n') lines++;
+
+    // Cas spécial, si dernière ligne ne termine pas par un '\n'
+    fseek(fp, -1, SEEK_END);
+    if ((c = getc(fp)) != EOF && c != '\n') lines++;
+
+    // Repositionner
+    fseek(fp, currPos, SEEK_SET);
+    
+    return lines;
+}
+
+/**
+ * Ex.3: Lit une ligne au complet d'un fichier
+ *
+ * @param fp le pointeur vers la ligne de fichier
+ * @param out le pointeur vers la sortie
+ * @param max_len la longueur maximale de la ligne à lire
+ * @return le nombre de caractère ou ERROR si une erreur est survenue
+ */
+error_code readline(FILE *fp, char **out, size_t max_len) {
+    if (!fp) return ERROR;
+
+    // On alloue ici max_len + 1 pour inclure le caractère nul '\0', à la fin de
+    // la chaîne. Les chaînes de style c contiennent toujours un caractère
+    // terminal '\0'.
+    *out = (char *) malloc(sizeof(char) * max_len + 1);
+
+    // Positionner en début de ligne
+    long currPos = ftell(fp);
+    char c = '\0';
+    for (long i = 1; i <= currPos; i++) {
+	fseek(fp, currPos - i, SEEK_SET);
+	// Cas spéciaux - À la première ligne ou fichier vide
+        if (ftell(fp) == SEEK_SET || (c = getc(fp)) == EOF) {
+            fseek(fp, 0, SEEK_SET);
+            break;
+        } else if (c == '\n') break;
+    }
+    
+    // Affectation de la chaîne de retour
+    bool end = false;
+    for (size_t i = 0; i < max_len; i++)
+        if (!end)
+        if ((c = getc(fp)) != EOF && c != '\n')
+          (*out)[i] = c;
+        else
+          end = true;
+      else
+        (*out)[i] = '\0';
+    (*out)[max_len] = '\0'; // Caractère terminal
+    
+    return strlen2(*out);
+}
+
+/**
+ * Ex.4: Copie un bloc mémoire vers un autre
+ * 
+ * @param dest la destination de la copie
+ * @param src  la source de la copie
+ * @param len la longueur (>en byte<) de la source
+ * @return nombre de bytes copiés ou une erreur s'il y a lieu
+ */
+error_code memcpy2(void *dest, void *src, size_t len) {
+    if (!dest || !src) return ERROR;
+
+    char *s1 = (char *) src;
+    char *s2 = (char *) dest;
+
+    for (int i = 0; i < len; i++)
+        s2[i] = s1[i];
+
+    return len;
+}
+
+/**
+ * Vérifie que la syntaxe d'un état est conforme.
+ *
+ * @param line La ligne contenant la transition
+ * @param parsePos La position de début d'analyse dans la ligne
+ * @param stateLen La longueur de la chaîne représentant l'état
+ * @param length La longueur de la ligne
+ * @return true si la syntaxe est conforme, false sinon
+ */
+bool stateWellFormed(const char* line, size_t* parsePos, size_t* stateLen,
+		     const size_t length) {
+    while (line[*parsePos + *stateLen] != ',')
+	if ((*stateLen) > STATE_MAX_LENGTH ||
+	    (*parsePos + (*stateLen)++) > length)
+	    return false;
+    (*parsePos) += *stateLen + 1; // Not good
+    return true;
+}
+
+/**
+ * Ex.5: Analyse une ligne de transition
+ *
+ * @param line la ligne à lire
+ * @param len la longueur de la ligne
+ * @return la transition ou NULL en cas d'erreur
+ */
+transition *parse_line(char *line, size_t len) {
+    if (!line) return NULL;
+    
+    char read = '\0', write = '\0', movement = '\0';
+    size_t parsePos = 0, currStateLen = 0, nextStateLen = 0;
+    uint currStateStart = 0, nextStateStart = 0;
+
+    // Vérification de la structure de la transition
+    if (line[parsePos++] != '(' ||
+	!(currStateStart = parsePos) ||
+	!stateWellFormed(line, &parsePos, &currStateLen, len) ||
+	!(read = line[parsePos++]) ||
+	line[parsePos++] != ')' ||
+	line[parsePos++] != '-' ||
+	line[parsePos++] != '>' ||
+	line[parsePos++] != '(' ||
+	!(nextStateStart = parsePos) ||
+	!stateWellFormed(line, &parsePos, &nextStateLen, len) ||
+	!(write = line[parsePos++]) ||
+	line[parsePos++] != ',' ||
+	!(movement = line[parsePos++]) ||
+	line[parsePos++] != ')' ||
+	(movement != 'G' && movement != 'R' && movement != 'D'))
+	return NULL;
+
+    // Allocation et vérification
+    transition* t = (transition*) malloc(sizeof(transition));
+    t->current_state = (char*) malloc(sizeof(char) * currStateLen + 1);
+    t->next_state = (char*) malloc(sizeof(char) * nextStateLen + 1);
+    if (!t || !(t->current_state) || !(t->next_state)) {
+	free(t->current_state);
+	free(t->next_state);
+	free(t);
+	return NULL;
+    }
+
+    // Assignation des membres de la transition
+    memcpy2(t->current_state, &line[currStateStart], currStateLen);
+    t->current_state[currStateLen] = '\0';
+    memcpy2(t->next_state, &line[nextStateStart], nextStateLen);
+    t->next_state[nextStateLen] = '\0';
+    
+    t->read = read;
+    t->write = write;
+
+    switch (movement) {
+    case 'G':
+	t->movement = -1;
+	break;
+    case 'R':
+	t->movement = 0;
+	break;
+    case 'D':
+	t->movement = 1;
+	break;
+    }
+    
+    return t;
+}
+
+/**
+ * Ex.6: Execute la machine de turing dont la description est fournie
+ *
+ * @param machine_file le fichier de la description
+ * @param input la chaîne d'entrée de la machine de turing
+ * @return le code d'erreur
+ */
+error_code execute(char *machine_file, char *input) {
+    // Vérification sur conformité
+    FILE* fp = fopen(machine_file, "r");
+    size_t numTrans = 0;
+    if (!fp ||
+	!input ||
+	(numTrans = no_of_lines(fp) - MACHINE_FILE_DEF_LINES) <= 0)
+	return ERROR;
+ 
+    // Initialisation de structure pour l'exécution
+    transition* trans = (transition*) malloc(sizeof(transition) * numTrans);
+    char* currState,* acceptState,* rejectState;
+    readline(fp, &currState, STATE_MAX_LENGTH);
+    readline(fp, &acceptState, STATE_MAX_LENGTH);
+    readline(fp, &rejectState, STATE_MAX_LENGTH);
+    for (transition* t = trans; t < &trans[numTrans]; t++) {
+	char* line;
+	readline(fp, &line, 1024);
+	transition* temp = parse_line(line, strlen2(line));
+	*t = *temp;
+	free(temp);
+	free(line);
+    }
+    
+    fclose(fp);
+    
+    // Création du ruban
+    size_t inputLen = 0, tapeLen = 0;
+    int head = 0;
+    char read = '\0';
+    bool doneAction = true;
+    // +1 à tapeLen dans le cas où input est la chaîne vide
+    // en plus du +1 pour le NUL character
+    char* tape = (char*) malloc(sizeof(char) * (tapeLen =
+				(ALPHA * (inputLen = strlen2(input)) + 1)) + 1);
+    memcpy2(tape, input, inputLen);
+    for (size_t i = inputLen; i < tapeLen; i++) tape[i] = ' ';
+    tape[tapeLen] = '\0';
+    
+    // Exécution de la machine
+    while (!(doneAction = !doneAction) &&
+	   currState != acceptState &&
+	   currState != rejectState) {
+	// Repositionnement de la tête
+	if (head < 0) head = 0;
+	else if (head == tapeLen) {
+	    // Allocation dynamique au besoin
+	    char* extTape = (char*) malloc(sizeof(char) *
+					   (tapeLen = (ALPHA * tapeLen)) + 1);
+	    memcpy2(extTape, tape, tapeLen);
+	    for (size_t i = tapeLen / ALPHA; i < tapeLen; i++) extTape[i] = ' ';
+	    extTape[tapeLen] = '\0';
+	    free(tape);
+	    tape = extTape;
+	}
+	
+	read = tape[head];
+
+	// Recherche de la transition
+	for (transition* t = trans; t < &trans[numTrans]; t++) {
+            if (strcmp(t->current_state, currState) == 0 && t->read == read) {
+              tape[head] = t->write;
+              head += t->movement;
+              size_t stateSize = strlen2(t->next_state);
+              memcpy2(currState, t->next_state, stateSize);
+              for (size_t i = stateSize; i < STATE_MAX_LENGTH; i++)
+                currState[i] = '\0';
+              doneAction = true;
+	      break;
+            }
+        }
+    }
+
+    // Nettoyage
+    for (transition* t = trans; t < &trans[numTrans]; t++) {
+        free(t->current_state);
+        free(t->next_state);
+    }
+
+    free(trans);
+    free(tape);
+
+    error_code endVal;
+    
+    if (strcmp(currState, acceptState) == 0) endVal = ACCEPT;
+    else if (strcmp(currState, rejectState) == 0) endVal = REJECT;
+    else endVal = ERROR;
+
+    free(currState);
+    free(acceptState);
+    free(rejectState);
+
+    return endVal;
+}
+
+// ATTENTION! TOUT CE QUI EST ENTRE LES BALISES ༽つ۞﹏۞༼つ SERA ENLEVÉ! N'AJOUTEZ PAS D'AUTRES ༽つ۞﹏۞༼つ
+
+// ༽つ۞﹏۞༼つ
+
+int main() {
+    // Vous pouvez ajouter des tests pour les fonctions ici
+
+    // Tests Ex1
+    printf("Tests Ex1\n");
+    char* nullString = 0; // Affectation du pointeur nul
+    printf("strlen2(\"Allo\") = %d\n", strlen2("Allo"));
+    printf("strlen2(\"\") = %d\n", strlen2(""));
+    printf("strlen2(nullString) = %d\n", strlen2(nullString));
+
+    // Tests Ex2
+    printf("\nTests Ex2\n");
+    char* files[4] = {"empty", "five_lines", "six_lines", "notfound"};
+    for (int i = 0; i < 4; i++) {
+	FILE *fp = fopen(files[i], "r");
+	printf("no_of_lines(fp): %d\n", no_of_lines(fp));
+	if (fp) fclose(fp);
+    }
+    
+    // Tests Ex3
+    printf("\nTests Ex3\n");
+    char* out;
+    FILE *fp = fopen("six_lines", "r");
+    fseek(fp, 0, SEEK_END);
+    printf("readline(fp, out, 1024): %d\n", readline(fp, &out, 1024));
+    printf("%s\n", out);
+    free(out);
+    fseek(fp, 19, SEEK_SET);
+    printf("readline(fp, out, 1024): %d\n", readline(fp, &out, 1024));
+    printf("%s\n", out);
+    free(out);
+    printf("readline(fp, out, 1024): %d\n", readline(fp, &out, 1024));
+    printf("%s\n", out);
+    free(out);
+    fclose(fp);
+
+    // Tests Ex5
+    printf("\nTests Ex5\n");
+    char* line = "(q0,2)->(qR,1,R)";
+    transition* t = parse_line(line, strlen2(line));
+    printf("(%s,%c)->(%s,%c,%i)\n",
+	   t->current_state,
+	   t->read,
+	   t->next_state,
+	   t->write,
+	   t->movement);
+    free(t->current_state);
+    free(t->next_state);
+    free(t);
+
+    // Tests Ex6
+    printf("\nTests Ex6\n");
+    printf("Test1: %d\n", execute("this_file_dne", "101010"));
+    printf("Test2: %d\n", execute("youre_gonna_go_far_kid", ""));
+    printf("Test3: %d\n", execute("has_five_ones", "0000"));
+    printf("Test4: %d\n", execute("has_five_ones", "101010101"));
+    printf("Test5: %d\n", execute("has_five_ones", "111111111"));
+    printf("Test6: %d\n", execute("youre_gonna_go_far_kid", "STARING AT THE SUN"));
+
+    // Tests Simon
+    printf("strlen2(\"Allo\") == %d\n", strlen2("Allo"));
+    printf("strlen2(\"\") == %d\n", strlen2(""));
+    //printf("strlen2\(1\) == %d\n", strlen2(1));
+
+    FILE *bruh = fopen("./five_lines", "r");
+    printf("no_of_lines() de five_lines == %d\n", no_of_lines(bruh));
+    if (bruh) fclose(bruh);
+
+    bruh = fopen("./newlineonlineone", "r");
+    printf("no_of_lines() de newlineonlineone == %d\n", no_of_lines(bruh));
+    if (bruh) fclose(bruh);
+  
+    return 0;
+}
+
+// ༽つ۞﹏۞༼つ

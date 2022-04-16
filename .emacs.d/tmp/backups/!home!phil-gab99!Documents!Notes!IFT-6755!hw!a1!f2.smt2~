@@ -1,0 +1,9 @@
+(declare-const p Bool)
+(declare-const q Bool)
+
+(assert (or (not p) (not q)))
+
+(assert (not (not (and q p))))
+
+(check-sat)
+;; unsat therefore the sequent is valid

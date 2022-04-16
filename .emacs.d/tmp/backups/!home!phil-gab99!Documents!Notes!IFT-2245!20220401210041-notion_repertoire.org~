@@ -1,0 +1,59 @@
+:PROPERTIES:
+:ID:       70d1c86f-b4aa-4458-966b-ef507b34464d
+:END:
+#+title: ift6755-notion-repertoire
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-04-01 Fri 21:00]
+
+* Structure du répertoire
+
+- Le répertoire est un tableau de traduction - Nom $\to$ Fichier
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220401210041-notion_repertoire.org_20220401_210426_kA8aiJ.png]]
+
+- La structure du répertoire et les fichiers sont stockés sur le disque
+
+Un répertoire *est* un fichier
+
+** Opérations effectuées sur le répertoire
+
+- *Chercher* $\Rightarrow$ Trouver un fichier ou un ensemble de fichiers (ex.: ~ls *.tex~)
+- *Création* $\Rightarrow$ Lorsqu'un nouveau fichier est créé, une nouvelle entrée doit être ajoutée au répertoire
+- *Effacer* $\Rightarrow$ Lorsqu’un fichier est supprimé, nous supprimons l'entrée du répertoire
+- *Énumérer* $\Rightarrow$ Énumérer les entrées de la table
+- *Renommez un fichier* $\Rightarrow$ Pour renommer un fichier, nous ne voulons pas créer un nouveau fichier
+- *Traverser le système de fichiers* $\Rightarrow$ Par exemple, pour trouver sa taille totale (ex.: ~du -sh~)
+- *Création de répertoire* $\Rightarrow$ Créer un nouveau sous-répertoire dans la hiérarchie (également appelé un dossier)
+
+** Répertoire à un niveau
+
+Un répertoire unique pour tous les utilisateurs
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220401210041-notion_repertoire.org_20220401_211018_S7f59d.png]]
+
+- Problèmes de nommage et de regroupement
+
+** Répertoire à deux niveaux
+
+Séparer le répertoire pour chaque utilisateur
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220401210041-notion_repertoire.org_20220401_211104_sFvy2A.png]]
+
+- Le nom du fichier contient maintenant un chemin
+- Peut avoir le même nom de fichier pour un utilisateur différen
+- Impossible de grouper les fichiers de manière logique
+
+** Arbre de fichiers
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220401210041-notion_repertoire.org_20220401_211218_RhvEcS.png]]
+
+** Graphe acyclique de répertoires
+
+Un fichier peut être référencé par plusieurs noms (ex.: avec ~ln~)
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220401210041-notion_repertoire.org_20220401_211303_3utRnQ.png]]
+
+** Graphe générale de répertoires
+
+[[/home/phil-gab99/Documents/Notes/IFT-6755/20220401210041-notion_repertoire.org_20220401_211339_2Eb8HT.png]]
+
+- C'est un problème pour l'opération *Traverser le système de fichiers*

@@ -1,0 +1,997 @@
+User-agent: mu4e 1.6.10; emacs 28.0.91
+References: <R5XOXDV6PX@zendesk.com> <R5XOXDV6PX_61f9bbb620711_383fde3aacb9644336fd_sprut@zendesk.com> <R5XOXDV6PX_61f8b1d198174_3c3fcedcecb964710e8_sprut@zendesk.com> <R5XOXDV6PX_61fb1a9d15843_3b3fb2fd0cb9683073dc_sprut@zendesk.com> <R5XOXDV6PX_6214271981036_353f7ed9ecb96c373137_sprut@zendesk.com> <SA2PR02MB77709E98D895E71F5940E18CF0279@SA2PR02MB7770.namprd02.prod.outlook.com> <SA2PR02MB77707F96AED11FB4FEFCB3BFF0289@SA2PR02MB7770.namprd02.prod.outlook.com> <SA2PR02MB777068817A90E3A0DB8A3B64F02A9@SA2PR02MB7770.namprd02.prod.outlook.com> <SA2PR02MB77708E0A981D8895C3616B9AF03B9@SA2PR02MB7770.namprd02.prod.outlook.com> <SA2PR02MB7770ABEB8CEC2C12B9C418CCF03C9@SA2PR02MB7770.namprd02.prod.outlook.com> <R5XOXDV6PX_62157491ae313_403fb7aeccb960333aa_sprut@zendesk.com> <R5XOXDV6PX_6216d405f03f0_343fdb2e6cb96842878d_sprut@zendesk.com>
+From: Philippe Gabriel <pgabriel999@hotmail.com>
+To: Camil Gabriel <cam4gab@gmail.com>
+Date: Mon, 28 Feb 2022 20:46:33 -0500
+Subject: Fwd: [System76] Re: lemp10 charging thresholds
+--text follows this line--
+#+OPTIONS: html-postamble:nil toc:nil author:nil num:nil \n:t d:nil
+#+STARTUP: indent inlineimages hidestars
+:PROPERTIES:
+:reply-to: ("/tmp/org-msgjJbuiO.html")
+:attachment: nil
+:alternatives: (text org html)
+:END:
+
+Hello dad, I needed your help a little bit for this procedure. I have tested the first step that this email asked me to, and so the ~system76_acpi~ kernel module is well loaded as this person was asking. The next step involves creating a USB based firmware update as he describes below. Could you help me with this dad?
+
+Thanks!
+
+*--*
+Philippe Gabriel - 
+[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | [[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]
+
+--citation follows this line (read-only)--
+"Thomas Zimmerman (System76)" <help@system76.com> writes:
+
+,*        
+Your request (50724) has been updated. To add additional comments, reply to this email.        
+
+,*  Thomas Zimmerman (System76)             
+
+Feb 23, 2022, 5:40 PM MST             
+
+Hello Philippe,            
+
+
+
+I am checking in on your support case as Nathaniel has the day off. Thank you for sending in the log files! Every is looking correct for the firmware and kernel versions. Just to make sure, I want to have you check one last            
+thing. Can I have you run the following command to make sure we have the "system76_acpi" kernel module loaded:            
+
+
+
+lsmod | grep acpi            
+
+
+If we don't have a "system76_acpi" module in the output, let's check if we can load it:            
+
+
+
+sudo depmod -a && sudo modprobe system76_acpi            
+
+
+If all of this is checking out, my last suggestion would be to create a USB based firmware update to see if we are just missing the firmware half of the software that allows charging thresholds to work. The attached            
+compressed USB image needs to be uncompressed and than "restored" to a USB drive--I've used disks. Note this will overwrite both any and all data on the USB drive but also the filesystem information. You will need to            
+format the drive to use it for other uses using disks.            
+
+
+
+The firmware flashing process is covered here: https://support.system76.com/articles/system-firmware            
+
+
+
+I'd note that on the Lemur Pro (lemp10) it can take a couple minutes after it looks like the system turned off before you can power it back on during the firmware update process.            
+
+Kind Regards,            
+
+Thomas            
+
+Attachment(s)            
+
+lemp10-2021-07-20_93c2809.img.gz            
+
+,*  Philippe Gabriel             
+
+Feb 23, 2022, 1:04 PM MST             
+
+Hi Nathaniel,            
+
+Here are the requested log files. Thanks again for            
+your time.            
+
+Regards,            
+
+--            
+
+Philippe Gabriel -            
+
+pgabriel999@hotmail.com            
+
+Attachment(s)            
+
+system76-logs.tgz            
+
+,*  Nathaniel Warburton (System76)             
+
+Feb 22, 2022, 4:41 PM MST             
+
+Hi Philippe,             
+
+Thanks very much for those outputs. Everything looks normal. Just in case we've missed something obvious, but I'm still chatting with QA as well. Could you also attach the full system logs (instructions            
+below)?            
+
+Best,            
+
+Nathaniel            
+
+
+
+--            
+
+
+
+Please open the System76 Driver application to create a set of logs.            
+
+
+
+How to run the System76 Driver            
+
+
+
+On systems running a Gnome Desktop (ie Ubuntu or Pop 20.10 or older)            
+
+1 Click your 'Activities' menu in the top left of your Desktop, type System76 and select the System76 driver.             
+2 Type 'system76' and select the System76 Driver application            
+3 Click the button on the bottom right to 'Create Log Files'            
+4 A log file will populate in your home folder.             
+
+
+
+On systems running Pop 21.04            
+
+1 Press the Super key (located on the bottom left between Ctrl and Alt keys)            
+2 Follow steps 2-4 from above            
+
+
+
+Please attach the log file in a reply to this ticket. Thanks!            
+
+,*  Philippe Gabriel             
+
+Feb 21, 2022, 5:36 PM MST             
+
+Hi Nathaniel,            
+
+No worries, I was fairly busy myself these past couple of days.            
+
+Here is the output of the different commands:            
+
+,* sudo dmidecode            
+
+# dmidecode 3.2            
+Getting SMBIOS data from sysfs.            
+SMBIOS 3.0 present.            
+17 structures occupying 808 bytes.            
+Table at 0x76B27040.            
+
+Handle 0x0000, DMI type 0, 26 bytes            
+BIOS Information            
+Vendor: coreboot            
+Version: 2021-07-20_93c2809            
+Release Date: 07/20/2021            
+ROM Size: 16 MB            
+Characteristics:            
+PCI is supported            
+PC Card (PCMCIA) is supported            
+BIOS is upgradeable            
+Selectable boot is supported            
+ACPI is supported            
+Targeted content distribution is supported            
+BIOS Revision: 4.13            
+Firmware Revision: 0.0            
+
+Handle 0x0001, DMI type 1, 27 bytes            
+System Information            
+Manufacturer: System76            
+Product Name: Lemur Pro            
+Version: lemp10            
+Serial Number: 123456789            
+UUID: Not Settable            
+Wake-up Type: Reserved            
+SKU Number: Not Specified            
+Family: Not Specified            
+
+Handle 0x0002, DMI type 2, 14 bytes            
+Base Board Information            
+Manufacturer: System76            
+Product Name: Lemur Pro            
+Version: lemp10            
+Serial Number: 123456789            
+Asset Tag: Not Specified            
+Features: None            
+Location In Chassis: Not Specified            
+Chassis Handle: 0x0003            
+Type: Unknown            
+
+Handle 0x0003, DMI type 3, 22 bytes            
+Chassis Information            
+Manufacturer: System76            
+Type: Laptop            
+Lock: Not Present            
+Version: Not Specified            
+Serial Number: Not Specified            
+Asset Tag: Not Specified            
+Boot-up State: Safe            
+Power Supply State: Safe            
+Thermal State: Safe            
+Security Status: None            
+OEM Information: 0x00000000            
+Height: Unspecified            
+Number Of Power Cords: Unspecified            
+Contained Elements: 0            
+SKU Number: Not Specified            
+
+Handle 0x0004, DMI type 4, 48 bytes            
+Processor Information            
+Socket Designation: CPU0            
+Type: Central Processor            
+Family: Pentium Pro            
+Manufacturer: GenuineIntel            
+ID: C1 06 08 00 FF FB EB BF            
+Signature: Type 0, Family 6, Model 140, Stepping 1            
+Flags:            
+FPU (Floating-point unit on-chip)            
+VME (Virtual mode extension)            
+DE (Debugging extension)            
+PSE (Page size extension)            
+TSC (Time stamp counter)            
+MSR (Model specific registers)            
+PAE (Physical address extension)            
+MCE (Machine check exception)            
+CX8 (CMPXCHG8 instruction supported)            
+APIC (On-chip APIC hardware supported)            
+SEP (Fast system call)            
+MTRR (Memory type range registers)            
+PGE (Page global enable)            
+MCA (Machine check architecture)            
+CMOV (Conditional move instruction supported)            
+PAT (Page attribute table)            
+PSE-36 (36-bit page size extension)            
+CLFSH (CLFLUSH instruction supported)            
+DS (Debug store)            
+ACPI (ACPI supported)            
+MMX (MMX technology supported)            
+FXSR (FXSAVE and FXSTOR instructions supported)            
+SSE (Streaming SIMD extensions)            
+SSE2 (Streaming SIMD extensions 2)            
+SS (Self-snoop)            
+HTT (Multi-threading)            
+TM (Thermal monitor supported)            
+PBE (Pending break enabled)            
+Version: 11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz            
+Voltage: Unknown            
+External Clock: 100 MHz            
+Max Speed: 4700 MHz            
+Current Speed: 2800 MHz            
+Status: Populated, Enabled            
+Upgrade: Unknown            
+L1 Cache Handle: 0x0006            
+L2 Cache Handle: 0x0007            
+L3 Cache Handle: 0x0008            
+Serial Number: Not Specified            
+Asset Tag: Not Specified            
+Part Number: Not Specified            
+Core Count: 4            
+Core Enabled: 4            
+Thread Count: 8            
+Characteristics:            
+Hardware Thread            
+Execute Protection            
+Enhanced Virtualization            
+
+Handle 0x0005, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE1            
+Configuration: Enabled, Not Socketed, Level 1            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 192 kB            
+Maximum Size: 192 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Data            
+Associativity: 12-way Set-associative            
+
+Handle 0x0006, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE1            
+Configuration: Enabled, Not Socketed, Level 1            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 128 kB            
+Maximum Size: 128 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Instruction            
+Associativity: 8-way Set-associative            
+
+Handle 0x0007, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE2            
+Configuration: Enabled, Not Socketed, Level 2            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 5120 kB            
+Maximum Size: 5120 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Unified            
+Associativity: 20-way Set-associative            
+
+Handle 0x0008, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE3            
+Configuration: Enabled, Not Socketed, Level 3            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 12288 kB            
+Maximum Size: 12288 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Unified            
+Associativity: 12-way Set-associative            
+
+Handle 0x0009, DMI type 16, 23 bytes            
+Physical Memory Array            
+Location: System Board Or Motherboard            
+Use: System Memory            
+Error Correction Type: None            
+Maximum Capacity: 128 GB            
+Error Information Handle: Not Provided            
+Number Of Devices: 2            
+
+Handle 0x000A, DMI type 17, 40 bytes            
+Memory Device            
+Array Handle: 0x0009            
+Error Information Handle: Not Provided            
+Total Width: 64 bits            
+Data Width: 64 bits            
+Size: 8192 MB            
+Form Factor: SODIMM            
+Set: None            
+Locator: Channel-0-DIMM-0            
+Bank Locator: BANK 0            
+Type: DDR4            
+Type Detail: Synchronous            
+Speed: 3200 MT/s            
+Manufacturer: Samsung            
+Serial Number: 00000000            
+Asset Tag: Not Specified            
+Part Number: M471A1G44AB0-CWE            
+Rank: 1            
+Configured Memory Speed: 3200 MT/s            
+Minimum Voltage: 1.2 V            
+Maximum Voltage: 1.2 V            
+Configured Voltage: 1.2 V            
+
+Handle 0x000B, DMI type 17, 40 bytes            
+Memory Device            
+Array Handle: 0x0009            
+Error Information Handle: Not Provided            
+Total Width: 64 bits            
+Data Width: 64 bits            
+Size: 32 GB            
+Form Factor: SODIMM            
+Set: None            
+Locator: Channel-0-DIMM-0            
+Bank Locator: BANK 0            
+Type: DDR4            
+Type Detail: Synchronous            
+Speed: 3200 MT/s            
+Manufacturer: Unknown (4589)            
+Serial Number: 02323201            
+Asset Tag: Not Specified            
+Part Number: NMSO432F82-3200E            
+Rank: 2            
+Configured Memory Speed: 3200 MT/s            
+Minimum Voltage: 1.2 V            
+Maximum Voltage: 1.2 V            
+Configured Voltage: 1.2 V            
+
+Handle 0x000C, DMI type 19, 31 bytes            
+Memory Array Mapped Address            
+Starting Address: 0x00000000000            
+Ending Address: 0x009FFFFFFFF            
+Range Size: 40 GB            
+Physical Array Handle: 0x0009            
+Partition Width: 2            
+
+Handle 0x000D, DMI type 32, 11 bytes            
+System Boot Information            
+Status: No errors detected            
+
+Handle 0x000E, DMI type 41, 11 bytes            
+Onboard Device            
+Reference Designation: VGA compatible controller            
+Type: Video            
+Status: Enabled            
+Type Instance: 0            
+Bus Address: 0000:00:02.0            
+
+Handle 0x000F, DMI type 133, 5 bytes            
+OEM-specific Type            
+Header and Data:            
+85 05 0F 00 01            
+Strings:            
+KHOIHGIUCCHHII            
+
+Handle 0x0010, DMI type 127, 4 bytes            
+End Of Table            
+
+,* sudo dpkg --list | grep linux-image            
+
+rc  linux-image-5.11.0-27-generic                 5.11.0-27.29~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-34-generic                 5.11.0-34.36~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-36-generic                 5.11.0-36.40~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-37-generic                 5.11.0-37.41~20.04.2                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-38-generic                 5.11.0-38.42~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-40-generic                 5.11.0-40.44~20.04.2                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-41-generic                 5.11.0-41.45~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-43-generic                 5.11.0-43.47~20.04.2                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-44-generic                 5.11.0-44.48~20.04.2                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-46-generic                 5.11.0-46.51~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.11.0-7620-generic               5.11.0-7620.21~1626191760~20.04~55de9c3~dev                amd64        Linux kernel image for version 5.11.0 on 64 bit x86 SMP            
+rc  linux-image-5.11.0-7633-generic               5.11.0-7633.35~1630100930~20.04~ae2753e~dev                amd64        Linux kernel image for version 5.11.0 on 64 bit x86 SMP            
+rc  linux-image-5.13.0-27-generic                 5.13.0-27.29~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.13.0-28-generic                 5.13.0-28.31~20.04.1                                       amd64        Signed kernel image generic            
+ii  linux-image-5.13.0-30-generic                 5.13.0-30.33~20.04.1                                       amd64        Signed kernel image generic            
+rc  linux-image-5.13.0-7614-generic               5.13.0-7614.14~1631647151~20.04~930e87c~dev                amd64        Linux kernel image for version 5.13.0 on 64 bit x86 SMP            
+rc  linux-image-5.13.0-7620-generic               5.13.0-7620.20~1634827117~20.04~874b071~dev                amd64        Linux kernel image for version 5.13.0 on 64 bit x86 SMP            
+ii  linux-image-5.15.11-76051511-generic          5.15.11-76051511.202112220937~1640185481~20.04~b3a2c21~dev amd64        Linux kernel image for version 5.15.11 on 64 bit x86 SMP            
+ii  linux-image-5.15.15-76051515-generic          5.15.15-76051515.202201160435~1642693824~20.04~97db1bb~dev amd64        Linux kernel image for version 5.15.15 on 64 bit x86 SMP            
+rc  linux-image-5.15.5-76051505-generic           5.15.5-76051505.202111250933~1638201579~20.04~09f1aa7~dev  amd64        Linux kernel image for version 5.15.5 on 64 bit x86 SMP            
+rc  linux-image-5.15.8-76051508-generic           5.15.8-76051508.202112141040~1639505278~20.04~0ede46a~dev  amd64        Linux kernel image for version 5.15.8 on 64 bit x86 SMP            
+rc  linux-image-5.8.0-63-generic                  5.8.0-63.71~20.04.1                                        amd64        Signed kernel image generic            
+ii  linux-image-generic                           5.15.15.76051515.202201160435~1642693824~20.04~97db1bb~dev amd64        Generic Linux kernel image            
+ii  linux-image-generic-hwe-20.04                 5.13.0.30.33~20.04.17                                      amd64        Generic Linux kernel image            
+
+,* uname -a            
+
+Linux pgab99-laptop 5.15.15-76051515-generic #202201160435~1642693824~20.04~97db1bb~dev-Ubuntu SMP Fri Jan 21 x86_64 x86_64 x86_64 GNU/Linux            
+
+Thank you again for your time and have a nice day!            
+
+Regards,            
+
+--            
+
+Philippe Gabriel -            
+
+pgabriel999@hotmail.com            
+
+,*  Nathaniel Warburton (System76)             
+
+Feb 21, 2022, 4:58 PM MST             
+
+Hi Philippe,            
+
+Sorry for the delay in getting back to you. Thank you for the update. It's odd that you're still getting that response.            
+
+I consulted with the team on this, and I'd like to take a step back and just check a couple of assumptions on my part. When we started you were on the firmware update from January 2022. We had an unrelated bug that            
+forced us to rollback that update to a July 2022 version.            
+
+I am now assuming, based on our previous step of reinstalling the firmware, that we are on the version that was rolled back. Let's check this. Please provide the output again for:            
+
+
+
+sudo dmidecode            
+
+I'd also like to get some information about the kernel we're running. Let's also grab the output for:            
+
+
+
+sudo dpkg --list | grep linux-image            
+
+and             
+
+
+
+uname -a            
+
+Best,            
+
+Nathaniel            
+
+,*  Philippe Gabriel             
+
+Feb 5, 2022, 11:16 AM MST             
+
+Hi Nathaniel,            
+
+My apologies for my late reply, I was a little busy these past couple of days.            
+
+I have followed the article (the CLI section) and have scheduled for the firmware update and then rebooted my system for the update to take place. I also made sure to run these 3 commands that you had specified in            
+your last email which were also mentioned in the article.. Once I started my machine again, I still get the same issue with the charge thresholds. I notice that at the /sys/class/power_supply/BAT0/ directory, the files            
+charge_control_start_threshold and charge_control_end_threshold are still not present. Furthermore, when I run from the terminal the command system76-power charge-thresholds, it still shows me the            
+message that daemon returned an error message: "Not running System76 firmware with charge threshold support"            
+
+Regards,            
+
+--            
+
+Philippe Gabriel -            
+
+,*  Nathaniel Warburton (System76)             
+
+Feb 3, 2022, 12:22 PM MST             
+
+Hello Philippe,            
+
+
+
+Thanks for getting me that output. It looks like the system is correctly identifying the firmware. So I think we're okay there.            
+
+
+
+That said, I'd still like to try reinstalling the firmware to see if that fixes the battery problem.            
+
+
+
+We have a support article on updating/reinstalling firmware here:            
+
+https://support.system76.com/articles/system-firmware             
+
+
+
+Please look that entire article over as it contains important setup information, but specifically I'd like to run these commands:            
+
+
+
+sudo apt update            
+sudo apt install system76-firmware            
+sudo system76-firmware-cli schedule            
+
+
+Source: https://support.system76.com/articles/system-firmware#starting-the-update-cli             
+
+
+
+The first command makes sure the repos are up to date. The second, makes sure that the firmware application is installed. The third, and final command tells the system to update/reinstall the firmware on the next            
+reboot.            
+
+
+
+Once that's done, let's try setting the battery thresholds again.            
+
+
+
+Best,            
+
+
+
+Nathaniel            
+
+,*  Philippe Gabriel             
+
+Feb 2, 2022, 5:04 PM MST             
+
+Hi Nathaniel,            
+
+Here is the output for sudo dmidecode:            
+
+# dmidecode 3.2            
+Getting SMBIOS data from sysfs.            
+SMBIOS 3.3.0 present.            
+# SMBIOS implementations newer than version 3.2.0 are not# fully supported by this version of dmidecode.            
+Table at 0xA7F964000.            
+
+Handle 0x0000, DMI type 0, 26 bytes            
+BIOS Information            
+Vendor: coreboot            
+Version: 2022-01-06_c73e482            
+Release Date: 01/05/2022            
+ROM Size: 16 MB            
+Characteristics:            
+PCI is supported            
+PC Card (PCMCIA) is supported            
+BIOS is upgradeable            
+Selectable boot is supported            
+ACPI is supported            
+Targeted content distribution is supported            
+BIOS Revision: 4.15            
+Firmware Revision: 0.0            
+
+Handle 0x0001, DMI type 1, 27 bytes            
+System Information            
+Manufacturer: System76            
+Product Name: Lemur Pro            
+Version: lemp10            
+Serial Number: 123456789            
+UUID: Not Settable            
+Wake-up Type: Reserved            
+SKU Number: Not Specified            
+Family: Not Specified            
+
+Handle 0x0002, DMI type 2, 14 bytes            
+Base Board Information            
+Manufacturer: System76            
+Product Name: Lemur Pro            
+Version: lemp10            
+Serial Number: 123456789            
+Asset Tag: Not Specified            
+Features: None            
+Location In Chassis: Not Specified            
+Chassis Handle: 0x0003            
+Type: Motherboard            
+
+Handle 0x0003, DMI type 3, 22 bytes            
+Chassis Information            
+Manufacturer: System76            
+Type: Laptop            
+Lock: Not Present            
+Version: Not Specified            
+Serial Number: Not Specified            
+Asset Tag: Not Specified            
+Boot-up State: Safe            
+Power Supply State: Safe            
+Thermal State: Safe            
+Security Status: None            
+OEM Information: 0x00000000            
+Height: Unspecified            
+Number Of Power Cords: 1            
+Contained Elements: 0            
+SKU Number: Not Specified            
+
+Handle 0x0004, DMI type 4, 48 bytes            
+Processor Information            
+Socket Designation: CPU0            
+Type: Central Processor            
+Family: Pentium Pro            
+Manufacturer: GenuineIntel            
+ID: C1 06 08 00 FF FB EB BF            
+Signature: Type 0, Family 6, Model 140, Stepping 1            
+Flags:            
+FPU (Floating-point unit on-chip)            
+VME (Virtual mode extension)            
+DE (Debugging extension)            
+PSE (Page size extension)            
+TSC (Time stamp counter)            
+MSR (Model specific registers)            
+PAE (Physical address extension)            
+MCE (Machine check exception)            
+CX8 (CMPXCHG8 instruction supported)            
+APIC (On-chip APIC hardware supported)            
+SEP (Fast system call)            
+MTRR (Memory type range registers)            
+PGE (Page global enable)            
+MCA (Machine check architecture)            
+CMOV (Conditional move instruction supported)            
+PAT (Page attribute table)            
+PSE-36 (36-bit page size extension)            
+CLFSH (CLFLUSH instruction supported)            
+DS (Debug store)            
+ACPI (ACPI supported)            
+MMX (MMX technology supported)            
+FXSR (FXSAVE and FXSTOR instructions supported)            
+SSE (Streaming SIMD extensions)            
+SSE2 (Streaming SIMD extensions 2)            
+SS (Self-snoop)            
+HTT (Multi-threading)            
+TM (Thermal monitor supported)            
+PBE (Pending break enabled)            
+Version: 11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz            
+Voltage: Unknown            
+External Clock: 100 MHz            
+Max Speed: Unknown            
+Current Speed: 2800 MHz            
+Status: Populated, Enabled            
+Upgrade: Unknown            
+L1 Cache Handle: 0x0006            
+L2 Cache Handle: 0x0007            
+L3 Cache Handle: 0x0008            
+Serial Number: Not Specified            
+Asset Tag: Not Specified            
+Part Number: Not Specified            
+Core Count: 4            
+Core Enabled: 4            
+Thread Count: 8            
+Characteristics:            
+Hardware Thread            
+Execute Protection            
+Enhanced Virtualization            
+
+Handle 0x0005, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE1            
+Configuration: Enabled, Not Socketed, Level 1            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 192 kB            
+Maximum Size: 192 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Data            
+Associativity: 12-way Set-associative            
+
+Handle 0x0006, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE1            
+Configuration: Enabled, Not Socketed, Level 1            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 128 kB            
+Maximum Size: 128 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Instruction            
+Associativity: 8-way Set-associative            
+
+Handle 0x0007, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE2            
+Configuration: Enabled, Not Socketed, Level 2            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 5120 kB            
+Maximum Size: 5120 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Unified            
+Associativity: 20-way Set-associative            
+
+Handle 0x0008, DMI type 7, 27 bytes            
+Cache Information            
+Socket Designation: CACHE3            
+Configuration: Enabled, Not Socketed, Level 3            
+Operational Mode: Unknown            
+Location: Internal            
+Installed Size: 12288 kB            
+Maximum Size: 12288 kB            
+Supported SRAM Types:            
+Unknown            
+Installed SRAM Type: Unknown            
+Speed: Unknown            
+Error Correction Type: Unknown            
+System Type: Unified            
+Associativity: 12-way Set-associative            
+
+Handle 0x0009, DMI type 16, 23 bytes            
+Physical Memory Array            
+Location: System Board Or Motherboard            
+Use: System Memory            
+Error Correction Type: None            
+Maximum Capacity: 128 GB            
+Error Information Handle: Not Provided            
+Number Of Devices: 2            
+
+Handle 0x000A, DMI type 17, 40 bytes            
+Memory Device            
+Array Handle: 0x0009            
+Error Information Handle: Not Provided            
+Total Width: 64 bits            
+Data Width: 64 bits            
+Size: 8192 MB            
+Form Factor: SODIMM            
+Set: None            
+Locator: Channel-0-DIMM-0            
+Bank Locator: BANK 0            
+Type: DDR4            
+Type Detail: Unknown Synchronous            
+Speed: 3200 MT/s            
+Manufacturer: Samsung            
+Serial Number: 00000000            
+Asset Tag: Channel-0-DIMM-0-AssetTag            
+Part Number: M471A1G44AB0-CWE            
+Rank: 1            
+Configured Memory Speed: 3200 MT/s            
+Minimum Voltage: 1.2 V            
+Maximum Voltage: 1.2 V            
+Configured Voltage: 1.2 V            
+
+Handle 0x000B, DMI type 17, 40 bytes            
+Memory Device            
+Array Handle: 0x0009            
+Error Information Handle: Not Provided            
+Total Width: 64 bits            
+Data Width: 64 bits            
+Size: 32 GB            
+Form Factor: SODIMM            
+Set: None            
+Locator: Channel-0-DIMM-0            
+Bank Locator: BANK 0            
+Type: DDR4            
+Type Detail: Unknown Synchronous            
+Speed: 3200 MT/s            
+Manufacturer: Unknown (4589)            
+Serial Number: 02323201            
+Asset Tag: Channel-0-DIMM-0-AssetTag            
+Part Number: NMSO432F82-3200E            
+Rank: 2            
+Configured Memory Speed: 3200 MT/s            
+Minimum Voltage: 1.2 V            
+Maximum Voltage: 1.2 V            
+Configured Voltage: 1.2 V            
+
+Handle 0x000C, DMI type 19, 31 bytes            
+Memory Array Mapped Address            
+Starting Address: 0x00000000000            
+Ending Address: 0x009FFFFFFFF            
+Range Size: 40 GB            
+Physical Array Handle: 0x0009            
+Partition Width: 2            
+
+Handle 0x000D, DMI type 20, 35 bytes            
+Memory Device Mapped Address            
+Starting Address: 0x00000000000            
+Ending Address: 0x001FFFFFFFF            
+Range Size: 8 GB            
+Physical Device Handle: 0x000A            
+Memory Array Mapped Address Handle: 0x000C            
+Partition Row Position: Unknown            
+Interleave Position: Unknown            
+Interleaved Data Depth: Unknown            
+
+Handle 0x000E, DMI type 20, 35 bytes            
+Memory Device Mapped Address            
+Starting Address: 0x00200000000            
+Ending Address: 0x009FFFFFFFF            
+Range Size: 32 GB            
+Physical Device Handle: 0x000A            
+Memory Array Mapped Address Handle: 0x000C            
+Partition Row Position: Unknown            
+Interleave Position: Unknown            
+Interleaved Data Depth: Unknown            
+
+Handle 0x000F, DMI type 32, 11 bytes            
+System Boot Information            
+Status: No errors detected            
+
+Handle 0x0010, DMI type 41, 11 bytes            
+Onboard Device            
+Reference Designation: VGA compatible controller            
+Type: Video            
+Status: Enabled            
+Type Instance: 0            
+Bus Address: 0000:00:02.0            
+
+Handle 0x0011, DMI type 133, 5 bytes            
+OEM-specific Type            
+Header and Data:            
+85 05 11 00 01            
+Strings:            
+KHOIHGIUCCHHII            
+
+Handle 0xFEFF, DMI type 127, 4 bytes            
+End Of Table            
+
+Thanks again and have a nice day!            
+
+Regards,            
+
+--            
+
+Philippe Gabriel -            
+
+,*  Nathaniel Warburton (System76)             
+
+Feb 2, 2022, 4:58 PM MST             
+
+Hi Philppe,            
+
+
+
+Thanks for that output. It looks like the package is installed            
+just fine.            
+
+
+
+Could you also provide:            
+
+
+
+sudo dmidecode            
+
+
+Thanks!            
+
+
+
+Nathaniel            
+
+,*  Philippe Gabriel             
+
+Feb 1, 2022, 6:30 PM MST             
+
+Hi Nathaniel,            
+
+Thanks for the quick response. Here is the output of the apt policy system76-dkms command:            
+
+system76-dkms:            
+Installed: 1.0.13~1630342318~20.04~68bd479~dev            
+Candidate: 1.0.13~1630342318~20.04~68bd479~dev            
+Version table:            
+,*** 1.0.13~1630342318~20.04~68bd479~dev 500            
+500 http://ppa.launchpad.net/system76-dev/stable/ubuntu focal/main amd64 Packages            
+100 /var/lib/dpkg/status            
+
+Regards,            
+
+--            
+
+Philippe Gabriel -            
+
+,*  Nathaniel Warburton (System76)             
+
+Feb 1, 2022, 4:01 PM MST             
+
+Hello Philippe,            
+
+
+
+Thanks for reaching out and providing that information. I'm happy to help!            
+
+
+
+Based on your report, I touched base with our QA team and they confirmed that the January firmware update did not remove charging thresholds and seems to still be working in their master file on the Lemp 10. So it            
+doesn't look like that firmware update in particular would have affected the charging thresholds.            
+
+
+
+We are in the process of doing some firmware revisions (in fact that most recent January update has been rolled back).            
+
+
+
+Let's still see if we can figure out what is happening here.            
+
+Please the output of the Terminal command:            
+
+
+
+apt policy system76-dkms            
+
+
+Best,            
+
+
+
+Nathaniel            
+
+,*  Philippe Gabriel             
+
+Jan 31, 2022, 9:06 PM MST             
+
+Recent changes to system: Using emacs EXWM desktop session instead of the default.            
+
+OS and version: Ubuntu 20.04.3 LTS            
+
+Hi, I have bought this laptop somewhere around past mid 2021 and I have really enjoyed it so far, it has everything I could ever need and much more. One of the features I loved a lot about this model is that it supported            
+setting one's own charging thresholds to preserve battery life. I had followed this reddit post's (https://www.reddit.com/r/System76/comments/kcqt9o/how_to_enable_and_control_charging_thresholds_on/) advice on the            
+matter as well as an article on your website about the matter.            
+
+Although recently I noticed these thresholds not working on my machine anymore. It was around the time I had installed the last firmware update which came out around 6th of January. I hadn't installed immediately            
+then, but I had noticed that after I did update, the next day I started using the laptop, trying to set the thresholds wouldn't work anymore. And when I try to run a command using the `system76-power` package to change            
+the thresholds, I receive a message that I hadn't received previously: daemon returned an error message: "Not running System76 firmware with charge threshold support".            
+
+At first it didn't bother me so much, I thought I'd make do until the next firmware update where it would be fixed hopefully. But now I am a little worried because it has been a couple of weeks since I have not been using            
+the charge threshold feature and I haven't found anything on either the GitHub repo or on reddit any body with a similar issue.            
+
+Should I expect everything to be fixed by the next firmware update? Is there anything I should do now? Is there any other information you need me to provide?            
+
+Thank you for your time and have nice day!            
+This email is a service from System76. Delivered by Zendesk           
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+,*
+[R5XOXD-V6PX] 
+

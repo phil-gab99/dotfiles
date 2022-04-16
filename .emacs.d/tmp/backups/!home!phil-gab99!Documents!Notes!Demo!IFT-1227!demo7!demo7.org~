@@ -1,0 +1,222 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: IFT-1227 Demo 7
+#+date: <2022-03-10 Thu>
+#+author: Philippe Gabriel
+#+email: philippe.gabriel.1@umontreal.ca
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.01 (Org mode 9.5.2)
+#+cite_export:
+
+* Simulateur MARS v4.5
+
+Télécharger à partir d'[[http://courses.missouristate.edu/KenVollmar/MARS/download.htm][ici]]
+Nécessaire d'avoir Java version 9 ou + (Vous devriez déjà avoir Java d'installer suite au cours 1215)
+
+* Exercices de démo
+
+Il serait utile d'avoir [[https://studium.umontreal.ca/pluginfile.php/7077706/mod_resource/content/1/MIPS_Green_Sheet.pdf][ce document]] en main en faisant ces exercices
+
+** Exercice 6.10
+
+Format pour stockage
+
+Instructions R: ~opcode rs rt rd shamt funct~
+Instructions I: ~opcode rs rt immediate~
+Instructions J: ~opcode address~
+
+Convertir en langage machine
+
+#+begin_src mips
+
+          add         $t0, $s0, $s1       
+
+          lw          $t0, 0x20($t7)      
+
+          addi        $s0, $0, 10
+
+#+end_src
+
+*** Solution
+
+#+begin_src mips
+
+        # 0000 00 | 10 000 | 1 0001 | 0100 0 | 000 00 | 10 0000
+        add         $t0, $s0, $s1       # 0 | 16 | 17 | 8 | 0 | 32
+
+        # 1000 11 | 01 111 | 0 1000 | 0000 0000 0010 0000
+        lw          $t0, 0x20($t7)      # 35 | 15 | 8 | 32
+
+        # 0010 00 | 00 000 | 1 0000 | 0000 0000 0000 1010
+        addi        $s0, $0, 10         # 8 | 0 | 16 | 10
+
+#+end_src
+
+** Exercice 6.14
+
+Convertir en assembleur MIPS
+
+#+begin_src mips
+
+          0x00400000  0x20080000          
+          0x00400004  0x20090001
+          0x00400008  0x0089502A
+          0x0040000C  0x15400003
+          0x00400010  0x01094020          
+          0x00400014  0x21290002
+          0x00400018  0x08100002
+          0x0040001C  0x01001020
+          0x00400020  0x03E00008
+
+#+end_src
+
+*** Solution
+
+#+begin_src mips
+
+  # 0010 00 | 00 000 | 0 1000 | 0000 0000 0000 0000
+          addi        $t0, $0, 0          # Adresse 128
+
+  # 0010 00 | 00 000 | 0 1001 | 0000 0000 0000 0001
+          addi        $t1, $0, 1          # Adresse 132
+
+  # 0000 00 | 00 100 | 0 1001 | 0101 0 | 000 00 | 10 1010
+          slt         $t2, $a0, $t1       # Adresse 136
+
+  # 0001 01 | 01 010 | 0 0000 | 0000 0000 0000 0011
+          bne         $t2, $0, 3          # Adresse 140
+  #       bne         $t2, $0, tag
+
+  # 0000 00 | 01 000 | 0 1001 | 0100 0 | 000 00 | 10 0000
+          add         $t0, $t0, $t1       # Adresse 144
+
+  # 0010 00 | 01 001 | 0 1001 | 0000 0000 0000 0010
+          addi        $t1, $t1, 2         # Adresse 148
+
+  # 0000 10 | 00 0001 0000 0000 0000 0000 0010
+          j           0x00100002          # Adresse 152
+
+  # 0000 00 | 01 000 | 0 0000 | 0001 0 | 000 00 | 10 0000
+  tag:    add         $v0, $t0, $0        # Adresse 156
+
+  # 0000 00 | 11 111 | 0 0000 | 0000 0 | 000 00 | 00 1000
+          jr          $ra                 # Adresse 160
+
+#+end_src
+
+** Exercice 6.17
+
+Implémenter en MIPS en utilisant ~slt~. On suppose que ~g~ et ~h~ correspondent aux registres ~$s0~ et ~$s1~
+
+#+begin_src c
+
+  // a)
+
+  if (g > h)
+      g = g + h;
+  else
+      g = g - h;
+
+#+end_src
+
+#+begin_src c
+
+  // b)
+
+  if (g >= h)
+      g = g + 1;
+  else
+      h = h - 1;
+
+#+end_src
+
+#+begin_src c
+
+  // c)
+
+  if (g <= h)
+      g = 0;
+  else
+      h = 0;
+
+#+end_src
+
+*** Solution
+
+#+begin_src mips
+
+  # a)
+
+          slt         $t0, $s1, $s0       # $t0 = (g > h ? 1 : 0)
+          beq         $t0, $0, else       # if $t0 == 0 goto else
+          add         $s0, $s0, $s1       # g = g + h
+          j           end
+  else:   sub         $s0, $s0, $s1       # g = g - h
+  end:
+
+#+end_src
+
+#+begin_src mips
+
+  # b)
+
+          slt         $t0, $s0, $s1       # #t0 = (g >= h ? 0 : 1)
+          bne         $t0, $0, else       # if $t0 != 0 goto else
+          addi        $s0, $s0, 1         # g = g + 1
+          j           end
+  else:   subi        $s1, $s1, 1         # h = h - 1
+  end:
+ 
+#+end_src
+
+#+begin_src mips
+
+  # c)
+
+          slt         $t0, $s1, $s0       # $t0 = (g <= h ? 0 : 1)
+          bne         $t0, $0, else       # if $t0 != 0 goto else
+          li          $s0, $0             # g = 0
+          j           end
+  else:   li          $s1, $0             # h = 0
+  end:
+
+#+end_src
+
+** Exercice 6.18
+
+Écrire la spécification suivante en code haut niveau
+
+~find42(int array[]. int size)~
+- ~size~: Taille de ~array~
+- ~array~: Adresse du premier élément (i.e. adresse de ~array[0]~)
+- ~return~: Index du premier élément rencontré dans ~array~ de valeur ~42~, ~-1~ sinon
+
+#+begin_src c
+
+  int find42(int array[], int size) {
+      for (int i = 0; i < size; ++i)
+          if (array[i] == 42) return i;
+      return -1;
+  }
+
+#+end_src
+
+*** Solution
+
+#+begin_src c
+
+  int find42(int array[], int size) {
+      for (int i = 0; i < size; i++) {
+          if (array[i] == 42) {
+              return i;
+          }
+      }
+      return -1;
+  }
+
+#+end_src

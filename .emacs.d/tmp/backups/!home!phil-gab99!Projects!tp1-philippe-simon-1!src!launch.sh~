@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cmake ./
+make
+valgrind --show-leak-kinds=all --leak-check=full --leak-resolution=med --trace-children=no --track-origins=yes --vgdb=no --log-file=valgrind-out.txt ./TP1

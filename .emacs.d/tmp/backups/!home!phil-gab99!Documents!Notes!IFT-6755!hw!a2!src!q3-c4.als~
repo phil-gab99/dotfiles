@@ -1,0 +1,25 @@
+module KripkeModel
+
+sig Prop {}
+
+sig State {
+    props: set Prop
+}
+
+sig StateMachine {
+    states: set State,
+    init: set states,
+    next: states -> states,
+    final: set states
+} {
+    // Non-empty set of initial states
+    #init > 0
+
+    // Final states have no next state
+    all s: final | #(s.^next) = 0
+}
+
+pred Liveness(m: StateMachine, p: Prop) {
+    all s: (m.init).*(m.next) |
+        some t: s.*(m.next) | p in t.props
+}

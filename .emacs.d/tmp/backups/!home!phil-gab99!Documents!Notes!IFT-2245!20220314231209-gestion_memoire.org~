@@ -1,0 +1,96 @@
+:PROPERTIES:
+:ID:       08d8bd5f-fd4b-4300-b0c4-bb55a7276ea2
+:END:
+#+title: ift2245-gestion-memoire
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-14 Mon 23:12]
+
+* Gestion mémoire contiguë
+
+Allocation à plusieurs partitions
+- Avec des partitions de *taille fixe* - Le degré de multiprogrammation est limité par le nombre de partitions
+- Avec des partitions de *taille variable* - Mieux pour l'efficacité (dimensionnées pour les besoins d'un processus donné)
+Le système d'exploitation conserve des informations sur:
+- Les partitions allouées
+- Les partitions libres (trou)
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314231209-gestion_memoire.org_20220314_231414_kQqShV.png]]
+
+* Problème de l'allocation mémoire dynamique
+
+Comment satisfaire une requêtes de $N$ bytes?
+- First-fit - Utiliser le premier "trou" assez grand
+- Best-fit - Utiliser le plus petit "trou" assez grand
+- Worst-fit - Utiliser le plus gros "trou"
+
+* Fragmentation
+
+*Fragmentation externe* $\Rightarrow$ Mémoire inutilisable parce que "trou" est trop petit
+- Ex.: Il y a assez de mémoire libre mais fragmentée en plusieurs trous trop petits
+
+*Fragmentation interne* $\Rightarrow$ Mémoire gaspillée par le système
+- Ex.: Le processus à besoin de 600 KB, mais le SE alloue par morceaux de 1 M, laissant 400 KB inutilisées
+
+Fragmentation totale peut être de l'ordre de 33%
+  
+* Segmentation
+
+Généralisation de ~base~ + ~limit~
+
+Diviser l'espace logique d'un programme en segments:
+- ~main program~
+- ~procedure~
+- ~function~
+- ~method~
+- ~object~
+- ~local variables~
+- ~global variables~
+- ~common block~
+- ~stack~
+- ~symbol table~
+- ~arrays~
+- ...
+
+Chaque segment a sa propre ~base~ et ~limit~
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314231209-gestion_memoire.org_20220314_232044_yW7csn.png]]
+
+Vue logique de la segmentation:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314231209-gestion_memoire.org_20220314_232119_KLnhB4.png]]
+
+** Architecture de segmentation
+
+- Adresses logique ~<SegID, offset>~
+- Tableau de segments - Chaque entrée du tableau a:
+  - ~base~ - Contient l'adresse physique de départ où les segments résident dans la mémoire
+  - ~limit~ - Spécifie la longueur du segment
+- Adresse physique ~= base[SegID] + offset~
+- Vérification: ~offset < limit[SegID]~
+- *Segment-table base register* (STBR) - Pointe vers emplacement du tableau de segment en mémoire
+- *Segment-table length register* (STLR) - Indique le nombre de segments utilisés par un programme
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314231209-gestion_memoire.org_20220314_232449_VKAwNU.png]]
+
+** Problèmes avec segmentation
+
+- Jamais assez de segments - On aimerait un segment par objet
+- Trop de segments - Tableau devient très large
+- Adresses trop grandes
+- Fragmentation externe
+
+* Pagination
+
+Diviser l'espace logique en *pages*
+Diviser l'espace physique en *frames*
+
+- Chaque page et framme ont la même taille (ex.: 4 KB)
+- *Table de pages* (page table) - Effectue la traduction d'adresses logiques en adresses physiques
+- Pas de fragmentation externe
+- Fragmentation interne à cause de l'allocation par page
+
+
+|                 | Allocation contiguë  | Allocation non-contiguë | Fragmentation |
+|-----------------+----------------------+-------------------------+---------------|
+| Taille variable | Partitions variables | Segmentation            | Externe       |
+| Taille fixe     | Partitions fixes     | Pagination              | Interne       |

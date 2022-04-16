@@ -1,0 +1,263 @@
+% * Start
+\documentclass[12pt, titlepage]{article}
+
+% * Packages
+\usepackage{amsmath, amssymb}
+\usepackage[margin=0.45in]{geometry}
+\usepackage{calrsfs}
+
+% * Intro
+\date{Jeudi 7 Avril 2022}
+\title{\textbf{IFT2935 - Devoir 3} \\ Base de Données}
+\author{Vincent Falardeau - 20170932 \\ Philippe Gabriel - 20120600}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+% * Exercice 1
+\section*{Exercice 1}
+
+Soit la relation $R(A, B, C, D, E)$ avec $\mathcal F = \{A \to B; A \to C; B, C
+\to A\}$. On remarque rapidement que $\mathcal F$ est à la fois une couverture
+minimale de $\mathcal F^+$ et contient toutes les dépendances élémentaires de
+$\mathcal F^+$.
+
+\begin{enumerate}
+  
+% ** Question 1
+\item Utilisez l'algorithme de Boyce-Codd pour obtenir une décomposition de
+  $\langle R(A, B, C, D, E), \mathcal F \rangle$ en relations qui soient en BCNF
+
+  \begin{itemize}
+  \item Initialiser $\mathcal D$ à $\{R(U, \mathcal F)\}$ où $U = \{A, B, C, D,
+    E\}$
+  \item Par la définition de Zaniolo, on remarque que $R \in \mathcal D$ n'est
+    pas en BCNF -- $A \to B \in \mathcal F \ | \ B \notin \{A\} \land A^+ \neq
+    U$
+    \begin{itemize}
+    \item On sélectionne la dépendance $A \to B \in \mathcal F$ car $A \neq A^+$
+      et $A^+ \neq U$
+    \item On pose $U_1 = \{A^+\} = \{A, B, C\}$ et $U_2 = \{A\} \cup \{U -
+      A^+\} = \{A, D, E\}$ -- On a que $\mathcal F_1 = \{A \to B; A \to C; B, C
+      \to A\}$ et que $\mathcal F_2 = \emptyset$
+      \begin{itemize}
+      \item Ceci est possible car $\mathcal F$ contient toutes les dépendances
+        élémentaires de $\mathcal F^+$, donc $\mathcal F_1$ contient ainsi
+        l'ensemble des dépendances fonctionnelles ne faisant intervenir que des
+        attributs de $U_1$, soit toutes les dépendances fonctionnelles de
+        $\mathcal F$
+      \end{itemize}
+    \item On remplace $R(U, \mathcal F)$ par ses projections sur $U_1$ et $U_2$,
+      $R_1(U_1, \mathcal F_1)$ et $R_2(U_2, \mathcal F_2)$
+      \begin{itemize}
+      \item On remarque bien que $R = R_1 \Join R_2$
+      \end{itemize}
+    \end{itemize}
+  \item On a maintenant que $\mathcal D = \{R_1(U_1, \mathcal F_1), R_2(U_2,
+    \mathcal F_2)\}$
+  \item Par la définition de Zaniolo, $R_1$ est en BCNF -- $\nexists X \to Y \in
+    \mathcal F_1 \ | \ Y \notin \{X\} \land X^+ \neq U_1^+$
+  \item Par la définition de Zaniolo, $R_2$ est en BCNF -- $\nexists X \to Y \in
+    \mathcal F_2 \ | \ Y \notin \{X\} \land X^+ \neq U_2^+$
+  \item Il n'existe plus de relations dans $\mathcal D$ qui ne sont pas en BCNF
+    -- Donc on retourne les relations dans $\mathcal D$
+  \end{itemize}
+
+  \begin{align*}
+    & R_1(\underline A, B, C) \quad && \mathcal F_1 = \{A \to B; A \to C; B, C \to
+    A\} \\
+    & R_2(\underline{\# A, D, E}) \quad && \mathcal F_2 = \emptyset
+  \end{align*}
+
+% ** Question 2
+\item Dites si les dépendances fonctionnelles sont préservées et justifiez votre
+  réponse.
+
+  Par la décomposition entreprise à l'aide de l'algorithme de Boyce-Codd, on
+  remarque que $\mathcal F_1 \cup \mathcal F_2 = \mathcal F$ ce qui nous indique
+  que les dépendances fonctionnelles sont présevées.
+\end{enumerate}
+\newpage
+
+% * Exercice 2
+\section*{Exercice 2}
+
+Soit $\langle R(C, E, H, N, P, S), \mathcal F \rangle$ une relation avec
+ensemble de dépendances fonctionnelles
+
+\[\mathcal F = \{C \to P \quad H, S \to C \quad H, P \to S \quad C, E \to N
+  \quad H, E \to S\}\]
+
+\begin{enumerate}
+
+% ** Question 1
+\item Montrez que $\mathcal F$ est une couverture minimale de $\mathcal F^+$
+  
+  On voit que $\mathcal F$ est une couverture minimale de $\mathcal F^+$ car:
+  \begin{itemize}
+  \item Toutes les dépendances sont élémentaires:
+    \begin{itemize}
+    \item $C \to P$ est élémentaire -- Elle ne contient qu'un déterminant
+    \item $H, S \to C$ est élémentaire -- $C \notin H^+ = \{H\} \land C \notin
+      S^+ = \{S\}$
+    \item $H, P \to S$ est élémentaire -- $S \notin H^+ = \{H\} \land S \notin
+      P^+ = \{P\}$
+    \item $C, E \to N$ est élémentaire -- $N \notin C^+ = \{C, P\} \land N
+      \notin E^+ = \{E\}$
+    \item $H, E \to S$ est élémentaire -- $S \notin H^+ = \{H\} \land S \notin
+      E^+ = \{E\}$
+    \end{itemize}
+  \item Aucune dépendance n'est redondante -- Aucune dépendance ne peut être
+    supprimée sans enlever des dépendances de $\mathcal F^+$:
+    \begin{itemize}
+    \item $C \to P$ n'est pas redondante -- $C^+_{\mathcal F} \neq C^+_{\mathcal
+        F - \{C \to P\}} \Rightarrow \{C, P\} \neq \{C\}$
+    \item $H, S \to C$ n'est pas redondante -- $(H S)^+_{\mathcal F} \neq (H
+      S)^+_{\mathcal F - \{H, S \to C\}} \Rightarrow \{H, S, C, P\} \neq \{H, S\}$
+    \item $H, P \to S$ n'est pas redondante -- $(H P)^+_{\mathcal F} \neq (H
+      P)^+_{\mathcal F - \{H, P \to S\}} \Rightarrow \{H, P, S, C\} \neq \{H, P\}$
+    \item $C, E \to N$ n'est pas redondante -- $(C E)^+_{\mathcal F} \neq (C
+      E)^+_{\mathcal F - \{C, E \to N\}} \Rightarrow \{C, E, N, P\} \neq \{C, E,
+      P\}$
+    \item $H, E \to S$ n'est pas redondante -- $(H E)^+_{\mathcal F} \neq (H
+      E)^+_{\mathcal F - \{H, E \to S\}} \Rightarrow \{H, E, S, C, P, N\} \neq \{H,
+      E\}$
+    \end{itemize}
+  \end{itemize}
+  Donc, puisque toutes les dépendances sont élémentaires et qu'il n'y a aucune
+  redondance, $\mathcal F$ est une couverture minimale de $\mathcal F^+$
+
+% ** Question 2
+\item Déterminer toutes les dépendances élémentaires de $\mathcal F^+$
+
+  Pour vérifier que $X \to Y \in \mathcal F^+$ et est élémentaire, il suffit de
+  vérifier que $Y \subseteq (X^+ - \{X\})$ dans $F^+$:
+  \begin{align*}
+    & \{C \to P; \ H, S \to C; \ H, P \to S; \ C, E \to N; \ H, E \to S\} \\
+    & \{C \to P; \ H, S \to C, P; \ H, P \to S; \ C, E \to N; \ H, E \to S\} \\
+    & \{C \to P; \ H, S \to C, P; \ H, P \to S, C; \ C, E \to N; \ H, E \to S\}
+    \\
+    & \{C \to P; \ H, S \to C, P; \ H, P \to S, C; \ C, E \to N, P; \ H, E \to
+      S\} \\
+    & \{C \to P; \ H, S \to C, P; \ H, P \to S, C; \ C, E \to N, P; \ H, E \to
+      S, C, P, N\} \\
+  \end{align*}
+  Donc les dépendances élémentaires de $\mathcal F^+$ sont:
+  \[\{C \to P; \ H, S \to C, P; \ H, P \to S, C; \ C, E \to N, P; \ H, E \to
+  S, C, P, N\} \in \mathcal F^+\]
+
+% ** Question 3
+\item Trouvez toutes les clés de $R$
+  Un ensemble $X$ est une super-clé de $R$ si $X^+ = \{C, E, H, N, P, S\} = U$.
+  Une clé est une super-clé minimale
+
+  On commence par trouver de tel $X$ tel que $X^+ = U$ pour ensuite tenter
+  d'enlever un à un les attributs $A$ de $X$ de sorte à préserver $(X - \{A\})^+
+  = U$:
+
+  \begin{itemize}
+  \item Puisque les attributs $H$ et $E$ ne sont jamais à la droite d'une
+    dépendance fonctionnelle (i.e. ne sont jamais déterminés), alors ils doivent
+    obligatoirement faire partie d'une super-clé
+  \item On remarque par contre que $(HE)^+ = U$ -- Il s'agit donc déjà d'une
+    super-clé
+  \item Pour déterminer si c'est une clé minimale il faut tenter d'enlever des
+    attributs de $\{H, E\}$
+  \item Cependant, puisqu'aucun de ces attributs ne figurent à droite d'une
+    dépendance fonctionnelle, on ne peut pas enlever l'un où l'autre sans faire
+    sorte que l'ensemble résultant n'est plus une super-clé
+  \item Donc $\{H, E\}$ est une super-clé minimale et s'agit alors d'une clé de
+    $R$
+  \item Puisque $\{H, E\}$ doit appartenir à n'importe quelle autre super-clé,
+    il s'agit alors de la seule clé car $\{H, E\}$ est une super-clé minimale
+  \end{itemize}
+
+  Donc la seule clé de $R$ est $\{H, E\}$
+
+% ** Question 4
+\item Donnez une décomposition de $R$ en 3NF en utilisant l'algorithme de
+  Bernstein et en précisant bien les dépendances fonctionnelles induites sur les
+  relations de la décomposition
+
+  Pour utiliser l'algorithme de Bernstein, nous allons supposer que la relation
+  $R$ est 1NF puisqu'il s'agit d'une précondition pour entreprendre
+  l'algorithme
+
+  \begin{itemize}
+  \item On initialise $\mathcal P$ (ensemble de projections) à l'ensemble vide
+  \item On fixe la couverture minimale de $\mathcal F$ qui s'agit de $\mathcal
+    F$ dans ce cas
+  \item Pour chaque déterminant $X$ distinct d'une dépendance fonctionnelle de
+    $\mathcal F$
+    \begin{itemize}
+    \item $\mathcal P \gets \mathcal P \cup R_1(\underline C, P) \ | \
+      R_1(\underline C, P) = \pi_{CP}(R)$ avec $\mathcal F_1 = \{C \to P\}$
+    \item $\mathcal P \gets \mathcal P \cup R_2(\underline {H, S}, C) \ | \
+      R_2(\underline {H, S}, C) = \pi_{HSC}(R)$ avec $\mathcal F_2 = \{H, S \to
+      C\}$
+    \item $\mathcal P \gets \mathcal P \cup R_3(\underline {H, P}, S) \ | \
+      R_3(\underline {H, P}, S) = \pi_{HPS}(R)$ avec $\mathcal F_3 = \{H, P \to
+      S\}$
+    \item $\mathcal P \gets \mathcal P \cup R_4(\underline {C, E}, N) \ | \
+      R_4(\underline {C, E}, N) = \pi_{CEN}(R)$ avec $\mathcal F_4 = \{C, E \to
+      N\}$
+    \item $\mathcal P \gets \mathcal P \cup R_5(\underline {H, E}, S) \ | \
+      R_5(\underline {H, E}, S) = \pi_{HES}(R)$ avec $\mathcal F_5 = \{H, E \to
+      S\}$
+    \end{itemize}
+  \item Puisque $R_5 \in \mathcal P$ contient une clé candidate $\{H, E\}$, il
+    n'y a plus d'autres relations à ajouter
+  \end{itemize}
+
+  Donc, les projections dans $\mathcal P$ sont en 3NF
+
+% ** Question 5
+\item Vérifiez explicitement que les dépendances fonctionnelles sont préservées
+
+  On remarque que les dépendances sont préservées:
+  \begin{align*}
+    \mathcal F_1 \cup \mathcal F_2 \cup \mathcal F_3 \cup \mathcal F_4 \cup
+    \mathcal F_5 & = \{C \to P\} \cup \{H, S \to C\} \cup \{H, P \to S\} \cup
+                   \{C, E \to N\} \cup \{H, E \to S\} \\
+                 & = \{C \to P; H, S \to C; H, P \to S; C, E \to N; H, E \to S\}
+    \\
+                 & = \mathcal F
+  \end{align*}
+
+% ** Question 6
+\item Dire si les relations de cette décomposition est aussi BCNF et justifiez
+
+  En analysant chaque relation à l'aide des conditions de Zaniolo, on peut
+  déterminer si chacune sont en BCNF ou non:
+
+  \begin{itemize}
+  \item $R_1(\underline C, P), \mathcal F_1 = \{C \to P\}$
+    \begin{itemize}
+    \item Puisque $\{C\}$ est une super-clé, $R_1$ est en BCNF
+    \end{itemize}
+  \item $R_2(\underline {H, S}, C), \mathcal F_2 = \{H, S \to C\}$
+    \begin{itemize}
+    \item Puisque $\{H, S\}$ est une super-clé, $R_2$ est en BCNF
+    \end{itemize}
+  \item $R_3(\underline {H, P}, S), \mathcal F_3 = \{H, P \to S\}$
+    \begin{itemize}
+    \item Puisque $\{H, P\}$ est une super-clé, $R_3$ est en BCNF
+    \end{itemize}
+  \item $R_4(\underline {C, E}, N), \mathcal F_4 = \{C, E \to N\}$
+    \begin{itemize}
+    \item Puisque $\{C, E\}$ est une super-clé, $R_4$ est en BCNF
+    \end{itemize}
+  \item $R_1(\underline {H, E}, P), \mathcal F_5 = \{H, E \to P\}$
+    \begin{itemize}
+    \item Puisque $\{H, E\}$ est une super-clé, $R_5$ est en BCNF
+    \end{itemize}
+  \end{itemize}
+
+  Donc, chacune des relations sont en BCNF
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,161 @@
+:PROPERTIES:
+:ID:       63a62cf9-b599-441f-bc42-ec1aa0f4cce9
+:END:
+#+title: ift2245-docker
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-04-10 Sun 13:00]
+
+* Docker
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org_20220410_130108_fP7OVZ.png]]
+
+** Docker Architecture
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org_20220410_130126_Oj0QYo.png]]
+
+** Docker Images
+
+- Manière de regrouper les fichiers binaires et les dépendances des logiciels
+- Isole les logiciels les uns des autres
+- Format standardisé
+- Facilement portable
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org_20220410_130234_KnPmDV.png]]
+
+** Docker Containers
+
+La *principale différence* entre un *conteneur* et une *image* est:
+- La couche sur le dessus d’un conteneur et *inscriptible*
+- Toutes les écritures dans le conteneur qui ajoutent de nouvelles données ou modifient des données existantes sont stockées dans cette couche accessible en écriture
+- Lorsque le conteneur est supprimé, la couche en écriture est également supprimé
+- L'image sous reste la même
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org_20220410_130419_gEE3rK.png]]
+
+** Docker CLI
+
+~docker build~ - Construire une image à partir d'un Dockerfile
+~docker push~ - Pousser l'image dans un registre
+~docker pull~ - Télécharger une image d'un registre
+~docker images~ - Répertorier toutes les images connues du serveur
+~docker run~ - Exécuter une image en tant que conteneur
+~docker ps~ - Répertorier tous les conteneurs en cours d'exécution
+~docker stop~ - Arrêter un conteneur
+~docker rm~ - Retirer un conteneur
+~docker rmi~ - Supprimer une image
+
+** Gestion de données
+
+Les données peuvent persister sur le système hôte en montant un volume
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org_20220410_130934_AH1pZo.png]]
+
+** Comment créer les images
+
+1. Exécuter un conteneur, Apporter les modifications, Commit
+2. À partir d'un dockerfile
+
+*** Copy-on-Write (CoW) strategy
+
+- La CoW est une stratégie de partage et de copie de fichiers pour une efficacité maximale
+- Si un fichier ou un répertoire existe dans une couche inférieure de l'image et qu'une autre couche (y compris la couche accessible en écriture) doit y accéder en lecture, elle utilise simplement le fichier existant
+- La première fois qu'une autre couche doit modifier le fichier (lors de la création de l'image ou de l'exécution du conteneur), le fichier est copié dans cette couche et modifiée
+- Cela minimise les I/O et la taille de chacune des couches suivantes
+
+** Dockerfiles
+
+Une recette pour construire un image Docker
+
+#+begin_src dockerfile
+
+# Use an official Python runtime as parent image
+FROM python:2.7-slim
+
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+
+#+end_src
+
+** Docker compose
+
+#+begin_src yaml
+
+  version: '3'
+  services:
+    web:
+      build: .
+      ports:
+        -"5000:5000"
+      volumes
+        -.:/code
+    redis:
+      image: "redis:alpine"
+
+#+end_src
+
+** API Python
+
+#+begin_src python
+
+  import docker
+
+  client = docker.from_env()
+  >>> client.containers.run("ubuntu", "echo hello world")
+  'hello world\n'
+
+  >>> client.containers.run("bfirsh/reticulate-splines", detach=True)
+  <Container '45e6d2de7c54'>
+
+  >>> client.containers.list()
+  [<Container '45e6d2de7c54'>, <Container 'db18e4f20eaa'>, ...]
+
+  >>> container = client.containers.get('45e6d2de7c54')
+  >>> container.attrs['Config']['Image']
+  "bfirsh/reticulate-splines"
+
+  >>> container.logs()
+  "Reticulating spline 1...\n"
+
+  >>> container.stop()
+  >>> for line in container.logs(stream=True):
+  ... print line.strip()
+  Reticulating spline 2...
+  Reticulating spline 3...
+  ...
+
+  >>> client.images.pull('nginx')
+  <Image 'nginx'>
+
+  >>> client.images.list()
+  [<Image 'ubuntu'>, <Image 'nginx'>, ...]
+
+#+end_src
+
+** Avantages de la conteneurisation
+
+- *Utilisation réduite des ressources* - Au lieu de virtualiser tout un système d'exploitation, les conteneurs s'isolent au niveau des processus et utilisent le noyau de l'hôte
+- *Portabilité* - Toutes les dépendances d'une application conteneurisée sont regroupées à l'intérieur du conteneur, ce qui lui permet de s'exécuter sur n'importe quel hôte Docker
+- *Prévisibilité* - L'hôte ne se soucie pas de ce qui est en cours d'exécution à l'intérieur du conteneur et le conteneur ne se soucie pas de l'hôte sur lequel il s'exécute
+  - Les interfaces sont normalisées et les interactions prévisibles
+
+** Mac/Windows
+
+Il existe une machine virtuelle très légère (machine virtuelle xhyve sur Mac OS X ou sur une machine virtuelle
+Hyper-V sous Windows) en cours d'exécution
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org_20220410_131847_hzAM9w.png]]

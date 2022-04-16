@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       ff35f1fb-ab26-4b8c-9f01-c799a2026001
+:END:
+#+title: ift2245-memoire-virtuelle
+#+filetags: :ift2245-toc:
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-16 Wed 03:55]
+
+* Rappel
+
+- Le code doit être en mémoire centrale pour exécuter
+  - Le programme entier est rarement utilisé (ex.: code d'erreur, routines inhabituelles, grandes structures de données)
+  - La mémoire centrale est trop petite pour accomoder le niveau désiré de multiprogrammation
+  - On parle donc cette fois-ci de chargement partiel d'un processus en mémoire centrale au moyen d'une *mémoire virtuelle*
+
+* Contenu
+- [[id:0b1f0035-c6db-46c0-a8d1-a80f063ef44b][memoire-virtuelle-intro]]
+- [[id:8b9cc994-1920-48cf-a2bc-5b13cbeb3c8c][copy-on-write]]
+- [[id:96735a35-a041-4af6-86b1-a2aff1f73f89][remplacement-page]]
+  

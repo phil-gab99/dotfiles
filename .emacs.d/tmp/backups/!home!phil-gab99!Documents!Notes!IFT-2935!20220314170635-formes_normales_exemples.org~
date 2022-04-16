@@ -1,0 +1,68 @@
+:PROPERTIES:
+:ID:       3ed1a458-9a0c-49a5-85bb-232ec5496b61
+:END:
+#+title: ift2935-formes-normales-exemples
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-14 Mon 17:06]
+
+* Algorithme de Bernstein
+
+Soit $R(A, B, C, D, E)$ avec $\mathcal F = \{A, B \to C, D, E; \quad A \to C; \quad D \to E\}$
+- $\mathcal F = \{A, B \to C; \quad A, B \to D; \quad A, B \to E; \quad A \to C; \quad D \to E\}$
+- $A, B \to C$ n'est pas élémentaire (à cause de $A \to C$) et on la rejette
+- On enlève $A, B \to E$ qui se déduit de $A, B \to D$ et $D \to E$
+- $\mathcal G = \{A, B \to D; \quad A \to C; \quad D \to E\}$ est couverture minimale
+- Bernstein donne les projections $R[\underline{A, B}, D], R[\underline A, C]$ et $R[\underline D, E]$
+  
+Remarques:
+- Notons les relations $R_1, R_2, R_3$ avec DF $\mathcal F_1, \mathcal F_2, \mathcal F_3$
+- $\mathcal F_1 = \{\underline{AB} \to D\}, \mathcal F_2 = \{\underline A \to C\}, \mathcal F_3 = \{\underline D \to E\}$
+- $R_1, R_2, R_3$ sont non seulement 3NF mais BCNF
+- $R = R_1 \Join R_2 \Join R_3$ (i.e. pas de perte d'information)
+- $(\mathcal F_1 \cup \mathcal F_2 \cup \mathcal F_2)^+ = \mathcal G^+ = \mathcal F^+$ (i.e. dépendances présevées)
+
+* Algorithme de Boyce-Codd
+
+Soit $R(A, B, C, D, E)$ avec $\mathcal F = \{A, B \to C, D, E; \quad A \to C; \quad D \to E\}$
+Remarque: Les dépendances élémentaires de $\mathcal F^+$ sont déjà toutes dans $\{A, B \to D; \quad A, B \to E; \quad A \to C; \quad D \to E\}$
+
+
+- $D = \{R(A, B, C, D, E)\}$
+  - $D \to E$ est non triviale et $D \neq D^+ = DE \neq ABCDE$
+- $D = \{R_1(\underline D, E), R_2(A, B, C, D)\}, \mathcal F_1 = \{D \to E\}, \mathcal F_2 = \{A, B \to D; \quad A \to C\}$
+  - $A \to C$ est non-triviale et $A \neq A^+ = AC \neq ABCD$
+- $D = \{R_1(\underline D, E), R_{21}(\underline A, C), R_{22}(\underline{A, B}, D)\}, \mathcal F_1 = \{D \to E\}, \mathcal F_{21} = \{A \to C\}, \mathcal F_{22} = \{A, B \to D\}$
+  - Les trois relations sont BCNF
+  - Soit $\mathcal F' = \mathcal F_1 \cup \mathcal F_{21} \cup \mathcal F_{22} = \{D \to E; \quad A \to C; \quad A, B \to D\}$
+  - $(AB)^+ = ABCDE$ par rapport à $\mathcal F'$ et donc $A, B \to C, D, E \in \mathcal F'^+$
+  - Il s'ensuit que $\mathcal F^+ = \{\mathcal F_1 \cup \mathcal F_2 \cup \mathcal F_3\}$ (i.e. les DF sont préservés)
+
+* Exemple relation 3NF pas BCNF
+
+Soit ~Depart(heure, quai, train)~ avec $\mathcal F =$ ~{heure, quai -> train, train -> quai}~
+- Il y a deux clés - ~{heure, quai}~ et ~{heure, train}~
+- Il n'y pas d'attribut non clé dans ~Depart~ - C'est donc bien 3NF
+- Avec ~Depart(_heure_, _quai_, train)~ on perd ~train -> quai~
+- Même si avec SQL on déclare ~heure, train unique~ (ce qui ajoute une clé candidate) on ne gagne pas la dépendance manquante
+- On voit que ~train -> quai~ viole la condition BCNF car ~train~ n'est pas superclé
+- Regardons la décomposition BCNF:
+
+  - On part avec $D = \{\mathrm{Depart}(U, \mathcal F)\}$ avec $U =$ ~{heure, quai, train}~ et $\mathcal F =$ ~{heure, quai -> train, train -> quai}~
+
+    - $\mathcal F$ contient toutes les DF élémentaires de $\mathcal F^+$
+  - À partir de ~{train}~ $\neq$ ~{train}^+~ $=$ ~{train, quai}~ $\neq U$, on obtient $U_1 =$ ~{train, quai}~ et $U_2 =$ ~{train, heure}~
+    - $D = \{\mathrm{Depart}_1[\mathrm{train, quai}, \mathcal F_1], \mathrm{Depart}_2[\mathrm{train, heure}, \mathcal F_2]\}, \mathcal F_1 = \{\mathrm{train} \to \mathrm{quait}\}, \mathcal F_2 = \emptyset$
+    - Aucune DF de $\mathcal F^+$ ne contient ~train~ et ~heure~
+  - Ni $\mathcal F_1$ ni $\mathcal F_2$ ne violent BCNF - La décomposition est terminée
+  - Il est claire que ~heure, quai -> train~ $\notin (\mathcal F_1 \cup \mathcal F_2)^+ =$ ~{train -> quai}~
+  - On a perte de DF
+
+** Solution
+
+SQL permet de faire des ~ASSERTION~ pour vérifier lors d'une mise à jour de la table ~Depart(heure, quai, train)~ qu'on ne fait pas partir un ~train~ à deux ~quais~ distincts
+- ~ASSERTION~ est disponible en ORACLE
+- ~ASSERTION~ n'est pas implanté en postgres
+- Aux prix de créer de la redondance, pour implanter toutes les dépendances on peut
+  - Garder la relation initiale ~Depart(_heure_, _quai_, train)~
+  - Garder la projection ~Dep'(_train_, quai)~ (et dećlarer ~train, quai UNIQUE~)
+  - Dans la table ~Depart~, déclarer ~{train, quai}~ comme clé étrangère qui référence ~{train, quai}~ dans ~Dep'~

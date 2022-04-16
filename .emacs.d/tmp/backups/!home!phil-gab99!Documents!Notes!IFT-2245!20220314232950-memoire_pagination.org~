@@ -1,0 +1,109 @@
+:PROPERTIES:
+:ID:       5048ad18-d365-4c1c-becf-dd2a251647dc
+:END:
+#+title: ift2245-memoire-pagination
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-14 Mon 23:29]
+
+* Système de traduction d'adresses
+
+L'adresse générée par le CPU est divisée en:
+- *Numéro de page* (page number) $p$ - Utilisé comme un index dans une table de page qui contient l'adresse de base de chaque page dans la mémoire physique
+- *Décalage* (page offset) $d$ - Combiné avec l'adresse de base pour définir l'adresse de mémoire physique qui est envoyée à l'unité de mémoire
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_233204_8DFXks.png]]
+
+- Pour un espace logique de grandeur $2^m$ et les pages de grandeur $2^n$
+
+** Pagination dans le MMU
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_233242_K8fyfM.png]]
+
+** Modèle de pagination
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_233331_Giw6jD.png]]
+
+** Exemple
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_233416_pBPS6e.png]]
+
+- $n = 2$ bits pour la table de pages
+- $m = 4$ bits pour l'espace logique
+- 32 byte de mémoire physique et 4 byte grandeur de la page
+
+* Coût de la pagination
+
+- Fragmentation interne
+  - Taille de page $\to$ 2 048 bytes
+  - Taille de processus $\to$ 72 766 bytes
+  - 35 pages + 1 086 bytes
+  - Fragmentation interne: 2 048 - 1 086 = 962 bytes
+  - Pire fragmentation interne: 1 frame - 1 byte
+  - Moyenne fragmentation interne: 1/2 frame size
+  - Pages (frames) plus petits $\to$ Plus de pages
+    - Ex.: Adresses de 64 bits, pages de 4 KB $\Rightarrow$ $m = 64$, $n = 12$ $\Rightarrow$ $2^{52}$ pages
+
+Problème - Stocker le tableau de pages
+
+Frames libres:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_234653_Dfws7L.png]]
+
+* Implémentation d'un tableau de pages
+
+Les tableaux de pages sont gardées en mémokire
+- PTBR donne l'adresse du tableau
+- PTLR donne la taille du tableau
+Problème - 2 accès mémoire par accès
+
+* Translation Look-aside Buffer
+
+*Translation Look-aside Buffer* (TLB) $\to$ "cache" du tableau des pages
+- TLB est rapide mais petit
+- Si un numéro de page n'est pas dans le TLB
+  - Chercher le frame correspondant dans le tableau de pages
+  - Placer le résultat dans le TLB (comment s'y prendre pour le remplacement)
+
+Modèle TLB:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_234951_9BZbBO.png]]
+
+** Temps d'accès effectif
+
+$\epsilon :$ Temps de recherche dans le TLB
+$\alpha :$ TLB hit ratio (% de temps que le frame trouvée est dans le TLB)
+$m :$ Temps d'accès à la mémoire
+
+*Temps d'accès effectif* (Effective Access Time - EAT)
+
+\begin{align*}
+\mathrm{EAT} & = (\epsilon + 1m) \alpha + (\epsilon + 2m)(1 - \alpha) \\
+& = 2m + \epsilon - m\alpha
+\end{align*}
+
+- Ex.: $\alpha = 80 \%, \epsilon = 20 \mathrm{ns}, m = 100 \mathrm{ns}$
+  $\mathrm{EAT} = 0.80 \times (20 + 100) + 0.20 \times (20 +200) = 140 \mathrm{ns}$
+
+- Ex.: $\alpha = 99 \%, \epsilon = 20 \mathrm{ns}, m = 100 \mathrm{ns}$
+  $\mathrm{EAT} = 0.99 \times (20 + 100) + 0.01 \times (20 + 200) = 121 \mathrm{ns}$
+
+** Protection mémoire avec pagination
+
+- Protection de la mémoire implémentée en associant un bit de protection à chaque frame pour indiquer si l'accès en lecture ou en lecture-écriture est autorisé
+  - Peut également ajouter plus de bits pour indiquer l'exécution de la page, etc...
+- Deux méthodes pour indiquer les entrées valides dans le tableau de pages:
+  - Bit valide/invalide attaché à chaque entrée du tableau de pages
+    - "Valide" - Indique que la page associée est dans l'espace d'adressage logique du procesus, et est donc une page légale
+    - "Invalide" - Indique que la page ne se trouve pas dans l'espace d'adressage logique du processus
+  - Utiliser le PTLR
+    - Cette méthode gaspille moins de mémoire pour le tableau de page
+
+Toute violation entraîne un ~trap~ au kernel
+
+*** Bit valid/invalid
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220314_235926_CdrLoz.png]]
+
+*** Exemple pages partagées
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220314232950-memoire_pagination.org_20220315_080146_ishFgT.png]]

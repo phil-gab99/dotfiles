@@ -1,0 +1,12 @@
+module AboutGraphs
+
+sig Element {}
+
+sig Graph {
+    nodes : set Element,
+    edges : nodes -> nodes
+}
+
+pred cycle(G : Graph, n : int) {
+    some x : G.Element | 
+}

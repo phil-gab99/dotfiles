@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       ef50f299-8f80-4ab2-9640-2d74e1e86b10
+:END:
+#+title: ift2935-algebre-calcul-relationnel
+#+filetags: :ift2935-toc:
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-25 Tue 08:24]
+
+
+* Contenu
+- [[id:be786a1d-7d59-45b0-b5b3-94e2f6d7c81f][algebre-relationnelle]]
+- [[id:168b5c5c-b287-459f-801d-9a409eb7ec45][comment-exemple]]
+- [[id:0e81c14e-1c87-4bf7-a4ef-785d484f31bb][sql]]
+- [[id:da3233df-96e6-4f64-be72-2e160787fd3d][calcul-tuples]]
+- [[id:95261f3e-626f-4b97-9283-87a8f3a8d115][calcul-domaines]]
+- [[id:551669d5-21fd-4f52-902d-22655582ff22][valeurs-absentes]]

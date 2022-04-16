@@ -1,0 +1,54 @@
+:PROPERTIES:
+:ID:       70d4a161-caae-4e2a-bd42-b4f044f1aae0
+:END:
+#+title: ift2245-introduction-processus
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-20 Thu 16:47]
+
+
+* Processus
+
+Un SE exécute divers programmes
+- Tâche $\equiv$ Job $\equiv$ Processus
+- *Processus* $\to$ Un programme en cours d'exécution
+  - L'exécution du processus doit progresser de manière séquentielle
+  - Le processus est *actif*
+- *Programme* $\to$ Entité passive stockée sur le disque (fichier exécutable)
+  - Le programme est *passif*
+  - Le programme *devient* un processus lorsque le fichier exécutable est chargé dans la mémoire.
+
+Processus en *mémoire* (représentée en un rectangle bleu):
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220120164721-introduction_processus.org_20220120_165756_1t7AoH.png]]
+
+- Représentation contigüe et séquentielle de la mémoire
+- Pas nécessairement le cas dans une vraie mémoire physique
+- Les index ~0~ et ~max~ peuvent ne pas être les vrais index de la mémoire physique mais le SE est en mesure de bien convertir ces *adresses virtuelles* à leur correspondante  *adresse physique* de la mémoire
+
+* États des processus
+
+Les différents états caractérisant un processus:
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220120164721-introduction_processus.org_20220120_170821_oe4jGC.png]]
+
+
+- Lorsqu'un *programme* est chargé en mémoire (qui devient alors un *processus*) et est prêt à s'exécuter il est en état *prêt*
+- Un *processus* dans l'état *en exécution* peut être interrompu par le CPU, le remettant en état *prêt*
+- La transition entre l'état *nouveau* et *prêt* représente le chargement d'un *programme* en mémoire qui devient alors un *processus*
+
+* Bloc de Contrôle de Processus (PCB - Process Control Block)
+
+Chaque processus est géré par le système d'exploitation à l'aide de son bloc de contrôle de processus
+
+Le PCB contient:
+  - *État* du processus (/state/) - Fonctionnement, attente, etc.
+  - *Compteur* de programme (/PC - Program Counter/) - Emplacement de l'instruction à exécuter ensuite
+    - Le système d'exploitation préserve l'état antérieur du CPU, tel qu'en est le contenu des registres (“context switch”)
+  - *Registres* du processeur (/registers/) - Contenu de tous les registres centrés sur le processus
+  - *Informations* sur la planification du processeur - Priorités, planification des pointeurs de file d'attente
+  - *Informations* de gestion de la mémoire - Mémoire allouée au processus
+  - *Informations* comptables - CPU utilisé, temps écoulé depuis le démarrage, limites de temps
+  - *Informations* d'état d'E/S - Périphériques d'E/S aﬀectés au processus, liste des fichiers ouverts
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220120164721-introduction_processus.org_20220120_205427_CUy0UH.png]]
+

@@ -1,0 +1,30 @@
+User-agent: mu4e 1.6.10; emacs 26.3
+From: Philippe Gabriel <pgabriel999@hotmail.com>
+To: Helen Agaybi <helenagaybi@gmail.com>
+Subject: Sorry mama
+Date: Sat, 01 Jan 2022 21:40:56 -0500
+--text follows this line--
+#+OPTIONS: html-postamble:nil toc:nil author:nil num:nil d:nil
+#+STARTUP: indent inlineimages hidestars
+:PROPERTIES:
+:reply-to: nil
+:attachment: nil
+:alternatives: (text utf-8 html)
+:END:
+
+Bonjour/Hi, 
+
+*Code*
+
+#+begin_src python
+  print("Hello again ya mama!")
+#+end_src
+
+
+Cordialement/Regards,
+
+#+begin_signature
+  --
+  Philippe Gabriel - 
+  philippe.gabriel.1@umontreal.ca | pgabriel999@hotmail.com
+#+end_signature

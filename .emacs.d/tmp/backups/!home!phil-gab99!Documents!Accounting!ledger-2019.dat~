@@ -1,0 +1,63 @@
+2019-01-04 Solidarity Provincial Tax
+    Assets:Cash:Bank:Checkings                 71.75 CAD
+    Equity:Government:Quebec
+
+2019-01-14 Solidarity Federal Tax
+    Assets:Cash:Bank:Checkings                 71.00 CAD
+    Equity:Government:Canada
+
+2019-01-21 Repay credit
+    Assets:Cash:Bank:Checkings                -17.02 CAD
+    Liabilities:CreditCards:SceneVISA
+
+2019-04-05 Solidarity Provincial Tax
+    Assets:Cash:Bank:Checkings                 71.75 CAD
+    Equity:Government:Quebec
+
+2019-04-15 Solidarity Federal Tax
+    Assets:Cash:Bank:Checkings                 71.00 CAD
+    Equity:Government:Canada
+
+2019-06-11 Repay credit
+    Assets:Cash:Bank:Checkings                 -6.00 CAD
+    Liabilities:CreditCards:SceneVISA
+
+2019-07-02 Paypal Testing
+    Assets:Cash:Bank:Checkings                  0.34 CAD
+    Equity:Paypal
+
+2019-07-02 Paypal Transfer
+    Assets:Cash:PaypalAccount                  30.00 CAD
+    Assets:Cash:Bank:Checkings
+
+2019-07-04 Solidarity Provincial Tax
+    Assets:Cash:Bank:Checkings                 73.00 CAD
+    Equity:Government:Quebec
+
+2019-07-25 Solidarity Federal Tax
+    Assets:Cash:Bank:Checkings                 72.50 CAD
+    Equity:Government:Canada
+
+2019-08-06 Paypal Transfer
+    Assets:Cash:PaypalAccount                  20.00 CAD
+    Assets:Cash:Bank:Checkings
+
+2019-10-04 Solidarity Provincial Tax
+    Assets:Cash:Bank:Checkings                 73.00 CAD
+    Equity:Government:Quebec
+
+2019-10-11 Solidarity Federal Tax
+    Assets:Cash:Bank:Checkings                 72.50 CAD
+    Equity:Government:Canada
+
+2019-12-23 Repay credit
+    Assets:Cash:Bank:Checkings                -28.57 CAD
+    Liabilities:CreditCards:SceneVISA
+
+2019-12-24 Scotia Monthly Fees
+    Assets:Cash:Bank:Checkings                 -3.95 CAD
+    Equity:Scotia
+
+2019-12-24 Paypal Transfer
+    Assets:Cash:PaypalAccount                  50.00 CAD
+    Assets:Cash:Bank:Checkings

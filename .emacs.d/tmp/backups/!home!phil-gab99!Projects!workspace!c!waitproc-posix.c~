@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t pid;
+
+    // fork a child process
+    pid = fork();
+
+    // error occurred
+    if (pid < 0) {
+        fprintf(stderr, "Fork Failed\n");
+        return 1;
+    }
+    // child process
+    else if (pid == 0)
+        printf("I am the child %d\n", pid);
+
+    // parent process
+    // parent will wait for the child to complete
+    else {
+        printf("I am the parent %d\n", pid);
+
+        pid_t pid_return_val;
+        int status;
+        pid_return_val = wait(&status);
+        printf("Child %d returns\n", pid_return_val);
+    }
+
+    printf("After the if \n");
+    return 0;
+}

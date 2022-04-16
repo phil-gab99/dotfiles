@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       8b9cc994-1920-48cf-a2bc-5b13cbeb3c8c
+:END:
+#+title: ift2245-copy-on-write
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-16 Wed 18:49]
+
+* Copy-on-write
+
+Copie paresseuse via la table des pages
+- La copie partage la même mémoire physique que l'original
+  - Pages marquées "read-only"
+  - En cas de "write" - La page affectée est copiée
+  - Le tableau des pages est ajusté et marqué "read-write"
+- Indispenssable pour ~fork~
+  - On évite de copier un processus entier seulement pour que celui-ci soit complètement remplacé immédiatement par un ~exec~
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220316035528-memoire_virtuelle.org_20220316_183959_2bTK22.png]]

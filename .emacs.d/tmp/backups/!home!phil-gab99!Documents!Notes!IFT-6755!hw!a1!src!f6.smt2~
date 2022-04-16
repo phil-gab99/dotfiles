@@ -1,0 +1,9 @@
+;; f6.smt2
+
+(declare-const p Bool)
+(declare-const q Bool)
+
+(assert (and (not p) (not q)))
+
+;; Negation of conclusion
+(assert (not (not (or p q))))

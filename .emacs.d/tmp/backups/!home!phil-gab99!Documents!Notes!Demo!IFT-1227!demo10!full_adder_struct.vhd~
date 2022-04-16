@@ -1,0 +1,17 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity full_adder_struct is
+  port(A, B, C_in: in STD_LOGIC;
+       C_out, S: out STD_LOGIC);
+end full_adder_struct;
+
+architecture synth of full_adder_struct is
+  component half_adder
+    port(A, B: in STD_LOGIC;
+         C_out, S: out STD_LOGIC);
+  end component;
+begin
+  C_out <= (A and B) or (A and C_in) or (B and C_in);
+  S <= A xor B xor C_in;
+end synth;

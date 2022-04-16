@@ -1,0 +1,8 @@
+package list;
+
+public interface Pile {
+    
+    Object pop();
+    void push(Object o);
+    boolean isEmpty();
+}

@@ -1,0 +1,339 @@
+Jan 20 00:50 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 00:50 : inotify: initializing inotify
+Jan 20 00:50 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 00:50 : inotify: watching music directory
+Jan 20 00:50 : client: [0] opened from [::1]:49578
+Jan 20 00:50 : client: [0] process command list
+Jan 20 00:50 : client: process command "status"
+Jan 20 00:50 : mixer: Failed to read mixer for 'My ALSA Device': no such mixer control: PCM
+Jan 20 00:50 : client: command returned 0
+Jan 20 00:50 : client: process command "currentsong"
+Jan 20 00:50 : client: command returned 0
+Jan 20 00:50 : client: [0] process command list returned 0
+Jan 20 00:50 : client: [0] closed
+Jan 20 00:53 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 00:53 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 00:53 : inotify: initializing inotify
+Jan 20 00:53 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 00:53 : inotify: watching music directory
+Jan 20 00:53 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 00:58 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 00:58 : inotify: initializing inotify
+Jan 20 00:58 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 00:58 : inotify: watching music directory
+Jan 20 00:59 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 00:59 : inotify: initializing inotify
+Jan 20 00:59 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 00:59 : inotify: watching music directory
+Jan 20 00:59 : client: [0] opened from [::1]:49580
+Jan 20 00:59 : client: [0] process command list
+Jan 20 00:59 : client: process command "status"
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: process command "currentsong"
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: [0] process command list returned 0
+Jan 20 00:59 : client: [0] closed
+Jan 20 00:59 : client: [1] opened from [::1]:49582
+Jan 20 00:59 : client: [1] process command list
+Jan 20 00:59 : client: process command "update """
+Jan 20 00:59 : update: spawned thread for update job id 1
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: [1] process command list returned 0
+Jan 20 00:59 : update: starting
+Jan 20 00:59 : client: [1] process command list
+Jan 20 00:59 : client: process command "status"
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: process command "currentsong"
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: [1] process command list returned 0
+Jan 20 00:59 : client: [1] closed
+Jan 20 00:59 : update: finished
+Jan 20 00:59 : client: [2] opened from [::1]:49584
+Jan 20 00:59 : client: [2] process command list
+Jan 20 00:59 : client: process command "tagtypes "clear""
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: process command "playlistinfo"
+Jan 20 00:59 : client: command returned 0
+Jan 20 00:59 : client: [2] process command list returned 0
+Jan 20 00:59 : client: [2] closed
+Jan 20 01:00 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 01:00 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 01:00 : inotify: initializing inotify
+Jan 20 01:00 : inotify: watching music directory
+Jan 20 01:00 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 01:01 : client: [0] opened from [::1]:49586
+Jan 20 01:01 : client: [0] process command list
+Jan 20 01:01 : client: process command "status"
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: process command "currentsong"
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: [0] process command list returned 0
+Jan 20 01:01 : client: [0] closed
+Jan 20 01:01 : client: [1] opened from [::1]:49588
+Jan 20 01:01 : client: [1] process command list
+Jan 20 01:01 : client: process command "tagtypes "clear""
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: process command "playlistinfo"
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: [1] process command list returned 0
+Jan 20 01:01 : client: [1] closed
+Jan 20 01:01 : client: [2] opened from [::1]:49590
+Jan 20 01:01 : client: [2] process command list
+Jan 20 01:01 : client: process command "tagtypes "clear""
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: process command "search file "Music/croft-manor-anniversary.mp3""
+Jan 20 01:01 : client: command returned 0
+Jan 20 01:01 : client: [2] process command list returned 0
+Jan 20 01:01 : client: [2] closed
+Jan 20 01:01 : client: [3] opened from [::1]:49592
+Jan 20 01:01 : client: [3] process command list
+Jan 20 01:01 : client: process command "add "filename""
+Jan 20 01:01 : exception: No such directory
+Jan 20 01:01 : client: command returned 3
+Jan 20 01:01 : client: [3] process command list returned 3
+Jan 20 01:01 : client: [3] closed
+Jan 20 01:01 : client: [4] opened from [::1]:49594
+Jan 20 01:01 : client: [4] process command list
+Jan 20 01:01 : client: process command "add "Music/croft-manor-anniversary.mp3""
+Jan 20 01:01 : exception: No such directory
+Jan 20 01:01 : client: command returned 3
+Jan 20 01:01 : client: [4] process command list returned 3
+Jan 20 01:01 : client: [4] closed
+Jan 20 01:01 : client: [5] opened from [::1]:49596
+Jan 20 01:01 : client: [5] process command list
+Jan 20 01:01 : client: process command "add "Music/croft-manor-anniversary.mp3""
+Jan 20 01:01 : exception: No such directory
+Jan 20 01:01 : client: command returned 3
+Jan 20 01:01 : client: [5] process command list returned 3
+Jan 20 01:01 : client: [5] closed
+Jan 20 01:02 : client: [6] opened from [::1]:49598
+Jan 20 01:02 : client: [6] process command list
+Jan 20 01:02 : client: process command "update """
+Jan 20 01:02 : update: spawned thread for update job id 1
+Jan 20 01:02 : client: command returned 0
+Jan 20 01:02 : client: [6] process command list returned 0
+Jan 20 01:02 : update: starting
+Jan 20 01:02 : client: [6] process command list
+Jan 20 01:02 : client: process command "status"
+Jan 20 01:02 : client: command returned 0
+Jan 20 01:02 : client: process command "currentsong"
+Jan 20 01:02 : client: command returned 0
+Jan 20 01:02 : client: [6] process command list returned 0
+Jan 20 01:02 : client: [6] closed
+Jan 20 01:02 : update: finished
+Jan 20 01:03 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 01:03 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 01:03 : inotify: initializing inotify
+Jan 20 01:03 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 01:03 : inotify: watching music directory
+Jan 20 01:03 : client: [0] opened from [::1]:49600
+Jan 20 01:03 : client: [0] process command list
+Jan 20 01:03 : client: process command "status"
+Jan 20 01:03 : client: command returned 0
+Jan 20 01:03 : client: process command "currentsong"
+Jan 20 01:03 : client: command returned 0
+Jan 20 01:03 : client: [0] process command list returned 0
+Jan 20 01:03 : client: [0] closed
+Jan 20 01:03 : client: [1] opened from [::1]:49602
+Jan 20 01:03 : client: [1] process command list
+Jan 20 01:03 : client: process command "tagtypes "clear""
+Jan 20 01:03 : client: command returned 0
+Jan 20 01:03 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:03 : client: command returned 0
+Jan 20 01:03 : client: process command "playlistinfo"
+Jan 20 01:03 : client: command returned 0
+Jan 20 01:03 : client: [1] process command list returned 0
+Jan 20 01:03 : client: [1] closed
+Jan 20 01:05 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 01:05 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 01:05 : inotify: initializing inotify
+Jan 20 01:05 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 01:05 : inotify: watching music directory
+Jan 20 01:05 : client: [0] opened from [::1]:49604
+Jan 20 01:05 : client: [0] process command list
+Jan 20 01:05 : client: process command "status"
+Jan 20 01:05 : mixer: Failed to read mixer for 'My ALSA Device': no such mixer control: Headphones
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: process command "currentsong"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: [0] process command list returned 0
+Jan 20 01:05 : client: [0] closed
+Jan 20 01:05 : client: [1] opened from [::1]:49606
+Jan 20 01:05 : client: [1] process command list
+Jan 20 01:05 : client: process command "tagtypes "clear""
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: process command "playlistinfo"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: [1] process command list returned 0
+Jan 20 01:05 : client: [1] closed
+Jan 20 01:05 : client: [2] opened from [::1]:49608
+Jan 20 01:05 : client: [2] process command list
+Jan 20 01:05 : client: process command "update """
+Jan 20 01:05 : update: spawned thread for update job id 1
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: [2] process command list returned 0
+Jan 20 01:05 : update: starting
+Jan 20 01:05 : client: [2] process command list
+Jan 20 01:05 : client: process command "status"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: process command "currentsong"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: [2] process command list returned 0
+Jan 20 01:05 : client: [2] closed
+Jan 20 01:05 : update: finished
+Jan 20 01:05 : client: [3] opened from [::1]:49610
+Jan 20 01:05 : client: [3] process command list
+Jan 20 01:05 : client: process command "tagtypes "clear""
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: process command "playlistinfo"
+Jan 20 01:05 : client: command returned 0
+Jan 20 01:05 : client: [3] process command list returned 0
+Jan 20 01:05 : client: [3] closed
+Jan 20 01:06 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 01:06 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 01:06 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 01:06 : inotify: initializing inotify
+Jan 20 01:06 : inotify: watching music directory
+Jan 20 01:06 : client: [0] opened from [::1]:49612
+Jan 20 01:06 : client: [0] process command list
+Jan 20 01:06 : client: process command "status"
+Jan 20 01:06 : mixer: Failed to read mixer for 'My ALSA Device': no such mixer control: Headphone
+Jan 20 01:06 : client: command returned 0
+Jan 20 01:06 : client: process command "currentsong"
+Jan 20 01:06 : client: command returned 0
+Jan 20 01:06 : client: [0] process command list returned 0
+Jan 20 01:06 : client: [0] closed
+Jan 20 01:06 : client: [1] opened from [::1]:49614
+Jan 20 01:06 : client: [1] process command list
+Jan 20 01:06 : client: process command "tagtypes "clear""
+Jan 20 01:06 : client: command returned 0
+Jan 20 01:06 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:06 : client: command returned 0
+Jan 20 01:06 : client: process command "playlistinfo"
+Jan 20 01:06 : client: command returned 0
+Jan 20 01:06 : client: [1] process command list returned 0
+Jan 20 01:06 : client: [1] closed
+Jan 20 01:07 : state_file: Saving state file /home/phil-gab99/.mpd/state
+Jan 20 01:07 : state_file: Loading state file /home/phil-gab99/.mpd/state
+Jan 20 01:07 : inotify: initializing inotify
+Jan 20 01:07 : event: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 20 01:07 : inotify: watching music directory
+Jan 20 01:07 : client: [0] opened from [::1]:49616
+Jan 20 01:07 : client: [0] process command list
+Jan 20 01:07 : client: process command "tagtypes "clear""
+Jan 20 01:07 : client: command returned 0
+Jan 20 01:07 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:07 : client: command returned 0
+Jan 20 01:07 : client: process command "playlistinfo"
+Jan 20 01:07 : client: command returned 0
+Jan 20 01:07 : client: [0] process command list returned 0
+Jan 20 01:07 : client: [0] closed
+Jan 20 01:08 : client: [1] opened from [::1]:49618
+Jan 20 01:08 : client: [1] process command list
+Jan 20 01:08 : client: process command "tagtypes "clear""
+Jan 20 01:08 : client: command returned 0
+Jan 20 01:08 : client: process command "tagtypes enable Artist AlbumArtist Title Name Composer Performer"
+Jan 20 01:08 : client: command returned 0
+Jan 20 01:08 : client: process command "playlistinfo"
+Jan 20 01:08 : client: command returned 0
+Jan 20 01:08 : client: [1] process command list returned 0
+Jan 20 01:08 : client: [1] closed
+Jan 20 01:08 : client: [2] opened from [::1]:49620
+Jan 20 01:08 : client: [2] process command list
+Jan 20 01:08 : client: process command "update """
+Jan 20 01:08 : update: spawned thread for update job id 1
+Jan 20 01:08 : client: command returned 0
+Jan 20 01:08 : client: [2] process command list returned 0
+Jan 20 01:08 : client: [2] process command list
+Jan 20 01:08 : client: process command "status"
+Jan 20 01:08 : update: starting
+Jan 20 01:08 : update: finished
+Jan 20 01:08 : client: command returned 0
+Jan 20 01:08 : client: process command "currentsong"
+Jan 20 01:08 : client: command returned 0
+Jan 20 01:08 : client: [2] process command list returned 0
+Jan 20 01:08 : client: [2] closed
+Jan 20 01:09 : client: [3] opened from [::1]:49624
+Jan 20 01:09 : client: [3] process command list
+Jan 20 01:09 : client: process command "add "Music/croft-manor-anniversary.mp3""
+Jan 20 01:09 : exception: No such directory
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [3] process command list returned 3
+Jan 20 01:09 : client: [3] closed
+Jan 20 01:09 : client: [4] opened from [::1]:49626
+Jan 20 01:09 : client: [4] process command list
+Jan 20 01:09 : client: process command "add "Music""
+Jan 20 01:09 : exception: No such directory
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [4] process command list returned 3
+Jan 20 01:09 : client: [4] closed
+Jan 20 01:09 : client: [5] opened from [::1]:49628
+Jan 20 01:09 : client: [5] process command list
+Jan 20 01:09 : client: process command "add ".""
+Jan 20 01:09 : exception: No such directory
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [5] process command list returned 3
+Jan 20 01:09 : client: [5] closed
+Jan 20 01:09 : client: [6] opened from [::1]:49630
+Jan 20 01:09 : client: [6] process command "config"
+Jan 20 01:09 : client: [6] command returned 3
+Jan 20 01:09 : client: [6] process command list
+Jan 20 01:09 : client: process command "add "/home/phil-gab99""
+Jan 20 01:09 : exception: Access denied
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [6] process command list returned 3
+Jan 20 01:09 : client: [6] closed
+Jan 20 01:09 : client: [7] opened from [::1]:49632
+Jan 20 01:09 : client: [7] process command "config"
+Jan 20 01:09 : client: [7] command returned 3
+Jan 20 01:09 : client: [7] process command list
+Jan 20 01:09 : client: process command "add "/home/phil-gab99""
+Jan 20 01:09 : exception: Access denied
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [7] process command list returned 3
+Jan 20 01:09 : client: [7] closed
+Jan 20 01:09 : client: [8] opened from [::1]:49634
+Jan 20 01:09 : client: [8] process command "config"
+Jan 20 01:09 : client: [8] command returned 3
+Jan 20 01:09 : client: [8] process command list
+Jan 20 01:09 : client: process command "add "/home/phil-gab99""
+Jan 20 01:09 : exception: Access denied
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [8] process command list returned 3
+Jan 20 01:09 : client: [8] closed
+Jan 20 01:09 : client: [9] opened from [::1]:49636
+Jan 20 01:09 : client: [9] process command "config"
+Jan 20 01:09 : client: [9] command returned 3
+Jan 20 01:09 : client: [9] process command list
+Jan 20 01:09 : client: process command "add "/home/phil-gab99/Music""
+Jan 20 01:09 : exception: Access denied
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [9] process command list returned 3
+Jan 20 01:09 : client: [9] closed
+Jan 20 01:09 : client: [10] opened from [::1]:49638
+Jan 20 01:09 : client: [10] process command "config"
+Jan 20 01:09 : client: [10] command returned 3
+Jan 20 01:09 : client: [10] process command list
+Jan 20 01:09 : client: process command "add "/home/phil-gab99/Music/croft-manor-anniversary.mp3""
+Jan 20 01:09 : exception: Access denied
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [10] process command list returned 3
+Jan 20 01:09 : client: [10] closed
+Jan 20 01:09 : client: [11] opened from [::1]:49640
+Jan 20 01:09 : client: [11] process command "config"
+Jan 20 01:09 : client: [11] command returned 3
+Jan 20 01:09 : client: [11] process command list
+Jan 20 01:09 : client: process command "add "/home/phil-gab99/Music/croft-manor-anniversary.mp3""
+Jan 20 01:09 : exception: Access denied
+Jan 20 01:09 : client: command returned 3
+Jan 20 01:09 : client: [11] process command list returned 3
+Jan 20 01:09 : client: [11] closed
+Jan 20 01:11 : state_file: Saving state file /home/phil-gab99/.mpd/state

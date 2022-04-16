@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for d in *; do
+    if [ -d "$d" ]; then
+	for f in ./"$d"/*; do
+	    case "$f" in
+		*/corr-*.pdf) mv "$f" feedbacks/;;
+		*) #echo "$f"
+	    esac
+	done
+    fi
+done

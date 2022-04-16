@@ -1,0 +1,375 @@
+:PROPERTIES:
+:ID:       0e81c14e-1c87-4bf7-a4ef-785d484f31bb
+:END:
+#+title: ift2935-sql
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-01-31 Mon 16:13]
+
+* Le langage SQL
+
+** Requêtes simples
+
+#+begin_src sql
+
+  SELECT <attributs> FROM <table> WHERE <condition>
+
+#+end_src
+
+- ~<table>~ peut être une table simple ou obtenue par jointures
+- La *jointure naturelle* ~R1 natural join R2~ sur les attributs communs à ~R1~ et ~R2~
+- La *jointure* ~R1 join R2 using (<attributs)~ le fait sur le sous-ensembles spécifié de l'intersection - Ces attributs ne sont pas répétés dans la table résultante
+- *L'équi-jointure* ~R1 join R2 on (<cond>)~ spécifie les attributs à être égaux
+  - Par exemple, ~on (R1.A = R2.B)~ - La table résultante conteint tous les attributs de ~R1~ et ~R2~
+- On peut aussi fait une jointure ~R1 join R2 on (<cond>)~ sans que ce soit une *équi-jointure*
+  - i.e. la condition n'en est pas une d'égalité sur les colonnes des deux tables
+- La ~<condition>~ du ~where~ peut en général faire intervenir autre chose que les inégalités permises par l'algèbre relationnelle
+
+*** Exemples
+
+- La *jointure (interne)* des tables ~R~ et ~S~ peut être:
+  - ~R natural join S~
+  - ~R join S using (<liste d'attributs>)~
+  - ~R join S on <condition>~
+
+Note - Il faut faire un ~SELECT~ explicite de l'ordre des attributs pour obtenir le bon ordre de colonnes.
+
+Si ~R~ et ~S~ sont
+~R~
+| A | B | C |
+|---+---+---|
+| 1 | 2 | 3 |
+| 6 | 7 | 8 |
+| 9 | 7 | 8 |
+
+~S~
+| B | C |  D |
+|---+---+----|
+| 2 | 3 |  4 |
+| 2 | 4 |  5 |
+| 7 | 9 | 10 |
+
+La jointure naturelle est
+| A | B | C | D |
+|---+---+---+---|
+| 1 | 2 | 3 | 4 |
+
+
+#+begin_src sql
+
+  -- Important de mettre entre guillemets pour spécifier le `case`
+  -- Également important de définir l'ordre dans lequel on sélectionne
+  SELECT A AS "A",
+         B AS "B",
+         R.C AS "R.C",
+         S.C AS "S.C",
+         D AS "D"
+  FROM R JOIN S USING (B); -- Regarde si l'attribut `B` match pour les deux
+
+  -- La requête donne ceci:
+
+#+end_src
+
+| A | B | R.C | S.C |  D |
+|---+---+-----+-----+----|
+| 1 | 2 |   3 |   3 |  4 |
+| 1 | 2 |   3 |   4 |  5 |
+| 6 | 7 |   8 |   9 | 10 |
+| 9 | 7 |   8 |   9 | 10 |
+
+
+#+begin_src sql
+
+  SELECT A AS "A",
+         R.B AS "R.B",
+         R.C AS "R.C"
+         S.B AS "S.B",
+         S.C AS "S.C",
+         D AS "D"
+  FROM R JOIN S USING (B);
+
+  -- La requête donne ceci:
+
+#+end_src
+
+| A | R.B | R.C | S.B | S.C |  D |
+|---+-----+-----+-----+-----+----|
+| 1 |   2 |   3 |   2 |   3 |  4 |
+| 1 |   2 |   3 |   2 |   4 |  5 |
+| 1 |   2 |   3 |   7 |   9 | 10 |
+| 6 |   7 |   8 |   7 |   9 | 10 |
+
+#+begin_src sql
+
+  SELECT *
+  FROM R LEFT JOIN S ON (R.A < S.C);
+
+  -- La requête donne (mais faut renommer) ceci:
+
+#+end_src
+
+| A | R.B | R.C |  S.B |  S.C |    D |
+|---+-----+-----+------+------+------|
+| 1 |   2 |   3 |    2 |    3 |    4 |
+| 1 |   2 |   3 |    2 |    4 |    5 |
+| 1 |   2 |   3 |    7 |    9 |   10 |
+| 6 |   7 |   8 |    7 |    9 |   10 |
+| 9 |   7 |   8 | NULL | NULL | NULL |
+
+- Le tuple ~(9, 7, 8)~ à gauche n'a pas de correspondant, on ajoute ~(NULL, NULL, NULL)~ comme correspondant à droite
+
+#+begin_src sql
+
+  SELECT *
+  FROM R NATURAL LEFT JOIN S;
+
+  -- La requête donne (note la différence avec NATURAL JOIN) ceci:
+
+#+end_src
+
+| A | B | C | D    |
+|---+---+---+------|
+| 1 | 2 | 3 | 4    |
+| 6 | 7 | 8 | NULL |
+| 9 | 7 | 8 | NULL |
+
+- Car tuples ~(6, 7, 8)~ et ~(9, 7, 8)~ de ~R~ qui est à gauche n'ont pas de correspondants dans ~S~
+
+** ~ON~ et ~WHERE~
+
+Soient les tables ~cadeaux~ et ~presences~
+
+~cadeaux~
+| nopige | cadeau |
+|--------+--------|
+|      1 | iPad   |
+|      2 | galaxy |
+
+~presences~
+| nopige | nom   |
+|--------+-------|
+|      1 | Alice |
+|      1 | Bob   |
+
+Avec la requête suivante:
+
+#+begin_src sql
+
+  SELECT * FROM CADEAUX AS c
+  LEFT OUTER JOIN PRESENCES AS p ON (1 = 1) -- Condition vide de ON
+  WHERE c.nopige = p.nopige;
+ 
+#+end_src
+
+On obtient:
+
+| nopige | cadeau | nopige | nom   |
+|--------+--------+--------+-------|
+|      1 | iPad   |      1 | Alice |
+|      1 | iPad   |      1 | Bob   |
+
+- Avec ~on (1 = 1)~ on obtient le produit des deux tables, on toujours des entrées correspondantes
+- Le ~where~ permet d'omettre les entrées supplémentaires obtenu par ~on~
+
+Avec la requête suivante:
+
+#+begin_src sql
+
+  SELECT * FROM CADEAUX AS c
+  LEFT OUTER JOIN PRESENCES AS p
+  ON (1 = 1 AND c.nopige = p.nopige); -- Jointure sur la condition
+
+  -- Si jointure ne peut pas se faire pour une ligne, met des NULL
+
+#+end_src
+
+On obtient:
+
+| nopige | cadeau | nopige | nom   |
+|--------+--------+--------+-------|
+|      1 | iPad   |      1 | Alice |
+|      1 | iPad   |      1 | Bob   |
+|      2 | galaxy |   NULL | NULL  |
+
+- La jointure avec le ~on~ n'a pas trouvé de correspondant pour ~(2, galaxy)~ - La ~jointure externe~ met ~NULL~ en partie droite
+
+
+Trouver les noms et prénoms des employés qui ont un fils comme dépendant:
+~employee(_ssn_, fname, lname, ...)~
+~dependent(_essn_, _dependent_name_, relationship, ...)~
+
+#+begin_src sql
+
+  -- Le where porte sur le select
+
+  SELECT e.fname, e.lname
+  FROM employee AS e, dependent AS d
+  WHERE e.ssn = d.ssn AND d.relationship = 'Son';
+
+
+  -- Le on porte sur le join
+  SELECT e.fname, e.lname
+  FROM employee AS e
+  JOIN dependent AS D
+  ON (e.ssn = d.essn AND d.relationship='Son');
+         
+#+end_src
+
+Même résultat - des ~NULL~ peuvent briser cette égalité
+
+** La condition ~IN~
+
+Teste si un tuple est dans une relation, qui peut être une sous-relation
+- Exemple - Trouver tous les ~essn~ des employés qui travaillent sur un même projet et avec le même nombre d’heures que John Smith
+- Note - On a le schéma ~works_on(essn, pno, hours)~ et le ~ssn~ de John Smith est ~123456789~
+
+#+begin_src sql
+
+  SELECT DISTINCT essn
+  FROM works_on
+  WHERE (pno, hours)
+  IN (SELECT pno, hours
+      FROM works_on
+      WHERE essn='123456789')
+
+#+end_src
+
+- Cette requête sélectionne tous les ~essn~ distincts qui se retrouvent dans les tuples ~(essn, pno, hours)~ de ~works_on~ vérifiant la condition à savoir que ~('123456789', pno, hours)~ est aussi dans la table ~works_on~
+
+La table ~works_on~ contient:
+~=> SELECT * FROM works_on;~
+|      essn | pno | hours |
+|-----------+-----+-------|
+| 123456789 |   1 |  32.5 |
+| 123456789 |   2 |   7.5 |
+| 666884444 |   2 |   7.5 |
+| 666884444 |   3 |  32.5 |
+| 453453453 |   1 |  20.0 |
+| 453453453 |   2 |  20.0 |
+| 333445555 |   2 |   3.0 |
+| 333445555 |   3 |   4.5 |
+| 333445555 |  10 |  10.0 |
+| 333445555 |  20 |  10.0 |
+| 999887777 |  30 |  30.0 |
+| 999887777 |  10 |  10.0 |
+| 987987987 |  10 |  35.0 |
+| 987987987 |  30 |   5.0 |
+| 987654321 |  30 |  20.0 |
+| 987654321 |  20 |  15.0 |
+| 888665555 |  20 |       |
+
+*** Recherche avec jointure
+
+La table des projets de John Smith avec les heures s'obtient avec la requête:
+~=> SELECT pno, hours FROM works_on WHERE essn='123456789';~
+| pno | hours |
+|-----+-------|
+|   1 |  32.5 |
+|   2 |   7.5 |
+
+La jointure naturelle de ~works_on(_essn_, _pno_, hours)~ avec cette table donne:
+~=> SELECT * FROM works_on NATURAL JOIN (SELECT pno, hours FROM works_on WHERE essn = '123456789') r;~
+| pno | hours |      essn |
+|-----+-------+-----------|
+|   1 |  32.5 | 123456789 |
+|   2 |   7.5 | 123456789 |
+|   2 |   7.5 | 666884444 |
+
+Pour obtenir les ~essn~ distincts
+~=> SELECT DISTINCT essn from -> works_on NATURAL JOIN (SELECT pno, hours FROM works_on WHERE essn='123456789') r;~
+|      essn |
+|-----------|
+| 123456789 |
+| 666884444 |
+
+- PostgreSQL exige de nommer les sous-requêtes (ici nommée ~r~ ) d’une jointure
+- Avec PostgreSQL, Oracle mais pas MySQL, on peut aussi utiliser un ~with~:
+~=> WITH r AS (SELECT pno,hours FROM works_on WHERE essn='123456789') -> SELECT DISTINCT essn FROM works_on NATURAL JOIN r;~
+
+** La condition ~EXISTS~
+
+Sert à tester si la table d’une *requête corrélée* (une sous-requête) contient au moins un tuple
+- Le résultat est ~TRUE~ si la table contient au moins un tuple, ~FALSE~ sinon
+- Trouver tous les prénoms et noms des employés qui n’ont pas de dépendant
+  - On a ~employee(fname, lname, ssn, ...)~ et ~dependent(essn, ...)~ avec ~essn~ qui réfère au ~ssn~ d’un employé dont il est ~Daughter~, ~Son~ ou ~Spouse~
+  - La requête suivante donne réponse à la question:
+
+#+begin_src sql
+
+  SELECT fname, lname
+  FROM employee
+  WHERE NOT EXISTS (SELECT * FROM dependent
+                    WHERE ssn=essn);
+
+#+end_src
+
+- Trouvez les noms des employés qui travaillent sur tous les projets gérés par le département numéro 4 sachant que
+  - ~employee(fname, lname, _ssn_, …)~
+  - ~works_on(_essn_, pno, hours)~
+  - ~project(_pnumber_, dnum, …)~
+
+#+begin_src sql
+
+  SELECT fname, lname
+  FROM employee
+  WHERE NOT EXISTS (SELECT pnumber FROM project
+                    WHERE dnum = 4
+                    EXCEPT SELECT pno FROM works_on
+                    WHERE ssn = essn);
+
+#+end_src
+
+- La sous-requête retourne pour chaque employé les numéros de projets contrôlés par le département 4 et enlève ceux sur lesquels il travaille - Il faut qu’il n’en reste pas.
+
+** Requêtes avec groupements
+
+Si l’on tient compte des regroupements et des possibilités de faire sortir les résultats dans un ordre désiré, une requête SQL prend la forme
+
+#+begin_src sql
+
+  SELECT <attributs avec ou sans fonctions>
+  FROM <liste de tables>
+  [WHERE <condition>]
+  [GROUP BY <attributs de groupement>]
+  [HAVING <condition sur les groupes>]
+  [ORDER BY <liste d'attributs>]
+
+#+end_src
+
+** Exemple
+
+Trouver le noms des employés qui travaillent pour plus de deux projets
+- À partir de ~works_on(essn, pno, hours)~ on obtient pour chaque ~essn~ le nombre de numéros de projets
+  ~SELECT essn, COUNT(pno) FROM works_on GROUP BY essn;~
+|      essn | count |
+|-----------+-------|
+| 333445555 |     5 |
+| 999887777 |     2 |
+| 666884444 |     2 |
+| 888665555 |     1 |
+| 987987987 |     2 |
+| 453453453 |     2 |
+| 123456789 |     2 |
+| 987654321 |     2 |
+
+- La condition pour sélectionner ~count > 2~ utilise ~HAVING~
+  ~=> SELECT essn, COUNT(pno) FROM works_on GROUP BY essn HAVING COUNT(pno) > 2;~
+|      essn | count |
+|-----------+-------|
+| 333445555 |     5 |
+
+- Il n’y a qu’un employé - Pour obtenir son nom on peut utiliser une jointure avec la table précédente
+
+#+begin_src sql
+
+  SELECT fname, lname FROM employee
+      JOIN (SELECT essn, count(pno)
+      FROM works_on
+      GROUP BY essn
+      HAVING count(pno) > 2) a
+  ON ssn=essn;
+
+#+end_src
+
+| fname    | lname |
+|----------+-------|
+| Franklin | Wong  |

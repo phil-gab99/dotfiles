@@ -1,0 +1,43 @@
+(declare-const Wash Bool)
+(declare-const Delay Bool)
+(declare-const Heat Bool)
+(declare-const Dry Bool)
+
+(declare-const startPrewash Bool)
+(declare-const endPrewash Bool)
+(declare-const startWash Bool)
+(declare-const endWash Bool)
+(declare-const startDrying Bool)
+(declare-const endDrying Bool)
+(declare-const Entry/TempCheck Bool)
+
+(declare-const Locking Bool)
+(declare-const Unlocking Bool)
+(declare-const Washing Bool)
+(declare-const Drying Bool)
+(declare-const Waiting Bool)
+
+;; Feature Model constraints
+(assert Wash)
+(assert (not (and Delay Heat)))
+(assert (or Dry (not Dry)))
+
+;; Domain Model constraints
+(assert (=> startPrewash (and Waiting Locking)))
+(assert (=> endPrewash (and Washing Waiting)))
+(assert (=> startWash (and Washing Locking)))
+(assert (=> endWash (and Washing Unlocking)))
+(assert (=> startDrying (and Drying Washing)))
+(assert (=> endDrying (and Unlocking Drying)))
+(assert (=> Entry/TempCheck Washing))
+
+;; Feature Mapping
+(assert (iff startPrewash (or Heat Delay)))
+(assert (iff endPrewash (or Heat Delay)))
+(assert (iff Waiting (or Heat Delay)))
+(assert (iff Entry/TempCheck Heat))
+(assert (iff startDrying Dry))
+(assert (iff endDrying Dry))
+(assert (iff Drying Dry))
+
+(check-sat)

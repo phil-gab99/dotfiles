@@ -1,0 +1,16 @@
+;; Let A be an arbitrary domain
+(declare-sort A)
+
+;; Let P be an arbitrary predicate on the atoms in A
+;; (note that we are using an uninterpreted boolean function to define a
+;; predicate!)
+(declare-fun P (A) Bool)
+
+(define-fun conjecture () Bool
+            (=>
+             (forall ((x A)) (P x))
+             (exists ((x A)) (P x))))
+
+; If our conjecture is valid, its negation is unsat
+(assert (not conjecture))
+(check-sat)

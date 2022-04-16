@@ -1,0 +1,69 @@
+open ctl[State]
+
+abstract  sig Bit {}
+// These bits are NOT the numbers 0 and 1, they are signature identifiers
+one sig _0, _1 extends Bit{}
+
+sig State {
+  transition: some State,
+  L : one Bit,
+  R : one Bit
+}
+
+fact modelDefinition {
+  // constraints on states (State)
+  all s:State | stateConstraints[s]
+  // init state constraints
+  // the function initialState is defined in the CTL module
+  all s:State | s in initialState iff init[s]
+  // only defined transitions are valid 
+  // the function nextState is defined in the CTL module
+  all s,s':State| s->s' in nextState iff 
+    validTransition[s,s']
+  // ensure that two states with the same features are equivalent
+  all s,s':State| stateEquality[s,s']
+}
+
+pred init [s:State]{ 
+  // This is how we know that s is an initial state:
+  s.L = _0
+  s.R = _0
+}
+
+pred stateConstraints [s: State] { 
+  // Here we would be defining constraints that tell us what a valid state looks like.
+  // The two-bit counter is very simple, so we shouldn't need to add anything here  
+}
+
+pred validTransition[s,s' : State ]{
+  // TODO: how do you know if s->s' is a valid transition?
+}
+
+pred stateEquality[s,s' : State]{
+  // TODO: how do you know if s and s' are the same state?
+}
+
+fact modelWellMappedToCTLModule{
+  initialStateAxiom
+  totalityAxiom
+}
+pred initialStateAxiom {
+	some s: State | s in initialState
+}
+pred totalityAxiom {
+  all s,s' : State |
+    s->s' in nextState iff s' in s.transition
+}
+
+run showExamples { } for 5 
+
+assert letsModelCheckThisFormula{
+  // ag is the AG operator of CTL
+	ctl_mc[ ag[{s:State | completeThis[s]}] ]
+}
+pred completeThis [s:State]{
+  // TODO: what is the property that should hold for all states of all paths?
+}
+check letsModelCheckThisFormula for 3 // should find no counterexample
+check letsModelCheckThisFormula for 4 // should find a counterexample
+

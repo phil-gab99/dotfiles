@@ -1,0 +1,41 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity func is
+  port(A, B: in STD_LOGIC
+       Y: out STD_LOGIC);
+end;
+
+architecture struct of func is
+  component dec2
+    port(d0, d1: in STD_LOGIC
+         y0, y1, y2, y3: out STD_LOGIC);
+  end component;
+
+  signal y_dec: STD_LOGIC_VECTOR(3 downto 1);
+begin
+  dec2_q3c: dec2 port map(A, B, y_dec(3), y_dec(2), y_dec(1), y_dec(0));
+  Y <= y_dec(3) or y_dec(0);
+end;
+
+architecture synth of dec2 is
+  signal d: STD_LOGIC_VECTOR(1 downto 0);
+begin
+  d <= d0 & d1;
+-- A change in value on one or more of these signals, causes the process to be
+-- activated
+  process(d)
+    variable y: STD_LOGIC_VECTOR(3 downto 0)
+  begin
+    case d is
+      when "00" => y <= "0001"
+      when "01" => y <= "0010"
+      when "10" => y <= "0100"
+      when "11" => y <= "1000"
+    end case;
+    y0 <= y(0);
+    y1 <= y(1);
+    y2 <= y(2);
+    y3 <= y(3);
+  end process;
+end;

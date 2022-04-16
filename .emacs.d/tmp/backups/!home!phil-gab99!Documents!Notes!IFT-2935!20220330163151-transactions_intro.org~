@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       1f590e9c-7fc7-4e94-98a9-426ba53f9914
+:END:
+#+title: ift2935-transactions-intro
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-30 Wed 16:31]
+
+* Transaction
+
+Une transaction est une unité d'exécution de programme qui accède et peut modifier une BD
+- Durant la transaction, la base peut être temporairement inconsistente
+- Quand la transaction a terminé avec succès (commited)
+  - La base doit être consistante
+  - Les changements doivent persister même en cas de panne
+- Si une transaction ne peut être satisfaite, toute modification qu'elle a faite à la base doit être annulée (rollback)
+- Plusieurs transactions doivent pouvoir s'exécuter en parallèle

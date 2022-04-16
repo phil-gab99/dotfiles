@@ -1,0 +1,70 @@
+==28655== Memcheck, a memory error detector
+==28655== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+
+==28655== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==28655== Command: ./TP1
+==28655== Parent PID: 3618
+==28655== 
+==28657== 
+==28657== HEAP SUMMARY:
+==28657==     in use at exit: 1,322 bytes in 6 blocks
+==28657==   total heap usage: 9 allocs, 3 frees, 4,394 bytes allocated
+==28657== 
+==28657== 5 bytes in 1 blocks are still reachable in loss record 1 of 6
+==28657==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==28657==    by 0x109979: tokenize (main.c:263)
+==28657==    by 0x109BA6: parse_line (main.c:335)
+==28657==    by 0x10A0A7: shell_workflow (main.c:478)
+==28657==    by 0x10A153: main (main.c:497)
+==28657== 
+==28657== 5 bytes in 1 blocks are still reachable in loss record 2 of 6
+==28657==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==28657==    by 0x109702: build_command (main.c:208)
+==28657==    by 0x109F34: execute (main.c:431)
+==28657==    by 0x10A0BA: shell_workflow (main.c:479)
+==28657==    by 0x10A153: main (main.c:497)
+==28657== 
+==28657== 32 bytes in 1 blocks are still reachable in loss record 3 of 6
+==28657==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==28657==    by 0x109638: build_command (main.c:195)
+==28657==    by 0x109F34: execute (main.c:431)
+==28657==    by 0x10A0BA: shell_workflow (main.c:479)
+==28657==    by 0x10A153: main (main.c:497)
+==28657== 
+==28657== 128 bytes in 1 blocks are still reachable in loss record 4 of 6
+==28657==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==28657==    by 0x109B7D: parse_line (main.c:332)
+==28657==    by 0x10A0A7: shell_workflow (main.c:478)
+==28657==    by 0x10A153: main (main.c:497)
+==28657== 
+==28657== 128 bytes in 1 blocks are still reachable in loss record 5 of 6
+==28657==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==28657==    by 0x1096B8: build_command (main.c:205)
+==28657==    by 0x109F34: execute (main.c:431)
+==28657==    by 0x10A0BA: shell_workflow (main.c:479)
+==28657==    by 0x10A153: main (main.c:497)
+==28657== 
+==28657== 1,024 bytes in 1 blocks are still reachable in loss record 6 of 6
+==28657==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==28657==    by 0x109A6F: read_line (main.c:295)
+==28657==    by 0x10A094: shell_workflow (main.c:477)
+==28657==    by 0x10A153: main (main.c:497)
+==28657== 
+==28657== LEAK SUMMARY:
+==28657==    definitely lost: 0 bytes in 0 blocks
+==28657==    indirectly lost: 0 bytes in 0 blocks
+==28657==      possibly lost: 0 bytes in 0 blocks
+==28657==    still reachable: 1,322 bytes in 6 blocks
+==28657==         suppressed: 0 bytes in 0 blocks
+==28657== 
+==28657== For lists of detected and suppressed errors, rerun with: -s
+==28657== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==28655== 
+==28655== HEAP SUMMARY:
+==28655==     in use at exit: 0 bytes in 0 blocks
+==28655==   total heap usage: 16 allocs, 16 frees, 6,740 bytes allocated
+==28655== 
+==28655== All heap blocks were freed -- no leaks are possible
+==28655== 
+==28655== For lists of detected and suppressed errors, rerun with: -s
+==28655== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

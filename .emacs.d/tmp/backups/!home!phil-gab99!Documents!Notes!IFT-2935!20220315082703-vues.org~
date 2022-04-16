@@ -1,0 +1,68 @@
+:PROPERTIES:
+:ID:       1cc61443-c1d4-4fa8-b345-60593aca49b0
+:END:
+#+title: ift2935-vues
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-03-15 Tue 08:27]
+
+* Vues (Views)
+
+Tables virtuelles dont le schéma et le contenu sont dérivés de la base de données par une requête
+- Garantissent l'indépendance logique entre les applications et la base de données
+- On peut donner accès à une vue sans donner accès aux tables utilisées pour la construire
+- Renforce la sécurité
+
+Le schéma ~releves_notes~
+
+#+begin_src sql
+
+  CREATE TABLE valnotes(
+      note CHAR(3) PRIMARY KEY,
+      valeur NUMERIC
+  );
+  INSERT INTO valnotes VALUES ('A+','4.3');
+
+  CREATE TABLE titres(
+      sigle CHAR(10) PRIMARY KEY,
+      titre VARCHAR(45)
+  );
+  INSERT INTO titres VALUES ('IFT1005','Design et développement Web') ...
+
+  CREATE TABLE credits(
+      sigle CHAR(10) PRIMARY KEY,
+      credits NUMERIC,
+      FOREIGN KEY (sigle) REFERENCES titres(sigle)
+  );
+  INSERT INTO credits VALUES ('IFT1015','3'), ('IFT1025','3'), ...
+
+  CREATE TABLE programmes(
+      prog CHAR(7) PRIMARY KEY,
+      description VARCHAR(200)
+  );
+  INSERT INTO programmes VALUES ('105020','Majeure en Anthropologie'),...
+
+  CREATE TABLE notes(
+      trimc CHAR(5),
+      sigle char(10),
+      matricule CHAR(10),
+      prog CHAR(7),
+      nature CHAR(3),
+      note CHAR(3),
+      PRIMARY KEY (trimc, sigle, matricule),
+      FOREIGN KEY (sigle) REFERENCES titres(sigle),
+      FOREIGN KEY (note) REFERENCES valnotes(note),
+      FOREIGN KEY (prog) REFERENCES programmes(prog)
+  );
+  INSERT INTO notes VALUES
+  ('20054','IFT1015','51702','146810','OBL','A'),
+  ('20054','IFT1015','51704','117510','OBL','B+'),...
+
+#+end_src
+
+- La décomposition précédente est typique du résultat d'une normalisation
+- La table des notes donne la matricule, le trimestre, le sigle, la note, le programme, etc...
+- La matricule ne détermine pas le programme car l'étudiant peut bien changer de programme ou être dans deux programmes
+- Le sigle détermine le titre, etc...
+- Il manque encore une table - Celle qui associe à chaque matricule son nom, etc...
+
+Pour obtenir la liste des notes avec nom du cours et son nombre de crédits

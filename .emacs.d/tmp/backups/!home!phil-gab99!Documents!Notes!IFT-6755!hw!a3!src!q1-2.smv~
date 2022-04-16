@@ -1,0 +1,44 @@
+MODULE main
+VAR
+    p: boolean;
+    q: boolean;
+    r: boolean;
+    t: boolean;
+    state: {s0, s1, s2, s3};
+ASSIGN
+    next(p) :=
+        case -- s1 | s3 => p
+          state = s1 | state = s3: TRUE;
+          TRUE: p;
+        esac;
+
+    next(q) :=
+        case -- s2 | s3 => q
+          state = s2 | state = s3: TRUE;
+          TRUE: q;
+        esac;
+
+    next(r) :=
+        case -- s0 | s1 | s2 => r
+          state = s0 | state = s1 | state = s2: TRUE;
+          TRUE: r;
+        esac;
+
+    next(t) :=
+        case -- s1 => t
+          state = s1: TRUE;
+          TRUE: t;
+        esac;
+
+    init(state) := s0;
+    next(state) :=
+        case
+          state = s0 & r: s0;          -- (s0, s0)
+          state = s0 & p & t & r: s1;  -- (s0, s1)
+          state = s0 & p & q: s3;      -- (s0, s3)
+          state = s1 & q & r: s2;      -- (s1, s2)
+          state = s2 & p & t & r: s1;  -- (s2, s1)
+          state = s3 & q & r: s2;      -- (s3, s2)
+          TRUE: state;
+        esac;
+SPEC !EG r

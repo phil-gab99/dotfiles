@@ -1,0 +1,16 @@
+;; Feature model
+(declare-const Keep Bool)
+(declare-const Safe Bool)
+(declare-const Cute Bool)
+
+;; Domain model
+(declare-const Box Bool) ; The object exists
+(declare-const ClothTop Bool)
+(declare-const Lock Bool)
+
+(declare-const top Bool) ; Connection top exists
+(declare-const front Bool)
+
+;; Feature model
+                                        ; Keep is always true
+                                        ; Cute and safe are mutually exclusive

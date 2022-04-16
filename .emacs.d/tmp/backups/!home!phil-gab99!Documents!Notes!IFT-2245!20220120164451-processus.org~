@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       09464122-615c-49ff-bfb8-f363efcd7ed4
+:END:
+#+title: ift2245-processus
+#+filetags: :ift2245-toc:
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-20 Thu 16:44]
+
+* Contenu
+
+- [[id:70d4a161-caae-4e2a-bd42-b4f044f1aae0][introduction-processus]]
+- [[id:ffe4707a-c905-426c-a623-06aa2a3ac626][ordonnancement-processus]]
+- [[id:10ed5bad-c8d4-4ac4-b842-b96ba32c64d0][operation-processus]]
+- [[id:3a151d4d-f043-4508-ad20-a9309ae2028c][communication-processus]]
+
+Questions:
+Slide 15 - Context Switch - Les PCBs ne sont pas continuellement mis à jour après chaque cycle fetch-decode-execute?

@@ -1,0 +1,11 @@
+module AboutGraphs
+
+sig Element {}
+
+pred reflexive(G : Graph)
+
+fun reflsymm(G : Graph) {
+    all x in G.Element | x in G.edges[x]
+    all x, y in G.Element | y in G.edges[x] implies x in G.edges[y]
+
+}

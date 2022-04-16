@@ -1,0 +1,8 @@
+c
+c DIMACS format for formula containing 3 clauses and 2 variables in cnf
+c p: 1; q: 2
+c
+p cnf 2 3
+-1 -2 0
+1 -2 0
+-1 2 0

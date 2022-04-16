@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="/public/include/css/modern/framework.css?q=1617871733" />
+    <script type="text/javascript" src="/public/include/js/modern/loader.js?q=1617871733"></script>
+    <script type="text/javascript" src="/public/include/js/modern/main.js?q=1617871733"></script>
+    <script type="text/javascript">
+    function init(apmui) {
+        var appLoader = new apmui.AppLoader();
+        appLoader.configure({
+    "pageType": "logon",
+    "source": "/Common/modern",
+    "styles": [
+        "/public/include/css/modern/user-common.css?cg_code=9ffcc5e00dc1de6c9d1dadfdd9f70605&cg_name=YwwBOdyxOsPhvPLxlsz4LqiAzvOSfR63-xlZByXehnGFCQhZ41uHcDW1__n5H3XG"
+    ],
+    "scripts": [
+        "/public/include/js/modern/user-common.js?cg_code=560d9b43878a29ee3541ac425e7eaa1a&cg_name=YwwBOdyxOsPhvPLxlsz4LqiAzvOSfR63-xlZByXehnGFCQhZ41uHcDW1__n5H3XG"
+    ],
+    "logon": {
+        "softToken": {
+            "fieldName": "",
+            "state": "",
+            "newPin": ""
+        },
+        "form": {
+            "id": "auth_form",
+            "title": "Authentification",
+            "submitCaption": "Se connecter",
+            "savePassword": "Sauvegarder le mot de passe",
+            "passwordVerifyDontMatch": "Le mot de passe et la confirmation de ce mot de passe ne correspondent pas.",
+            "fields": [
+                {
+                    "type": "text",
+                    "name": "username",
+                    "caption": "Code d\u2019acc\u00e8s ou courriel UdeM",
+                    "value": "",
+                    "disabled": false
+                },
+                {
+                    "type": "password",
+                    "name": "password",
+                    "caption": "Mot de passe (UNIP)",
+                    "value": "",
+                    "disabled": false
+                },
+                {
+                    "type": "checkbox",
+                    "name": "session_publique",
+                    "caption": "J\u2019utilise un appareil public.",
+                    "value": "",
+                    "disabled": false
+                }
+            ]
+        },
+        "images": {
+            "image00": "/public/images/my/tr.gif",
+            "image01": "/public/images/my/tr.gif",
+            "image02": "/public/images/my/tr.gif",
+            "image03": "/public/images/my/tr.gif",
+            "image04": "/public/images/my/tr.gif",
+            "image05": "/public/images/my/tr.gif",
+            "image06": "/public/images/my/tr.gif",
+            "image07": "/public/images/my/tr.gif",
+            "image08": "/public/images/my/tr.gif",
+            "image09": "/public/images/my/tr.gif"
+        }
+    },
+    "general": {
+        "header": {
+            "logoImage": "/public/images/modern/general/f5-logo-desktop.png",
+            "logoSmallImage": "/public/images/modern/general/f5-logo-mobile.png",
+            "disconnectCaption": "D\u00e9connexion",
+            "mottoMessage": ""
+        },
+        "footer": {
+            "message": "\u00a9 Universit\u00e9 de Montr\u00e9al, <span>2020</span>.<br>Tous droits r\u00e9serv\u00e9s"
+        },
+        "config": {
+            "pageTitle": "Universit\u00e9 de Montr\u00e9al - Authentification",
+            "landingUri": "/login/index.php",
+            "landingUriBase64": "",
+            "layoutBreakpointSmall": "586px",
+            "layoutBreakpointLarge": "992px",
+            "disableExternal": "off"
+        },
+        "policyTimeout": {
+            "message": "Votre session a expir\u00e9.",
+            "newSessionMessage": "Nouvelle session"
+        },
+        "controllers": {
+            "policyTimeout": true
+        }
+    }
+});
+        appLoader.run();
+    }
+    function __run() {
+        if (typeof require !== 'undefined') {
+            require(['apmui'], init);
+        } else {
+            init(this['apmui']);
+        }
+    }
+    </script>
+</head>
+<body onload="javascript: __run();">
+</body>
+</html>

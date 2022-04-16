@@ -1,0 +1,30 @@
+module ColoredGraphs
+
+sig Color {}
+
+sig Element {
+    color: Color
+}
+
+sig AboutColoredGraphs {
+    nodes: set Element,
+    edges: nodes -> nodes
+} {
+    // Symmetric edges relation
+    edges = ~edges
+
+    // No adjacent nodes with same color
+    all x, y : nodes | x in y.edges => x.color != y.color
+}
+
+fun ThreeColorable(): AboutColoredGraphs {
+	{G: AboutColoredGraphs | #(G.nodes.color) = 3 &&
+        (all x: Element | x in G.nodes) &&
+        (all x: G.nodes | some x.(G.edges))}
+}
+
+fun FourColorable(): AboutColoredGraphs {
+	{G: AboutColoredGraphs | #(G.nodes.color) = 4 &&
+        (all x: Element | x in G.nodes) &&
+        (all x: G.nodes | some x.(G.edges))}
+}

@@ -1,0 +1,116 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: IFT-1227 Demo 2
+#+date: <2022-01-27 Thu>
+#+author: Philippe Gabriel
+#+email: philippe.gabriel.1@umontreal.ca
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 28.0.01 (Org mode 9.5.2)
+#+cite_export:
+
+* Installation Quartus
+
+Lien de téléchargement [[https://fpgasoftware.intel.com/13.0sp1/?edition=web&platform=windows&download_manager=dlm3][windows]] et [[https://fpgasoftware.intel.com/13.0sp1/?edition=web&platform=linux][gnu/linux]] (je ne sais pas si c'est possible sur Mac désolé)
+
+** Compte Intel
+
+Il faut se créer un compte standard avant de pouvoir installer
+- Remplir les champs obligatoires
+- Voir son courriel pour un email de vérification
+
+** Fichiers à télécharger - Installation
+
+Télécharger ces fichiers dans le même *répertoire*
+- Sélectionner _Quartus II Software V13.0 sp1_ sous /Web edition/
+- Dans /Device Families/, cocher _Cyclone II, Cyclone III, Cyclone IV_ et _ModelSim-Altera STARTER edition (Free)_
+
+Run le installer (processus plus "facile" sur Windows)
+
+** Installation sur gnu/linux (facultative)
+
+Pour gnu/linux, s'assurer de changer la permission avec cette command: ~chmod +x *.run~
+Important d'avoir installer cette librairie sur ubuntu si votre système est 64-bit: ~sudo apt install libc6-i386~
+Puis rouler la commande à partir de l'emplacement des fichiers d'installations: ~./QuartusSetupWeb-13.0.1.232.run~
+Skip le manuel puis arriver à ces informations ici - S'assurer de bien répondre aux détails d'installation:
+
+| Message                                                                                   | Réponse |
+|-------------------------------------------------------------------------------------------+---------|
+| Quartus II Web Edition (Free) [Y/n]                                                       | y       |
+| Quartus II Web Edition (Free) - Quartus II Software (includes Nios II EDS) (4424MB) [Y/n] | y       |
+| Quartus II Web Edition (Free) - Quartus II Software 64-bit support (1090MB) [Y/n]         | y       |
+| Quartus II Web Edition (Free) - Devices [Y/n]                                             | y       |
+| Quartus II Web Edition (Free) - Devices - Cyclone II/III/IV (615.2MB) [Y/n]               | y       |
+| ModelSim-Altera Starter Edition (Free) (3547.1MB) [Y/n]                                   | y       |
+| ModelSim-Altera Edition (3547.1MB) [y/N]                                                  | n       |
+| Is the selection above correct? [Y/n]                                                     | y       |
+
+*** Configurations de variables
+
+Dans votre fichier ~~/.profile~, ajouter ceci à la fin
+
+#+begin_src shell
+
+  export QUARTUS_ROOTDIR="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
+  PATH="$PATH:$QUARTUS_ROOTDIR/bin"
+
+#+end_src
+
+Dans votre fichier ~~/.bash_aliases~, ajouter ceci à la fin (facultatif)
+
+#+begin_src shell
+
+  alias quartus='quartus --64bit'
+
+#+end_src
+
+Installer les paquets suivants supplémentaires pour quelques parties dans Quartus qui fonctionnent toujours en 32-bit
+
+~sudo dpkg --add-architecture i386~
+
+~sudo apt update~
+
+~sudo apt install libc6:i386 libncurses5:i386 libstdc++6:i386 libpng12-0:i386 libfreetype6:i386 libsm6:i386 libxrender1:i386 libfontconfig1:i386 libxext6:i386 libxtst6:i386 libxi6:i386 libgtk2.0-0:i386~
+
+(Note: il se peut que ~libpng12-0:i386~ ne soit pas disponible sur votre distro, utiliser plutôt ce lien et recherché ce nom spécifique: [[http://ppa.launchpad.net/linuxuprising/libpng12/ubuntu/pool/main/libp/libpng/][libpng12-0_1.2.54-1ubuntu1.1+1~ppa0~eoan_amd64.deb]] pour l'installer manuellement avec ~sudo dpkg -i~)
+
+Finalement, pour permettre à votre système de bien reconnaître la carte, voir les instructions à ce [[https://rocketboards.org/foswiki/Documentation/UsingUSBBlasterUnderLinux][lien]]
+
+** Créer un projet
+
+1. Create a New Project ~NEXT~
+2. Sélectionner l'emplacement d'installation et le nom du projet ~NEXT~
+3. Passer la prochaine étape ~NEXT~
+4. Choisir la carte approprié - Inscrit sur la carte, mais devrait normalement être *Cyclone II - EP2C35F672C6* ~NEXT~
+5. Passer la prochaine étape ~NEXT~
+6. ~FINISH~
+
+** Ajouter des fichiers au projets
+
+Vous pouvez maintenant créer des fichiers au projet (block diagram schéma, fichiers ~.vhd~, etc...)
+
+** Exemple avec Block Diagram
+
+Ajouter des ~inputs~ et ~outputs~, leur donner des noms, ~Symbol Tool~ pour ajouter les différentes portes logiques
+
+Enregistrer et compiler:
+- Bouton ~Save~
+- Bouton ~Start Compilation~
+
+
+Quand tout fonctionne comme prévu, on veut maintenant entreprendre l'assignation avec la carte physique:
+- Bouton ~Assignment Editor~
+- Associé les différentes composantes aux pins de la carte (spécifié dans les énoncés normalement) - Un checkmark indique que tout est bon pour cette ligne
+  - Le ~Assignment Name~ prend la valeur de ~Location~
+
+Après avoir complété les assignations pour les ~inputs~ et ~outputs~, enregistrer et recompiler pour s'assurer que tout est correct.
+- Bouton ~Programmer~ sélectionner le fichier ~.sof~ (dans le répertoire ~output_files~ si n'est pas automatiquement sélectionné)
+- Bouton ~Hardware setup~ pour vérifier qu'il reconnaît la carte (si elle est connectée à votre ordinateur) - Entrée ~USB Blaster~
+- Après avoir ajouté la carte, le bouton ~Start~ va permettre de charger le circuit sur la carte
+
+Je n'ai pas la carte avec moi actuellement
+Alors peut-être à la prochaine démo on pourra clarifier ce que reste

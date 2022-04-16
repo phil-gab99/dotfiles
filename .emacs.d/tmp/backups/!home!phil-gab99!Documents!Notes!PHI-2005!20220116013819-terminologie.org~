@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       bf4cb5b5-63ed-44c4-87a5-e72a20b0d9fc
+:END:
+#+title: phi2005-terminologie
+#+STARTUP: latexpreview, inlineimages
+#+date: [2022-01-16 Sun 01:38]
+
+Logique $\rightarrow$ Étude des arguments valide, des raisonnements, qu'est-ce qu'un _bon_ raisonnement
+
+- Proposition $\rightarrow$ Phrase qui peut être vraie ou fausse
+  - Les phrases qui ne prétendent pas connaître de la connaissance ne sont pas des propositions
+
+- Argument $\rightarrow$ Dans son sens restreint, est une suite de propositions ou d’énoncés qui comprend:
+  - Une ou plusieurs prémisses et
+  - Une conclusion.
+  - Notation
+    - À l'horizontale - $A_{1},..., A_{n} / B$
+    - À la verticale, comme en logique 1
+
+Argument déductif:
+- (1) Tout ce que nous imaginons est fini
+- (C) Nous ne pouvons concevoir l'infini
+
+Argument inductif:
+- (1) 75% des hommes qui fument développent un cancer de poumon
+- (2) Jean fume
+- (C) Jean a 75% des chances de développer un cancer du poumon

@@ -1,0 +1,15 @@
+
+|  2 | <- array = 10001000
+|  3 | <- 10001004
+|  5 | <- 10001008
+|  7 | <- 10001012
+| 42 | <- 10001016
+
+#+begin_src mips
+
+  lw          $s0, array          # s0 = 2
+  la          $s0, array          # s0 = addresse array 10001000 + i * sizeof(int)
+
+          
+
+#+end_src

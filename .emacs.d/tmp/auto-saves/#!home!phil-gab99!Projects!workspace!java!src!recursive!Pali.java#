@@ -1,0 +1,38 @@
+package recursive;
+
+import java.util.Arrays;
+
+
+public class Pali {
+    
+
+    public static void main(String[] args) {
+        int[] array = { 1, 2, 3 };
+        
+        System.out.println(new Pali().palindrome("ab"));
+        // System.out.println(Arrays.asList(array));
+        // Sus
+    }
+    
+    public boolean palindrome(String s) {
+        
+        return isPalindromic(s, 0, s.length() - 1);
+    }
+    
+    public boolean isPalindromic(String s, int start, int end) {
+        
+        if (s.charAt(start) != s.charAt(end)) {
+            
+            return false;
+        } else {
+            
+            if (start >= end) {
+                
+                return true;
+            } else {
+                
+                return isPalindromic(s, start + 1, end - 1);
+            }
+        }
+    }
+}

@@ -1,0 +1,219 @@
+:PROPERTIES:
+:ID:       8b2343ca-d80a-4e63-be30-b4104b897607
+:END:
+#+title: ift2245-algorithmes-ordonnancement
+#+STARTUP: latexpreview inlineimages
+#+date: [2022-04-03 Sun 12:21]
+
+* Algorithmes d'ordonnancement
+
+Algorithmes pour réduire le seek time
+
+- First-come first-served (FCFS)
+- Shortest-seek-time-first (SSTF)
+- SCAN
+- SCAN circulaire (C-SCAN)
+- LOOK
+- LOOK circulaire (C-LOOK)
+
+queue $\gets$ 98, 183, 37, 122, 14, 124, 65, 67
+head commence à 53
+
+** First-come first-served (FCFS)
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_122414_gkB5Sr.png]]
+
+- Distance total parcourue par la tête est de 640 tracks
+
+** Shortest-seek-time-first (SSTF)
+
+Sélectionne la requête avec le "seek time" minimum à partir de la position de la tête actuelle
+- Problème $\to$ Famine
+- Meilleur que FCFS, mais pas optimal
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_140627_SFLKBw.png]]
+
+- Distance totale parcourue par la tête est de 236 tracks
+
+** SCAN
+
+La tête parcourt toute la surface dans un sens puis dans l'autre
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_140812_jf6wmy.png]]
+
+- Distance totale parcourue par la tête est de 236 tracks
+
+** SCAN circulaire (C-SCAN)
+
+La tête parcourt la surface toujours dans le même sens
+Diminue l'attente maximum par rapport à SCAN
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_140946_9TpuMH.png]]
+
+- Déplacement total parcourue par la tête est de 382 tracks
+- Plus grand que SCAN mais le déplacement de droite à gauche de 200 pistes est rapide
+
+** LOOK circulaire (C-LOOK)
+
+Le LOOK est équivalent au SCAN sans aller vraiment jusqu'au bout
+Le C-LOOK est équivalent au C-SCAN en évitant aussi les déplacement jusqu'au bout
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_141241_Fdeydw.png]]
+
+- Déplacement total parcourue par la tête est de 322 tracks
+
+* Fonctionnement de l'ordonnanceur
+
+Les performances dépendent du nombre et des types de demandes
+- Les demandes de service de disque peuvent être influencées par la méthode d'allocation de fichiers
+- SSTF ou LOOK est un choix raisonnable pour l'algorithme par défaut
+- Latence de rotation (souvent aussi grand que le "seek time") - Difficile à calculer pour l'OS
+- Le contrôleur de disque peut avoir son propre algorithme d’ordonnancement, ce qui soulagerait le système d'exploitation de cette tâche
+  - Mais une telle approche retarderait toutes les connaissances du système d'exploitation sur les priorités (crash, écriture vs lecture, petit espace restant pour la mémoire paginée, etc.)
+
+** RAID - Redundant Array of Inexpensive/Independent Disks
+
+Copies redondantes sur plusieurs disques, pour la *fiabilité* et/ou la *performance*
+- Temps moyen jusqu'à l'échec:
+  - 100,000 heures - Un disque
+  - 100,000/100 = 1000 heures (41 jours) - Un disque dans un array de 100 disques
+    - Plus de diques, plus de chance d'échec
+  - Avec mirroring, avoir deux disques spécifiques qui échouent en même temps
+    - ex.:100,000x100,000 / 2 x 10 heures pour réparer = 500x106 (57k years)
+    - Moins de chance que les deux échouent en même temps
+
+*Disk striping* $\Rightarrow$ Utilise un groupe de disques comme une unité de stockage - Distribuer les données sur plusieurs disques, une seule copie des données
+- Ex.: Avec 8 bits de données, stocker un bit par disque, 8 disques peuvent transférer 8 fois plus de données (bit-level striping)
+- Peut "stripe" par byte, secteur, bloc (le plus commun)
+- Augmente le throughput
+- N'améliore pas la fiabilité
+
+*Disk mirroring* $\Rightarrow$ Plusieurs copies du disque
+- Augmente le throughput et la fiabilité
+- Écriture plus difficiles (écrire sur chaque disque)
+
+*Error correcting codes* $\Rightarrow$ Bits de parité utilisé pour détecter et/ou corriger les erreurs
+- Augment la fiabilité
+
+*** Error correcting codes (ECC)
+
+- Parity code $\to$ Peut détecter les erreurs mais ne les corrige pas
+  - ~1 1 0 0 0 1 1 0~ - Parity bit: 0 (even parity)
+  - Dans le cas de even parity, on vérifie si on a un nombre pair de ~1~, si oui on met le parity bit à ~0~ signifiant que c'est pair
+  - Permet de détecter les manques de cohérence entre le parity bit et le byte lue
+
+- Hamming codes $\to$ Peut détecter les erreurs de deux bits et corriger les erreurs d'un bit
+  - Ex.: (even parity gauche a droite)
+    - ~0 1 0 0 1 1 0 1~ - Byte transformé en 12 bits
+    - ~P1 P2 0 P4 1 0 0 P8 1 1 0 1~ - 12 bits, P1, P2, P4, P8 sont les bits de parity
+
+    - ~P1 0 1 0 1 0~ - ~P1 = 0~ $\to$ Read-Skip-Read-Skip-Read...: ~P1 0 1 0 1 0~, ~P1~ doit être 0 pour un even parity
+    - ~P2 0 0 0 1 0~ - ~P2 = 1~ $\to$ Read2-Skip2...: ~P2 0 0 0 1 0~, ~P2~ doit être 1 pour un even parity
+    - ~P4 1 0 0 1~ - ~P4 = 0~ $\to$ Read4-Skip4...: ~P4 1 0 0 1~, ~P4~ doit être 0 pour un even parity
+    - ~P8 1 1 0 1~ - ~P8 = 1~ $\to$ ~Read8-Skip8...: ~P8 1 1 0 1~, ~P8~ doit être 1 pour un even parity
+    - On transfert donc la valeur suivante: ~0 1~ =0= ~0~ =1 0 0= ~1~ =1 1 0 1=
+
+  - Pour $2^N$ bits besoin de $N + 1$ bits de parité
+
+**** Corriger l'erreur 1 bit avec le code de Hamming
+
+- Séquence correcte - ~0 1 0 0 1 0 0 1 1 1 0 1~
+  - Les bits parité pour la séquence correct sont tous = 0
+
+- Supposons que bit 5 n'est plus correct (1 $\to$ 0)
+- Nouvelle séquence: ~0 1 0 0 0 =0= 0 1 1 1 0 1~
+  - Calcule les bits de parité
+    - P1: ~0 0 0 0 1 0 -> 1~
+    - P2: ~1 0 0 0 1 0 -> 0~
+    - P4: ~0 0 0 0 1 -> 1~
+    - P8: ~1 1 1 0 1 -> 0~
+    - P8 P4 P2 P1 = ~0 1 0 1~ = 5 nous dit qu'il y avait une erreur avec le bit 5
+
+*** Considérations
+
+- Taille de stockage
+- Throughput
+  - Écriture
+  - Lecture
+- IOPS
+- Fiabilité
+
+*** RAID-0 - Striping
+
+- Combiner $N$ disques $PD_i$ en un grand disque $LD$
+- Données distribué sur tous les disques
+- Divisé en "stripes"
+  - Stripe $S$ placée sur disque $S \!\! \mod N$
+    - Taille $(LD) = \sum$ taille $(PD_i)$
+    - Throughput $(LD) = \sum$ throughput $(PD_i)$
+    - IOPS $(LD) = \sum$ IOPS $(PD_i)$
+    - fiabilité $(LD) \cong 1/N \times$ fiabilité $(PD_i)$
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_144524_8YtcuU.png]]
+
+*** RAID-1 - Mirroring
+
+Combiner $N$ disque $PD_i$ en un disque $LD$ de même taille
+Données copiées $N$ fois - Chaque disque est une copie des autres
+
+- Taille $(LD) \cong$ taille $(PD_i)$
+- IOPS_read $(LD) \cong \sum$ IOPS_read $(PD_i)$
+- IOPS_write $(LD) \cong$ IOPS_write $(PD_i)$
+- fiabilité $(LD) \cong N \times$ fiabilité $(PD_i)$
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_231350_KbBvMM.png]]
+
+*** RAID-2-4 - Parity
+
+- Striping sur $N$ disques plus un disque supplémentaire de parité
+- En lecture - comme RAID-0 avec le disque de parité inutilisé
+- Fiabilité meilleure que RAID-0 - Un disque peut mourir sans perte
+- Mais en écriture - Peut être pire que RAID-1
+  - Chaque écriture touche au disque de parité
+  - Le calcul de la parité peut nécessiter des lectures supplémentaires
+
+- RAID-2 - Hamming code (bit level striping)
+- RAID-3 - Byte level striping
+- RAID-4 - Block level striping
+  - Une lecture d'I/O n'accède qu'à un seul disque - Nous pouvons faire beaucoup de lectures en parallèle
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_145516_SmqjHe.png]]
+
+*** RAID-5
+
+- Identique à RAID 4, mais distribue le disque de parité sur tous les disques en /round-robin/
+- Récupération plus complexe en cas de panne de disque
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_145434_LXEEjl.png]]
+
+*** RAID-6
+
+Ajouter deux bits redondants pour permettre la récupération de deux disques
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_145542_bZKoft.png]]
+
+*** RAID (0 + 1) et (1 + 0)
+
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_145604_FQfASh.png]]
+
+** RAID Conclusion
+
+- Mirroring (RAID 1) conserve un copie de chaque disque
+- Block interleaved parity (RAID 4, 5, 6) utilise beaucoup moins de redondance
+- RAID 2 ECC
+- RAID 3 bit level parity
+- RAID 4 lit un bloc sur un disque, mais les petits accès sont chers
+- RAID 5 stocke la parité et bloque sur n'importe quel disque
+- RAID 6 utilise plus de bits pour la correction d'erreurs (permettre 2 échecs de disque)
+- Striped mirrors (RAID 1+0) ou mirrored stripes (RAID 0+1) fournit de hautes performances et une grande fiabilité
+[[/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org_20220403_145832_IB1xxW.png]]
+
+* Solid state drives (SSDs)
+
+- Une mémoire non volatile
+- Plus cher par MB
+- Performance beaucoup plus élevée qu’un HDD:
+  - Bande passante: $\sim 500$ MB/s
+  - Latence: $< 0.1$ ms
+  - Meilleure fiabilité mécanique
+  - Plus basse consommation d’énergie

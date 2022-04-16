@@ -1,0 +1,41 @@
+package misc;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class ColorChooser {
+    
+    private ArrayList<String> colors;
+    
+    public ColorChooser() {
+        
+        colors = new ArrayList<String>();
+    }
+    
+    public void addColor(String color) {
+        
+        colors.add(color);
+    }
+    
+    public void removeColor(String color) {
+        
+        colors.remove(color);
+    }
+    
+    public String randomColor() {
+        
+        return colors.get(new Random().nextInt(colors.size()));
+    }
+    
+    public static void main(String[] args) {
+        
+        ColorChooser c = new ColorChooser();
+        
+        c.addColor("green");
+        c.addColor("pink");
+        c.addColor("blue");
+        c.addColor("yellow");
+        
+        System.out.println(c.randomColor());
+    }
+}
