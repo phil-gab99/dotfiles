@@ -41,6 +41,7 @@
                 coming-mode-hook
                 gfm-view-mode-hook
                 eshell-mode-hook
+                sql-interactive-mode-hook
                 pdf-view-mode-hook
                 doc-view-mode-hook
                 mu4e-main-mode-hook
@@ -566,8 +567,37 @@
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
+(defun pg/eshell-git-prompt-multiline ()
+  "Eshell Git prompt inspired by spaceship-prompt."
+  (let (separator hr dir git git-dirty time sign command)
+    (setq separator (with-face " | " 'eshell-git-prompt-multiline-secondary-face))
+    (setq hr (with-face (concat "\n" (make-string (/ (window-total-width) 2) ?─) "\n") 'eshell-git-prompt-multiline-secondary-face))
+    (setq dir
+          (concat
+           (with-face " " 'eshell-git-prompt-directory-face)
+           (concat  (abbreviate-file-name (eshell/pwd)))))
+    (setq git
+          (concat (with-face "⎇" 'eshell-git-prompt-exit-success-face)
+                  (concat (eshell-git-prompt--branch-name))))
+    (setq git-dirty
+          (when (eshell-git-prompt--branch-name)
+            (if (eshell-git-prompt--collect-status)
+                (with-face " ✎" 'eshell-git-prompt-modified-face)
+              (with-face " ✔" 'eshell-git-prompt-exit-success-face))))
+    (setq time (with-face (format-time-string "%I:%M:%S %p") 'eshell-git-prompt-multiline-secondary-face))
+    (setq sign
+          (if (= (user-uid) 0)
+              (with-face "\n#" 'eshell-git-prompt-multiline-sign-face)
+            (with-face "\nλ" 'eshell-git-prompt-multiline-sign-face)))
+    (setq command (with-face " " 'eshell-git-prompt-multiline-command-face))
+
+    ;; Build prompt
+    (concat hr dir separator git git-dirty separator time sign command)))
+
 (use-package eshell-git-prompt
-  :after eshell)
+  :after eshell
+  :config
+  (fset #'eshell-git-prompt-multiline #'pg/eshell-git-prompt-multiline))
 
 (defun pg/config-path ()
   (let ((paths '("/home/phil-gab99/miniconda3/bin"
@@ -618,13 +648,16 @@
   :diminish projectile-mode
   :hook (lsp-mode . projectile-mode)
   :custom ((projectile-completion-system 'vertico))
-  ;; :bind-keymap
-  ;; ("C-c p" . projectile-command-map)
   :init
   (setq projectile-keymap-prefix (kbd "C-c p"))
   (when (file-directory-p "~/Projects")
     (setq projectile-project-search-path '("~/Projects")))
   (setq projectile-switch-project-action #'projectile-dired))
+
+(bind-keys*
+ :map prog-mode-map
+ ("C-p C-c" . projectile-run-project)
+ ("C-p C-b" . projectile-compile-project))
 
 (use-package magit
   :commands (magit-status magit-get-current-branch)
@@ -819,8 +852,7 @@
 
 (use-package git-modes)
 
-(use-package groovy-emacs-mode
-  ;; :disabled
+(use-package groovy-mode
   :straight '(groovy-emacs-modes :type git
                                  :host github
                                  :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
@@ -844,6 +876,17 @@
   (lsp-java-java-path "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
   (lsp-java-import-gradle-java-home "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
   (lsp-java-server-install-dir "/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/bin/"))
+
+(defun pg/gradle-run ()
+  "Execute gradle run command"
+  (interactive)
+  (gradle-run "run"))
+
+(use-package gradle-mode
+  :hook (java-mode . gradle-mode)
+  :straight '(emacs-gradle-mode
+              :host github
+              :repo "jacobono/emacs-gradle-mode"))
 
 (straight-use-package 'auctex)
 (require 'tex-site)
@@ -1614,6 +1657,7 @@
   (unbind-key "C-k" 'evil-ex-search-keymap)
   (unbind-key "C-k" 'evil-insert-state-map)
   (unbind-key "C-k" 'evil-replace-state-map)
+  (unbind-key "C-p" 'evil-normal-state-map)
   ;; Visual line motions outside visual-line mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
@@ -1789,3 +1833,24 @@
     "ons" '(org-id-get-create :which-key "create subheading")))
 
 (setq gc-cons-threshold (* 2 1000 1000))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-minibuffer-history-key "M-p")
+ '(pdf-misc-print-program-args '("-o sides=two-sided-long-edge") nil nil "Customized with use-package pdf-tools")
+ '(pdf-misc-print-program-executable "/usr/bin/lpr" nil nil "Customized with use-package pdf-tools")
+ '(safe-local-variable-values
+   '((projectile-project-run-cmd . "gradle run ")
+     (projectile-project-compilation-cmd . "gradle build ")
+     (projectile-project-name . "projet-ift2935")
+     (projectile-project-compile-cmd gradle-build)
+     (projectile-project-run-cmd pg/gradle-run)
+     (projectile-project-name . projet-ift2935))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

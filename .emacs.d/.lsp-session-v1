@@ -1,0 +1,1 @@
+#s(lsp-session ("/home/phil-gab99/Projects/projet-ift2935/biblioApp" "/home/phil-gab99/Projects/tp4-tp4-simon-philippe") nil #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ()) #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ()) #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ()))

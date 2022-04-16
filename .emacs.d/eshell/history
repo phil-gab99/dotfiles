@@ -1,128 +1,84 @@
-cat washingmachineFSM.smt2 
-*echo --help
-alloy.jar 
-ls
-bash --version
-ls
-cd hw/
-ls
-cd a3/ ls
-cd a3/
-ls
 cd lib/
-ls
 man fread
-ls
 cd Projects/tp4-tp4-simon-philippe/
-ls
 zipinfo floppy.zip 
 zipinfo -l floppy.zip 
 man zipinfo
 zipinfo -1 floppy.zip 
 cd test/
-ls
 tree floppy.zip 
-ls
 cd ../
-ls
 unzip floppy.zip 
-ls
 tree floppy.img 
 man fsck
 man mount
 htop
-ls
 cd Projects/
-ls
 cd tp4-tp4-simon-philippe/
-ls
 rm floppy.img 
-ls
 unzip floppy.zip 
-ls
 man docker build
 man docker run
-ls
 man docker cp
 lpstat -s
 man docker run
 normal-charge 
-ls
 mv 2022-QC-Sourc-\ Deduction-\ Return.pdf 2022-QC-Source-Deduction-Return.pdf
-ls
 gradle build
 cd ../../../
-ls
 cd ..
-ls
 gradle build
 gradle run
-exit
-ls
 ls -al
 cd .emacs.d/
-ls
 ls straight/
 cd ..
-ls
 cd Packages/
-ls
 cd ../.emacs.d/
 mv straight/ ../Packages/
-ls
 cd .emacs.d/
-ls
 rm -r straight/
 cd ..
-ls
 cd Packages/
-ls
 ls straight/
-ls
 cd ..
-ls
 cd straight/
-ls
 cd ..
-ls
 ls | grep straight/
 ls | grep straight	
 ls -al
-ls
 ls -al
 cd straight/
-ls
 cd build/
-ls
 cd ..
 cd ..
 rm -rf straight/
 cd ..
-ls
 cd ..
 cd Packages/
-ls
 cd straight/
-ls
 cd repos/
 ls -al
 cd ..
 cd build/
-ls
 cd ..
-ls
 ls straight/
 ls straight/repos/
-ls
 cd straight/
-ls
 rm -rf build/ repos/
-ls
 cd ..
-ls
 rm -r straight/
-ls
 cd ..
-ls
 ln -sf ~/Packages/straight/ ~/.dotfiles/.emacs.d/straight
+docker login
+cd Documents/
+cd ../Projects/tp5-simon-philippe/
+make dockerhub 
+make pull
+docker image ls
+exit
+cd Packages/
+ls
+exit
+ls
 exit
