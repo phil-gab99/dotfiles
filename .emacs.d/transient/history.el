@@ -17,7 +17,6 @@
              ("--force")
              ("--force-with-lease" "--force" "--no-verify"))
  (magit-rebase nil
-               ("--autostash")
                ("--autostash" "--no-verify"))
  (magit-reset nil)
  (magit-revert

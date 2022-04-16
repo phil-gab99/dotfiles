@@ -1,5 +1,14 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
+(defun pg/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'pg/display-startup-time)
+
 (server-start)
 
 (setq inhibit-startup-message t)                                   ; Disable startup message
@@ -101,6 +110,9 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
+
+(setq straight-base-dir "~/Packages/")
+
 (setq straight-use-package-by-default t)
 ;;(setq use-package-verbose t) For optimizing performance
 
@@ -290,14 +302,6 @@
                                   (redisplay)
                                   (run-hooks 'dashboard-after-initialize-hook))))
 
-(defun pg/display-startup-time ()
-  (let ((package-count 0) (time (float-time (time-subtract after-init-time before-init-time))))
-    (when (boundp 'straight--profile-cache)
-      (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
-    (if (zerop package-count)
-        (format "Emacs started in %.2f" time)
-      (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
-
 (use-package dashboard
   :straight t
   :custom
@@ -305,8 +309,6 @@
   (dashboard-items '((recents . 10)
                      (projects . 10)
                      (agenda . 5)))
-  (dashboard-init-info #'pg/display-startup-time)
-
   :config
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
   (pg/dashboard-setup-startup-hook))
@@ -1789,3 +1791,5 @@
     "ons" '(org-id-get-create :which-key "create subheading")))
 
 (setq gc-cons-threshold (* 2 1000 1000))
+
+

@@ -1,66 +1,3 @@
-ls
-man 7z
-man 7zip
-apt search 7zip
-man p7zip
-p7zip -d Devoir1_IFT1227.7z 
-ls
-cd Devoir1_IFT1227/
-ls
-xournal Devoir1_IFT1227.pdf 
-alloy.jar --help
-alloy version
-alloy.jar version
-alloy.jar --version
-alloy.jar --solver minisat shell
-normal-charge 
-man youtube-dl 
-mpc
-*mpc
-mpc repeat
-*mpc repeat
-normal-charge 
-a
-b
-h
-s
-a
-man youtube-dl
-cd Music/
-youtube-dl -x --audio-format "mp3" https://www.youtube.com/watch?v=RRQrLHtuESc
-youtube-dl --rm-cache-dir -x --audio-format "mp3" https://www.youtube.com/watch?v=RRQrLHtuESc
-ls
-mv MitiS\ -\ Expose-RRQrLHtuESc.mp3 Mitis\ -\ Expose.mp3
-ls
-Mars4_5.jar 
-ls
-mv 2022\ Updated\ Personal\ Tax\ Credits\ Return\ Canada\ -\ EN.pdf Documents/Jobs/
-mv 2022\ Quebec\ Source\ Deductions\ Return\ -\ EN.pdf Documents/Jobs/
-ls
-cd Documents/Jobs/
-l
-ls
-*l
-man getopts
-apt search getopts
-getopts --help
-getopts
-cd Packages/
-ls
-git clone git@github.com:motemen/kt-alloy-cli.git
-ls
-cd kt-alloy-cli/
-ls
-cat README.md 
-man echo
-man printf
-alloy.jar 
-cd Documents/Notes/IFT-6755/hw/project/ls
-cd Documents/Notes/IFT-6755/hw/project/src/ 
-ls
-cd ../
-cd p3script/
-ls
 cat washingmachineFSM.smt2 
 *echo --help
 alloy.jar 
@@ -120,4 +57,72 @@ cd ..
 ls
 gradle build
 gradle run
+exit
+ls
+ls -al
+cd .emacs.d/
+ls
+ls straight/
+cd ..
+ls
+cd Packages/
+ls
+cd ../.emacs.d/
+mv straight/ ../Packages/
+ls
+cd .emacs.d/
+ls
+rm -r straight/
+cd ..
+ls
+cd Packages/
+ls
+ls straight/
+ls
+cd ..
+ls
+cd straight/
+ls
+cd ..
+ls
+ls | grep straight/
+ls | grep straight	
+ls -al
+ls
+ls -al
+cd straight/
+ls
+cd build/
+ls
+cd ..
+cd ..
+rm -rf straight/
+cd ..
+ls
+cd ..
+cd Packages/
+ls
+cd straight/
+ls
+cd repos/
+ls -al
+cd ..
+cd build/
+ls
+cd ..
+ls
+ls straight/
+ls straight/repos/
+ls
+cd straight/
+ls
+rm -rf build/ repos/
+ls
+cd ..
+ls
+rm -r straight/
+ls
+cd ..
+ls
+ln -sf ~/Packages/straight/ ~/.dotfiles/.emacs.d/straight
 exit
