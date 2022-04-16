@@ -1,0 +1,15 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored"
+ (filename . "~/Documents/Notes/IFT-2245/20220410130048-docker.org")
+ (front-context-string)
+ (rear-context-string . "4-10 Sun 13:00]\n")
+ (position . 160))
+("org-refile-last-stored"
+ (filename . "~/Documents/Org/Agenda/Tasks.org")
+ (front-context-string . "** CANC Meeting ")
+ (rear-context-string . "notes to henri\n\n")
+ (position . 1174))
+)
