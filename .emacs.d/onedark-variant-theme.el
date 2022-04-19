@@ -30,7 +30,7 @@
   (onedark-variant-preproc    "#7b447b")
   (onedark-variant-shexec     "#afeeee")
   (onedark-variant-modelnfg   "#9da5b4")
-  (onedark-variant-modelnbg   "#21252B")
+  (onedark-variant-modelnbg   "#21252b")
   (onedark-variant-modelndiff "#ff4c35")
   (onedark-variant-modelninfg "#5b6268")
   (onedark-variant-modelninbg "#21242b")

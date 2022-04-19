@@ -43,6 +43,7 @@
                 eshell-mode-hook
                 sql-interactive-mode-hook
                 pdf-view-mode-hook
+                sokoban-mode-hook
                 doc-view-mode-hook
                 mu4e-main-mode-hook
                 Man-mode-hook
@@ -475,6 +476,10 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package abbrev
+  :straight nil
+  :diminish abbrev-mode)
+
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :custom 
@@ -656,8 +661,8 @@
 
 (bind-keys*
  :map prog-mode-map
- ("C-p C-c" . projectile-run-project)
- ("C-p C-b" . projectile-compile-project))
+ ("C-p c" . projectile-run-project)
+ ("C-p b" . projectile-compile-project))
 
 (use-package magit
   :commands (magit-status magit-get-current-branch)
@@ -1838,16 +1843,31 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(helm-minibuffer-history-key "M-p")
- '(pdf-misc-print-program-args '("-o sides=two-sided-long-edge") nil nil "Customized with use-package pdf-tools")
- '(pdf-misc-print-program-executable "/usr/bin/lpr" nil nil "Customized with use-package pdf-tools")
- '(safe-local-variable-values
-   '((projectile-project-run-cmd . "gradle run ")
-     (projectile-project-compilation-cmd . "gradle build ")
-     (projectile-project-name . "projet-ift2935")
-     (projectile-project-compile-cmd gradle-build)
-     (projectile-project-run-cmd pg/gradle-run)
-     (projectile-project-name . projet-ift2935))))
+ '(ignored-local-variable-values
+   '((eval cl-flet
+           ((enhance-imenu-lisp
+             (&rest keywords)
+             (dolist
+                 (keyword keywords)
+               (add-to-list 'lisp-imenu-generic-expression
+                            (list
+                             (purecopy
+                              (concat
+                               (capitalize keyword)
+                               (if
+                                   (string=
+                                    (substring-no-properties keyword -1)
+                                    "s")
+                                   "es" "s")))
+                             (purecopy
+                              (concat "^\\s-*("
+                                      (regexp-opt
+                                       (list
+                                        (concat "define-" keyword))
+                                       t)
+                                      "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
+                             2)))))
+           (enhance-imenu-lisp "bookmarklet-command" "class" "command" "ffi-method" "function" "mode" "parenscript" "user-class")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

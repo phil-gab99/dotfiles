@@ -79,6 +79,7 @@ Starting a server for displaying polybar info
                   eshell-mode-hook
                   sql-interactive-mode-hook
                   pdf-view-mode-hook
+                  sokoban-mode-hook
                   doc-view-mode-hook
                   mu4e-main-mode-hook
                   Man-mode-hook
@@ -819,6 +820,16 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+end_src
 
+*** Package | abbrev-mode
+
+#+begin_src emacs-lisp
+
+  (use-package abbrev
+    :straight nil
+    :diminish abbrev-mode)
+
+#+end_src
+
 *** Package | highlight-indent-guides
 
 #+begin_src emacs-lisp
@@ -1167,8 +1178,8 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
   (bind-keys*
    :map prog-mode-map
-   ("C-p C-c" . projectile-run-project)
-   ("C-p C-b" . projectile-compile-project))
+   ("C-p c" . projectile-run-project)
+   ("C-p b" . projectile-compile-project))
 
 #+end_src
 

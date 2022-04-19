@@ -5234,3 +5234,588 @@ Apr 15 17:41 : player: played "Mitis - Expose.mp3"
 Apr 15 17:42 : exception: Failed to play on "My Pulse Output" (pulse): suspended
 Apr 15 17:42 : exception: Failed to open audio output
 Apr 16 01:30 : player: played "Mitis - Expose.mp3"
+Apr 17 13:31 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 17 13:31 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 17 13:31 : client: [0] opened from 127.0.0.1:46526
+Apr 17 13:31 : client: [0] closed
+Apr 17 13:31 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 17 13:32 : player: played "Mitis - Expose.mp3"
+Apr 17 13:32 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 17 13:32 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 17 13:32 : client: [0] opened from 127.0.0.1:46528
+Apr 17 13:32 : client: [0] closed
+Apr 17 13:32 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 17 13:32 : client: [1] opened from 127.0.0.1:46530
+Apr 17 13:32 : client: [1] closed
+Apr 17 13:32 : client: [2] opened from 127.0.0.1:46534
+Apr 17 13:32 : client: [2] closed
+Apr 17 13:32 : client: [3] opened from 127.0.0.1:46536
+Apr 17 13:32 : client: [3] closed
+Apr 17 13:32 : client: [4] opened from 127.0.0.1:46538
+Apr 17 13:32 : client: [4] closed
+Apr 17 13:32 : client: [5] opened from 127.0.0.1:46540
+Apr 17 13:32 : client: [5] closed
+Apr 17 13:32 : client: [6] opened from 127.0.0.1:46542
+Apr 17 13:32 : player: played "Mitis - Expose.mp3"
+Apr 17 13:32 : client: [6] closed
+Apr 17 13:32 : client: [7] opened from 127.0.0.1:46544
+Apr 17 13:32 : client: [7] closed
+Apr 17 13:32 : client: [8] opened from 127.0.0.1:46546
+Apr 17 13:32 : client: [8] closed
+Apr 17 13:32 : client: [9] opened from 127.0.0.1:46548
+Apr 17 13:32 : client: [9] closed
+Apr 17 14:01 : update: added /Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3
+Apr 17 14:05 : client: [10] opened from 127.0.0.1:46550
+Apr 17 14:05 : client: [10] closed
+Apr 17 14:05 : client: [11] opened from 127.0.0.1:46552
+Apr 17 14:05 : client: [11] closed
+Apr 17 14:05 : client: [12] opened from 127.0.0.1:46554
+Apr 17 14:05 : client: [12] closed
+Apr 17 14:05 : client: [13] opened from 127.0.0.1:46556
+Apr 17 14:05 : client: [13] closed
+Apr 17 14:05 : client: [14] opened from 127.0.0.1:46558
+Apr 17 14:05 : client: [14] closed
+Apr 17 14:05 : client: [15] opened from 127.0.0.1:46560
+Apr 17 14:05 : client: [15] closed
+Apr 17 14:05 : client: [16] opened from 127.0.0.1:46562
+Apr 17 14:05 : client: [16] closed
+Apr 17 14:05 : client: [17] opened from 127.0.0.1:46564
+Apr 17 14:05 : client: [17] closed
+Apr 17 14:05 : client: [18] opened from 127.0.0.1:46566
+Apr 17 14:05 : client: [18] closed
+Apr 17 14:05 : client: [19] opened from 127.0.0.1:46568
+Apr 17 14:05 : client: [19] closed
+Apr 17 14:05 : client: [20] opened from 127.0.0.1:46570
+Apr 17 14:05 : client: [20] closed
+Apr 17 14:05 : client: [21] opened from 127.0.0.1:46572
+Apr 17 14:05 : client: [21] closed
+Apr 17 14:05 : client: [22] opened from 127.0.0.1:46574
+Apr 17 14:05 : client: [22] closed
+Apr 17 14:05 : client: [23] opened from 127.0.0.1:46576
+Apr 17 14:05 : client: [23] closed
+Apr 17 14:05 : client: [24] opened from 127.0.0.1:46578
+Apr 17 14:05 : client: [24] closed
+Apr 17 14:05 : client: [25] opened from 127.0.0.1:46580
+Apr 17 14:05 : client: [25] closed
+Apr 17 14:05 : client: [26] opened from 127.0.0.1:46582
+Apr 17 14:05 : client: [26] closed
+Apr 17 14:05 : client: [27] opened from 127.0.0.1:46584
+Apr 17 14:05 : client: [27] closed
+Apr 17 14:05 : client: [28] opened from 127.0.0.1:46586
+Apr 17 14:05 : client: [28] closed
+Apr 17 14:05 : client: [29] opened from 127.0.0.1:46588
+Apr 17 14:05 : client: [29] closed
+Apr 17 14:05 : client: [30] opened from 127.0.0.1:46590
+Apr 17 14:05 : client: [30] closed
+Apr 17 14:05 : client: [31] opened from 127.0.0.1:46592
+Apr 17 14:05 : client: [31] closed
+Apr 17 14:05 : client: [32] opened from 127.0.0.1:46594
+Apr 17 14:05 : client: [32] closed
+Apr 17 14:05 : client: [33] opened from 127.0.0.1:46596
+Apr 17 14:05 : client: [33] closed
+Apr 17 14:05 : client: [34] opened from 127.0.0.1:46598
+Apr 17 14:05 : client: [34] closed
+Apr 17 14:05 : client: [35] opened from 127.0.0.1:46600
+Apr 17 14:05 : client: [35] closed
+Apr 17 14:05 : client: [36] opened from 127.0.0.1:46602
+Apr 17 14:05 : client: [36] closed
+Apr 17 14:05 : client: [37] opened from 127.0.0.1:46604
+Apr 17 14:05 : client: [37] closed
+Apr 17 14:05 : client: [38] opened from 127.0.0.1:46606
+Apr 17 14:05 : client: [38] closed
+Apr 17 14:05 : client: [39] opened from 127.0.0.1:46608
+Apr 17 14:05 : client: [39] closed
+Apr 17 14:05 : client: [40] opened from 127.0.0.1:46610
+Apr 17 14:05 : client: [40] closed
+Apr 17 14:05 : client: [41] opened from 127.0.0.1:46612
+Apr 17 14:05 : client: [41] closed
+Apr 17 14:05 : client: [42] opened from 127.0.0.1:46616
+Apr 17 14:05 : client: [42] closed
+Apr 17 14:05 : client: [43] opened from 127.0.0.1:46618
+Apr 17 14:05 : client: [43] closed
+Apr 17 14:05 : client: [44] opened from 127.0.0.1:46620
+Apr 17 14:05 : client: [44] closed
+Apr 17 14:05 : client: [45] opened from 127.0.0.1:46622
+Apr 17 14:05 : client: [45] closed
+Apr 17 14:05 : client: [46] opened from 127.0.0.1:46626
+Apr 17 14:05 : client: [46] closed
+Apr 17 14:05 : client: [47] opened from 127.0.0.1:46628
+Apr 17 14:05 : client: [47] closed
+Apr 17 14:05 : client: [48] opened from 127.0.0.1:46630
+Apr 17 14:05 : client: [48] closed
+Apr 17 14:05 : client: [49] opened from 127.0.0.1:46632
+Apr 17 14:05 : client: [49] closed
+Apr 17 14:05 : client: [50] opened from 127.0.0.1:46634
+Apr 17 14:05 : client: [50] closed
+Apr 17 14:05 : client: [51] opened from 127.0.0.1:46636
+Apr 17 14:05 : client: [51] closed
+Apr 17 14:05 : client: [52] opened from 127.0.0.1:46638
+Apr 17 14:05 : client: [52] closed
+Apr 17 14:05 : client: [53] opened from 127.0.0.1:46640
+Apr 17 14:05 : client: [53] closed
+Apr 17 14:05 : client: [54] opened from 127.0.0.1:46642
+Apr 17 14:05 : client: [54] closed
+Apr 17 14:05 : client: [55] opened from 127.0.0.1:46644
+Apr 17 14:05 : client: [55] closed
+Apr 17 14:05 : client: [56] opened from 127.0.0.1:46646
+Apr 17 14:05 : client: [56] closed
+Apr 17 14:05 : client: [57] opened from 127.0.0.1:46648
+Apr 17 14:05 : client: [57] closed
+Apr 17 14:05 : client: [58] opened from 127.0.0.1:46650
+Apr 17 14:05 : client: [58] closed
+Apr 17 14:05 : client: [59] opened from 127.0.0.1:46652
+Apr 17 14:05 : client: [59] closed
+Apr 17 14:05 : client: [60] opened from 127.0.0.1:46654
+Apr 17 14:05 : client: [60] closed
+Apr 17 14:05 : client: [61] opened from 127.0.0.1:46656
+Apr 17 14:05 : client: [61] closed
+Apr 17 14:05 : client: [62] opened from 127.0.0.1:46658
+Apr 17 14:05 : client: [62] closed
+Apr 17 14:05 : client: [63] opened from 127.0.0.1:46660
+Apr 17 14:05 : client: [63] closed
+Apr 17 14:05 : client: [64] opened from 127.0.0.1:46662
+Apr 17 14:05 : client: [64] closed
+Apr 17 14:05 : client: [65] opened from 127.0.0.1:46664
+Apr 17 14:05 : client: [65] closed
+Apr 17 14:05 : client: [66] opened from 127.0.0.1:46666
+Apr 17 14:05 : client: [66] closed
+Apr 17 14:05 : client: [67] opened from 127.0.0.1:46668
+Apr 17 14:05 : client: [67] closed
+Apr 17 14:05 : client: [68] opened from 127.0.0.1:46670
+Apr 17 14:05 : client: [68] closed
+Apr 17 14:05 : client: [69] opened from 127.0.0.1:46672
+Apr 17 14:05 : client: [69] closed
+Apr 17 14:05 : client: [70] opened from 127.0.0.1:46674
+Apr 17 14:05 : client: [70] closed
+Apr 17 14:05 : client: [71] opened from 127.0.0.1:46676
+Apr 17 14:05 : client: [71] closed
+Apr 17 14:05 : client: [72] opened from 127.0.0.1:46678
+Apr 17 14:05 : client: [72] closed
+Apr 17 14:06 : client: [73] opened from 127.0.0.1:46680
+Apr 17 14:06 : client: [73] closed
+Apr 17 14:06 : client: [74] opened from 127.0.0.1:46682
+Apr 17 14:06 : client: [74] closed
+Apr 17 14:06 : client: [75] opened from 127.0.0.1:46684
+Apr 17 14:06 : client: [75] closed
+Apr 17 14:06 : client: [76] opened from 127.0.0.1:46686
+Apr 17 14:06 : client: [76] closed
+Apr 17 14:06 : client: [77] opened from 127.0.0.1:46688
+Apr 17 14:06 : client: [77] closed
+Apr 17 14:06 : client: [78] opened from 127.0.0.1:46692
+Apr 17 14:06 : client: [78] closed
+Apr 17 14:06 : client: [79] opened from 127.0.0.1:46694
+Apr 17 14:06 : client: [79] closed
+Apr 17 14:06 : client: [80] opened from 127.0.0.1:46696
+Apr 17 14:06 : client: [80] closed
+Apr 17 14:06 : client: [81] opened from 127.0.0.1:46698
+Apr 17 14:06 : client: [81] closed
+Apr 17 14:06 : client: [82] opened from 127.0.0.1:46700
+Apr 17 14:06 : client: [82] closed
+Apr 17 14:06 : client: [83] opened from 127.0.0.1:46702
+Apr 17 14:06 : client: [83] closed
+Apr 17 14:06 : client: [84] opened from 127.0.0.1:46704
+Apr 17 14:06 : client: [84] closed
+Apr 17 14:06 : client: [85] opened from 127.0.0.1:46706
+Apr 17 14:06 : client: [85] closed
+Apr 17 14:06 : client: [86] opened from 127.0.0.1:46708
+Apr 17 14:06 : client: [86] closed
+Apr 17 14:06 : client: [87] opened from 127.0.0.1:46710
+Apr 17 14:06 : client: [87] closed
+Apr 17 14:06 : client: [88] opened from 127.0.0.1:46712
+Apr 17 14:06 : client: [88] closed
+Apr 17 14:06 : client: [89] opened from 127.0.0.1:46714
+Apr 17 14:06 : client: [89] closed
+Apr 17 14:06 : client: [90] opened from 127.0.0.1:46716
+Apr 17 14:06 : client: [90] closed
+Apr 17 14:06 : client: [91] opened from 127.0.0.1:46718
+Apr 17 14:06 : client: [91] closed
+Apr 17 14:06 : client: [92] opened from 127.0.0.1:46720
+Apr 17 14:06 : client: [92] closed
+Apr 17 14:06 : client: [93] opened from 127.0.0.1:46724
+Apr 17 14:06 : client: [93] closed
+Apr 17 14:06 : client: [94] opened from 127.0.0.1:46726
+Apr 17 14:06 : client: [94] closed
+Apr 17 14:06 : client: [95] opened from 127.0.0.1:46728
+Apr 17 14:06 : client: [95] closed
+Apr 17 14:06 : client: [96] opened from 127.0.0.1:46730
+Apr 17 14:06 : client: [96] closed
+Apr 17 14:06 : client: [97] opened from 127.0.0.1:46732
+Apr 17 14:06 : client: [97] closed
+Apr 17 14:06 : client: [98] opened from 127.0.0.1:46734
+Apr 17 14:06 : client: [98] closed
+Apr 17 14:06 : client: [99] opened from 127.0.0.1:46736
+Apr 17 14:06 : client: [99] closed
+Apr 17 14:06 : client: [100] opened from 127.0.0.1:46738
+Apr 17 14:06 : client: [100] closed
+Apr 17 14:06 : client: [101] opened from 127.0.0.1:46742
+Apr 17 14:06 : client: [101] closed
+Apr 17 14:06 : client: [102] opened from 127.0.0.1:46744
+Apr 17 14:06 : client: [102] closed
+Apr 17 14:06 : client: [103] opened from 127.0.0.1:46748
+Apr 17 14:06 : client: [103] closed
+Apr 17 14:06 : client: [104] opened from 127.0.0.1:46750
+Apr 17 14:06 : client: [104] closed
+Apr 17 14:06 : client: [105] opened from 127.0.0.1:46752
+Apr 17 14:06 : client: [105] closed
+Apr 17 14:06 : client: [106] opened from 127.0.0.1:46754
+Apr 17 14:06 : client: [106] closed
+Apr 17 14:06 : client: [107] opened from 127.0.0.1:46756
+Apr 17 14:06 : client: [107] closed
+Apr 17 14:06 : client: [108] opened from 127.0.0.1:46758
+Apr 17 14:06 : client: [108] closed
+Apr 17 14:06 : client: [109] opened from 127.0.0.1:46760
+Apr 17 14:06 : client: [109] closed
+Apr 17 14:06 : client: [110] opened from 127.0.0.1:46762
+Apr 17 14:06 : client: [110] closed
+Apr 17 14:06 : client: [111] opened from 127.0.0.1:46764
+Apr 17 14:06 : client: [111] closed
+Apr 17 14:06 : client: [112] opened from 127.0.0.1:46766
+Apr 17 14:06 : client: [112] closed
+Apr 17 14:06 : client: [113] opened from 127.0.0.1:46768
+Apr 17 14:06 : client: [113] closed
+Apr 17 14:06 : client: [114] opened from 127.0.0.1:46770
+Apr 17 14:06 : client: [114] closed
+Apr 17 14:06 : client: [115] opened from 127.0.0.1:46772
+Apr 17 14:06 : client: [115] closed
+Apr 17 14:06 : client: [116] opened from 127.0.0.1:46774
+Apr 17 14:06 : client: [116] closed
+Apr 17 14:06 : client: [117] opened from 127.0.0.1:46776
+Apr 17 14:06 : client: [117] closed
+Apr 17 14:06 : client: [118] opened from 127.0.0.1:46778
+Apr 17 14:06 : client: [118] closed
+Apr 17 14:06 : client: [119] opened from 127.0.0.1:46780
+Apr 17 14:06 : client: [119] closed
+Apr 17 14:06 : client: [120] opened from 127.0.0.1:46782
+Apr 17 14:06 : client: [120] closed
+Apr 17 14:06 : client: [121] opened from 127.0.0.1:46784
+Apr 17 14:06 : client: [121] closed
+Apr 17 14:06 : client: [122] opened from 127.0.0.1:46786
+Apr 17 14:06 : client: [122] closed
+Apr 17 14:06 : client: [123] opened from 127.0.0.1:46788
+Apr 17 14:06 : client: [123] closed
+Apr 17 14:06 : client: [124] opened from 127.0.0.1:46790
+Apr 17 14:06 : client: [124] closed
+Apr 17 14:06 : client: [125] opened from 127.0.0.1:46792
+Apr 17 14:06 : client: [125] closed
+Apr 17 14:06 : client: [126] opened from 127.0.0.1:46794
+Apr 17 14:06 : client: [126] closed
+Apr 17 14:06 : client: [127] opened from 127.0.0.1:46796
+Apr 17 14:06 : client: [127] closed
+Apr 17 14:06 : client: [128] opened from 127.0.0.1:46798
+Apr 17 14:06 : client: [128] closed
+Apr 17 14:06 : client: [129] opened from 127.0.0.1:46800
+Apr 17 14:06 : client: [129] closed
+Apr 17 14:06 : client: [130] opened from 127.0.0.1:46802
+Apr 17 14:06 : client: [130] closed
+Apr 17 14:06 : client: [131] opened from 127.0.0.1:46804
+Apr 17 14:06 : client: [131] closed
+Apr 17 14:06 : client: [132] opened from 127.0.0.1:46806
+Apr 17 14:06 : client: [132] closed
+Apr 17 14:06 : client: [133] opened from 127.0.0.1:46808
+Apr 17 14:06 : client: [133] closed
+Apr 17 14:06 : client: [134] opened from 127.0.0.1:46812
+Apr 17 14:06 : client: [134] closed
+Apr 17 14:06 : client: [135] opened from 127.0.0.1:46814
+Apr 17 14:06 : client: [135] closed
+Apr 17 14:06 : client: [136] opened from 127.0.0.1:46816
+Apr 17 14:06 : client: [136] closed
+Apr 17 14:06 : client: [137] opened from 127.0.0.1:46818
+Apr 17 14:06 : client: [137] closed
+Apr 17 14:06 : client: [138] opened from 127.0.0.1:46820
+Apr 17 14:06 : client: [138] closed
+Apr 17 14:06 : client: [139] opened from 127.0.0.1:46822
+Apr 17 14:06 : client: [139] closed
+Apr 17 14:06 : client: [140] opened from 127.0.0.1:46824
+Apr 17 14:06 : client: [140] closed
+Apr 17 14:06 : client: [141] opened from 127.0.0.1:46826
+Apr 17 14:06 : client: [141] closed
+Apr 17 14:06 : client: [142] opened from 127.0.0.1:46828
+Apr 17 14:06 : client: [142] closed
+Apr 17 14:06 : client: [143] opened from 127.0.0.1:46830
+Apr 17 14:06 : client: [143] closed
+Apr 17 14:06 : client: [144] opened from 127.0.0.1:46832
+Apr 17 14:06 : client: [144] closed
+Apr 17 14:06 : client: [145] opened from 127.0.0.1:46834
+Apr 17 14:06 : client: [145] closed
+Apr 17 14:06 : client: [146] opened from 127.0.0.1:46838
+Apr 17 14:06 : client: [146] closed
+Apr 17 14:06 : client: [147] opened from 127.0.0.1:46840
+Apr 17 14:06 : client: [147] closed
+Apr 17 14:06 : client: [148] opened from 127.0.0.1:46842
+Apr 17 14:06 : client: [148] closed
+Apr 17 14:06 : client: [149] opened from 127.0.0.1:46844
+Apr 17 14:06 : client: [149] closed
+Apr 17 14:06 : client: [150] opened from 127.0.0.1:46846
+Apr 17 14:06 : client: [150] closed
+Apr 17 14:06 : client: [151] opened from 127.0.0.1:46848
+Apr 17 14:06 : client: [151] closed
+Apr 17 14:06 : client: [152] opened from 127.0.0.1:46850
+Apr 17 14:06 : client: [152] closed
+Apr 17 14:06 : client: [153] opened from 127.0.0.1:46852
+Apr 17 14:06 : client: [153] closed
+Apr 17 14:06 : client: [154] opened from 127.0.0.1:46854
+Apr 17 14:06 : client: [154] closed
+Apr 17 14:06 : client: [155] opened from 127.0.0.1:46856
+Apr 17 14:06 : client: [155] closed
+Apr 17 14:07 : client: [156] opened from 127.0.0.1:46858
+Apr 17 14:07 : client: [156] closed
+Apr 17 14:08 : client: [157] opened from 127.0.0.1:46860
+Apr 17 14:08 : client: [157] closed
+Apr 17 14:08 : client: [158] opened from 127.0.0.1:46862
+Apr 17 14:08 : client: [158] closed
+Apr 17 14:08 : client: [159] opened from 127.0.0.1:46866
+Apr 17 14:08 : client: [159] closed
+Apr 17 14:08 : client: [160] opened from 127.0.0.1:46868
+Apr 17 14:08 : client: [160] closed
+Apr 17 14:10 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:15 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:19 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:24 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:28 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:32 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:37 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:41 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 14:45 : client: [161] opened from 127.0.0.1:46870
+Apr 17 14:45 : client: [161] closed
+Apr 17 15:05 : client: [162] opened from 127.0.0.1:46872
+Apr 17 15:05 : client: [162] closed
+Apr 17 15:05 : client: [163] opened from 127.0.0.1:46874
+Apr 17 15:05 : client: [163] closed
+Apr 17 15:05 : client: [164] opened from 127.0.0.1:46876
+Apr 17 15:05 : client: [164] closed
+Apr 17 15:06 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:11 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:15 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:20 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:24 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:29 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:33 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:38 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:42 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:47 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:51 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 15:56 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:00 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:05 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:09 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:14 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:18 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:23 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:27 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:32 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:36 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:41 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:45 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:50 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:54 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 16:59 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:03 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:08 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:12 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:17 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:21 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:26 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:30 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:35 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:39 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:43 : client: [165] opened from 127.0.0.1:46878
+Apr 17 17:43 : client: [165] closed
+Apr 17 17:43 : client: [166] opened from 127.0.0.1:46880
+Apr 17 17:43 : client: [166] closed
+Apr 17 17:43 : client: [167] opened from 127.0.0.1:46882
+Apr 17 17:43 : client: [167] closed
+Apr 17 17:44 : client: [168] opened from 127.0.0.1:46884
+Apr 17 17:44 : client: [168] closed
+Apr 17 17:44 : client: [169] opened from 127.0.0.1:46886
+Apr 17 17:44 : client: [169] closed
+Apr 17 17:44 : client: [170] opened from 127.0.0.1:46888
+Apr 17 17:44 : client: [170] closed
+Apr 17 17:44 : client: [171] opened from 127.0.0.1:46890
+Apr 17 17:44 : client: [171] closed
+Apr 17 17:44 : client: [172] opened from 127.0.0.1:46892
+Apr 17 17:44 : client: [172] closed
+Apr 17 17:44 : client: [173] opened from 127.0.0.1:46894
+Apr 17 17:44 : client: [173] closed
+Apr 17 17:44 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 17 17:44 : client: [174] opened from 127.0.0.1:46896
+Apr 17 17:44 : client: [174] closed
+Apr 17 17:44 : client: [175] opened from 127.0.0.1:46898
+Apr 17 17:44 : client: [175] closed
+Apr 17 17:44 : client: [176] opened from 127.0.0.1:46900
+Apr 17 17:44 : client: [176] closed
+Apr 17 17:44 : client: [177] opened from 127.0.0.1:46902
+Apr 17 17:44 : client: [177] closed
+Apr 17 17:44 : client: [178] opened from 127.0.0.1:46904
+Apr 17 17:44 : client: [178] closed
+Apr 17 17:44 : client: [179] opened from 127.0.0.1:46906
+Apr 17 17:44 : client: [179] closed
+Apr 17 17:44 : client: [180] opened from 127.0.0.1:46908
+Apr 17 17:44 : client: [180] closed
+Apr 17 17:44 : client: [181] opened from 127.0.0.1:46910
+Apr 17 17:44 : client: [181] closed
+Apr 17 17:44 : client: [182] opened from 127.0.0.1:46912
+Apr 17 17:44 : client: [182] closed
+Apr 17 17:44 : client: [183] opened from 127.0.0.1:46914
+Apr 17 17:44 : client: [183] closed
+Apr 17 17:44 : client: [184] opened from 127.0.0.1:46916
+Apr 17 17:44 : client: [184] closed
+Apr 17 17:44 : client: [185] opened from 127.0.0.1:46918
+Apr 17 17:44 : client: [185] closed
+Apr 17 17:44 : client: [186] opened from 127.0.0.1:46920
+Apr 17 17:44 : client: [186] closed
+Apr 17 17:44 : client: [187] opened from 127.0.0.1:46922
+Apr 17 17:44 : client: [187] closed
+Apr 17 17:44 : client: [188] opened from 127.0.0.1:46924
+Apr 17 17:44 : client: [188] closed
+Apr 17 17:44 : client: [189] opened from 127.0.0.1:46926
+Apr 17 17:44 : client: [189] closed
+Apr 17 17:44 : client: [190] opened from 127.0.0.1:46928
+Apr 17 17:44 : client: [190] closed
+Apr 17 17:50 : player: played "croft-manor-anniversary.mp3"
+Apr 17 17:52 : client: [191] opened from 127.0.0.1:46930
+Apr 17 17:52 : client: [191] closed
+Apr 17 17:52 : client: [192] opened from 127.0.0.1:46932
+Apr 17 17:52 : client: [192] closed
+Apr 17 17:52 : client: [193] opened from 127.0.0.1:46934
+Apr 17 17:52 : client: [193] closed
+Apr 17 17:52 : client: [194] opened from 127.0.0.1:46936
+Apr 17 17:52 : client: [194] closed
+Apr 17 17:56 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:02 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:08 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:15 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:21 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:27 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:33 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:39 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:45 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:52 : player: played "croft-manor-anniversary.mp3"
+Apr 17 18:58 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:04 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:10 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:16 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:23 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:29 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:35 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:41 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:47 : player: played "croft-manor-anniversary.mp3"
+Apr 17 19:54 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:00 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:06 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:12 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:13 : client: [195] opened from 127.0.0.1:46938
+Apr 17 20:13 : client: [195] closed
+Apr 17 20:13 : client: [196] opened from 127.0.0.1:46940
+Apr 17 20:13 : client: [196] closed
+Apr 17 20:13 : client: [197] opened from 127.0.0.1:46942
+Apr 17 20:13 : client: [197] closed
+Apr 17 20:13 : client: [198] opened from 127.0.0.1:46946
+Apr 17 20:13 : client: [198] closed
+Apr 17 20:13 : client: [199] opened from 127.0.0.1:46948
+Apr 17 20:13 : client: [199] closed
+Apr 17 20:13 : client: [200] opened from 127.0.0.1:46950
+Apr 17 20:13 : client: [200] closed
+Apr 17 20:18 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:25 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:31 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:37 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:43 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:49 : player: played "croft-manor-anniversary.mp3"
+Apr 17 20:55 : client: [201] opened from 127.0.0.1:46952
+Apr 17 20:55 : client: [201] closed
+Apr 17 22:24 : client: [202] opened from 127.0.0.1:46954
+Apr 17 22:24 : client: [202] closed
+Apr 17 22:24 : client: [203] opened from 127.0.0.1:46956
+Apr 17 22:24 : client: [203] closed
+Apr 17 22:24 : client: [204] opened from 127.0.0.1:46958
+Apr 17 22:24 : client: [204] closed
+Apr 17 22:24 : client: [205] opened from 127.0.0.1:46960
+Apr 17 22:24 : client: [205] closed
+Apr 17 22:24 : client: [206] opened from 127.0.0.1:46962
+Apr 17 22:24 : client: [206] closed
+Apr 17 22:24 : client: [207] opened from 127.0.0.1:46964
+Apr 17 22:24 : client: [207] closed
+Apr 17 22:24 : client: [208] opened from 127.0.0.1:46966
+Apr 17 22:24 : client: [208] closed
+Apr 17 22:25 : client: [209] opened from 127.0.0.1:46968
+Apr 17 22:25 : client: [209] closed
+Apr 17 22:25 : client: [210] opened from 127.0.0.1:46970
+Apr 17 22:25 : client: [210] closed
+Apr 17 22:25 : client: [211] opened from 127.0.0.1:46972
+Apr 17 22:25 : client: [211] closed
+Apr 17 22:25 : client: [212] opened from 127.0.0.1:46976
+Apr 17 22:25 : client: [212] closed
+Apr 17 22:25 : client: [213] opened from 127.0.0.1:46978
+Apr 17 22:25 : client: [213] closed
+Apr 17 22:25 : client: [214] opened from 127.0.0.1:46980
+Apr 17 22:25 : client: [214] closed
+Apr 17 22:25 : client: [215] opened from 127.0.0.1:46982
+Apr 17 22:25 : client: [215] closed
+Apr 17 22:25 : client: [216] opened from 127.0.0.1:46984
+Apr 17 22:25 : client: [216] closed
+Apr 17 22:25 : client: [217] opened from 127.0.0.1:46986
+Apr 17 22:25 : client: [217] closed
+Apr 17 22:25 : client: [218] opened from 127.0.0.1:46988
+Apr 17 22:25 : client: [218] closed
+Apr 17 22:25 : client: [219] opened from 127.0.0.1:46990
+Apr 17 22:25 : client: [219] closed
+Apr 17 22:25 : client: [220] opened from 127.0.0.1:46992
+Apr 17 22:25 : client: [220] closed
+Apr 17 22:25 : client: [221] opened from 127.0.0.1:46994
+Apr 17 22:25 : client: [221] closed
+Apr 17 22:25 : client: [222] opened from 127.0.0.1:46996
+Apr 17 22:25 : client: [222] closed
+Apr 17 22:25 : player: played "croft-manor-anniversary.mp3"
+Apr 17 22:25 : client: [223] opened from 127.0.0.1:46998
+Apr 17 22:25 : client: [223] closed
+Apr 17 22:25 : client: [224] opened from 127.0.0.1:47000
+Apr 17 22:25 : client: [224] closed
+Apr 17 22:25 : client: [225] opened from 127.0.0.1:47002
+Apr 17 22:25 : client: [225] closed
+Apr 17 22:25 : client: [226] opened from 127.0.0.1:47004
+Apr 17 22:25 : client: [226] closed
+Apr 17 22:26 : client: [227] opened from 127.0.0.1:47006
+Apr 17 22:26 : client: [227] closed
+Apr 17 22:26 : client: [228] opened from 127.0.0.1:47008
+Apr 17 22:26 : client: [228] closed
+Apr 17 22:31 : player: played "croft-manor-anniversary.mp3"
+Apr 17 22:37 : player: played "croft-manor-anniversary.mp3"
+Apr 17 22:43 : player: played "croft-manor-anniversary.mp3"
+Apr 17 22:50 : player: played "croft-manor-anniversary.mp3"
+Apr 17 22:56 : player: played "croft-manor-anniversary.mp3"
+Apr 17 23:02 : player: played "croft-manor-anniversary.mp3"
+Apr 17 23:08 : player: played "croft-manor-anniversary.mp3"
+Apr 17 23:10 : client: [229] opened from 127.0.0.1:47012
+Apr 17 23:10 : client: [229] closed
+Apr 18 02:09 : player: played "croft-manor-anniversary.mp3"
+Apr 18 18:27 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 18 18:27 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 18 18:27 : client: [0] opened from 127.0.0.1:60986
+Apr 18 18:27 : client: [0] closed
+Apr 18 18:27 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 18 18:28 : player: played "croft-manor-anniversary.mp3"
+Apr 18 18:28 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 18 18:28 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 18 18:28 : client: [0] opened from 127.0.0.1:60988
+Apr 18 18:28 : client: [0] closed
+Apr 18 18:28 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 18 18:28 : client: [1] opened from 127.0.0.1:60990
+Apr 18 18:28 : client: [1] closed
+Apr 18 18:28 : client: [2] opened from 127.0.0.1:60992
+Apr 18 18:28 : client: [2] closed
+Apr 18 18:28 : client: [3] opened from 127.0.0.1:60994
+Apr 18 18:28 : client: [3] closed
+Apr 18 18:28 : client: [4] opened from 127.0.0.1:60996
+Apr 18 18:28 : client: [4] closed
+Apr 18 18:28 : client: [5] opened from 127.0.0.1:60998
+Apr 18 18:28 : client: [5] closed
+Apr 18 18:28 : client: [6] opened from 127.0.0.1:32768
+Apr 18 18:28 : client: [6] closed
+Apr 18 18:32 : player: played "croft-manor-anniversary.mp3"
+Apr 18 18:39 : player: played "croft-manor-anniversary.mp3"
+Apr 18 18:45 : player: played "croft-manor-anniversary.mp3"
+Apr 18 18:51 : player: played "croft-manor-anniversary.mp3"
+Apr 18 18:57 : player: played "croft-manor-anniversary.mp3"
+Apr 18 19:03 : player: played "croft-manor-anniversary.mp3"
+Apr 18 19:10 : player: played "croft-manor-anniversary.mp3"
+Apr 18 19:11 : player: played "croft-manor-anniversary.mp3"

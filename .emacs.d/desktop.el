@@ -11,6 +11,7 @@
 (defun pg/configure-window-by-class ()
   (pcase exwm-class-name
     ("biblioApp.App" (exwm-layout-hide-mode-line) (exwm-floating-toggle-floating))
+    ("mpv" (exwm-layout-hide-mode-line))
     ("PPSSPPSDL" (exwm-layout-hide-mode-line))
     ("edu-mit-csail-sdg-alloy4whole-Alloy" (exwm-layout-hide-mode-line))
     ("vlc" (exwm-layout-hide-mode-line))))

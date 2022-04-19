@@ -4,51 +4,6 @@
 #
 # On branch main
 # Changes to be committed:
-#	new file:   .emacs.d/.cache/treemacs-persist
-#	new file:   .emacs.d/.dap-breakpoints
-#	new file:   .emacs.d/.lsp-session-v1
-#	modified:   .emacs.d/emacs-config.org
-#	modified:   .emacs.d/eshell/history
-#	modified:   .emacs.d/eshell/lastdir
-#	modified:   .emacs.d/init.el
-#	deleted:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/.manager/.fileTable.2
-#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/.manager/.fileTable.4
-#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/framework.info.2 -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/framework.info.3
-#	modified:   .emacs.d/places
 #	modified:   .emacs.d/projectile-bookmarks.eld
-#	modified:   .emacs.d/recentf
-#	new file:   .emacs.d/tmp/auto-saves/sessions/31059-pgab99-laptop~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.authinfo.gpg~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.git!COMMIT_EDITMSG~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.emacs.d!straight!build!emacs-gradle-mode!emacs-gradle-mode-autoloads.el~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Documents!Notes!.git!COMMIT_EDITMSG~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!.git!COMMIT_EDITMSG~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!biblioApp!.dir-locals.el~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!tp5-simon-philippe!.git!COMMIT_EDITMSG~
-#	deleted:    .emacs.d/url/cache/phil-gab99/https/com/stackexchange/api/0a08e159b10e997164a1dee12a73270a
-#	deleted:    .emacs.d/url/cache/phil-gab99/https/com/stackexchange/api/7270cba2b3e2d22cbce3406e494c3a06
-#	deleted:    .emacs.d/url/cache/phil-gab99/https/com/stackexchange/api/aa55f1d16594a37439de8d766d085984
-#	deleted:    .emacs.d/url/cache/phil-gab99/https/com/stackexchange/api/dac1446d6e0eed541e3c519623a2b3b7
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.markers.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.syncinfo.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.markers.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.syncinfo.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.markers.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.syncinfo.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/0.snap
-#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1126911084.index
-#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1650627547.index
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
-#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1920809321.index
-#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/2254944994.index
-#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/2525109020.index
-#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3288556740.index
-#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3750530935.index
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/4013607337.index
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat
-#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/.file-digests
 #
