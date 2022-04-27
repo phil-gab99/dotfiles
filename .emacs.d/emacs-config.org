@@ -76,6 +76,7 @@ Starting a server for displaying polybar info
                   term-mode-hook
                   coming-mode-hook
                   gfm-view-mode-hook
+                  compilation-mode-hook
                   eshell-mode-hook
                   sql-interactive-mode-hook
                   pdf-view-mode-hook
@@ -1564,12 +1565,17 @@ Allows writing textual descriptions for creating uml diagrams
     :hook (java-mode . lsp-deferred)
     :bind
     (:map lsp-mode-map
-           ("C-<return>" . lsp-execute-code-action))
+          ("C-<return>" . lsp-execute-code-action))
     :config
     (require 'dap-java)
     :custom
     (lsp-enable-file-watchers nil)
+    (lsp-java-configuration-runtimes '[( :name "JavaSE-17"
+                                         :path "/usr/lib/jvm/java-17-openjdk-amd64"
+                                         :default t)])
+    (lsp-java-vmargs (list "-noverify" "--enable-preview"))
     (lsp-java-java-path "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
+    (lsp-java-import-gradle-home "/opt/gradle/latest/bin/gradle")
     (lsp-java-import-gradle-java-home "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
     (lsp-java-server-install-dir "/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/bin/"))
 
@@ -1628,11 +1634,21 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp
 
-  (defvar lmc-mode-hook nil)
+  (defun pg/lmc-setup ()
+    (setq-local comment-start "# ")
+    (setq-local comment-end "")
+    (setq-local indent-tabs-mode nil)
+    (setq-local tab-width 8)
+    (setq-local indent-tabs-mode nil))
+
+  (use-package lmc
+    :hook (lmc-mode . pg/lmc-setup))
+
+  (defvar lmc-java-mode-hook nil)
 
   (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-mode))
 
-  (defconst lmc-font-lock-defaults
+  (defconst lmc-java-font-lock-defaults
     (list
      '("#.*" . font-lock-comment-face)
      '("\\<\\(ADD\\|BR[PZ]?\\|DAT\\|HLT\\|IN\\|LDA\\|OUT\\|S\\(?:TO\\|UB\\)\\)\\>" . font-lock-keyword-face)
@@ -1640,14 +1656,14 @@ Custom syntax highlighting for LMC assembly language.
      '("\\b[0-9]+\\b" . font-lock-constant-face))
     "Minimal highlighting expressions for lmc mode")
 
-  (defvar lmc-mode-syntax-table
+  (defvar lmc-java-mode-syntax-table
     (let ((st (make-syntax-table)))
       (modify-syntax-entry ?# ". 1b" st)
       (modify-syntax-entry ?\n "> b" st)
       st)
     "Syntax table for lmc-mode")
 
-  (define-derived-mode lmc-mode prog-mode "LMC"
+  (define-derived-mode lmc-java-mode prog-mode "LMC"
     "Major mode for editing lmc files"
     :syntax-table lmc-mode-syntax-table
 
@@ -1796,6 +1812,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package sql-indent
+    :hook (sql-mode . sqlind-minor-mode)
     :config
     (setq-default sqlind-basic-offset 4))
 
@@ -2381,7 +2398,7 @@ Custom pomodoro timer
   (defun pg/start-with-break-timer () ;; For Minyi
     (interactive)
     (setq org-clock-sound "~/Misc/ding.wav")
-    (pg/study-break))
+    (pg/break-timer))
 
   (defun pg/stop-timer ()
     (interactive)
@@ -2472,7 +2489,11 @@ Allows for printing of emacs buffers.
           (list
            (list
             (openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
-            "vlc"
+            "mpv"
+            '(file))
+           (list
+            (openwith-make-extension-regexp '("odt"))
+            "libreoffice"
             '(file))))
     (openwith-mode 1))
 

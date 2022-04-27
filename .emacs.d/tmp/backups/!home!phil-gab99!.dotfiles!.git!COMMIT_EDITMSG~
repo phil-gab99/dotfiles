@@ -4,6 +4,59 @@
 #
 # On branch main
 # Changes to be committed:
+#	modified:   .config/mpd/mpd.db
+#	modified:   .config/mpd/mpd.log
+#	modified:   .config/mpd/mpdstate
+#	new file:   .config/nyxt/dark-reader.lisp
+#	new file:   .config/nyxt/evil-mode.lisp
+#	new file:   .config/nyxt/freestance.lisp
+#	modified:   .config/nyxt/init.lisp
+#	new file:   .config/nyxt/search-engines.lisp
+#	new file:   .config/nyxt/status.lisp
+#	new file:   .config/nyxt/style.lisp
+#	modified:   .emacs.d/desktop.el
+#	modified:   .emacs.d/desktop.org
+#	modified:   .emacs.d/emacs-config.org
+#	modified:   .emacs.d/eshell/history
+#	modified:   .emacs.d/eshell/lastdir
+#	modified:   .emacs.d/init.el
+#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.core.runtime/.manager/.tmp9139086200865174895.instance
+#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp11692466674243880684.instance
+#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp3888896275818439679.instance
+#	modified:   .emacs.d/onedark-variant-theme.el
+#	modified:   .emacs.d/org-roam.db
+#	modified:   .emacs.d/places
 #	modified:   .emacs.d/projectile-bookmarks.eld
+#	modified:   .emacs.d/recentf
+#	modified:   .emacs.d/sokoban-state
+#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Downloads!nyxt-2.2.4!source!base-mode.lisp#
+#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Downloads!nyxt-2.2.4!source!visual-mode.lisp#
+#	new file:   .emacs.d/tmp/auto-saves/sessions/2528-pgab99-laptop~
+#	deleted:    .emacs.d/tmp/auto-saves/sessions/31059-pgab99-laptop~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.authinfo.gpg~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!auto-config.lisp~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!dark-reader.lisp~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!evil-mode.lisp~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!freestance.lisp~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!search-engines.lisp~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!style.lisp~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.git!COMMIT_EDITMSG~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.emacs.d!.cache!treemacs-persist~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Documents!Notes!.git!COMMIT_EDITMSG~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Documents!Org!Agenda!.git!COMMIT_EDITMSG~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!.git!COMMIT_EDITMSG~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!biblioApp!.dir-locals.el~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!bin!download-music~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!bin!yt-download~
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.markers.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.syncinfo.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.markers.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.syncinfo.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.markers.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.syncinfo.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/0.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat
 #

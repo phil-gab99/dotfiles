@@ -40,6 +40,7 @@
                 term-mode-hook
                 coming-mode-hook
                 gfm-view-mode-hook
+                compilation-mode-hook
                 eshell-mode-hook
                 sql-interactive-mode-hook
                 pdf-view-mode-hook
@@ -873,12 +874,17 @@
   :hook (java-mode . lsp-deferred)
   :bind
   (:map lsp-mode-map
-         ("C-<return>" . lsp-execute-code-action))
+        ("C-<return>" . lsp-execute-code-action))
   :config
   (require 'dap-java)
   :custom
   (lsp-enable-file-watchers nil)
+  (lsp-java-configuration-runtimes '[( :name "JavaSE-17"
+                                       :path "/usr/lib/jvm/java-17-openjdk-amd64"
+                                       :default t)])
+  (lsp-java-vmargs (list "-noverify" "--enable-preview"))
   (lsp-java-java-path "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
+  (lsp-java-import-gradle-home "/opt/gradle/latest/bin/gradle")
   (lsp-java-import-gradle-java-home "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
   (lsp-java-server-install-dir "/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/bin/"))
 
@@ -911,11 +917,21 @@
   :config
   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
 
-(defvar lmc-mode-hook nil)
+(defun pg/lmc-setup ()
+  (setq-local comment-start "# ")
+  (setq-local comment-end "")
+  (setq-local indent-tabs-mode nil)
+  (setq-local tab-width 8)
+  (setq-local indent-tabs-mode nil))
+
+(use-package lmc
+  :hook (lmc-mode . pg/lmc-setup))
+
+(defvar lmc-java-mode-hook nil)
 
 (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-mode))
 
-(defconst lmc-font-lock-defaults
+(defconst lmc-java-font-lock-defaults
   (list
    '("#.*" . font-lock-comment-face)
    '("\\<\\(ADD\\|BR[PZ]?\\|DAT\\|HLT\\|IN\\|LDA\\|OUT\\|S\\(?:TO\\|UB\\)\\)\\>" . font-lock-keyword-face)
@@ -923,14 +939,14 @@
    '("\\b[0-9]+\\b" . font-lock-constant-face))
   "Minimal highlighting expressions for lmc mode")
 
-(defvar lmc-mode-syntax-table
+(defvar lmc-java-mode-syntax-table
   (let ((st (make-syntax-table)))
     (modify-syntax-entry ?# ". 1b" st)
     (modify-syntax-entry ?\n "> b" st)
     st)
   "Syntax table for lmc-mode")
 
-(define-derived-mode lmc-mode prog-mode "LMC"
+(define-derived-mode lmc-java-mode prog-mode "LMC"
   "Major mode for editing lmc files"
   :syntax-table lmc-mode-syntax-table
 
@@ -1025,6 +1041,7 @@
                                         " dbname=ift2935 sslmode=disable")))))))
 
 (use-package sql-indent
+  :hook (sql-mode . sqlind-minor-mode)
   :config
   (setq-default sqlind-basic-offset 4))
 
@@ -1428,7 +1445,7 @@
 (defun pg/start-with-break-timer () ;; For Minyi
   (interactive)
   (setq org-clock-sound "~/Misc/ding.wav")
-  (pg/study-break))
+  (pg/break-timer))
 
 (defun pg/stop-timer ()
   (interactive)
@@ -1483,7 +1500,11 @@
         (list
          (list
           (openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
-          "vlc"
+          "mpv"
+          '(file))
+         (list
+          (openwith-make-extension-regexp '("odt"))
+          "libreoffice"
           '(file))))
   (openwith-mode 1))
 
@@ -1838,39 +1859,3 @@
     "ons" '(org-id-get-create :which-key "create subheading")))
 
 (setq gc-cons-threshold (* 2 1000 1000))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ignored-local-variable-values
-   '((eval cl-flet
-           ((enhance-imenu-lisp
-             (&rest keywords)
-             (dolist
-                 (keyword keywords)
-               (add-to-list 'lisp-imenu-generic-expression
-                            (list
-                             (purecopy
-                              (concat
-                               (capitalize keyword)
-                               (if
-                                   (string=
-                                    (substring-no-properties keyword -1)
-                                    "s")
-                                   "es" "s")))
-                             (purecopy
-                              (concat "^\\s-*("
-                                      (regexp-opt
-                                       (list
-                                        (concat "define-" keyword))
-                                       t)
-                                      "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
-                             2)))))
-           (enhance-imenu-lisp "bookmarklet-command" "class" "command" "ffi-method" "function" "mode" "parenscript" "user-class")))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

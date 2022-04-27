@@ -102,6 +102,9 @@
         ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
         `(([?\s-r] . exwm-reset)
 
+          ;; Switch between char and line mode
+          ([?\s-s] . exwm-input-toggle-keyboard)
+
           ;; Launch applications via shell command
           ([?\s-t] . (lambda (command)
                        (interactive (list (read-shell-command "$ ")))

@@ -74,8 +74,8 @@ WITH r1 AS (SELECT nom
             FROM Souris
             WHERE poids > 20)
 SELECT nom
-FROM r1 NATURAL JOIN Manger
-GROUP BY nom
+  FROM r1 NATURAL JOIN Manger
+ GROUP BY nom
 HAVING (COUNT(id) > 1);
 
 ROLLBACK;

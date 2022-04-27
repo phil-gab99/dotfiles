@@ -1,5 +1,0 @@
-module biblioApp {
-    requires javafx.controls;
-
-    exports biblioApp; 
-}

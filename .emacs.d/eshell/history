@@ -1,104 +1,3 @@
-cd tp4-tp4-simon-philippe/
-rm floppy.img 
-unzip floppy.zip 
-man docker build
-man docker run
-man docker cp
-lpstat -s
-man docker run
-normal-charge 
-mv 2022-QC-Sourc-\ Deduction-\ Return.pdf 2022-QC-Source-Deduction-Return.pdf
-gradle build
-cd ../../../
-cd ..
-gradle build
-gradle run
-ls -al
-cd .emacs.d/
-ls straight/
-cd ..
-cd Packages/
-cd ../.emacs.d/
-mv straight/ ../Packages/
-cd .emacs.d/
-rm -r straight/
-cd ..
-cd Packages/
-ls straight/
-cd ..
-cd straight/
-cd ..
-ls | grep straight/
-ls | grep straight	
-ls -al
-ls -al
-cd straight/
-cd build/
-cd ..
-cd ..
-rm -rf straight/
-cd ..
-cd ..
-cd Packages/
-cd straight/
-cd repos/
-ls -al
-cd ..
-cd build/
-cd ..
-ls straight/
-ls straight/repos/
-cd straight/
-rm -rf build/ repos/
-cd ..
-rm -r straight/
-cd ..
-ln -sf ~/Packages/straight/ ~/.dotfiles/.emacs.d/straight
-docker login
-cd Documents/
-cd ../Projects/tp5-simon-philippe/
-make dockerhub 
-make pull
-docker image ls
-cd Packages/
-ls
-ls
-man gradle run
-man gradle
-gradle --help
-cd Projects/projet-ift2935/
-ls
-cd biblioApp/ 
-ls -a
-rm .dir-locals.el 
-ls
-ls -a
-rm .#.dir-locals.el 
-ls
-ls -a
-ls
-ls -a
-cd ..
-ls -a
-cat .dir-locals.el 
-ls
-cd Documents/
-ls
-cd ..
-ls
-cd Videos/
-ls
-rm *.mkv
-ls
-p7zip Pirates\ of\ the\ Caribbean\ -\ Curse\ of\ the\ Black\ Pearl\ \(2003\).7z 
-ls
-p7zip -h
-p7zip -d Pirates\ of\ the\ Caribbean\ -\ Curse\ of\ the\ Black\ Pearl\ \(2003\).7z 
-ls
-cd Pirates\ of\ the\ Caribbean\ -\ Curse\ of\ the\ Black\ Pearl\ \(2003\)/
-ls
-mpv Pirates.of.the.Caribbean.Curse.of.the.Black.Pearl.2003.720p.BrRip.x264.Deceit.YIFY.mp4 
-mpv --help
 mpv Pirates.of.the.Caribbean.Curse.of.the.Black.Pearl.2003.720p.BrRip.x264.Deceit.YIFY.mp4 -sub-file=Pirates.of.the.Caribbean.Curse.of.the.Black.Pearl.2003.720p.BrRip.x264.Deceit.YIFY.srt 
 man youtube-dl
 cd ..
@@ -116,13 +15,114 @@ cd nyxt-2.2.4/
 ls
 cd source/
 ls
-exit
 mkdir common-lisp
 cd common-lisp/
 git clone https://github.com/kssytsrk/nx-freestance-handler
 ls
 man emacsclient
-exit
 cd Videos/Pirates\ of\ the\ Caribbean\ -\ Curse\ of\ the\ Black\ Pearl\ \(2003\)/ 
 ls
 mpv Pirates.of.the.Caribbean.Curse.of.the.Black.Pearl.2003.720p.BrRip.x264.Deceit.YIFY.mp4 -sub-file=Pirates.of.the.Caribbean.Curse.of.the.Black.Pearl.2003.720p.BrRip.x264.Deceit.YIFY.srt 
+cd /
+ls
+cd lib/
+ls
+cd ..
+cd lib64/ 
+ls
+cd 
+cd ..
+ls
+cd ..
+cd lib32/
+ls
+cd ..
+ls
+cd libx32/ 
+ls
+cd ..
+ls
+cd lost+found/
+ls
+ls lost+found/ 
+sudo ls lost+found/
+cd var/
+ls
+cd ..
+find --help
+find / ublock
+find / ublock-origin
+man find
+find / "ublock-origin"
+cd /
+ls
+cd root/
+ls
+cd snap/
+ls
+cd ..
+ls
+cd usr/
+ls
+ls -l
+cd ..
+cd var/
+ls
+cd lib/
+ls
+cd ..
+whereis .so
+cd usr/lib/x86_64-linux-gnu/
+ls
+cd ..
+ls
+cd /usr/lib/
+ls
+apt search ublock
+sudo apt remove webext-ublock-origin
+dpkg -i webext-ublock-origin
+sudo dpkg -i webext-ublock-origin
+cd /var/cache/apt/archives/
+ls
+find / -name ublock
+cd /usr/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/uBlock0@raymondhill.net/assets/
+ls
+cd ublock/
+ls
+cd ..
+ls
+cd ..
+ls
+cd assets/
+ls
+cd ..
+cd lib/
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+dpkg -L ublock
+dpkg -L webext-ublock-origin
+sudo pat uninstall webext-ublock-origin
+sudo apt remove webext-ublock-origin
+dpkg -L webext-ublock-origin
+git clone https://github.com/aartaka/nx-search-engines ~/.local/share/nyxt/extensions/nx-search-engines
+cd ~/.local/share/nyxt/extensions/
+ls
+cd ..
+ls
+man ffmpeg
+exit
+man libreoffice
+lowriter Documents/Jobs/Philippe\ Gabriel_Fiche\ Employeur.odt 
+man lowriter
+lowriter -o Documents/Jobs/Philippe\ Gabriel_Fiche\ Employeur.odt 
+cd Documents/
+cd Jobs/
+libreoffice Offre-de-stage-Fiche-employeur_FAS_NISRINE_MASTAS.odt 
+exit

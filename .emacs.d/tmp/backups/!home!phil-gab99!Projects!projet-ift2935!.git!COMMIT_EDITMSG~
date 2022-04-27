@@ -6,6 +6,10 @@
 # Your branch is up to date with 'origin/main'.
 #
 # Changes to be committed:
-#	modified:   .dir-locals.el
 #	modified:   biblioApp/app/src/main/java/biblioApp/App.java
+#	modified:   biblioRapport/q3.sql
+#	modified:   biblioRapport/q4.sql
+#	modified:   biblioRapport/rapport.pdf
+#	modified:   biblioRapport/rapport.tex
+#	modified:   script.sql
 #

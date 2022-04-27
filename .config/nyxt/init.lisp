@@ -7,12 +7,13 @@ These handlers are usually used to block/redirect the requests.")
 (dolist (file
          (list (nyxt-init-file "evil-mode.lisp")
                (nyxt-init-file "status.lisp")
+               (nyxt-init-file "adblock.lisp")
                (nyxt-init-file "style.lisp")))
   (load file))
 
 (load-after-system :nx-search-engines (nyxt-init-file "search-engines.lisp"))
 (load-after-system :nx-freestance-handler (nyxt-init-file "freestance.lisp"))
-(load-after-system :nx-dark-reader (nyxt-init-file "dark-reader.lisp"))
+;; (load-after-system :nx-dark-reader (nyxt-init-file "dark-reader.lisp"))
 
 (define-configuration web-buffer
     ((request-resource-hook

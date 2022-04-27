@@ -5819,3 +5819,1818 @@ Apr 18 18:57 : player: played "croft-manor-anniversary.mp3"
 Apr 18 19:03 : player: played "croft-manor-anniversary.mp3"
 Apr 18 19:10 : player: played "croft-manor-anniversary.mp3"
 Apr 18 19:11 : player: played "croft-manor-anniversary.mp3"
+Apr 19 12:31 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 19 12:31 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 19 12:31 : client: [0] opened from 127.0.0.1:44406
+Apr 19 12:31 : client: [0] closed
+Apr 19 12:31 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 19 12:31 : player: played "croft-manor-anniversary.mp3"
+Apr 19 12:32 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 19 12:32 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 19 12:32 : client: [0] opened from 127.0.0.1:44408
+Apr 19 12:32 : client: [0] closed
+Apr 19 12:32 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 19 12:36 : player: played "croft-manor-anniversary.mp3"
+Apr 19 12:42 : player: played "croft-manor-anniversary.mp3"
+Apr 19 12:48 : player: played "croft-manor-anniversary.mp3"
+Apr 19 12:55 : player: played "croft-manor-anniversary.mp3"
+Apr 19 13:01 : player: played "croft-manor-anniversary.mp3"
+Apr 19 13:04 : client: [1] opened from 127.0.0.1:44410
+Apr 19 13:04 : client: [1] closed
+Apr 19 13:36 : client: [2] opened from 127.0.0.1:44824
+Apr 19 13:36 : client: [2] closed
+Apr 19 13:36 : client: [3] opened from 127.0.0.1:44826
+Apr 19 13:36 : client: [3] closed
+Apr 19 13:36 : client: [4] opened from 127.0.0.1:44828
+Apr 19 13:36 : client: [4] closed
+Apr 19 13:36 : client: [5] opened from 127.0.0.1:44830
+Apr 19 13:36 : client: [5] closed
+Apr 19 13:36 : client: [6] opened from 127.0.0.1:44832
+Apr 19 13:36 : client: [6] closed
+Apr 19 13:36 : client: [7] opened from 127.0.0.1:44836
+Apr 19 13:36 : client: [7] closed
+Apr 19 13:36 : client: [8] opened from 127.0.0.1:44838
+Apr 19 13:36 : client: [8] closed
+Apr 19 13:36 : client: [9] opened from 127.0.0.1:44840
+Apr 19 13:36 : client: [9] closed
+Apr 19 13:36 : client: [10] opened from 127.0.0.1:44842
+Apr 19 13:36 : client: [10] closed
+Apr 19 13:39 : player: played "croft-manor-anniversary.mp3"
+Apr 19 13:45 : player: played "croft-manor-anniversary.mp3"
+Apr 19 13:51 : player: played "croft-manor-anniversary.mp3"
+Apr 19 13:58 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:04 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:10 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:16 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:22 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:29 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:35 : player: played "croft-manor-anniversary.mp3"
+Apr 19 14:37 : client: [11] opened from 127.0.0.1:44868
+Apr 19 14:37 : client: [11] closed
+Apr 19 14:50 : client: [12] opened from 127.0.0.1:44890
+Apr 19 14:50 : client: [12] closed
+Apr 19 14:54 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:00 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:00 : client: [13] opened from 127.0.0.1:44936
+Apr 19 15:00 : client: [13] closed
+Apr 19 15:00 : client: [14] opened from 127.0.0.1:44938
+Apr 19 15:00 : client: [14] closed
+Apr 19 15:00 : client: [15] opened from 127.0.0.1:44940
+Apr 19 15:00 : client: [15] closed
+Apr 19 15:00 : client: [16] opened from 127.0.0.1:44942
+Apr 19 15:00 : client: [16] closed
+Apr 19 15:06 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:10 : client: [17] opened from 127.0.0.1:44944
+Apr 19 15:10 : client: [17] closed
+Apr 19 15:10 : client: [18] opened from 127.0.0.1:44946
+Apr 19 15:10 : client: [18] closed
+Apr 19 15:10 : client: [19] opened from 127.0.0.1:44948
+Apr 19 15:10 : client: [19] closed
+Apr 19 15:10 : client: [20] opened from 127.0.0.1:44950
+Apr 19 15:10 : client: [20] closed
+Apr 19 15:10 : client: [21] opened from 127.0.0.1:44952
+Apr 19 15:10 : client: [21] closed
+Apr 19 15:10 : client: [22] opened from 127.0.0.1:44954
+Apr 19 15:10 : client: [22] closed
+Apr 19 15:10 : client: [23] opened from 127.0.0.1:44956
+Apr 19 15:10 : client: [23] closed
+Apr 19 15:10 : client: [24] opened from 127.0.0.1:44958
+Apr 19 15:10 : client: [24] closed
+Apr 19 15:12 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:18 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:25 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:31 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:37 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:43 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:49 : player: played "croft-manor-anniversary.mp3"
+Apr 19 15:55 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:02 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:08 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:14 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:20 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:26 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:33 : player: played "croft-manor-anniversary.mp3"
+Apr 19 16:34 : client: [25] opened from 127.0.0.1:44990
+Apr 19 16:34 : client: [25] closed
+Apr 19 21:25 : client: [26] opened from 127.0.0.1:45080
+Apr 19 21:25 : client: [26] closed
+Apr 19 21:25 : client: [27] opened from 127.0.0.1:45082
+Apr 19 21:25 : client: [27] closed
+Apr 19 21:25 : client: [28] opened from 127.0.0.1:45084
+Apr 19 21:25 : client: [28] closed
+Apr 19 21:25 : client: [29] opened from 127.0.0.1:45086
+Apr 19 21:25 : client: [29] closed
+Apr 19 21:25 : client: [30] opened from 127.0.0.1:45088
+Apr 19 21:25 : client: [30] closed
+Apr 19 21:25 : client: [31] opened from 127.0.0.1:45090
+Apr 19 21:25 : player: played "croft-manor-anniversary.mp3"
+Apr 19 21:25 : client: [31] closed
+Apr 19 21:25 : client: [32] opened from 127.0.0.1:45094
+Apr 19 21:25 : client: [32] closed
+Apr 19 21:25 : client: [33] opened from 127.0.0.1:45096
+Apr 19 21:25 : client: [33] closed
+Apr 19 21:25 : client: [34] opened from 127.0.0.1:45098
+Apr 19 21:25 : client: [34] closed
+Apr 19 21:25 : client: [35] opened from 127.0.0.1:45100
+Apr 19 21:25 : client: [35] closed
+Apr 19 21:37 : client: [36] opened from 127.0.0.1:45102
+Apr 19 21:37 : client: [36] closed
+Apr 19 21:37 : client: [37] opened from 127.0.0.1:45104
+Apr 19 21:37 : client: [37] closed
+Apr 19 21:37 : client: [38] opened from 127.0.0.1:45106
+Apr 19 21:37 : client: [38] closed
+Apr 19 21:37 : client: [39] opened from 127.0.0.1:45108
+Apr 19 21:37 : client: [39] closed
+Apr 19 21:37 : client: [40] opened from 127.0.0.1:45110
+Apr 19 21:37 : client: [40] closed
+Apr 19 21:37 : client: [41] opened from 127.0.0.1:45112
+Apr 19 21:37 : client: [41] closed
+Apr 19 21:37 : client: [42] opened from 127.0.0.1:45114
+Apr 19 21:37 : client: [42] closed
+Apr 19 21:37 : client: [43] opened from 127.0.0.1:45116
+Apr 19 21:37 : client: [43] closed
+Apr 19 21:37 : client: [44] opened from 127.0.0.1:45118
+Apr 19 21:37 : client: [44] closed
+Apr 19 21:37 : client: [45] opened from 127.0.0.1:45120
+Apr 19 21:37 : client: [45] closed
+Apr 19 21:37 : client: [46] opened from 127.0.0.1:45122
+Apr 19 21:37 : client: [46] closed
+Apr 19 21:39 : client: [47] opened from 127.0.0.1:45124
+Apr 19 21:39 : client: [47] closed
+Apr 19 21:39 : client: [48] opened from 127.0.0.1:45126
+Apr 19 21:39 : client: [48] closed
+Apr 19 21:39 : client: [49] opened from 127.0.0.1:45128
+Apr 19 21:39 : client: [49] closed
+Apr 19 21:39 : client: [50] opened from 127.0.0.1:45130
+Apr 19 21:39 : client: [50] closed
+Apr 19 21:39 : client: [51] opened from 127.0.0.1:45132
+Apr 19 21:39 : client: [51] closed
+Apr 19 21:39 : client: [52] opened from 127.0.0.1:45134
+Apr 19 21:39 : client: [52] closed
+Apr 19 21:41 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 21:46 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 21:48 : client: [53] opened from 127.0.0.1:45136
+Apr 19 21:48 : client: [53] closed
+Apr 19 21:48 : client: [54] opened from 127.0.0.1:45138
+Apr 19 21:48 : client: [54] closed
+Apr 19 21:48 : client: [55] opened from 127.0.0.1:45140
+Apr 19 21:48 : client: [55] closed
+Apr 19 21:48 : client: [56] opened from 127.0.0.1:45142
+Apr 19 21:48 : client: [56] closed
+Apr 19 21:48 : client: [57] opened from 127.0.0.1:45144
+Apr 19 21:48 : client: [57] closed
+Apr 19 21:48 : client: [58] opened from 127.0.0.1:45146
+Apr 19 21:48 : client: [58] closed
+Apr 19 21:50 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 21:55 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 21:59 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:04 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:08 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:13 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:17 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:21 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:26 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:30 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:35 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 19 22:37 : client: [59] opened from 127.0.0.1:45148
+Apr 19 22:37 : client: [59] closed
+Apr 20 02:30 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 20 15:58 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 20 15:58 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 20 15:58 : client: [0] opened from 127.0.0.1:39988
+Apr 20 15:58 : client: [0] closed
+Apr 20 15:58 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 20 15:58 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 20 15:58 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 20 15:58 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 20 15:58 : client: [0] opened from 127.0.0.1:39990
+Apr 20 15:58 : client: [0] closed
+Apr 20 15:58 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 20 15:58 : client: [1] opened from 127.0.0.1:39992
+Apr 20 15:58 : client: [1] closed
+Apr 20 15:58 : client: [2] opened from 127.0.0.1:39994
+Apr 20 15:58 : client: [2] closed
+Apr 20 15:58 : client: [3] opened from 127.0.0.1:39996
+Apr 20 15:58 : client: [3] closed
+Apr 20 15:59 : client: [4] opened from 127.0.0.1:39998
+Apr 20 15:59 : client: [4] closed
+Apr 20 15:59 : client: [5] opened from 127.0.0.1:40000
+Apr 20 15:59 : client: [5] closed
+Apr 20 15:59 : client: [6] opened from 127.0.0.1:40002
+Apr 20 15:59 : client: [6] closed
+Apr 20 15:59 : client: [7] opened from 127.0.0.1:40004
+Apr 20 15:59 : client: [7] closed
+Apr 20 15:59 : client: [8] opened from 127.0.0.1:40006
+Apr 20 15:59 : client: [8] closed
+Apr 20 15:59 : client: [9] opened from 127.0.0.1:40008
+Apr 20 15:59 : client: [9] closed
+Apr 20 15:59 : client: [10] opened from 127.0.0.1:40010
+Apr 20 15:59 : client: [10] closed
+Apr 20 15:59 : client: [11] opened from 127.0.0.1:40012
+Apr 20 15:59 : client: [11] closed
+Apr 20 15:59 : client: [12] opened from 127.0.0.1:40014
+Apr 20 15:59 : client: [12] closed
+Apr 20 15:59 : client: [13] opened from 127.0.0.1:40016
+Apr 20 15:59 : client: [13] closed
+Apr 20 15:59 : client: [14] opened from 127.0.0.1:40018
+Apr 20 15:59 : client: [14] closed
+Apr 20 15:59 : client: [15] opened from 127.0.0.1:40020
+Apr 20 15:59 : client: [15] closed
+Apr 20 15:59 : client: [16] opened from 127.0.0.1:40022
+Apr 20 15:59 : client: [16] closed
+Apr 20 15:59 : client: [17] opened from 127.0.0.1:40024
+Apr 20 15:59 : client: [17] closed
+Apr 20 15:59 : client: [18] opened from 127.0.0.1:40028
+Apr 20 15:59 : client: [18] closed
+Apr 20 15:59 : client: [19] opened from 127.0.0.1:40030
+Apr 20 15:59 : client: [19] closed
+Apr 20 15:59 : client: [20] opened from 127.0.0.1:40032
+Apr 20 15:59 : client: [20] closed
+Apr 20 15:59 : client: [21] opened from 127.0.0.1:40034
+Apr 20 15:59 : client: [21] closed
+Apr 20 15:59 : client: [22] opened from 127.0.0.1:40036
+Apr 20 15:59 : client: [22] closed
+Apr 20 15:59 : client: [23] opened from 127.0.0.1:40038
+Apr 20 15:59 : client: [23] closed
+Apr 20 15:59 : client: [24] opened from 127.0.0.1:40040
+Apr 20 15:59 : client: [24] closed
+Apr 20 15:59 : client: [25] opened from 127.0.0.1:40042
+Apr 20 15:59 : client: [25] closed
+Apr 20 15:59 : client: [26] opened from 127.0.0.1:40044
+Apr 20 15:59 : client: [26] closed
+Apr 20 15:59 : client: [27] opened from 127.0.0.1:40046
+Apr 20 15:59 : client: [27] closed
+Apr 20 15:59 : client: [28] opened from 127.0.0.1:40048
+Apr 20 15:59 : client: [28] closed
+Apr 20 15:59 : client: [29] opened from 127.0.0.1:40050
+Apr 20 15:59 : client: [29] closed
+Apr 20 15:59 : client: [30] opened from 127.0.0.1:40052
+Apr 20 15:59 : client: [30] closed
+Apr 20 15:59 : client: [31] opened from 127.0.0.1:40054
+Apr 20 15:59 : client: [31] closed
+Apr 20 15:59 : client: [32] opened from 127.0.0.1:40056
+Apr 20 15:59 : client: [32] closed
+Apr 20 15:59 : client: [33] opened from 127.0.0.1:40058
+Apr 20 15:59 : client: [33] closed
+Apr 20 15:59 : client: [34] opened from 127.0.0.1:40060
+Apr 20 15:59 : client: [34] closed
+Apr 20 15:59 : client: [35] opened from 127.0.0.1:40062
+Apr 20 15:59 : client: [35] closed
+Apr 20 15:59 : client: [36] opened from 127.0.0.1:40064
+Apr 20 15:59 : client: [36] closed
+Apr 20 15:59 : client: [37] opened from 127.0.0.1:40066
+Apr 20 15:59 : client: [37] closed
+Apr 20 15:59 : client: [38] opened from 127.0.0.1:40068
+Apr 20 15:59 : client: [38] closed
+Apr 20 15:59 : client: [39] opened from 127.0.0.1:40072
+Apr 20 15:59 : client: [39] closed
+Apr 20 15:59 : client: [40] opened from 127.0.0.1:40074
+Apr 20 15:59 : client: [40] closed
+Apr 20 15:59 : client: [41] opened from 127.0.0.1:40076
+Apr 20 15:59 : client: [41] closed
+Apr 20 15:59 : client: [42] opened from 127.0.0.1:40078
+Apr 20 15:59 : client: [42] closed
+Apr 20 15:59 : client: [43] opened from 127.0.0.1:40080
+Apr 20 15:59 : client: [43] closed
+Apr 20 15:59 : client: [44] opened from 127.0.0.1:40082
+Apr 20 15:59 : client: [44] closed
+Apr 20 15:59 : client: [45] opened from 127.0.0.1:40084
+Apr 20 15:59 : client: [45] closed
+Apr 20 15:59 : client: [46] opened from 127.0.0.1:40086
+Apr 20 15:59 : client: [46] closed
+Apr 20 15:59 : client: [47] opened from 127.0.0.1:40088
+Apr 20 15:59 : client: [47] closed
+Apr 20 15:59 : client: [48] opened from 127.0.0.1:40090
+Apr 20 15:59 : client: [48] closed
+Apr 20 15:59 : client: [49] opened from 127.0.0.1:40092
+Apr 20 15:59 : client: [49] closed
+Apr 20 15:59 : client: [50] opened from 127.0.0.1:40094
+Apr 20 15:59 : client: [50] closed
+Apr 20 15:59 : client: [51] opened from 127.0.0.1:40096
+Apr 20 15:59 : client: [51] closed
+Apr 20 15:59 : client: [52] opened from 127.0.0.1:40098
+Apr 20 15:59 : client: [52] closed
+Apr 20 15:59 : client: [53] opened from 127.0.0.1:40100
+Apr 20 15:59 : client: [53] closed
+Apr 20 15:59 : client: [54] opened from 127.0.0.1:40102
+Apr 20 15:59 : client: [54] closed
+Apr 20 15:59 : client: [55] opened from 127.0.0.1:40104
+Apr 20 15:59 : client: [55] closed
+Apr 20 15:59 : client: [56] opened from 127.0.0.1:40106
+Apr 20 15:59 : client: [56] closed
+Apr 20 15:59 : client: [57] opened from 127.0.0.1:40110
+Apr 20 15:59 : client: [57] closed
+Apr 20 15:59 : client: [58] opened from 127.0.0.1:40112
+Apr 20 15:59 : client: [58] closed
+Apr 20 15:59 : client: [59] opened from 127.0.0.1:40114
+Apr 20 15:59 : client: [59] closed
+Apr 20 15:59 : client: [60] opened from 127.0.0.1:40116
+Apr 20 15:59 : client: [60] closed
+Apr 20 15:59 : client: [61] opened from 127.0.0.1:40118
+Apr 20 15:59 : client: [61] closed
+Apr 20 15:59 : client: [62] opened from 127.0.0.1:40120
+Apr 20 15:59 : client: [62] closed
+Apr 20 15:59 : client: [63] opened from 127.0.0.1:40122
+Apr 20 15:59 : client: [63] closed
+Apr 20 15:59 : client: [64] opened from 127.0.0.1:40124
+Apr 20 15:59 : client: [64] closed
+Apr 20 15:59 : client: [65] opened from 127.0.0.1:40126
+Apr 20 15:59 : client: [65] closed
+Apr 20 15:59 : client: [66] opened from 127.0.0.1:40128
+Apr 20 15:59 : client: [66] closed
+Apr 20 15:59 : client: [67] opened from 127.0.0.1:40130
+Apr 20 15:59 : client: [67] closed
+Apr 20 15:59 : client: [68] opened from 127.0.0.1:40134
+Apr 20 15:59 : client: [68] closed
+Apr 20 15:59 : client: [69] opened from 127.0.0.1:40136
+Apr 20 15:59 : client: [69] closed
+Apr 20 15:59 : client: [70] opened from 127.0.0.1:40138
+Apr 20 15:59 : client: [70] closed
+Apr 20 15:59 : client: [71] opened from 127.0.0.1:40140
+Apr 20 15:59 : client: [71] closed
+Apr 20 15:59 : client: [72] opened from 127.0.0.1:40142
+Apr 20 15:59 : client: [72] closed
+Apr 20 15:59 : client: [73] opened from 127.0.0.1:40146
+Apr 20 15:59 : client: [73] closed
+Apr 20 15:59 : client: [74] opened from 127.0.0.1:40148
+Apr 20 15:59 : client: [74] closed
+Apr 20 15:59 : client: [75] opened from 127.0.0.1:40150
+Apr 20 15:59 : client: [75] closed
+Apr 20 15:59 : client: [76] opened from 127.0.0.1:40152
+Apr 20 15:59 : client: [76] closed
+Apr 20 15:59 : client: [77] opened from 127.0.0.1:40154
+Apr 20 15:59 : client: [77] closed
+Apr 20 15:59 : client: [78] opened from 127.0.0.1:40156
+Apr 20 15:59 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 20 15:59 : client: [78] closed
+Apr 20 15:59 : client: [79] opened from 127.0.0.1:40158
+Apr 20 15:59 : client: [79] closed
+Apr 20 15:59 : client: [80] opened from 127.0.0.1:40160
+Apr 20 15:59 : client: [80] closed
+Apr 20 15:59 : client: [81] opened from 127.0.0.1:40162
+Apr 20 15:59 : client: [81] closed
+Apr 20 15:59 : client: [82] opened from 127.0.0.1:40164
+Apr 20 15:59 : client: [82] closed
+Apr 20 15:59 : client: [83] opened from 127.0.0.1:40168
+Apr 20 15:59 : client: [83] closed
+Apr 20 15:59 : client: [84] opened from 127.0.0.1:40170
+Apr 20 15:59 : client: [84] closed
+Apr 20 15:59 : client: [85] opened from 127.0.0.1:40172
+Apr 20 15:59 : client: [85] closed
+Apr 20 15:59 : client: [86] opened from 127.0.0.1:40176
+Apr 20 15:59 : client: [86] closed
+Apr 20 15:59 : client: [87] opened from 127.0.0.1:40178
+Apr 20 15:59 : client: [87] closed
+Apr 20 15:59 : client: [88] opened from 127.0.0.1:40180
+Apr 20 15:59 : client: [88] closed
+Apr 20 15:59 : client: [89] opened from 127.0.0.1:40182
+Apr 20 15:59 : client: [89] closed
+Apr 20 16:02 : player: played "Climbing Through Air 2 by Tomas Skyldeberg - _Electro Music_.mp3"
+Apr 20 16:04 : client: [90] opened from 127.0.0.1:40184
+Apr 20 16:04 : client: [90] closed
+Apr 20 16:04 : client: [91] opened from 127.0.0.1:40186
+Apr 20 16:04 : client: [91] closed
+Apr 20 16:04 : client: [92] opened from 127.0.0.1:40188
+Apr 20 16:04 : client: [92] closed
+Apr 20 16:04 : client: [93] opened from 127.0.0.1:40190
+Apr 20 16:04 : client: [93] closed
+Apr 20 16:04 : client: [94] opened from 127.0.0.1:40192
+Apr 20 16:04 : client: [94] closed
+Apr 20 16:04 : client: [95] opened from 127.0.0.1:40194
+Apr 20 16:04 : client: [95] closed
+Apr 20 16:04 : client: [96] opened from 127.0.0.1:40196
+Apr 20 16:04 : client: [96] closed
+Apr 20 16:04 : client: [97] opened from 127.0.0.1:40198
+Apr 20 16:04 : client: [97] closed
+Apr 20 16:05 : client: [98] opened from 127.0.0.1:40200
+Apr 20 16:05 : client: [98] closed
+Apr 20 16:05 : client: [99] opened from 127.0.0.1:40202
+Apr 20 16:05 : client: [99] closed
+Apr 20 16:05 : client: [100] opened from 127.0.0.1:40206
+Apr 20 16:05 : client: [100] closed
+Apr 20 16:05 : client: [101] opened from 127.0.0.1:40208
+Apr 20 16:05 : client: [101] closed
+Apr 20 16:05 : client: [102] opened from 127.0.0.1:40212
+Apr 20 16:05 : client: [102] closed
+Apr 20 16:05 : client: [103] opened from 127.0.0.1:40214
+Apr 20 16:05 : client: [103] closed
+Apr 20 16:05 : client: [104] opened from 127.0.0.1:40216
+Apr 20 16:05 : client: [104] closed
+Apr 20 16:05 : client: [105] opened from 127.0.0.1:40220
+Apr 20 16:05 : client: [105] closed
+Apr 20 16:11 : player: played "croft-manor-anniversary.mp3"
+Apr 20 16:11 : client: [106] opened from 127.0.0.1:40222
+Apr 20 16:11 : client: [106] closed
+Apr 20 16:11 : client: [107] opened from 127.0.0.1:40224
+Apr 20 16:11 : client: [107] closed
+Apr 20 16:11 : client: [108] opened from 127.0.0.1:40226
+Apr 20 16:11 : client: [108] closed
+Apr 20 16:11 : client: [109] opened from 127.0.0.1:40228
+Apr 20 16:11 : client: [109] closed
+Apr 20 16:11 : client: [110] opened from 127.0.0.1:40230
+Apr 20 16:11 : client: [110] closed
+Apr 20 16:11 : client: [111] opened from 127.0.0.1:40232
+Apr 20 16:11 : client: [111] closed
+Apr 20 16:12 : client: [112] opened from 127.0.0.1:40234
+Apr 20 16:12 : client: [112] closed
+Apr 20 16:12 : client: [113] opened from 127.0.0.1:40236
+Apr 20 16:12 : client: [113] closed
+Apr 20 16:12 : client: [114] opened from 127.0.0.1:40238
+Apr 20 16:12 : client: [114] closed
+Apr 20 16:12 : client: [115] opened from 127.0.0.1:40240
+Apr 20 16:12 : client: [115] closed
+Apr 20 16:12 : client: [116] opened from 127.0.0.1:40242
+Apr 20 16:12 : client: [116] closed
+Apr 20 16:12 : client: [117] opened from 127.0.0.1:40246
+Apr 20 16:12 : client: [117] closed
+Apr 20 16:13 : client: [118] opened from 127.0.0.1:40248
+Apr 20 16:13 : client: [118] closed
+Apr 20 16:13 : client: [119] opened from 127.0.0.1:40252
+Apr 20 16:13 : client: [119] closed
+Apr 20 16:13 : client: [120] opened from 127.0.0.1:40254
+Apr 20 16:13 : client: [120] closed
+Apr 20 16:13 : client: [121] opened from 127.0.0.1:40256
+Apr 20 16:13 : client: [121] closed
+Apr 20 16:13 : client: [122] opened from 127.0.0.1:40258
+Apr 20 16:13 : client: [122] closed
+Apr 20 16:13 : client: [123] opened from 127.0.0.1:40260
+Apr 20 16:13 : client: [123] closed
+Apr 20 16:13 : client: [124] opened from 127.0.0.1:40262
+Apr 20 16:13 : client: [124] closed
+Apr 20 16:13 : client: [125] opened from 127.0.0.1:40264
+Apr 20 16:13 : client: [125] closed
+Apr 20 16:13 : client: [126] opened from 127.0.0.1:40266
+Apr 20 16:13 : client: [126] closed
+Apr 20 16:13 : client: [127] opened from 127.0.0.1:40270
+Apr 20 16:13 : client: [127] closed
+Apr 20 16:13 : client: [128] opened from 127.0.0.1:40272
+Apr 20 16:13 : client: [128] closed
+Apr 20 16:13 : client: [129] opened from 127.0.0.1:40274
+Apr 20 16:13 : client: [129] closed
+Apr 20 16:13 : client: [130] opened from 127.0.0.1:40276
+Apr 20 16:13 : client: [130] closed
+Apr 20 16:13 : client: [131] opened from 127.0.0.1:40278
+Apr 20 16:13 : client: [131] closed
+Apr 20 16:13 : client: [132] opened from 127.0.0.1:40280
+Apr 20 16:13 : client: [132] closed
+Apr 20 16:13 : client: [133] opened from 127.0.0.1:40282
+Apr 20 16:13 : client: [133] closed
+Apr 20 16:13 : client: [134] opened from 127.0.0.1:40284
+Apr 20 16:13 : client: [134] closed
+Apr 20 16:13 : client: [135] opened from 127.0.0.1:40286
+Apr 20 16:13 : client: [135] closed
+Apr 20 16:13 : client: [136] opened from 127.0.0.1:40288
+Apr 20 16:13 : client: [136] closed
+Apr 20 16:13 : client: [137] opened from 127.0.0.1:40290
+Apr 20 16:13 : client: [137] closed
+Apr 20 16:13 : client: [138] opened from 127.0.0.1:40292
+Apr 20 16:13 : client: [138] closed
+Apr 20 16:13 : client: [139] opened from 127.0.0.1:40294
+Apr 20 16:13 : client: [139] closed
+Apr 20 16:13 : client: [140] opened from 127.0.0.1:40296
+Apr 20 16:13 : client: [140] closed
+Apr 20 16:13 : client: [141] opened from 127.0.0.1:40298
+Apr 20 16:13 : client: [141] closed
+Apr 20 16:13 : client: [142] opened from 127.0.0.1:40300
+Apr 20 16:13 : client: [142] closed
+Apr 20 16:13 : client: [143] opened from 127.0.0.1:40304
+Apr 20 16:13 : client: [143] closed
+Apr 20 16:13 : client: [144] opened from 127.0.0.1:40306
+Apr 20 16:13 : client: [144] closed
+Apr 20 16:13 : client: [145] opened from 127.0.0.1:40308
+Apr 20 16:13 : client: [145] closed
+Apr 20 16:13 : client: [146] opened from 127.0.0.1:40312
+Apr 20 16:13 : client: [146] closed
+Apr 20 16:13 : client: [147] opened from 127.0.0.1:40314
+Apr 20 16:13 : client: [147] closed
+Apr 20 16:13 : client: [148] opened from 127.0.0.1:40316
+Apr 20 16:13 : client: [148] closed
+Apr 20 16:13 : client: [149] opened from 127.0.0.1:40318
+Apr 20 16:13 : client: [149] closed
+Apr 20 16:13 : client: [150] opened from 127.0.0.1:40320
+Apr 20 16:13 : client: [150] closed
+Apr 20 16:13 : client: [151] opened from 127.0.0.1:40322
+Apr 20 16:13 : client: [151] closed
+Apr 20 16:13 : client: [152] opened from 127.0.0.1:40324
+Apr 20 16:13 : client: [152] closed
+Apr 20 16:13 : client: [153] opened from 127.0.0.1:40326
+Apr 20 16:13 : client: [153] closed
+Apr 20 16:13 : client: [154] opened from 127.0.0.1:40328
+Apr 20 16:13 : client: [154] closed
+Apr 20 16:13 : client: [155] opened from 127.0.0.1:40330
+Apr 20 16:13 : client: [155] closed
+Apr 20 16:13 : client: [156] opened from 127.0.0.1:40332
+Apr 20 16:13 : client: [156] closed
+Apr 20 16:13 : client: [157] opened from 127.0.0.1:40334
+Apr 20 16:13 : client: [157] closed
+Apr 20 16:13 : client: [158] opened from 127.0.0.1:40336
+Apr 20 16:13 : client: [158] closed
+Apr 20 16:13 : client: [159] opened from 127.0.0.1:40338
+Apr 20 16:13 : client: [159] closed
+Apr 20 16:13 : client: [160] opened from 127.0.0.1:40340
+Apr 20 16:13 : client: [160] closed
+Apr 20 16:13 : client: [161] opened from 127.0.0.1:40342
+Apr 20 16:13 : client: [161] closed
+Apr 20 16:13 : client: [162] opened from 127.0.0.1:40344
+Apr 20 16:13 : client: [162] closed
+Apr 20 16:13 : client: [163] opened from 127.0.0.1:40346
+Apr 20 16:13 : client: [163] closed
+Apr 20 16:13 : client: [164] opened from 127.0.0.1:40348
+Apr 20 16:13 : client: [164] closed
+Apr 20 16:13 : client: [165] opened from 127.0.0.1:40350
+Apr 20 16:13 : client: [165] closed
+Apr 20 16:13 : client: [166] opened from 127.0.0.1:40354
+Apr 20 16:13 : client: [166] closed
+Apr 20 16:13 : client: [167] opened from 127.0.0.1:40356
+Apr 20 16:13 : client: [167] closed
+Apr 20 16:13 : client: [168] opened from 127.0.0.1:40358
+Apr 20 16:13 : client: [168] closed
+Apr 20 16:13 : client: [169] opened from 127.0.0.1:40360
+Apr 20 16:13 : client: [169] closed
+Apr 20 16:13 : client: [170] opened from 127.0.0.1:40362
+Apr 20 16:13 : client: [170] closed
+Apr 20 16:13 : client: [171] opened from 127.0.0.1:40364
+Apr 20 16:13 : client: [171] closed
+Apr 20 16:13 : client: [172] opened from 127.0.0.1:40366
+Apr 20 16:13 : client: [172] closed
+Apr 20 16:13 : client: [173] opened from 127.0.0.1:40368
+Apr 20 16:13 : client: [173] closed
+Apr 20 16:13 : client: [174] opened from 127.0.0.1:40370
+Apr 20 16:13 : client: [174] closed
+Apr 20 16:13 : client: [175] opened from 127.0.0.1:40372
+Apr 20 16:13 : client: [175] closed
+Apr 20 16:13 : client: [176] opened from 127.0.0.1:40374
+Apr 20 16:13 : client: [176] closed
+Apr 20 16:13 : client: [177] opened from 127.0.0.1:40376
+Apr 20 16:13 : client: [177] closed
+Apr 20 16:13 : client: [178] opened from 127.0.0.1:40378
+Apr 20 16:13 : client: [178] closed
+Apr 20 16:13 : client: [179] opened from 127.0.0.1:40380
+Apr 20 16:13 : client: [179] closed
+Apr 20 16:13 : client: [180] opened from 127.0.0.1:40382
+Apr 20 16:13 : client: [180] closed
+Apr 20 16:13 : client: [181] opened from 127.0.0.1:40384
+Apr 20 16:13 : client: [181] closed
+Apr 20 16:13 : client: [182] opened from 127.0.0.1:40386
+Apr 20 16:13 : client: [182] closed
+Apr 20 16:13 : client: [183] opened from 127.0.0.1:40390
+Apr 20 16:13 : client: [183] closed
+Apr 20 16:13 : client: [184] opened from 127.0.0.1:40392
+Apr 20 16:13 : client: [184] closed
+Apr 20 16:13 : client: [185] opened from 127.0.0.1:40394
+Apr 20 16:13 : client: [185] closed
+Apr 20 16:13 : client: [186] opened from 127.0.0.1:40396
+Apr 20 16:13 : client: [186] closed
+Apr 20 16:13 : client: [187] opened from 127.0.0.1:40398
+Apr 20 16:13 : client: [187] closed
+Apr 20 16:13 : client: [188] opened from 127.0.0.1:40400
+Apr 20 16:13 : client: [188] closed
+Apr 20 16:13 : client: [189] opened from 127.0.0.1:40402
+Apr 20 16:13 : client: [189] closed
+Apr 20 16:13 : client: [190] opened from 127.0.0.1:40404
+Apr 20 16:13 : client: [190] closed
+Apr 20 16:13 : client: [191] opened from 127.0.0.1:40406
+Apr 20 16:13 : client: [191] closed
+Apr 20 16:13 : client: [192] opened from 127.0.0.1:40408
+Apr 20 16:13 : client: [192] closed
+Apr 20 16:13 : client: [193] opened from 127.0.0.1:40410
+Apr 20 16:13 : client: [193] closed
+Apr 20 16:13 : client: [194] opened from 127.0.0.1:40412
+Apr 20 16:13 : client: [194] closed
+Apr 20 16:13 : client: [195] opened from 127.0.0.1:40414
+Apr 20 16:13 : client: [195] closed
+Apr 20 16:13 : client: [196] opened from 127.0.0.1:40416
+Apr 20 16:13 : client: [196] closed
+Apr 20 16:13 : client: [197] opened from 127.0.0.1:40418
+Apr 20 16:13 : client: [197] closed
+Apr 20 16:13 : client: [198] opened from 127.0.0.1:40420
+Apr 20 16:13 : client: [198] closed
+Apr 20 16:13 : client: [199] opened from 127.0.0.1:40422
+Apr 20 16:13 : client: [199] closed
+Apr 20 16:13 : client: [200] opened from 127.0.0.1:40424
+Apr 20 16:13 : client: [200] closed
+Apr 20 16:13 : client: [201] opened from 127.0.0.1:40426
+Apr 20 16:13 : client: [201] closed
+Apr 20 16:13 : client: [202] opened from 127.0.0.1:40428
+Apr 20 16:13 : client: [202] closed
+Apr 20 16:13 : client: [203] opened from 127.0.0.1:40430
+Apr 20 16:13 : client: [203] closed
+Apr 20 16:13 : client: [204] opened from 127.0.0.1:40432
+Apr 20 16:13 : client: [204] closed
+Apr 20 16:13 : client: [205] opened from 127.0.0.1:40434
+Apr 20 16:13 : client: [205] closed
+Apr 20 16:13 : client: [206] opened from 127.0.0.1:40436
+Apr 20 16:13 : client: [206] closed
+Apr 20 16:13 : client: [207] opened from 127.0.0.1:40438
+Apr 20 16:13 : client: [207] closed
+Apr 20 16:13 : client: [208] opened from 127.0.0.1:40440
+Apr 20 16:13 : client: [208] closed
+Apr 20 16:13 : client: [209] opened from 127.0.0.1:40442
+Apr 20 16:13 : client: [209] closed
+Apr 20 16:13 : client: [210] opened from 127.0.0.1:40444
+Apr 20 16:13 : client: [210] closed
+Apr 20 16:13 : client: [211] opened from 127.0.0.1:40446
+Apr 20 16:13 : client: [211] closed
+Apr 20 16:13 : client: [212] opened from 127.0.0.1:40448
+Apr 20 16:13 : client: [212] closed
+Apr 20 16:13 : client: [213] opened from 127.0.0.1:40450
+Apr 20 16:13 : client: [213] closed
+Apr 20 16:13 : client: [214] opened from 127.0.0.1:40452
+Apr 20 16:13 : client: [214] closed
+Apr 20 16:13 : client: [215] opened from 127.0.0.1:40454
+Apr 20 16:13 : client: [215] closed
+Apr 20 16:13 : client: [216] opened from 127.0.0.1:40456
+Apr 20 16:13 : client: [216] closed
+Apr 20 16:13 : client: [217] opened from 127.0.0.1:40458
+Apr 20 16:13 : client: [217] closed
+Apr 20 16:13 : client: [218] opened from 127.0.0.1:40460
+Apr 20 16:13 : client: [218] closed
+Apr 20 16:13 : client: [219] opened from 127.0.0.1:40462
+Apr 20 16:13 : client: [219] closed
+Apr 20 16:13 : client: [220] opened from 127.0.0.1:40464
+Apr 20 16:13 : client: [220] closed
+Apr 20 16:13 : client: [221] opened from 127.0.0.1:40468
+Apr 20 16:13 : client: [221] closed
+Apr 20 16:13 : client: [222] opened from 127.0.0.1:40470
+Apr 20 16:13 : client: [222] closed
+Apr 20 16:13 : client: [223] opened from 127.0.0.1:40472
+Apr 20 16:13 : client: [223] closed
+Apr 20 16:13 : client: [224] opened from 127.0.0.1:40474
+Apr 20 16:13 : client: [224] closed
+Apr 20 16:13 : client: [225] opened from 127.0.0.1:40476
+Apr 20 16:13 : client: [225] closed
+Apr 20 16:13 : client: [226] opened from 127.0.0.1:40478
+Apr 20 16:13 : client: [226] closed
+Apr 20 16:13 : client: [227] opened from 127.0.0.1:40480
+Apr 20 16:13 : client: [227] closed
+Apr 20 16:13 : client: [228] opened from 127.0.0.1:40482
+Apr 20 16:13 : player: played "Two Worlds 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 16:13 : client: [228] closed
+Apr 20 16:13 : client: [229] opened from 127.0.0.1:40484
+Apr 20 16:13 : client: [229] closed
+Apr 20 16:13 : client: [230] opened from 127.0.0.1:40486
+Apr 20 16:13 : client: [230] closed
+Apr 20 16:13 : client: [231] opened from 127.0.0.1:40488
+Apr 20 16:13 : client: [231] closed
+Apr 20 16:13 : client: [232] opened from 127.0.0.1:40490
+Apr 20 16:13 : client: [232] closed
+Apr 20 16:13 : client: [233] opened from 127.0.0.1:40492
+Apr 20 16:13 : client: [233] closed
+Apr 20 16:13 : client: [234] opened from 127.0.0.1:40494
+Apr 20 16:13 : client: [234] closed
+Apr 20 16:13 : client: [235] opened from 127.0.0.1:40496
+Apr 20 16:13 : client: [235] closed
+Apr 20 16:13 : client: [236] opened from 127.0.0.1:40498
+Apr 20 16:13 : client: [236] closed
+Apr 20 16:13 : client: [237] opened from 127.0.0.1:40500
+Apr 20 16:13 : client: [237] closed
+Apr 20 16:13 : client: [238] opened from 127.0.0.1:40502
+Apr 20 16:13 : client: [238] closed
+Apr 20 16:13 : client: [239] opened from 127.0.0.1:40504
+Apr 20 16:13 : client: [239] closed
+Apr 20 16:13 : client: [240] opened from 127.0.0.1:40508
+Apr 20 16:13 : client: [240] closed
+Apr 20 16:13 : client: [241] opened from 127.0.0.1:40510
+Apr 20 16:13 : client: [241] closed
+Apr 20 16:13 : client: [242] opened from 127.0.0.1:40512
+Apr 20 16:13 : client: [242] closed
+Apr 20 16:13 : client: [243] opened from 127.0.0.1:40514
+Apr 20 16:13 : client: [243] closed
+Apr 20 16:13 : client: [244] opened from 127.0.0.1:40518
+Apr 20 16:13 : client: [244] closed
+Apr 20 16:13 : client: [245] opened from 127.0.0.1:40520
+Apr 20 16:13 : client: [245] closed
+Apr 20 16:13 : client: [246] opened from 127.0.0.1:40522
+Apr 20 16:13 : client: [246] closed
+Apr 20 16:13 : client: [247] opened from 127.0.0.1:40524
+Apr 20 16:13 : client: [247] closed
+Apr 20 16:13 : client: [248] opened from 127.0.0.1:40526
+Apr 20 16:13 : client: [248] closed
+Apr 20 16:13 : client: [249] opened from 127.0.0.1:40528
+Apr 20 16:13 : client: [249] closed
+Apr 20 16:13 : client: [250] opened from 127.0.0.1:40530
+Apr 20 16:13 : client: [250] closed
+Apr 20 16:13 : client: [251] opened from 127.0.0.1:40532
+Apr 20 16:13 : client: [251] closed
+Apr 20 16:13 : client: [252] opened from 127.0.0.1:40534
+Apr 20 16:13 : client: [252] closed
+Apr 20 16:13 : client: [253] opened from 127.0.0.1:40536
+Apr 20 16:13 : client: [253] closed
+Apr 20 16:13 : client: [254] opened from 127.0.0.1:40538
+Apr 20 16:13 : client: [254] closed
+Apr 20 16:13 : client: [255] opened from 127.0.0.1:40540
+Apr 20 16:13 : client: [255] closed
+Apr 20 16:13 : client: [256] opened from 127.0.0.1:40542
+Apr 20 16:13 : client: [256] closed
+Apr 20 16:13 : client: [257] opened from 127.0.0.1:40544
+Apr 20 16:13 : client: [257] closed
+Apr 20 16:13 : client: [258] opened from 127.0.0.1:40546
+Apr 20 16:13 : client: [258] closed
+Apr 20 16:13 : client: [259] opened from 127.0.0.1:40548
+Apr 20 16:13 : client: [259] closed
+Apr 20 16:13 : client: [260] opened from 127.0.0.1:40550
+Apr 20 16:13 : client: [260] closed
+Apr 20 16:13 : client: [261] opened from 127.0.0.1:40552
+Apr 20 16:13 : client: [261] closed
+Apr 20 16:13 : client: [262] opened from 127.0.0.1:40554
+Apr 20 16:13 : client: [262] closed
+Apr 20 16:13 : client: [263] opened from 127.0.0.1:40556
+Apr 20 16:13 : client: [263] closed
+Apr 20 16:13 : client: [264] opened from 127.0.0.1:40558
+Apr 20 16:13 : client: [264] closed
+Apr 20 16:13 : client: [265] opened from 127.0.0.1:40560
+Apr 20 16:13 : client: [265] closed
+Apr 20 16:13 : client: [266] opened from 127.0.0.1:40562
+Apr 20 16:13 : client: [266] closed
+Apr 20 16:13 : client: [267] opened from 127.0.0.1:40564
+Apr 20 16:13 : client: [267] closed
+Apr 20 16:13 : client: [268] opened from 127.0.0.1:40566
+Apr 20 16:13 : client: [268] closed
+Apr 20 16:13 : client: [269] opened from 127.0.0.1:40570
+Apr 20 16:13 : client: [269] closed
+Apr 20 16:13 : client: [270] opened from 127.0.0.1:40572
+Apr 20 16:13 : client: [270] closed
+Apr 20 16:13 : client: [271] opened from 127.0.0.1:40574
+Apr 20 16:13 : client: [271] closed
+Apr 20 16:13 : client: [272] opened from 127.0.0.1:40576
+Apr 20 16:13 : client: [272] closed
+Apr 20 16:13 : client: [273] opened from 127.0.0.1:40578
+Apr 20 16:13 : client: [273] closed
+Apr 20 16:13 : client: [274] opened from 127.0.0.1:40582
+Apr 20 16:13 : client: [274] closed
+Apr 20 16:13 : client: [275] opened from 127.0.0.1:40584
+Apr 20 16:13 : client: [275] closed
+Apr 20 16:13 : client: [276] opened from 127.0.0.1:40586
+Apr 20 16:13 : client: [276] closed
+Apr 20 16:13 : client: [277] opened from 127.0.0.1:40588
+Apr 20 16:13 : client: [277] closed
+Apr 20 16:13 : client: [278] opened from 127.0.0.1:40590
+Apr 20 16:13 : client: [278] closed
+Apr 20 16:13 : client: [279] opened from 127.0.0.1:40592
+Apr 20 16:13 : client: [279] closed
+Apr 20 16:13 : client: [280] opened from 127.0.0.1:40594
+Apr 20 16:13 : client: [280] closed
+Apr 20 16:13 : client: [281] opened from 127.0.0.1:40596
+Apr 20 16:13 : client: [281] closed
+Apr 20 16:13 : client: [282] opened from 127.0.0.1:40598
+Apr 20 16:13 : client: [282] closed
+Apr 20 16:13 : client: [283] opened from 127.0.0.1:40600
+Apr 20 16:13 : client: [283] closed
+Apr 20 16:13 : client: [284] opened from 127.0.0.1:40602
+Apr 20 16:13 : client: [284] closed
+Apr 20 16:13 : client: [285] opened from 127.0.0.1:40604
+Apr 20 16:13 : client: [285] closed
+Apr 20 16:13 : client: [286] opened from 127.0.0.1:40606
+Apr 20 16:13 : client: [286] closed
+Apr 20 16:13 : client: [287] opened from 127.0.0.1:40608
+Apr 20 16:13 : client: [287] closed
+Apr 20 16:13 : client: [288] opened from 127.0.0.1:40612
+Apr 20 16:13 : client: [288] closed
+Apr 20 16:13 : client: [289] opened from 127.0.0.1:40614
+Apr 20 16:13 : client: [289] closed
+Apr 20 16:13 : client: [290] opened from 127.0.0.1:40616
+Apr 20 16:13 : client: [290] closed
+Apr 20 16:13 : client: [291] opened from 127.0.0.1:40618
+Apr 20 16:13 : client: [291] closed
+Apr 20 16:13 : client: [292] opened from 127.0.0.1:40620
+Apr 20 16:13 : client: [292] closed
+Apr 20 16:13 : client: [293] opened from 127.0.0.1:40622
+Apr 20 16:13 : client: [293] closed
+Apr 20 16:13 : client: [294] opened from 127.0.0.1:40624
+Apr 20 16:13 : client: [294] closed
+Apr 20 16:13 : client: [295] opened from 127.0.0.1:40626
+Apr 20 16:13 : client: [295] closed
+Apr 20 16:13 : client: [296] opened from 127.0.0.1:40628
+Apr 20 16:13 : client: [296] closed
+Apr 20 16:13 : client: [297] opened from 127.0.0.1:40630
+Apr 20 16:13 : client: [297] closed
+Apr 20 16:13 : client: [298] opened from 127.0.0.1:40632
+Apr 20 16:13 : client: [298] closed
+Apr 20 16:13 : client: [299] opened from 127.0.0.1:40634
+Apr 20 16:13 : client: [299] closed
+Apr 20 16:13 : client: [300] opened from 127.0.0.1:40636
+Apr 20 16:13 : client: [300] closed
+Apr 20 16:13 : client: [301] opened from 127.0.0.1:40638
+Apr 20 16:13 : client: [301] closed
+Apr 20 16:13 : client: [302] opened from 127.0.0.1:40640
+Apr 20 16:13 : client: [302] closed
+Apr 20 16:13 : client: [303] opened from 127.0.0.1:40642
+Apr 20 16:13 : client: [303] closed
+Apr 20 16:13 : client: [304] opened from 127.0.0.1:40644
+Apr 20 16:13 : client: [304] closed
+Apr 20 16:13 : client: [305] opened from 127.0.0.1:40646
+Apr 20 16:13 : client: [305] closed
+Apr 20 16:13 : client: [306] opened from 127.0.0.1:40648
+Apr 20 16:13 : client: [306] closed
+Apr 20 16:13 : client: [307] opened from 127.0.0.1:40650
+Apr 20 16:13 : client: [307] closed
+Apr 20 16:13 : client: [308] opened from 127.0.0.1:40652
+Apr 20 16:13 : client: [308] closed
+Apr 20 16:13 : client: [309] opened from 127.0.0.1:40654
+Apr 20 16:13 : client: [309] closed
+Apr 20 16:13 : client: [310] opened from 127.0.0.1:40656
+Apr 20 16:13 : client: [310] closed
+Apr 20 16:13 : client: [311] opened from 127.0.0.1:40658
+Apr 20 16:13 : client: [311] closed
+Apr 20 16:13 : client: [312] opened from 127.0.0.1:40660
+Apr 20 16:13 : client: [312] closed
+Apr 20 16:13 : client: [313] opened from 127.0.0.1:40662
+Apr 20 16:13 : client: [313] closed
+Apr 20 16:13 : client: [314] opened from 127.0.0.1:40664
+Apr 20 16:13 : client: [314] closed
+Apr 20 16:13 : client: [315] opened from 127.0.0.1:40666
+Apr 20 16:13 : client: [315] closed
+Apr 20 16:13 : client: [316] opened from 127.0.0.1:40668
+Apr 20 16:13 : client: [316] closed
+Apr 20 16:13 : client: [317] opened from 127.0.0.1:40670
+Apr 20 16:13 : client: [317] closed
+Apr 20 16:13 : client: [318] opened from 127.0.0.1:40672
+Apr 20 16:13 : client: [318] closed
+Apr 20 16:13 : client: [319] opened from 127.0.0.1:40674
+Apr 20 16:13 : client: [319] closed
+Apr 20 16:13 : client: [320] opened from 127.0.0.1:40676
+Apr 20 16:13 : client: [320] closed
+Apr 20 16:13 : client: [321] opened from 127.0.0.1:40680
+Apr 20 16:13 : client: [321] closed
+Apr 20 16:13 : client: [322] opened from 127.0.0.1:40682
+Apr 20 16:13 : client: [322] closed
+Apr 20 16:13 : client: [323] opened from 127.0.0.1:40684
+Apr 20 16:13 : client: [323] closed
+Apr 20 16:13 : client: [324] opened from 127.0.0.1:40686
+Apr 20 16:13 : client: [324] closed
+Apr 20 16:13 : client: [325] opened from 127.0.0.1:40688
+Apr 20 16:13 : client: [325] closed
+Apr 20 16:13 : client: [326] opened from 127.0.0.1:40690
+Apr 20 16:13 : client: [326] closed
+Apr 20 16:13 : client: [327] opened from 127.0.0.1:40692
+Apr 20 16:13 : client: [327] closed
+Apr 20 16:13 : client: [328] opened from 127.0.0.1:40694
+Apr 20 16:13 : client: [328] closed
+Apr 20 16:13 : client: [329] opened from 127.0.0.1:40696
+Apr 20 16:13 : client: [329] closed
+Apr 20 16:13 : client: [330] opened from 127.0.0.1:40698
+Apr 20 16:13 : client: [330] closed
+Apr 20 16:13 : client: [331] opened from 127.0.0.1:40700
+Apr 20 16:13 : client: [331] closed
+Apr 20 16:13 : client: [332] opened from 127.0.0.1:40702
+Apr 20 16:13 : client: [332] closed
+Apr 20 16:13 : client: [333] opened from 127.0.0.1:40704
+Apr 20 16:13 : client: [333] closed
+Apr 20 16:13 : client: [334] opened from 127.0.0.1:40706
+Apr 20 16:13 : client: [334] closed
+Apr 20 16:13 : client: [335] opened from 127.0.0.1:40708
+Apr 20 16:13 : client: [335] closed
+Apr 20 16:13 : client: [336] opened from 127.0.0.1:40712
+Apr 20 16:13 : client: [336] closed
+Apr 20 16:13 : client: [337] opened from 127.0.0.1:40714
+Apr 20 16:13 : client: [337] closed
+Apr 20 16:13 : client: [338] opened from 127.0.0.1:40716
+Apr 20 16:13 : client: [338] closed
+Apr 20 16:13 : client: [339] opened from 127.0.0.1:40718
+Apr 20 16:13 : client: [339] closed
+Apr 20 16:13 : client: [340] opened from 127.0.0.1:40720
+Apr 20 16:13 : client: [340] closed
+Apr 20 16:13 : client: [341] opened from 127.0.0.1:40722
+Apr 20 16:13 : client: [341] closed
+Apr 20 16:13 : client: [342] opened from 127.0.0.1:40724
+Apr 20 16:13 : client: [342] closed
+Apr 20 16:13 : client: [343] opened from 127.0.0.1:40726
+Apr 20 16:13 : client: [343] closed
+Apr 20 16:13 : client: [344] opened from 127.0.0.1:40728
+Apr 20 16:13 : client: [344] closed
+Apr 20 16:13 : client: [345] opened from 127.0.0.1:40732
+Apr 20 16:13 : client: [345] closed
+Apr 20 16:13 : client: [346] opened from 127.0.0.1:40734
+Apr 20 16:13 : client: [346] closed
+Apr 20 16:13 : client: [347] opened from 127.0.0.1:40736
+Apr 20 16:13 : client: [347] closed
+Apr 20 16:13 : client: [348] opened from 127.0.0.1:40738
+Apr 20 16:13 : client: [348] closed
+Apr 20 16:13 : client: [349] opened from 127.0.0.1:40740
+Apr 20 16:13 : client: [349] closed
+Apr 20 16:13 : client: [350] opened from 127.0.0.1:40742
+Apr 20 16:13 : client: [350] closed
+Apr 20 16:13 : client: [351] opened from 127.0.0.1:40744
+Apr 20 16:13 : client: [351] closed
+Apr 20 16:13 : client: [352] opened from 127.0.0.1:40746
+Apr 20 16:13 : client: [352] closed
+Apr 20 16:13 : client: [353] opened from 127.0.0.1:40748
+Apr 20 16:13 : client: [353] closed
+Apr 20 16:13 : client: [354] opened from 127.0.0.1:40750
+Apr 20 16:13 : client: [354] closed
+Apr 20 16:14 : client: [355] opened from 127.0.0.1:40752
+Apr 20 16:14 : client: [355] closed
+Apr 20 16:14 : client: [356] opened from 127.0.0.1:40754
+Apr 20 16:14 : client: [356] closed
+Apr 20 16:14 : client: [357] opened from 127.0.0.1:40756
+Apr 20 16:14 : client: [357] closed
+Apr 20 16:14 : client: [358] opened from 127.0.0.1:40758
+Apr 20 16:14 : client: [358] closed
+Apr 20 16:14 : client: [359] opened from 127.0.0.1:40760
+Apr 20 16:14 : client: [359] closed
+Apr 20 16:19 : player: played "Rue Des Rosiers.mp3"
+Apr 20 16:19 : client: [360] opened from 127.0.0.1:40762
+Apr 20 16:19 : client: [360] closed
+Apr 20 16:19 : client: [361] opened from 127.0.0.1:40764
+Apr 20 16:19 : client: [361] closed
+Apr 20 16:19 : client: [362] opened from 127.0.0.1:40766
+Apr 20 16:19 : client: [362] closed
+Apr 20 16:19 : client: [363] opened from 127.0.0.1:40768
+Apr 20 16:19 : client: [363] closed
+Apr 20 16:23 : player: played "Mitis - Expose.mp3"
+Apr 20 16:28 : player: played "MitiS - You.mp3"
+Apr 20 16:28 : client: [364] opened from 127.0.0.1:40770
+Apr 20 16:28 : client: [364] closed
+Apr 20 16:28 : client: [365] opened from 127.0.0.1:40772
+Apr 20 16:28 : client: [365] closed
+Apr 20 16:28 : client: [366] opened from 127.0.0.1:40774
+Apr 20 16:28 : client: [366] closed
+Apr 20 16:28 : client: [367] opened from 127.0.0.1:40776
+Apr 20 16:28 : client: [367] closed
+Apr 20 16:28 : client: [368] opened from 127.0.0.1:40778
+Apr 20 16:28 : client: [368] closed
+Apr 20 16:28 : client: [369] opened from 127.0.0.1:40780
+Apr 20 16:28 : client: [369] closed
+Apr 20 16:28 : client: [370] opened from 127.0.0.1:40782
+Apr 20 16:28 : client: [370] closed
+Apr 20 16:28 : client: [371] opened from 127.0.0.1:40784
+Apr 20 16:28 : client: [371] closed
+Apr 20 16:31 : client: [372] opened from 127.0.0.1:40786
+Apr 20 16:31 : client: [372] closed
+Apr 20 16:31 : client: [373] opened from 127.0.0.1:40788
+Apr 20 16:31 : client: [373] closed
+Apr 20 16:31 : client: [374] opened from 127.0.0.1:40792
+Apr 20 16:31 : client: [374] closed
+Apr 20 16:31 : client: [375] opened from 127.0.0.1:40794
+Apr 20 16:31 : client: [375] closed
+Apr 20 16:35 : player: played "croft-manor-anniversary.mp3"
+Apr 20 16:35 : client: [376] opened from 127.0.0.1:40796
+Apr 20 16:35 : client: [376] closed
+Apr 20 16:35 : client: [377] opened from 127.0.0.1:40798
+Apr 20 16:35 : client: [377] closed
+Apr 20 16:35 : client: [378] opened from 127.0.0.1:40800
+Apr 20 16:35 : client: [378] closed
+Apr 20 16:35 : client: [379] opened from 127.0.0.1:40802
+Apr 20 16:35 : client: [379] closed
+Apr 20 16:35 : client: [380] opened from 127.0.0.1:40804
+Apr 20 16:35 : client: [380] closed
+Apr 20 16:35 : client: [381] opened from 127.0.0.1:40806
+Apr 20 16:35 : client: [381] closed
+Apr 20 16:36 : client: [382] opened from 127.0.0.1:40808
+Apr 20 16:36 : client: [382] closed
+Apr 20 16:36 : client: [383] opened from 127.0.0.1:40810
+Apr 20 16:36 : client: [383] closed
+Apr 20 16:36 : client: [384] opened from 127.0.0.1:40812
+Apr 20 16:36 : client: [384] closed
+Apr 20 16:36 : client: [385] opened from 127.0.0.1:40814
+Apr 20 16:36 : client: [385] closed
+Apr 20 16:36 : client: [386] opened from 127.0.0.1:40816
+Apr 20 16:36 : client: [386] closed
+Apr 20 16:36 : client: [387] opened from 127.0.0.1:40818
+Apr 20 16:36 : client: [387] closed
+Apr 20 16:41 : player: played "Endless Ocean 2 - Tomas Skyldeberg.mp3"
+Apr 20 16:41 : client: [388] opened from 127.0.0.1:40820
+Apr 20 16:41 : client: [388] closed
+Apr 20 16:41 : client: [389] opened from 127.0.0.1:40822
+Apr 20 16:41 : client: [389] closed
+Apr 20 16:41 : client: [390] opened from 127.0.0.1:40824
+Apr 20 16:41 : client: [390] closed
+Apr 20 16:41 : client: [391] opened from 127.0.0.1:40828
+Apr 20 16:41 : client: [391] closed
+Apr 20 16:46 : player: played "Crystal Kid 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 16:50 : player: played "Fireballs.mp3"
+Apr 20 16:55 : player: played "Meteor Bursts.mp3"
+Apr 20 16:57 : player: played "ukeSounds (ccMixter mix).mp3"
+Apr 20 17:03 : player: played "Crystal Kid 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 17:07 : player: played "Climbing Through Air 3 by Tomas Skyldeberg - _Instrumental 2010s Pop, Soft House Music_.mp3"
+Apr 20 17:10 : client: [392] opened from 127.0.0.1:40830
+Apr 20 17:10 : client: [392] closed
+Apr 20 17:10 : client: [393] opened from 127.0.0.1:40834
+Apr 20 17:10 : client: [393] closed
+Apr 20 17:10 : client: [394] opened from 127.0.0.1:40836
+Apr 20 17:10 : client: [394] closed
+Apr 20 17:13 : player: played "Two Worlds 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 17:18 : player: played "Magnetic Fields.mp3"
+Apr 20 17:22 : player: played "Silver Skyline 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 17:25 : client: [395] opened from 127.0.0.1:40838
+Apr 20 17:25 : client: [395] closed
+Apr 20 17:25 : client: [396] opened from 127.0.0.1:40840
+Apr 20 17:25 : client: [396] closed
+Apr 20 17:25 : client: [397] opened from 127.0.0.1:40842
+Apr 20 17:25 : client: [397] closed
+Apr 20 17:25 : client: [398] opened from 127.0.0.1:40844
+Apr 20 17:25 : client: [398] closed
+Apr 20 17:25 : client: [399] opened from 127.0.0.1:40846
+Apr 20 17:25 : client: [399] closed
+Apr 20 17:25 : client: [400] opened from 127.0.0.1:40848
+Apr 20 17:25 : client: [400] closed
+Apr 20 17:27 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 20 17:27 : client: [401] opened from 127.0.0.1:40850
+Apr 20 17:27 : client: [401] closed
+Apr 20 17:27 : client: [402] opened from 127.0.0.1:40854
+Apr 20 17:27 : client: [402] closed
+Apr 20 17:33 : player: played "Jungle Walking 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 17:40 : player: played "septahelix - The Lie (feat. Mo71, coruscate).mp3"
+Apr 20 17:46 : player: played "Rue Crémieux.mp3"
+Apr 20 17:52 : player: played "Cosmic Dust.mp3"
+Apr 20 17:58 : player: played "Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:01 : player: played "RENOVATION-Airtone.mp3"
+Apr 20 18:07 : player: played "Silver Skyline 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:12 : player: played "Stories From Dreams 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:17 : player: played "Angel Falls 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:23 : player: played "Stories From Dreams 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:28 : player: played "A Sonic Boom.mp3"
+Apr 20 18:31 : player: played "Between Worlds (Instrumental).mp3"
+Apr 20 18:35 : player: played "Mseq_-_Coriolis_Effect.mp3"
+Apr 20 18:40 : player: played "Retrograde Orbit.mp3"
+Apr 20 18:45 : player: played "Angel Falls 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:52 : player: played "Purple Island 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 18:57 : player: played "Silver Skyline 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 19:02 : player: played "Two Worlds 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 19:06 : player: played "Climbing Through Air 2 by Tomas Skyldeberg - _Electro Music_.mp3"
+Apr 20 19:11 : player: played "Rue Des Rosiers.mp3"
+Apr 20 19:15 : player: played "Mitis - Expose.mp3"
+Apr 20 19:20 : player: played "MitiS - You.mp3"
+Apr 20 19:26 : player: played "croft-manor-anniversary.mp3"
+Apr 20 19:32 : player: played "Endless Ocean 2 - Tomas Skyldeberg.mp3"
+Apr 20 19:38 : player: played "Crystal Kid 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 19:41 : player: played "Fireballs.mp3"
+Apr 20 19:47 : player: played "Meteor Bursts.mp3"
+Apr 20 19:49 : player: played "ukeSounds (ccMixter mix).mp3"
+Apr 20 19:54 : player: played "Crystal Kid 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 19:58 : player: played "Climbing Through Air 3 by Tomas Skyldeberg - _Instrumental 2010s Pop, Soft House Music_.mp3"
+Apr 20 20:04 : player: played "Two Worlds 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 20:09 : player: played "Magnetic Fields.mp3"
+Apr 20 20:14 : player: played "Silver Skyline 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 20:16 : client: [403] opened from 127.0.0.1:40878
+Apr 20 20:16 : client: [403] closed
+Apr 20 20:16 : client: [404] opened from 127.0.0.1:40880
+Apr 20 20:16 : client: [404] closed
+Apr 20 20:18 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 20 20:24 : player: played "Jungle Walking 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 20 20:28 : client: [405] opened from 127.0.0.1:40882
+Apr 20 20:28 : client: [405] closed
+Apr 20 20:28 : client: [406] opened from 127.0.0.1:40884
+Apr 20 20:28 : client: [406] closed
+Apr 20 20:28 : client: [407] opened from 127.0.0.1:40886
+Apr 20 20:28 : client: [407] closed
+Apr 20 20:28 : client: [408] opened from 127.0.0.1:40888
+Apr 20 20:28 : client: [408] closed
+Apr 20 20:32 : player: played "septahelix - The Lie (feat. Mo71, coruscate).mp3"
+Apr 20 20:32 : client: [409] opened from 127.0.0.1:40890
+Apr 20 20:32 : client: [409] closed
+Apr 20 20:32 : client: [410] opened from 127.0.0.1:40892
+Apr 20 20:32 : client: [410] closed
+Apr 20 20:32 : client: [411] opened from 127.0.0.1:40894
+Apr 20 20:32 : client: [411] closed
+Apr 20 20:32 : client: [412] opened from 127.0.0.1:40896
+Apr 20 20:32 : client: [412] closed
+Apr 20 20:38 : player: played "Rue Crémieux.mp3"
+Apr 20 20:43 : player: played "Cosmic Dust.mp3"
+Apr 20 20:46 : client: [413] opened from 127.0.0.1:40916
+Apr 20 20:46 : client: [413] closed
+Apr 21 02:15 : player: played "Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 21 16:49 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 21 16:49 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 21 16:49 : client: [0] opened from 127.0.0.1:46792
+Apr 21 16:49 : client: [0] closed
+Apr 21 16:49 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 21 16:49 : player: played "Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 21 16:49 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 21 16:49 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 21 16:49 : client: [0] opened from 127.0.0.1:46794
+Apr 21 16:49 : client: [0] closed
+Apr 21 16:49 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 21 16:49 : client: [1] opened from 127.0.0.1:46796
+Apr 21 16:49 : client: [1] closed
+Apr 21 16:49 : client: [2] opened from 127.0.0.1:46798
+Apr 21 16:49 : client: [2] closed
+Apr 21 16:49 : client: [3] opened from 127.0.0.1:46800
+Apr 21 16:49 : client: [3] closed
+Apr 21 16:49 : client: [4] opened from 127.0.0.1:46802
+Apr 21 16:49 : client: [4] closed
+Apr 21 16:49 : client: [5] opened from 127.0.0.1:46804
+Apr 21 16:49 : client: [5] closed
+Apr 21 16:49 : client: [6] opened from 127.0.0.1:46806
+Apr 21 16:49 : client: [6] closed
+Apr 21 16:49 : client: [7] opened from 127.0.0.1:46808
+Apr 21 16:49 : client: [7] closed
+Apr 21 16:49 : client: [8] opened from 127.0.0.1:46810
+Apr 21 16:49 : client: [8] closed
+Apr 21 16:49 : client: [9] opened from 127.0.0.1:46812
+Apr 21 16:49 : client: [9] closed
+Apr 21 16:49 : client: [10] opened from 127.0.0.1:46814
+Apr 21 16:49 : client: [10] closed
+Apr 21 16:49 : client: [11] opened from 127.0.0.1:46816
+Apr 21 16:49 : client: [11] closed
+Apr 21 16:49 : client: [12] opened from 127.0.0.1:46818
+Apr 21 16:49 : client: [12] closed
+Apr 21 16:49 : client: [13] opened from 127.0.0.1:46820
+Apr 21 16:49 : client: [13] closed
+Apr 21 16:49 : client: [14] opened from 127.0.0.1:46822
+Apr 21 16:49 : client: [14] closed
+Apr 21 16:49 : client: [15] opened from 127.0.0.1:46824
+Apr 21 16:49 : client: [15] closed
+Apr 21 16:49 : client: [16] opened from 127.0.0.1:46826
+Apr 21 16:49 : client: [16] closed
+Apr 21 16:49 : client: [17] opened from 127.0.0.1:46828
+Apr 21 16:49 : client: [17] closed
+Apr 21 16:49 : client: [18] opened from 127.0.0.1:46830
+Apr 21 16:49 : client: [18] closed
+Apr 21 16:49 : client: [19] opened from 127.0.0.1:46832
+Apr 21 16:49 : player: played "Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 21 16:49 : client: [19] closed
+Apr 21 16:49 : client: [20] opened from 127.0.0.1:46834
+Apr 21 16:49 : client: [20] closed
+Apr 21 16:49 : client: [21] opened from 127.0.0.1:46836
+Apr 21 16:49 : client: [21] closed
+Apr 21 16:49 : client: [22] opened from 127.0.0.1:46838
+Apr 21 16:49 : client: [22] closed
+Apr 21 16:49 : client: [23] opened from 127.0.0.1:46840
+Apr 21 16:49 : client: [23] closed
+Apr 21 16:49 : client: [24] opened from 127.0.0.1:46842
+Apr 21 16:49 : client: [24] closed
+Apr 21 16:49 : client: [25] opened from 127.0.0.1:46844
+Apr 21 16:49 : client: [25] closed
+Apr 21 16:49 : client: [26] opened from 127.0.0.1:46846
+Apr 21 16:49 : client: [26] closed
+Apr 21 16:49 : client: [27] opened from 127.0.0.1:46848
+Apr 21 16:49 : client: [27] closed
+Apr 21 16:49 : client: [28] opened from 127.0.0.1:46850
+Apr 21 16:49 : client: [28] closed
+Apr 21 16:49 : client: [29] opened from 127.0.0.1:46852
+Apr 21 16:49 : client: [29] closed
+Apr 21 16:49 : client: [30] opened from 127.0.0.1:46854
+Apr 21 16:49 : client: [30] closed
+Apr 21 16:49 : client: [31] opened from 127.0.0.1:46856
+Apr 21 16:49 : client: [31] closed
+Apr 21 16:49 : client: [32] opened from 127.0.0.1:46860
+Apr 21 16:49 : client: [32] closed
+Apr 21 16:49 : client: [33] opened from 127.0.0.1:46862
+Apr 21 16:49 : client: [33] closed
+Apr 21 16:49 : client: [34] opened from 127.0.0.1:46864
+Apr 21 16:49 : client: [34] closed
+Apr 21 16:49 : client: [35] opened from 127.0.0.1:46868
+Apr 21 16:49 : client: [35] closed
+Apr 21 16:49 : client: [36] opened from 127.0.0.1:46870
+Apr 21 16:49 : client: [36] closed
+Apr 21 16:49 : client: [37] opened from 127.0.0.1:46872
+Apr 21 16:49 : client: [37] closed
+Apr 21 16:49 : client: [38] opened from 127.0.0.1:46874
+Apr 21 16:49 : client: [38] closed
+Apr 21 16:49 : client: [39] opened from 127.0.0.1:46876
+Apr 21 16:49 : client: [39] closed
+Apr 21 16:49 : client: [40] opened from 127.0.0.1:46878
+Apr 21 16:49 : client: [40] closed
+Apr 21 16:49 : client: [41] opened from 127.0.0.1:46880
+Apr 21 16:49 : client: [41] closed
+Apr 21 16:49 : client: [42] opened from 127.0.0.1:46882
+Apr 21 16:49 : client: [42] closed
+Apr 21 16:49 : client: [43] opened from 127.0.0.1:46884
+Apr 21 16:49 : client: [43] closed
+Apr 21 16:49 : client: [44] opened from 127.0.0.1:46886
+Apr 21 16:49 : client: [44] closed
+Apr 21 16:49 : client: [45] opened from 127.0.0.1:46888
+Apr 21 16:49 : client: [45] closed
+Apr 21 16:49 : client: [46] opened from 127.0.0.1:46890
+Apr 21 16:49 : client: [46] closed
+Apr 21 16:49 : client: [47] opened from 127.0.0.1:46892
+Apr 21 16:49 : client: [47] closed
+Apr 21 16:49 : client: [48] opened from 127.0.0.1:46894
+Apr 21 16:49 : client: [48] closed
+Apr 21 16:49 : client: [49] opened from 127.0.0.1:46896
+Apr 21 16:49 : client: [49] closed
+Apr 21 16:49 : client: [50] opened from 127.0.0.1:46898
+Apr 21 16:49 : client: [50] closed
+Apr 21 16:49 : client: [51] opened from 127.0.0.1:46900
+Apr 21 16:49 : client: [51] closed
+Apr 21 16:49 : client: [52] opened from 127.0.0.1:46902
+Apr 21 16:49 : client: [52] closed
+Apr 21 16:49 : client: [53] opened from 127.0.0.1:46904
+Apr 21 16:49 : client: [53] closed
+Apr 21 16:49 : client: [54] opened from 127.0.0.1:46906
+Apr 21 16:49 : client: [54] closed
+Apr 21 16:49 : client: [55] opened from 127.0.0.1:46908
+Apr 21 16:49 : client: [55] closed
+Apr 21 16:49 : client: [56] opened from 127.0.0.1:46910
+Apr 21 16:49 : client: [56] closed
+Apr 21 16:49 : client: [57] opened from 127.0.0.1:46912
+Apr 21 16:49 : client: [57] closed
+Apr 21 16:49 : client: [58] opened from 127.0.0.1:46914
+Apr 21 16:49 : client: [58] closed
+Apr 21 16:49 : client: [59] opened from 127.0.0.1:46916
+Apr 21 16:49 : client: [59] closed
+Apr 21 16:49 : client: [60] opened from 127.0.0.1:46918
+Apr 21 16:49 : client: [60] closed
+Apr 21 16:49 : client: [61] opened from 127.0.0.1:46920
+Apr 21 16:49 : client: [61] closed
+Apr 21 16:49 : client: [62] opened from 127.0.0.1:46922
+Apr 21 16:49 : client: [62] closed
+Apr 21 16:49 : client: [63] opened from 127.0.0.1:46924
+Apr 21 16:49 : client: [63] closed
+Apr 21 16:49 : client: [64] opened from 127.0.0.1:46926
+Apr 21 16:49 : client: [64] closed
+Apr 21 16:49 : client: [65] opened from 127.0.0.1:46928
+Apr 21 16:49 : client: [65] closed
+Apr 21 16:49 : client: [66] opened from 127.0.0.1:46930
+Apr 21 16:49 : client: [66] closed
+Apr 21 16:49 : client: [67] opened from 127.0.0.1:46932
+Apr 21 16:49 : client: [67] closed
+Apr 21 16:49 : client: [68] opened from 127.0.0.1:46934
+Apr 21 16:49 : client: [68] closed
+Apr 21 16:49 : client: [69] opened from 127.0.0.1:46938
+Apr 21 16:49 : client: [69] closed
+Apr 21 16:49 : client: [70] opened from 127.0.0.1:46940
+Apr 21 16:49 : client: [70] closed
+Apr 21 16:49 : client: [71] opened from 127.0.0.1:46942
+Apr 21 16:49 : client: [71] closed
+Apr 21 16:49 : client: [72] opened from 127.0.0.1:46944
+Apr 21 16:49 : client: [72] closed
+Apr 21 16:49 : client: [73] opened from 127.0.0.1:46946
+Apr 21 16:49 : client: [73] closed
+Apr 21 16:49 : client: [74] opened from 127.0.0.1:46948
+Apr 21 16:49 : client: [74] closed
+Apr 21 16:49 : client: [75] opened from 127.0.0.1:46952
+Apr 21 16:49 : client: [75] closed
+Apr 21 16:49 : client: [76] opened from 127.0.0.1:46954
+Apr 21 16:49 : client: [76] closed
+Apr 21 16:49 : client: [77] opened from 127.0.0.1:46956
+Apr 21 16:49 : client: [77] closed
+Apr 21 16:49 : client: [78] opened from 127.0.0.1:46958
+Apr 21 16:49 : client: [78] closed
+Apr 21 16:49 : client: [79] opened from 127.0.0.1:46962
+Apr 21 16:49 : client: [79] closed
+Apr 21 16:49 : client: [80] opened from 127.0.0.1:46964
+Apr 21 16:49 : client: [80] closed
+Apr 21 16:49 : client: [81] opened from 127.0.0.1:46966
+Apr 21 16:49 : client: [81] closed
+Apr 21 16:49 : client: [82] opened from 127.0.0.1:46968
+Apr 21 16:49 : client: [82] closed
+Apr 21 16:49 : client: [83] opened from 127.0.0.1:46970
+Apr 21 16:49 : client: [83] closed
+Apr 21 16:49 : client: [84] opened from 127.0.0.1:46972
+Apr 21 16:49 : client: [84] closed
+Apr 21 16:49 : client: [85] opened from 127.0.0.1:46974
+Apr 21 16:49 : client: [85] closed
+Apr 21 16:49 : client: [86] opened from 127.0.0.1:46976
+Apr 21 16:49 : client: [86] closed
+Apr 21 16:49 : client: [87] opened from 127.0.0.1:46978
+Apr 21 16:49 : client: [87] closed
+Apr 21 16:49 : client: [88] opened from 127.0.0.1:46980
+Apr 21 16:49 : client: [88] closed
+Apr 21 16:49 : client: [89] opened from 127.0.0.1:46982
+Apr 21 16:49 : client: [89] closed
+Apr 21 16:49 : client: [90] opened from 127.0.0.1:46986
+Apr 21 16:49 : client: [90] closed
+Apr 21 16:49 : client: [91] opened from 127.0.0.1:46988
+Apr 21 16:49 : client: [91] closed
+Apr 21 16:49 : client: [92] opened from 127.0.0.1:46990
+Apr 21 16:49 : client: [92] closed
+Apr 21 16:49 : client: [93] opened from 127.0.0.1:46992
+Apr 21 16:49 : client: [93] closed
+Apr 21 16:49 : client: [94] opened from 127.0.0.1:46994
+Apr 21 16:49 : client: [94] closed
+Apr 21 16:49 : client: [95] opened from 127.0.0.1:46996
+Apr 21 16:49 : client: [95] closed
+Apr 21 16:49 : client: [96] opened from 127.0.0.1:46998
+Apr 21 16:49 : client: [96] closed
+Apr 21 16:49 : client: [97] opened from 127.0.0.1:47000
+Apr 21 16:49 : client: [97] closed
+Apr 21 16:49 : client: [98] opened from 127.0.0.1:47002
+Apr 21 16:49 : client: [98] closed
+Apr 21 16:49 : client: [99] opened from 127.0.0.1:47004
+Apr 21 16:49 : client: [99] closed
+Apr 21 16:49 : client: [100] opened from 127.0.0.1:47006
+Apr 21 16:49 : client: [100] closed
+Apr 21 16:49 : client: [101] opened from 127.0.0.1:47008
+Apr 21 16:49 : client: [101] closed
+Apr 21 16:49 : client: [102] opened from 127.0.0.1:47010
+Apr 21 16:49 : client: [102] closed
+Apr 21 16:49 : client: [103] opened from 127.0.0.1:47012
+Apr 21 16:49 : client: [103] closed
+Apr 21 16:49 : client: [104] opened from 127.0.0.1:47014
+Apr 21 16:49 : client: [104] closed
+Apr 21 16:49 : client: [105] opened from 127.0.0.1:47016
+Apr 21 16:49 : client: [105] closed
+Apr 21 16:50 : client: [106] opened from 127.0.0.1:47018
+Apr 21 16:50 : client: [106] closed
+Apr 21 16:50 : client: [107] opened from 127.0.0.1:47020
+Apr 21 16:50 : client: [107] closed
+Apr 21 16:50 : client: [108] opened from 127.0.0.1:47022
+Apr 21 16:50 : client: [108] closed
+Apr 21 16:50 : client: [109] opened from 127.0.0.1:47024
+Apr 21 16:50 : client: [109] closed
+Apr 21 16:50 : client: [110] opened from 127.0.0.1:47026
+Apr 21 16:50 : client: [110] closed
+Apr 21 16:50 : client: [111] opened from 127.0.0.1:47028
+Apr 21 16:50 : client: [111] closed
+Apr 21 16:50 : client: [112] opened from 127.0.0.1:47030
+Apr 21 16:50 : client: [112] closed
+Apr 21 16:50 : client: [113] opened from 127.0.0.1:47032
+Apr 21 16:50 : client: [113] closed
+Apr 21 16:50 : client: [114] opened from 127.0.0.1:47036
+Apr 21 16:50 : client: [114] closed
+Apr 21 16:50 : client: [115] opened from 127.0.0.1:47038
+Apr 21 16:50 : client: [115] closed
+Apr 21 16:56 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:02 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:08 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:14 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:21 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:27 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:33 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:39 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:45 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:51 : player: played "croft-manor-anniversary.mp3"
+Apr 21 17:58 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:04 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:10 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:16 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:22 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:29 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:35 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:41 : player: played "croft-manor-anniversary.mp3"
+Apr 21 18:45 : client: [116] opened from 127.0.0.1:47040
+Apr 21 18:45 : client: [116] closed
+Apr 21 19:14 : client: [117] opened from 127.0.0.1:47042
+Apr 21 19:14 : client: [117] closed
+Apr 21 19:14 : client: [118] opened from 127.0.0.1:47044
+Apr 21 19:14 : client: [118] closed
+Apr 21 19:14 : client: [119] opened from 127.0.0.1:47048
+Apr 21 19:14 : client: [119] closed
+Apr 21 19:14 : client: [120] opened from 127.0.0.1:47050
+Apr 21 19:14 : client: [120] closed
+Apr 21 19:14 : client: [121] opened from 127.0.0.1:47052
+Apr 21 19:14 : client: [121] closed
+Apr 21 19:14 : client: [122] opened from 127.0.0.1:47054
+Apr 21 19:14 : client: [122] closed
+Apr 21 19:14 : client: [123] opened from 127.0.0.1:47056
+Apr 21 19:14 : client: [123] closed
+Apr 21 19:14 : client: [124] opened from 127.0.0.1:47058
+Apr 21 19:14 : client: [124] closed
+Apr 21 19:14 : client: [125] opened from 127.0.0.1:47060
+Apr 21 19:14 : client: [125] closed
+Apr 21 19:16 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:22 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:28 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:34 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:40 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:47 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:53 : player: played "croft-manor-anniversary.mp3"
+Apr 21 19:59 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:05 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:11 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:18 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:24 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:30 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:36 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:42 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:49 : player: played "croft-manor-anniversary.mp3"
+Apr 21 20:55 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:01 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:07 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:13 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:19 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:26 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:32 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:38 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:44 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:50 : player: played "croft-manor-anniversary.mp3"
+Apr 21 21:57 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:03 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:09 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:15 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:21 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:28 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:34 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:40 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:46 : player: played "croft-manor-anniversary.mp3"
+Apr 21 22:52 : client: [126] opened from 127.0.0.1:47062
+Apr 21 22:52 : client: [126] closed
+Apr 22 02:37 : player: played "croft-manor-anniversary.mp3"
+Apr 24 00:04 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 24 00:04 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 24 00:04 : client: [0] opened from 127.0.0.1:40958
+Apr 24 00:04 : client: [0] closed
+Apr 24 00:04 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 24 00:04 : player: played "croft-manor-anniversary.mp3"
+Apr 24 00:04 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 24 00:04 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 24 00:04 : client: [0] opened from 127.0.0.1:40960
+Apr 24 00:04 : client: [0] closed
+Apr 24 00:04 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 24 00:04 : client: [1] opened from 127.0.0.1:40962
+Apr 24 00:04 : client: [1] closed
+Apr 24 00:04 : client: [2] opened from 127.0.0.1:40964
+Apr 24 00:04 : client: [2] closed
+Apr 24 00:04 : client: [3] opened from 127.0.0.1:40966
+Apr 24 00:04 : client: [3] closed
+Apr 24 00:04 : client: [4] opened from 127.0.0.1:40968
+Apr 24 00:04 : player: played "croft-manor-anniversary.mp3"
+Apr 24 00:04 : client: [4] closed
+Apr 24 00:04 : client: [5] opened from 127.0.0.1:40970
+Apr 24 00:04 : client: [5] closed
+Apr 24 00:04 : client: [6] opened from 127.0.0.1:40972
+Apr 24 00:04 : client: [6] closed
+Apr 24 00:04 : client: [7] opened from 127.0.0.1:40974
+Apr 24 00:04 : client: [7] closed
+Apr 24 00:04 : client: [8] opened from 127.0.0.1:40976
+Apr 24 00:04 : client: [8] closed
+Apr 24 00:04 : client: [9] opened from 127.0.0.1:40978
+Apr 24 00:04 : client: [9] closed
+Apr 24 00:04 : client: [10] opened from 127.0.0.1:40980
+Apr 24 00:04 : client: [10] closed
+Apr 24 00:04 : client: [11] opened from 127.0.0.1:40982
+Apr 24 00:04 : client: [11] closed
+Apr 24 00:04 : client: [12] opened from 127.0.0.1:40986
+Apr 24 00:04 : client: [12] closed
+Apr 24 00:04 : client: [13] opened from 127.0.0.1:40988
+Apr 24 00:04 : client: [13] closed
+Apr 24 00:04 : client: [14] opened from 127.0.0.1:40990
+Apr 24 00:04 : client: [14] closed
+Apr 24 00:04 : client: [15] opened from 127.0.0.1:40992
+Apr 24 00:04 : client: [15] closed
+Apr 24 00:04 : client: [16] opened from 127.0.0.1:40994
+Apr 24 00:04 : client: [16] closed
+Apr 24 00:04 : client: [17] opened from 127.0.0.1:40996
+Apr 24 00:04 : client: [17] closed
+Apr 24 00:04 : client: [18] opened from 127.0.0.1:40998
+Apr 24 00:04 : client: [18] closed
+Apr 24 00:04 : client: [19] opened from 127.0.0.1:41000
+Apr 24 00:04 : client: [19] closed
+Apr 24 00:04 : client: [20] opened from 127.0.0.1:41002
+Apr 24 00:04 : client: [20] closed
+Apr 24 00:04 : client: [21] opened from 127.0.0.1:41004
+Apr 24 00:04 : client: [21] closed
+Apr 24 00:04 : client: [22] opened from 127.0.0.1:41006
+Apr 24 00:04 : client: [22] closed
+Apr 24 00:04 : client: [23] opened from 127.0.0.1:41008
+Apr 24 00:04 : client: [23] closed
+Apr 24 00:04 : client: [24] opened from 127.0.0.1:41010
+Apr 24 00:04 : client: [24] closed
+Apr 24 00:04 : client: [25] opened from 127.0.0.1:41012
+Apr 24 00:04 : client: [25] closed
+Apr 24 00:04 : client: [26] opened from 127.0.0.1:41014
+Apr 24 00:04 : client: [26] closed
+Apr 24 00:04 : client: [27] opened from 127.0.0.1:41016
+Apr 24 00:04 : client: [27] closed
+Apr 24 00:04 : client: [28] opened from 127.0.0.1:41018
+Apr 24 00:04 : client: [28] closed
+Apr 24 00:04 : client: [29] opened from 127.0.0.1:41020
+Apr 24 00:04 : client: [29] closed
+Apr 24 00:04 : client: [30] opened from 127.0.0.1:41022
+Apr 24 00:04 : client: [30] closed
+Apr 24 00:04 : client: [31] opened from 127.0.0.1:41024
+Apr 24 00:04 : client: [31] closed
+Apr 24 00:04 : client: [32] opened from 127.0.0.1:41026
+Apr 24 00:04 : client: [32] closed
+Apr 24 00:04 : client: [33] opened from 127.0.0.1:41028
+Apr 24 00:04 : client: [33] closed
+Apr 24 00:04 : client: [34] opened from 127.0.0.1:41032
+Apr 24 00:04 : client: [34] closed
+Apr 24 00:04 : client: [35] opened from 127.0.0.1:41034
+Apr 24 00:04 : client: [35] closed
+Apr 24 00:04 : client: [36] opened from 127.0.0.1:41036
+Apr 24 00:04 : client: [36] closed
+Apr 24 00:04 : client: [37] opened from 127.0.0.1:41038
+Apr 24 00:04 : client: [37] closed
+Apr 24 00:04 : client: [38] opened from 127.0.0.1:41040
+Apr 24 00:04 : client: [38] closed
+Apr 24 00:04 : client: [39] opened from 127.0.0.1:41042
+Apr 24 00:04 : client: [39] closed
+Apr 24 00:04 : client: [40] opened from 127.0.0.1:41044
+Apr 24 00:04 : client: [40] closed
+Apr 24 00:04 : client: [41] opened from 127.0.0.1:41046
+Apr 24 00:04 : client: [41] closed
+Apr 24 00:04 : client: [42] opened from 127.0.0.1:41048
+Apr 24 00:04 : client: [42] closed
+Apr 24 00:04 : client: [43] opened from 127.0.0.1:41050
+Apr 24 00:04 : client: [43] closed
+Apr 24 00:04 : client: [44] opened from 127.0.0.1:41052
+Apr 24 00:04 : client: [44] closed
+Apr 24 00:04 : client: [45] opened from 127.0.0.1:41054
+Apr 24 00:04 : client: [45] closed
+Apr 24 00:04 : client: [46] opened from 127.0.0.1:41056
+Apr 24 00:04 : client: [46] closed
+Apr 24 00:04 : client: [47] opened from 127.0.0.1:41058
+Apr 24 00:04 : client: [47] closed
+Apr 24 00:04 : client: [48] opened from 127.0.0.1:41060
+Apr 24 00:04 : client: [48] closed
+Apr 24 00:04 : client: [49] opened from 127.0.0.1:41062
+Apr 24 00:04 : client: [49] closed
+Apr 24 00:04 : client: [50] opened from 127.0.0.1:41064
+Apr 24 00:04 : client: [50] closed
+Apr 24 00:04 : client: [51] opened from 127.0.0.1:41066
+Apr 24 00:04 : client: [51] closed
+Apr 24 00:04 : client: [52] opened from 127.0.0.1:41068
+Apr 24 00:04 : client: [52] closed
+Apr 24 00:04 : client: [53] opened from 127.0.0.1:41070
+Apr 24 00:04 : client: [53] closed
+Apr 24 00:04 : client: [54] opened from 127.0.0.1:41072
+Apr 24 00:04 : client: [54] closed
+Apr 24 00:04 : client: [55] opened from 127.0.0.1:41074
+Apr 24 00:04 : client: [55] closed
+Apr 24 00:04 : client: [56] opened from 127.0.0.1:41076
+Apr 24 00:04 : client: [56] closed
+Apr 24 00:04 : client: [57] opened from 127.0.0.1:41078
+Apr 24 00:04 : client: [57] closed
+Apr 24 00:04 : client: [58] opened from 127.0.0.1:41080
+Apr 24 00:04 : client: [58] closed
+Apr 24 00:04 : client: [59] opened from 127.0.0.1:41082
+Apr 24 00:04 : client: [59] closed
+Apr 24 00:04 : client: [60] opened from 127.0.0.1:41084
+Apr 24 00:04 : client: [60] closed
+Apr 24 00:04 : client: [61] opened from 127.0.0.1:41086
+Apr 24 00:04 : client: [61] closed
+Apr 24 00:04 : client: [62] opened from 127.0.0.1:41088
+Apr 24 00:04 : client: [62] closed
+Apr 24 00:04 : client: [63] opened from 127.0.0.1:41090
+Apr 24 00:04 : client: [63] closed
+Apr 24 00:04 : client: [64] opened from 127.0.0.1:41092
+Apr 24 00:04 : client: [64] closed
+Apr 24 00:04 : client: [65] opened from 127.0.0.1:41094
+Apr 24 00:04 : client: [65] closed
+Apr 24 00:04 : client: [66] opened from 127.0.0.1:41096
+Apr 24 00:04 : client: [66] closed
+Apr 24 00:04 : client: [67] opened from 127.0.0.1:41098
+Apr 24 00:04 : client: [67] closed
+Apr 24 00:04 : client: [68] opened from 127.0.0.1:41100
+Apr 24 00:04 : client: [68] closed
+Apr 24 00:04 : client: [69] opened from 127.0.0.1:41102
+Apr 24 00:04 : client: [69] closed
+Apr 24 00:04 : client: [70] opened from 127.0.0.1:41104
+Apr 24 00:04 : client: [70] closed
+Apr 24 00:04 : client: [71] opened from 127.0.0.1:41106
+Apr 24 00:04 : client: [71] closed
+Apr 24 00:04 : client: [72] opened from 127.0.0.1:41110
+Apr 24 00:04 : client: [72] closed
+Apr 24 00:04 : client: [73] opened from 127.0.0.1:41112
+Apr 24 00:04 : client: [73] closed
+Apr 24 00:04 : client: [74] opened from 127.0.0.1:41116
+Apr 24 00:04 : client: [74] closed
+Apr 24 00:04 : client: [75] opened from 127.0.0.1:41118
+Apr 24 00:04 : client: [75] closed
+Apr 24 00:04 : client: [76] opened from 127.0.0.1:41120
+Apr 24 00:04 : client: [76] closed
+Apr 24 00:04 : client: [77] opened from 127.0.0.1:41122
+Apr 24 00:04 : client: [77] closed
+Apr 24 00:04 : client: [78] opened from 127.0.0.1:41124
+Apr 24 00:04 : client: [78] closed
+Apr 24 00:04 : client: [79] opened from 127.0.0.1:41126
+Apr 24 00:04 : client: [79] closed
+Apr 24 00:04 : client: [80] opened from 127.0.0.1:41128
+Apr 24 00:04 : client: [80] closed
+Apr 24 00:04 : client: [81] opened from 127.0.0.1:41132
+Apr 24 00:04 : client: [81] closed
+Apr 24 00:04 : client: [82] opened from 127.0.0.1:41134
+Apr 24 00:04 : client: [82] closed
+Apr 24 00:04 : client: [83] opened from 127.0.0.1:41136
+Apr 24 00:04 : client: [83] closed
+Apr 24 00:04 : client: [84] opened from 127.0.0.1:41138
+Apr 24 00:04 : client: [84] closed
+Apr 24 00:04 : client: [85] opened from 127.0.0.1:41140
+Apr 24 00:04 : client: [85] closed
+Apr 24 00:04 : client: [86] opened from 127.0.0.1:41142
+Apr 24 00:04 : client: [86] closed
+Apr 24 00:04 : client: [87] opened from 127.0.0.1:41144
+Apr 24 00:04 : client: [87] closed
+Apr 24 00:05 : client: [88] opened from 127.0.0.1:41146
+Apr 24 00:05 : client: [88] closed
+Apr 24 00:05 : client: [89] opened from 127.0.0.1:41148
+Apr 24 00:05 : client: [89] closed
+Apr 24 00:05 : client: [90] opened from 127.0.0.1:41150
+Apr 24 00:05 : client: [90] closed
+Apr 24 00:05 : client: [91] opened from 127.0.0.1:41152
+Apr 24 00:05 : client: [91] closed
+Apr 24 00:07 : player: played "Rue Montorgueil.mp3"
+Apr 24 00:13 : player: played "Silver Skyline 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 24 00:17 : player: played "Mseq_-_Coriolis_Effect.mp3"
+Apr 24 00:21 : player: played "Climbing Through Air 3 by Tomas Skyldeberg - _Instrumental 2010s Pop, Soft House Music_.mp3"
+Apr 24 00:26 : player: played "Stories From Dreams 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 24 00:32 : player: played "Crystal Kid 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 24 00:37 : player: played "Magnetic Fields.mp3"
+Apr 24 00:38 : player: played "Cosmic Dust.mp3"
+Apr 25 17:07 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 25 17:07 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 25 17:07 : client: [0] opened from 127.0.0.1:48048
+Apr 25 17:07 : client: [0] closed
+Apr 25 17:07 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 25 17:07 : client: [1] opened from 127.0.0.1:48050
+Apr 25 17:07 : client: [1] closed
+Apr 25 17:07 : client: [2] opened from 127.0.0.1:48052
+Apr 25 17:07 : client: [2] closed
+Apr 25 17:07 : client: [3] opened from 127.0.0.1:48056
+Apr 25 17:07 : client: [3] closed
+Apr 25 17:07 : client: [4] opened from 127.0.0.1:48058
+Apr 25 17:07 : client: [4] closed
+Apr 25 17:07 : client: [5] opened from 127.0.0.1:48060
+Apr 25 17:07 : client: [5] closed
+Apr 25 17:07 : client: [6] opened from 127.0.0.1:48062
+Apr 25 17:07 : client: [6] closed
+Apr 25 17:07 : client: [7] opened from 127.0.0.1:48064
+Apr 25 17:07 : client: [7] closed
+Apr 25 17:07 : client: [8] opened from 127.0.0.1:48066
+Apr 25 17:07 : client: [8] closed
+Apr 25 17:07 : client: [9] opened from 127.0.0.1:48068
+Apr 25 17:07 : client: [9] closed
+Apr 25 17:11 : player: played "Cosmic Dust.mp3"
+Apr 25 17:14 : player: played "Fireballs.mp3"
+Apr 25 17:21 : player: played "Rue Crémieux.mp3"
+Apr 25 17:28 : player: played "septahelix - The Lie (feat. Mo71, coruscate).mp3"
+Apr 25 17:33 : player: played "Meteor Bursts.mp3"
+Apr 25 17:38 : player: played "Silver Skyline 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 17:44 : player: played "Jungle Walking 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 17:49 : player: played "Crystal Kid 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 17:54 : player: played "Angel Falls 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 18:00 : player: played "Retrograde Orbit.mp3"
+Apr 25 18:03 : player: played "RENOVATION-Airtone.mp3"
+Apr 25 18:09 : player: played "Silver Skyline 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 18:14 : player: played "Magnetic Fields.mp3"
+Apr 25 18:17 : player: played "Rue Montorgueil.mp3"
+Apr 25 18:20 : player: played "Between Worlds (Instrumental).mp3"
+Apr 25 18:26 : player: played "Purple Island 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 18:30 : player: played "Mseq_-_Coriolis_Effect.mp3"
+Apr 25 18:36 : player: played "A Sonic Boom.mp3"
+Apr 25 18:42 : player: played "Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 18:47 : player: played "MitiS - You.mp3"
+Apr 25 18:51 : player: played "Mitis - Expose.mp3"
+Apr 25 18:57 : player: played "Crystal Kid 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:03 : player: played "Two Worlds 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:08 : player: played "Rue Des Rosiers.mp3"
+Apr 25 19:13 : player: played "Angel Falls 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:19 : player: played "croft-manor-anniversary.mp3"
+Apr 25 19:24 : player: played "Silver Skyline 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:29 : player: played "Stories From Dreams 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:34 : player: played "Stories From Dreams 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:40 : player: played "Endless Ocean 2 - Tomas Skyldeberg.mp3"
+Apr 25 19:44 : player: played "Climbing Through Air 3 by Tomas Skyldeberg - _Instrumental 2010s Pop, Soft House Music_.mp3"
+Apr 25 19:47 : player: played "ukeSounds (ccMixter mix).mp3"
+Apr 25 19:53 : player: played "Two Worlds 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 19:56 : player: played "Climbing Through Air 2 by Tomas Skyldeberg - _Electro Music_.mp3"
+Apr 25 20:00 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 25 20:04 : player: played "Mseq_-_Coriolis_Effect.mp3"
+Apr 25 20:09 : player: played "Silver Skyline 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 20:14 : client: [10] opened from 127.0.0.1:48072
+Apr 25 20:14 : client: [10] closed
+Apr 25 20:14 : client: [11] opened from 127.0.0.1:48074
+Apr 25 20:14 : client: [11] closed
+Apr 25 20:15 : player: played "Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 20:19 : client: [12] opened from 127.0.0.1:48076
+Apr 25 20:19 : client: [12] closed
+Apr 25 20:19 : client: [13] opened from 127.0.0.1:48080
+Apr 25 20:19 : client: [13] closed
+Apr 25 20:20 : player: played "Meteor Bursts.mp3"
+Apr 25 20:23 : client: [14] opened from 127.0.0.1:48082
+Apr 25 20:23 : client: [14] closed
+Apr 25 20:23 : client: [15] opened from 127.0.0.1:48084
+Apr 25 20:23 : client: [15] closed
+Apr 25 20:23 : client: [16] opened from 127.0.0.1:48086
+Apr 25 20:23 : client: [16] closed
+Apr 25 20:23 : client: [17] opened from 127.0.0.1:48088
+Apr 25 20:23 : client: [17] closed
+Apr 25 20:23 : client: [18] opened from 127.0.0.1:48090
+Apr 25 20:23 : client: [18] closed
+Apr 25 20:23 : client: [19] opened from 127.0.0.1:48092
+Apr 25 20:23 : client: [19] closed
+Apr 25 20:24 : client: [20] opened from 127.0.0.1:48094
+Apr 25 20:24 : client: [20] closed
+Apr 25 20:24 : client: [21] opened from 127.0.0.1:48096
+Apr 25 20:24 : client: [21] closed
+Apr 25 20:24 : client: [22] opened from 127.0.0.1:48098
+Apr 25 20:24 : client: [22] closed
+Apr 25 20:24 : client: [23] opened from 127.0.0.1:48100
+Apr 25 20:24 : client: [23] closed
+Apr 25 20:25 : client: [24] opened from 127.0.0.1:48102
+Apr 25 20:25 : client: [24] closed
+Apr 25 20:25 : client: [25] opened from 127.0.0.1:48104
+Apr 25 20:25 : client: [25] closed
+Apr 25 20:25 : client: [26] opened from 127.0.0.1:48106
+Apr 25 20:25 : client: [26] closed
+Apr 25 20:25 : client: [27] opened from 127.0.0.1:48108
+Apr 25 20:25 : client: [27] closed
+Apr 25 20:25 : client: [28] opened from 127.0.0.1:48110
+Apr 25 20:25 : client: [28] closed
+Apr 25 20:25 : client: [29] opened from 127.0.0.1:48112
+Apr 25 20:25 : client: [29] closed
+Apr 25 20:25 : player: played "Angel Falls 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 20:30 : player: played "Angel Falls 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 20:35 : player: played "Stories From Dreams 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 20:38 : player: played "Rue Montorgueil.mp3"
+Apr 25 20:39 : client: [30] opened from 127.0.0.1:48114
+Apr 25 20:39 : client: [30] closed
+Apr 25 20:39 : client: [31] opened from 127.0.0.1:48116
+Apr 25 20:39 : client: [31] closed
+Apr 25 20:39 : client: [32] opened from 127.0.0.1:48118
+Apr 25 20:39 : client: [32] closed
+Apr 25 20:39 : client: [33] opened from 127.0.0.1:48120
+Apr 25 20:39 : client: [33] closed
+Apr 25 20:42 : client: [34] opened from 127.0.0.1:48122
+Apr 25 20:42 : client: [34] closed
+Apr 25 20:42 : client: [35] opened from 127.0.0.1:48124
+Apr 25 20:42 : client: [35] closed
+Apr 25 20:43 : player: played "MitiS - You.mp3"
+Apr 25 20:48 : player: played "Rue Des Rosiers.mp3"
+Apr 25 20:53 : player: played "Silver Skyline 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 20:55 : player: played "ukeSounds (ccMixter mix).mp3"
+Apr 25 21:03 : player: played "septahelix - The Lie (feat. Mo71, coruscate).mp3"
+Apr 25 21:09 : player: played "Jungle Walking 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 21:13 : client: [36] opened from 127.0.0.1:48128
+Apr 25 21:13 : client: [36] closed
+Apr 25 21:13 : client: [37] opened from 127.0.0.1:48130
+Apr 25 21:13 : client: [37] closed
+Apr 25 21:13 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 25 21:19 : player: played "Silver Skyline 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 21:22 : player: played "RENOVATION-Airtone.mp3"
+Apr 25 21:25 : player: played "Between Worlds (Instrumental).mp3"
+Apr 25 21:30 : player: played "Cosmic Dust.mp3"
+Apr 25 21:36 : player: played "Crystal Kid 3 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 21:36 : client: [38] opened from 127.0.0.1:48132
+Apr 25 21:36 : client: [38] closed
+Apr 25 21:36 : client: [39] opened from 127.0.0.1:48134
+Apr 25 21:36 : client: [39] closed
+Apr 25 21:41 : player: played "Crystal Kid 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 21:47 : player: played "Magnetic Fields.mp3"
+Apr 25 21:53 : player: played "Endless Ocean 2 - Tomas Skyldeberg.mp3"
+Apr 25 21:56 : player: played "Fireballs.mp3"
+Apr 25 21:59 : player: played "Climbing Through Air 2 by Tomas Skyldeberg - _Electro Music_.mp3"
+Apr 25 22:06 : player: played "Purple Island 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 22:11 : player: played "Retrograde Orbit.mp3"
+Apr 25 22:13 : client: [40] opened from 127.0.0.1:48136
+Apr 25 22:13 : client: [40] closed
+Apr 25 22:13 : client: [41] opened from 127.0.0.1:48138
+Apr 25 22:13 : client: [41] closed
+Apr 25 22:18 : player: played "croft-manor-anniversary.mp3"
+Apr 25 22:18 : client: [42] opened from 127.0.0.1:48140
+Apr 25 22:18 : client: [42] closed
+Apr 25 22:18 : client: [43] opened from 127.0.0.1:48142
+Apr 25 22:18 : client: [43] closed
+Apr 25 22:21 : player: played "Climbing Through Air 3 by Tomas Skyldeberg - _Instrumental 2010s Pop, Soft House Music_.mp3"
+Apr 25 22:21 : client: [44] opened from 127.0.0.1:48144
+Apr 25 22:21 : client: [44] closed
+Apr 25 22:21 : client: [45] opened from 127.0.0.1:48146
+Apr 25 22:21 : client: [45] closed
+Apr 25 22:21 : client: [46] opened from 127.0.0.1:48148
+Apr 25 22:21 : client: [46] closed
+Apr 25 22:21 : client: [47] opened from 127.0.0.1:48150
+Apr 25 22:21 : client: [47] closed
+Apr 25 22:21 : client: [48] opened from 127.0.0.1:48152
+Apr 25 22:21 : client: [48] closed
+Apr 25 22:21 : client: [49] opened from 127.0.0.1:48154
+Apr 25 22:21 : client: [49] closed
+Apr 25 22:26 : player: played "Mitis - Expose.mp3"
+Apr 25 22:31 : player: played "Stories From Dreams 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 22:37 : player: played "Rue Crémieux.mp3"
+Apr 25 22:43 : player: played "Two Worlds 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 22:49 : player: played "Two Worlds 2 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 22:55 : player: played "A Sonic Boom.mp3"
+Apr 25 23:00 : player: played "Silver Skyline 1 by Tomas Skyldeberg - _Soft House Music_.mp3"
+Apr 25 23:04 : player: played "Mseq_-_Coriolis_Effect.mp3"
+Apr 25 23:06 : client: [50] opened from 127.0.0.1:48156
+Apr 25 23:06 : client: [50] closed
+Apr 26 02:32 : player: played "Fireballs.mp3"
+Apr 26 20:52 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 26 20:52 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 26 20:52 : client: [0] opened from 127.0.0.1:33038
+Apr 26 20:52 : client: [0] closed
+Apr 26 20:52 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 26 20:52 : player: played "Fireballs.mp3"
+Apr 26 20:52 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 26 20:52 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 26 20:52 : client: [0] opened from 127.0.0.1:33040
+Apr 26 20:52 : client: [0] closed
+Apr 26 20:52 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 26 20:52 : client: [1] opened from 127.0.0.1:33042
+Apr 26 20:52 : client: [1] closed
+Apr 26 20:54 : player: played "Fireballs.mp3"
+Apr 26 20:57 : player: played "Between Worlds (Instrumental).mp3"
+Apr 26 20:58 : client: [2] opened from 127.0.0.1:33044
+Apr 26 20:58 : client: [2] closed
+Apr 26 20:58 : client: [3] opened from 127.0.0.1:33046
+Apr 26 20:58 : client: [3] closed
+Apr 26 20:58 : client: [4] opened from 127.0.0.1:33050
+Apr 26 20:58 : client: [4] closed
+Apr 26 20:58 : client: [5] opened from 127.0.0.1:33052
+Apr 26 20:58 : client: [5] closed
+Apr 26 21:03 : player: played "Endless Ocean 2 - Tomas Skyldeberg.mp3"
+Apr 26 21:03 : client: [6] opened from 127.0.0.1:33054
+Apr 26 21:03 : client: [6] closed
+Apr 26 21:03 : client: [7] opened from 127.0.0.1:33056
+Apr 26 21:03 : client: [7] closed
+Apr 26 21:03 : client: [8] opened from 127.0.0.1:33058
+Apr 26 21:03 : client: [8] closed
+Apr 26 21:03 : client: [9] opened from 127.0.0.1:33060
+Apr 26 21:03 : client: [9] closed
+Apr 26 21:03 : client: [10] opened from 127.0.0.1:33062
+Apr 26 21:03 : client: [10] closed
+Apr 26 21:03 : client: [11] opened from 127.0.0.1:33064
+Apr 26 21:03 : client: [11] closed
+Apr 26 21:10 : player: played "septahelix - The Lie (feat. Mo71, coruscate).mp3"
+Apr 26 21:12 : client: [12] opened from 127.0.0.1:33066
+Apr 26 21:12 : client: [12] closed
+Apr 26 21:13 : client: [13] opened from 127.0.0.1:33068
+Apr 26 21:13 : client: [13] closed
+Apr 26 21:13 : client: [14] opened from 127.0.0.1:33070
+Apr 26 21:13 : client: [14] closed
+Apr 26 21:13 : client: [15] opened from 127.0.0.1:33072
+Apr 26 21:13 : client: [15] closed
+Apr 26 21:14 : player: played "Mseq_-_Coriolis_Effect.mp3"
