@@ -917,16 +917,6 @@
   :config
   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
 
-(defun pg/lmc-setup ()
-  (setq-local comment-start "# ")
-  (setq-local comment-end "")
-  (setq-local indent-tabs-mode nil)
-  (setq-local tab-width 8)
-  (setq-local indent-tabs-mode nil))
-
-(use-package lmc
-  :hook (lmc-mode . pg/lmc-setup))
-
 (defvar lmc-java-mode-hook nil)
 
 (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-mode))
@@ -956,6 +946,16 @@
   (setq-local comment-end "")
 
   (setq-local indent-tabs-mode nil))
+
+(defun pg/lmc-setup ()
+  (setq-local comment-start "# ")
+  (setq-local comment-end "")
+  (setq-local indent-tabs-mode nil)
+  (setq-local tab-width 8)
+  (setq-local indent-tabs-mode nil))
+
+(use-package lmc
+  :hook (lmc-mode . pg/lmc-setup))
 
 (use-package markdown-mode
   :straight nil

@@ -4,59 +4,297 @@
 #
 # On branch main
 # Changes to be committed:
-#	modified:   .config/mpd/mpd.db
 #	modified:   .config/mpd/mpd.log
+#	new file:   .config/mpd/mpd.pid
 #	modified:   .config/mpd/mpdstate
-#	new file:   .config/nyxt/dark-reader.lisp
-#	new file:   .config/nyxt/evil-mode.lisp
-#	new file:   .config/nyxt/freestance.lisp
+#	new file:   .config/nyxt/adblock.lisp
 #	modified:   .config/nyxt/init.lisp
-#	new file:   .config/nyxt/search-engines.lisp
-#	new file:   .config/nyxt/status.lisp
-#	new file:   .config/nyxt/style.lisp
+#	modified:   .emacs.d/.cache/treemacs-persist
+#	modified:   .emacs.d/.lsp-session-v1
+#	new file:   .emacs.d/.sx/auth.el
+#	new file:   .emacs.d/.sx/filter.el
+#	new file:   .emacs.d/.sx/hidden-questions.el
+#	new file:   .emacs.d/.sx/network-user.el
+#	new file:   .emacs.d/.sx/read-questions.el
+#	new file:   .emacs.d/.sx/site-list.el
 #	modified:   .emacs.d/desktop.el
 #	modified:   .emacs.d/desktop.org
 #	modified:   .emacs.d/emacs-config.org
 #	modified:   .emacs.d/eshell/history
 #	modified:   .emacs.d/eshell/lastdir
+#	modified:   .emacs.d/games/tetris-scores
 #	modified:   .emacs.d/init.el
-#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.core.runtime/.manager/.tmp9139086200865174895.instance
-#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp11692466674243880684.instance
-#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp3888896275818439679.instance
-#	modified:   .emacs.d/onedark-variant-theme.el
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.core.runtime/.manager/.tmp9139086200865174895.instance -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.core.runtime/.manager/.tmp15010933949553281252.instance
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp11692466674243880684.instance -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp11737424099802734433.instance
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp18024940963074500769.instance -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp17503039849318109051.instance
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp3888896275818439679.instance -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp7387700366444758534.instance
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp3996306014020286049.instance -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp7924209366609717802.instance
+#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/.manager/.fileTable.1
+#	new file:   .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/.manager/.fileTable.2
+#	deleted:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/.manager/.fileTable.3
+#	deleted:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/.manager/.fileTable.4
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/framework.info.3 -> .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.osgi/framework.info.1
+#	deleted:    .emacs.d/lsp-servers/java-language-server/config_linux/config.ini
+#	deleted:    .emacs.d/lsp-servers/java-language-server/config_mac/config.ini
+#	deleted:    .emacs.d/lsp-servers/java-language-server/config_ss_linux/config.ini
+#	deleted:    .emacs.d/lsp-servers/java-language-server/config_ss_mac/config.ini
+#	deleted:    .emacs.d/lsp-servers/java-language-server/config_ss_win/config.ini
+#	deleted:    .emacs.d/lsp-servers/java-language-server/config_win/config.ini
+#	deleted:    .emacs.d/lsp-servers/java-language-server/features/org.eclipse.equinox.executable_3.8.1500.v20220210-1108.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/jdt-language-server-1.9.0-202203031534.tar.gz
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/ch.qos.logback.classic_1.2.3.v20200428-2012.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/ch.qos.logback.core_1.2.3.v20200428-2012.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/ch.qos.logback.slf4j_1.2.3.v20200428-2012.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/com.google.gson_2.8.9.v20220111-1409.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/com.google.guava_30.1.0.v20210127-2300.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/com.sun.jna_5.8.0.v20210503-0343.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/javax.inject_1.0.0.v20091030.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.apache.ant_1.10.12.v20211102-1452.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.apache.commons.lang3_3.1.0.v201403281430.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.apache.felix.scr_2.1.24.v20200924-1939.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.ant.core_3.6.300.v20220214-2001.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.buildship.compat_3.1.6.v20211108-1823-s.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.buildship.core_3.1.6.v20211108-1823-s.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.compare.core_3.6.1000.v20201020-1107.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.commands_3.10.100.v20210722-1426.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.contenttype_3.8.100.v20210910-0640.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.expressions_3.8.100.v20210910-0640.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.filebuffers_3.7.200.v20220202-1008.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.filesystem_1.9.300.v20220121-1426.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.jobs_3.12.100.v20220120-1329.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.net.linux_1.0.100.v20220111-1854.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.net.win32.x86_64_1.1.500.v20190925-1337.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.net_1.3.1100.v20210424-0724.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.resources_3.16.100.v20220214-1012.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.runtime_3.24.100.v20220211-2001.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.core.variables_3.5.100.v20210721-1355.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.debug.core_3.19.0.v20220125-2302.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.app_1.6.100.v20211021-1418.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.common_3.16.0.v20220211-2322.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.frameworkadmin.equinox_1.2.100.v20210703-1540.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.frameworkadmin_2.2.0.v20210315-2042.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.2.400.v20211117-0650.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.400.v20211117-0650.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.2.400.v20211117-0650.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.preferences_3.9.100.v20211021-1418.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.registry_3.11.100.v20211021-1418.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.security.linux_1.0.200.v20210616-0726.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.security.macosx_1.101.400.v20210427-1958.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.security.win32.x86_64_1.1.300.v20211021-1418.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.security_1.3.900.v20220108-1321.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.simpleconfigurator.manipulator_2.2.0.v20210315-2228.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.equinox.simpleconfigurator_1.4.0.v20210315-2228.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.apt.core_3.7.50.v20210914-1429.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.apt.pluggable.core_1.3.0.v20210618-1653.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.compiler.apt_1.4.50.v20210914-1429.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.compiler.tool_1.3.100.v20211201-1611.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.core.manipulation_1.16.0.v20220214-0655.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.core_3.29.0.v20220214-1307.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.debug_3.19.100.v20220212-1425.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.junit.core_3.11.200.v20220204-2234.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.junit.runtime_3.6.100.v20210708-1502.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.launching.macosx_3.4.800.v20210915-0906.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.launching_3.19.500.v20220125-2008.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.jdt.ls.core_1.9.0.202203031534.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.lsp4j.jsonrpc_0.11.0.v20210319-1406.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.lsp4j_0.11.0.v20210319-1406.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.ltk.core.refactoring_3.12.100.v20210926-1112.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.archetype.common_1.18.1.20211011-2139.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.core_1.18.2.20211011-2139.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.jdt_1.18.2.20211002-1029.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.lifecyclemapping.defaults_1.17.1.20210115-1536.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.logback.configuration_1.16.3.20211002-1029.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.maven.indexer_1.18.1.20211011-2139.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.maven.runtime.slf4j.simple_1.18.1.20211008-0657.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.maven.runtime_1.18.1.20211011-2139.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.m2e.workspace.cli_0.3.1.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.osgi.compatibility.state_1.2.600.v20220207-1403.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.osgi.services_3.10.200.v20210723-0643.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.osgi.util_3.6.100.v20210723-1119.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.osgi_3.17.200.v20220215-2237.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.text_3.12.0.v20210512-1644.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.xtend.lib.macro_2.25.0.v20210301-0821.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.xtend.lib_2.25.0.v20210301-0821.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.eclipse.xtext.xbase.lib_2.25.0.v20210301-0821.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.gradle.toolingapi_7.1.1.v20211108-1823-s.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.jboss.tools.maven.apt.core_1.5.4.202201260914.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.junit_4.13.2.v20211018-1956.jar
+#	deleted:    .emacs.d/lsp-servers/java-language-server/plugins/org.slf4j.api_1.7.30.v20200204-2150.jar
 #	modified:   .emacs.d/org-roam.db
 #	modified:   .emacs.d/places
 #	modified:   .emacs.d/projectile-bookmarks.eld
 #	modified:   .emacs.d/recentf
-#	modified:   .emacs.d/sokoban-state
-#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Downloads!nyxt-2.2.4!source!base-mode.lisp#
-#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Downloads!nyxt-2.2.4!source!visual-mode.lisp#
-#	new file:   .emacs.d/tmp/auto-saves/sessions/2528-pgab99-laptop~
-#	deleted:    .emacs.d/tmp/auto-saves/sessions/31059-pgab99-laptop~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.authinfo.gpg~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!auto-config.lisp~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!dark-reader.lisp~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!evil-mode.lisp~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!freestance.lisp~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!search-engines.lisp~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.config!nyxt!style.lisp~
+#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Mail!Main!Drafts!cur!1650916419.5d017611e927f262.pgab99-laptop:2,DS#
+#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Mail!University!Drafts!cur!1650911202.1a7102f17e4ec97a.pgab99-laptop:2,DS#
+#	new file:   .emacs.d/tmp/auto-saves/#!home!phil-gab99!Packages!straight!repos!lmc!lmc.el#
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp4103172934694224316.instance -> .emacs.d/tmp/auto-saves/#!home!phil-gab99!Projects!workspace!sql!user.sql#
+#	renamed:    .emacs.d/tmp/auto-saves/sessions/2528-pgab99-laptop~ -> .emacs.d/tmp/auto-saves/sessions/2353-pgab99-laptop~
+#	new file:   .emacs.d/tmp/auto-saves/sessions/2909-pgab99-laptop~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.config!nyxt!adblock.lisp~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.git!COMMIT_EDITMSG~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.emacs.d!.cache!treemacs-persist~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!.emacs.d!straight!build!lmc!lmc-autoloads.el~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.emacs.d!url!cookies~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Documents!Accounting!ledger-2022.dat~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Documents!Notes!.git!COMMIT_EDITMSG~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Documents!Org!Agenda!.git!COMMIT_EDITMSG~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!.git!COMMIT_EDITMSG~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!biblioApp!.dir-locals.el~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!bin!download-music~
-#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!bin!yt-download~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!biblioApp!app!src!main!java!module-info.java~
+#	renamed:    .emacs.d/lsp-servers/java-language-server/bin/config_linux/org.eclipse.equinox.app/.manager/.tmp5303491035972385858.instance -> .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!biblioRapport!q1.sql~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!biblioRapport!q2.sql~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!workspace!lmc!ex7.lmc~
+#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!workspace!sql!mice.sql~
+#	new file:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!workspace!sql!user.sql~
+#	modified:   .emacs.d/tramp
+#	modified:   .emacs.d/url/cookies
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.buildship.core/project-preferences/app
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.buildship.core/project-preferences/biblioApp
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/13/a08e3d7bd6b2001c19f7aa96af8fc1e6
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/14/40dc9ec6b4b2001c1015a0a9e00e6356
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/2/81b13f7bd6b2001c19f7aa96af8fc1e6
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/26/d0bae605d8b2001c1a24b8cc46054cf3
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/2a/90df297bd6b2001c19f7aa96af8fc1e6
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/30/80b13f7bd6b2001c19f7aa96af8fc1e6
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/71/80b8297bd6b2001c19f7aa96af8fc1e6
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/89/60c888f5f0c4001c1edfad509b4e131b
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/96/e077ce05d8b2001c1a24b8cc46054cf3
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/be/10b74f7bd6b2001c19f7aa96af8fc1e6
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.history/f9/a0a21b05d8b2001c1a24b8cc46054cf3
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.indexes/af/history.index
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.markers.snap
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/app/.syncinfo.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/application/.location
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/application/.markers.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/application/.syncinfo.snap
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.indexes/af/history.index
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.markers.snap
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/biblioApp/.syncinfo.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.indexes/af/history.index
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.markers.snap
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/jdt.ls-java-project/.syncinfo.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/list/.location
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/list/.markers.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/list/.syncinfo.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/modules-multi-project/.location
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/modules-multi-project/.markers.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/modules-multi-project/.syncinfo.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/utilities/.location
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/utilities/.markers.snap
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/utilities/.syncinfo.snap
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.resources/0.snap
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.launching.prefs
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1035539611.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1037762622.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1133868989.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1209369328.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1481558881.index
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1506415109.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1662319963.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/185906976.index
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/2091871800.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/2104827667.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/2915605972.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3520042200.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3546990346.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3650216769.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/365692216.index
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3671469801.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3685640979.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3735875275.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3762251980.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/3874093496.index
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/4013607337.index
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/4029672656.index
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/4224858272.index
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/4288266275.index
+#	new file:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/519067020.index
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/673279850.index
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/javaLikeNames.txt
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
 #	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.launching/.install.xml
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.launching/libraryInfos.xml
+#	modified:   .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/.file-digests
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-controls-16-linux/Button.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-controls-16-linux/Label.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-controls-16-linux/TextArea.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-graphics-16-linux/Stage-linux.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-graphics-16-linux/Stage-mac.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-graphics-16-linux/Stage-win.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-graphics-16-linux/borderpane.png
+#	deleted:    .emacs.d/workspace/.metadata/.plugins/org.eclipse.jdt.ls.core/extracted-jar-images/javafx-graphics-16-linux/strokedasharray.png
+#	deleted:    .emacs.d/workspace/java_b96bc339/.classpath
+#	deleted:    .emacs.d/workspace/java_b96bc339/.project
+#	deleted:    .emacs.d/workspace/java_b96bc339/.settings/org.eclipse.jdt.core.prefs
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/Test.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/quizanswers/Q1_1.JPG
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/quizanswers/Q1_17.JPG
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/quizanswers/Q1_8.JPG
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/quizanswers/Q2_16.JPG
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/ActionHistoryOneStruc.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/ActionHistoryTwoStacks.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/BinTree$Node.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/BinTree.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/Deque$Node.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/Deque.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/DynamicArray$ArrayOverflowException.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/DynamicArray.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/MedianHeap.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/MinPQArray.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/QueueConc$Node.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/QueueConc.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/exam/TricoSearch.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/myutil/LinkedListSingle$Node.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/myutil/LinkedListSingle.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/datastructures/myutil/Sorter.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/exceptions/ValeurNegativeException.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/exceptions/ValeurNegativeTest.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/files/Fichier.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/files/Min.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/gui/ButtonTextCount.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/gui/Compevent$FrameChange.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/gui/Compevent.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/gui/Control$ButtonCount.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/gui/Control.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/gui/Model.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/list/Pile.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/list/PileListe$Node.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/list/PileListe.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/misc/Arithmetique.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/misc/ColorChooser.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/misc/Test.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/p1/A.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/p1/B.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/p2/C.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/p2/D.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/recursive/Exists.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/recursive/Fibo.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/recursive/Pali.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/recursive/Reines.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/recursive/Reverse.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/servers/Client.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/servers/Server.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/servers/ServerHandler.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/servers/SimpleClient.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/servers/SimpleServer.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/sort/BubbleSort.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/sort/CheckSorted.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/sort/QuickSort.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/testing/Client.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/testing/Server.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/testing/ServerHandler.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/threads/Dict.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/threads/LockTutorial.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/threads/LockTutorialTest.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/threads/Melange.class
+#	deleted:    .emacs.d/workspace/java_b96bc339/bin/src/threads/MergeSort.class
+#	deleted:    .emacs.d/workspace/javaapp_a374c048/.classpath
+#	deleted:    .emacs.d/workspace/javaapp_a374c048/.project
+#	deleted:    .emacs.d/workspace/javaapp_a374c048/.settings/org.eclipse.jdt.core.prefs
+#	modified:   .emacs.d/workspace/jdt.ls-java-project/.settings/org.eclipse.jdt.core.prefs
 #

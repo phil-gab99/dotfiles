@@ -1632,17 +1632,9 @@ Allows writing textual descriptions for creating uml diagrams
 
 Custom syntax highlighting for LMC assembly language.
 
+***** Custom LMC
+
 #+begin_src emacs-lisp
-
-  (defun pg/lmc-setup ()
-    (setq-local comment-start "# ")
-    (setq-local comment-end "")
-    (setq-local indent-tabs-mode nil)
-    (setq-local tab-width 8)
-    (setq-local indent-tabs-mode nil))
-
-  (use-package lmc
-    :hook (lmc-mode . pg/lmc-setup))
 
   (defvar lmc-java-mode-hook nil)
 
@@ -1673,6 +1665,22 @@ Custom syntax highlighting for LMC assembly language.
     (setq-local comment-end "")
 
     (setq-local indent-tabs-mode nil))
+
+#+end_src
+
+***** Lispy LMC
+
+#+begin_src emacs-lisp
+
+  (defun pg/lmc-setup ()
+    (setq-local comment-start "# ")
+    (setq-local comment-end "")
+    (setq-local indent-tabs-mode nil)
+    (setq-local tab-width 8)
+    (setq-local indent-tabs-mode nil))
+
+  (use-package lmc
+    :hook (lmc-mode . pg/lmc-setup))
 
 #+end_src
 
