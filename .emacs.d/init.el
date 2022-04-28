@@ -395,7 +395,7 @@
   (unless (equal persp-mode t) (persp-mode)))
 
 (use-package mu4e
-  :if (not pg/is-termux)
+  :if (member system-name '("pgab99-laptop"))
   :straight '(mu :type git
                  :host github
                  :branch "release/1.6"
