@@ -97,7 +97,8 @@
 ;; (setq use-package-always-ensure t)
 
 (defvar bootstrap-version)
-(let ((bootstrap-file "~/Packages/straight/repos/straight.el/bootstrap.el")
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
