@@ -40,7 +40,6 @@
 (add-hook 'compilation-filter-hook
           (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
-
 (dolist (mode '(org-mode-hook         ; Disable line numbers for some modes
                 term-mode-hook
                 coming-mode-hook
