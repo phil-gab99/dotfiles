@@ -118,12 +118,12 @@
   :custom
   (auth-sources '("~/.authinfo.gpg")))
 
-(use-package pinentry
-  :if (not pg/is-termux)
-  :custom
-  (epg-pinentry-mode 'loopback)
-  :config
-  (pinentry-start))
+(unless pg/is-termux
+  (use-package pinentry
+    :custom
+    (epg-pinentry-mode 'loopback)
+    :config
+    (pinentry-start)))
 
 (use-package password-cache
   :straight nil
@@ -394,93 +394,94 @@
   :config
   (unless (equal persp-mode t) (persp-mode)))
 
-(use-package mu4e
-  :if (member system-name '("pgab99-laptop"))
-  :straight '(mu :type git
-                 :host github
-                 :branch "release/1.6"
-                 :repo "djcb/mu"
-                 :files ("mu4e/*")
-                 :pre-build (("./autogen.sh") ("make")))
-  :commands mu4e
-  ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
-  :config
-  (require 'mu4e-org)
-  ;; This is set to 't' to avoid mail syncing issues when using mbsync
-  (setq mu4e-change-filenames-when-moving t)
+(unless pg/is-termux
+  (use-package mu4e
+    :straight '(mu :type git
+                   :host github
+                   :branch "release/1.6"
+                   :repo "djcb/mu"
+                   :files ("mu4e/*")
+                   :pre-build (("./autogen.sh") ("make")))
+    :commands mu4e
+    ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
+    :config
+    (require 'mu4e-org)
+    ;; This is set to 't' to avoid mail syncing issues when using mbsync
+    (setq mu4e-change-filenames-when-moving t)
 
-  ;; Refresh mail using isync every 10 minutes
-  (setq mu4e-update-interval (* 10 60))
-  (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-maildir "~/Mail")
-  (setq message-send-mail-function 'smtpmail-send-it)
-  (setq mu4e-compose-format-flowed t)
-  (setq mu4e-compose-signature
-        (concat "Philippe Gabriel - \n[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
-                "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
-  (setq mu4e-compose-signature-auto-include nil)
+    ;; Refresh mail using isync every 10 minutes
+    (setq mu4e-update-interval (* 10 60))
+    (setq mu4e-get-mail-command "mbsync -a")
+    (setq mu4e-maildir "~/Mail")
+    (setq message-send-mail-function 'smtpmail-send-it)
+    (setq mu4e-compose-format-flowed t)
+    (setq mu4e-compose-signature
+          (concat "Philippe Gabriel - \n[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
+                  "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
+    (setq mu4e-compose-signature-auto-include nil)
 
-  (setq mu4e-contexts
-        (list
-         ;; Main account
-         (make-mu4e-context
-          :name "Main"
-          :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
-          :vars '((user-mail-address . "pgabriel999@hotmail.com")
-                  (user-full-name . "Philippe Gabriel")
-                  (smtpmail-smtp-server . "smtp.office365.com")
-                  (smtpmail-smtp-user . "pgabriel999@hotmail.com")
-                  (smtpmail-smtp-service . 587)
-                  (smtpmail-stream-type . starttls)
-                  (mu4e-drafts-folder . "/Main/Drafts")
-                  (mu4e-sent-folder . "/Main/Sent")
-                  (mu4e-refile-folder . "/Main/Archive")
-                  (mu4e-trash-folder . "/Main/Deleted")))
+    (setq mu4e-contexts
+          (list
+           ;; Main account
+           (make-mu4e-context
+            :name "Main"
+            :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
+            :vars '((user-mail-address . "pgabriel999@hotmail.com")
+                    (user-full-name . "Philippe Gabriel")
+                    (smtpmail-smtp-server . "smtp.office365.com")
+                    (smtpmail-smtp-user . "pgabriel999@hotmail.com")
+                    (smtpmail-smtp-service . 587)
+                    (smtpmail-stream-type . starttls)
+                    (mu4e-drafts-folder . "/Main/Drafts")
+                    (mu4e-sent-folder . "/Main/Sent")
+                    (mu4e-refile-folder . "/Main/Archive")
+                    (mu4e-trash-folder . "/Main/Deleted")))
 
-         ;; University account
-         (make-mu4e-context
-          :name "University"
-          :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/University" (mu4e-message-field msg :maildir))))
-          :vars '((user-mail-address . "philippe.gabriel.1@umontreal.ca")
-                  (user-full-name . "Philippe Gabriel")
-                  (smtpmail-smtp-server . "smtp.office365.com")
-                  (smtpmail-smtp-user . "philippe.gabriel.1@umontreal.ca")
-                  (smtpmail-smtp-service . 587)
-                  (smtpmail-stream-type . starttls)
-                  (mu4e-drafts-folder . "/University/Drafts")
-                  (mu4e-sent-folder . "/University/Sent Items")
-                  (mu4e-refile-folder . "/University/Archive")
-                  (mu4e-trash-folder . "/University/Deleted Items")))))
+           ;; University account
+           (make-mu4e-context
+            :name "University"
+            :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/University" (mu4e-message-field msg :maildir))))
+            :vars '((user-mail-address . "philippe.gabriel.1@umontreal.ca")
+                    (user-full-name . "Philippe Gabriel")
+                    (smtpmail-smtp-server . "smtp.office365.com")
+                    (smtpmail-smtp-user . "philippe.gabriel.1@umontreal.ca")
+                    (smtpmail-smtp-service . 587)
+                    (smtpmail-stream-type . starttls)
+                    (mu4e-drafts-folder . "/University/Drafts")
+                    (mu4e-sent-folder . "/University/Sent Items")
+                    (mu4e-refile-folder . "/University/Archive")
+                    (mu4e-trash-folder . "/University/Deleted Items")))))
 
-  (setq mu4e-maildir-shortcuts
-        '(("/University/Inbox" . ?u)
-          ("/University/Drafts" . ?d)
-          ("/Main/Inbox" . ?m)
-          ("/Main/Jobs" . ?j)
-          ("/Main/University" . ?s)))
-  (mu4e t)
-  :custom
-  (mu4e-context-policy 'pick-first)
-  (mu4e-mu-binary (expand-file-name "mu/mu" (straight--repos-dir "mu")))
-  ;; (setq mu4e-bookmarks
-  ;;       '((:name "Display Name" :query "Query" :key "Key" ...)))
-  )
+    (setq mu4e-maildir-shortcuts
+          '(("/University/Inbox" . ?u)
+            ("/University/Drafts" . ?d)
+            ("/Main/Inbox" . ?m)
+            ("/Main/Jobs" . ?j)
+            ("/Main/University" . ?s)))
+    (mu4e t)
+    :custom
+    (mu4e-context-policy 'pick-first)
+    (mu4e-mu-binary (expand-file-name "mu/mu" (straight--repos-dir "mu")))
+    ;; (setq mu4e-bookmarks
+    ;;       '((:name "Display Name" :query "Query" :key "Key" ...)))
+    ))
 
-(straight-use-package 'mu4e-alert)
-(use-package mu4e-alert
-  :after mu4e
-  :custom
-  (mu4e-alert-notify-repeated-mails t)
-  :config
-  (mu4e-alert-set-default-style 'notifications)
-  (mu4e-alert-enable-notifications)
-  (mu4e-alert-enable-mode-line-display))
+(unless pg/is-termux
+  (straight-use-package 'mu4e-alert)
+  (use-package mu4e-alert
+    :after mu4e
+    :custom
+    (mu4e-alert-notify-repeated-mails t)
+    :config
+    (mu4e-alert-set-default-style 'notifications)
+    (mu4e-alert-enable-notifications)
+    (mu4e-alert-enable-mode-line-display)))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -571,9 +572,9 @@
   :after dired
   :commands (dired dired-jump))
 
-(use-package all-the-icons-dired
-  :if (not pg/is-termux)
-  :hook (dired-mode . all-the-icons-dired-mode))
+(unless pg/is-termux
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode)))
 
 (use-package dired-hide-dotfiles
   :after evil-collection
@@ -1512,22 +1513,22 @@
   (ps-lpr-switches '("-o sides=two-sided-long-edge"))
   (ps-spool-duplex t))
 
-(use-package openwith
-  :if (not pg/is-termux)
-  :custom
-  (large-file-warning-threshold nil)
-  :config
-  (setq openwith-associations
-        (list
-         (list
-          (openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
-          "mpv"
-          '(file))
-         (list
-          (openwith-make-extension-regexp '("odt"))
-          "libreoffice"
-          '(file))))
-  (openwith-mode 1))
+(unless pg/is-termux
+  (use-package openwith
+    :custom
+    (large-file-warning-threshold nil)
+    :config
+    (setq openwith-associations
+          (list
+           (list
+            (openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
+            "mpv"
+            '(file))
+           (list
+            (openwith-make-extension-regexp '("odt"))
+            "libreoffice"
+            '(file))))
+    (openwith-mode 1)))
 
 (use-package dtk
   :commands dtk
