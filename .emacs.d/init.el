@@ -2,21 +2,27 @@
 
 (server-start)
 
+(setq pg/is-termux
+      (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
+
 (setq inhibit-startup-message t)                                   ; Disable startup message
 (setq scroll-conservatively 1000)                                  ; Slow scrolling
-(scroll-bar-mode 0)                                                ; Disable visible scrollbar
-(tool-bar-mode 0)                                                  ; Disable toolbar
-(tooltip-mode 0)
+(unless pg/is-termux
+  (scroll-bar-mode 0)                                                ; Disable visible scrollbar
+  (tool-bar-mode 0)                                                  ; Disable toolbar
+  (tooltip-mode 0))
+
 (menu-bar-mode 0)                                                  ; Disable menu bar
 (setq split-width-threshold 185)                                   ; Width for splitting
 (global-set-key (kbd "M-<tab>") 'other-window)                     ; Bind alt tab to buffer switching
 
 
 ;; Set frame transparency
-(set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
-(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(unless pg/is-termux
+  (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+  (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 (require 'iso-transl)
 (define-key global-map (kbd "<Multi_key>") iso-transl-ctl-x-8-map) ; Bind compose key in case emacs captures it
@@ -113,6 +119,7 @@
   (auth-sources '("~/.authinfo.gpg")))
 
 (use-package pinentry
+  :if (not pg/is-termux)
   :custom
   (epg-pinentry-mode 'loopback)
   :config
@@ -564,6 +571,7 @@
   :commands (dired dired-jump))
 
 (use-package all-the-icons-dired
+  :if (not pg/is-termux)
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package dired-hide-dotfiles
@@ -684,54 +692,55 @@
   (git-gutter:deleted-sign nil)
   (git-gutter-fr:side 'right-fringe)
   :config
-  (require 'git-gutter-fringe)
-  (set-face-foreground 'git-gutter-fr:added "LightGreen")
-  (fringe-helper-define 'git-gutter-fr:added nil
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        ".........."
-                        ".........."
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        ".........."
-                        ".........."
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX")
+  (unless pg/is-termux
+    (require 'git-gutter-fringe)
+    (set-face-foreground 'git-gutter-fr:added "LightGreen")
+    (fringe-helper-define 'git-gutter-fr:added nil
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      ".........."
+      ".........."
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      ".........."
+      ".........."
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX")
 
-  (set-face-foreground 'git-gutter-fr:modified "LightGoldenrod")
-  (fringe-helper-define 'git-gutter-fr:modified nil
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        ".........."
-                        ".........."
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        ".........."
-                        ".........."
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX")
+    (set-face-foreground 'git-gutter-fr:modified "LightGoldenrod")
+    (fringe-helper-define 'git-gutter-fr:modified nil
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      ".........."
+      ".........."
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      ".........."
+      ".........."
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX")
 
-  (set-face-foreground 'git-gutter-fr:deleted "LightCoral")
-  (fringe-helper-define 'git-gutter-fr:deleted nil
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        ".........."
-                        ".........."
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        ".........."
-                        ".........."
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX"
-                        "XXXXXXXXXX")
+    (set-face-foreground 'git-gutter-fr:deleted "LightCoral")
+    (fringe-helper-define 'git-gutter-fr:deleted nil
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      ".........."
+      ".........."
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      ".........."
+      ".........."
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"
+      "XXXXXXXXXX"))
 
   ;; These characters are used in terminal mode
   (set-face-foreground 'git-gutter:added "LightGreen")
@@ -919,7 +928,7 @@
 
 (defvar lmc-java-mode-hook nil)
 
-(add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-mode))
+;; (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-java-mode))
 
 (defconst lmc-java-font-lock-defaults
   (list
@@ -947,15 +956,25 @@
 
   (setq-local indent-tabs-mode nil))
 
-(defun pg/lmc-setup ()
-  (setq-local comment-start "# ")
-  (setq-local comment-end "")
-  (setq-local indent-tabs-mode nil)
-  (setq-local tab-width 8)
-  (setq-local indent-tabs-mode nil))
+(define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
+  "Major mode to edit LMC assembly code."
+  :syntax-table emacs-lisp-mode-syntax-table
+  (set (make-local-variable 'font-lock-defaults)
+       '(lmc-asm-font-lock-keywords))
+  (set (make-local-variable 'indent-line-function)
+       #'lmc-asm-indent-line)
+  (set (make-local-variable 'indent-tabs-mode) nil)
+  (set (make-local-variable 'imenu-generic-expression)
+       lmc-asm-imenu-generic-expression)
+  (set (make-local-variable 'outline-regexp) lmc-asm-outline-regexp)
+  (add-hook 'completion-at-point-functions #'lmc-asm-completion nil t)
+  (set (make-local-variable 'comment-start) "#")
+  (set (make-local-variable 'comment-start-skip)
+       "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
 
 (use-package lmc
-  :hook (lmc-mode . pg/lmc-setup))
+  :config
+  (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 (use-package markdown-mode
   :straight nil
@@ -1493,6 +1512,7 @@
   (ps-spool-duplex t))
 
 (use-package openwith
+  :if (not pg/is-termux)
   :custom
   (large-file-warning-threshold nil)
   :config

@@ -80,6 +80,12 @@
     Assets:Cash:Bank:Checkings                 75.25 CAD
     Equity:Government:Quebec
 
+2022-04-06 * STM Opus Charge
+    Expenses:Travel:STM                        54.00 CAD
+    Liabilities:CreditCards:TriangleCard      -54.00 CAD
+    Assets:Cash:Bank:TriangleRewards            0.27 CAD
+    Equity:CanadianTire
+
 2022-04-07 * UdeM TA Payroll
     Assets:Cash:Bank:Checkings                513.94 CAD
     Income:UdeM
@@ -91,3 +97,11 @@
 2022-04-14 * Notice of Assessment
     Assets:Cash:Bank:Savings                  186.23 CAD
     Equity:Government:Canada
+
+2022-04-20 * Tax Refund
+    Assets:Cash:Bank:Checkings                860.89 CAD
+    Equity:Government:Quebec
+
+2022-04-21 * UdeM TA Payroll
+    Assets:Cash:Bank:Checkings                514.94 CAD
+    Income:UdeM

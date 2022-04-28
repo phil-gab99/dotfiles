@@ -1,26 +1,73 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
 (("/home/phil-gab99/Documents/Org/Recurrent/Birthdays.org" . 237)
- ("/home/phil-gab99/Documents/Org/Agenda/Tasks.org" . 75)
  ("/home/phil-gab99/Documents/Org/Agenda/Schedule-S5.org" . 77)
  ("/home/phil-gab99/Documents/Org/Agenda/Mail.org" . 40)
+ ("/home/phil-gab99/.authinfo.gpg" . 1496)
+ ("/home/phil-gab99/Documents/Org/Agenda/Tasks.org" . 673)
+ ("/home/phil-gab99/Documents/Jobs/letter.pdf" . 68279)
+ ("/home/phil-gab99/Documents/Accounting/ledger-2022.dat" . 3428)
+ ("/home/phil-gab99/.dotfiles/.emacs.d/emacs-config.org" . 35105)
+ ("/home/phil-gab99/Projects/workspace/lmc/test.lmc" . 225)
+ ("/home/phil-gab99/Packages/straight/repos/lmc/lmc.el" . 12187)
+ ("/home/phil-gab99/Projects/workspace/lmc/hello.elmc" . 139)
+ ("/home/phil-gab99/.emacs.d/straight/build/lmc/lmc-autoloads.el" . 394)
+ ("/home/phil-gab99/Projects/workspace/lmc/ex7.lmc" . 9)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331165939-controle_concurrence.org" . 4818)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331113350-transctions_ordonnancements.org" . 6347)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220323083421-gestion_transactions.org" . 397)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331230344-reprise_atomicite.org" . 12752)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331224004-reprise_panne.org" . 378)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220330163151-transactions_intro.org" . 350)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220315082442-vues_fonctions_triggers.org" . 424)
+ ("/home/phil-gab99/Documents/Notes/IFT-2935/20220316020757-vues_fonctions_triggers_autres.org" . 4469)
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/Rapport_Final.tex" . 4759)
+ ("/home/phil-gab99/Documents/Notes/IFT-6755/hw/a2/report.tex" . 25714)
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/rapport.tex" . 589)
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/q3.sql" . 177)
+ ("/home/phil-gab99/Projects/projet-ift2935/script.sql" . 33)
+ ("/home/phil-gab99/Projects/projet-ift2935/remise/Script.sql" . 10224)
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/module-info.java" . 110)
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp/App.java" . 10633)
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/build/libs/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/build/libs/projet.jar"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/build/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/build/libs"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test/java/biblioApp/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test/java/biblioApp/AppTest.java"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test/java/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test/java/biblioApp"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test/java"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/test"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app"))
+ ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioRapport/rapport.pdf.xoj"))
+ ("/home/phil-gab99/Projects/projet-ift2935/remise/CodeSource/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/remise/CodeSource/main"))
+ ("/home/phil-gab99/Projects/projet-ift2935/remise/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/remise/projet.jar"))
+ ("/home/phil-gab99/Projects/projet-ift2935/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/remise"))
+ ("/home/phil-gab99/Documents/Notes/IFT-2245/20220316185015-remplacement_page.org" . 9994)
+ ("/home/phil-gab99/Projects/"
+  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935"))
+ ("/home/phil-gab99/Downloads/"
+  (dired-filename . "/home/phil-gab99/Downloads/nyxt-2.2.4.zip"))
+ ("/home/phil-gab99/"
+  (dired-filename . "/home/phil-gab99/Downloads"))
+ ("/home/phil-gab99/.dotfiles/.emacs.d/init.el" . 61508)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220410124831-conteneurisation.org" . 374)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220410130048-docker.org" . 4885)
- ("/home/phil-gab99/.authinfo.gpg" . 522)
  ("/home/phil-gab99/.dotfiles/.emacs.d/games/tetris-scores" . 3894)
- ("/home/phil-gab99/Documents/Notes/IFT-2245/20220316185015-remplacement_page.org" . 9994)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220316113307-memoire_virtuelle_intro.org" . 7181)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220316035528-memoire_virtuelle.org" . 657)
- ("/home/phil-gab99/Documents/Jobs/letter.pdf" . 23051)
- ("/home/phil-gab99/.dotfiles/.emacs.d/emacs-config.org" . 49164)
  ("/home/phil-gab99/Projects/workspace/sql/mice.sql" . 1728)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331165939-controle_concurrence.org" . 5254)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220323083421-gestion_transactions.org" . 322)
  ("/home/phil-gab99/Projects/workspace/sql/pokemon.sql" . 1215)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331113350-transctions_ordonnancements.org" . 5750)
  ("/home/phil-gab99/.dotfiles/.emacs.d/.cache/treemacs-persist" . 71)
- ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/build.gradle" . 2)
- ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp/App.java" . 72)
- ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/module-info.java" . 110)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp/Livre.java" . 56)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp/"
   (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp/App.java"))
@@ -28,21 +75,8 @@
   (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp"))
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/"
   (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java"))
- ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/"
-  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main"))
- ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/"
-  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src"))
- ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/"
-  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp/app"))
- ("/home/phil-gab99/Projects/projet-ift2935/"
-  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioApp"))
- ("/home/phil-gab99/Projects/"
-  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935"))
- ("/home/phil-gab99/"
-  (dired-filename . "/home/phil-gab99/.emacs.d"))
  ("/home/phil-gab99/.emacs.d/"
   (dired-filename . "/home/phil-gab99/.emacs.d/ac-comphist.dat"))
- ("/home/phil-gab99/.dotfiles/.emacs.d/init.el" . 61508)
  ("/home/phil-gab99/Documents/Jobs/Philippe Gabriel_Fiche Employeur.odt" . 160)
  ("/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/"
   (dired-filename . "/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/bin"))
@@ -72,11 +106,8 @@
  ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/q1.sql" . 1251)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220125082443-algebre_calcul_relationnel.org" . 263)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/q2.sql" . 109)
- ("/home/phil-gab99/Projects/projet-ift2935/README.org" . 5654)
- ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/rapport.tex" . 10794)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/java/biblioApp/Main.java" . 110)
  ("/home/phil-gab99/Projects/workspace/sql/" . 390)
- ("/home/phil-gab99/Projects/projet-ift2935/script.sql" . 2327)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/app/src/main/resources/META-INF/persistence.xml" . 949)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/settings.gradle" . 374)
  ("/home/phil-gab99/Projects/projet-ift2935/biblioApp/gradle/wrapper/gradle-wrapper.properties" . 203)
@@ -91,16 +122,12 @@
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220401234737-memoire_masse.org" . 676)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220403122132-algorithmes_ordonnancement.org" . 1696)
  ("/home/phil-gab99/Documents/Notes/IFT-6755/slides/00-intro.pdf" . 746)
- ("/home/phil-gab99/Downloads/"
-  (dired-filename . "/home/phil-gab99/Downloads/nyxt-2.2.4.zip"))
  ("/home/phil-gab99/Downloads/nyxt-2.2.4.zip" . 157)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220406103700-stockage_indexation.org" . 311)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220410091355-stockage.org" . 1165)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220410092821-index.org" . 160)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331225040-recovery_intro.org" . 877)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331225118-panne_memoire_intro.org" . 1231)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331224004-reprise_panne.org" . 378)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331230344-reprise_atomicite.org" . 172)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/"
   (dired-filename . "/home/phil-gab99/Documents/Notes/IFT-2935/20220331230344-reprise_atomicite.org"))
  ("/home/phil-gab99/Documents/Notes/"
@@ -113,12 +140,9 @@
   (dired-filename . "/home/phil-gab99/Documents/Notes/IFT-2935/slides/fn_over_rec.pdf"))
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220410093918-arbrebplus.org" . 165)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220410095557-choix_index.org" . 166)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220315082442-vues_fonctions_triggers.org" . 368)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220315082703-vues.org" . 2815)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220316014947-fonctions.org" . 1853)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220316020212-triggers.org" . 1052)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220316020757-vues_fonctions_triggers_autres.org" . 6204)
- ("/home/phil-gab99/Documents/Notes/IFT-2935/20220330163151-transactions_intro.org" . 1390)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220331214535-controle_verrous.org" . 2386)
  ("/home/phil-gab99/.dotfiles/.config/nyxt/freestance.lisp" . 161)
  ("/home/phil-gab99/.config/nyxt/adblock.lisp" . 285)
@@ -129,7 +153,6 @@
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220316092457-sql_fonctions.org" . 372)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220316093935-exemple_fonction.org" . 7901)
  ("/home/phil-gab99/Documents/Accounting/main.dat" . 145)
- ("/home/phil-gab99/Documents/Accounting/ledger-2022.dat" . 3311)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220314170635-formes_normales_exemples.org" . 179)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220314004149-normalisation_formes_normales.org" . 405)
  ("/home/phil-gab99/Documents/Notes/IFT-2935/20220314174124-formes_normales_autre.org" . 176)
@@ -224,8 +247,6 @@
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220314231209-gestion_memoire.org" . 3300)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220314215502-memoire.org" . 499)
  ("/home/phil-gab99/Documents/Notes/IFT-2245/20220315080451-memoire_tableau_pages.org" . 3607)
- ("/home/phil-gab99/Projects/projet-ift2935/biblioRapport/"
-  (dired-filename . "/home/phil-gab99/Projects/projet-ift2935/biblioRapport/rapport.pdf"))
  ("/home/phil-gab99/Documents/Notes/IFT-6755/hw/a3/report.tex" . 986)
  ("/home/phil-gab99/.emacs.d/straight/build/projectile/projectile.el" . 197821)
  ("/usr/local/share/emacs/28.1/lisp/progmodes/compile.el.gz" . 30236)
@@ -413,19 +434,4 @@
  ("/home/phil-gab99/Packages/straight/build/use-package/use-package-autoloads.el" . 8066)
  ("/home/phil-gab99/Packages/straight/build/bind-key/bind-key-autoloads.el" . 2477)
  ("/home/phil-gab99/.emacs.d/straight/build/straight/straight-autoloads.el" . 16090)
- ("/home/phil-gab99/Packages/straight/build/dashboard/dashboard-widgets.el" . 5959)
- ("/home/phil-gab99/Packages/straight/build/desktop-environment/desktop-environment-autoloads.el" . 4741)
- ("/home/phil-gab99/Packages/straight/build/exwm/exwm-autoloads.el" . 525)
- ("/home/phil-gab99/Packages/straight/build/xelb/xelb-autoloads.el" . 7832)
- ("/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/demo12.org" . 565)
- ("/home/phil-gab99/Projects/tp5-simon-philippe/README.md" . 4438)
- ("/home/phil-gab99/.dotfiles/.profile" . 948)
- ("/home/phil-gab99/Documents/Notes/Demo/IFT-1227/final/"
-  (dired-filename . "/home/phil-gab99/Documents/Notes/Demo/IFT-1227/final/final15q1.c"))
- ("/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo11/demo11.org" . 622)
- ("/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo12/q1b.asm" . 569)
- ("/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo8/demo8.org" . 16397)
- ("/home/phil-gab99/Documents/Notes/Demo/IFT-1227/demo7/demo7.org" . 1769)
- ("/home/phil-gab99/Projects/tp5-simon-philippe/machine.turing" . 7)
- ("/home/phil-gab99/Projects/tp3-simon-philippe/compile.sh" . 14)
- ("/home/phil-gab99/Projects/tp0-simon-philippe/src/launch.sh" . 14))
+ ("/home/phil-gab99/Packages/straight/build/dashboard/dashboard-widgets.el" . 5959))

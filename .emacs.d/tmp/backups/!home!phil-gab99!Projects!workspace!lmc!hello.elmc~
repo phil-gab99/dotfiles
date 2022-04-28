@@ -1,0 +1,49 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Exercice 7
+;; 
+;; @author Philippe Gabriel
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;       
+	
+        (LDA minVal)
+        (STO currVal)             
+        (STO count)             
+	
+square  (LDA squrVal)
+        (ADD currVal)
+        (STO squrVal)
+
+        (LDA count)    ; Décrémente compteur après ajout
+        (SUB one)
+        (STO count)
+	
+        (BRZ next)    ; Condition d'arrêt de somme
+        (BR square)   ; Continue avec sommes successives
+
+
+next    (LDA squrVal) 
+        (OUT)
+
+        (LDA currVal) ; Condition d'arrêt si arrivé à valeur maximale
+        (SUB maxVal)
+        (BRZ done)
+
+        (LDA zero)
+        (STO squrVal) ; Reset de valeur carrée
+
+        (LDA currVal) ; Prochaine valeur
+        (ADD one)
+        (STO currVal)
+        (STO count)
+        (BR square)
+
+done    (HLT)
+
+; Déclarations de variables
+maxVal  (DAT 020) ; Valeur maximale
+minVal  (DAT 001) ; Valeur minimale
+
+currVal (DAT 000) ; Valeur courante à élevé au carré
+squrVal (DAT 000) ; Carré de currVal
+count   (DAT 000) ; Compteur de sommes successives (décrémente)
+one     (DAT 001) ; Constante 1
+zero    (DAT 000) ; Constante 0 (pour reset)

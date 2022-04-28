@@ -2,9 +2,9 @@
 # Exercice 7
 # 
 # @author Philippe Gabriel
-################################################################################
+################################################################################       
 
-        LDA minVal
+        (LDA minVal)
         STO currVal             
         STO count               
 
@@ -36,7 +36,7 @@ next    LDA squrVal
         STO count
         BR square
 
-done    HLT
+done    (HLT)
 
 # Déclarations de variables
 maxVal  DAT 020 # Valeur maximale
