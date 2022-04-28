@@ -395,6 +395,7 @@
   (unless (equal persp-mode t) (persp-mode)))
 
 (use-package mu4e
+  :if (not pg/is-termux)
   :straight '(mu :type git
                  :host github
                  :branch "release/1.6"
