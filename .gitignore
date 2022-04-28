@@ -1,2 +1,4 @@
 *.log
 .config/mpd/mpdstate
+/.emacs.d/straight/build/
+/.emacs.d/straight/repos/

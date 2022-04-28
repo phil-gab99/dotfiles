@@ -16,7 +16,6 @@
 (setq split-width-threshold 185)                                   ; Width for splitting
 (global-set-key (kbd "M-<tab>") 'other-window)                     ; Bind alt tab to buffer switching
 
-
 ;; Set frame transparency
 (unless pg/is-termux
   (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
