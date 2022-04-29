@@ -1,4 +1,3 @@
-man youtube-dl
 cd ..
 download-music https://www.youtube.com/watch?v=EPyfYsEpXE8
 *mpc
@@ -126,3 +125,4 @@ cd Jobs/
 libreoffice Offre-de-stage-Fiche-employeur_FAS_NISRINE_MASTAS.odt 
 exit
 man ssh
+man amixer

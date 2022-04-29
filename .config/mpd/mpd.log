@@ -7975,3 +7975,121 @@ Apr 28 22:53 : player: played "croft-manor-anniversary.mp3"
 Apr 28 22:54 : client: [121] opened from 127.0.0.1:48186
 Apr 28 22:54 : client: [121] closed
 Apr 28 22:54 : player: played "croft-manor-anniversary.mp3"
+Apr 29 01:02 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:02 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:02 : client: [0] opened from 127.0.0.1:48188
+Apr 29 01:02 : client: [0] closed
+Apr 29 01:02 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 29 01:39 : player: played "croft-manor-anniversary.mp3"
+Apr 29 01:39 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:39 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:39 : client: [0] opened from 127.0.0.1:48192
+Apr 29 01:39 : client: [0] closed
+Apr 29 01:39 : client: [1] opened from 127.0.0.1:48194
+Apr 29 01:39 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 29 01:41 : player: played "croft-manor-anniversary.mp3"
+Apr 29 01:41 : client: [1] closed
+Apr 29 01:45 : client: [2] opened from 127.0.0.1:48196
+Apr 29 01:48 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:48 : client: [0] opened from 127.0.0.1:48198
+Apr 29 01:48 : client: [0] closed
+Apr 29 01:48 : client: [1] opened from 127.0.0.1:48200
+Apr 29 01:48 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:48 : exception: Access denied
+Apr 29 01:49 : exception: Access denied
+Apr 29 01:49 : exception: Access denied
+Apr 29 01:50 : client: [1] closed
+Apr 29 01:50 : client: [2] opened from 127.0.0.1:48202
+Apr 29 01:50 : exception: Access denied
+Apr 29 01:50 : exception: Access denied
+Apr 29 01:51 : client: [2] closed
+Apr 29 01:51 : client: [3] opened from 127.0.0.1:48204
+Apr 29 01:52 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:52 : client: [0] opened from 127.0.0.1:48206
+Apr 29 01:52 : client: [0] closed
+Apr 29 01:52 : client: [1] opened from 127.0.0.1:48208
+Apr 29 01:52 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 29 01:52 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 01:58 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:02 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:02 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 02:02 : client: [0] opened from 127.0.0.1:48210
+Apr 29 02:02 : client: [0] closed
+Apr 29 02:02 : client: [1] opened from 127.0.0.1:48212
+Apr 29 02:02 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 29 02:03 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 02:09 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:15 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:21 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:27 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:34 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:40 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:46 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:48 : player: played "croft-manor-anniversary.mp3"
+Apr 29 02:49 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 02:49 : client: [0] opened from 127.0.0.1:48214
+Apr 29 02:49 : client: [0] closed
+Apr 29 02:49 : client: [1] opened from 127.0.0.1:48216
+Apr 29 02:49 : avahi: Service 'Music Player @ pgab99-laptop' successfully established.
+Apr 29 02:49 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Apr 29 02:54 : client: [2] opened from 127.0.0.1:48218
+Apr 29 02:54 : client: [2] closed
+Apr 29 02:54 : client: [3] opened from 127.0.0.1:48220
+Apr 29 02:54 : client: [3] closed
+Apr 29 02:54 : client: [4] opened from 127.0.0.1:48222
+Apr 29 02:54 : client: [4] closed
+Apr 29 02:54 : client: [5] opened from 127.0.0.1:48224
+Apr 29 02:54 : client: [5] closed
+Apr 29 02:54 : client: [6] opened from 127.0.0.1:48226
+Apr 29 02:54 : client: [6] closed
+Apr 29 02:54 : client: [7] opened from 127.0.0.1:48228
+Apr 29 02:54 : client: [7] closed
+Apr 29 02:54 : client: [8] opened from 127.0.0.1:48230
+Apr 29 02:54 : client: [8] closed
+Apr 29 02:54 : client: [9] opened from 127.0.0.1:48232
+Apr 29 02:54 : client: [9] closed
+Apr 29 02:54 : client: [10] opened from 127.0.0.1:48234
+Apr 29 02:54 : client: [10] closed
+Apr 29 02:54 : client: [11] opened from 127.0.0.1:48236
+Apr 29 02:54 : client: [11] closed
+Apr 29 02:54 : client: [12] opened from 127.0.0.1:48238
+Apr 29 02:54 : client: [12] closed
+Apr 29 02:54 : client: [13] opened from 127.0.0.1:48240
+Apr 29 02:54 : client: [13] closed
+Apr 29 02:54 : client: [14] opened from 127.0.0.1:48242
+Apr 29 02:54 : client: [14] closed
+Apr 29 02:54 : client: [15] opened from 127.0.0.1:48244
+Apr 29 02:54 : client: [15] closed
+Apr 29 02:54 : client: [16] opened from 127.0.0.1:48246
+Apr 29 02:54 : client: [16] closed
+Apr 29 02:54 : client: [17] opened from 127.0.0.1:48248
+Apr 29 02:54 : client: [17] closed
+Apr 29 02:54 : client: [18] opened from 127.0.0.1:48250
+Apr 29 02:54 : client: [18] closed
+Apr 29 02:54 : client: [19] opened from 127.0.0.1:48252
+Apr 29 02:54 : client: [19] closed
+Apr 29 02:54 : client: [20] opened from 127.0.0.1:48254
+Apr 29 02:54 : client: [20] closed
+Apr 29 02:54 : client: [21] opened from 127.0.0.1:48258
+Apr 29 02:54 : client: [21] closed
+Apr 29 02:55 : player: played "croft-manor-anniversary.mp3"
+Apr 29 03:01 : player: played "croft-manor-anniversary.mp3"
+Apr 29 03:06 : client: [22] opened from 127.0.0.1:48260
+Apr 29 03:06 : client: [22] closed
+Apr 29 03:07 : player: played "croft-manor-anniversary.mp3"
+Apr 29 03:10 : player: played "croft-manor-anniversary.mp3"
+Apr 29 03:10 : client: [23] opened from 127.0.0.1:48262
+Apr 29 03:10 : client: [1] closed
+Apr 29 03:14 : player: played "Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3"
+Apr 29 03:21 : player: played "croft-manor-anniversary.mp3"
+Apr 29 03:25 : player: played "croft-manor-anniversary.mp3"
+Apr 29 03:25 : client: [23] closed

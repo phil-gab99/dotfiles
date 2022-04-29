@@ -688,9 +688,6 @@
   :hook ((text-mode . git-gutter-mode)
          (prog-mode . git-gutter-mode))
   :custom
-  (git-gutter:added-sign nil)
-  (git-gutter:modified-sign nil)
-  (git-gutter:deleted-sign nil)
   (git-gutter-fr:side 'right-fringe)
   :config
   (unless pg/is-termux
@@ -1578,14 +1575,15 @@
   (interactive)
   (shell-command "mpd")
   (pg/update-mpd-db)
-  (fset #'evil-collection-simple-mpc-replace-main-view #'pg/evil-collection-simple-mpc-replace-main-view)
-  (simple-mpc)
+  (emms-player-mpd-connect)
+  (emms-cache-set-from-mpd-all)
+  (emms-smart-browse)
   (message "MPD Started!"))
 
 (defun pg/kill-mpd ()
   "Stops playback and kill the music daemon."
   (interactive)
-  (simple-mpc-quit)
+  (emms-stop)
   (call-process "killall" nil nil nil "mpd")
   (message "MPD Killed!"))
 
@@ -1595,42 +1593,58 @@
   (call-process "mpc" nil nil nil "update")
   (message "MPD Database Updated!"))
 
+(defun pg/convert-number-to-relative-string (number)
+  "Convert an integer NUMBER to a prefixed string.
 
-(defun pg/evil-collection-simple-mpc-replace-main-view ()
-  "Update main view to show keys in use with evil mode."
-  (interactive)
-  (when (string= (buffer-name) simple-mpc-main-buffer-name)
-    (read-only-mode -1)
-    (erase-buffer)
-    (insert (propertize "* simple-mpc *\n\n"
-                        'face 'simple-mpc-main-name)
-            (propertize "   * controls\n" 'face 'simple-mpc-main-headers)
-            "      * [p]lay/pause toggle\n"
-            "      * [>] next track\n"
-            "      * [<] previous track\n"
-            "      * seek [f]orward\n"
-            "      * seek [b]ackward\n"
-            "      * [+] increase volume\n"
-            "      * [-] decrease volume\n"
-            "      * toggle [r]epeat mode\n"
-            (propertize "\n   * playlist\n" 'face 'simple-mpc-main-headers)
-            "      * view [c]urrent playlist\n"
-            "      * [C]lear current playlist\n"
-            "      * [S]huffle playlist\n"
-            "      * [l]oad playlist\n"
-            "      * [s]earch database\n"
-            (propertize "\n   * misc\n" 'face 'simple-mpc-main-headers)
-            "      * [q]uit")))
+The prefix is either - or +. This is useful for mpc commands
+like volume and seek."
+  (let ((number-string (number-to-string number)))
+    (if (> number 0)
+        (concat "+" number-string)
+      number-string)))
 
-(use-package simple-mpc
-  :commands simple-mpc
-  :bind
-  (:map simple-mpc-mode-map
-        ("<normal-state> r" . simple-mpc-toggle-repeat))
-  (:map simple-mpc-mode-map
-        ("r" . simple-mpc-toggle-repeat))
-  :custom
-  (simple-mpc-playlist-format "#| [%id%] \t #| [%time%] \t #| [%file%]"))
+(defun pg/call-mpc (destination mpc-args)
+  "Call mpc with `call-process'.
+
+DESTINATION will be passed to `call-process' and MPC-ARGS will be
+passed to the mpc program."
+  (if (not (listp mpc-args))
+      (setq mpc-args (list mpc-args)))
+  (apply 'call-process "mpc" nil destination nil mpc-args))
+
+(defun pg/message-current-volume ()
+  "Return the current volume."
+  (message "%s"
+           (with-temp-buffer
+             (pg/call-mpc t "volume")
+             (delete-char -1)  ;; delete trailing \n
+             (buffer-string))))
+
+(defun pg/emms-volume-amixer-change (amount)
+  "Change amixer master volume by AMOUNT."
+  (let ((volume-change-string (pg/convert-number-to-relative-string amount)))
+    (pg/call-mpc nil (list "volume" volume-change-string)))
+  (pg/message-current-volume))
+
+(unless pg/is-termux
+  (use-package emms
+    :config
+    (require 'emms-setup)
+    (emms-all)
+    (emms-player-mpd-connect)
+    (setq emms-info-functions '(emms-info-mpd)
+          emms-player-list '(emms-player-mpd))
+    (add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
+    (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
+    :custom
+    (emms-source-file-default-directory "~/Music/")
+    (emms-seek-seconds 5)
+    (emms-volume-change-amount 5)
+    :bind
+    ("<XF86AudioPrev>" . emms-previous)
+    ("<XF86AudioNext>" . emms-next)
+    ("<XF86AudioPlay>" . emms-pause)
+    ("<XF86AudioStop>" . emms-stop)))
 
 (use-package sudoku
   :custom
