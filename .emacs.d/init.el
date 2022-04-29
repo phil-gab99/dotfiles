@@ -1149,9 +1149,10 @@
   :config
   (set-face-attribute 'org-ellipsis nil :underline nil)
   (setq org-ellipsis " ▾")
-  (setq org-agenda-files ; Files considered by org-agenda
-        '("~/Documents/Org/Agenda/"
-          "~/Documents/Org/Recurrent/"))
+  (unless pg/is-termux
+    (setq org-agenda-files ; Files considered by org-agenda
+          '("~/Documents/Org/Agenda/"
+            "~/Documents/Org/Recurrent/")))
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -1161,56 +1162,58 @@
         '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|"
                     "COMPLETED(c)" "CANC(k)")))
 
-  (setq org-agenda-custom-commands ; Custom org-agenda commands
-        '(("d" "Dashboard"
-           ((agenda "" ((org-deadline-warning-days 7)))
-            (todo "TODO"
-                  ((org-agenda-overriding-header "Tasks")))
-            (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Tasks")))))
+  (unless pg/is-termux
+    (setq org-agenda-custom-commands ; Custom org-agenda commands
+          '(("d" "Dashboard"
+             ((agenda "" ((org-deadline-warning-days 7)))
+              (todo "TODO"
+                    ((org-agenda-overriding-header "Tasks")))
+              (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Tasks")))))
 
-          ("Z" "TODOs"
-           ((todo "TODO"
-                  ((org-agenda-overriding-header "Todos")))))
+            ("Z" "TODOs"
+             ((todo "TODO"
+                    ((org-agenda-overriding-header "Todos")))))
 
-          ("m" "Misc" tags-todo "other")
+            ("m" "Misc" tags-todo "other")
 
-          ("s" "Schedule" agenda ""
-           ((org-agenda-files '("~/Documents/Org/Agenda/Schedule-S5.org")))
-           ("~/Documents/Schedule-S5.pdf"))
+            ("s" "Schedule" agenda ""
+             ((org-agenda-files '("~/Documents/Org/Agenda/Schedule-S5.org")))
+             ("~/Documents/Schedule-S5.pdf"))
 
-          ("w" "Work Status"
-           ((todo "WAIT"
-                  ((org-agenda-overriding-header "Waiting")
-                   (org-agenda-files org-agenda-files)))
-            (todo "REVIEW"
-                  ((org-agenda-overriding-header "In Review")
-                   (org-agenda-files org-agenda-files)))
-            (todo "HOLD"
-                  ((org-agenda-overriding-header "On Hold")
-                   (org-agenda-todo-list-sublevels nil)
-                   (org-agenda-files org-agenda-files)))
-            (todo "ACTIVE"
-                  ((org-agenda-overriding-header "Active")
-                   (org-agenda-files org-agenda-files)))
-            (todo "COMPLETED"
-                  ((org-agenda-overriding-header "Completed")
-                   (org-agenda-files org-agenda-files)))
-            (todo "CANC"
-                  ((org-agenda-overriding-header "Cancelled")
-                   (org-agenda-files org-agenda-files)))))))
+            ("w" "Work Status"
+             ((todo "WAIT"
+                    ((org-agenda-overriding-header "Waiting")
+                     (org-agenda-files org-agenda-files)))
+              (todo "REVIEW"
+                    ((org-agenda-overriding-header "In Review")
+                     (org-agenda-files org-agenda-files)))
+              (todo "HOLD"
+                    ((org-agenda-overriding-header "On Hold")
+                     (org-agenda-todo-list-sublevels nil)
+                     (org-agenda-files org-agenda-files)))
+              (todo "ACTIVE"
+                    ((org-agenda-overriding-header "Active")
+                     (org-agenda-files org-agenda-files)))
+              (todo "COMPLETED"
+                    ((org-agenda-overriding-header "Completed")
+                     (org-agenda-files org-agenda-files)))
+              (todo "CANC"
+                    ((org-agenda-overriding-header "Cancelled")
+                     (org-agenda-files org-agenda-files))))))))
 
-  (setq org-capture-templates
-        `(("t" "Tasks / Projects")
-          ("tt" "Task" entry (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
-           "* TODO %?\n  DEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+  (unless pg/is-termux
+    (setq org-capture-templates
+          `(("t" "Tasks / Projects")
+            ("tt" "Task" entry (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
+             "* TODO %?\n  DEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
-          ("j" "Meetings")
-          ("jm" "Meeting" entry (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
-           "* TODO %? \n SCHEDULED: %U\n" :empty-lines 1)
+            ("j" "Meetings")
+            ("jm" "Meeting" entry (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
+             "* TODO %? \n SCHEDULED: %U\n" :empty-lines 1)
 
-          ("m" "Email Workflow")
-          ("mr" "Follow Up" entry (file+olp "~/Documents/Org/Agenda/Mail.org" "Follow up")
-           "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
+            ("m" "Email Workflow")
+            ("mr" "Follow Up" entry (file+olp "~/Documents/Org/Agenda/Mail.org" "Follow up")
+             "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))))
 
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
@@ -1223,14 +1226,15 @@
           (ps-top-margin 55)
           (ps-left-margin 35)
           (ps-right-margin 30)))
+  (unless pg/is-termux
+    (setq org-plantuml-jar-path "~/bin/plantuml.jar"))
   :custom
 
   (org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                           (vm-imap . vm-visit-imap-folder-other-frame)
                           (gnus . org-gnus-no-new-news)
                           (file . find-file)
-                          (wl . wl-other-frame)))
-  (org-plantuml-jar-path "~/bin/plantuml.jar"))
+                          (wl . wl-other-frame))))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode))
@@ -1334,54 +1338,55 @@
   :config
   (org-msg-mode))
 
-(use-package org-roam
-  :straight t
-  :custom
-  (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-directory "~/Documents/Notes")
-  (org-roam-capture-templates
-   '(("d" "default" plain
-      "%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("1" "databases" plain
-      "%?"
-      :if-new (file+head "IFT-2935/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: ift2935-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("2" "operating system" plain
-      "%?"
-      :if-new (file+head "IFT-2245/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: ift2245-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("3" "software analysis" plain
-      "%?"
-      :if-new (file+head "IFT-6755/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: ift6755-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("4" "logic 2" plain
-      "%?"
-      :if-new (file+head "PHI-2005/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: phi2005-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("5" "demo2015" plain
-      "%?"
-      :if-new (file+head "Demo/IFT-2015/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: demo2015-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("6" "demo1215" plain
-      "%?"
-      :if-new (file+head "Demo/IFT-1215/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: demo1215-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)
-     ("7" "demo1227" plain
-      "%?"
-      :if-new (file+head "Demo/IFT-1227/%<%Y%m%d%H%M%S>-${slug}.org"
-                         "#+title: demo1227-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-      :unnarrowed t)))
+(unless pg/is-termux
+  (use-package org-roam
+    :straight t
+    :custom
+    (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+    (org-roam-directory "~/Documents/Notes")
+    (org-roam-capture-templates
+     '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("1" "databases" plain
+        "%?"
+        :if-new (file+head "IFT-2935/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ift2935-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("2" "operating system" plain
+        "%?"
+        :if-new (file+head "IFT-2245/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ift2245-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("3" "software analysis" plain
+        "%?"
+        :if-new (file+head "IFT-6755/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ift6755-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("4" "logic 2" plain
+        "%?"
+        :if-new (file+head "PHI-2005/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: phi2005-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("5" "demo2015" plain
+        "%?"
+        :if-new (file+head "Demo/IFT-2015/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: demo2015-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("6" "demo1215" plain
+        "%?"
+        :if-new (file+head "Demo/IFT-1215/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: demo1215-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("7" "demo1227" plain
+        "%?"
+        :if-new (file+head "Demo/IFT-1227/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: demo1227-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)))
 
-  :config
-  (org-roam-setup))
+    :config
+    (org-roam-setup)))
 
 (use-package org-fragtog
   :hook (org-mode . org-fragtog-mode))
