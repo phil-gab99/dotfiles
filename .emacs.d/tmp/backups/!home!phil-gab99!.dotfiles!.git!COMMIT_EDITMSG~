@@ -4,12 +4,10 @@
 #
 # On branch main
 # Changes to be committed:
-#	modified:   .config/mpd/mpd.log
-#	modified:   .config/mpd/mpdstate
 #	modified:   .emacs.d/emacs-config.org
 #	modified:   .emacs.d/init.el
-#	modified:   .emacs.d/projectile-bookmarks.eld
-#	modified:   .emacs.d/tmp/auto-saves/sessions/2909-pgab99-laptop~
+#
+# Changes not staged for commit:
+#	modified:   .emacs.d/tmp/auto-saves/sessions/48767-pgab99-laptop~
 #	modified:   .emacs.d/tmp/backups/!home!phil-gab99!.dotfiles!.git!COMMIT_EDITMSG~
-#	modified:   .emacs.d/tmp/backups/!home!phil-gab99!Projects!projet-ift2935!.git!COMMIT_EDITMSG~
 #

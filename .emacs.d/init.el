@@ -1177,8 +1177,8 @@
             ("m" "Misc" tags-todo "other")
 
             ("s" "Schedule" agenda ""
-             ((org-agenda-files '("~/Documents/Org/Agenda/Schedule-S5.org")))
-             ("~/Documents/Schedule-S5.pdf"))
+             ((org-agenda-files '("~/Documents/Org/Agenda/Schedule-S5-summer.org")))
+             ("~/Documents/Schedule-S5-summer.pdf"))
 
             ("w" "Work Status"
              ((todo "WAIT"
@@ -1349,42 +1349,16 @@
         "%?"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
         :unnarrowed t)
-       ("1" "databases" plain
+       ("1" "web tech" plain
         "%?"
-        :if-new (file+head "IFT-2935/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ift2935-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :if-new (file+head "IFT-3225/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ift3225-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
         :unnarrowed t)
-       ("2" "operating system" plain
+       ("2" "economy" plain
         "%?"
-        :if-new (file+head "IFT-2245/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ift2245-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-        :unnarrowed t)
-       ("3" "software analysis" plain
-        "%?"
-        :if-new (file+head "IFT-6755/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ift6755-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-        :unnarrowed t)
-       ("4" "logic 2" plain
-        "%?"
-        :if-new (file+head "PHI-2005/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: phi2005-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-        :unnarrowed t)
-       ("5" "demo2015" plain
-        "%?"
-        :if-new (file+head "Demo/IFT-2015/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: demo2015-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-        :unnarrowed t)
-       ("6" "demo1215" plain
-        "%?"
-        :if-new (file+head "Demo/IFT-1215/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: demo1215-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-        :unnarrowed t)
-       ("7" "demo1227" plain
-        "%?"
-        :if-new (file+head "Demo/IFT-1227/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: demo1227-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
         :unnarrowed t)))
-
     :config
     (org-roam-setup)))
 

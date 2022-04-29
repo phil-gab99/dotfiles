@@ -1,8 +1,8 @@
-sw_volume: 20
+sw_volume: 35
 audio_device_state:1:My Pulse Output
-state: play
-current: 33
-time: 129.327000
+state: pause
+current: 0
+time: 47.146000
 random: 1
 repeat: 1
 single: 0
@@ -11,39 +11,5 @@ crossfade: 0
 mixrampdb: 0.000000
 mixrampdelay: -1.000000
 playlist_begin
-0:Jungle Walking 2 by Tomas Skyldeberg - _Soft House Music_.mp3
-1:Cosmic Dust.mp3
-2:septahelix - The Lie (feat. Mo71, coruscate).mp3
-3:A Sonic Boom.mp3
-4:ukeSounds (ccMixter mix).mp3
-5:Two Worlds 1 by Tomas Skyldeberg - _Soft House Music_.mp3
-6:Angel Falls 1 by Tomas Skyldeberg - _Soft House Music_.mp3
-7:Crystal Kid 1 by Tomas Skyldeberg - _Soft House Music_.mp3
-8:Silver Skyline 2 by Tomas Skyldeberg - _Soft House Music_.mp3
-9:Shadowrun Returns OST 05 Blood Hounds-EPyfYsEpXE8.mp3
-10:Magnetic Fields.mp3
-11:Retrograde Orbit.mp3
-12:Two Worlds 3 by Tomas Skyldeberg - _Soft House Music_.mp3
-13:Meteor Bursts.mp3
-14:Rue Des Rosiers.mp3
-15:Climbing Through Air 2 by Tomas Skyldeberg - _Electro Music_.mp3
-16:Between Worlds (Instrumental).mp3
-17:Stories From Dreams 1 by Tomas Skyldeberg - _Soft House Music_.mp3
-18:Fireballs.mp3
-19:Mseq_-_Coriolis_Effect.mp3
-20:Silver Skyline 1 by Tomas Skyldeberg - _Soft House Music_.mp3
-21:Endless Ocean 2 - Tomas Skyldeberg.mp3
-22:Silver Skyline 3 by Tomas Skyldeberg - _Soft House Music_.mp3
-23:Climbing Through Air 3 by Tomas Skyldeberg - _Instrumental 2010s Pop, Soft House Music_.mp3
-24:Purple Island 2 by Tomas Skyldeberg - _Soft House Music_.mp3
-25:Rue Crémieux.mp3
-26:RENOVATION-Airtone.mp3
-27:Rue Montorgueil.mp3
-28:croft-manor-anniversary.mp3
-29:Stories From Dreams 2 by Tomas Skyldeberg - _Soft House Music_.mp3
-30:Mitis - Expose.mp3
-31:Angel Falls 3 by Tomas Skyldeberg - _Soft House Music_.mp3
-32:MitiS - You.mp3
-33:Two Worlds 2 by Tomas Skyldeberg - _Soft House Music_.mp3
-34:Crystal Kid 3 by Tomas Skyldeberg - _Soft House Music_.mp3
+0:croft-manor-anniversary.mp3
 playlist_end
