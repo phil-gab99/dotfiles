@@ -33,7 +33,22 @@ Check whether using emacs from phone or laptop for applying appropriate settings
 #+begin_src emacs-lisp
 
   (setq pg/is-termux
-        (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
+	(string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
+
+  (setq pg/exwm-enabled (and (not pg/is-termux)
+			     (eq window-system 'x)
+			     (seq-contains command-line-args "--use-exwm")))
+
+  ;; (when pg/exwm-enabled (require 'pg-desktop))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-exwm"
+  "emacs-desktop-environment"
 
 #+end_src
 
@@ -80,27 +95,28 @@ Check whether using emacs from phone or laptop for applying appropriate settings
   (global-display-line-numbers-mode 1)  ; Show line numbers
   (setq display-line-numbers-type 'relative)
   (setq-default fill-column 80)         ; 80 caracter column indicator
+  (setq vc-follow-symlinks t)
   (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
   (add-hook 'compilation-filter-hook
-            (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
+	    (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
   (dolist (mode '(org-mode-hook         ; Disable line numbers for some modes
-                  term-mode-hook
-                  coming-mode-hook
-                  gfm-view-mode-hook
-                  compilation-mode-hook
-                  eshell-mode-hook
-                  sql-interactive-mode-hook
-                  pdf-view-mode-hook
-                  sokoban-mode-hook
-                  doc-view-mode-hook
-                  mu4e-main-mode-hook
-                  Man-mode-hook
-                  simple-mpc-mode-hook
-                  treemacs-mode-hook
-                  vterm-mode-hook
-                  slack-mode-hook
-                  shell-mode-hook))
+		  term-mode-hook
+		  coming-mode-hook
+		  gfm-view-mode-hook
+		  compilation-mode-hook
+		  eshell-mode-hook
+		  sql-interactive-mode-hook
+		  pdf-view-mode-hook
+		  sokoban-mode-hook
+		  doc-view-mode-hook
+		  mu4e-main-mode-hook
+		  Man-mode-hook
+		  simple-mpc-mode-hook
+		  treemacs-mode-hook
+		  vterm-mode-hook
+		  slack-mode-hook
+		  shell-mode-hook))
     (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
 #+end_src
@@ -151,40 +167,48 @@ Some initializations are first set up.
 
 #+begin_src emacs-lisp
 
-    ;; (require 'package) ; Initialize package sources
+  ;; (require 'package) ; Initialize package sources
 
-    ;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-    ;;                          ("org" . "https://orgmode.org/elpa/")
-    ;;                          ("elpa" . "https://elpa.gnu.org/packages/")))
-    ;; (package-initialize)
-    ;; (setq package-enable-at-startup nil)
-    ;; (unless package-archive-contents
-    ;;   (package-refresh-contents))
+  ;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+  ;;                          ("org" . "https://orgmode.org/elpa/")
+  ;;                          ("elpa" . "https://elpa.gnu.org/packages/")))
+  ;; (package-initialize)
+  ;; (setq package-enable-at-startup nil)
+  ;; (unless package-archive-contents
+  ;;   (package-refresh-contents))
 
-    ;; (unless (package-installed-p 'use-package) 
-    ;;   (package-install 'use-package))
+  ;; (unless (package-installed-p 'use-package) 
+  ;;   (package-install 'use-package))
 
-    ;; (require 'use-package)
-    ;; (setq use-package-always-ensure t)
+  ;; (require 'use-package)
+  ;; (setq use-package-always-ensure t)
 
-    (defvar bootstrap-version)
-    (let ((bootstrap-file
-           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-          (bootstrap-version 5))
-      (unless (file-exists-p bootstrap-file)
-        (with-current-buffer
-            (url-retrieve-synchronously
-             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-             'silent 'inhibit-cookies)
-          (goto-char (point-max))
-          (eval-print-last-sexp)))
-      (load bootstrap-file nil 'nomessage))
-  
-    (straight-use-package 'use-package)
-    (setq straight-use-package-by-default t)
-    ;;(setq use-package-verbose t) For optimizing performance
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  ;;(straight-use-package 'use-package)
+  ;;(setq straight-use-package-by-default t)
+  ;;(setq use-package-verbose t) For optimizing performance
 
 #+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-use-package"
+
+#+end_src#
 
 ** Password utilities
 
@@ -205,10 +229,19 @@ Some initializations are first set up.
 
   (unless pg/is-termux
     (use-package pinentry
+      :straight nil
       :custom
       (epg-pinentry-mode 'loopback)
       :config
       (pinentry-start)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-pinentry"
 
 #+end_src
 
@@ -261,6 +294,14 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-keycast-mode"
+
+#+end_src
+
 ** Command Completion Framework
 
 *** Package | savehist
@@ -279,7 +320,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package marginalia
-    :straight t
+    :straight nil
     :after vertico
     :custom
     (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
@@ -288,12 +329,20 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-marginalia"
+
+#+end_src
+
 *** Package | consult
 
 #+begin_src emacs-lisp
 
   (use-package consult
-    :straight t
+    :straight nil
     :bind
     ("C-s" . consult-line)
     ("C-x b" . consult-buffer)
@@ -302,12 +351,20 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-consult"
+
+#+end_src
+
 *** Package | orderless
 
 #+begin_src emacs-lisp
 
   (use-package orderless
-    :straight t
+    :straight nil
     :custom
     (completion-styles '(orderless))
     (completion-category-defaults nil)
@@ -316,12 +373,20 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-orderless"
+
+#+end_src
+
 *** Package | corfu
 
 #+begin_src emacs-lisp
 
   (use-package corfu
-    :straight t
+    :straight nil
     :bind
     (:map corfu-map
           ("C-j" . corfu-next)
@@ -333,12 +398,20 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-corfu"
+
+#+end_src
+
 *** Package | vertico
 
 #+begin_src emacs-lisp
 
   (use-package vertico
-    :straight t
+    :straight nil
     :bind
     (:map vertico-map
           ("C-j" . vertico-next)
@@ -350,12 +423,20 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-vertico"
+
+#+end_src
+
 *** Package | embark
 
 #+begin_src emacs-lisp
 
   (use-package embark
-    :straight t
+    :straight nil
     :bind
     ("C-S-a" . embark-act)
     (:map minibuffer-local-map
@@ -368,6 +449,14 @@ Useful when starting out with the various keybindings and when presenting to an 
             (which-key--show-keymap "Embark" map nil nil 'no-paging)
             #'which-key--hide-popup-ignore-command)
           embark-become-indicator embark-action-indicator))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-embark"
 
 #+end_src
 
@@ -402,7 +491,15 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package prescient
-    :straight t)
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-prescient"
 
 #+end_src
 
@@ -413,10 +510,19 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package which-key
+    :straight nil
     :diminish which-key-mode
     :config
     (which-key-mode)
     (setq which-key-idle-delay 1)) ; Delay before popup in seconds
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-which-key"
 
 #+end_src
 
@@ -425,6 +531,7 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package helm
+    :straight t
     :after lsp-java
     :bind
     (:map helm-map
@@ -435,6 +542,14 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-helm"
+
+#+end_src
+
 ** UI Enhancement
 
 *** Package | diminish
@@ -442,7 +557,15 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package diminish
-    :straight t)
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-diminish"
 
 #+end_src
 
@@ -450,7 +573,16 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src emacs-lisp
 
-  (use-package all-the-icons)
+  (use-package all-the-icons
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-all-the-icons"
 
 #+end_src
 
@@ -460,6 +592,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
   (use-package ligature
     :straight nil
+    :disabled
     :load-path "~/Packages/ligature.el"
     :config
     ;; Enable ligatures
@@ -487,7 +620,7 @@ Customizes the look of the modeline for better aesthetic.
 #+begin_src emacs-lisp
 
   (use-package doom-modeline
-    :straight t
+    :straight nil
     :init (doom-modeline-mode 1)
     :custom
     (doom-modeline-height 15)
@@ -498,6 +631,14 @@ Customizes the look of the modeline for better aesthetic.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-doom-modeline"
+
+#+end_src
+
 *** Package | autothemer
 
 Important to disable current theme ~M-x disable-theme~ in order to experiment.
@@ -505,8 +646,17 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
 #+begin_src emacs-lisp
 
   (use-package autothemer
+    :straight nil
     :config
     (load-theme 'onedark-variant t))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-autothemer"
 
 #+end_src
 
@@ -534,7 +684,7 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
         (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
   (use-package dashboard
-    :straight t
+    :straight nil
     :custom
     (dashboard-set-file-icons t)
     (dashboard-items '((recents . 10)
@@ -548,11 +698,28 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-dashboard"
+
+#+end_src
+
 *** Package | page-break-lines
 
 #+begin_src emacs-lisp
 
-  (use-package page-break-lines)
+  (use-package page-break-lines
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-page-break-lines"
 
 #+end_src
 
@@ -630,11 +797,12 @@ For window configurations
 
 #+end_src
 
-*** Package | tab-bar mode
+*** Package | tab-bar
 
 #+begin_src emacs-lisp
 
   (use-package tab-bar
+    :straight nil
     :custom
     (tab-bar-show 1)
     :config
@@ -649,11 +817,19 @@ For organizing the buffer list
 #+begin_src emacs-lisp
 
   (use-package perspective
-    :straight t
+    :straight nil
     :bind
     ("C-x k" . persp-kill-buffer*)
     :config
     (unless (equal persp-mode t) (persp-mode)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-perspective"
 
 #+end_src
 
@@ -718,6 +894,15 @@ After having setup the file, make sure to run the following commands:
   Create Both
   Expunge Both
   SyncState *
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "mu"
+  "isync"
 
 #+end_src
 
@@ -812,8 +997,8 @@ Allows for notification pop-up and mode line count when receiving emails
 #+begin_src emacs-lisp
 
   (unless pg/is-termux
-    (straight-use-package 'mu4e-alert)
     (use-package mu4e-alert
+      :straight nil
       :after mu4e
       :custom
       (mu4e-alert-notify-repeated-mails t)
@@ -821,6 +1006,14 @@ Allows for notification pop-up and mode line count when receiving emails
       (mu4e-alert-set-default-style 'notifications)
       (mu4e-alert-enable-notifications)
       (mu4e-alert-enable-mode-line-display)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-mu4e-alert"
 
 #+end_src
 
@@ -833,7 +1026,16 @@ Colors matching delimiters with different colours for distinguishability.
 #+begin_src emacs-lisp
 
   (use-package rainbow-delimiters
+    :straight nil
     :hook (prog-mode . rainbow-delimiters-mode))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-rainbow-delimiters"
 
 #+end_src
 
@@ -852,6 +1054,7 @@ Colors matching delimiters with different colours for distinguishability.
 #+begin_src emacs-lisp
 
   (use-package highlight-indent-guides
+    :straight nil
     :hook (prog-mode . highlight-indent-guides-mode)
     :custom 
     (highlight-indent-guides-responsive 'stack)
@@ -859,13 +1062,30 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+end_src
 
-*** Package | undofu
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-highlight-indent-guides"
+
+#+end_src
+
+*** Package | undo-fu
 
 Undo-redo tree to use for the evil package.
 
 #+begin_src emacs-lisp
 
-  (use-package undo-fu) 
+  (use-package undo-fu
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-undo-fu"
 
 #+end_src
 
@@ -876,6 +1096,7 @@ For surrounding delimiter matching and autocompletion.
 #+begin_src emacs-lisp
 
   (use-package smartparens
+    :straight nil
     :diminish smartparens-mode
     :config
     (smartparens-global-mode))
@@ -884,6 +1105,14 @@ For surrounding delimiter matching and autocompletion.
     (sp-with-modes
         '(smartparens-mode)
       (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-smartparens"
 
 #+end_src
 
@@ -906,6 +1135,14 @@ For surrounding delimiter matching and autocompletion.
     :bind (:map outline-minor-mode-map
                 ("C-j" . outline-next-visible-heading)
                 ("C-k" . outline-previous-visible-heading)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-outshine"
 
 #+end_src
 
@@ -943,11 +1180,28 @@ For surrounding delimiter matching and autocompletion.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-rainbow-mode"
+
+#+end_src
+
 *** Package | emojify
 
 #+begin_src emacs-lisp
 
-  (use-package emojify)
+  (use-package emojify
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-emojify"
 
 #+end_src
 
@@ -960,12 +1214,21 @@ Displays full documentations of the default help function.
 #+begin_src emacs-lisp
 
   (use-package helpful
+    :straight nil
     :commands (helpful-callable helpful-variable helpful-command helpful-key)
     :bind
     ([remap describe-function] . helpful-callable)
     ([remap describe-command] . helpful-command)
     ([remap describe-variable] . helpful-variable)
     ([remap describe-key] . helpful-key))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-helpful"
 
 #+end_src
 
@@ -1052,7 +1315,16 @@ Displays icons in dired-mode.
 
   (unless pg/is-termux
     (use-package all-the-icons-dired
+      :straight nil
       :hook (dired-mode . all-the-icons-dired-mode)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-all-the-icons-dired"
 
 #+end_src
 
@@ -1119,20 +1391,6 @@ Some configurations to the built-in eshell.
 
 #+begin_src emacs-lisp
 
-  (defun pg/config-path ()
-    (let ((paths '("/home/phil-gab99/miniconda3/bin"
-                   "/home/phil-gab99/miniconda3/condabin"
-                   "/opt/pulsesecure/bin"
-                   "/home/phil-gab99/bin"
-                   "/home/phil-gab99/Visual_Paradigm_16.3/bin"
-                   "/home/phil-gab99/yakindu-sctpro"
-                   "/home/phil-gab99/PIPEv4.3.0"
-                   "/home/phil-gab99/.dotnet"
-                   "/home/phil-gab99/.cabal/bin"
-                   "/home/phil-gab99/.ghcup/bi")))
-      (dolist (path paths)
-        (add-to-list 'exec-path path))))
-
   (defun pg/configure-eshell ()
     ;; Save command history when commands are entered
     (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -1168,7 +1426,16 @@ Some configurations to the built-in eshell.
 
 #+begin_src emacs-lisp
 
-  (use-package vterm)
+  (use-package vterm
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-vterm"
 
 #+end_src
 
@@ -1185,6 +1452,7 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 #+begin_src emacs-lisp
 
   (use-package projectile
+    :straight nil
     :diminish projectile-mode
     :hook (lsp-mode . projectile-mode)
     :custom ((projectile-completion-system 'vertico))
@@ -1201,6 +1469,14 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-projectile"
+
+#+end_src
+
 *** Package | magit
 
 Allows for git commands to be applied to the current repository using the command ~C-x g~ which invokes a ~git status~ command with some additional information. Typing ~?~ invokes a list of possible commands, typing ~?~ again invokes the help function for the different commands and typing ~?~ a third time invokes the manual for the package.
@@ -1208,6 +1484,7 @@ Allows for git commands to be applied to the current repository using the comman
 #+begin_src emacs-lisp
 
   (use-package magit
+    :straight nil
     :commands (magit-status magit-get-current-branch)
     :config
     (unbind-key "M-<tab>" 'magit-mode-map)
@@ -1217,12 +1494,20 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-magit"
+
+#+end_src
+
 *** Package | git-gutter
 
 #+begin_src emacs-lisp
 
   (use-package git-gutter
-    :straight git-gutter-fringe
+    :straight nil
     :diminish git-gutter-mode
     :hook ((text-mode . git-gutter-mode)
            (prog-mode . git-gutter-mode))
@@ -1286,6 +1571,15 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-git-gutter"
+  "emacs-git-gutter-fringe"
+
+#+end_src
+
 *** Package | forge
 
 Adds git forges to magit.
@@ -1295,7 +1589,16 @@ Steps to get working:
 #+begin_src emacs-lisp
 
   (use-package forge
+    :straight nil
     :after magit)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-forge"
 
 #+end_src
 
@@ -1312,9 +1615,9 @@ The ~lsp=ui-doc-focus-frame~ command allows to access the documentation frame of
     (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
     (lsp-headerline-breadcrumb-mode))
 
-  (straight-use-package 'lsp-mode)
   (require 'lsp-completion)
   (use-package lsp-mode
+    :straight nil
     :commands (lsp lsp-deferred)
     :hook (lsp-mode . pg/lsp-mode-setup)
     :init
@@ -1326,6 +1629,14 @@ The ~lsp=ui-doc-focus-frame~ command allows to access the documentation frame of
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-lsp-mode"
+
+#+end_src
+
 *** Package | lsp-ui
 
 Displays useful doc on hover.
@@ -1333,10 +1644,19 @@ Displays useful doc on hover.
 #+begin_src emacs-lisp
 
   (use-package lsp-ui
+    :straight nil
     :hook (lsp-mode . lsp-ui-mode)
     :custom
     (lsp-ui-doc-position 'bottom)
     (lsp-ui-doc-show-with-cursor t))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-lsp-ui"
 
 #+end_src
 
@@ -1347,7 +1667,16 @@ Tree views in emacs.
 #+begin_src emacs-lisp
 
   (use-package lsp-treemacs
+    :straight nil
     :after lsp)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-lsp-treemacs"
 
 #+end_src
 
@@ -1367,6 +1696,7 @@ For auto-completions while coding.
               '(:with company-yasnippet))))
 
   (use-package company
+    :straight nil
     :after lsp-mode
     :hook (prog-mode . company-mode)
     :bind
@@ -1384,6 +1714,14 @@ For auto-completions while coding.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-company"
+
+#+end_src
+
 *** Package | company-box
 
 Includes icons for company mode suggestions.
@@ -1391,9 +1729,17 @@ Includes icons for company mode suggestions.
 #+begin_src emacs-lisp
 
   (use-package company-box
-    :straight t
+    :straight nil
     :after company
     :hook (company-mode . company-box-mode))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-company-box"
 
 #+end_src
 
@@ -1404,6 +1750,7 @@ Remembers autocomplete selections.
 #+begin_src emacs-lisp
 
   (use-package company-prescient
+    :straight t
     :after company
     :config
     (company-prescient-mode 1))
@@ -1417,7 +1764,16 @@ Syntax checking.
 #+begin_src emacs-lisp
 
   (use-package flycheck
+    :straight nil
     :hook (lsp-mode . flycheck-mode))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-flycheck"
 
 #+end_src
 
@@ -1428,6 +1784,7 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
 #+begin_src emacs-lisp
 
   (use-package dap-mode
+    :straight nil
     :after lsp-mode
     :config
     (dap-mode 1)
@@ -1442,6 +1799,14 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-dap-mode"
+
+#+end_src
+
 *** Package | plantuml-mode
 
 Allows writing textual descriptions for creating uml diagrams
@@ -1449,10 +1814,19 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package plantuml-mode
+    :straight nil
     :custom
     (plantuml-indent-level 4)
     (plantuml-jar-path "~/bin/plantuml.jar")
     (plantuml-default-exec-mode 'jar))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-plantuml-mode"
 
 #+end_src
 
@@ -1501,13 +1875,22 @@ Allows writing textual descriptions for creating uml diagrams
 
 **** Common Lisp
 
-***** Package | slime
+***** Package | sly
 
 #+begin_src emacs-lisp
 
   (use-package sly
+    :straight nil
     :custom
     (inferior-lisp-program "sbcl"))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-sly"
 
 #+end_src
 
@@ -1525,9 +1908,37 @@ Allows writing textual descriptions for creating uml diagrams
 
 **** Docker
 
+***** Package | docker
+
 #+begin_src emacs-lisp
 
-  (use-package dockerfile-mode)
+  (use-package docker
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-docker"
+
+#+end_src
+
+***** Package | dockerfile-mode
+     
+#+begin_src emacs-lisp
+
+  (use-package dockerfile-mode
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-dockerfile-mode"
 
 #+end_src
 
@@ -1535,7 +1946,16 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+begin_src emacs-lisp
 
-  (use-package git-modes)
+  (use-package git-modes
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-git-modes"
 
 #+end_src
 
@@ -1555,7 +1975,16 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package haskell-mode
+    :straight nil
     :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-haskell-mode"
 
 #+end_src
 
@@ -1564,6 +1993,7 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package lsp-haskell
+    :disabled
     :custom
     (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
 
@@ -1576,6 +2006,7 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package lsp-java
+    :straight nil
     :hook (java-mode . lsp-deferred)
     :bind
     (:map lsp-mode-map
@@ -1592,6 +2023,14 @@ Allows writing textual descriptions for creating uml diagrams
     (lsp-java-import-gradle-home "/opt/gradle/latest/bin/gradle")
     (lsp-java-import-gradle-java-home "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
     (lsp-java-server-install-dir "/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/bin/"))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-lsp-java"
 
 #+end_src
 
@@ -1616,10 +2055,9 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+begin_src emacs-lisp
 
-  (straight-use-package 'auctex)
   (require 'tex-site)
   (use-package tex
-    :straight auctex
+    :straight nil
     :config
     (add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
@@ -1631,23 +2069,40 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-auctex"
+
+#+end_src
+
 ***** Package | company-auctex
 
 #+begin_src emacs-lisp
 
   (use-package company-auctex
+    :straight nil
     :after (auctex company)
     :config
     (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-company-auctex"
+
+#+end_src
+
 **** LMC
 
+***** Package | lmc-java
+
 Custom syntax highlighting for LMC assembly language.
-
-***** Custom LMC
-
+      
 #+begin_src emacs-lisp
 
   (defvar lmc-java-mode-hook nil)
@@ -1682,29 +2137,30 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-***** Lispy LMC
+***** Package | lmc
 
 #+begin_src emacs-lisp
 
-    (define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
-      "Major mode to edit LMC assembly code."
-      :syntax-table emacs-lisp-mode-syntax-table
-      (set (make-local-variable 'font-lock-defaults)
-           '(lmc-asm-font-lock-keywords))
-      (set (make-local-variable 'indent-line-function)
-           #'lmc-asm-indent-line)
-      (set (make-local-variable 'indent-tabs-mode) nil)
-      (set (make-local-variable 'imenu-generic-expression)
-           lmc-asm-imenu-generic-expression)
-      (set (make-local-variable 'outline-regexp) lmc-asm-outline-regexp)
-      (add-hook 'completion-at-point-functions #'lmc-asm-completion nil t)
-      (set (make-local-variable 'comment-start) "#")
-      (set (make-local-variable 'comment-start-skip)
-           "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
+  (define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
+    "Major mode to edit LMC assembly code."
+    :syntax-table emacs-lisp-mode-syntax-table
+    (set (make-local-variable 'font-lock-defaults)
+         '(lmc-asm-font-lock-keywords))
+    (set (make-local-variable 'indent-line-function)
+         #'lmc-asm-indent-line)
+    (set (make-local-variable 'indent-tabs-mode) nil)
+    (set (make-local-variable 'imenu-generic-expression)
+         lmc-asm-imenu-generic-expression)
+    (set (make-local-variable 'outline-regexp) lmc-asm-outline-regexp)
+    (add-hook 'completion-at-point-functions #'lmc-asm-completion nil t)
+    (set (make-local-variable 'comment-start) "#")
+    (set (make-local-variable 'comment-start-skip)
+         "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
 
-    (use-package lmc
-      :config
-      (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
+  (use-package lmc
+    :straight t
+    :config
+    (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 #+end_src
 
@@ -1719,15 +2175,24 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-markdown-mode"
+
+#+end_src
+
 **** MIPS
 
 #+begin_src emacs-lisp
 
   (use-package mips-mode
+    :straight t
     :mode "\\.asm\\'"
     :custom
     (mips-tab-width 4))
-  
+
 #+end_src
 
 **** NuSMV
@@ -1757,6 +2222,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package python-mode
+    :straight nil
     :hook (python-mode . lsp-deferred)
     :custom
     ;;(python-shell-interpreter "python3")
@@ -1772,6 +2238,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package lsp-python-ms
+    :straight t
     :init (setq lsp-python-ms-auto-install-server t)
     :custom
     (lsp-python-ms-executable
@@ -1780,11 +2247,12 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-***** Package | jupyter
+***** TODO Package | jupyter
 
 #+begin_src emacs-lisp
 
-  (use-package jupyter)
+  (use-package jupyter
+    :disabled)
 
 #+end_src
 
@@ -1792,7 +2260,8 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp
 
-  (use-package z3-mode)
+  (use-package z3-mode
+    :straight t)
 
 #+end_src
 
@@ -1801,6 +2270,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package sql
+    :straight nil
     :hook (sql-mode . lsp-deferred)
     :config
     (add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
@@ -1844,6 +2314,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package sql-indent
+    :straight t
     :hook (sql-mode . sqlind-minor-mode)
     :config
     (setq-default sqlind-basic-offset 4))
@@ -1855,12 +2326,21 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package typescript-mode
+    :straight nil
     :mode "\\.ts\\'"
     :hook (typescript-mode . lsp-deferred)
     :config
     (require 'dap-node)
     (dap-node-setup))
-  
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-typescript-mode"
+
 #+end_src
 
 **** VHDL
@@ -1891,7 +2371,16 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp
 
-  (use-package yaml-mode)
+  (use-package yaml-mode
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-yaml-mode"
 
 #+end_src
 
@@ -1900,6 +2389,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package comment-dwim-2
+    :straight t
     :bind
     ("M-/" . comment-dwim-2)
     (:map org-mode-map
@@ -1924,6 +2414,14 @@ Allows for code snippets for different languages.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-yasnippet"
+
+#+end_src
+
 *** Package | yasnippet-snippets
 
 Collection of code snippets for yasnippet.
@@ -1936,6 +2434,14 @@ Collection of code snippets for yasnippet.
   
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-yasnippet-snippets"
+
+#+end_src
+
 ** Notification
 
 *** Package | alert
@@ -1943,8 +2449,17 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp
 
   (use-package alert
+    :straight nil
     :custom
     (alert-default-style 'notifications))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-alert"
 
 #+end_src
 
@@ -1993,8 +2508,7 @@ Version issues with download can be fixed by manually getting the package from t
     (setq evil-auto-indent nil))
 
   (use-package org
-    ;;:pin org
-    ;;:straight org-plus-contrib
+    :straight nil
     :commands (org-capture org-agenda)
     :hook (org-mode . pg/org-mode-setup)
     :config
@@ -2089,6 +2603,14 @@ Version issues with download can be fixed by manually getting the package from t
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org"
+
+#+end_src
+
 *** Package | org-appear
 
 Toggles visibility of emphasis markers.
@@ -2096,7 +2618,16 @@ Toggles visibility of emphasis markers.
 #+begin_src emacs-lisp
 
   (use-package org-appear
+    :straight nil
     :hook (org-mode . org-appear-mode))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-appear"
 
 #+end_src
 
@@ -2107,9 +2638,18 @@ Customizes the heading bullets.
 #+begin_src emacs-lisp
 
   (use-package org-bullets
+    :straight nil
     :hook (org-mode . org-bullets-mode)
     :custom
     (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-bullets"
 
 #+end_src
 
@@ -2148,6 +2688,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     (setq-local face-remapping-alist '((default variable-pitch default))))
 
   (use-package org-tree-slide
+    :straight nil
     :hook (((org-tree-slide-before-move-next org-tree-slide-before-move-previous) . org-latex-preview)
            (org-tree-slide-play . pg/presentation-setup)
            (org-tree-slide-stop . pg/presentation-end))
@@ -2170,13 +2711,30 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-tree-slide"
+
+#+end_src
+
 *** Package | ox-reveal
 
 #+begin_src emacs-lisp
 
   (use-package ox-reveal
+    :straight nil
     :custom
     (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-ox-reveal"
 
 #+end_src
 
@@ -2186,9 +2744,8 @@ Handles notifications of scheduled tasks.
 
 #+begin_src emacs-lisp
 
-  (straight-use-package 'org-notify)
   (use-package org-notify
-    :straight nil
+    :straight t
     :after org
     :custom
     (user-mail-address "philippe.gabriel.1@umontreal.ca")
@@ -2214,8 +2771,16 @@ Allows for editing an email in org mode
 #+begin_src emacs-lisp
 
   (use-package org-mime
-    :straight t
+    :straight nil
     :after org-msg)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-mime"
 
 #+end_src
 
@@ -2227,7 +2792,7 @@ Allows for markup language when composing email
 
   (setq mail-user-agent 'mu4e-user-agent)
   (use-package org-msg
-    :straight t
+    :straight nil
     :after mu4e
     :custom
     (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
@@ -2245,6 +2810,14 @@ Allows for markup language when composing email
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-msg"
+
+#+end_src
+
 *** Package | org-roam
 
 Helps with note-taking strategies.
@@ -2253,7 +2826,7 @@ Helps with note-taking strategies.
 
   (unless pg/is-termux
     (use-package org-roam
-      :straight t
+      :straight nil
       :custom
       (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
       (org-roam-directory "~/Documents/Notes")
@@ -2277,6 +2850,14 @@ Helps with note-taking strategies.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-roam"
+
+#+end_src
+
 *** Package | org-fragtog
 
 Allows display of latex fragments in org files.
@@ -2284,7 +2865,16 @@ Allows display of latex fragments in org files.
 #+begin_src emacs-lisp
 
   (use-package org-fragtog
+    :straight nil
     :hook (org-mode . org-fragtog-mode))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-org-fragtog"
 
 #+end_src
 
@@ -2301,7 +2891,16 @@ Allows line soft-wrap in org files.
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
+    :straight nil
     :hook ((org-mode gfm-view-mode) . pg/org-mode-visual-fill))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-visual-fill-column"
 
 #+end_src
 
@@ -2453,7 +3052,7 @@ Allows for viewing of pdfs.
 #+begin_src emacs-lisp
 
   (use-package pdf-tools
-    :straight t
+    :straight nil
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :custom
     (pdf-misc-print-programm "/usr/bin/lpr")
@@ -2461,11 +3060,28 @@ Allows for viewing of pdfs.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-pdf-tools"
+
+#+end_src
+
 *** Package | djvu
 
 #+begin_src emacs-lisp
 
-  (use-package djvu)
+  (use-package djvu
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-djvu"
 
 #+end_src
 
@@ -2494,6 +3110,7 @@ Allows for printing of emacs buffers.
 
   (unless pg/is-termux
     (use-package openwith
+      :straight nil
       :custom
       (large-file-warning-threshold nil)
       :config
@@ -2508,6 +3125,14 @@ Allows for printing of emacs buffers.
               "libreoffice"
               '(file))))
       (openwith-mode 1)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-openwith"
 
 #+end_src
 
@@ -2545,13 +3170,22 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package ledger-mode
-    :straight t
+    :straight nil
     :mode "\\.dat\\'"
     :hook (ledger-mode . company-mode)
     :custom
     (ledger-reconcile-default-commodity "CAD")
     (ledger-binary-path "/usr/bin/ledger")
     (ledger-clear-whole-transaction t))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "ledger"
+  "emacs-ledger-mode"
 
 #+end_src
 
@@ -2562,6 +3196,7 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package slack
+    :straight nil
     :commands slack-start
     :hook (slack-mode . company-mode)
     :config
@@ -2579,12 +3214,29 @@ Allows for printing of emacs buffers.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-slack"
+
+#+end_src
+
 *** Package | sx
 
 #+begin_src emacs-lisp
 
   (use-package sx
+    :straight nil
     :commands sx-search)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-sx"
 
 #+end_src
 
@@ -2605,12 +3257,21 @@ Allows for printing of emacs buffers.
         (decode-coding-string (buffer-string) 'utf-8))))
 
   (use-package wttrin
+    :straight nil
     :commands wttrin
     :config
     (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
     :custom
     (wttrin-default-cities '("montreal"))
     (wttrin-default-accept-language '("Accept-Language" . "en-US")))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-wttrin"
 
 #+end_src
 
@@ -2676,6 +3337,7 @@ Allows for printing of emacs buffers.
 
   (unless pg/is-termux
     (use-package emms
+      :straight nil
       :config
       (require 'emms-setup)
       (emms-all)
@@ -2696,11 +3358,20 @@ Allows for printing of emacs buffers.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-emms"
+
+#+end_src
+
 *** Package | sudoku
 
 #+begin_src emacs-lisp
 
   (use-package sudoku
+    :straight t
     :custom
     (sudoku-style 'unicode)
     (sudoku-level 'hard))
@@ -2712,6 +3383,7 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package sokoban
+    :straight t
     :bind
     (:map sokoban-mode-map
           ("<normal-state> h" . sokoban-move-left)
@@ -2743,6 +3415,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
       (add-to-list 'evil-emacs-state-modes mode)))
 
   (use-package evil
+    :straight nil
     :init
     (setq evil-want-integration t)
     (setq evil-want-keybinding nil)
@@ -2781,15 +3454,32 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-evil"
+
+#+end_src
+
 *** Package | evil-collection
 
 #+begin_src emacs-lisp
 
   (use-package evil-collection
+    :straight nil
     :after evil
     :diminish evil-collection-unimpaired-mode
     :config
     (evil-collection-init))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-evil-collection"
 
 #+end_src
 
@@ -2800,6 +3490,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 #+begin_src emacs-lisp
 
   (use-package hydra
+    :straight nil
     :defer t)
 
   (defhydra hydra-text-scale (:timeout 5)
@@ -2855,6 +3546,14 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-hydra"
+
+#+end_src
+
 *** Package | general
 
 Allows for general custom keybindings definition to create own set of various keybindings.
@@ -2862,6 +3561,7 @@ Allows for general custom keybindings definition to create own set of various ke
 #+begin_src emacs-lisp
 
   (use-package general
+    :straight nil
     :after evil
     :config
     (general-create-definer pg/leader-keys
@@ -2966,6 +3666,14 @@ Allows for general custom keybindings definition to create own set of various ke
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-general"
+
+#+end_src
+
 * Runtime Performance
 
 Here we lower back the garbage collector threshold to keep better control over memory usage.
@@ -2973,5 +3681,16 @@ Here we lower back the garbage collector threshold to keep better control over m
 #+begin_src emacs-lisp
 
   (setq gc-cons-threshold (* 2 1000 1000))
+
+#+end_src
+
+* Emacs Profile
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/emacs.scm :noweb yes
+
+  (specifications->manifest
+   '("emacs"
+     ;;"emacs-native-comp"
+     <<packages>>))
 
 #+end_src
