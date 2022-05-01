@@ -1,6 +1,40 @@
 #+title: Emacs Desktop Environment
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/desktop.el
 
+* Fonts
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; Settin gs Manager
+  "xsettingsd"
+
+  ;; GTK Themes
+  "arc-icon-theme"
+  "matcha-theme"
+  "hicolor-icon-theme"
+  "gnome-icon-theme"
+  "gnome-backgrounds"
+  "papirus-icon-theme"
+  "breeze-icons"
+
+  ;; Fonts
+  "font-fira-code"
+  "font-jetbrains-mono"
+  "font-iosevka"
+  "font-iosevka-aile"
+  "font-abattis-cantarell"
+  "font-dejavu"
+  "font-google-noto"
+  "font-gnu-freefont"
+  "font-liberation"
+  "font-awesome"
+  "font-google-material-design-icons"
+  "gs-fonts"
+
+#+end_src
+
 * Window Management
 
 Various settings and packages to alllow emacs to act as the operating system.
@@ -472,6 +506,14 @@ Below is the config file with the various parameters.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "polybar"
+
+#+end_src
+
 ** Dunst
 
 Some utility functions:
@@ -714,5 +756,721 @@ For desktop notifications
     timeout = 10
     # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "dunst"
+  "libnotify"  ; For notify-send
+
+#+end_src
+
+* User Services
+
+Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage services that run in the background when logging in.
+
+#+begin_src scheme :tangle .config/shepherd/init.scm
+
+  (define gpg-agent
+    (make <service>
+      #:provides '(gpg-agent)
+      #:respawn? #t
+      #:start (make-system-constructor "gpg-connect-agent /bye")
+      #:stop (make-system-destructor "gpgconf --kill gpg-agent")))
+
+  (define pulseaudio
+    (make <service>
+      #:provides '(pulseaudio)
+      #:respawn? #t
+      #:start (make-forkexec-constructor '("pulseaudio"))
+      #:stop  (make-kill-destructor)))
+
+  (register-services gpg-agent pulseaudio)
+  (action 'shepherd 'daemonize)
+
+  ;; Start user services
+  (for-each start '(gpg-agent pulseaudio))
+
+#+end_src
+
+* Applications
+
+** Browsers
+
+*** Nyxt
+
+*init.lisp*
+    
+#+begin_src lisp :tangle ~/.config/nyxt/init.lisp
+
+  (in-package #:nyxt-user)
+
+  (defvar *request-resource-handlers* nil
+    "The list of handlers to add to `request-resource-hook'.
+  These handlers are usually used to block/redirect the requests.")
+
+  (dolist (file
+	   (list (nyxt-init-file "evil-mode.lisp")
+		 (nyxt-init-file "status.lisp")
+		 (nyxt-init-file "adblock.lisp")
+		 (nyxt-init-file "style.lisp")))
+    (load file))
+
+  (load-after-system :nx-search-engines (nyxt-init-file "search-engines.lisp"))
+  (load-after-system :nx-freestance-handler (nyxt-init-file "freestance.lisp"))
+  ;; (load-after-system :nx-dark-reader (nyxt-init-file "dark-reader.lisp"))
+
+  (define-configuration web-buffer
+      ((request-resource-hook
+	(reduce #'hooks:add-hook
+		(mapcar #'make-handler-resource
+			,*request-resource-handlers*)
+		:initial-value %slot-default%))))
+
+  (define-configuration browser
+    ;; This is for Nyxt to never prompt me about restoring the previous session.
+      ((session-restore-prompt :never-restore)
+       (external-editor-program (list "emacsclient" "-c"))))
+
+  ;;; Those are settings that every type of buffer should share
+  (define-configuration (buffer web-buffer internal-buffer editor-buffer prompt-buffer)
+    ((default-modes (append '(evil-normal-mode) %slot-default%))
+     (download-engine :renderer)
+     (current-zoom-ratio 1.25)))
+
+  (define-configuration (prompt-buffer)
+      ((default-modes (append '(evil-insert-mode) %slot-default%))))
+
+  (define-configuration buffer
+    ((default-new-buffer-url "https://duckduckgo.com")))
+
+#+end_src
+
+*evil-mode.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/evil-mode.lisp
+
+  (in-package #:nyxt-user)
+
+  ;; * Evil normal
+  (define-mode evil-normal-mode ()
+    "Enable evil style modal bindings (normal mode).
+  To enable these bindings by default, add the mode to the list of default modes
+  in your configuration file.
+
+  Example:
+
+  \(define-configuration buffer
+    ((default-modes (append '(evil-normal-mode) %slot-default%))))
+
+  In `evil-insert-mode', CUA bindings are still available unless
+  `application-mode-p' is non-nil in `evil-insert-mode'.
+  You can also enable `application-mode' manually to forward all keybindings to
+  the web page.
+
+  See also `evil-insert-mode'."
+    ((glyph "N")
+     (previous-keymap-scheme-name
+      nil
+      :type (or keymap:scheme-name null)
+      :documentation "The previous keymap scheme that will be used when ending
+      normal-mode")
+     (keymap-scheme
+      (define-scheme "evil-normal"
+	scheme:vi-normal
+	'("i" evil-insert-mode
+	  "button1" evil-button1)))
+     (destructor
+      (lambda (mode)
+	(setf (keymap-scheme-name (buffer mode))
+	      (previous-keymap-scheme-name mode))
+	 (setf (forward-input-events-p (buffer mode)) t)))
+     (constructor
+      (lambda (mode)
+	(with-accessors
+	 ((buffer buffer)) mode
+	 (let ((evil-insert (find-submode buffer 'evil-insert-mode)))
+	   (setf (previous-keymap-scheme-name mode)
+		 (if evil-insert
+		     (previous-keymap-scheme-name evil-insert)
+		   (keymap-scheme-name buffer))))
+	 ;; Destroy evil-normal mode after setting previous-keymap-scheme-name,
+	 ;; or else we can't save the previous keymap scheme.
+	 (evil-insert-mode :activate nil :buffer buffer)
+	 (setf (keymap-scheme-name buffer) scheme:vi-normal)
+	 (setf (forward-input-events-p buffer) nil))))))
+
+  ;; * Evil insert
+  (define-mode evil-insert-mode ()
+    "Enable evil-insert-style modal bindings (insert mode).
+  See `evil-normal-mode'."
+    ((glyph "I")
+     (rememberable-p nil)
+     (previous-keymap-scheme-name nil
+      :type (or keymap:scheme-name null)
+      :documentation "The previous keymap scheme that will be used when ending
+  vi-normal-mode.")
+     (previous-evil-normal-mode nil
+      :type (or evil-normal-mode null)
+      :documentation "The `evil-normal-mode' that this insert mode is tied to.")
+     (keymap-scheme
+      (define-scheme "evil-insert"
+	scheme:vi-insert
+	'("button1" evil-button1
+	  "C-g" nyxt/prompt-buffer-mode:cancel-input
+	  "escape" switch-to-evil-normal-mode)))
+     (destructor
+      (lambda (mode)
+	(setf (keymap-scheme-name (buffer mode))
+	      (previous-keymap-scheme-name mode))))
+     (constructor
+      (lambda (mode)
+	(with-accessors ((buffer buffer)) mode
+	  (let ((evil-normal (find-submode buffer 'evil-normal-mode)))
+	    (setf (previous-keymap-scheme-name mode)
+		  (if evil-normal
+		      (previous-keymap-scheme-name evil-normal)
+		      (keymap-scheme-name buffer))
+		  (previous-evil-normal-mode mode)
+		  evil-normal))
+	  (evil-normal-mode :activate nil :buffer buffer)
+	  (setf (keymap-scheme-name buffer) scheme:vi-insert))))))
+
+
+  ;; * Insert to normal
+  (define-command switch-to-evil-normal-mode
+      (&optional (mode
+		  (find-submode (or (current-prompt-buffer) (current-buffer))
+				'evil-insert-mode)))
+    "Switch to the mode remembered to be the matching evil-normal one for this
+    MODE. See also `evil-normal-mode' and `evil-insert-mode'."
+    (when mode
+      (enable-modes (list (or (and (previous-evil-normal-mode mode)
+				   (mode-name (previous-evil-normal-mode mode)))
+			      'evil-normal-mode))
+		    (buffer mode))))
+
+  (define-command evil-button1
+      (&optional (buffer (or (current-prompt-buffer)
+			     (current-buffer))))
+    "Enable evil insert mode when focus is on an input element on the web page.
+  See also `evil-normal-mode' and `evil-insert-mode'."
+    (forward-to-renderer :window (current-window) :buffer buffer)
+    (let ((response (nyxt/web-mode:%clicked-in-input? buffer)))
+      (cond
+	((and (nyxt/web-mode:input-tag-p response)
+	      (find-submode buffer 'evil-normal-mode))
+	 (evil-insert-mode))
+	((and (not (nyxt/web-mode:input-tag-p response))
+	      (find-submode buffer 'evil-insert-mode))
+	 (evil-normal-mode)))))
+
+  (define-configuration base-mode
+      ((keymap-scheme
+	(define-scheme "evil-base"
+	  scheme:vi-normal
+	  '("C-x C-c" quit
+	    "C-x C-f" open-file
+	    "[" switch-buffer-previous
+	    "]" switch-buffer-next
+	    "M-x" execute-command
+	    "C-x k" delete-buffer
+	    "C-x b" switch-buffer
+	    "g r" reload-current-buffer
+	    "o" set-url
+	    "O" set-url-new-buffer
+	    "m u" bookmark-url
+	    "m d" delete-bookmark
+	    "m l" list-bookmarks
+	    "y u" copy-url
+	    "y t" copy-title
+	    "C-h h" help
+	    "C-h C" describe-class
+	    "C-h b" describe-bindings
+	    "C-h c" describe-command
+	    "C-h f" describe-function
+	    "C-h k" describe-key
+	    "C-h r" manual
+	    "C-h s" describe-slot
+	    "C-h t" tutorial
+	    "C-h v" describe-variable
+	    "w w" make-window
+	    "w q" delete-current-window
+	    "v" nyxt/visual-mode:visual-mode
+	    "u" reopen-buffer)))))
+
+  (define-configuration prompt-buffer
+      ((keymap-scheme
+	(define-scheme "evil-prompt"
+	  scheme:vi-normal
+	  '("C-j" select-next
+	    "C-k" select-previous
+	    "C-g" cancel-input)))))
+
+  (define-configuration nyxt/web-mode:web-mode
+      ((keymap-scheme
+	(define-scheme "evil-web"
+	  scheme:vi-normal
+	  '("C-s" nyxt/web-mode:search-buffer
+	    "H" nyxt/web-mode:history-backwards
+	    "L" nyxt/web-mode:history-forwards
+	    "y y" nyxt/web-mode:copy
+	    "p" nyxt/web-mode:paste
+	    "d d" nyxt/web-mode:cut
+	    "u" nyxt/web-mode:undo
+	    "f" nyxt/web-mode:follow-hint
+	    "F" nyxt/web-mode:follow-hint-new-buffer
+	    "C-r" nyxt/web-mode:redo
+	    "m f" nyxt/web-mode:bookmark-hint
+	    "+" nyxt/web-mode:zoom-page
+	    "hyphen" nyxt/web-mode:unzoom-page
+	    "=" nyxt/web-mode:reset-page-zoom
+	    "j" nyxt/web-mode:scroll-down
+	    "k" nyxt/web-mode:scroll-up
+	    "h" nyxt/web-mode:scroll-left
+	    "j" nyxt/web-mode:scroll-down
+	    "k" nyxt/web-mode:scroll-up
+	    "l" nyxt/web-mode:scroll-right
+	    "G" nyxt/web-mode:scroll-to-bottom
+	    "g g" nyxt/web-mode:scroll-to-top
+	    "C-d" nyxt/web-mode:scroll-page-down
+	    "C-u" nyxt/web-mode:scroll-page-up)))))
+
+  (define-configuration nyxt/visual-mode:visual-mode
+    ((keymap-scheme
+      (define-scheme "evil-visual"
+	scheme:vi-normal
+	'("h" nyxt/visual-mode:backward-char
+	  "j" nyxt/visual-mode:forward-line
+	  "k" nyxt/visual-mode:backward-line
+	  "l" nyxt/visual-mode:forward-char
+	  "w" nyxt/visual-mode:forward-word
+	  "e" nyxt/visual-mode:forward-word
+	  "b" nyxt/visual-mode:backward-word
+	  "$" nyxt/visual-mode:end-line
+	  ")" nyxt/visual-mode:forward-sentence
+	  "(" nyxt/visual-mode:backward-sentence
+	  "}" nyxt/visual-mode:forward-paragraph
+	  "{" nyxt/visual-mode:backward-paragraph
+	  "C-u" nyxt/visual-mode:forward-document
+	  "C-d" nyxt/visual-mode:backward-document
+	  "0" nyxt/visual-mode:beginning-line
+	  "C-g" nyxt/visual-mode:toggle-mark
+	  "C-c" nyxt/visual-mode:visual-mode)))))
+
+#+end_src
+
+*status.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/status.lisp
+
+  (in-package #:nyxt-user)
+
+  ;;; Display modes as short glyphs (listed below) in the mode line
+  ;;; (bottom-right of the screen).
+  (define-configuration status-buffer
+    ((glyph-mode-presentation-p t)))
+
+  (define-configuration nyxt/force-https-mode:force-https-mode ((glyph "ϕ")))
+  (define-configuration nyxt/blocker-mode:blocker-mode ((glyph "β")))
+  (define-configuration nyxt/proxy-mode:proxy-mode ((glyph "π")))
+  (define-configuration nyxt/reduce-tracking-mode:reduce-tracking-mode
+    ((glyph "τ")))
+  (define-configuration nyxt/certificate-exception-mode:certificate-exception-mode
+    ((glyph "χ")))
+  (define-configuration nyxt/style-mode:style-mode ((glyph "ϕ")))
+  (define-configuration nyxt/help-mode:help-mode ((glyph "?")))
+  (define-configuration nyxt/web-mode:web-mode ((glyph "ω")))
+  (define-configuration nyxt/auto-mode:auto-mode ((glyph "α")))
+  (define-configuration nyxt/cruise-control-mode:cruise-control-mode ((glyph "σ")))
+
+#+end_src
+
+*adblock.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/adblock.lisp
+
+  (in-package #:nyxt)
+
+  (define-configuration nyxt/blocker-mode:blocker-mode
+    ((nyxt/blocker-mode:hostlists
+      (mapcar (lambda (h)
+		;; Update every minute
+		(setf (nyxt/blocker-mode:update-interval h) 60))
+	      %slot-default%))))
+
+  (define-configuration buffer
+    ((default-modes (append '(blocker-mode noscript-mode) %slot-default%))))
+
+#+end_src
+
+*style.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/style.lisp
+
+  (in-package #:nyxt-user)
+
+  (define-configuration window
+      ((message-buffer-style
+	(str:concat
+	 %slot-default%
+	 (cl-css:css
+	  '((body
+	     :background-color "#282c34"
+	     :color "#cccccc")))))))
+  ;;; Color config for prompt-buffer (minibuffer in Emacs parlance).
+  (define-configuration prompt-buffer
+      ((style (str:concat
+	       %slot-default%
+	       (cl-css:css
+		'((body
+		   :background-color "#282c34"
+		   :color "#cccccc")
+		  ("#prompt-area"
+		   :background-color "#282c34")
+		  ;; The area you input text in.
+		  ("#input"
+		   :background-color "#cccccc")
+		  (".source-name"
+		   :color "#cccccc"
+		   :background-color "#202231")
+		  (".source-content"
+		   :background-color "#282c34")
+		  (".source-content th"
+		   :border "1px solid #202231"
+		   :background-color "#282c34")
+		  ;; The currently highlighted option.
+		  ("#selection"
+		   :background-color "#98f979"
+		   :color "#282c34")
+		  (.marked :background-color "#4682d9"
+			   :font-weight "bold"
+			   :color "#cccccc")
+		  (.selected :background-color "#282c34"
+			     :color "#cccccc")))))))
+  ;;; Internal (i.e. help, info, describe-* buffers). Usually work for
+  ;;; simple HTML display, so I'm overriding lots of things there.
+  ;;;
+  ;;; Panel buffers are the same in regards to style.
+  (define-configuration (internal-buffer panel-buffer)
+      ((style
+	(str:concat
+	 %slot-default%
+	 (cl-css:css
+	  '((title
+	     :color "#cccccc")
+	    (body
+	     :background-color "#282c34"
+	     :color "#cccccc")
+	    (hr
+	     :color "#eead0e")
+	    (a
+	     :color "#61afef")
+	    (.button
+	     :color "#ffffff"
+	     :background-color "#006fff")))))))
+  ;;; History-tree-mode is a mode used in `history-tree' and
+  ;;; `buffer-history-tree' buffers. It's not enough to customize
+  ;;; `internal-buffer' to cover it, thus I'm customizing it
+  ;;; specifically.
+  (define-configuration nyxt/history-tree-mode:history-tree-mode
+      ((nyxt/history-tree-mode::style
+	(str:concat
+	 %slot-default%
+	 (cl-css:css
+	  '((body
+	     :background-color "#282c34"
+	     :color "#cccccc")
+	    (hr
+	     :color "#cccccc")
+	    (a
+	     :color "#61afef")
+	    ;; Those three below are here to color the tree-branching list
+	    ;; markers in white.
+	    ("ul li::before"
+	     :background-color "#cccccc")
+	    ("ul li::after"
+	     :background-color "#cccccc")
+	    ("ul li:only-child::before"
+	     :background-color "#cccccc")))))))
+  (define-configuration nyxt/web-mode:web-mode
+      ;; The style of highlighted boxes, e.g. link hints.
+      ((nyxt/web-mode:highlighted-box-style
+	(cl-css:css
+	 '((".nyxt-hint.nyxt-highlight-hint"
+	    :font-weight "normal"
+	    :background "#494949"))))))
+  ;;; Status buffer is the strip above the message buffer/echo area.
+  ;;; Modeline in Emacs parlance.
+  (define-configuration status-buffer
+      ((style (str:concat
+	       %slot-default%
+	       (cl-css:css
+	      ;; Arrows on the left.
+		'(("#controls"
+		   :border-top "1px solid #ffffff"
+		   :background-color "#737373")
+		  ;; To the right of the arrows.
+		  ("#url"
+		   :background-color "#21252b"
+		   :color "#cccccc"
+		   :border-top "1px solid #cccccc")
+		  ;; Far to the right.
+		  ("#modes"
+		   :background-color "#21252b"
+		   :border-top "1px solid #cccccc")
+		  ;; The center segment.
+		  ("#tabs"
+		   :background-color "#737373"
+		   :color "#282c34"
+		   :border-top "1px solid #cccccc")))))))
+  (define-configuration nyxt/style-mode:dark-mode
+      ((style #.(cl-css:css
+		 '((*
+		    :background-color "#282c34 !important"
+		    :background-image "none !important"
+		    :color "#cccccc")
+		   (a
+		    :background-color "#282c34 !important"
+		    :background-image "none !important"
+		    :color "#556B2F !important"))))))
+
+#+end_src
+
+*freestance.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/freestance.lisp
+
+  (in-package #:nyxt-user)
+
+  (setq *request-resource-handlers*
+	(nconc *request-resource-handlers*
+	       nx-freestance-handler:*freestance-handlers*))
+
+#+end_src
+
+*dark-reader.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/dark-reader.lisp
+
+  (in-package #:nyxt-user)
+
+  (define-configuration nx-dark-reader:dark-reader-mode
+    ((nxdr:selection-color "#494949")
+     (nxdr:background-color "#282c34")
+     (nxdr:text-color "#cccccc")))
+
+  (push 'nx-dark-reader:dark-reader-mode *web-buffer-modes*)
+
+#+end_src
+
+*search-engines.lisp*
+
+#+begin_src lisp :tangle ~/.config/nyxt/search-engines.lisp
+
+  (in-package #:nyxt-user)
+
+  ;;;; This is a file with settings for my nx-search-engines extension.
+
+  ;;; My DDG settings, shared between the usual, image-search and other
+  ;;; types of DuckDuckGo.
+  (defvar *duckduckgo-keywords*
+    '(:theme :dark
+      :help-improve-duckduckgo nil
+      :homepage-privacy-tips nil
+      :privacy-newsletter nil
+      :newsletter-reminders nil
+      :install-reminders nil
+      :install-duckduckgo nil
+      :units-of-measure :metric
+      :keyboard-shortcuts t
+      :advertisements nil
+      :open-in-new-tab nil
+      :infinite-scroll t
+      :safe-search :off
+      :font-size :medium
+      :header-behavior :on-fixed
+      :font :helvetica
+      :background-color "000000"
+      :center-alignment t))
+
+  (define-configuration buffer
+      ((search-engines
+	(list
+	 ;; engines: is a prefix for `nx-search-engines',
+	 ;; it only works if you load nx-search-engines.
+	 (engines:google :shortcut "gmaps"
+			 :object :maps)
+	 (engines:wikipedia :shortcut "w")
+	 (engines:google :shortcut "g"
+			 :safe-search nil)
+	 (apply #'engines:duckduckgo-images
+		:shortcut "i" *duckduckgo-keywords*)
+	 (engines:duckduckgo-html-only :shortcut "dho")
+	 (engines:github :shortcut "git")
+	 (apply #'engines:duckduckgo
+		:shortcut "d" *duckduckgo-keywords*)))))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "nyxt"
+
+#+end_src
+
+** Audio Device Control
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "alsa-utils"
+  "pavucontrol"
+
+#+end_src
+
+** Media Players
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "mpv"
+  "youtube-dl"
+  "gstreamer"
+  "gst-plugins-base"
+  "gst-plugins-good"
+  "gst-plugins-bad"
+  "gst-plugins-ugly"
+  "gst-libav"
+  "intel-vaapi-driver"
+  "libva-utils"
+
+#+end_src
+
+** Image Viwers and Editors
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "feh"
+  "gimp"
+
+#+end_src
+
+** Flatpak
+
+Applications to install which are otherwise difficult to install Guix systems.
+    
+#+begin_src sh
+
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+flatpak install --user flathub com.spotify.Client
+flatpak install --user flathub com.valvesoftware.Steam
+flatpak install --user flathub com.microsoft.Teams
+flatpak install --user flathub com.discordapp.Discord
+flatpak install --user flathub-beta com.obsproject.Studio
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "flatpak"
+
+#+end_src
+
+** Printing
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "system-config-printer"
+
+#+end_src
+
+** Desktop Tools
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "compton"
+  "redshift"
+  "gucharmap"
+  "fontmanager"
+  "brightnessctl"
+  "xdg-utils"      ;; For xdg-open, etc
+  "xdg-dbus-proxy" ;; For Flatpak
+  "gtk+:bin"       ;; For gtk-launch
+  "glib:bin"       ;; For gio-launch-desktop
+  "shared-mime-info"
+
+#+end_src
+
+** System Tools
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "openssh"
+  "zip"
+  "unzip"
+  "trash-cli"
+
+#+end_src
+
+** Xorg Tools
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "xev"
+  "xset"
+  "xrdb"
+  "xhost"
+  "xmodmap"
+  "setxkbmap"
+  "xrandr"
+  "arandr"
+  "xss-lock"
+  "libinput"
+  "xinput"
+
+#+end_src
+
+** Bluetooth Setup
+
+If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~, enter these commands at the ~bluetoothctl~ prompt:
+
+#+begin_src sh
+
+  system-alias "my-hostname" # To configure your laptop's device name
+  default-agent
+  power on
+  scan on
+  # Wait for your device to appear
+  pair 04:52:C7:5E:5C:A8
+  trust 04:52:C7:5E:5C:A8 # To enable auto-connect
+  connect 04:52:C7:5E:5C:A8
+
+#+end_src
+
+* Desktop Profile
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/desktop.scm :noweb yes
+
+  (specifications->manifest
+   '(<<packages>>))
 
 #+end_src
