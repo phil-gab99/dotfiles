@@ -1,7 +1,0 @@
-(declare-const p Bool)
-(declare-const q Bool)
-
-(assert (=> p q))
-
-(check-sat)
-(get-model)

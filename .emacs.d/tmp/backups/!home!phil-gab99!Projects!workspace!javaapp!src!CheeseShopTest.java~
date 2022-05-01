@@ -1,9 +1,0 @@
-
-public class CheeseShopTest {
-
-    @Test
-    public void emptyShop() throws Exception {
-        CheeseShop cheeseshop = new CheeseShop();
-        assertEquals(0, cheeseshop.getCustomers().size());
-    }
-}

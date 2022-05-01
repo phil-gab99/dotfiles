@@ -1,5 +1,0 @@
-#!/bin/bash
-# Enable safe charging limits.
-echo 60 > /sys/class/power_supply/BAT0/charge_control_start_threshold
-echo 81 > /sys/class/power_supply/BAT0/charge_control_end_threshold
-echo "Safe Charge Enabled - 80%"

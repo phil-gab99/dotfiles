@@ -1,4 +1,0 @@
-(declare-const p Bool)
-
-(check-sat)
-(get-model)

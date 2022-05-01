@@ -1,7 +1,0 @@
-library IEEE;
-use IEEE.std_logic_1164.all;
-
-entity subber is
-  port(A, B: in STD_LOGIC;
-       Y: out STD_LOGIC);
-end subber;

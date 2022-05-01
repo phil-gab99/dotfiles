@@ -1,6 +1,0 @@
-.button {
-    -fx-background-radius: 10;
-    -fx-background-color: rgba(193, 143, 255, 255);
-    -fx-font-weight: bold;
-    -fx-font-size: 20px;
-}

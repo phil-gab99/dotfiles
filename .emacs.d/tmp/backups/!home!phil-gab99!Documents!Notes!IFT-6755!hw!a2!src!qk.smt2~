@@ -1,9 +1,0 @@
-(declare-sort A)
-(declare-sort B)
-
-(declare-fun P(A) Bool)
-(declare-fun Q(B) Bool)
-
-(define-fun premise() Bool
-            (forall ((x A))
-                    (and (P x) (Q x))))

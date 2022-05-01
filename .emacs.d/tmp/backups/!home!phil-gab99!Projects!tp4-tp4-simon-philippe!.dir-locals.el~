@@ -1,7 +1,0 @@
-;;; Directory Local Variables
-;;; For more information see (info "(emacs) Directory Variables")
-
-((nil . ((projectile-project-root . "~/Projects/tp4-tp4-simon-philippe")
-         (projectile-run-use-comint-mode . t)
-         (projectile-project-run-cmd . "./run.sh ")
-         (projectile-project-compilation-cmd . "./compile.sh "))))

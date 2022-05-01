@@ -1,7 +1,0 @@
-
-\begin{align*}
-  \mathrm{dep5\_emps} & \leftarrow \sigma_{\mathrm{dno} = 5} (\mathrm{employee}) \\
-  \mathrm{result1} & \leftarrow \pi_\mathrm{ssn}(\mathrm{dep5\_emps}) \\
-  \mathrm{result2} & \leftarrow \rho_\mathrm{ssn} \pi_\mathrm{superssn}(\mathrm{dep5\_emps}) \\
-  \mathrm{result} & \leftarrow \mathrm{result1} \cup \mathrm{result2}
-\end{align*}

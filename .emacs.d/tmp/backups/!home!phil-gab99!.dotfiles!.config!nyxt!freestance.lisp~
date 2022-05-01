@@ -1,5 +1,0 @@
-(in-package #:nyxt-user)
-
-(setq *my-request-resource-handlers*
-      (nconc *my-request-resource-handlers*
-             nx-freestance-handler:*freestance-handlers*))
