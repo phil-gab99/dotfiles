@@ -1,2 +1,9 @@
 auto-save-list
 extrapkgs
+.org-id-locations
+forge-database.sqlite
+places
+projectile-bookmarks.eld
+tmp
+transient
+straight

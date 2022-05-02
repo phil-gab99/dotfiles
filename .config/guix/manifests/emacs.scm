@@ -1,13 +1,15 @@
 (specifications->manifest
- '("emacs"
+ '("emacs-next-pgtk"
    ;;"emacs-native-comp"
    
    "emacs-exwm"
    "emacs-desktop-environment"
    
+   "emacs-use-package"
+   
    "emacs-pinentry"
    
-   "emacs-keycast-mode"
+   "emacs-keycast"
    
    "emacs-marginalia"
    

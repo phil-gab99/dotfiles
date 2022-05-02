@@ -1,3 +1,4 @@
+(require 'subr-x)
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
 (server-start)
@@ -23,7 +24,7 @@
 (global-set-key (kbd "M-<tab>") 'other-window)                     ; Bind alt tab to buffer switching
 
 ;; Set frame transparency
-(unless pg/is-termux
+(unless (or pg/is-termux (not pg/exwm-enabled))
   (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
   (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
@@ -312,13 +313,13 @@
                                   (redisplay)
                                   (run-hooks 'dashboard-after-initialize-hook))))
 
-(defun pg/display-startup-time ()
-  (let ((package-count 0) (time (float-time (time-subtract after-init-time before-init-time))))
-    (when (boundp 'straight--profile-cache)
-      (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
-    (if (zerop package-count)
-        (format "Emacs started in %.2f" time)
-      (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
+;; (defun pg/display-startup-time ()
+;;   (let ((package-count 0) (time (float-time (time-subtract after-init-time before-init-time))))
+;;     (when (boundp 'straight--profile-cache)
+;;       (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
+;;     (if (zerop package-count)
+;;         (format "Emacs started in %.2f" time)
+;;       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
 (use-package dashboard
   :straight nil
@@ -327,8 +328,7 @@
   (dashboard-items '((recents . 10)
                      (projects . 10)
                      (agenda . 5)))
-  (dashboard-init-info #'pg/display-startup-time)
-
+  ;; (dashboard-init-info #'pg/display-startup-time)
   :config
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
   (pg/dashboard-setup-startup-hook))
@@ -410,12 +410,8 @@
 
 (unless pg/is-termux
   (use-package mu4e
-    :straight '(mu :type git
-                   :host github
-                   :branch "release/1.6"
-                   :repo "djcb/mu"
-                   :files ("mu4e/*")
-                   :pre-build (("./autogen.sh") ("make")))
+    :straight t
+    :disabled
     :commands mu4e
     ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
     :config
@@ -551,6 +547,7 @@
           (selectric-make-sound (format "%sping.wav" selectric-files-path))))))
 
 (use-package selectric-mode
+  :straight t
   :config
   (fset #'selectric-type-sound #'pg/selectric-type-sound))
 
@@ -868,6 +865,7 @@
   :hook ((c-mode c++-mode objc-mode) . lsp-deferred))
 
 (use-package company-c-headers
+  :straight t
   :after (cc-mode company)
   :config
   (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
@@ -1052,45 +1050,47 @@
   :disabled)
 
 (use-package z3-mode
-  :straight t)
+  :straight t
+  :disabled)
 
+(require 'lsp-sqls)
 (use-package sql
-  :straight nil
-  :hook (sql-mode . lsp-deferred)
-  :config
-  (add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
-  :custom
-  ;; (sql-postgres-login-params '((user :default "phil-gab99")
-  ;;                              (database :default "phil-gab99")
-  ;;                              (server :default "localhost")
-  ;;                              (port :default 5432)))
+   :straight nil
+   :hook (sql-mode . lsp-deferred)
+   :config
+   (add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
+   :custom
+   ;; (sql-postgres-login-params '((user :default "phil-gab99")
+   ;;                              (database :default "phil-gab99")
+   ;;                              (server :default "localhost")
+   ;;                              (port :default 5432)))
 
-  (sql-connection-alist
-   '((main (sql-product 'postgres)
-           (sql-port 5432)
-           (sql-server "localhost")
-           (sql-user "phil-gab99")
-           (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-           (sql-database "phil-gab99"))
-     (school (sql-product 'postgres)
-             (sql-port 5432)
-             (sql-server "localhost")
-             (sql-user "phil-gab99")
-             (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-             (sql-database "ift2935"))))
+   (sql-connection-alist
+    '((main (sql-product 'postgres)
+            (sql-port 5432)
+            (sql-server "localhost")
+            (sql-user "phil-gab99")
+            (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+            (sql-database "phil-gab99"))
+      (school (sql-product 'postgres)
+              (sql-port 5432)
+              (sql-server "localhost")
+              (sql-user "phil-gab99")
+              (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+              (sql-database "ift2935"))))
 
-  (lsp-sqls-server "~/go/bin/sqls")
-  (setq lsp-sqls-connections
-   (list
-    (list
-     (cl-pairlis '(driver dataSourceName)
-                 (list '("postgresql") (concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                        (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432)
-                                        " dbname=phil-gab99 sslmode=disable")))
-     (cl-pairlis '(driver dataSourceName)
-                 (list '("postgresql") (concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                        (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432)
-                                        " dbname=ift2935 sslmode=disable")))))))
+   (lsp-sqls-server "~/go/bin/sqls")
+   (setq lsp-sqls-connections
+         (list
+          (list
+           (cl-pairlis '(driver dataSourceName)
+                       (list '("postgresql") (concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
+                                                     (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432)
+                                                     " dbname=phil-gab99 sslmode=disable")))
+           (cl-pairlis '(driver dataSourceName)
+                       (list '("postgresql") (concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
+                                                     (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432)
+                                                     " dbname=ift2935 sslmode=disable")))))))
 
 (use-package sql-indent
   :straight t
@@ -1187,8 +1187,8 @@
   (setq org-ellipsis " ▾")
   (unless pg/is-termux
     (setq org-agenda-files ; Files considered by org-agenda
-          '("~/Documents/Org/Agenda/"
-            "~/Documents/Org/Recurrent/")))
+          '("~/Documents/Org/Agenda/")))
+            ;; "~/Documents/Org/Recurrent/")))
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -1334,6 +1334,7 @@
 
 (use-package ox-reveal
   :straight nil
+  :disabled
   :custom
   (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
 
