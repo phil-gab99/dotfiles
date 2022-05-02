@@ -1,5 +1,5 @@
 #+title: Emacs Desktop Environment
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/pg-desktop.el
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
 * Fonts
 
@@ -106,13 +106,13 @@ Workspaces:
     (pg/run-in-background "dunst")
     (pg/run-in-background "nm-applet")
     (pg/run-in-background "pasystray")
+    (pg/run-in-background "udiskie -t")
     (pg/run-in-background "blueman-applet"))
 
-  (straight-use-package 'exwm)
   (require 'exwm-config)
   (require 'exwm-randr)
   (use-package exwm
-    :straight t
+    :straight nil
     :custom
     (exwm-manage-configurations
      '(((string-equal exwm-class-name "Nyxt")
@@ -213,16 +213,10 @@ Allows for some of the keybindings to use while in exwm.
 
 #+end_src
 
-#+begin_src emacs-lisp
-
-  (provide 'pg-desktop)
- 
-#+end_src
-
 ** Desktop environment
 
 It is necessary to run the following command for creating a sym link for the below file:
-~sudo ln -f ~/.emacs.d/exwm/EXWM.desktop /usr/share/xsessions/EXWM.desktop~
+~sudo ln -f ~~/.emacs.d/exwm/EXWM.desktop /usr/share/xsessions/EXWM.desktop~
 
 #+begin_src conf :tangle ~/.emacs.d/exwm/EXWM.desktop :mkdirp yes
 
@@ -237,36 +231,48 @@ It is necessary to run the following command for creating a sym link for the bel
 
 #+end_src
 
+** Xsession
+
+How the launcher script will be called. Do not forget to make the symlink to the file if there is no need to pass by the gnome WM:
+
+=ln -sf ~/.dotfiles/.xsession ~/.xsession=
+
+#+begin_src sh  :tangle ~/.dotfiles/.xsession :shebang #!/bin/sh
+
+  ~/.emacs.d/exwm/start-exwm.sh
+
+#+end_src
+
 ** Launcher script
 
 Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment configuration.
 
-#+begin_src shell :tangle ~/.emacs.d/exwm/start-exwm.sh :mkdirp yes :shebang #!/bin/bash
+#+begin_src sh :tangle ~/.emacs.d/exwm/start-exwm.sh :mkdirp yes :shebang #!/bin/sh
 
   . ~/.profile
 
-  # xset dpms 0 0 0 && xset -dpms && xset s off && xset s noblank # Prevent screen blank
+  xset dpms 0 0 0 && xset -dpms && xset s off && xset s noblank # Prevent screen blank
 
-  # xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Tapping Enabled" 1
-  # xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
-  # xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Natural Scrolling Enabled" 1
-  # xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 1
+  xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Tapping Enabled" 1
+  xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
+  xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Natural Scrolling Enabled" 1
+  xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 1
 
   start_daemons () {
       if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
           shepherd
       fi
-      # eval "$(gnome-keyring-daemon --start --components=ssh)"
+      eval "$(gnome-keyring-daemon --start --components=ssh)"
       compton &
       xsettingsd &
-      # gnome-keyring-daemon --start --components=pkcs11 &
-      # gnome-keyring-daemon --start --components=secrets &
+      gnome-keyring-daemon --start --components=pkcs11 &
+      gnome-keyring-daemon --start --components=secrets &
       # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
       export SSH_AUTH_SOCK
   }
 
   exwm () {
-      export EXWM=1
+      # export EXWM=1
       # Disable access control for the current user.
       xhost "+SI:localuser:$USER"
 
@@ -274,10 +280,13 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
       export _JAVA_AWT_WM_NONREPARENTING=1
 
       # Set default cursor.
-      # xsetroot -cursor_name left_ptr
+      xsetroot -cursor_name left_ptr
 
       # Set keyboard repeat rate.
       # xset r rate 200 60
+
+      # For debugging
+      # xterm
 
       # Finally start Emacs
       # exec dbus-launch emacs --eval "(lerax-exwm-start nil t)"
@@ -310,6 +319,12 @@ In order to setup exwm for multiple monitors, the ~arandr~ and ~autorandr~ appli
 - ~autorandr --save profile~ - Saves the current display setup under the name profile
 - ~autorandr --change~ - Changes to the appopriate profile with respect to the current display setup; the profile name can be explicitly given to change to it
 - ~autorandr~ - Displays the created profiles
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "autorandr"
+
+#+end_src
 
 ** Polybar
 
@@ -1342,6 +1357,16 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
   "alsa-utils"
   "pavucontrol"
+  "pasystray"
+  "blueman"
+
+#+end_src
+
+** Disk Mounting
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "udiskie"
 
 #+end_src
 
@@ -1414,7 +1439,6 @@ flatpak install --user flathub-beta com.obsproject.Studio
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "compton"
-  "redshift"
   "gucharmap"
   "fontmanager"
   "brightnessctl"
@@ -1478,11 +1502,17 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 
 * Desktop Profile
 
+#+begin_src emacs-lisp
+
+  (provide 'pg-desktop)
+
+#+end_src
+
 #+begin_src scheme :tangle ~/.config/guix/manifests/desktop.scm :noweb yes
 
-  (specifications->manifest
-   '(
-     <<packages>>
-     ))
+    (specifications->manifest
+     '(
+       <<packages>>
+       ))
 
 #+end_src

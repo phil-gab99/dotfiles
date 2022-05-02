@@ -1,1 +1,2 @@
-/home/phil-gab99/.xsession
+#!/bin/sh
+~/.emacs.d/exwm/start-exwm.sh

@@ -27,6 +27,8 @@
    "font-google-material-design-icons"
    "gs-fonts"
    
+   "autorandr"
+   
    "polybar"
    
    "dunst"
@@ -36,6 +38,10 @@
    
    "alsa-utils"
    "pavucontrol"
+   "pasystray"
+   "blueman"
+   
+   "udiskie"
    
    "mpv"
    "youtube-dl"
@@ -56,7 +62,6 @@
    "system-config-printer"
    
    "compton"
-   "redshift"
    "gucharmap"
    "fontmanager"
    "brightnessctl"

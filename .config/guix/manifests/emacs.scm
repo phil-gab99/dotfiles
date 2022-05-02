@@ -1,11 +1,11 @@
 (specifications->manifest
- '("emacs-next-pgtk"
-   ;;"emacs-native-comp"
+ '(;;"emacs-next"
+   "emacs"
+   
+   "emacs-use-package"
    
    "emacs-exwm"
    "emacs-desktop-environment"
-   
-   "emacs-use-package"
    
    "emacs-pinentry"
    

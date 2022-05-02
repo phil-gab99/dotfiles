@@ -46,13 +46,13 @@
   (pg/run-in-background "dunst")
   (pg/run-in-background "nm-applet")
   (pg/run-in-background "pasystray")
+  (pg/run-in-background "udiskie -t")
   (pg/run-in-background "blueman-applet"))
 
-(straight-use-package 'exwm)
 (require 'exwm-config)
 (require 'exwm-randr)
 (use-package exwm
-  :straight t
+  :straight nil
   :custom
   (exwm-manage-configurations
    '(((string-equal exwm-class-name "Nyxt")
@@ -142,8 +142,6 @@
   (desktop-environment-brightness-normal-increment "5%+")
   (desktop-environment-brightness-normal-decrement "5%-"))
 
-(provide 'pg-desktop)
-
 (defvar pg/polybar-process nil
   "Holds the process of the running Polybar instance, if any")
 
@@ -184,3 +182,5 @@
 (defun pg/enable-desktop-notifications ()
   (interactive)
   (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\""))
+
+(provide 'pg-desktop)
