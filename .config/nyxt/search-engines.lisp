@@ -30,13 +30,13 @@
        ;; engines: is a prefix for `nx-search-engines',
        ;; it only works if you load nx-search-engines.
        (engines:google :shortcut "gmaps"
-                       :object :maps)
+		       :object :maps)
        (engines:wikipedia :shortcut "w")
        (engines:google :shortcut "g"
-                       :safe-search nil)
+		       :safe-search nil)
        (apply #'engines:duckduckgo-images
-              :shortcut "i" *duckduckgo-keywords*)
+	      :shortcut "i" *duckduckgo-keywords*)
        (engines:duckduckgo-html-only :shortcut "dho")
        (engines:github :shortcut "git")
        (apply #'engines:duckduckgo
-              :shortcut "d" *duckduckgo-keywords*)))))
+	      :shortcut "d" *duckduckgo-keywords*)))))

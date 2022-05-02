@@ -2,4 +2,4 @@
 
 (setq *request-resource-handlers*
       (nconc *request-resource-handlers*
-             nx-freestance-handler:*freestance-handlers*))
+	     nx-freestance-handler:*freestance-handlers*))

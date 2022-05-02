@@ -782,7 +782,7 @@ For desktop notifications
 
 Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage services that run in the background when logging in.
 
-#+begin_src scheme :tangle .config/shepherd/init.scm
+#+begin_src scheme :tangle ~/.config/shepherd/init.scm :mkdirp yes
 
   (define gpg-agent
     (make <service>
@@ -1481,6 +1481,8 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 #+begin_src scheme :tangle ~/.config/guix/manifests/desktop.scm :noweb yes
 
   (specifications->manifest
-   '(<<packages>>))
+   '(
+     <<packages>>
+     ))
 
 #+end_src
