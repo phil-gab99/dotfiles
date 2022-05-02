@@ -106,8 +106,7 @@ Workspaces:
     (pg/run-in-background "dunst")
     (pg/run-in-background "nm-applet")
     (pg/run-in-background "pasystray")
-    (pg/run-in-background "udiskie -t")
-    (pg/run-in-background "blueman-applet"))
+    (pg/run-in-background "udiskie -t"))
 
   (require 'exwm-config)
   (require 'exwm-randr)
@@ -1358,7 +1357,6 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   "alsa-utils"
   "pavucontrol"
   "pasystray"
-  "blueman"
 
 #+end_src
 
@@ -1406,13 +1404,13 @@ Applications to install which are otherwise difficult to install Guix systems.
     
 #+begin_src sh
 
-flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-flatpak install --user flathub com.spotify.Client
-flatpak install --user flathub com.valvesoftware.Steam
-flatpak install --user flathub com.microsoft.Teams
-flatpak install --user flathub com.discordapp.Discord
-flatpak install --user flathub-beta com.obsproject.Studio
+  flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+  flatpak install --user flathub com.spotify.Client
+  flatpak install --user flathub com.valvesoftware.Steam
+  flatpak install --user flathub com.microsoft.Teams
+  flatpak install --user flathub com.discordapp.Discord
+  flatpak install --user flathub-beta com.obsproject.Studio
 
 #+end_src
 

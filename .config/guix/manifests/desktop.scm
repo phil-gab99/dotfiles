@@ -39,7 +39,6 @@
    "alsa-utils"
    "pavucontrol"
    "pasystray"
-   "blueman"
    
    "udiskie"
    
