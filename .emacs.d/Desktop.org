@@ -1398,7 +1398,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 #+end_src
 
-** Flatpak
+** Flatpak and Nix
 
 Applications to install which are otherwise difficult to install Guix systems.
     

@@ -127,6 +127,9 @@
 (setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
+(use-package guix
+  :straight nil)
+
 (use-package auth-source
   :straight nil
   :custom
@@ -418,7 +421,6 @@
 (unless pg/is-termux
   (use-package mu4e
     :straight t
-    :disabled
     :commands mu4e
     ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
     :config
@@ -841,7 +843,6 @@
   (dap-mode 1)
   (dap-ui-mode 1)
   (dap-ui-controls-mode 1))
-
 
 ;;(general-define-key
 ;;  :keymaps 'lsp-mode-map

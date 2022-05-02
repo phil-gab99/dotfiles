@@ -379,8 +379,8 @@ This script makes it easy to update all channels to the latest commit based on a
 
 #+begin_src conf :tangle ~/.nix-channels
 
-  # https://nixos.org/channels/nixpkgs-unstable nixpkgs
-  
+  https://nixos.org/channels/nixpkgs-unstable nixpkgs
+
 #+end_src
 
 The channel needs to be updated before any packages can be installed:

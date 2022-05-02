@@ -1,0 +1,12 @@
+(specifications->manifest
+ '("gcc-toolchain"
+   "make"
+   "pkg-config"
+   "texinfo"
+   "llvm"
+   "lld"
+   "meson"
+   "clang"
+   "file"
+   "elfutils"
+   "go"))

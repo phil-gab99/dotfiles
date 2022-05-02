@@ -7,6 +7,8 @@
    "emacs-exwm"
    "emacs-desktop-environment"
    
+   "emacs-guix"
+   
    "emacs-pinentry"
    
    "emacs-keycast"

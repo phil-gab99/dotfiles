@@ -228,6 +228,27 @@ Some settings to manage where emacs stores backup files (such as the ~~~ backup 
 
 * Packages
 
+** System Management
+
+*** Package | guix
+
+Emacs interface for guix package manager.
+
+#+begin_src emacs-lisp
+
+  (use-package guix
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-guix"
+
+#+end_src
+
 ** Password utilities
 
 *** Package | auth-source
@@ -878,8 +899,8 @@ After having setup the file, make sure to run the following commands:
   Inbox /home/phil-gab99/Mail/Main/Inbox
 
   Channel hotmail
-  Master :hotmail-remote:
-  Slave :hotmail-local:
+  Far :hotmail-remote:
+  Near :hotmail-local:
   Patterns *
   CopyArrivalDate yes
   Create Both
@@ -904,8 +925,8 @@ After having setup the file, make sure to run the following commands:
   Inbox /home/phil-gab99/Mail/University/Inbox
 
   Channel umontreal
-  Master :umontreal-remote:
-  Slave :umontreal-local:
+  Far :umontreal-remote:
+  Near :umontreal-local:
   Patterns *
   CopyArrivalDate yes
   Create Both
@@ -930,7 +951,6 @@ After having setup the file, make sure to run the following commands:
   (unless pg/is-termux
     (use-package mu4e
       :straight t
-      :disabled
       :commands mu4e
       ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
       :config
@@ -1807,7 +1827,6 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
     (dap-ui-mode 1)
     (dap-ui-controls-mode 1))
 
-
   ;;(general-define-key
   ;;  :keymaps 'lsp-mode-map
   ;;  :prefix lsp-keymap-prefix
@@ -1875,6 +1894,25 @@ Allows writing textual descriptions for creating uml diagrams
     (lsp-clangd-version "13.0.0")
     (company-clang-executable "/usr/lib/clang")
     :hook ((c-mode c++-mode objc-mode) . lsp-deferred))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/cc.scm :noweb yes
+
+  (specifications->manifest
+   '("gcc-toolchain"
+     "make"
+     "pkg-config"
+     "texinfo"
+     "llvm"
+     "lld"
+     "meson"
+     "clang"
+     "file"
+     "elfutils"
+     "go"))
 
 #+end_src
 
