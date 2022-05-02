@@ -5,6 +5,12 @@
 (setq pg/is-termux
       (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
 
+(setq pg/exwm-enabled (and (not pg/is-termux)
+			   (eq window-system 'x)
+			   (seq-contains command-line-args "--use-exwm")))
+
+(when pg/exwm-enabled (require 'pg-desktop))
+
 (setq inhibit-startup-message t)                                   ; Disable startup message
 (setq scroll-conservatively 1000)                                  ; Slow scrolling
 (unless pg/is-termux
@@ -36,27 +42,28 @@
 (global-display-line-numbers-mode 1)  ; Show line numbers
 (setq display-line-numbers-type 'relative)
 (setq-default fill-column 80)         ; 80 caracter column indicator
+(setq vc-follow-symlinks t)
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 (add-hook 'compilation-filter-hook
-          (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
+	  (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
 (dolist (mode '(org-mode-hook         ; Disable line numbers for some modes
-                term-mode-hook
-                coming-mode-hook
-                gfm-view-mode-hook
-                compilation-mode-hook
-                eshell-mode-hook
-                sql-interactive-mode-hook
-                pdf-view-mode-hook
-                sokoban-mode-hook
-                doc-view-mode-hook
-                mu4e-main-mode-hook
-                Man-mode-hook
-                simple-mpc-mode-hook
-                treemacs-mode-hook
-                vterm-mode-hook
-                slack-mode-hook
-                shell-mode-hook))
+		term-mode-hook
+		coming-mode-hook
+		gfm-view-mode-hook
+		compilation-mode-hook
+		eshell-mode-hook
+		sql-interactive-mode-hook
+		pdf-view-mode-hook
+		sokoban-mode-hook
+		doc-view-mode-hook
+		mu4e-main-mode-hook
+		Man-mode-hook
+		simple-mpc-mode-hook
+		treemacs-mode-hook
+		vterm-mode-hook
+		slack-mode-hook
+		shell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 120)
@@ -101,15 +108,15 @@
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+;;(straight-use-package 'use-package)
+;;(setq straight-use-package-by-default t)
 ;;(setq use-package-verbose t) For optimizing performance
 
 (use-package auth-source
@@ -119,6 +126,7 @@
 
 (unless pg/is-termux
   (use-package pinentry
+    :straight nil
     :custom
     (epg-pinentry-mode 'loopback)
     :config
@@ -157,7 +165,7 @@
   (savehist-mode))
 
 (use-package marginalia
-  :straight t
+  :straight nil
   :after vertico
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
@@ -165,7 +173,7 @@
   (marginalia-mode))
 
 (use-package consult
-  :straight t
+  :straight nil
   :bind
   ("C-s" . consult-line)
   ("C-x b" . consult-buffer)
@@ -173,7 +181,7 @@
         ("C-r" . consult-history)))
 
 (use-package orderless
-  :straight t
+  :straight nil
   :custom
   (completion-styles '(orderless))
   (completion-category-defaults nil)
@@ -181,7 +189,7 @@
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package corfu
-  :straight t
+  :straight nil
   :bind
   (:map corfu-map
         ("C-j" . corfu-next)
@@ -192,7 +200,7 @@
   (corfu-global-mode))
 
 (use-package vertico
-  :straight t
+  :straight nil
   :bind
   (:map vertico-map
         ("C-j" . vertico-next)
@@ -203,7 +211,7 @@
   (vertico-mode))
 
 (use-package embark
-  :straight t
+  :straight nil
   :bind
   ("C-S-a" . embark-act)
   (:map minibuffer-local-map
@@ -232,15 +240,17 @@
               :repo "SebastienWae/app-launcher"))
 
 (use-package prescient
-  :straight t)
+  :straight nil)
 
 (use-package which-key
+  :straight nil
   :diminish which-key-mode
   :config
   (which-key-mode)
   (setq which-key-idle-delay 1)) ; Delay before popup in seconds
 
 (use-package helm
+  :straight t
   :after lsp-java
   :bind
   (:map helm-map
@@ -250,12 +260,14 @@
   (helm-mode 1))
 
 (use-package diminish
-  :straight t)
+  :straight nil)
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :straight nil)
 
 (use-package ligature
   :straight nil
+  :disabled
   :load-path "~/Packages/ligature.el"
   :config
   ;; Enable ligatures
@@ -275,7 +287,7 @@
   (global-ligature-mode 't))
 
 (use-package doom-modeline
-  :straight t
+  :straight nil
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-height 15)
@@ -285,6 +297,7 @@
   (doom-modeline-mu4e t))
 
 (use-package autothemer
+  :straight nil
   :config
   (load-theme 'onedark-variant t))
 
@@ -308,7 +321,7 @@
       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
 (use-package dashboard
-  :straight t
+  :straight nil
   :custom
   (dashboard-set-file-icons t)
   (dashboard-items '((recents . 10)
@@ -320,7 +333,8 @@
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
   (pg/dashboard-setup-startup-hook))
 
-(use-package page-break-lines)
+(use-package page-break-lines
+  :straight nil)
 
 (use-package bufler
   :straight t
@@ -381,13 +395,14 @@
   (winner-mode))
 
 (use-package tab-bar
+  :straight nil
   :custom
   (tab-bar-show 1)
   :config
   (tab-bar-mode))
 
 (use-package perspective
-  :straight t
+  :straight nil
   :bind
   ("C-x k" . persp-kill-buffer*)
   :config
@@ -472,8 +487,8 @@
     ))
 
 (unless pg/is-termux
-  (straight-use-package 'mu4e-alert)
   (use-package mu4e-alert
+    :straight nil
     :after mu4e
     :custom
     (mu4e-alert-notify-repeated-mails t)
@@ -483,6 +498,7 @@
     (mu4e-alert-enable-mode-line-display)))
 
 (use-package rainbow-delimiters
+  :straight nil
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package abbrev
@@ -490,14 +506,17 @@
   :diminish abbrev-mode)
 
 (use-package highlight-indent-guides
+  :straight nil
   :hook (prog-mode . highlight-indent-guides-mode)
   :custom 
   (highlight-indent-guides-responsive 'stack)
   (highlight-indent-guides-method 'character))
 
-(use-package undo-fu)
+(use-package undo-fu
+  :straight nil)
 
 (use-package smartparens
+  :straight nil
   :diminish smartparens-mode
   :config
   (smartparens-global-mode))
@@ -545,9 +564,11 @@
           scss-mode
           less-css-mode) . rainbow-mode))
 
-(use-package emojify)
+(use-package emojify
+  :straight nil)
 
 (use-package helpful
+  :straight nil
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
   :bind
   ([remap describe-function] . helpful-callable)
@@ -573,6 +594,7 @@
 
 (unless pg/is-termux
   (use-package all-the-icons-dired
+    :straight nil
     :hook (dired-mode . all-the-icons-dired-mode)))
 
 (use-package dired-hide-dotfiles
@@ -614,20 +636,6 @@
   :config
   (fset #'eshell-git-prompt-multiline #'pg/eshell-git-prompt-multiline))
 
-(defun pg/config-path ()
-  (let ((paths '("/home/phil-gab99/miniconda3/bin"
-                 "/home/phil-gab99/miniconda3/condabin"
-                 "/opt/pulsesecure/bin"
-                 "/home/phil-gab99/bin"
-                 "/home/phil-gab99/Visual_Paradigm_16.3/bin"
-                 "/home/phil-gab99/yakindu-sctpro"
-                 "/home/phil-gab99/PIPEv4.3.0"
-                 "/home/phil-gab99/.dotnet"
-                 "/home/phil-gab99/.cabal/bin"
-                 "/home/phil-gab99/.ghcup/bi")))
-    (dolist (path paths)
-      (add-to-list 'exec-path path))))
-
 (defun pg/configure-eshell ()
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -657,9 +665,11 @@
   (pg/config-path)
   (eshell-git-prompt-use-theme 'multiline))
 
-(use-package vterm)
+(use-package vterm
+  :straight nil)
 
 (use-package projectile
+  :straight nil
   :diminish projectile-mode
   :hook (lsp-mode . projectile-mode)
   :custom ((projectile-completion-system 'vertico))
@@ -675,6 +685,7 @@
  ("C-p b" . projectile-compile-project))
 
 (use-package magit
+  :straight nil
   :commands (magit-status magit-get-current-branch)
   :config
   (unbind-key "M-<tab>" 'magit-mode-map)
@@ -683,7 +694,7 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package git-gutter
-  :straight git-gutter-fringe
+  :straight nil
   :diminish git-gutter-mode
   :hook ((text-mode . git-gutter-mode)
          (prog-mode . git-gutter-mode))
@@ -746,15 +757,16 @@
   (set-face-foreground 'git-gutter:deleted "LightCoral"))
 
 (use-package forge
+  :straight nil
   :after magit)
 
 (defun pg/lsp-mode-setup () ; Displays structure of cursor position for all buffers
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
 
-(straight-use-package 'lsp-mode)
 (require 'lsp-completion)
 (use-package lsp-mode
+  :straight nil
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . pg/lsp-mode-setup)
   :init
@@ -765,12 +777,14 @@
   (lsp-completion-provider :none))
 
 (use-package lsp-ui
+  :straight nil
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-doc-position 'bottom)
   (lsp-ui-doc-show-with-cursor t))
 
 (use-package lsp-treemacs
+  :straight nil
   :after lsp)
 
 (defvar company-mode/enable-yas t
@@ -783,6 +797,7 @@
             '(:with company-yasnippet))))
 
 (use-package company
+  :straight nil
   :after lsp-mode
   :hook (prog-mode . company-mode)
   :bind
@@ -799,19 +814,22 @@
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (use-package company-box
-  :straight t
+  :straight nil
   :after company
   :hook (company-mode . company-box-mode))
 
 (use-package company-prescient
+  :straight t
   :after company
   :config
   (company-prescient-mode 1))
 
 (use-package flycheck
+  :straight nil
   :hook (lsp-mode . flycheck-mode))
 
 (use-package dap-mode
+  :straight nil
   :after lsp-mode
   :config
   (dap-mode 1)
@@ -825,6 +843,7 @@
 ;;  "d" '(dap-hydra t :wk "debugger")))
 
 (use-package plantuml-mode
+  :straight nil
   :custom
   (plantuml-indent-level 4)
   (plantuml-jar-path "~/bin/plantuml.jar")
@@ -854,6 +873,7 @@
   (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
 
 (use-package sly
+  :straight nil
   :custom
   (inferior-lisp-program "sbcl"))
 
@@ -861,9 +881,14 @@
   :straight nil
   :hook ((css-mode less-css-mode scss-mode) . lsp-deferred))
 
-(use-package dockerfile-mode)
+(use-package docker
+  :straight nil)
 
-(use-package git-modes)
+(use-package dockerfile-mode
+  :straight nil)
+
+(use-package git-modes
+  :straight nil)
 
 (use-package groovy-mode
   :straight '(groovy-emacs-modes :type git
@@ -871,13 +896,16 @@
                                  :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
 
 (use-package haskell-mode
+  :straight nil
   :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))
 
 (use-package lsp-haskell
+  :disabled
   :custom
   (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
 
 (use-package lsp-java
+  :straight nil
   :hook (java-mode . lsp-deferred)
   :bind
   (:map lsp-mode-map
@@ -906,10 +934,9 @@
               :host github
               :repo "jacobono/emacs-gradle-mode"))
 
-(straight-use-package 'auctex)
 (require 'tex-site)
 (use-package tex
-  :straight auctex
+  :straight nil
   :config
   (add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
@@ -920,6 +947,7 @@
   (TeX-source-correlate-start-server t))
 
 (use-package company-auctex
+  :straight nil
   :after (auctex company)
   :config
   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
@@ -971,6 +999,7 @@
        "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
 
 (use-package lmc
+  :straight t
   :config
   (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
@@ -980,6 +1009,7 @@
                                                                        (markdown-code-face (:height 1.5) fixed-pitch))))))
 
 (use-package mips-mode
+  :straight t
   :mode "\\.asm\\'"
   :custom
   (mips-tab-width 4))
@@ -1001,6 +1031,7 @@
   (put 'nusmv-mode 'derived-mode-parent 'prog-mode))
 
 (use-package python-mode
+  :straight nil
   :hook (python-mode . lsp-deferred)
   :custom
   ;;(python-shell-interpreter "python3")
@@ -1010,17 +1041,21 @@
   (require 'dap-python))
 
 (use-package lsp-python-ms
+  :straight t
   :init (setq lsp-python-ms-auto-install-server t)
   :custom
   (lsp-python-ms-executable
    "~/.emacs.d/lsp-servers/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
   :hook (python-mode . (lambda () (require 'lsp-python-ms) (lsp-deferred))))
 
-(use-package jupyter)
+(use-package jupyter
+  :disabled)
 
-(use-package z3-mode)
+(use-package z3-mode
+  :straight t)
 
 (use-package sql
+  :straight nil
   :hook (sql-mode . lsp-deferred)
   :config
   (add-hook 'sql-interactive-mode-hook (lambda () (toggle-truncate-lines t)))
@@ -1058,11 +1093,13 @@
                                         " dbname=ift2935 sslmode=disable")))))))
 
 (use-package sql-indent
+  :straight t
   :hook (sql-mode . sqlind-minor-mode)
   :config
   (setq-default sqlind-basic-offset 4))
 
 (use-package typescript-mode
+  :straight nil
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
   :config
@@ -1085,9 +1122,11 @@
   :config
   (add-to-list 'flycheck-checkers 'vhdl-tool))
 
-(use-package yaml-mode)
+(use-package yaml-mode
+  :straight nil)
 
 (use-package comment-dwim-2
+  :straight t
   :bind
   ("M-/" . comment-dwim-2)
   (:map org-mode-map
@@ -1107,6 +1146,7 @@
   :straight t)
 
 (use-package alert
+  :straight nil
   :custom
   (alert-default-style 'notifications))
 
@@ -1139,8 +1179,7 @@
   (setq evil-auto-indent nil))
 
 (use-package org
-  ;;:pin org
-  ;;:straight org-plus-contrib
+  :straight nil
   :commands (org-capture org-agenda)
   :hook (org-mode . pg/org-mode-setup)
   :config
@@ -1234,9 +1273,11 @@
                           (wl . wl-other-frame))))
 
 (use-package org-appear
+  :straight nil
   :hook (org-mode . org-appear-mode))
 
 (use-package org-bullets
+  :straight nil
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
@@ -1270,6 +1311,7 @@
   (setq-local face-remapping-alist '((default variable-pitch default))))
 
 (use-package org-tree-slide
+  :straight nil
   :hook (((org-tree-slide-before-move-next org-tree-slide-before-move-previous) . org-latex-preview)
          (org-tree-slide-play . pg/presentation-setup)
          (org-tree-slide-stop . pg/presentation-end))
@@ -1291,12 +1333,12 @@
   (org-image-actual-width nil))
 
 (use-package ox-reveal
+  :straight nil
   :custom
   (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
 
-(straight-use-package 'org-notify)
 (use-package org-notify
-  :straight nil
+  :straight t
   :after org
   :custom
   (user-mail-address "philippe.gabriel.1@umontreal.ca")
@@ -1314,12 +1356,12 @@
 ;;
 
 (use-package org-mime
-  :straight t
+  :straight nil
   :after org-msg)
 
 (setq mail-user-agent 'mu4e-user-agent)
 (use-package org-msg
-  :straight t
+  :straight nil
   :after mu4e
   :custom
   (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
@@ -1337,7 +1379,7 @@
 
 (unless pg/is-termux
   (use-package org-roam
-    :straight t
+    :straight nil
     :custom
     (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
     (org-roam-directory "~/Documents/Notes")
@@ -1360,6 +1402,7 @@
     (org-roam-setup)))
 
 (use-package org-fragtog
+  :straight nil
   :hook (org-mode . org-fragtog-mode))
 
 ;; Turns soft wrap on
@@ -1369,6 +1412,7 @@
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
+  :straight nil
   :hook ((org-mode gfm-view-mode) . pg/org-mode-visual-fill))
 
 (font-lock-add-keywords 'org-mode ; Replace '-' with bullets
@@ -1469,13 +1513,14 @@
   :mode ("\\.djvu\\'" . doc-view-mode))
 
 (use-package pdf-tools
-  :straight t
+  :straight nil
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :custom
   (pdf-misc-print-programm "/usr/bin/lpr")
   (pdf-misc-print-programm-args '("-o sides=two-sided-long-edge")))
 
-(use-package djvu)
+(use-package djvu
+  :straight nil)
 
 (use-package ps-print
   :straight nil
@@ -1490,6 +1535,7 @@
 
 (unless pg/is-termux
   (use-package openwith
+    :straight nil
     :custom
     (large-file-warning-threshold nil)
     :config
@@ -1525,7 +1571,7 @@
   (dtk-word-wrap t))
 
 (use-package ledger-mode
-  :straight t
+  :straight nil
   :mode "\\.dat\\'"
   :hook (ledger-mode . company-mode)
   :custom
@@ -1534,6 +1580,7 @@
   (ledger-clear-whole-transaction t))
 
 (use-package slack
+  :straight nil
   :commands slack-start
   :hook (slack-mode . company-mode)
   :config
@@ -1550,6 +1597,7 @@
   (slack-prefer-current-team t))
 
 (use-package sx
+  :straight nil
   :commands sx-search)
 
 (defun pg/wttrin-fetch-raw-string (query)
@@ -1563,6 +1611,7 @@
       (decode-coding-string (buffer-string) 'utf-8))))
 
 (use-package wttrin
+  :straight nil
   :commands wttrin
   :config
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
@@ -1628,6 +1677,7 @@ passed to the mpc program."
 
 (unless pg/is-termux
   (use-package emms
+    :straight nil
     :config
     (require 'emms-setup)
     (emms-all)
@@ -1647,11 +1697,13 @@ passed to the mpc program."
     ("<XF86AudioStop>" . emms-stop)))
 
 (use-package sudoku
+  :straight t
   :custom
   (sudoku-style 'unicode)
   (sudoku-level 'hard))
 
 (use-package sokoban
+  :straight t
   :bind
   (:map sokoban-mode-map
         ("<normal-state> h" . sokoban-move-left)
@@ -1673,6 +1725,7 @@ passed to the mpc program."
     (add-to-list 'evil-emacs-state-modes mode)))
 
 (use-package evil
+  :straight nil
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -1710,12 +1763,14 @@ passed to the mpc program."
   (setq-default evil-symbol-word-search t))
 
 (use-package evil-collection
+  :straight nil
   :after evil
   :diminish evil-collection-unimpaired-mode
   :config
   (evil-collection-init))
 
 (use-package hydra
+  :straight nil
   :defer t)
 
 (defhydra hydra-text-scale (:timeout 5)
@@ -1770,6 +1825,7 @@ passed to the mpc program."
   ("h" persp-prev "prev"))
 
 (use-package general
+  :straight nil
   :after evil
   :config
   (general-create-definer pg/leader-keys
