@@ -1,33 +1,58 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+#export QUARTUS_ROOTDIR="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
+#export PRINTER="Canon_MF642C_643C_644C_aa_7c_a2_8_"
+#export PATH="$PATH:$QUARTUS_ROOTDIR/bin:$QUARTUS_ROOTDIR_OVERRIDE/bin"
+export PATH="$HOME/bin:$PATH"
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
+# Load the default Guix profile
+GUIX_PROFILE="$HOME/.guix-profile"
+. "$GUIX_PROFILE"/etc/profile
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+# Load additional Guix profiles
+GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
+for i in $GUIX_EXTRA_PROFILES/*; do
+    profile=$i/$(basename "$i")
+    if [ -f "$profile"/etc/profile ]; then
+	GUIX_PROFILE="$profile"
+	. "$GUIX_PROFILE"/etc/profile
     fi
+    unset profile
+done
+
+# Load Nix environment
+if [ -f /run/current-system/profile/etc/profile.d/nix.sh ]; then
+  . /run/current-system/profile/etc/profile.d/nix.sh
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+# Don't use the system-wide PulseAudio configuration
+#unset PULSE_CONFIG
+#unset PULSE_CLIENTCONFIG
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+# Export the path to IcedTea so that tools pick it up correctly
+#export JAVA_HOME=$(dirname $(dirname $(readlink $(which java))))
 
-export QUARTUS_ROOTDIR="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
-# export PRINTER="Canon_MF642C_643C_644C"
-export PRINTER="Canon_MF642C_643C_644C_aa_7c_a2_8_"
-# export QUARTUS_ROOTDIR_OVERRIDE="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
-PATH="$PATH:$QUARTUS_ROOTDIR/bin:$QUARTUS_ROOTDIR_OVERRIDE/bin"
+# Make sure we can reach the GPG agent for SSH auth
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+# Make sure `ls` collates dotfiles first (for dired)
+export LC_COLLATE="C"
+
+# Many build scripts expect CC to contain the compiler command
+export CC="gcc"
+
+# Make Flatpak apps visible to launcher
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share"
+
+# Make applications in other profiles visible to launcher
+#export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-extra-profiles/music/music/share"
+#export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-extra-profiles/video/video/share"
+#export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.guix-extra-profiles/browsers/browsers/share"
+
+# Ensure that font folders are loaded correctly
+xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/desktop/desktop/share/fonts/truetype/fonts.dir))
+
+# We're in Emacs
+export VISUAL=emacsclient
+export EDITOR="$VISUAL"
+
+# Load .bashrc to get login environment
+[ -f ~/.bashrc ] && . ~/.bashrc

@@ -39,7 +39,7 @@ Check whether using emacs from phone or laptop for applying appropriate settings
 			     (eq window-system 'x)
 			     (seq-contains command-line-args "--use-exwm")))
 
-  ;; (when pg/exwm-enabled (require 'pg-desktop))
+  (when pg/exwm-enabled (require 'pg-desktop))
 
 #+end_src
 

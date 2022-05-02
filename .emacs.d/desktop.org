@@ -1,5 +1,5 @@
 #+title: Emacs Desktop Environment
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/desktop.el
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/pg-desktop.el
 
 * Fonts
 
@@ -213,6 +213,12 @@ Allows for some of the keybindings to use while in exwm.
 
 #+end_src
 
+#+begin_src emacs-lisp
+
+  (provide 'pg-desktop)
+ 
+#+end_src
+
 ** Desktop environment
 
 It is necessary to run the following command for creating a sym link for the below file:
@@ -237,6 +243,8 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
 
 #+begin_src shell :tangle ~/.emacs.d/exwm/start-exwm.sh :mkdirp yes :shebang #!/bin/bash
 
+  . ~/.profile
+
   xset dpms 0 0 0 && xset -dpms && xset s off && xset s noblank # Prevent screen blank
 
   xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Tapping Enabled" 1
@@ -244,22 +252,23 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
   xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Natural Scrolling Enabled" 1
   xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 1
 
-  xinput map-to-output "Wacom Intuos PT S Pen stylus" eDP-1     # Maps stylus to laptop monitor
-  xinput map-to-output "Wacom Intuos PT S Pen eraser" eDP-1     # Maps eraser to laptop monitor
-
   start_daemons () {
       eval "$(gnome-keyring-daemon --start --components=ssh)"
       compton &
+      xsettingsd &
       gnome-keyring-daemon --start --components=pkcs11 &
       gnome-keyring-daemon --start --components=secrets &
-      /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+      # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
       export SSH_AUTH_SOCK
+      if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
+	  shepherd
+      fi
   }
 
   exwm () {
       export EXWM=1
       # Disable access control for the current user.
-      # xhost "+SI:localuser:$USER"
+      xhost "+SI:localuser:$USER"
 
       # Make Java applications aware this is a non-reparenting window manager.
       export _JAVA_AWT_WM_NONREPARENTING=1
@@ -272,11 +281,12 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
 
       # Finally start Emacs
       # exec dbus-launch emacs --eval "(lerax-exwm-start nil t)"
-      exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/desktop.el
+      # exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/pg-desktop.el
+      exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
   }
 
   start_daemons
-  exwm 
+  exwm
 
 #+end_src
 
