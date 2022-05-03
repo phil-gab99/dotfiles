@@ -3,6 +3,54 @@
 
 * Fonts
 
+The ~xsettingsd~ configuration file. Below is the table for each property:
+
+| Name                          | Type    | Description                    | Values                                     |
+|-------------------------------+---------+--------------------------------+--------------------------------------------|
+| Gtk/CursorThemeName           | string  | Cursor theme                   | Subdirs of =/usr/share/icons=                |
+| Net/EnableEventSounds         | integer | Play event sounds              | 0 (no), 1 (yes)                            |
+| Net/EnableInputFeedbackSounds | integer | Event sounds response to input | 0 (no), 1 (yes)                            |
+| Net/IconThemeName             | string  | Icon theme                     | Subdirs of =/usr/share/icons=                |
+| Net/SoundThemeName            | string  | Sound theme                    |                                            |
+| Net/ThemeName                 | string  | Widget theme                   | Subdirs of =/usr/share/themes=               |
+| Xft/Antialias                 | integer | Text antialiasing              | 0 (no), 1 (yes), -1 (default)              |
+| Xft/DPI                       | integer | Display DPI                    | 1024*dots/inch, -1 (default)               |
+| Xft/HintStyle                 | string  | Text hinting style             | hintnone, hintslight, hintmedium, hintfull |
+| Xft/Hinting                   | integer | Text hinting                   | 0 (no), 1 (yes), -1 (default)              |
+| Xft/RGBA                      | string  | Text subpixel rendering        | none, rgb, bgr, vrgb, vbgr                 |
+
+#+begin_src conf :tangle ~/.config/xsettingsd/xsettingsd.conf
+
+  Gtk/DecorationLayout "menu:minimize,maximize,close"
+  Gtk/FontName "Cantarell 11"
+  Gtk/MonospaceFontName "Fira Mono 10"
+  Gtk/CursorThemeName "Adwaita"
+  Net/IconThemeName "Papirus-Dark"
+  Net/ThemeName "Matcha-dark-azul"
+  Xft/Antialias 1
+  Xft/Hinting 0
+  Xft/HintStyle "hintnone"
+        
+#+end_src
+
+Make sure Emacs can find the font path from the ~desktop~ profile:
+
+#+begin_src xml :tangle ~/.config/fontconfig/fonts.conf
+
+  <?xml version="1.0"?>
+  <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+  <fontconfig>
+    <dir>~/.guix-extra-profiles/desktop/desktop/sahre/fonts</dir>
+    <alias>
+      <family> Apple Color Emoji</family>
+      <prefer>
+        <family>Noto Color Emoji</family>
+      </prefer>
+    </alias>
+  </fontconfig>
+
+#+end_src
+
 *Guix Packages*
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
