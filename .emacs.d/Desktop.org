@@ -1528,6 +1528,14 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 #+end_src
 
+** Network
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "net-tools"
+
+#+end_src
+
 ** Image Viwers and Editors
 
 *Guix Packages*

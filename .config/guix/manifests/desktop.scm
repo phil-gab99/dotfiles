@@ -55,6 +55,8 @@
    "intel-vaapi-driver"
    "libva-utils"
    
+   "net-tools"
+   
    "feh"
    "gimp"
    "xournalpp"

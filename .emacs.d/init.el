@@ -1663,6 +1663,7 @@
   "Stops playback and kill the music daemon."
   (interactive)
   (emms-stop)
+  ;; (emms-player-mpd-disconnect)
   (call-process "killall" nil nil nil "mpd")
   (message "MPD Killed!"))
 
@@ -1710,6 +1711,7 @@ passed to the mpc program."
     :straight nil
     :config
     (require 'emms-setup)
+    (require 'emms-player-mpd)
     (emms-all)
     (emms-player-mpd-connect)
     (setq emms-info-functions '(emms-info-mpd)
@@ -1718,6 +1720,7 @@ passed to the mpc program."
     (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
     :custom
     (emms-source-file-default-directory "~/Music/")
+    (emms-player-mpd-music-directory "~/Music/")
     (emms-seek-seconds 5)
     (emms-volume-change-amount 5)
     :bind

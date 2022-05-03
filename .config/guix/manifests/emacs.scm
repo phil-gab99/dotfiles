@@ -160,7 +160,7 @@
    
    "emacs-wttrin"
    
-   "mpc"
+   "mpd-mpc"
    "mpd"
    "emacs-emms"
    
