@@ -129,6 +129,7 @@
   :bind (("C-x B" . exwm-workspace-switch-to-buffer)))
 
 (use-package desktop-environment
+  :straight nil
   :after exwm
   :diminish desktop-environment-mode
   :config

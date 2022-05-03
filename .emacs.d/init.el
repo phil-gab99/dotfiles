@@ -141,10 +141,12 @@
 (advice-add 'geiser-impl--set-buffer-implementation :after #'guix-geiser--set-project)
 
 (use-package guix
-  :straight nil)
+  :straight nil
+  :disabled) ;; Issues with emacs 27.x
 
 (use-package geiser
-  :straight nil)
+  :straight nil
+  :disabled) ;; guix package dep
 
 (use-package auth-source
   :straight nil
@@ -292,7 +294,7 @@
 
 (use-package ligature
   :straight nil
-  :disabled
+  :disabled ;; Crashes on emacs 27.x
   :load-path "~/Packages/ligature.el"
   :config
   ;; Enable ligatures
@@ -553,19 +555,7 @@
 
 (use-package outshine
   :straight nil
-  :hook (prog-mode . outshine-mode)
-  :config
-  (unbind-key "M-<up>" 'outshine-mode-map)
-  (unbind-key "M-<down>" 'outshine-mode-map)
-  (unbind-key "<normal-state> [ [" 'outline-mode-map)
-  (unbind-key "<normal-state> ] ]" 'outline-mode-map)
-  (unbind-key "C-c @ C-p" 'outline-minor-mode-map)
-  (unbind-key "C-c @ C-n" 'outline-minor-mode-map)
-  (unbind-key "<normal-state> C-k" 'outline-mode-map)
-  (unbind-key "<normal-state> C-j" 'outline-mode-map)
-  :bind (:map outline-minor-mode-map
-              ("C-j" . outline-next-visible-heading)
-              ("C-k" . outline-previous-visible-heading)))
+  :hook (prog-mode . outshine-mode))
 
 (defun pg/selectric-type-sound ()
   "Make the sound of the printing element hitting the paper."
@@ -631,38 +621,9 @@
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
-(defun pg/eshell-git-prompt-multiline ()
-  "Eshell Git prompt inspired by spaceship-prompt."
-  (let (separator hr dir git git-dirty time sign command)
-    (setq separator (with-face " | " 'eshell-git-prompt-multiline-secondary-face))
-    (setq hr (with-face (concat "\n" (make-string (/ (window-total-width) 2) ?─) "\n") 'eshell-git-prompt-multiline-secondary-face))
-    (setq dir
-          (concat
-           (with-face " " 'eshell-git-prompt-directory-face)
-           (concat  (abbreviate-file-name (eshell/pwd)))))
-    (setq git
-          (concat (with-face "⎇" 'eshell-git-prompt-exit-success-face)
-                  (concat (eshell-git-prompt--branch-name))))
-    (setq git-dirty
-          (when (eshell-git-prompt--branch-name)
-            (if (eshell-git-prompt--collect-status)
-                (with-face " ✎" 'eshell-git-prompt-modified-face)
-              (with-face " ✔" 'eshell-git-prompt-exit-success-face))))
-    (setq time (with-face (format-time-string "%I:%M:%S %p") 'eshell-git-prompt-multiline-secondary-face))
-    (setq sign
-          (if (= (user-uid) 0)
-              (with-face "\n#" 'eshell-git-prompt-multiline-sign-face)
-            (with-face "\nλ" 'eshell-git-prompt-multiline-sign-face)))
-    (setq command (with-face " " 'eshell-git-prompt-multiline-command-face))
-
-    ;; Build prompt
-    (concat hr dir separator git git-dirty separator time sign command)))
-
 (use-package eshell-git-prompt
   :straight t
-  :after eshell
-  :config
-  (fset #'eshell-git-prompt-multiline #'pg/eshell-git-prompt-multiline))
+  :after eshell)
 
 (defun pg/configure-eshell ()
   ;; Save command history when commands are entered
@@ -927,7 +888,7 @@
   :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))
 
 (use-package lsp-haskell
-  :disabled
+  :disabled ;; Not working on Haskell recently
   :custom
   (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
 
@@ -956,10 +917,11 @@
   (gradle-run "run"))
 
 (use-package gradle-mode
-  :hook (java-mode . gradle-mode)
   :straight '(emacs-gradle-mode
               :host github
-              :repo "jacobono/emacs-gradle-mode"))
+              :repo "jacobono/emacs-gradle-mode")
+  :disabled ;; No gradle package on guix yet
+  :hook (java-mode . gradle-mode))
 
 (require 'tex-site)
 (use-package tex
@@ -1043,6 +1005,7 @@
 
 (use-package nusmv-mode
   :straight nil
+  :disabled ;; Need NuSMV binary
   :load-path "~/.emacs.d/extrapkgs/nusmv-mode"
   :mode "\\.smv\\'"
   :bind*
@@ -1076,11 +1039,11 @@
   :hook (python-mode . (lambda () (require 'lsp-python-ms) (lsp-deferred))))
 
 (use-package jupyter
-  :disabled)
+  :disabled) ;; Figure it out
 
 (use-package z3-mode
   :straight t
-  :disabled)
+  :disabled) ;; Need z3 binary for guix
 
 (require 'lsp-sqls)
 (use-package sql
@@ -1145,6 +1108,8 @@
    (error line-start (file-name) ":" line ":" column ":e:" (message) line-end)))
 
 (use-package vhdl-tools
+  :straight t
+  :disabled ;; Settings and binaries not configured
   :hook (vhdl-mode . lsp-deferred)
   :custom
   (lsp-vhdl-server-path "~/.emacs.d/lsp-servers/vhdl-tool")
@@ -1163,7 +1128,7 @@
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :straight t
+  :straight nil
   :hook (prog-mode . yas-minor-mode)
   :config
   (yas-global-mode 1)
@@ -1172,7 +1137,7 @@
 
 (use-package yasnippet-snippets
   :after yasnippet
-  :straight t)
+  :straight nil)
 
 (use-package alert
   :straight nil
@@ -1363,7 +1328,7 @@
 
 (use-package ox-reveal
   :straight nil
-  :disabled
+  :disabled ;; Test if working
   :custom
   (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
 
@@ -1582,6 +1547,7 @@
     (openwith-mode 1)))
 
 (use-package dtk
+  :straight t
   :commands dtk
   :after evil-collection
   :config

@@ -230,7 +230,7 @@ Some settings to manage where emacs stores backup files (such as the ~~~ backup 
 
 ** System Management
 
-*** Package | guix
+*** HOLD Package | guix
 
 Emacs interface for guix package manager.
 
@@ -250,7 +250,8 @@ Emacs interface for guix package manager.
   (advice-add 'geiser-impl--set-buffer-implementation :after #'guix-geiser--set-project)
 
   (use-package guix
-    :straight nil)
+    :straight nil
+    :disabled) ;; Issues with emacs 27.x
 
 #+end_src
 
@@ -262,12 +263,13 @@ Emacs interface for guix package manager.
 
 #+end_src
 
-*** Package | geiser
+*** HOLD Package | geiser
 
 #+begin_src emacs-lisp
 
   (use-package geiser
-    :straight nil)
+    :straight nil
+    :disabled) ;; guix package dep
 
 #+end_src
 
@@ -653,13 +655,13 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+end_src
 
-*** Package | ligature
+*** HOLD Package | ligature
 
 #+begin_src emacs-lisp
 
   (use-package ligature
     :straight nil
-    :disabled
+    :disabled ;; Crashes on emacs 27.x
     :load-path "~/Packages/ligature.el"
     :config
     ;; Enable ligatures
@@ -1189,19 +1191,7 @@ For surrounding delimiter matching and autocompletion.
 
   (use-package outshine
     :straight nil
-    :hook (prog-mode . outshine-mode)
-    :config
-    (unbind-key "M-<up>" 'outshine-mode-map)
-    (unbind-key "M-<down>" 'outshine-mode-map)
-    (unbind-key "<normal-state> [ [" 'outline-mode-map)
-    (unbind-key "<normal-state> ] ]" 'outline-mode-map)
-    (unbind-key "C-c @ C-p" 'outline-minor-mode-map)
-    (unbind-key "C-c @ C-n" 'outline-minor-mode-map)
-    (unbind-key "<normal-state> C-k" 'outline-mode-map)
-    (unbind-key "<normal-state> C-j" 'outline-mode-map)
-    :bind (:map outline-minor-mode-map
-                ("C-j" . outline-next-visible-heading)
-                ("C-k" . outline-previous-visible-heading)))
+    :hook (prog-mode . outshine-mode))
 
 #+end_src
 
@@ -1420,38 +1410,9 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+begin_src emacs-lisp
 
-  (defun pg/eshell-git-prompt-multiline ()
-    "Eshell Git prompt inspired by spaceship-prompt."
-    (let (separator hr dir git git-dirty time sign command)
-      (setq separator (with-face " | " 'eshell-git-prompt-multiline-secondary-face))
-      (setq hr (with-face (concat "\n" (make-string (/ (window-total-width) 2) ?─) "\n") 'eshell-git-prompt-multiline-secondary-face))
-      (setq dir
-            (concat
-             (with-face " " 'eshell-git-prompt-directory-face)
-             (concat  (abbreviate-file-name (eshell/pwd)))))
-      (setq git
-            (concat (with-face "⎇" 'eshell-git-prompt-exit-success-face)
-                    (concat (eshell-git-prompt--branch-name))))
-      (setq git-dirty
-            (when (eshell-git-prompt--branch-name)
-              (if (eshell-git-prompt--collect-status)
-                  (with-face " ✎" 'eshell-git-prompt-modified-face)
-                (with-face " ✔" 'eshell-git-prompt-exit-success-face))))
-      (setq time (with-face (format-time-string "%I:%M:%S %p") 'eshell-git-prompt-multiline-secondary-face))
-      (setq sign
-            (if (= (user-uid) 0)
-                (with-face "\n#" 'eshell-git-prompt-multiline-sign-face)
-              (with-face "\nλ" 'eshell-git-prompt-multiline-sign-face)))
-      (setq command (with-face " " 'eshell-git-prompt-multiline-command-face))
-
-      ;; Build prompt
-      (concat hr dir separator git git-dirty separator time sign command)))
-
   (use-package eshell-git-prompt
     :straight t
-    :after eshell
-    :config
-    (fset #'eshell-git-prompt-multiline #'pg/eshell-git-prompt-multiline))
+    :after eshell)
 
 #+end_src
 
@@ -1915,6 +1876,7 @@ Some general tools for programming:
      "libtool"
      "gmime"
      "xapian"
+     "docker"
   ;   "gtk+"
    ;  "gtk+:bin"
     ; "webkitgtk"
@@ -1931,6 +1893,8 @@ Some general tools for programming:
 
 **** Alloy
 
+***** Package | alloy-mode
+
 #+begin_src emacs-lisp
 
   (use-package alloy-mode
@@ -1943,6 +1907,8 @@ Some general tools for programming:
 #+end_src
 
 **** C/C++/Objective-C
+
+***** Package | cc-mode
 
 #+begin_src emacs-lisp
 
@@ -2059,6 +2025,8 @@ Some general tools for programming:
 
 **** Git
 
+***** Package | git-modes
+
 #+begin_src emacs-lisp
 
   (use-package git-modes
@@ -2076,6 +2044,8 @@ Some general tools for programming:
 
 **** Groovy
 
+***** Package | groovy-mode
+
 #+begin_src emacs-lisp
 
   (use-package groovy-mode
@@ -2086,6 +2056,8 @@ Some general tools for programming:
 #+end_src
 
 **** Haskell
+
+***** Package | haskell-mode
 
 #+begin_src emacs-lisp
 
@@ -2103,12 +2075,12 @@ Some general tools for programming:
 
 #+end_src
 
-***** Package | lsp-haskell
+***** HOLD Package | lsp-haskell
 
 #+begin_src emacs-lisp
 
   (use-package lsp-haskell
-    :disabled
+    :disabled ;; Not working on Haskell recently
     :custom
     (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
 
@@ -2143,13 +2115,20 @@ Some general tools for programming:
 
 *Guix Packages*
 
+#+begin_src scheme :tangle ~/.config/guix/manifests/java.scm
+
+  (specifications->manifest
+   '("openjdk@17.0.1"))
+
+#+end_src
+
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "emacs-lsp-java"
 
 #+end_src
 
-***** Package | gradle-mode
+***** HOLD Package | gradle-mode
 
 #+begin_src emacs-lisp
 
@@ -2159,14 +2138,17 @@ Some general tools for programming:
     (gradle-run "run"))
 
   (use-package gradle-mode
-    :hook (java-mode . gradle-mode)
     :straight '(emacs-gradle-mode
                 :host github
-                :repo "jacobono/emacs-gradle-mode"))
+                :repo "jacobono/emacs-gradle-mode")
+    :disabled ;; No gradle package on guix yet
+    :hook (java-mode . gradle-mode))
 
 #+end_src
 
 **** LaTeX
+
+***** Package | tex
 
 #+begin_src emacs-lisp
 
@@ -2185,6 +2167,13 @@ Some general tools for programming:
 #+end_src
 
 *Guix Packages*
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/latex.scm
+
+  (specifications->manifest
+   '("texlive"))
+
+#+end_src
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
@@ -2281,6 +2270,8 @@ Custom syntax highlighting for LMC assembly language.
 
 **** Markdown
 
+***** Package | markdown-mode
+
 #+begin_src emacs-lisp
 
   (use-package markdown-mode
@@ -2300,6 +2291,8 @@ Custom syntax highlighting for LMC assembly language.
 
 **** MIPS
 
+***** Package | mips-mode
+
 #+begin_src emacs-lisp
 
   (use-package mips-mode
@@ -2310,12 +2303,15 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-**** NuSMV
+**** HOLD NuSMV
+
+***** Package | nusmv-mode
 
 #+begin_src emacs-lisp
 
   (use-package nusmv-mode
     :straight nil
+    :disabled ;; Need NuSMV binary
     :load-path "~/.emacs.d/extrapkgs/nusmv-mode"
     :mode "\\.smv\\'"
     :bind*
@@ -2333,6 +2329,8 @@ Custom syntax highlighting for LMC assembly language.
 #+end_src
 
 **** Python
+
+***** Package | python-mode
 
 #+begin_src emacs-lisp
 
@@ -2376,21 +2374,25 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package jupyter
-    :disabled)
+    :disabled) ;; Figure it out
 
 #+end_src
 
 **** SMTLibv2
 
+***** HOLD Package | z3-mode
+
 #+begin_src emacs-lisp
 
     (use-package z3-mode
       :straight t
-      :disabled)
+      :disabled) ;; Need z3 binary for guix
 
 #+end_src
 
 **** SQL
+
+***** Package | sql
 
 #+begin_src emacs-lisp
 
@@ -2435,6 +2437,15 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/sql.scm
+
+  (specifications->manifest
+   '("postgresql@14.2"))
+
+#+end_src
+
 ***** Package | sql-indent
 
 #+begin_src emacs-lisp
@@ -2448,6 +2459,8 @@ Custom syntax highlighting for LMC assembly language.
 #+end_src
 
 **** TypeScript
+
+***** Package | typescript-mode
 
 #+begin_src emacs-lisp
 
@@ -2471,7 +2484,7 @@ Custom syntax highlighting for LMC assembly language.
 
 **** VHDL
 
-***** Package | vhdl-tools
+***** HOLD Package | vhdl-tools
 
 #+begin_src emacs-lisp
 
@@ -2485,6 +2498,8 @@ Custom syntax highlighting for LMC assembly language.
      (error line-start (file-name) ":" line ":" column ":e:" (message) line-end)))
 
   (use-package vhdl-tools
+    :straight t
+    :disabled ;; Settings and binaries not configured
     :hook (vhdl-mode . lsp-deferred)
     :custom
     (lsp-vhdl-server-path "~/.emacs.d/lsp-servers/vhdl-tool")
@@ -2494,6 +2509,8 @@ Custom syntax highlighting for LMC assembly language.
 #+end_src
 
 **** YAML
+
+***** Package | yaml-mode
 
 #+begin_src emacs-lisp
 
@@ -2531,7 +2548,7 @@ Allows for code snippets for different languages.
 
   (use-package yasnippet
     :diminish yas-minor-mode
-    :straight t
+    :straight nil
     :hook (prog-mode . yas-minor-mode)
     :config
     (yas-global-mode 1)
@@ -2556,7 +2573,7 @@ Collection of code snippets for yasnippet.
 
   (use-package yasnippet-snippets
     :after yasnippet
-    :straight t)
+    :straight nil)
   
 #+end_src
 
@@ -2845,13 +2862,13 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+end_src
 
-*** Package | ox-reveal
+*** HOLD Package | ox-reveal
 
 #+begin_src emacs-lisp
 
   (use-package ox-reveal
     :straight nil
-    :disabled
+    :disabled ;; Test if working
     :custom
     (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
 
@@ -3270,6 +3287,7 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package dtk
+    :straight t
     :commands dtk
     :after evil-collection
     :config

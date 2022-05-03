@@ -7,6 +7,7 @@
    "libtool"
    "gmime"
    "xapian"
+   "docker"
 ;   "gtk+"
  ;  "gtk+:bin"
   ; "webkitgtk"

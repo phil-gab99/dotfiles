@@ -246,6 +246,7 @@ Allows for some of the keybindings to use while in exwm.
 #+begin_src emacs-lisp
 
   (use-package desktop-environment
+    :straight nil
     :after exwm
     :diminish desktop-environment-mode
     :config

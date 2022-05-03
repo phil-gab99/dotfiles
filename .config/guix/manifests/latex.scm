@@ -1,0 +1,2 @@
+(specifications->manifest
+ '("texlive"))
