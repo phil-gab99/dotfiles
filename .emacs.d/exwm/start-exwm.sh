@@ -22,7 +22,7 @@ start_daemons () {
 }
 
 exwm () {
-    # export EXWM=1
+    export EXWM=1
     # Disable access control for the current user.
     xhost "+SI:localuser:$USER"
 

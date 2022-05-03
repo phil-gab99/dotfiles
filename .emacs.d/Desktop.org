@@ -319,7 +319,7 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
   }
 
   exwm () {
-      # export EXWM=1
+      export EXWM=1
       # Disable access control for the current user.
       xhost "+SI:localuser:$USER"
 
