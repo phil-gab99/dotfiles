@@ -330,12 +330,13 @@
 ;;       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
 (use-package dashboard
-  :straight nil
+  :straight t
   :custom
   (dashboard-set-file-icons t)
   (dashboard-items '((recents . 10)
                      (projects . 10)
                      (agenda . 5)))
+  (dashboard-page-separator "\n\f\n")
   ;; (dashboard-init-info #'pg/display-startup-time)
   :config
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)

@@ -39,7 +39,7 @@
    
    "emacs-autothemer"
    
-   "emacs-dashboard"
+   ;; "emacs-dashboard" ;; old version
    
    "emacs-page-break-lines"
    
