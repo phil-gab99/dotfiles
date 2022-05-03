@@ -1416,6 +1416,40 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+end_src
 
+*** Package | eshell-syntax-highlighting
+
+#+begin_src emacs-lisp
+
+  (use-package eshell-syntax-highlighting
+    :straight nil
+    :after eshell
+    :config
+    (eshell syntax-highlighting-global-mode 1))
+
+#+end_src
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-eshell-syntax-highlighting"
+
+#+end_src
+
+*** Package | fish-completion
+
+#+begin_src emacs-lisp
+
+  (use-package fish-completion
+    :straight nil
+    :hook (eshell-mode . fish-completion-mode))
+
+#+end_src
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-fish-completion"
+
+#+end_src
+
 *** Package | eshell
 
 Some configurations to the built-in eshell.
@@ -1434,7 +1468,7 @@ Some configurations to the built-in eshell.
     (evil-normalize-keymaps)
 
     (local-unset-key (kbd "M-<tab>"))
-    (corfu-mode)
+    ;; (corfu-mode)
 
     (setq eshell-history-size 10000
           eshell-buffer-maximum-lines 10000
@@ -2936,7 +2970,7 @@ Allows for markup language when composing email
 
   (setq mail-user-agent 'mu4e-user-agent)
   (use-package org-msg
-    :straight nil
+    :straight t
     :after mu4e
     :custom
     (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
@@ -2958,7 +2992,7 @@ Allows for markup language when composing email
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-msg"
+  ;; "emacs-org-msg" ;; Issues sending emails
 
 #+end_src
 

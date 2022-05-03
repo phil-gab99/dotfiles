@@ -625,6 +625,16 @@
   :straight t
   :after eshell)
 
+(use-package eshell-syntax-highlighting
+  :straight nil
+  :after eshell
+  :config
+  (eshell syntax-highlighting-global-mode 1))
+
+(use-package fish-completion
+  :straight nil
+  :hook (eshell-mode . fish-completion-mode))
+
 (defun pg/configure-eshell ()
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -637,7 +647,7 @@
   (evil-normalize-keymaps)
 
   (local-unset-key (kbd "M-<tab>"))
-  (corfu-mode)
+  ;; (corfu-mode)
 
   (setq eshell-history-size 10000
         eshell-buffer-maximum-lines 10000
@@ -1356,7 +1366,7 @@
 
 (setq mail-user-agent 'mu4e-user-agent)
 (use-package org-msg
-  :straight nil
+  :straight t
   :after mu4e
   :custom
   (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")

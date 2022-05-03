@@ -70,6 +70,10 @@
    
    "emacs-all-the-icons-dired"
    
+   "emacs-eshell-syntax-highlighting"
+   
+   "emacs-fish-completion"
+   
    "emacs-vterm"
    
    "emacs-projectile"
@@ -137,7 +141,7 @@
    
    "emacs-org-mime"
    
-   "emacs-org-msg"
+   ;; "emacs-org-msg" ;; Issues sending emails
    
    "emacs-org-roam"
    

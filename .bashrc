@@ -197,7 +197,7 @@ function __setprompt {
     fi
 
     # Date
-    PS1+="\[${LIGHTGRAY}\](\[${CYAN}\]\$(date +%a) $(date +%b-'%-m')" # Date
+    PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]\$(date +%a) $(date +%b-'%-m')" # Date
     PS1+="${BLUE} $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
 
     # CPU
@@ -230,10 +230,10 @@ function __setprompt {
     PS1+="\[${GREEN}\]\$(ls -A -1 | wc -l)\[${LIGHTGRAY}\])"
 
     # Skip to the next line
-    PS1+="\n"
+    PS1+="\n└─"
 
     if [[ $EUID -ne 0 ]]; then
-        PS1+="\[${GREEN}\]$\[${NOCOLOR}\] " # Normal user
+        PS1+="\[${LIGHTGRAY}\]$\[${NOCOLOR}\] " # Normal user
     else
         PS1+="\[${RED}\]$\[${NOCOLOR}\] " # Root user
     fi
