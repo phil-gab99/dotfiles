@@ -12,7 +12,6 @@ start_daemons () {
     if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
         shepherd
     fi
-    # eval "$(gnome-keyring-daemon --start --components=ssh)"
     compton &
     xsettingsd &
     gnome-keyring-daemon --start --components=pkcs11 &
