@@ -1395,6 +1395,10 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 #+end_src
 
+*** Qutebrowser
+
+
+
 ** Audio Device Control
 
 *Guix Packages*

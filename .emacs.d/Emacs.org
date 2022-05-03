@@ -249,6 +249,23 @@ Emacs interface for guix package manager.
 
 #+end_src
 
+*** Package | geiser
+
+#+begin_src emacs-lisp
+
+  ;; (use-package geiser
+  ;;   :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; "emacs-geiser"
+
+#+end_src
+
 ** Password utilities
 
 *** Package | auth-source

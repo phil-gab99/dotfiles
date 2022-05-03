@@ -130,6 +130,9 @@
 (use-package guix
   :straight nil)
 
+;; (use-package geiser
+;;   :straight nil)
+
 (use-package auth-source
   :straight nil
   :custom

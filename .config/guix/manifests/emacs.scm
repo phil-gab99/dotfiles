@@ -9,6 +9,8 @@
    
    "emacs-guix"
    
+   ;; "emacs-geiser"
+   
    "emacs-pinentry"
    
    "emacs-keycast"
