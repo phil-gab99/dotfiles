@@ -206,9 +206,7 @@
         ("C-j" . corfu-next)
         ("C-k" . corfu-previous))
   :custom
-  (corfu-cycle t)
-  :config
-  (corfu-global-mode))
+  (corfu-cycle t))
 
 (use-package vertico
   :straight nil
@@ -419,7 +417,6 @@
 
 (unless pg/is-termux
   (use-package mu4e
-   ;; :straight t
     :straight '( :type git
                  :host github
                  :repo "djcb/mu"
@@ -427,6 +424,7 @@
                  :files ("mu4e/*")
                  :pre-build (("./autogen.sh") ("make")))
     :commands mu4e
+    :hook (mu4e-compose-mode . corfu-mode)
     ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
     :config
     (require 'mu4e-org)
@@ -675,8 +673,7 @@
   :custom
   (eshell-prefer-lisp-functions t)
   :config
-  (pg/config-path)
-  (eshell-git-prompt-use-theme 'multiline))
+  (eshell-git-prompt-use-theme 'multiline2))
 
 (use-package vterm
   :straight nil)
@@ -1598,7 +1595,7 @@
 (use-package slack
   :straight nil
   :commands slack-start
-  :hook (slack-mode . company-mode)
+  :hook (slack-mode . corfu-mode)
   :config
   (slack-register-team :name "ift6755"
                        :default t
