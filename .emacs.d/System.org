@@ -275,6 +275,25 @@ Profiles get installed under the ~~/.guix-extra-profiles~ path and sourced by ~~
 
 A couple of shell scripts for managing the profiles:
 
+** List Available profiles
+
+This script simply lists the profiles available to activate/update:
+
+#+begin_src sh
+
+  list-profiles
+
+#+end_src
+
+#+begin_src sh :tangle ~/bin/list-profiles :shebang #!/bin/sh
+
+  for profile in "$HOME/.config/guix/manifests/*.scm"; do
+      profileName=$(basename -s .scm $profile)
+      echo "$profileName"
+  done
+
+#+end_src
+
 ** Activating Profiles
 
 This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs those profiles for the first time.
