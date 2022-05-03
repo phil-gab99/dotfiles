@@ -309,7 +309,7 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
       if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
           shepherd
       fi
-      eval "$(gnome-keyring-daemon --start --components=ssh)"
+      # eval "$(gnome-keyring-daemon --start --components=ssh)"
       compton &
       xsettingsd &
       gnome-keyring-daemon --start --components=pkcs11 &
