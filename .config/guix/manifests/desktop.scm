@@ -71,6 +71,7 @@
    "shared-mime-info"
    
    "openssh"
+   "sysfsutils"
    "zip"
    "unzip"
    "trash-cli"

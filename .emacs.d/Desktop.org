@@ -1455,6 +1455,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "openssh"
+  "sysfsutils"
   "zip"
   "unzip"
   "trash-cli"

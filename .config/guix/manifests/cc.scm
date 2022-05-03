@@ -1,11 +1,9 @@
 (specifications->manifest
- '("gcc-toolchain"
-   "make"
-   "pkg-config"
+ '("gcc-toolchain@10.3.0"
    "texinfo"
    "llvm"
    "lld"
-   "meson"
+   "gcc@10.3.0"
    "clang"
    "file"
    "elfutils"

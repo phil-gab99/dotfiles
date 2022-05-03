@@ -840,7 +840,6 @@ For window configurations
 #+begin_src emacs-lisp
 
   (use-package tab-bar
-    :straight nil
     :custom
     (tab-bar-show 1)
     :config
@@ -950,7 +949,13 @@ After having setup the file, make sure to run the following commands:
 
   (unless pg/is-termux
     (use-package mu4e
-      :straight t
+     ;; :straight t
+      :straight '( :type git
+                   :host github
+                   :repo "djcb/mu"
+                   :branch "release/1.6"
+                   :files ("mu4e/*")
+                   :pre-build (("./autogen.sh") ("make")))
       :commands mu4e
       ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
       :config
@@ -1867,6 +1872,35 @@ Allows writing textual descriptions for creating uml diagrams
 
 *** Languages
 
+Some general tools for programming:
+
+*Guix Packages*
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/build-tools.scm :noweb yes
+
+  (specifications->manifest
+   '("meson"
+     "ninja"
+     "git"
+     "autoconf"
+     "automake"
+     "libtool"
+     "gmime"
+     "xapian"
+  ;   "gtk+"
+   ;  "gtk+:bin"
+    ; "webkitgtk"
+  ;   "guile"
+     "pkg-config"
+     "glibc"
+     "glib"
+     "glib:bin"
+   ;  "check"
+     "make"
+     "cmake"))
+
+#+end_src
+
 **** Alloy
 
 #+begin_src emacs-lisp
@@ -1902,13 +1936,11 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src scheme :tangle ~/.config/guix/manifests/cc.scm :noweb yes
 
   (specifications->manifest
-   '("gcc-toolchain"
-     "make"
-     "pkg-config"
+   '("gcc-toolchain@10.3.0"
      "texinfo"
      "llvm"
      "lld"
-     "meson"
+     "gcc@10.3.0"
      "clang"
      "file"
      "elfutils"

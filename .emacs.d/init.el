@@ -405,7 +405,6 @@
   (winner-mode))
 
 (use-package tab-bar
-  :straight nil
   :custom
   (tab-bar-show 1)
   :config
@@ -420,7 +419,13 @@
 
 (unless pg/is-termux
   (use-package mu4e
-    :straight t
+   ;; :straight t
+    :straight '( :type git
+                 :host github
+                 :repo "djcb/mu"
+                 :branch "release/1.6"
+                 :files ("mu4e/*")
+                 :pre-build (("./autogen.sh") ("make")))
     :commands mu4e
     ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
     :config
