@@ -157,8 +157,7 @@ function __setprompt {
 
     # Show error exit code if there is one
     if [[ $LAST_COMMAND != 0 ]]; then
-        # PS1="\[${RED}\](\[${LIGHTRED}\]ERROR\[${RED}\])-(\[${LIGHTRED}\]Exit Code \[${WHITE}\]${LAST_COMMAND}\[${RED}\])-(\[${LIGHTRED}\]"
-        PS1="\[${LIGHTGRAY}\](\[${LIGHTRED}\]ERROR\[${LIGHTGRAY}\])-(\[${RED}\]Exit Code \[${LIGHTRED}\]${LAST_COMMAND}\[${LIGHTGRAY}\])-(\[${RED}\]"
+        PS1="\[${LIGHTGRAY}\](\[${LIGHTRED}\]ERROR\[${LIGHTGRAY}\])-(\[${MAGENTA}\]Exit Code \[${LIGHTRED}\]${LAST_COMMAND}\[${LIGHTGRAY}\])-(\[${YELLOW}\]"
         if [[ $LAST_COMMAND == 1 ]]; then
             PS1+="General error"
         elif [ $LAST_COMMAND == 2 ]; then
@@ -202,7 +201,7 @@ function __setprompt {
     PS1+="${BLUE} $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
 
     # CPU
-    # PS1+="(\[${MAGENTA}\]CPU $(cpu)%"
+    PS1+="(\[${MAGENTA}\]CPU $(cpu)%"
 
     # Jobs
     PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]\j"
@@ -213,8 +212,8 @@ function __setprompt {
     PS1+="\[${LIGHTGRAY}\])-"
 
     # User and server
-    # local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-    # local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
+    local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
+    local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
     if [ $SSH2_IP ] || [ $SSH_IP ] ; then
         PS1+="(\[${RED}\]\u@\h"
     else

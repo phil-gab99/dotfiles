@@ -26,6 +26,8 @@ alias ps='ps auxf'
 alias ping='ping -c 10'
 alias less='less -R'
 alias vi='vim'
+alias qutebrowser='qutebrowser --qt-flag disable-seccomp-filter-sandbox'
+alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
 
 # Search files in the current folder
 alias find="find . | grep "

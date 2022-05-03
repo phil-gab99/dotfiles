@@ -9,7 +9,7 @@
    
    "emacs-guix"
    
-   ;; "emacs-geiser"
+   "emacs-geiser"
    
    "emacs-pinentry"
    
@@ -160,6 +160,8 @@
    
    "emacs-wttrin"
    
+   "mpc"
+   "mpd"
    "emacs-emms"
    
    "emacs-evil"

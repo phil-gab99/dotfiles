@@ -36,6 +36,8 @@
    
    "nyxt"
    
+   "qutebrowser"
+   
    "alsa-utils"
    "pavucontrol"
    "pasystray"
@@ -55,6 +57,7 @@
    
    "feh"
    "gimp"
+   "xournalpp"
    
    "flatpak"
    

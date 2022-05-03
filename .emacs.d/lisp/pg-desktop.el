@@ -10,11 +10,10 @@
 ;; Some configurations to do per application
 (defun pg/configure-window-by-class ()
   (pcase exwm-class-name
-    ("biblioApp.App" (exwm-layout-hide-mode-line) (exwm-floating-toggle-floating))
+    ("qutebrowser" (exwm-layout-hide-mode-line))
     ("mpv" (exwm-layout-hide-mode-line))
     ("PPSSPPSDL" (exwm-layout-hide-mode-line))
-    ("edu-mit-csail-sdg-alloy4whole-Alloy" (exwm-layout-hide-mode-line))
-    ("vlc" (exwm-layout-hide-mode-line))))
+    ("edu-mit-csail-sdg-alloy4whole-Alloy" (exwm-layout-hide-mode-line))))
 
 ;; Runs a process in the background
 (defun pg/run-in-background (command)
@@ -54,7 +53,8 @@
   :straight nil
   :custom
   (exwm-manage-configurations
-   '(((string-equal exwm-class-name "Nyxt")
+   '(((or (string-equal exwm-class-name "Nyxt")
+          (string-equal exwm-class-name "qutebrowser"))
       char-mode t)))
   :config
   ;; Set the default number of workspaces
@@ -135,9 +135,6 @@
   (desktop-environment-mode)
   (unbind-key "<XF86AudioPlay>" 'desktop-environment-mode-map)
   :custom
-  (desktop-environment-volume-get-command "amixer -D pulse get Master + 1")
-  (desktop-environment-volume-set-command "amixer -D pulse set Master 1+ %s")
-  (desktop-environment-volume-toggle-command "amixer -D pulse set Master 1+ toggle")
   (desktop-environment-brightness-normal-increment "5%+")
   (desktop-environment-brightness-normal-decrement "5%-"))
 

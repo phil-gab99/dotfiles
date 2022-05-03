@@ -155,7 +155,7 @@ Check whether using emacs from phone or laptop for applying appropriate settings
   (show-paren-mode 1)                   ; Enable delimiters matching
   (save-place-mode 1)                   ; Remembers last cursor placement in file
   (column-number-mode)                  ; Show column numbers
-  ;; (mouse-avoidance-mode 'banish)        ; No mouse allowed
+  (mouse-avoidance-mode 'banish)        ; No mouse allowed
   (global-display-line-numbers-mode 1)  ; Show line numbers
   (setq display-line-numbers-type 'relative)
   (setq-default fill-column 80)         ; 80 caracter column indicator
@@ -236,6 +236,19 @@ Emacs interface for guix package manager.
 
 #+begin_src emacs-lisp
 
+  (defun guix-buffer-p (&optional buffer)
+    (let ((buf-name (buffer-name (or buffer (current-buffer)))))
+      (not (null (or (string-match "*Guix REPL" buf-name)
+                     (string-match "*Guix Internal REPL" buf-name))))))
+
+  (defun guix-geiser--set-project (&optional _impl _prompt)
+    (when (and (eq 'guile geiser-impl--implementation)
+               (null geiser-repl--project)
+               (guix-buffer-p))
+      (geiser-repl--set-this-buffer-project 'guix)))
+
+  (advice-add 'geiser-impl--set-buffer-implementation :after #'guix-geiser--set-project)
+
   (use-package guix
     :straight nil)
 
@@ -253,8 +266,8 @@ Emacs interface for guix package manager.
 
 #+begin_src emacs-lisp
 
-  ;; (use-package geiser
-  ;;   :straight nil)
+  (use-package geiser
+    :straight nil)
 
 #+end_src
 
@@ -262,7 +275,7 @@ Emacs interface for guix package manager.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-geiser"
+  "emacs-geiser"
 
 #+end_src
 
@@ -1891,7 +1904,7 @@ Some general tools for programming:
 
 *Guix Packages*
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/build-tools.scm :noweb yes
+#+begin_src scheme :tangle ~/.config/guix/manifests/build-tools.scm
 
   (specifications->manifest
    '("meson"
@@ -1948,7 +1961,7 @@ Some general tools for programming:
 
 *Guix Packages*
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/cc.scm :noweb yes
+#+begin_src scheme :tangle ~/.config/guix/manifests/cc.scm
 
   (specifications->manifest
    '("gcc-toolchain@10.3.0"
@@ -2332,6 +2345,15 @@ Custom syntax highlighting for LMC assembly language.
     (dap-python-debugger 'debugpy)
     :config
     (require 'dap-python))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :tangle ~/.config/guix/manifests/python.scm
+
+  (specifications->manifest
+   '("python"))
 
 #+end_src
 
@@ -3467,6 +3489,8 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
+  "mpc"
+  "mpd"
   "emacs-emms"
 
 #+end_src

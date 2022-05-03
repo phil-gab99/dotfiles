@@ -78,7 +78,7 @@
 (show-paren-mode 1)                   ; Enable delimiters matching
 (save-place-mode 1)                   ; Remembers last cursor placement in file
 (column-number-mode)                  ; Show column numbers
-;; (mouse-avoidance-mode 'banish)        ; No mouse allowed
+(mouse-avoidance-mode 'banish)        ; No mouse allowed
 (global-display-line-numbers-mode 1)  ; Show line numbers
 (setq display-line-numbers-type 'relative)
 (setq-default fill-column 80)         ; 80 caracter column indicator
@@ -127,11 +127,24 @@
 (setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
+(defun guix-buffer-p (&optional buffer)
+  (let ((buf-name (buffer-name (or buffer (current-buffer)))))
+    (not (null (or (string-match "*Guix REPL" buf-name)
+                   (string-match "*Guix Internal REPL" buf-name))))))
+
+(defun guix-geiser--set-project (&optional _impl _prompt)
+  (when (and (eq 'guile geiser-impl--implementation)
+             (null geiser-repl--project)
+             (guix-buffer-p))
+    (geiser-repl--set-this-buffer-project 'guix)))
+
+(advice-add 'geiser-impl--set-buffer-implementation :after #'guix-geiser--set-project)
+
 (use-package guix
   :straight nil)
 
-;; (use-package geiser
-;;   :straight nil)
+(use-package geiser
+  :straight nil)
 
 (use-package auth-source
   :straight nil
