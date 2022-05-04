@@ -1,5 +1,4 @@
-# Open every tab as a new window, Vimb style
-c.tabs.tabs_are_windows = True
+c.tabs.tabs_are_windows = False
 c.tabs.show = "multiple"
 c.tabs.last_close = "close"
 
@@ -45,8 +44,12 @@ config.bind('<Ctrl-g>', 'mode-leave', mode='hint')
 # config.bind('V', 'hint links spawn ~/.dotfiles/bin/umpv {hint-url}')
 
 # Tweak some keybindings
-config.unbind('d') # Don't close window on lower-case 'd'
+config.unbind('d') # Don't close tab on lower-case 'd'
 config.bind('yy', 'yank')
+
+# Swap J and K for tab switching
+config.bind('J', 'tab-prev')
+config.bind('K', 'tab-next')
 
 # Vim-style movement keys in command mode
 config.bind('<Ctrl-j>', 'completion-item-focus --history next', mode='command')

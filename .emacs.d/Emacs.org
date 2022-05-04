@@ -313,6 +313,7 @@ Emacs interface for guix package manager.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "emacs-pinentry"
+  "pinentry-emacs"
 
 #+end_src
 

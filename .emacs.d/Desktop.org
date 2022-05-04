@@ -850,18 +850,18 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
       #:start (make-system-constructor "gpg-connect-agent /bye")
       #:stop (make-system-destructor "gpgconf --kill gpg-agent")))
 
-  (define pulseaudio
-    (make <service>
-      #:provides '(pulseaudio)
-      #:respawn? #t
-      #:start (make-forkexec-constructor '("pulseaudio"))
-      #:stop  (make-kill-destructor)))
+    (define pulseaudio
+      (make <service>
+        #:provides '(pulseaudio)
+        #:respawn? #t
+        #:start (make-forkexec-constructor '("pulseaudio"))
+        #:stop  (make-kill-destructor)))
 
-  (register-services gpg-agent pulseaudio)
-  (action 'shepherd 'daemonize)
+    (register-services gpg-agent pulseaudio)
+    (action 'shepherd 'daemonize)
 
-  ;; Start user services
-  (for-each start '(gpg-agent pulseaudio))
+    ;; Start user services
+    (for-each start '(gpg-agent pulseaudio))
 
 #+end_src
 
@@ -1410,8 +1410,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 #+begin_src python :tangle ~/.config/qutebrowser/config.py :noweb yes
 
-  # Open every tab as a new window, Vimb style
-  c.tabs.tabs_are_windows = True
+  c.tabs.tabs_are_windows = False
   c.tabs.show = "multiple"
   c.tabs.last_close = "close"
 
@@ -1457,8 +1456,12 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   # config.bind('V', 'hint links spawn ~/.dotfiles/bin/umpv {hint-url}')
 
   # Tweak some keybindings
-  config.unbind('d') # Don't close window on lower-case 'd'
+  config.unbind('d') # Don't close tab on lower-case 'd'
   config.bind('yy', 'yank')
+
+  # Swap J and K for tab switching
+  config.bind('J', 'tab-prev')
+  config.bind('K', 'tab-next')
 
   # Vim-style movement keys in command mode
   config.bind('<Ctrl-j>', 'completion-item-focus --history next', mode='command')

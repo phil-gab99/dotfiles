@@ -12,6 +12,7 @@
    "emacs-geiser"
    
    "emacs-pinentry"
+   "pinentry-emacs"
    
    "emacs-keycast"
    
