@@ -109,11 +109,9 @@
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 120)
 (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina")
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular)
 
-(set-face-attribute 'italic nil
-                    :slant 'italic 
-                    :underline nil)
+(set-face-attribute 'italic nil :slant 'italic :underline nil)
 
 (setq display-buffer-base-action
       '(display-buffer-reuse-mode-window
@@ -127,26 +125,11 @@
 (setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
-(defun guix-buffer-p (&optional buffer)
-  (let ((buf-name (buffer-name (or buffer (current-buffer)))))
-    (not (null (or (string-match "*Guix REPL" buf-name)
-                   (string-match "*Guix Internal REPL" buf-name))))))
-
-(defun guix-geiser--set-project (&optional _impl _prompt)
-  (when (and (eq 'guile geiser-impl--implementation)
-             (null geiser-repl--project)
-             (guix-buffer-p))
-    (geiser-repl--set-this-buffer-project 'guix)))
-
-(advice-add 'geiser-impl--set-buffer-implementation :after #'guix-geiser--set-project)
-
 (use-package guix
-  :straight nil
-  :disabled) ;; Issues with emacs 27.x
+  :straight nil)
 
 (use-package geiser
-  :straight nil
-  :disabled) ;; guix package dep
+  :straight nil)
 
 (use-package auth-source
   :straight nil
@@ -293,9 +276,9 @@
   :straight nil)
 
 (use-package ligature
-  :straight nil
-  :disabled ;; Crashes on emacs 27.x
-  :load-path "~/Packages/ligature.el"
+  :straight '(ligature :type git
+                       :host github
+                       :repo "mickeynp/ligature.el")
   :config
   ;; Enable ligatures
   (ligature-set-ligatures 't '("++" "--" "/=" "&&" "||" "||=" "->" "=>" "::" "__" "==" "===" "!=" "=/=" "!=="

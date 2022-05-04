@@ -22,8 +22,8 @@ The ~xsettingsd~ configuration file. Below is the table for each property:
 #+begin_src conf :tangle ~/.config/xsettingsd/xsettingsd.conf
 
   Gtk/DecorationLayout "menu:minimize,maximize,close"
-  Gtk/FontName "Cantarell 11"
-  Gtk/MonospaceFontName "Fira Mono 10"
+  Gtk/FontName "Cantarell 14"
+  Gtk/MonospaceFontName "Fira Mono 12"
   Gtk/CursorThemeName "Adwaita"
   Net/IconThemeName "Papirus-Dark"
   Net/ThemeName "Matcha-dark-azul"
@@ -42,7 +42,7 @@ Make sure Emacs can find the font path from the ~desktop~ profile:
   <fontconfig>
     <dir>~/.guix-extra-profiles/desktop/desktop/sahre/fonts</dir>
     <alias>
-      <family> Apple Color Emoji</family>
+      <family>Apple Color Emoji</family>
       <prefer>
         <family>Noto Color Emoji</family>
       </prefer>
