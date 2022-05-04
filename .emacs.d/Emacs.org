@@ -2,7 +2,7 @@
 #+author: Philippe Gabriel
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 
-Below is a sectioned configuration of emacs. Each code blocks gets written out to the ~~/.emacs~ config file.
+Below is a sectioned configuration of emacs. Each code blocks gets written out to the ~~/.emacs.d/init.el~ config file.
 
 * Startup
 
@@ -22,8 +22,8 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 
 #+begin_src emacs-lisp
 
-;;  (setq native-comp-async-report-warnings-errors nil)                                           ; Silence compiler warnings
-;;  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
+   (setq native-comp-async-report-warnings-errors nil)                                           ; Silence compiler warnings
+   (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
 
 #+end_src
 
@@ -1424,7 +1424,7 @@ Adds more detail to the prompt in eshell with custome themes.
     :straight nil
     :after eshell
     :config
-    (eshell syntax-highlighting-global-mode 1))
+    (eshell-syntax-highlighting-global-mode 1))
 
 #+end_src
 
@@ -1434,19 +1434,30 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+end_src
 
-*** Package | fish-completion
+*** Package | esh-autosuggest
 
 #+begin_src emacs-lisp
 
-  (use-package fish-completion
+  (defun pg/esh-autosuggest-setup ()
+    (require 'company)
+    (set-face-foreground 'company-preview-common nil)
+    (set-face-background 'company-preview nil))
+
+  (use-package esh-autosuggest
     :straight nil
-    :hook (eshell-mode . fish-completion-mode))
+    :hook (eshell-mode . esh-autosuggest-mode)
+    :custom
+    (esh-autosuggest-delay 0.5)
+    :config
+    (require 'esh-autosuggest)
+    (pg/esh-autosuggest-setup))
+
 
 #+end_src
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-fish-completion"
+  "emacs-esh-autosuggest"
 
 #+end_src
 
@@ -1468,7 +1479,7 @@ Some configurations to the built-in eshell.
     (evil-normalize-keymaps)
 
     (local-unset-key (kbd "M-<tab>"))
-    ;; (corfu-mode)
+    (corfu-mode)
 
     (setq eshell-history-size 10000
           eshell-buffer-maximum-lines 10000
@@ -1793,7 +1804,7 @@ Includes icons for company mode suggestions.
 #+begin_src emacs-lisp
 
   (use-package company-box
-    :straight nil
+    :straight t
     :after company
     :hook (company-mode . company-box-mode))
 
@@ -1803,7 +1814,7 @@ Includes icons for company mode suggestions.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-company-box"
+  ;; "emacs-company-box"
 
 #+end_src
 
@@ -2652,19 +2663,31 @@ Org mode package for writing structured documents and more. Here are some useful
 - ~M-RET~ - Adds another entry below the current header/bullet point of the same rank. 
 - ~C-RET~ - Adds another entry after the current section occupied by the current header of the same rank.
   
-Version issues with download can be fixed by manually getting the package from the package list.
-
 #+begin_src emacs-lisp
 
   (defun org-screenshot ()
-    "Take a screenshot into a time stamped unique-named file in the same directory as the org-buffer and insert a link to this file."
+    "Take a screenshot into a time stamped unique-named file in the `img' directory with respect to the org-buffer's
+    location and insert a link to this file."
     (interactive)
+    (setq imgpath (concat (let ((abspath (shell-command-to-string (concat "dirname " buffer-file-name))))
+                            (with-temp-buffer
+                              (call-process "echo" nil t nil "-n" abspath)
+                              (delete-char -1)  ;; delete trailing \n
+                              (buffer-string)))
+                          "/img/"))
+    (if (not (f-dir-p imgpath))
+        (make-directory imgpath))
     (setq filename
           (concat
            (make-temp-name
-            (concat (buffer-file-name)
+            (concat imgpath
+                    (let ((bname (shell-command-to-string (concat "basename -s .org " buffer-file-name))))
+                      (with-temp-buffer
+                        (call-process "echo" nil t nil "-n" bname)
+                        (delete-char -1)  ;; delete trailing \n
+                        (buffer-string)))
                     "_"
-                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+                    (format-time-string "%Y%m%d_%H%M%S_"))) ".png"))
     (call-process "import" nil nil nil filename)
     (insert (concat "[[" filename "]]"))
     (org-display-inline-images))
@@ -2694,7 +2717,6 @@ Version issues with download can be fixed by manually getting the package from t
     (unless pg/is-termux
       (setq org-agenda-files ; Files considered by org-agenda
             '("~/Documents/Org/Agenda/")))
-              ;; "~/Documents/Org/Recurrent/")))
     (setq org-hide-emphasis-markers t)
     (setq org-agenda-start-with-log-mode t)
     (setq org-log-done 'time)
@@ -2771,7 +2793,6 @@ Version issues with download can be fixed by manually getting the package from t
     (unless pg/is-termux
       (setq org-plantuml-jar-path "~/bin/plantuml.jar"))
     :custom
-
     (org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                             (vm-imap . vm-visit-imap-folder-other-frame)
                             (gnus . org-gnus-no-new-news)
@@ -2950,7 +2971,7 @@ Allows for editing an email in org mode
 
   (use-package org-mime
     :straight nil
-    :after org-msg)
+    :disabled)
 
 #+end_src
 
@@ -2970,19 +2991,17 @@ Allows for markup language when composing email
 
   (setq mail-user-agent 'mu4e-user-agent)
   (use-package org-msg
-    :straight t
+    :straight nil
     :after mu4e
     :custom
     (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
     (org-msg-startup "indent inlineimages hidestars")
-    (org-msg-greeting-fmt "\nBonjour/Hi%s,\n\n")
+    (org-msg-greeting-fmt "\nBonjour/Hi %s,\n\n")
     ;; (org-msg-recipient-names '(("user@domain.com" . "Name")))
     (org-msg-greeting-name-limit 3)
-    (org-msg-default-alternatives '((new . (text utf-8 html org))
-                                    (reply-to-html . (text org html))
-                                    (reply-to-text . (text org))))
     (org-message-convert-citation t)
     (org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
+    (org-msg-recipient-names nil)
     :config
     (org-msg-mode))
 
@@ -2992,7 +3011,7 @@ Allows for markup language when composing email
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-msg" ;; Issues sending emails
+  "emacs-org-msg"
 
 #+end_src
 
@@ -3387,6 +3406,15 @@ Allows for printing of emacs buffers.
                                                      :user "philippe.gabriel.1@umontreal.ca^cookie")
                          :subscribed-channels '((general questions random))
                          :modeline-enabled t)
+    (evil-define-key 'normal slack-info-mode-map
+      ",u" 'slack-room-update-messages)
+    (evil-define-key 'normal slack-mode-map
+      ",ra" 'slack-message-add-reaction
+      ",rr" 'slack-message-remove-reaction
+      ",rs" 'slack-message-show-reaction-users
+      ",mm" 'slack-message-write-another-buffer
+      ",me" 'slack-message-edit
+      ",md" 'slack-message-delete)
     :custom
     (slack-buffer-emojify t)
     (slack-prefer-current-team t))
@@ -3397,7 +3425,7 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-slack"
+  "emacs-slack" ;; Issues starting
 
 #+end_src
 
@@ -3599,7 +3627,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
       (add-to-list 'evil-emacs-state-modes mode)))
 
   (use-package evil
-    :straight nil
+    :straight t
     :init
     (setq evil-want-integration t)
     (setq evil-want-keybinding nil)
@@ -3642,7 +3670,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-evil"
+  ;; "emacs-evil"
 
 #+end_src
 
@@ -3874,7 +3902,7 @@ Here we lower back the garbage collector threshold to keep better control over m
 
   (specifications->manifest
    '(;;"emacs-next"
-     "emacs"
+     "emacs-native-comp"
      <<packages>>))
 
 #+end_src

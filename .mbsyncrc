@@ -1,0 +1,51 @@
+# Main hotmail account
+IMAPAccount hotmail
+Host outlook.office365.com
+User pgabriel999@hotmail.com
+Port 993
+PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"hotmail.com\\\" :user \\\"pgabriel999\\\")\" | cut -d '\"' -f2"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore hotmail-remote
+Account hotmail
+
+MaildirStore hotmail-local
+Subfolders Verbatim
+Path /home/phil-gab99/Mail/Main/
+Inbox /home/phil-gab99/Mail/Main/Inbox
+
+Channel hotmail
+Far :hotmail-remote:
+Near :hotmail-local:
+Patterns *
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+
+# University account
+IMAPAccount umontreal
+Host outlook.office365.com
+User philippe.gabriel.1@umontreal.ca
+Port 993
+PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"umontreal.ca\\\" :user \\\"philippe.gabriel.1\\\")\" | cut -d '\"' -f2"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore umontreal-remote
+Account umontreal
+
+MaildirStore umontreal-local
+SubFolders Verbatim
+Path /home/phil-gab99/Mail/University/
+Inbox /home/phil-gab99/Mail/University/Inbox
+
+Channel umontreal
+Far :umontreal-remote:
+Near :umontreal-local:
+Patterns *
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *

@@ -1442,7 +1442,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   c.editor.command = ["emacsclient", "+{line}:{column}", "{file}"]
 
   # Content
-  c.content.pdfjs = True
+  c.content.pdfjs = False
   c.content.autoplay = False
 
   # Rendering issues
@@ -1544,6 +1544,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "feh"
+  "imagemagick"
   "gimp"
   "xournalpp"
 

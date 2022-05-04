@@ -58,6 +58,7 @@
    "net-tools"
    
    "feh"
+   "imagemagick"
    "gimp"
    "xournalpp"
    

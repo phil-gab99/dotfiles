@@ -129,6 +129,10 @@ function extract {
     done
 }
 
+function parse_git_branch {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
 #######################################################
 # COLORED PROMPT
 #######################################################
@@ -198,7 +202,7 @@ function __setprompt {
 
     # Date
     PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]\$(date +%a) $(date +%b-'%-m')" # Date
-    PS1+="${BLUE} $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
+    PS1+=" $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
 
     # CPU
     PS1+="(\[${MAGENTA}\]CPU $(cpu)%"
@@ -222,6 +226,12 @@ function __setprompt {
 
     # Current directory
     PS1+="\[${LIGHTGRAY}\]:\[${BROWN}\]\w\[${LIGHTGRAY}\])-"
+
+    # Git branch
+    local BRANCH=$(parse_git_branch)
+    if [ "$BRANCH" != "" ]; then
+        PS1+="\[${LIGHTGRAY}\](\[${LIGHTGREEN}\]${BRANCH}\[${LIGHTGRAY}\])-"
+    fi
 
     # Total size of files in current directory
     PS1+="(\[${GREEN}\]$(ls -lah | grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]:"

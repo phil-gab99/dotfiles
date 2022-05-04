@@ -1,6 +1,6 @@
 (specifications->manifest
  '(;;"emacs-next"
-   "emacs"
+   "emacs-native-comp"
    
    "emacs-use-package"
    
@@ -72,7 +72,7 @@
    
    "emacs-eshell-syntax-highlighting"
    
-   "emacs-fish-completion"
+   "emacs-esh-autosuggest"
    
    "emacs-vterm"
    
@@ -93,7 +93,7 @@
    
    "emacs-company"
    
-   "emacs-company-box"
+   ;; "emacs-company-box"
    
    "emacs-flycheck"
    
@@ -141,7 +141,7 @@
    
    "emacs-org-mime"
    
-   ;; "emacs-org-msg" ;; Issues sending emails
+   "emacs-org-msg"
    
    "emacs-org-roam"
    
@@ -158,7 +158,7 @@
    "ledger"
    "emacs-ledger-mode"
    
-   "emacs-slack"
+   "emacs-slack" ;; Issues starting
    
    "emacs-sx"
    
@@ -168,7 +168,7 @@
    "mpd"
    "emacs-emms"
    
-   "emacs-evil"
+   ;; "emacs-evil"
    
    "emacs-evil-collection"
    

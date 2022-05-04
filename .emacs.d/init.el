@@ -1,7 +1,7 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
-;;  (setq native-comp-async-report-warnings-errors nil)                                           ; Silence compiler warnings
-;;  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
+(setq native-comp-async-report-warnings-errors nil)                                           ; Silence compiler warnings
+(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
 
 (server-start)
 
@@ -629,11 +629,21 @@
   :straight nil
   :after eshell
   :config
-  (eshell syntax-highlighting-global-mode 1))
+  (eshell-syntax-highlighting-global-mode 1))
 
-(use-package fish-completion
+(defun pg/esh-autosuggest-setup ()
+  (require 'company)
+  (set-face-foreground 'company-preview-common nil)
+  (set-face-background 'company-preview nil))
+
+(use-package esh-autosuggest
   :straight nil
-  :hook (eshell-mode . fish-completion-mode))
+  :hook (eshell-mode . esh-autosuggest-mode)
+  :custom
+  (esh-autosuggest-delay 0.5)
+  :config
+  (require 'esh-autosuggest)
+  (pg/esh-autosuggest-setup))
 
 (defun pg/configure-eshell ()
   ;; Save command history when commands are entered
@@ -647,7 +657,7 @@
   (evil-normalize-keymaps)
 
   (local-unset-key (kbd "M-<tab>"))
-  ;; (corfu-mode)
+  (corfu-mode)
 
   (setq eshell-history-size 10000
         eshell-buffer-maximum-lines 10000
@@ -812,7 +822,7 @@
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
 
 (use-package company-box
-  :straight nil
+  :straight t
   :after company
   :hook (company-mode . company-box-mode))
 
@@ -1155,14 +1165,28 @@
   (alert-default-style 'notifications))
 
 (defun org-screenshot ()
-  "Take a screenshot into a time stamped unique-named file in the same directory as the org-buffer and insert a link to this file."
+  "Take a screenshot into a time stamped unique-named file in the `img' directory with respect to the org-buffer's
+  location and insert a link to this file."
   (interactive)
+  (setq imgpath (concat (let ((abspath (shell-command-to-string (concat "dirname " buffer-file-name))))
+                          (with-temp-buffer
+                            (call-process "echo" nil t nil "-n" abspath)
+                            (delete-char -1)  ;; delete trailing \n
+                            (buffer-string)))
+                        "/img/"))
+  (if (not (f-dir-p imgpath))
+      (make-directory imgpath))
   (setq filename
         (concat
          (make-temp-name
-          (concat (buffer-file-name)
+          (concat imgpath
+                  (let ((bname (shell-command-to-string (concat "basename -s .org " buffer-file-name))))
+                    (with-temp-buffer
+                      (call-process "echo" nil t nil "-n" bname)
+                      (delete-char -1)  ;; delete trailing \n
+                      (buffer-string)))
                   "_"
-                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+                  (format-time-string "%Y%m%d_%H%M%S_"))) ".png"))
   (call-process "import" nil nil nil filename)
   (insert (concat "[[" filename "]]"))
   (org-display-inline-images))
@@ -1192,7 +1216,6 @@
   (unless pg/is-termux
     (setq org-agenda-files ; Files considered by org-agenda
           '("~/Documents/Org/Agenda/")))
-            ;; "~/Documents/Org/Recurrent/")))
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -1269,7 +1292,6 @@
   (unless pg/is-termux
     (setq org-plantuml-jar-path "~/bin/plantuml.jar"))
   :custom
-
   (org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                           (vm-imap . vm-visit-imap-folder-other-frame)
                           (gnus . org-gnus-no-new-news)
@@ -1362,23 +1384,21 @@
 
 (use-package org-mime
   :straight nil
-  :after org-msg)
+  :disabled)
 
 (setq mail-user-agent 'mu4e-user-agent)
 (use-package org-msg
-  :straight t
+  :straight nil
   :after mu4e
   :custom
   (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
   (org-msg-startup "indent inlineimages hidestars")
-  (org-msg-greeting-fmt "\nBonjour/Hi%s,\n\n")
+  (org-msg-greeting-fmt "\nBonjour/Hi %s,\n\n")
   ;; (org-msg-recipient-names '(("user@domain.com" . "Name")))
   (org-msg-greeting-name-limit 3)
-  (org-msg-default-alternatives '((new . (text utf-8 html org))
-                                  (reply-to-html . (text org html))
-                                  (reply-to-text . (text org))))
   (org-message-convert-citation t)
   (org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
+  (org-msg-recipient-names nil)
   :config
   (org-msg-mode))
 
@@ -1598,6 +1618,15 @@
                                                    :user "philippe.gabriel.1@umontreal.ca^cookie")
                        :subscribed-channels '((general questions random))
                        :modeline-enabled t)
+  (evil-define-key 'normal slack-info-mode-map
+    ",u" 'slack-room-update-messages)
+  (evil-define-key 'normal slack-mode-map
+    ",ra" 'slack-message-add-reaction
+    ",rr" 'slack-message-remove-reaction
+    ",rs" 'slack-message-show-reaction-users
+    ",mm" 'slack-message-write-another-buffer
+    ",me" 'slack-message-edit
+    ",md" 'slack-message-delete)
   :custom
   (slack-buffer-emojify t)
   (slack-prefer-current-team t))
@@ -1734,7 +1763,7 @@ passed to the mpc program."
     (add-to-list 'evil-emacs-state-modes mode)))
 
 (use-package evil
-  :straight nil
+  :straight t
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)

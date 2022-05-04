@@ -30,7 +30,7 @@ c.input.insert_mode.auto_load = True
 c.editor.command = ["emacsclient", "+{line}:{column}", "{file}"]
 
 # Content
-c.content.pdfjs = True
+c.content.pdfjs = False
 c.content.autoplay = False
 
 # Rendering issues
