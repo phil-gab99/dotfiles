@@ -1,8 +1,6 @@
 (list (channel
        (name 'flat)
        (url "https://github.com/flatwhatson/guix-channel.git")
-       (commit
-	"7b8353ebbcf486e3344924d1cac0fa7ba47c371d")
        (introduction
 	(make-channel-introduction
 	 "33f86a4b48205c0dc19d7c036c85393f0766f806"
@@ -22,7 +20,6 @@
       (channel
        (name 'guix)
        (url "https://git.savannah.gnu.org/git/guix.git")
-       ;; (url "file:///home/daviwil/Projects/Code/guix"))
        (introduction
 	(make-channel-introduction
 	 "9edb3f66fd807b096b48283debdcddccfea34bad"

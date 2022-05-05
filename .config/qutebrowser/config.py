@@ -29,8 +29,34 @@ c.input.insert_mode.auto_load = True
 c.editor.command = ["emacsclient", "+{line}:{column}", "{file}"]
 
 # Content
-c.content.pdfjs = False
+c.content.pdfjs = True
 c.content.autoplay = False
+
+# Adblocking
+c.content.blocking.enabled = True
+c.content.blocking.method = "adblock"
+c.content.blocking.adblock.lists = [
+    "https://easylist.to/easylist/easylist.txt",
+    "https://easylist.to/easylist/easyprivacy.txt",
+    "https://easylist.to/easylist/fanboy-annoyance.txt",
+    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt",
+    "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
+    "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badware.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2021.txt",
+    "https://www.malwaredomainlist.com/hostslist/hosts.txt",
+    "https://www.i-dont-care-about-cookies.eu/abp/",
+    "https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts",
+    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
+]
 
 # Rendering issues
 c.qt.args = ["disable-seccomp-filter-sandbox"]

@@ -53,8 +53,7 @@
   :straight nil
   :custom
   (exwm-manage-configurations
-   '(((or (string-equal exwm-class-name "Nyxt")
-          (string-equal exwm-class-name "qutebrowser"))
+   '(((string-equal exwm-class-name "Nyxt")
       char-mode t)))
   :config
   ;; Set the default number of workspaces
