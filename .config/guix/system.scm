@@ -74,7 +74,11 @@
    (list (service gnome-desktop-service-type)
          (service openssh-service-type)
          (service tor-service-type)
-         (service cups-service-type)
+         (service cups-service-type
+                  (cups-configuration
+                   (web-interface? #t)
+                   (extensions
+                    (list cups-filters))))
          (service nix-service-type)
          (set-xorg-configuration
           (xorg-configuration

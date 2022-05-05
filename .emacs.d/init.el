@@ -564,7 +564,9 @@
           less-css-mode) . rainbow-mode))
 
 (use-package emojify
-  :straight nil)
+  :straight nil
+  :config
+  (global-emojify-mode))
 
 (use-package helpful
   :straight nil

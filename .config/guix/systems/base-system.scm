@@ -9,7 +9,6 @@
   #:use-module (gnu services networking)
   #:use-module (gnu services virtualization)
   #:use-module (gnu packages wm)
-  #:use-module (gnu packages cups)
   #:use-module (gnu packages vim)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages xorg)

@@ -1235,7 +1235,9 @@ For surrounding delimiter matching and autocompletion.
 #+begin_src emacs-lisp
 
   (use-package emojify
-    :straight nil)
+    :straight nil
+    :config
+    (global-emojify-mode))
 
 #+end_src
 

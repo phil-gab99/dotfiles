@@ -55,7 +55,6 @@ This base configuration is shared between all of the machines I manage with Guix
     #:use-module (gnu services networking)
     #:use-module (gnu services virtualization)
     #:use-module (gnu packages wm)
-    #:use-module (gnu packages cups)
     #:use-module (gnu packages vim)
     #:use-module (gnu packages gtk)
     #:use-module (gnu packages xorg)
@@ -160,9 +159,9 @@ Define the ~base-operating-system~ which will be inherited by all machine config
      ;; Use the UEFI variant of GRUB with the EFI System
      ;; Partition mounted on /boot/efi.
      (bootloader (bootloader-configuration
-		  (bootloader grub-efi-bootloader)
-		  (target "/boot/efi")
-		  (keyboard-layout keyboard-layout)))
+                  (bootloader grub-efi-bootloader)
+                  (target "/boot/efi")
+                  (keyboard-layout keyboard-layout)))
 
      ;; Swap space to be overriden
      (swap-devices
@@ -172,60 +171,64 @@ Define the ~base-operating-system~ which will be inherited by all machine config
      ;; entry, so add one that is meant to be overridden
      (file-systems
       (cons* (file-system
-	      (mount-point "/tmp")
-	      (device "none")
-	      (type "tmpfs")
-	      (check? #f))
-	     %base-file-systems))
+              (mount-point "/tmp")
+              (device "none")
+              (type "tmpfs")
+              (check? #f))
+             %base-file-systems))
 
      (users (cons (user-account
-		   (name "phil-gab99")
-		   (comment "Philippe Gabriel")
-		   (group "users")
-		   (home-directory "/home/phil-gab99")
-		   (supplementary-groups '("wheel"     ;; sudo
-					   "netdev"    ;; network devices
-					   "kvm"
-					   "tty"
-					   "input"
-					   "docker"
-					   "realtime"  ;; Enable realtime sc heduling
-					   "lp"        ;; control bluetooth devices
-					   "audio"     ;; control audio devices
-					   "video")))  ;; control video devices
-		  %base-user-accounts))
+                   (name "phil-gab99")
+                   (comment "Philippe Gabriel")
+                   (group "users")
+                   (home-directory "/home/phil-gab99")
+                   (supplementary-groups '("wheel"     ;; sudo
+                                           "netdev"    ;; network devices
+                                           "kvm"
+                                           "tty"
+                                           "input"
+                                           "docker"
+                                           "realtime"  ;; Enable realtime sc heduling
+                                           "lp"        ;; control bluetooth devices
+                                           "audio"     ;; control audio devices
+                                           "video")))  ;; control video devices
+                  %base-user-accounts))
 
      ;; Install bare-minimum system packages
      (packages (append (list
-			git
-			ntfs-3g
-			exfat-utils
-			fuse-exfat
-			vim
-			emacs
-			emacs-exwm
-			emacs-desktop-environment
-			xterm
-			bluez
-			bluez-alsa
-			pulseaudio
-			tlp
-			xf86-input-libinput
-			nss-certs     ;; for HTTPS access
-			gvfs)         ;; for user mounts
-		       %base-packages))
+                        git
+                        ntfs-3g
+                        exfat-utils
+                        fuse-exfat
+                        vim
+                        emacs
+                        emacs-exwm
+                        emacs-desktop-environment
+                        xterm
+                        bluez
+                        bluez-alsa
+                        pulseaudio
+                        tlp
+                        xf86-input-libinput
+                        nss-certs     ;; for HTTPS access
+                        gvfs)         ;; for user mounts
+                       %base-packages))
 
      ;; Use the "desktop" services, which include the X11 log-in service,
      ;; networking with NetworkManager, and more
      (services
       (append
        (list (service gnome-desktop-service-type)
-	     (service openssh-service-type)
-	     (service tor-service-type)
-	     (service cups-service-type)
-	     (set-xorg-configuration
-	      (xorg-configuration
-	       (keyboard-layout keyboard-layout))))
+             (service openssh-service-type)
+             (service tor-service-type)
+             (service cups-service-type
+                      (cups-configuration
+                       (web-interface? #t)
+                       (extensions
+                        (list cups-filters))))
+             (set-xorg-configuration
+              (xorg-configuration
+               (keyboard-layout keyboard-layout))))
        %desktop-services))
 
 #+end_src

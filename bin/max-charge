@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Enable MAX charging limits.
+echo 0 >/sys/class/power_supply/BAT0/charge_control_start_threshold
+echo 100 >/sys/class/power_supply/BAT0/charge_control_end_threshold
+echo "Max Charge Enabled - 100%"

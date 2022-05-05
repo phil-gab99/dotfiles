@@ -1511,7 +1511,9 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   gh https://github.com
   yt https://youtube.com
   st https://studium.umontreal.ca/my/index.php
-  sc https://academique-dmz.synchro.umontreal.ca/psp/acprpr9/EMPLOYEE/SA/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL&cmd=login&languageCd=CFR&userid=CAS&pwd=z
+  sc https://academique-dmz.synchro.umontreal.ca
+  cups http://localhost:631
+
 #+end_src
 
 *Guix Packages*
