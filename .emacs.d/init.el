@@ -1591,7 +1591,7 @@
   :hook (ledger-mode . company-mode)
   :custom
   (ledger-reconcile-default-commodity "CAD")
-  (ledger-binary-path "/usr/bin/ledger")
+  (ledger-binary-path "/home/phil-gab99/.guix-extra-profiles/emacs/emacs/bin/ledger")
   (ledger-clear-whole-transaction t))
 
 (use-package slack
