@@ -311,6 +311,21 @@ Emacs interface for guix package manager.
 
 #+end_src
 
+*** Package | password-store
+
+#+begin_src emacs-lisp
+
+  (use-package password-store
+    :straight t)
+
+#+end_src
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; "emacs-password-store" ;; Issues with guix package
+
+#+end_src
+
 *** Password lookup
 
 #+begin_src emacs-lisp
@@ -2192,6 +2207,7 @@ Some general tools for programming:
     (add-hook 'TeX-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
     (put 'TeX-mode 'derived-mode-parent 'prog-mode)
     :custom
+    (latex-run-command "pdflatex")
     (TeX-view-program-selection '((output-pdf "PDF Tools")))
     (TeX-source-correlate-start-server t))
 
@@ -2202,7 +2218,21 @@ Some general tools for programming:
 #+begin_src scheme :tangle ~/.config/guix/manifests/latex.scm
 
   (specifications->manifest
-   '("texlive"))
+   '("rubber"
+     "texlive-base"
+     "texlive-wrapfig"
+     "texlive-microtype"
+     "texlive-listings"
+     "texlive-hyperref"
+     "texlive-pgf"
+     "texlive-latex-geometry"
+     "texlive-latex-preview"
+
+     "texlive-cm-super"
+     "texlive-amsfonts"
+     "texlive-times"
+     "texlive-helvetic"
+     "texlive-courier"))
 
 #+end_src
 
@@ -3380,7 +3410,7 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package slack
-    :straight nil
+    :straight t
     :commands slack-start
     :hook (slack-mode . corfu-mode)
     :config
@@ -3411,7 +3441,7 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-slack" ;; Issues starting
+  ;; "emacs-slack" No cookies support
 
 #+end_src
 

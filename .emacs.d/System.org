@@ -333,7 +333,7 @@ For example:
       profileName="${profileName%.*}"
 
       profilePath="$GUIX_EXTRA_PROFILES/$profileName"
-    
+
       manifestPath=$HOME/.config/guix/manifests/$profileName.scm
 
     if [ -f $manifestPath ]; then
@@ -347,9 +347,9 @@ For example:
       # Source the new profile
       GUIX_PROFILE="$profilePath/$profileName"
       if [ -f $GUIX_PROFILE/etc/profile ]; then
-	  . "$GUIX_PROFILE"/etc/profile
+          . "$GUIX_PROFILE"/etc/profile
       else
-	  echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+          echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
       fi
     else
       echo "No profile found at path" $profilePath
@@ -396,6 +396,12 @@ If no profile names are provided, it walks the list of profile directories under
 ** Updating Channels
 
 This script makes it easy to update all channels to the latest commit based on an original channel file (see the Channels section at the top of this document).
+
+#+begin_src sh
+
+  update-channels
+
+#+end_src
 
 #+begin_src sh :tangle ~/bin/update-channels :shebang #!/bin/sh
 

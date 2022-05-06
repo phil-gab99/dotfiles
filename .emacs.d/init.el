@@ -149,6 +149,9 @@
   :custom
   (password-cache-expiry (* 60 60 2)))
 
+(use-package password-store
+  :straight t)
+
 (defun pg/lookup-password (&rest keys)
   (let ((result (apply #'auth-source-search keys)))
     (if result
@@ -937,6 +940,7 @@
   (add-hook 'TeX-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
   (put 'TeX-mode 'derived-mode-parent 'prog-mode)
   :custom
+  (latex-run-command "pdflatex")
   (TeX-view-program-selection '((output-pdf "PDF Tools")))
   (TeX-source-correlate-start-server t))
 
@@ -1591,7 +1595,7 @@
   (ledger-clear-whole-transaction t))
 
 (use-package slack
-  :straight nil
+  :straight t
   :commands slack-start
   :hook (slack-mode . corfu-mode)
   :config

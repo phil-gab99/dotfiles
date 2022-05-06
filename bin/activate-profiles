@@ -29,9 +29,9 @@ for profile in $profiles; do
     # Source the new profile
     GUIX_PROFILE="$profilePath/$profileName"
     if [ -f $GUIX_PROFILE/etc/profile ]; then
-	. "$GUIX_PROFILE"/etc/profile
+        . "$GUIX_PROFILE"/etc/profile
     else
-	echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+        echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
     fi
   else
     echo "No profile found at path" $profilePath

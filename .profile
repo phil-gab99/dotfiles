@@ -30,6 +30,9 @@ fi
 # Export java path so that tools pick it up correctly
 export JAVA_HOME=$(dirname $(dirname $(realpath $(which java))))
 
+# Export casting program for qutebrowser
+export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
+
 # Make sure we can reach the GPG agent for SSH auth
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 

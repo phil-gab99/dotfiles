@@ -849,33 +849,56 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
       #:start (make-system-constructor "gpg-connect-agent /bye")
       #:stop (make-system-destructor "gpgconf --kill gpg-agent")))
 
-    (define pulseaudio
-      (make <service>
-        #:provides '(pulseaudio)
-        #:respawn? #t
-        #:start (make-forkexec-constructor '("pulseaudio"))
-        #:stop  (make-kill-destructor)))
+  (define mcron
+    (make <service>
+      #:provides '(mcron)
+      #:respawn? #t
+      #:start (make-forkexec-constructor '("mcron"))
+      #:stop  (make-kill-destructor)))
 
-    (register-services gpg-agent pulseaudio)
-    (action 'shepherd 'daemonize)
+  (define pulseaudio
+    (make <service>
+      #:provides '(pulseaudio)
+      #:respawn? #t
+      #:start (make-forkexec-constructor '("pulseaudio"))
+      #:stop  (make-kill-destructor)))
 
-    ;; Start user services
-    (for-each start '(gpg-agent pulseaudio))
+  (register-services gpg-agent mcron pulseaudio)
+  (action 'shepherd 'daemonize)
+
+  ;; Start user services
+  (for-each start '(gpg-agent mcron pulseaudio))
 
 #+end_src
 
 * Applications
 
-** Default Applications
+** Audio Device Control
 
-#+begin_src conf :tangle ~/.dotfiles/.config/mimeapps.list
+*Guix Packages*
 
-  [Default Applications]
-  text/html=qutebrowser.desktop
-  x-scheme-handler/http=qutebrowser.desktop
-  x-scheme-handler/https=qutebrowser.desktop
-  x-scheme-handler/about=qutebrowser.desktop
-  x-scheme-handler/unknown=qutebrowser.desktop
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "alsa-utils"
+  "pavucontrol"
+  "pasystray"
+
+#+end_src
+
+** Bluetooth Setup
+
+If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~, enter these commands at the ~bluetoothctl~ prompt:
+
+#+begin_src sh
+
+  system-alias "my-hostname" # To configure your laptop's device name
+  default-agent
+  power on
+  scan on
+  # Wait for your device to appear
+  pair 04:52:C7:5E:5C:A8
+  trust 04:52:C7:5E:5C:A8 # To enable auto-connect
+  connect 04:52:C7:5E:5C:A8
 
 #+end_src
 
@@ -1446,30 +1469,30 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   c.content.autoplay = False
 
   # Adblocking
-  c.content.blocking.enabled = True
-  c.content.blocking.method = "adblock"
-  c.content.blocking.adblock.lists = [
-      "https://easylist.to/easylist/easylist.txt",
-      "https://easylist.to/easylist/easyprivacy.txt",
-      "https://easylist.to/easylist/fanboy-annoyance.txt",
-      "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt",
-      "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
-      "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badware.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt",
-      "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2021.txt",
-      "https://www.malwaredomainlist.com/hostslist/hosts.txt",
-      "https://www.i-dont-care-about-cookies.eu/abp/",
-      "https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts",
-      "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
-  ]
+  # c.content.blocking.enabled = True
+  # c.content.blocking.method = "adblock"
+  # c.content.blocking.adblock.lists = [
+  #     "https://easylist.to/easylist/easylist.txt",
+  #     "https://easylist.to/easylist/easyprivacy.txt",
+  #     "https://easylist.to/easylist/fanboy-annoyance.txt",
+  #     "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt",
+  #     "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
+  #     "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badware.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt",
+  #     "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2021.txt",
+  #     "https://www.malwaredomainlist.com/hostslist/hosts.txt",
+  #     "https://www.i-dont-care-about-cookies.eu/abp/",
+  #     "https://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts",
+  #     "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
+  # ]
 
   # Rendering issues
   c.qt.args = ["disable-seccomp-filter-sandbox"]
@@ -1479,8 +1502,10 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   config.bind('<Ctrl-g>', 'mode-leave', mode='command')
   config.bind('<Ctrl-g>', 'mode-leave', mode='prompt')
   config.bind('<Ctrl-g>', 'mode-leave', mode='hint')
-  # config.bind('v', 'spawn ~/.dotfiles/bin/umpv {url}')
-  # config.bind('V', 'hint links spawn ~/.dotfiles/bin/umpv {hint-url}')
+
+  # Mpv spawn
+  config.bind('wm', 'spawn umpv {url}')
+  config.bind('wM', 'hint links spawn umpv {hint-url}')
 
   # Tweak some keybindings
   config.unbind('d') # Don't close tab on lower-case 'd'
@@ -1498,6 +1523,321 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
   # Load the autoconfig file (quteconfig.py)
   config.load_autoconfig()
+
+#+end_src
+
+*Cast script*
+
+#+begin_src sh :tangle ~/bin/cast :shebang #!/bin/sh
+
+  # Behavior
+  #   Userscript for qutebrowser which casts the url passed in $1 to the default
+  #   ChromeCast device in the network using the program `castnow`
+  #
+  # Usage
+  #   You can launch the script from qutebrowser as follows:
+  #       spawn --userscript ${PATH_TO_FILE} {url}
+  #
+  #   Then, you can control the chromecast by launching the simple command
+  #   `castnow` in a shell which will connect to the running castnow instance.
+  #
+  #   For stopping the script, issue the command `pkill -f castnow` which would
+  #   then let the rest of the userscript execute for cleaning temporary file.
+  #
+  # Thanks
+  #   This userscript borrows Thorsten Wißmann's javascript code from his `mpv`
+  #   userscript.
+  #
+  # Dependencies
+  #   - castnow, https://github.com/xat/castnow
+  #   - youtube-dl (https://youtube-dl.org/) or a drop-in replacement such as
+  #     yt-dlp (https://github.com/yt-dlp/yt-dlp).
+  #
+  # Configuration:
+  #   This script looks at the optional QUTE_CAST_YTDL_PROGRAM environment
+  #   variable (if it exists) to decide which program to use for downloading
+  #   videos. If specified, this should be youtube-dl or a drop-in replacement
+  #   for it.
+  #
+  # Author
+  #   Simon Désaulniers <sim.desaulniers@gmail.com>
+
+  if [ -z "$QUTE_FIFO" ] ; then
+      cat 1 > &2 << EOF
+  Error: $0 can not be run as a standalone script.
+  It is a qutebrowser userscript. In order to use it, call it using
+  'spawn --userscript' as described in qute://help/userscripts.html
+  EOF
+      exit 1
+  fi
+
+  function msg {
+      local cmd="$1"
+      shift
+      local msg="$*"
+      if [ -z "$QUTE_FIFO" ] ; then
+          echo "$cmd: $msg" > &2
+      else
+          echo "message-$cmd '${msg//\'/\\\'}'" >> "$QUTE_FIFO"
+      fi
+  }
+
+  function js {
+      cat << EOF
+      function descendantOfTagName(child, ancestorTagName) {
+          // tells whether child has some (proper) ancestor
+          // with the tag name ancestorTagName
+          while (child.parentNode != null) {
+              child = child.parentNode;
+              if (typeof child.tagName === 'undefined') break;
+              if (child.tagName.toUpperCase() == ancestorTagName.toUpperCase()) {
+                  return true;
+              }
+          }
+          return false;
+      }
+      var App = {};
+      var all_videos = [];
+      all_videos.push.apply(all_videos, document.getElementsByTagName("video"));
+      all_videos.push.apply(all_videos, document.getElementsByTagName("object"));
+      all_videos.push.apply(all_videos, document.getElementsByTagName("embed"));
+      App.backup_videos = Array();
+      App.all_replacements = Array();
+      for (i = 0; i < all_videos.length; i++) {
+          var video = all_videos[i];
+          if (descendantOfTagName(video, "object")) {
+              // skip tags that are contained in an object, because we hide
+              // the object anyway.
+              continue;
+          }
+          var replacement = document.createElement("div");
+          replacement.innerHTML = "
+              <p style=\\"margin-bottom: 0.5em\\">
+              The video is being cast on your ChromeCast device.
+              </p>
+              <p>
+              In order to restore this particular video
+              <a style=\\"font-weight: bold;
+                          color: white;
+                          background: transparent;
+                       \\"
+                 onClick=\\"restore_video(this, " + i + ");\\"
+                 href=\\"javascript: restore_video(this, " + i + ")\\"
+                >click here</a>.
+              </p>
+          ";
+          replacement.style.position = "relative";
+          replacement.style.zIndex = "100003000000";
+          replacement.style.fontSize = "1rem";
+          replacement.style.textAlign = "center";
+          replacement.style.verticalAlign = "middle";
+          replacement.style.height = "100%";
+          replacement.style.background = "#101010";
+          replacement.style.color = "white";
+          replacement.style.border = "4px dashed #545454";
+          replacement.style.padding = "2em";
+          replacement.style.margin = "auto";
+          App.all_replacements[i] = replacement;
+          App.backup_videos[i] = video;
+          video.parentNode.replaceChild(replacement, video);
+      }
+      function restore_video(obj, index) {
+          obj = App.all_replacements[index];
+          video = App.backup_videos[index];
+          console.log(video);
+          obj.parentNode.replaceChild(video, obj);
+      }
+      /** force repainting the video, thanks to:
+       ,* http://web.archive.org/web/20151029064649/https://martinwolf.org/2014/06/10/force-repaint-of-an-element-with-javascript/
+       ,*/
+      var siteHeader = document.getElementById('header');
+      siteHeader.style.display='none';
+      siteHeader.offsetHeight; // no need to store this anywhere, the reference is enough
+      siteHeader.style.display='block';
+  EOF
+  }
+
+  function printjs {
+      js | sed 's,//.*$,,' | tr '\n' ' '
+  }
+  echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
+
+  tmpdir=$(mktemp -d)
+  file_to_cast=${tmpdir}/qutecast
+  cast_program=$(command -v castnow)
+
+  # pick a ytdl program
+  for p in "$QUTE_CAST_YTDL_PROGRAM" yt-dlp youtube-dl; do
+      ytdl_program=$(command -v -- "$p")
+      [ "$ytdl_program" == "" ] || break
+  done
+
+  if [[ "${cast_program}" == "" ]]; then
+      msg error "castnow can't be found"
+      exit 1
+  fi
+
+  if [[ "${ytdl_program}" == "" ]]; then
+      msg error "youtube-dl or a drop-in replacement can't be found in PATH, and no installed program " \
+          "specified in QUTE_CAST_YTDL_PROGRAM (currently \"$QUTE_CAST_YTDL_PROGRAM\")"
+      exit 1
+  fi
+
+  # kill any running instance of castnow
+  pkill -f -- "${cast_program}"
+
+  # start youtube download in stream mode (-o -) into temporary file
+  "${ytdl_program}" -qo - "$1" > "${file_to_cast}" &
+  ytdl_pid=$!
+
+  msg info "Casting $1" >> "$QUTE_FIFO"
+  # start castnow in stream mode to cast on ChromeCast
+  tail -F "${file_to_cast}" | ${cast_program} -
+
+  # cleanup remaining background process and file on disk
+  kill ${ytdl_pid}
+  rm -rf "${tmpdir}"
+
+#+end_src
+
+*Mpv script*
+
+#+begin_src sh :tangle ~/bin/rmpv :shebang #!/bin/sh
+
+  # Behavior:
+  #   Userscript for qutebrowser which views the current web page in mpv using
+  #   sensible mpv-flags. While viewing the page in MPV, all <video>, <embed>,
+  #   and <object> tags in the original page are temporarily removed. Clicking on
+  #   such a removed video restores the respective video.
+  #
+  #   In order to use this script, just start it using `spawn --userscript` from
+  #   qutebrowser. I recommend using an alias, e.g. put this in the
+  #   [alias]-section of qutebrowser.conf:
+  #
+  #     mpv = spawn --userscript /path/to/view_in_mpv
+  #
+  # Background:
+  #   Most of my machines are too slow to play youtube videos using html5, but
+  #   they work fine in mpv (and mpv has further advantages like video scaling,
+  #   etc). Of course, I don't want the video to be played (or even to be
+  #   downloaded) twice — in MPV and in qwebkit. So I often close the tab after
+  #   opening it in mpv. However, I actually want to keep the rest of the page
+  #   (comments and video suggestions), i.e. only the videos should disappear
+  #   when mpv is started. And that's precisely what the present script does.
+  #
+  # Thorsten Wißmann, 2015 (thorsten` on Libera Chat)
+  # Any feedback is welcome!
+
+  set -e
+
+  if [ -z "$QUTE_FIFO" ]; then
+      cat 1 > &2 << EOF
+  Error: $0 can not be run as a standalone script.
+  It is a qutebrowser userscript. In order to use it, call it using
+  'spawn --userscript' as described in qute://help/userscripts.html
+  EOF
+      exit 1
+  fi
+
+  function msg {
+      local cmd="$1"
+      shift
+      local msg="$*"
+      if [ -z "$QUTE_FIFO" ]; then
+          echo "$cmd: $msg" >&2
+      else
+          echo "message-$cmd '${msg//\'/\\\'}'" >> "$QUTE_FIFO"
+      fi
+  }
+
+  MPV_COMMAND=${MPV_COMMAND:-mpv}
+  # Warning: spaces in single flags are not supported
+  MPV_FLAGS=${MPV_FLAGS:- --force-window --no-terminal --keep-open=yes --ytdl}
+  IFS=" " read -r -a video_command <<< "$MPV_COMMAND $MPV_FLAGS"
+
+  function js {
+      cat << EOF
+      function descendantOfTagName(child, ancestorTagName) {
+          // tells whether child has some (proper) ancestor
+          // with the tag name ancestorTagName
+          while (child.parentNode != null) {
+                  child = child.parentNode;
+              if (typeof child.tagName === 'undefined') break;
+              if (child.tagName.toUpperCase() == ancestorTagName.toUpperCase()) {
+                  return true;
+              }
+          }
+          return false;
+      }
+      var App = {};
+      var all_videos = [];
+      all_videos.push.apply(all_videos, document.getElementsByTagName("video"));
+      all_videos.push.apply(all_videos, document.getElementsByTagName("object"));
+      all_videos.push.apply(all_videos, document.getElementsByTagName("embed"));
+      App.backup_videos = Array();
+      App.all_replacements = Array();
+      for (i = 0; i < all_videos.length; i++) {
+              var video = all_videos[i];
+          if (descendantOfTagName(video, "object")) {
+                  // skip tags that are contained in an object, because we hide
+                  // the object anyway.
+              continue;
+          }
+              var replacement = document.createElement("div");
+              replacement.innerHTML = "
+              <p style=\\"margin-bottom: 0.5em\\">
+              Opening page with:
+              <span style=\\"font-family: monospace;\\">${video_command[*]}</span>
+              </p>
+              <p>
+              In order to restore this particular video
+              <a style=\\"font-weight: bold;
+              color: white;
+              background: transparent;
+              \\"
+                 onClick=\\"restore_video(this, " + i + ");\\"
+                 href=\\"javascript: restore_video(this, " + i + ")\\"
+                >click here</a>.
+              </p>
+          ";
+              replacement.style.position = "relative";
+              replacement.style.zIndex = "100003000000";
+              replacement.style.fontSize = "1rem";
+              replacement.style.textAlign = "center";
+              replacement.style.verticalAlign = "middle";
+              replacement.style.height = "100%";
+              replacement.style.background = "#101010";
+              replacement.style.color = "white";
+              replacement.style.border = "4px dashed #545454";
+              replacement.style.padding = "2em";
+              replacement.style.margin = "auto";
+              App.all_replacements[i] = replacement;
+              App.backup_videos[i] = video;
+              video.parentNode.replaceChild(replacement, video);
+      }
+      function restore_video(obj, index) {
+          obj = App.all_replacements[index];
+          video = App.backup_videos[index];
+          console.log(video);
+          obj.parentNode.replaceChild(video, obj);
+      }
+      /** force repainting the video, thanks to:
+      ,* http://web.archive.org/web/20151029064649/https://martinwolf.org/2014/06/10/force-repaint-of-an-element-with-javascript/
+      ,*/
+      var siteHeader = document.getElementById('header');
+      siteHeader.style.display='none';
+      siteHeader.offsetHeight; // no need to store this anywhere, the reference is enough
+      siteHeader.style.display='block';
+      EOF
+  }
+
+  function printjs {
+      js | sed 's,//.*$,,' | tr '\n' ' '
+  }
+  echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
+
+  msg info "Opening $QUTE_URL with mpv"
+  "${video_command[@]}" "$@" "$QUTE_URL"
 
 #+end_src
 
@@ -1524,15 +1864,34 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 #+end_src
 
-** Audio Device Control
+** Default Applications
+
+#+begin_src conf :tangle ~/.dotfiles/.config/mimeapps.list
+
+  [Default Applications]
+  text/html=qutebrowser.desktop
+  x-scheme-handler/http=qutebrowser.desktop
+  x-scheme-handler/https=qutebrowser.desktop
+  x-scheme-handler/about=qutebrowser.desktop
+  x-scheme-handler/unknown=qutebrowser.desktop
+
+#+end_src
+
+** Desktop Tools
 
 *Guix Packages*
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "alsa-utils"
-  "pavucontrol"
-  "pasystray"
+  "compton"
+  "gucharmap"
+  "fontmanager"
+  "brightnessctl"
+  "xdg-utils"      ;; For xdg-open, etc
+  "xdg-dbus-proxy" ;; For Flatpak
+  "gtk+:bin"       ;; For gtk-launch
+  "glib:bin"       ;; For gio-launch-desktop
+  "shared-mime-info"
 
 #+end_src
 
@@ -1541,6 +1900,43 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "udiskie"
+
+#+end_src
+
+** Flatpak
+
+Applications to install which are otherwise difficult to install Guix systems.
+    
+#+begin_src sh
+
+  flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+  flatpak install --user flathub com.spotify.Client
+  flatpak install --user flathub com.valvesoftware.Steam
+  flatpak install --user flathub com.microsoft.Teams
+  flatpak install --user flathub com.discordapp.Discord
+  flatpak install --user flathub-beta com.obsproject.Studio
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "flatpak"
+
+#+end_src
+
+** Image Viewers and Editors
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "feh"
+  "imagemagick"
+  "gimp"
+  "xournalpp"
 
 #+end_src
 
@@ -1571,32 +1967,26 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 #+end_src
 
-** Image Viwers and Editors
+** Password Management
 
-*Guix Packages*
+*Password sync script*
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src sh :tangle ~/bin/sync-passwords :shebang #!/bin/sh
 
-  "feh"
-  "imagemagick"
-  "gimp"
-  "xournalpp"
+  pass git pull
+  pass git push
+
+  notify-send -i "emblem-synchronizing" "Passwords synced!"
 
 #+end_src
 
-** Flatpak and Nix
+*Scheduling with mcron*
 
-Applications to install which are otherwise difficult to install Guix systems.
-    
-#+begin_src sh
+#+begin_src scheme :tangle ~/.config/cron/pass-sync.guile
 
-  flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-  flatpak install --user flathub com.spotify.Client
-  flatpak install --user flathub com.valvesoftware.Steam
-  flatpak install --user flathub com.microsoft.Teams
-  flatpak install --user flathub com.discordapp.Discord
-  flatpak install --user flathub-beta com.obsproject.Studio
+  (job
+   '(next-hour (range 0 24 4))
+   "~/bin/sync-passwords")
 
 #+end_src
 
@@ -1604,33 +1994,18 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "flatpak"
+  "password-store"
+  "mcron"
 
 #+end_src
 
 ** Printing
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  "system-config-printer"
-
-#+end_src
-
-** Desktop Tools
-
 *Guix Packages*
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "compton"
-  "gucharmap"
-  "fontmanager"
-  "brightnessctl"
-  "xdg-utils"      ;; For xdg-open, etc
-  "xdg-dbus-proxy" ;; For Flatpak
-  "gtk+:bin"       ;; For gtk-launch
-  "glib:bin"       ;; For gio-launch-desktop
-  "shared-mime-info"
+  "system-config-printer"
 
 #+end_src
 
@@ -1665,23 +2040,6 @@ Applications to install which are otherwise difficult to install Guix systems.
   "xss-lock"
   "libinput"
   "xinput"
-
-#+end_src
-
-** Bluetooth Setup
-
-If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~, enter these commands at the ~bluetoothctl~ prompt:
-
-#+begin_src sh
-
-  system-alias "my-hostname" # To configure your laptop's device name
-  default-agent
-  power on
-  scan on
-  # Wait for your device to appear
-  pair 04:52:C7:5E:5C:A8
-  trust 04:52:C7:5E:5C:A8 # To enable auto-connect
-  connect 04:52:C7:5E:5C:A8
 
 #+end_src
 

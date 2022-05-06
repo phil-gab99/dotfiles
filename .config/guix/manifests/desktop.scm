@@ -34,15 +34,32 @@
    "dunst"
    "libnotify"  ; For notify-send
    
-   "nyxt"
-   
-   "qutebrowser"
-   
    "alsa-utils"
    "pavucontrol"
    "pasystray"
    
+   "nyxt"
+   
+   "qutebrowser"
+   
+   "compton"
+   "gucharmap"
+   "fontmanager"
+   "brightnessctl"
+   "xdg-utils"      ;; For xdg-open, etc
+   "xdg-dbus-proxy" ;; For Flatpak
+   "gtk+:bin"       ;; For gtk-launch
+   "glib:bin"       ;; For gio-launch-desktop
+   "shared-mime-info"
+   
    "udiskie"
+   
+   "flatpak"
+   
+   "feh"
+   "imagemagick"
+   "gimp"
+   "xournalpp"
    
    "mpv"
    "youtube-dl"
@@ -57,24 +74,10 @@
    
    "net-tools"
    
-   "feh"
-   "imagemagick"
-   "gimp"
-   "xournalpp"
-   
-   "flatpak"
+   "password-store"
+   "mcron"
    
    "system-config-printer"
-   
-   "compton"
-   "gucharmap"
-   "fontmanager"
-   "brightnessctl"
-   "xdg-utils"      ;; For xdg-open, etc
-   "xdg-dbus-proxy" ;; For Flatpak
-   "gtk+:bin"       ;; For gtk-launch
-   "glib:bin"       ;; For gio-launch-desktop
-   "shared-mime-info"
    
    "openssh"
    "sysfsutils"

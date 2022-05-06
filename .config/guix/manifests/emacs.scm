@@ -14,6 +14,8 @@
    "emacs-pinentry"
    "pinentry-emacs"
    
+   ;; "emacs-password-store" ;; Issues with guix package
+   
    "emacs-keycast"
    
    "emacs-marginalia"
@@ -159,7 +161,7 @@
    "ledger"
    "emacs-ledger-mode"
    
-   "emacs-slack" ;; Issues starting
+   ;; "emacs-slack" No cookies support
    
    "emacs-sx"
    
