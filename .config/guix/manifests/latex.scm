@@ -8,6 +8,7 @@
    "texlive-pgf"
    "texlive-latex-geometry"
    "texlive-latex-preview"
+   "texlive-ulem"
 
    "texlive-cm-super"
    "texlive-amsfonts"
