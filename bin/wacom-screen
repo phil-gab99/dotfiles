@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/bin/sh
 xinput map-to-output "Wacom Intuos PT S Pen stylus" HDMI-1
 xinput map-to-output "Wacom Intuos PT S Pen eraser" HDMI-1
 
