@@ -88,21 +88,23 @@
    
    "emacs-forge"
    
-   "emacs-lsp-mode"
+   ;; "emacs-lsp-mode" ; Slightly behind in guix packages
    
-   "emacs-lsp-ui"
+   ;; "emacs-lsp-ui"
    
-   "emacs-lsp-treemacs"
+   ;; "emacs-lsp-treemacs"
    
-   "emacs-company"
+   ;; "emacs-company"
    
    ;; "emacs-company-box"
    
-   "emacs-flycheck"
+   ;; "emacs-flycheck"
    
-   "emacs-dap-mode"
+   ;; "emacs-dap-mode"
    
    "emacs-plantuml-mode"
+   
+   "emacs-ccls"
    
    "emacs-sly"
    
@@ -114,7 +116,7 @@
    
    "emacs-haskell-mode"
    
-   "emacs-lsp-java"
+   ;; "emacs-lsp-java"
    
    "emacs-auctex"
    

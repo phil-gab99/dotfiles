@@ -107,11 +107,11 @@
                 shell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height 120)
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina")
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 120)
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono")
+(set-face-attribute 'variable-pitch nil :font "DejaVu Serif" :weight 'regular)
 
-(set-face-attribute 'italic nil :slant 'italic :underline nil)
+(set-face-attribute 'italic nil :slant 'italic)
 
 (setq display-buffer-base-action
       '(display-buffer-reuse-mode-window
@@ -760,27 +760,28 @@
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
 
-(require 'lsp-completion)
 (use-package lsp-mode
-  :straight nil
+  :straight t
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . pg/lsp-mode-setup)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
+  (require 'lsp-completion)
   (lsp-enable-which-key-integration t)
   :custom
   (lsp-completion-provider :none))
 
 (use-package lsp-ui
-  :straight nil
+  :straight t
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-doc-position 'bottom)
-  (lsp-ui-doc-show-with-cursor t))
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-doc-include-signature t))
 
 (use-package lsp-treemacs
-  :straight nil
+  :straight t
   :after lsp)
 
 (defvar company-mode/enable-yas t
@@ -793,7 +794,7 @@
             '(:with company-yasnippet))))
 
 (use-package company
-  :straight nil
+  :straight t
   :after lsp-mode
   :hook (prog-mode . company-mode)
   :bind
@@ -821,11 +822,11 @@
   (company-prescient-mode 1))
 
 (use-package flycheck
-  :straight nil
+  :straight t
   :hook (lsp-mode . flycheck-mode))
 
 (use-package dap-mode
-  :straight nil
+  :straight t
   :after lsp-mode
   :config
   (dap-mode 1)
@@ -851,15 +852,12 @@
   :custom
   (alloy-basic-offset 4))
 
-(require 'lsp-clangd)
 (use-package cc-mode
   :straight nil
   :config
   (setq c-basic-offset 4)
   :custom
-  (lsp-clangd-binary-path "~/.emacs.d/lsp-servers/clangd_13.0.0/bin/clangd")
-  (lsp-clangd-version "13.0.0")
-  (company-clang-executable "/usr/lib/clang")
+  (company-clang-executable (expand-file-name "~/.guix-extra-profiles/cc/cc/bin/clang"))
   :hook ((c-mode c++-mode objc-mode) . lsp-deferred))
 
 (use-package company-c-headers
@@ -867,6 +865,9 @@
   :after (cc-mode company)
   :config
   (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
+
+(use-package ccls
+  :straight nil)
 
 (use-package sly
   :straight nil
@@ -901,7 +902,7 @@
   (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
 
 (use-package lsp-java
-  :straight nil
+  :straight t
   :hook (java-mode . lsp-deferred)
   :bind
   (:map lsp-mode-map

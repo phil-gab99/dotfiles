@@ -190,11 +190,11 @@ Check whether using emacs from phone or laptop for applying appropriate settings
 
 #+begin_src emacs-lisp
 
-  (set-face-attribute 'default nil :font "Fira Code Retina" :height 120)
-  (set-face-attribute 'fixed-pitch nil :font "Fira Code Retina")
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular)
+  (set-face-attribute 'default nil :font "JetBrains Mono" :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono")
+  (set-face-attribute 'variable-pitch nil :font "DejaVu Serif" :weight 'regular)
 
-  (set-face-attribute 'italic nil :slant 'italic :underline nil)
+  (set-face-attribute 'italic nil :slant 'italic)
 
 #+end_src
 
@@ -214,7 +214,7 @@ Check whether using emacs from phone or laptop for applying appropriate settings
 
 * Temporary Files Management
 
-Some settings to manage where emacs stores backup files (such as the ~~~ backup files).
+Some settings to manage where emacs stores backup files (such as the =~= backup files).
 
 #+begin_src emacs-lisp
 
@@ -1691,14 +1691,14 @@ The ~lsp=ui-doc-focus-frame~ command allows to access the documentation frame of
     (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
     (lsp-headerline-breadcrumb-mode))
 
-  (require 'lsp-completion)
   (use-package lsp-mode
-    :straight nil
+    :straight t
     :commands (lsp lsp-deferred)
     :hook (lsp-mode . pg/lsp-mode-setup)
     :init
     (setq lsp-keymap-prefix "C-c l")
     :config
+    (require 'lsp-completion)
     (lsp-enable-which-key-integration t)
     :custom
     (lsp-completion-provider :none))
@@ -1709,7 +1709,7 @@ The ~lsp=ui-doc-focus-frame~ command allows to access the documentation frame of
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-lsp-mode"
+  ;; "emacs-lsp-mode" ; Slightly behind in guix packages
 
 #+end_src
 
@@ -1720,11 +1720,12 @@ Displays useful doc on hover.
 #+begin_src emacs-lisp
 
   (use-package lsp-ui
-    :straight nil
+    :straight t
     :hook (lsp-mode . lsp-ui-mode)
     :custom
     (lsp-ui-doc-position 'bottom)
-    (lsp-ui-doc-show-with-cursor t))
+    (lsp-ui-doc-show-with-cursor t)
+    (lsp-ui-doc-include-signature t))
 
 #+end_src
 
@@ -1732,7 +1733,7 @@ Displays useful doc on hover.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-lsp-ui"
+  ;; "emacs-lsp-ui"
 
 #+end_src
 
@@ -1743,7 +1744,7 @@ Tree views in emacs.
 #+begin_src emacs-lisp
 
   (use-package lsp-treemacs
-    :straight nil
+    :straight t
     :after lsp)
 
 #+end_src
@@ -1752,7 +1753,7 @@ Tree views in emacs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-lsp-treemacs"
+  ;; "emacs-lsp-treemacs"
 
 #+end_src
 
@@ -1772,7 +1773,7 @@ For auto-completions while coding.
               '(:with company-yasnippet))))
 
   (use-package company
-    :straight nil
+    :straight t
     :after lsp-mode
     :hook (prog-mode . company-mode)
     :bind
@@ -1794,7 +1795,7 @@ For auto-completions while coding.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-company"
+  ;; "emacs-company"
 
 #+end_src
 
@@ -1840,7 +1841,7 @@ Syntax checking.
 #+begin_src emacs-lisp
 
   (use-package flycheck
-    :straight nil
+    :straight t
     :hook (lsp-mode . flycheck-mode))
 
 #+end_src
@@ -1849,7 +1850,7 @@ Syntax checking.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-flycheck"
+  ;; "emacs-flycheck"
 
 #+end_src
 
@@ -1860,7 +1861,7 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
 #+begin_src emacs-lisp
 
   (use-package dap-mode
-    :straight nil
+    :straight t
     :after lsp-mode
     :config
     (dap-mode 1)
@@ -1878,7 +1879,7 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-dap-mode"
+  ;; "emacs-dap-mode"
 
 #+end_src
 
@@ -1958,15 +1959,12 @@ Some general tools for programming:
 
 #+begin_src emacs-lisp
 
-  (require 'lsp-clangd)
   (use-package cc-mode
     :straight nil
     :config
     (setq c-basic-offset 4)
     :custom
-    (lsp-clangd-binary-path "~/.emacs.d/lsp-servers/clangd_13.0.0/bin/clangd")
-    (lsp-clangd-version "13.0.0")
-    (company-clang-executable "/usr/lib/clang")
+    (company-clang-executable (expand-file-name "~/.guix-extra-profiles/cc/cc/bin/clang"))
     :hook ((c-mode c++-mode objc-mode) . lsp-deferred))
 
 #+end_src
@@ -1979,9 +1977,10 @@ Some general tools for programming:
    '("gcc-toolchain@10.3.0"
      "texinfo"
      "llvm"
+     "clang"
+     "ccls"
      "lld"
      "gcc@10.3.0"
-     "clang"
      "file"
      "elfutils"
      "go"))
@@ -1997,6 +1996,23 @@ Some general tools for programming:
     :after (cc-mode company)
     :config
     (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
+
+#+end_src
+
+***** Package | ccls
+
+#+begin_src emacs-lisp
+
+  (use-package ccls
+    :straight nil)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-ccls"
 
 #+end_src
 
@@ -2139,7 +2155,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package lsp-java
-    :straight nil
+    :straight t
     :hook (java-mode . lsp-deferred)
     :bind
     (:map lsp-mode-map
@@ -2170,7 +2186,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-lsp-java"
+  ;; "emacs-lsp-java"
 
 #+end_src
 

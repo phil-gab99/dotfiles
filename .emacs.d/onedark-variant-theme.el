@@ -180,8 +180,10 @@
   (font-lock-preprocessor-face  ( :foreground onedark-variant-preproc))
   (font-lock-keyword-face       ( :foreground onedark-variant-keywords))
   (font-lock-string-face        ( :foreground onedark-variant-strings))
-  (font-lock-doc-face           ( :foreground onedark-variant-docs))
-  (font-lock-comment-face       ( :foreground onedark-variant-comments))
+  (font-lock-doc-face           ( :foreground onedark-variant-docs
+                                  :slant 'italic))
+  (font-lock-comment-face       ( :foreground onedark-variant-comments
+                                  :slant 'italic))
   (font-lock-type-face          ( :foreground onedark-variant-types))
   (font-lock-variable-name-face ( :foreground onedark-variant-vars))
   (font-lock-constant-face      ( :foreground onedark-variant-constants))

@@ -2,9 +2,10 @@
  '("gcc-toolchain@10.3.0"
    "texinfo"
    "llvm"
+   "clang"
+   "ccls"
    "lld"
    "gcc@10.3.0"
-   "clang"
    "file"
    "elfutils"
    "go"))
