@@ -40,6 +40,7 @@
    
    "nyxt"
    
+   ;; "rust-adblock"
    "qutebrowser"
    
    "compton"

@@ -1,3 +1,5 @@
+import sys, os
+
 ################################################################################
 # ALIASES
 ################################################################################
@@ -118,9 +120,10 @@ c.content.autoplay = False
 ################################################################################
 # ADBLOCKING - TODO
 ################################################################################
-
-# c.content.blocking.enabled = True
-# c.content.blocking.method = 'adblock'
+sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
+config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
+# c.content.blocking.enabled = False
+# c.content.blocking.method = null
 # c.content.blocking.adblock.lists = [
 #     'https://easylist.to/easylist/easylist.txt',
 #     'https://easylist.to/easylist/easyprivacy.txt',
