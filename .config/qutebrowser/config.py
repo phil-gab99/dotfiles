@@ -158,8 +158,8 @@ config.bind('J', 'tab-prev')
 config.bind('K', 'tab-next')
 config.unbind('d') # Don't close tab on lower-case 'd'
 config.bind('yy', 'yank')
-config.bind('Wm', 'spawn mpv {url}')
-config.bind('WM', 'hint links spawn mpv {hint-url}')
+config.bind(',m', 'spawn mpv {url}')
+config.bind(',M', 'hint links spawn mpv {hint-url}')
 
 ## Command mode ##
 config.bind('<Ctrl-g>', 'mode-leave', mode='command')
