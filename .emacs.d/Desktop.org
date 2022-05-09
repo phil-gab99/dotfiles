@@ -137,6 +137,7 @@ Workspaces:
     (setq exwm-randr-workspace-monitor-plist
           (pcase (shell-command-to-string "autorandr --detected")
             ("work\n" '(5 "HDMI-1"))
+            ("work+\n" '(5 "HDMI-1"))
             ("jclab\n" '(5 "HDMI-1"))
             ("aa-1140\n" '(5 "HDMI-1"))
             ("rg-e310\n" '(5 "HDMI-1"))
@@ -882,6 +883,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
   "alsa-utils"
   "pavucontrol"
   "pasystray"
+  "bluez"
 
 #+end_src
 
@@ -1599,8 +1601,8 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 
   ## Command mode ##
   config.bind('<Ctrl-g>', 'mode-leave', mode='command')
-  config.bind('<Ctrl-j>', 'completion-item-focus --history next', mode='command')
-  config.bind('<Ctrl-k>', 'completion-item-focus --history prev', mode='command')
+  config.bind('<ctrl-j>', 'completion-item-focus --history next', mode='command')
+  config.bind('<ctrl-k>', 'completion-item-focus --history prev', mode='command')
 
   ## Hint mode ##
   config.bind('<Ctrl-g>', 'mode-leave', mode='hint')
@@ -1610,6 +1612,8 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 
   ## Prompt mode ##
   config.bind('<Ctrl-g>', 'mode-leave', mode='prompt')
+  config.bind('<ctrl-j>', 'prompt-item-focus next', mode='prompt')
+  config.bind('<ctrl-k>', 'prompt-item-focus prev', mode='prompt')
 
   ################################################################################
   # MISC
@@ -1640,6 +1644,8 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
   ld https://www.linkedin.com/in/philippe-gabriel-52b945149/
   sb https://www.scotiaonline.scotiabank.com/online/views/accounts/summary/summaryStandard.bns?SBL=all&convid=60975
   ctfs https://www.ctfs.com/content/dash/en/private/Summary.html
+  naruto https://www18.naruspot.tv/
+  mal https://myanimelist.net/animelist/Ramenphile
 
 #+end_src
 
@@ -1687,6 +1693,7 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
   "gtk+:bin"       ;; For gtk-launch
   "glib:bin"       ;; For gio-launch-desktop
   "shared-mime-info"
+  "htop"
 
 #+end_src
 

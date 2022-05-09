@@ -163,8 +163,8 @@ config.bind(',M', 'hint links spawn mpv {hint-url}')
 
 ## Command mode ##
 config.bind('<Ctrl-g>', 'mode-leave', mode='command')
-config.bind('<Ctrl-j>', 'completion-item-focus --history next', mode='command')
-config.bind('<Ctrl-k>', 'completion-item-focus --history prev', mode='command')
+config.bind('<ctrl-j>', 'completion-item-focus --history next', mode='command')
+config.bind('<ctrl-k>', 'completion-item-focus --history prev', mode='command')
 
 ## Hint mode ##
 config.bind('<Ctrl-g>', 'mode-leave', mode='hint')
@@ -174,6 +174,8 @@ config.bind('<Ctrl-g>', 'mode-leave', mode='insert')
 
 ## Prompt mode ##
 config.bind('<Ctrl-g>', 'mode-leave', mode='prompt')
+config.bind('<ctrl-j>', 'prompt-item-focus next', mode='prompt')
+config.bind('<ctrl-k>', 'prompt-item-focus prev', mode='prompt')
 
 ################################################################################
 # MISC

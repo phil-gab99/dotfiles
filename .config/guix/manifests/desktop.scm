@@ -37,6 +37,7 @@
    "alsa-utils"
    "pavucontrol"
    "pasystray"
+   "bluez"
    
    "nyxt"
    
@@ -52,6 +53,7 @@
    "gtk+:bin"       ;; For gtk-launch
    "glib:bin"       ;; For gio-launch-desktop
    "shared-mime-info"
+   "htop"
    
    "udiskie"
    

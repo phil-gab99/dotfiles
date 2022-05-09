@@ -1403,12 +1403,7 @@
         "%?"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
         :unnarrowed t)
-       ("1" "web tech" plain
-        "%?"
-        :if-new (file+head "IFT-3225/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ift3225-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-        :unnarrowed t)
-       ("2" "economy" plain
+       ("1" "economy" plain
         "%?"
         :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                            "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
