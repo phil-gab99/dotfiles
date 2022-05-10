@@ -1646,6 +1646,7 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
   ctfs https://www.ctfs.com/content/dash/en/private/Summary.html
   naruto https://www18.naruspot.tv/
   mal https://myanimelist.net/animelist/Ramenphile
+  msdesk http://mydesk.morganstanley.com
 
 #+end_src
 
@@ -1842,6 +1843,16 @@ Applications to install which are otherwise difficult to install Guix systems.
   "zip"
   "unzip"
   "trash-cli"
+
+#+end_src
+
+** Virtual machines
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "virt-manager"
 
 #+end_src
 

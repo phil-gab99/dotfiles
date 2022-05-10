@@ -1407,9 +1407,14 @@
         "%?"
         :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                            "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+        :unnarrowed t)
+       ("m" "Morgan Stanley" plain
+        "%?"
+        :if-new (file+head "MorganStanley/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: morgan-stanley-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
         :unnarrowed t)))
-    :config
-    (org-roam-setup)))
+       :config
+       (org-roam-setup)))
 
 (use-package org-fragtog
   :straight nil

@@ -24,6 +24,7 @@
  (gnu packages gnuzilla)
  (gnu packages pulseaudio)
  (gnu packages web-browsers)
+ (gnu packages virtualization)
  (gnu packages version-control)
  (gnu packages package-management)
  (nongnu packages linux)
@@ -50,7 +51,13 @@
                 (group "users")
                 (home-directory "/home/phil-gab99")
                 (supplementary-groups
-                 '("wheel" "netdev" "audio" "video")))
+                 '("wheel"
+                   ;; "kvm"
+                   "input"
+                   ;; "libvirt"
+                   "netdev"
+                   "audio"
+                   "video")))
                %base-user-accounts))
  (packages
   (append
@@ -60,6 +67,8 @@
          (specification->package "nss-certs")
          git
          ntfs-3g
+         ;; qemu
+         ;; libvirt
          ;; exfat-utils
          fuse-exfat
          vim
@@ -80,6 +89,14 @@
                    (extensions
                     (list cups-filters))))
          (service nix-service-type)
+         ;; (service libvirt-service-type
+         ;;          (libvirt-configuration
+         ;;           (unix-sock-group "libvirt")
+         ;;           (tls-port "16555")))
+         (service bluetooth-service-type)
+         ;; (service virtlog-service-type
+         ;;          (virtlog-configuration
+         ;;           (max-clients 1000)))
          (set-xorg-configuration
           (xorg-configuration
            (keyboard-layout keyboard-layout))))

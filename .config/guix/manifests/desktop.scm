@@ -88,6 +88,8 @@
    "unzip"
    "trash-cli"
    
+   "virt-manager"
+   
    "xev"
    "xset"
    "xrdb"
