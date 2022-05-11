@@ -176,6 +176,7 @@ config.bind('<Ctrl-g>', 'mode-leave', mode='insert')
 config.bind('<Ctrl-g>', 'mode-leave', mode='prompt')
 config.bind('<ctrl-j>', 'prompt-item-focus next', mode='prompt')
 config.bind('<ctrl-k>', 'prompt-item-focus prev', mode='prompt')
+config.unbind('<Tab>', mode='prompt')
 
 ################################################################################
 # MISC
