@@ -45,13 +45,13 @@
   (pg/start-panel)
   (pg/run-in-background "dunst")
   (pg/run-in-background "nm-applet")
-  (pg/run-in-background "pasystray")
-  (pg/run-in-background "udiskie -t"))
+  (pg/run-in-background "pasystray"))
+  ;; (pg/run-in-background "udiskie -t"))
 
 (require 'exwm-config)
 (require 'exwm-randr)
 (use-package exwm
-  :straight nil
+  :straight t
   :custom
   (exwm-manage-configurations
    '(((string-equal exwm-class-name "Nyxt")
@@ -129,7 +129,7 @@
   :bind (("C-x B" . exwm-workspace-switch-to-buffer)))
 
 (use-package desktop-environment
-  :straight nil
+  :straight t
   :after exwm
   :diminish desktop-environment-mode
   :config

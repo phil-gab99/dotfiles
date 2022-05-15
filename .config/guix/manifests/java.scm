@@ -1,2 +1,2 @@
 (specifications->manifest
- '("openjdk@17.0.1"))
+ '("openjdk@17.0.2"))

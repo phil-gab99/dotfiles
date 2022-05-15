@@ -10,7 +10,7 @@ xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 
 
 start_daemons () {
     if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
-        shepherd
+	shepherd
     fi
     compton &
     xsettingsd &
@@ -39,8 +39,8 @@ exwm () {
 
     # Finally start Emacs
     # exec dbus-launch emacs --eval "(lerax-exwm-start nil t)"
-    # exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/pg-desktop.el
-    exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
+    exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/lisp/pg-desktop.el
+    # exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
 }
 
 start_daemons

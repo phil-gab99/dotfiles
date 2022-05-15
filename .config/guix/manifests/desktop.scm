@@ -34,16 +34,6 @@
    "dunst"
    "libnotify"  ; For notify-send
    
-   "alsa-utils"
-   "pavucontrol"
-   "pasystray"
-   "bluez"
-   
-   "nyxt"
-   
-   ;; "rust-adblock"
-   "qutebrowser"
-   
    "compton"
    "gucharmap"
    "fontmanager"
@@ -55,25 +45,9 @@
    "shared-mime-info"
    "htop"
    
-   "udiskie"
+   ;; "udiskie"
    
    "flatpak"
-   
-   "feh"
-   "imagemagick"
-   "gimp"
-   "xournalpp"
-   
-   "mpv"
-   "youtube-dl"
-   "gstreamer"
-   "gst-plugins-base"
-   "gst-plugins-good"
-   "gst-plugins-bad"
-   "gst-plugins-ugly"
-   "gst-libav"
-   "intel-vaapi-driver"
-   "libva-utils"
    
    "net-tools"
    
@@ -88,7 +62,7 @@
    "unzip"
    "trash-cli"
    
-   "virt-manager"
+   ;; "virt-manager"
    
    "xev"
    "xset"

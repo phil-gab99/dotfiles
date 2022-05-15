@@ -22,8 +22,8 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 
 #+begin_src emacs-lisp
 
-   (setq native-comp-async-report-warnings-errors nil)                                           ; Silence compiler warnings
-   (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
+;  (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
+;  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
 
 #+end_src
 
@@ -62,18 +62,18 @@ Some initializations are first set up.
   (unless (featurep 'straight)
     (defvar bootstrap-version)
     (let ((bootstrap-file
-	   (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	  (bootstrap-version 5))
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
       (unless (file-exists-p bootstrap-file)
-	(with-current-buffer
-	    (url-retrieve-synchronously
-	     "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	     'silent 'inhibit-cookies)
-	  (goto-char (point-max))
-	  (eval-print-last-sexp)))
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
       (load bootstrap-file nil 'nomessage)))
 
-  ;;(straight-use-package 'use-package)
+  (straight-use-package 'use-package)
   ;;(setq straight-use-package-by-default t)
   ;;(setq use-package-verbose t) For optimizing performance
 
@@ -83,7 +83,7 @@ Some initializations are first set up.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-use-package"
+  ;; "emacs-use-package"
 
 #+end_src
 
@@ -97,11 +97,11 @@ Check whether using emacs from phone or laptop for applying appropriate settings
 
   (require 'subr-x)
   (setq pg/is-termux
-	(string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
+        (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
 
   (setq pg/exwm-enabled (and (not pg/is-termux)
-			     (eq window-system 'x)
-			     (seq-contains command-line-args "--use-exwm")))
+                             (eq window-system 'x)))
+                             ;; (frame-parameter (selected-frame) 'exwm-active)))
 
   (when pg/exwm-enabled (require 'pg-desktop))
 
@@ -111,8 +111,8 @@ Check whether using emacs from phone or laptop for applying appropriate settings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-exwm"
-  "emacs-desktop-environment"
+  ;; "emacs-exwm"
+  ;; "emacs-desktop-environment"
 
 #+end_src
 
@@ -234,8 +234,8 @@ Emacs interface for guix package manager.
 
 #+begin_src emacs-lisp
 
-  (use-package guix
-    :straight nil)
+  ;; (use-package guix
+    ;; :straight t)
 
 #+end_src
 
@@ -243,16 +243,18 @@ Emacs interface for guix package manager.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-guix"
+  ;; "emacs-guix"
 
 #+end_src
 
-*** Package | geiser
+*** Package | geiser-guile
+
+Emacs interface for guix package manager.
 
 #+begin_src emacs-lisp
 
-  (use-package geiser
-    :straight nil)
+  ;; (use-package geiser-guile
+    ;; :straight t)
 
 #+end_src
 
@@ -260,10 +262,9 @@ Emacs interface for guix package manager.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-geiser"
+  ;; "emacs-geiser-guile"
 
 #+end_src
-
 ** Password utilities
 
 *** Package | auth-source
@@ -283,7 +284,7 @@ Emacs interface for guix package manager.
 
   (unless pg/is-termux
     (use-package pinentry
-      :straight nil
+      :straight t
       :custom
       (epg-pinentry-mode 'loopback)
       :config
@@ -295,8 +296,8 @@ Emacs interface for guix package manager.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-pinentry"
-  "pinentry-emacs"
+  ;; "emacs-pinentry"
+  ;; "pinentry-emacs"
 
 #+end_src
 
@@ -355,6 +356,7 @@ Useful when starting out with the various keybindings and when presenting to an 
       (remove-hook 'pre-command-hook 'keycast--update)))
 
   (use-package keycast
+    :straight t
     :custom
     (keycast-mode-line-format "%2s%k%c%2s")
     :config
@@ -368,7 +370,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-keycast"
+  ;; "emacs-keycast"
 
 #+end_src
 
@@ -390,7 +392,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package marginalia
-    :straight nil
+    :straight t
     :after vertico
     :custom
     (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
@@ -403,7 +405,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-marginalia"
+  ;; "emacs-marginalia"
 
 #+end_src
 
@@ -412,7 +414,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package consult
-    :straight nil
+    :straight t
     :bind
     ("C-s" . consult-line)
     ("C-x b" . consult-buffer)
@@ -425,7 +427,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-consult"
+  ;; "emacs-consult"
 
 #+end_src
 
@@ -434,7 +436,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package orderless
-    :straight nil
+    :straight t
     :custom
     (completion-styles '(orderless))
     (completion-category-defaults nil)
@@ -447,7 +449,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-orderless"
+  ;; "emacs-orderless"
 
 #+end_src
 
@@ -456,7 +458,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package corfu
-    :straight nil
+    :straight t
     :bind
     (:map corfu-map
           ("C-j" . corfu-next)
@@ -470,7 +472,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-corfu"
+  ;; "emacs-corfu"
 
 #+end_src
 
@@ -479,7 +481,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package vertico
-    :straight nil
+    :straight t
     :bind
     (:map vertico-map
           ("C-j" . vertico-next)
@@ -495,7 +497,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-vertico"
+  ;; "emacs-vertico"
 
 #+end_src
 
@@ -504,7 +506,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package embark
-    :straight nil
+    :straight t
     :bind
     ("C-S-a" . embark-act)
     (:map minibuffer-local-map
@@ -524,7 +526,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-embark"
+  ;; "emacs-embark"
 
 #+end_src
 
@@ -559,7 +561,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 #+begin_src emacs-lisp
 
   (use-package prescient
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -567,7 +569,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-prescient"
+  ;; "emacs-prescient"
 
 #+end_src
 
@@ -578,7 +580,7 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package which-key
-    :straight nil
+    :straight t
     :diminish which-key-mode
     :config
     (which-key-mode)
@@ -590,7 +592,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-which-key"
+  ;; "emacs-which-key"
 
 #+end_src
 
@@ -614,7 +616,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-helm"
+  ;; "emacs-helm"
 
 #+end_src
 
@@ -625,7 +627,7 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package diminish
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -633,7 +635,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-diminish"
+  ;; "emacs-diminish"
 
 #+end_src
 
@@ -642,7 +644,7 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp
 
   (use-package all-the-icons
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -650,7 +652,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-all-the-icons"
+  ;; "emacs-all-the-icons"
 
 #+end_src
 
@@ -688,7 +690,7 @@ Customizes the look of the modeline for better aesthetic.
 #+begin_src emacs-lisp
 
   (use-package doom-modeline
-    :straight nil
+    :straight t
     :init (doom-modeline-mode 1)
     :custom
     (doom-modeline-height 15)
@@ -703,7 +705,7 @@ Customizes the look of the modeline for better aesthetic.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-doom-modeline"
+  ;; "emacs-doom-modeline"
 
 #+end_src
 
@@ -714,7 +716,7 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
 #+begin_src emacs-lisp
 
   (use-package autothemer
-    :straight nil
+    :straight t
     :config
     (load-theme 'onedark-variant t))
 
@@ -724,7 +726,7 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-autothemer"
+  ;; "emacs-autothemer"
 
 #+end_src
 
@@ -779,7 +781,7 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
 #+begin_src emacs-lisp
 
   (use-package page-break-lines
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -787,7 +789,7 @@ Important to disable current theme ~M-x disable-theme~ in order to experiment.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-page-break-lines"
+  ;; "emacs-page-break-lines"
 
 #+end_src
 
@@ -870,6 +872,7 @@ For window configurations
 #+begin_src emacs-lisp
 
   (use-package tab-bar
+    :straight nil
     :custom
     (tab-bar-show 1)
     :config
@@ -884,7 +887,7 @@ For organizing the buffer list
 #+begin_src emacs-lisp
 
   (use-package perspective
-    :straight nil
+    :straight t
     :bind
     ("C-x k" . persp-kill-buffer*)
     :config
@@ -896,7 +899,7 @@ For organizing the buffer list
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-perspective"
+  ;; "emacs-perspective"
 
 #+end_src
 
@@ -1066,7 +1069,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
   (unless pg/is-termux
     (use-package mu4e-alert
-      :straight nil
+      :straight t
       :after mu4e
       :custom
       (mu4e-alert-notify-repeated-mails t)
@@ -1081,7 +1084,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-mu4e-alert"
+  ;; "emacs-mu4e-alert"
 
 #+end_src
 
@@ -1094,7 +1097,7 @@ Colors matching delimiters with different colours for distinguishability.
 #+begin_src emacs-lisp
 
   (use-package rainbow-delimiters
-    :straight nil
+    :straight t
     :hook (prog-mode . rainbow-delimiters-mode))
 
 #+end_src
@@ -1103,7 +1106,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-rainbow-delimiters"
+  ;; "emacs-rainbow-delimiters"
 
 #+end_src
 
@@ -1122,7 +1125,7 @@ Colors matching delimiters with different colours for distinguishability.
 #+begin_src emacs-lisp
 
   (use-package highlight-indent-guides
-    :straight nil
+    :straight t
     :hook (prog-mode . highlight-indent-guides-mode)
     :custom 
     (highlight-indent-guides-responsive 'stack)
@@ -1134,7 +1137,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-highlight-indent-guides"
+  ;; "emacs-highlight-indent-guides"
 
 #+end_src
 
@@ -1145,7 +1148,7 @@ Undo-redo tree to use for the evil package.
 #+begin_src emacs-lisp
 
   (use-package undo-fu
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -1153,7 +1156,7 @@ Undo-redo tree to use for the evil package.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-undo-fu"
+  ;; "emacs-undo-fu"
 
 #+end_src
 
@@ -1164,7 +1167,7 @@ For surrounding delimiter matching and autocompletion.
 #+begin_src emacs-lisp
 
   (use-package smartparens
-    :straight nil
+    :straight t
     :diminish smartparens-mode
     :config
     (smartparens-global-mode))
@@ -1180,7 +1183,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-smartparens"
+  ;; "emacs-smartparens"
 
 #+end_src
 
@@ -1189,7 +1192,7 @@ For surrounding delimiter matching and autocompletion.
 #+begin_src emacs-lisp
 
   (use-package outshine
-    :straight nil
+    :straight t
     :hook (prog-mode . outshine-mode))
 
 #+end_src
@@ -1198,7 +1201,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-outshine"
+  ;; "emacs-outshine"
 
 #+end_src
 
@@ -1226,6 +1229,7 @@ For surrounding delimiter matching and autocompletion.
 #+begin_src emacs-lisp
 
   (use-package rainbow-mode
+    :straight t
     :diminish rainbow-mode
     :hook ((org-mode
             emacs-lisp-mode
@@ -1241,7 +1245,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-rainbow-mode"
+  ;; "emacs-rainbow-mode"
 
 #+end_src
 
@@ -1250,7 +1254,7 @@ For surrounding delimiter matching and autocompletion.
 #+begin_src emacs-lisp
 
   (use-package emojify
-    :straight nil
+    :straight t
     :config
     (global-emojify-mode))
 
@@ -1260,7 +1264,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-emojify"
+  ;; "emacs-emojify"
 
 #+end_src
 
@@ -1273,7 +1277,7 @@ Displays full documentations of the default help function.
 #+begin_src emacs-lisp
 
   (use-package helpful
-    :straight nil
+    :straight t
     :commands (helpful-callable helpful-variable helpful-command helpful-key)
     :bind
     ([remap describe-function] . helpful-callable)
@@ -1287,7 +1291,7 @@ Displays full documentations of the default help function.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-helpful"
+  ;; "emacs-helpful"
 
 #+end_src
 
@@ -1374,7 +1378,7 @@ Displays icons in dired-mode.
 
   (unless pg/is-termux
     (use-package all-the-icons-dired
-      :straight nil
+      :straight t
       :hook (dired-mode . all-the-icons-dired-mode)))
 
 #+end_src
@@ -1383,7 +1387,7 @@ Displays icons in dired-mode.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-all-the-icons-dired"
+  ;; "emacs-all-the-icons-dired"
 
 #+end_src
 
@@ -1422,7 +1426,7 @@ Adds more detail to the prompt in eshell with custome themes.
 #+begin_src emacs-lisp
 
   (use-package eshell-syntax-highlighting
-    :straight nil
+    :straight t
     :after eshell
     :config
     (eshell-syntax-highlighting-global-mode 1))
@@ -1431,7 +1435,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-eshell-syntax-highlighting"
+  ;; "emacs-eshell-syntax-highlighting"
 
 #+end_src
 
@@ -1445,7 +1449,7 @@ Adds more detail to the prompt in eshell with custome themes.
     (set-face-background 'company-preview nil))
 
   (use-package esh-autosuggest
-    :straight nil
+    :straight t
     :hook (eshell-mode . esh-autosuggest-mode)
     :custom
     (esh-autosuggest-delay 0.5)
@@ -1458,7 +1462,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-esh-autosuggest"
+  ;; "emacs-esh-autosuggest"
 
 #+end_src
 
@@ -1528,7 +1532,7 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 #+begin_src emacs-lisp
 
   (use-package projectile
-    :straight nil
+    :straight t
     :diminish projectile-mode
     :hook (lsp-mode . projectile-mode)
     :custom ((projectile-completion-system 'vertico))
@@ -1549,7 +1553,7 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-projectile"
+  ;; "emacs-projectile"
 
 #+end_src
 
@@ -1560,7 +1564,7 @@ Allows for git commands to be applied to the current repository using the comman
 #+begin_src emacs-lisp
 
   (use-package magit
-    :straight nil
+    :straight t
     :commands (magit-status magit-get-current-branch)
     :config
     (unbind-key "M-<tab>" 'magit-mode-map)
@@ -1574,7 +1578,7 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-magit"
+  ;; "emacs-magit"
 
 #+end_src
 
@@ -1583,7 +1587,7 @@ Allows for git commands to be applied to the current repository using the comman
 #+begin_src emacs-lisp
 
   (use-package git-gutter
-    :straight nil
+    :straight git-gutter-fringe
     :diminish git-gutter-mode
     :hook ((text-mode . git-gutter-mode)
            (prog-mode . git-gutter-mode))
@@ -1651,8 +1655,8 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-git-gutter"
-  "emacs-git-gutter-fringe"
+  ;; "emacs-git-gutter"
+  ;; "emacs-git-gutter-fringe"
 
 #+end_src
 
@@ -1665,7 +1669,7 @@ Steps to get working:
 #+begin_src emacs-lisp
 
   (use-package forge
-    :straight nil
+    :straight t
     :after magit)
 
 #+end_src
@@ -1674,7 +1678,7 @@ Steps to get working:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-forge"
+  ;; "emacs-forge"
 
 #+end_src
 
@@ -1890,7 +1894,7 @@ Allows writing textual descriptions for creating uml diagrams
 #+begin_src emacs-lisp
 
   (use-package plantuml-mode
-    :straight nil
+    :straight t
     :custom
     (plantuml-indent-level 4)
     (plantuml-jar-path "~/bin/plantuml.jar")
@@ -1902,7 +1906,7 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-plantuml-mode"
+  ;; "emacs-plantuml-mode"
 
 #+end_src
 
@@ -2004,7 +2008,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package ccls
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -2012,7 +2016,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-ccls"
+  ;; "emacs-ccls"
 
 #+end_src
 
@@ -2023,7 +2027,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package sly
-    :straight nil
+    :straight t
     :custom
     (inferior-lisp-program "sbcl"))
 
@@ -2033,20 +2037,20 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-sly"
+  ;; "emacs-sly"
 
 #+end_src
 
 **** Css/LessCSS/SASS/SCSS
 
-***** Package | lsp-css
+***** TODO Package | lsp-css
 
 #+begin_src emacs-lisp
 
   (use-package lsp-css
     :straight nil
     :hook ((css-mode less-css-mode scss-mode) . lsp-deferred))
-
+  
 #+end_src
 
 **** Docker
@@ -2056,7 +2060,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package docker
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -2064,7 +2068,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-docker"
+  ;; "emacs-docker"
 
 #+end_src
 
@@ -2073,7 +2077,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package dockerfile-mode
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -2081,7 +2085,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-dockerfile-mode"
+  ;; "emacs-dockerfile-mode"
 
 #+end_src
 
@@ -2092,7 +2096,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package git-modes
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -2100,7 +2104,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-git-modes"
+  ;; "emacs-git-modes"
 
 #+end_src
 
@@ -2124,7 +2128,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package haskell-mode
-    :straight nil
+    :straight t
     :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))
 
 #+end_src
@@ -2133,7 +2137,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-haskell-mode"
+  ;; "emacs-haskell-mode"
 
 #+end_src
 
@@ -2180,7 +2184,7 @@ Some general tools for programming:
 #+begin_src scheme :tangle ~/.config/guix/manifests/java.scm
 
   (specifications->manifest
-   '("openjdk@17.0.1"))
+   '("openjdk@17.0.2"))
 
 #+end_src
 
@@ -2214,10 +2218,10 @@ Some general tools for programming:
 
 #+begin_src emacs-lisp
 
-  (require 'tex-site)
   (use-package tex
-    :straight nil
+    :straight auctex
     :config
+    (require 'tex-site)
     (add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
     (add-hook 'TeX-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
@@ -2255,7 +2259,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-auctex"
+  ;; "emacs-auctex"
 
 #+end_src
 
@@ -2264,7 +2268,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp
 
   (use-package company-auctex
-    :straight nil
+    :straight t
     :after (auctex company)
     :config
     (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
@@ -2275,7 +2279,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-company-auctex"
+  ;; "emacs-company-auctex"
 
 #+end_src
 
@@ -2353,7 +2357,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package markdown-mode
-    :straight nil
+    :straight t
     :hook (gfm-view-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                                                          (markdown-code-face (:height 1.5) fixed-pitch))))))
 
@@ -2363,7 +2367,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-markdown-mode"
+  ;; "emacs-markdown-mode"
 
 #+end_src
 
@@ -2543,7 +2547,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package typescript-mode
-    :straight nil
+    :straight t
     :mode "\\.ts\\'"
     :hook (typescript-mode . lsp-deferred)
     :config
@@ -2556,7 +2560,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-typescript-mode"
+  ;; "emacs-typescript-mode"
 
 #+end_src
 
@@ -2593,7 +2597,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp
 
   (use-package yaml-mode
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -2601,7 +2605,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-yaml-mode"
+  ;; "emacs-yaml-mode"
 
 #+end_src
 
@@ -2625,8 +2629,8 @@ Allows for code snippets for different languages.
 #+begin_src emacs-lisp
 
   (use-package yasnippet
+    :straight t
     :diminish yas-minor-mode
-    :straight nil
     :hook (prog-mode . yas-minor-mode)
     :config
     (yas-global-mode 1)
@@ -2639,7 +2643,7 @@ Allows for code snippets for different languages.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-yasnippet"
+  ;; "emacs-yasnippet"
 
 #+end_src
 
@@ -2650,8 +2654,8 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp
 
   (use-package yasnippet-snippets
-    :after yasnippet
-    :straight nil)
+    :straight t
+    :after yasnippet)
   
 #+end_src
 
@@ -2659,7 +2663,7 @@ Collection of code snippets for yasnippet.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-yasnippet-snippets"
+  ;; "emacs-yasnippet-snippets"
 
 #+end_src
 
@@ -2670,7 +2674,7 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp
 
   (use-package alert
-    :straight nil
+    :straight t
     :custom
     (alert-default-style 'notifications))
 
@@ -2680,7 +2684,7 @@ Collection of code snippets for yasnippet.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-alert"
+  ;; "emacs-alert"
 
 #+end_src
 
@@ -2741,7 +2745,7 @@ Org mode package for writing structured documents and more. Here are some useful
     (setq evil-auto-indent nil))
 
   (use-package org
-    :straight nil
+    :straight t
     :commands (org-capture org-agenda)
     :hook (org-mode . pg/org-mode-setup)
     :config
@@ -2838,7 +2842,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org"
+  ;; "emacs-org"
 
 #+end_src
 
@@ -2849,7 +2853,7 @@ Toggles visibility of emphasis markers.
 #+begin_src emacs-lisp
 
   (use-package org-appear
-    :straight nil
+    :straight t
     :hook (org-mode . org-appear-mode))
 
 #+end_src
@@ -2858,7 +2862,7 @@ Toggles visibility of emphasis markers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-appear"
+  ;; "emacs-org-appear"
 
 #+end_src
 
@@ -2869,7 +2873,7 @@ Customizes the heading bullets.
 #+begin_src emacs-lisp
 
   (use-package org-bullets
-    :straight nil
+    :straight t
     :hook (org-mode . org-bullets-mode)
     :custom
     (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
@@ -2880,7 +2884,7 @@ Customizes the heading bullets.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-bullets"
+  ;; "emacs-org-bullets"
 
 #+end_src
 
@@ -2919,7 +2923,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     (setq-local face-remapping-alist '((default variable-pitch default))))
 
   (use-package org-tree-slide
-    :straight nil
+    :straight t
     :hook (((org-tree-slide-before-move-next org-tree-slide-before-move-previous) . org-latex-preview)
            (org-tree-slide-play . pg/presentation-setup)
            (org-tree-slide-stop . pg/presentation-end))
@@ -2946,7 +2950,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-tree-slide"
+  ;; "emacs-org-tree-slide"
 
 #+end_src
 
@@ -2955,7 +2959,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 #+begin_src emacs-lisp
 
   (use-package ox-reveal
-    :straight nil
+    :straight t
     :disabled ;; Test if working
     :custom
     (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
@@ -2966,7 +2970,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-ox-reveal"
+  ;; "emacs-ox-reveal"
 
 #+end_src
 
@@ -3003,7 +3007,7 @@ Allows for editing an email in org mode
 #+begin_src emacs-lisp
 
   (use-package org-mime
-    :straight nil
+    :straight t
     :disabled)
 
 #+end_src
@@ -3012,7 +3016,7 @@ Allows for editing an email in org mode
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-mime"
+  ;; "emacs-org-mime"
 
 #+end_src
 
@@ -3024,7 +3028,7 @@ Allows for markup language when composing email
 
   (setq mail-user-agent 'mu4e-user-agent)
   (use-package org-msg
-    :straight nil
+    :straight t
     :after mu4e
     :custom
     (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
@@ -3044,7 +3048,7 @@ Allows for markup language when composing email
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-msg"
+  ;; "emacs-org-msg"
 
 #+end_src
 
@@ -3056,7 +3060,7 @@ Helps with note-taking strategies.
 
   (unless pg/is-termux
     (use-package org-roam
-      :straight nil
+      :straight t
       :custom
       (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
       (org-roam-directory "~/Documents/Notes")
@@ -3065,7 +3069,7 @@ Helps with note-taking strategies.
           "%?"
           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
           :unnarrowed t)
-         ("1" "economy" plain
+         ("e" "economy" plain
           "%?"
           :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                              "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
@@ -3084,7 +3088,7 @@ Helps with note-taking strategies.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-roam"
+  ;; "emacs-org-roam"
 
 #+end_src
 
@@ -3095,7 +3099,7 @@ Allows display of latex fragments in org files.
 #+begin_src emacs-lisp
 
   (use-package org-fragtog
-    :straight nil
+    :straight t
     :hook (org-mode . org-fragtog-mode))
 
 #+end_src
@@ -3104,7 +3108,7 @@ Allows display of latex fragments in org files.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org-fragtog"
+  ;; "emacs-org-fragtog"
 
 #+end_src
 
@@ -3121,7 +3125,7 @@ Allows line soft-wrap in org files.
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
-    :straight nil
+    :straight t
     :hook ((org-mode gfm-view-mode) . pg/org-mode-visual-fill))
 
 #+end_src
@@ -3130,7 +3134,7 @@ Allows line soft-wrap in org files.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-visual-fill-column"
+  ;; "emacs-visual-fill-column"
 
 #+end_src
 
@@ -3282,7 +3286,7 @@ Allows for viewing of pdfs.
 #+begin_src emacs-lisp
 
   (use-package pdf-tools
-    :straight nil
+    :straight t
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :custom
     (pdf-misc-print-programm "/usr/bin/lpr")
@@ -3294,7 +3298,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-pdf-tools"
+  ;; "emacs-pdf-tools"
 
 #+end_src
 
@@ -3303,7 +3307,7 @@ Allows for viewing of pdfs.
 #+begin_src emacs-lisp
 
   (use-package djvu
-    :straight nil)
+    :straight t)
 
 #+end_src
 
@@ -3311,7 +3315,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-djvu"
+  ;; "emacs-djvu"
 
 #+end_src
 
@@ -3340,7 +3344,7 @@ Allows for printing of emacs buffers.
 
   (unless pg/is-termux
     (use-package openwith
-      :straight nil
+      :straight t
       :custom
       (large-file-warning-threshold nil)
       :config
@@ -3362,7 +3366,7 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-openwith"
+  ;; "emacs-openwith"
 
 #+end_src
 
@@ -3401,7 +3405,7 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package ledger-mode
-    :straight nil
+    :straight t
     :mode "\\.dat\\'"
     :hook (ledger-mode . company-mode)
     :custom
@@ -3416,7 +3420,7 @@ Allows for printing of emacs buffers.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "ledger"
-  "emacs-ledger-mode"
+  ;; "emacs-ledger-mode"
 
 #+end_src
 
@@ -3467,7 +3471,7 @@ Allows for printing of emacs buffers.
 #+begin_src emacs-lisp
 
   (use-package sx
-    :straight nil
+    :straight t
     :commands sx-search)
 
 #+end_src
@@ -3476,7 +3480,7 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-sx"
+  ;; "emacs-sx"
 
 #+end_src
 
@@ -3497,7 +3501,7 @@ Allows for printing of emacs buffers.
         (decode-coding-string (buffer-string) 'utf-8))))
 
   (use-package wttrin
-    :straight nil
+    :straight t
     :commands wttrin
     :config
     (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
@@ -3511,7 +3515,7 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-wttrin"
+  ;; "emacs-wttrin"
 
 #+end_src
 
@@ -3578,7 +3582,7 @@ Allows for printing of emacs buffers.
 
   (unless pg/is-termux
     (use-package emms
-      :straight nil
+      :straight t
       :config
       (require 'emms-setup)
       (require 'emms-player-mpd)
@@ -3605,9 +3609,9 @@ Allows for printing of emacs buffers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "mpd-mpc"
   "mpd"
-  "emacs-emms"
+  "mpd-mpc"
+  ;; "emacs-emms"
 
 #+end_src
 
@@ -3670,32 +3674,18 @@ Allows usage of vim-like keybindings for some modes in emacs.
     (setq evil-want-fine-undo t)
     (evil-mode 1)
     :hook (evil-mode . pg/evil-hook)
-    :bind
-    (:map evil-insert-state-map
-          ("C-l" . right-word)
-          ("C-h" . left-word))
     :custom
     (evil-undo-system 'undo-fu)
     :config
     (evil-set-register ?j [?f ?  ?s return escape]) ;; break at point
 
-    ;; (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
 
-    (unbind-key "C-k" 'evil-ex-completion-map)
-    (unbind-key "C-k" 'evil-ex-search-keymap)
-    (unbind-key "C-k" 'evil-insert-state-map)
-    (unbind-key "C-k" 'evil-replace-state-map)
-    (unbind-key "C-p" 'evil-normal-state-map)
     ;; Visual line motions outside visual-line mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
-
-  (with-eval-after-load 'evil
-    (defalias #'forward-evil-word #'forward-evil-symbol)
-    ;; make evil-search-word look for symbol rather than word boundaries
-    (setq-default evil-symbol-word-search t))
 
 #+end_src
 
@@ -3712,7 +3702,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 #+begin_src emacs-lisp
 
   (use-package evil-collection
-    :straight nil
+    :straight t
     :after evil
     :diminish evil-collection-unimpaired-mode
     :config
@@ -3724,7 +3714,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-evil-collection"
+  ;; "emacs-evil-collection"
 
 #+end_src
 
@@ -3735,7 +3725,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 #+begin_src emacs-lisp
 
   (use-package hydra
-    :straight nil
+    :straight t
     :defer t)
 
   (defhydra hydra-text-scale (:timeout 5)
@@ -3795,7 +3785,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-hydra"
+  ;; "emacs-hydra"
 
 #+end_src
 
@@ -3806,7 +3796,7 @@ Allows for general custom keybindings definition to create own set of various ke
 #+begin_src emacs-lisp
 
   (use-package general
-    :straight nil
+    :straight t
     :after evil
     :config
     (general-create-definer pg/leader-keys
@@ -3915,7 +3905,7 @@ Allows for general custom keybindings definition to create own set of various ke
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-general"
+  ;; "emacs-general"
 
 #+end_src
 
@@ -3934,8 +3924,8 @@ Here we lower back the garbage collector threshold to keep better control over m
 #+begin_src scheme :tangle ~/.config/guix/manifests/emacs.scm :noweb yes
 
   (specifications->manifest
-   '(;;"emacs-next"
-     "emacs-native-comp"
+   '("emacs"
+     ;; "emacs-native-comp"
      <<packages>>))
 
 #+end_src

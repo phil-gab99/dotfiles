@@ -1,0 +1,11 @@
+(specifications->manifest
+ '("mpv"
+   "youtube-dl"
+   "gstreamer"
+   "gst-plugins-base"
+   "gst-plugins-good"
+   "gst-plugins-bad"
+   "gst-plugins-ugly"
+   "gst-libav"
+   "intel-vaapi-driver"
+   "libva-utils"))

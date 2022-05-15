@@ -153,13 +153,13 @@ Workspaces:
     (pg/start-panel)
     (pg/run-in-background "dunst")
     (pg/run-in-background "nm-applet")
-    (pg/run-in-background "pasystray")
-    (pg/run-in-background "udiskie -t"))
+    (pg/run-in-background "pasystray"))
+    ;; (pg/run-in-background "udiskie -t"))
 
   (require 'exwm-config)
   (require 'exwm-randr)
   (use-package exwm
-    :straight nil
+    :straight t
     :custom
     (exwm-manage-configurations
      '(((string-equal exwm-class-name "Nyxt")
@@ -246,7 +246,7 @@ Allows for some of the keybindings to use while in exwm.
 #+begin_src emacs-lisp
 
   (use-package desktop-environment
-    :straight nil
+    :straight t
     :after exwm
     :diminish desktop-environment-mode
     :config
@@ -305,7 +305,7 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
 
   start_daemons () {
       if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
-          shepherd
+	  shepherd
       fi
       compton &
       xsettingsd &
@@ -334,8 +334,8 @@ Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment
 
       # Finally start Emacs
       # exec dbus-launch emacs --eval "(lerax-exwm-start nil t)"
-      # exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/pg-desktop.el
-      exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
+      exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/lisp/pg-desktop.el
+      # exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
   }
 
   start_daemons
@@ -848,7 +848,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
       #:provides '(gpg-agent)
       #:respawn? #t
       #:start (make-system-constructor "gpg-connect-agent /bye")
-      #:stop (make-system-destructor "gpgconf --kill gpg-agent")))
+      #:stop  (make-system-destructor "gpgconf --kill gpg-agent")))
 
   (define mcron
     (make <service>
@@ -864,11 +864,18 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
       #:start (make-forkexec-constructor '("pulseaudio"))
       #:stop  (make-kill-destructor)))
 
-  (register-services gpg-agent mcron pulseaudio)
+  (define ssh-agent
+    (make <service>
+      #:provides '(ssh-agent)
+      #:respawn? #t
+      #:start (make-system-constructor "ssh-agent")
+      #:stop  (make-system-destructor "ssh-agent -k")))
+
+  (register-services gpg-agent mcron pulseaudio ssh-agent)
   (action 'shepherd 'daemonize)
 
   ;; Start user services
-  (for-each start '(gpg-agent mcron pulseaudio))
+  (for-each start '(gpg-agent mcron pulseaudio ssh-agent))
 
 #+end_src
 
@@ -878,12 +885,13 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 *Guix Packages*
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src scheme :tangle ~/.config/guix/manifests/audio.scm :noweb yes
 
-  "alsa-utils"
-  "pavucontrol"
-  "pasystray"
-  "bluez"
+  (specifications->manifest
+   '("alsa-utils"
+     "pavucontrol"
+     "pasystray"
+     "bluez"))
 
 #+end_src
 
@@ -1422,14 +1430,6 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  "nyxt"
-
-#+end_src
-
 *** Qutebrowser
 
 *Main configuration*
@@ -1642,7 +1642,7 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
   sc https://academique-dmz.synchro.umontreal.ca
   cups http://localhost:631
   fb https://www.facebook.com/philippe.gabriel99
-  ld https://www.linkedin.com/in/philippe-gabriel-52b945149/
+  li https://www.linkedin.com/in/philippe-gabriel-52b945149/
   sb https://www.scotiaonline.scotiabank.com/online/views/accounts/summary/summaryStandard.bns?SBL=all&convid=60975
   ctfs https://www.ctfs.com/content/dash/en/private/Summary.html
   naruto https://www18.naruspot.tv/
@@ -1653,10 +1653,11 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 
 *Guix Packages*
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src scheme :tangle ~/.config/guix/manifests/browsers.scm :noweb yes
 
-  ;; "rust-adblock"
-  "qutebrowser"
+  (specifications->manifest
+   '(;; "nyxt"
+     "qutebrowser"))
 
 #+end_src
 
@@ -1703,7 +1704,7 @@ If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~,
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "udiskie"
+  ;; "udiskie"
 
 #+end_src
 
@@ -1755,12 +1756,14 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Guix Packages*
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src scheme :tangle ~/.config/guix/manifests/media.scm :noweb yes
 
-  "feh"
-  "imagemagick"
-  "gimp"
-  "xournalpp"
+  (specifications->manifest
+   '("feh"
+     "imagemagick"
+     "gimp"
+     "evince"
+     "xournalpp"))
 
 #+end_src
 
@@ -1768,18 +1771,19 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Guix Packages*
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src scheme :tangle ~/.config/guix/manifests/video.scm :noweb yes
 
-  "mpv"
-  "youtube-dl"
-  "gstreamer"
-  "gst-plugins-base"
-  "gst-plugins-good"
-  "gst-plugins-bad"
-  "gst-plugins-ugly"
-  "gst-libav"
-  "intel-vaapi-driver"
-  "libva-utils"
+  (specifications->manifest
+   '("mpv"
+     "youtube-dl"
+     "gstreamer"
+     "gst-plugins-base"
+     "gst-plugins-good"
+     "gst-plugins-bad"
+     "gst-plugins-ugly"
+     "gst-libav"
+     "intel-vaapi-driver"
+     "libva-utils"))
 
 #+end_src
 
@@ -1853,7 +1857,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "virt-manager"
+  ;; "virt-manager"
 
 #+end_src
 

@@ -1,7 +1,7 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
-(setq native-comp-async-report-warnings-errors nil)                                           ; Silence compiler warnings
-(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
+;  (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
+;  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
 
 (server-start)
 
@@ -24,18 +24,18 @@
 (unless (featurep 'straight)
   (defvar bootstrap-version)
   (let ((bootstrap-file
-	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	(bootstrap-version 5))
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
-	  (url-retrieve-synchronously
-	   "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	   'silent 'inhibit-cookies)
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage)))
 
-;;(straight-use-package 'use-package)
+(straight-use-package 'use-package)
 ;;(setq straight-use-package-by-default t)
 ;;(setq use-package-verbose t) For optimizing performance
 
@@ -46,8 +46,8 @@
       (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
 
 (setq pg/exwm-enabled (and (not pg/is-termux)
-			   (eq window-system 'x)
-			   (seq-contains command-line-args "--use-exwm")))
+                           (eq window-system 'x)))
+                           ;; (frame-parameter (selected-frame) 'exwm-active)))
 
 (when pg/exwm-enabled (require 'pg-desktop))
 
@@ -125,11 +125,11 @@
 (setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
-(use-package guix
-  :straight nil)
+;; (use-package guix
+  ;; :straight t)
 
-(use-package geiser
-  :straight nil)
+;; (use-package geiser-guile
+  ;; :straight t)
 
 (use-package auth-source
   :straight nil
@@ -138,7 +138,7 @@
 
 (unless pg/is-termux
   (use-package pinentry
-    :straight nil
+    :straight t
     :custom
     (epg-pinentry-mode 'loopback)
     :config
@@ -167,6 +167,7 @@
     (remove-hook 'pre-command-hook 'keycast--update)))
 
 (use-package keycast
+  :straight t
   :custom
   (keycast-mode-line-format "%2s%k%c%2s")
   :config
@@ -180,7 +181,7 @@
   (savehist-mode))
 
 (use-package marginalia
-  :straight nil
+  :straight t
   :after vertico
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
@@ -188,7 +189,7 @@
   (marginalia-mode))
 
 (use-package consult
-  :straight nil
+  :straight t
   :bind
   ("C-s" . consult-line)
   ("C-x b" . consult-buffer)
@@ -196,7 +197,7 @@
         ("C-r" . consult-history)))
 
 (use-package orderless
-  :straight nil
+  :straight t
   :custom
   (completion-styles '(orderless))
   (completion-category-defaults nil)
@@ -204,7 +205,7 @@
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package corfu
-  :straight nil
+  :straight t
   :bind
   (:map corfu-map
         ("C-j" . corfu-next)
@@ -213,7 +214,7 @@
   (corfu-cycle t))
 
 (use-package vertico
-  :straight nil
+  :straight t
   :bind
   (:map vertico-map
         ("C-j" . vertico-next)
@@ -224,7 +225,7 @@
   (vertico-mode))
 
 (use-package embark
-  :straight nil
+  :straight t
   :bind
   ("C-S-a" . embark-act)
   (:map minibuffer-local-map
@@ -253,10 +254,10 @@
               :repo "SebastienWae/app-launcher"))
 
 (use-package prescient
-  :straight nil)
+  :straight t)
 
 (use-package which-key
-  :straight nil
+  :straight t
   :diminish which-key-mode
   :config
   (which-key-mode)
@@ -273,10 +274,10 @@
   (helm-mode 1))
 
 (use-package diminish
-  :straight nil)
+  :straight t)
 
 (use-package all-the-icons
-  :straight nil)
+  :straight t)
 
 (use-package ligature
   :straight '(ligature :type git
@@ -300,7 +301,7 @@
   (global-ligature-mode 't))
 
 (use-package doom-modeline
-  :straight nil
+  :straight t
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-height 15)
@@ -310,7 +311,7 @@
   (doom-modeline-mu4e t))
 
 (use-package autothemer
-  :straight nil
+  :straight t
   :config
   (load-theme 'onedark-variant t))
 
@@ -347,7 +348,7 @@
   (pg/dashboard-setup-startup-hook))
 
 (use-package page-break-lines
-  :straight nil)
+  :straight t)
 
 (use-package bufler
   :straight t
@@ -408,13 +409,14 @@
   (winner-mode))
 
 (use-package tab-bar
+  :straight nil
   :custom
   (tab-bar-show 1)
   :config
   (tab-bar-mode))
 
 (use-package perspective
-  :straight nil
+  :straight t
   :bind
   ("C-x k" . persp-kill-buffer*)
   :config
@@ -501,7 +503,7 @@
 
 (unless pg/is-termux
   (use-package mu4e-alert
-    :straight nil
+    :straight t
     :after mu4e
     :custom
     (mu4e-alert-notify-repeated-mails t)
@@ -511,7 +513,7 @@
     (mu4e-alert-enable-mode-line-display)))
 
 (use-package rainbow-delimiters
-  :straight nil
+  :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package abbrev
@@ -519,17 +521,17 @@
   :diminish abbrev-mode)
 
 (use-package highlight-indent-guides
-  :straight nil
+  :straight t
   :hook (prog-mode . highlight-indent-guides-mode)
   :custom 
   (highlight-indent-guides-responsive 'stack)
   (highlight-indent-guides-method 'character))
 
 (use-package undo-fu
-  :straight nil)
+  :straight t)
 
 (use-package smartparens
-  :straight nil
+  :straight t
   :diminish smartparens-mode
   :config
   (smartparens-global-mode))
@@ -540,7 +542,7 @@
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (use-package outshine
-  :straight nil
+  :straight t
   :hook (prog-mode . outshine-mode))
 
 (defun pg/selectric-type-sound ()
@@ -557,6 +559,7 @@
   (fset #'selectric-type-sound #'pg/selectric-type-sound))
 
 (use-package rainbow-mode
+  :straight t
   :diminish rainbow-mode
   :hook ((org-mode
           emacs-lisp-mode
@@ -567,12 +570,12 @@
           less-css-mode) . rainbow-mode))
 
 (use-package emojify
-  :straight nil
+  :straight t
   :config
   (global-emojify-mode))
 
 (use-package helpful
-  :straight nil
+  :straight t
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
   :bind
   ([remap describe-function] . helpful-callable)
@@ -598,7 +601,7 @@
 
 (unless pg/is-termux
   (use-package all-the-icons-dired
-    :straight nil
+    :straight t
     :hook (dired-mode . all-the-icons-dired-mode)))
 
 (use-package dired-hide-dotfiles
@@ -614,7 +617,7 @@
   :after eshell)
 
 (use-package eshell-syntax-highlighting
-  :straight nil
+  :straight t
   :after eshell
   :config
   (eshell-syntax-highlighting-global-mode 1))
@@ -625,7 +628,7 @@
   (set-face-background 'company-preview nil))
 
 (use-package esh-autosuggest
-  :straight nil
+  :straight t
   :hook (eshell-mode . esh-autosuggest-mode)
   :custom
   (esh-autosuggest-delay 0.5)
@@ -665,7 +668,7 @@
   :straight nil)
 
 (use-package projectile
-  :straight nil
+  :straight t
   :diminish projectile-mode
   :hook (lsp-mode . projectile-mode)
   :custom ((projectile-completion-system 'vertico))
@@ -681,7 +684,7 @@
  ("C-p b" . projectile-compile-project))
 
 (use-package magit
-  :straight nil
+  :straight t
   :commands (magit-status magit-get-current-branch)
   :config
   (unbind-key "M-<tab>" 'magit-mode-map)
@@ -690,7 +693,7 @@
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package git-gutter
-  :straight nil
+  :straight git-gutter-fringe
   :diminish git-gutter-mode
   :hook ((text-mode . git-gutter-mode)
          (prog-mode . git-gutter-mode))
@@ -753,7 +756,7 @@
   (set-face-foreground 'git-gutter:deleted "LightCoral"))
 
 (use-package forge
-  :straight nil
+  :straight t
   :after magit)
 
 (defun pg/lsp-mode-setup () ; Displays structure of cursor position for all buffers
@@ -839,7 +842,7 @@
 ;;  "d" '(dap-hydra t :wk "debugger")))
 
 (use-package plantuml-mode
-  :straight nil
+  :straight t
   :custom
   (plantuml-indent-level 4)
   (plantuml-jar-path "~/bin/plantuml.jar")
@@ -867,10 +870,10 @@
   (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
 
 (use-package ccls
-  :straight nil)
+  :straight t)
 
 (use-package sly
-  :straight nil
+  :straight t
   :custom
   (inferior-lisp-program "sbcl"))
 
@@ -879,13 +882,13 @@
   :hook ((css-mode less-css-mode scss-mode) . lsp-deferred))
 
 (use-package docker
-  :straight nil)
+  :straight t)
 
 (use-package dockerfile-mode
-  :straight nil)
+  :straight t)
 
 (use-package git-modes
-  :straight nil)
+  :straight t)
 
 (use-package groovy-mode
   :straight '(groovy-emacs-modes :type git
@@ -893,7 +896,7 @@
                                  :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
 
 (use-package haskell-mode
-  :straight nil
+  :straight t
   :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))
 
 (use-package lsp-haskell
@@ -932,10 +935,10 @@
   :disabled ;; No gradle package on guix yet
   :hook (java-mode . gradle-mode))
 
-(require 'tex-site)
 (use-package tex
-  :straight nil
+  :straight auctex
   :config
+  (require 'tex-site)
   (add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   (add-hook 'TeX-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
@@ -946,7 +949,7 @@
   (TeX-source-correlate-start-server t))
 
 (use-package company-auctex
-  :straight nil
+  :straight t
   :after (auctex company)
   :config
   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
@@ -1003,7 +1006,7 @@
   (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 (use-package markdown-mode
-  :straight nil
+  :straight t
   :hook (gfm-view-mode . (lambda () (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                                                        (markdown-code-face (:height 1.5) fixed-pitch))))))
 
@@ -1101,7 +1104,7 @@
   (setq-default sqlind-basic-offset 4))
 
 (use-package typescript-mode
-  :straight nil
+  :straight t
   :mode "\\.ts\\'"
   :hook (typescript-mode . lsp-deferred)
   :config
@@ -1127,7 +1130,7 @@
   (add-to-list 'flycheck-checkers 'vhdl-tool))
 
 (use-package yaml-mode
-  :straight nil)
+  :straight t)
 
 (use-package comment-dwim-2
   :straight t
@@ -1137,8 +1140,8 @@
         ("M-/" . org-comment-dwim-2)))
 
 (use-package yasnippet
+  :straight t
   :diminish yas-minor-mode
-  :straight nil
   :hook (prog-mode . yas-minor-mode)
   :config
   (yas-global-mode 1)
@@ -1146,11 +1149,11 @@
                                    (yas-activate-extra-mode 'fundamental-mode))))
 
 (use-package yasnippet-snippets
-  :after yasnippet
-  :straight nil)
+  :straight t
+  :after yasnippet)
 
 (use-package alert
-  :straight nil
+  :straight t
   :custom
   (alert-default-style 'notifications))
 
@@ -1197,7 +1200,7 @@
   (setq evil-auto-indent nil))
 
 (use-package org
-  :straight nil
+  :straight t
   :commands (org-capture org-agenda)
   :hook (org-mode . pg/org-mode-setup)
   :config
@@ -1289,11 +1292,11 @@
                           (wl . wl-other-frame))))
 
 (use-package org-appear
-  :straight nil
+  :straight t
   :hook (org-mode . org-appear-mode))
 
 (use-package org-bullets
-  :straight nil
+  :straight t
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
@@ -1327,7 +1330,7 @@
   (setq-local face-remapping-alist '((default variable-pitch default))))
 
 (use-package org-tree-slide
-  :straight nil
+  :straight t
   :hook (((org-tree-slide-before-move-next org-tree-slide-before-move-previous) . org-latex-preview)
          (org-tree-slide-play . pg/presentation-setup)
          (org-tree-slide-stop . pg/presentation-end))
@@ -1349,7 +1352,7 @@
   (org-image-actual-width nil))
 
 (use-package ox-reveal
-  :straight nil
+  :straight t
   :disabled ;; Test if working
   :custom
   (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
@@ -1373,12 +1376,12 @@
 ;;
 
 (use-package org-mime
-  :straight nil
+  :straight t
   :disabled)
 
 (setq mail-user-agent 'mu4e-user-agent)
 (use-package org-msg
-  :straight nil
+  :straight t
   :after mu4e
   :custom
   (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
@@ -1394,7 +1397,7 @@
 
 (unless pg/is-termux
   (use-package org-roam
-    :straight nil
+    :straight t
     :custom
     (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
     (org-roam-directory "~/Documents/Notes")
@@ -1403,7 +1406,7 @@
         "%?"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
         :unnarrowed t)
-       ("1" "economy" plain
+       ("e" "economy" plain
         "%?"
         :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                            "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
@@ -1417,7 +1420,7 @@
        (org-roam-setup)))
 
 (use-package org-fragtog
-  :straight nil
+  :straight t
   :hook (org-mode . org-fragtog-mode))
 
 ;; Turns soft wrap on
@@ -1427,7 +1430,7 @@
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-  :straight nil
+  :straight t
   :hook ((org-mode gfm-view-mode) . pg/org-mode-visual-fill))
 
 (font-lock-add-keywords 'org-mode ; Replace '-' with bullets
@@ -1528,14 +1531,14 @@
   :mode ("\\.djvu\\'" . doc-view-mode))
 
 (use-package pdf-tools
-  :straight nil
+  :straight t
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :custom
   (pdf-misc-print-programm "/usr/bin/lpr")
   (pdf-misc-print-programm-args '("-o sides=two-sided-long-edge")))
 
 (use-package djvu
-  :straight nil)
+  :straight t)
 
 (use-package ps-print
   :straight nil
@@ -1550,7 +1553,7 @@
 
 (unless pg/is-termux
   (use-package openwith
-    :straight nil
+    :straight t
     :custom
     (large-file-warning-threshold nil)
     :config
@@ -1587,7 +1590,7 @@
   (dtk-word-wrap t))
 
 (use-package ledger-mode
-  :straight nil
+  :straight t
   :mode "\\.dat\\'"
   :hook (ledger-mode . company-mode)
   :custom
@@ -1622,7 +1625,7 @@
   (slack-prefer-current-team t))
 
 (use-package sx
-  :straight nil
+  :straight t
   :commands sx-search)
 
 (defun pg/wttrin-fetch-raw-string (query)
@@ -1636,7 +1639,7 @@
       (decode-coding-string (buffer-string) 'utf-8))))
 
 (use-package wttrin
-  :straight nil
+  :straight t
   :commands wttrin
   :config
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
@@ -1703,7 +1706,7 @@ passed to the mpc program."
 
 (unless pg/is-termux
   (use-package emms
-    :straight nil
+    :straight t
     :config
     (require 'emms-setup)
     (require 'emms-player-mpd)
@@ -1763,42 +1766,28 @@ passed to the mpc program."
   (setq evil-want-fine-undo t)
   (evil-mode 1)
   :hook (evil-mode . pg/evil-hook)
-  :bind
-  (:map evil-insert-state-map
-        ("C-l" . right-word)
-        ("C-h" . left-word))
   :custom
   (evil-undo-system 'undo-fu)
   :config
   (evil-set-register ?j [?f ?  ?s return escape]) ;; break at point
 
-  ;; (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
 
-  (unbind-key "C-k" 'evil-ex-completion-map)
-  (unbind-key "C-k" 'evil-ex-search-keymap)
-  (unbind-key "C-k" 'evil-insert-state-map)
-  (unbind-key "C-k" 'evil-replace-state-map)
-  (unbind-key "C-p" 'evil-normal-state-map)
   ;; Visual line motions outside visual-line mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-(with-eval-after-load 'evil
-  (defalias #'forward-evil-word #'forward-evil-symbol)
-  ;; make evil-search-word look for symbol rather than word boundaries
-  (setq-default evil-symbol-word-search t))
-
 (use-package evil-collection
-  :straight nil
+  :straight t
   :after evil
   :diminish evil-collection-unimpaired-mode
   :config
   (evil-collection-init))
 
 (use-package hydra
-  :straight nil
+  :straight t
   :defer t)
 
 (defhydra hydra-text-scale (:timeout 5)
@@ -1853,7 +1842,7 @@ passed to the mpc program."
   ("h" persp-prev "prev"))
 
 (use-package general
-  :straight nil
+  :straight t
   :after evil
   :config
   (general-create-definer pg/leader-keys
