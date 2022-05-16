@@ -1,7 +1,7 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
-;  (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
-;  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
+;; (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
+;; (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
 
 (server-start)
 
@@ -96,6 +96,9 @@
                 eshell-mode-hook
                 sql-interactive-mode-hook
                 pdf-view-mode-hook
+                telega-root-mode-hook
+                telega-chat-mode
+                telega-image-mode
                 sokoban-mode-hook
                 doc-view-mode-hook
                 mu4e-main-mode-hook
@@ -1603,14 +1606,16 @@
   :commands slack-start
   :hook (slack-mode . corfu-mode)
   :config
-  (slack-register-team :name "ift6755"
-                       :default t
-                       :token (pg/lookup-password :host "ift6755.slack.com"
-                                                  :user "philippe.gabriel.1@umontreal.ca")
-                       :cookie (pg/lookup-password :host "ift6755.slack.com"
-                                                   :user "philippe.gabriel.1@umontreal.ca^cookie")
-                       :subscribed-channels '((general questions random))
-                       :modeline-enabled t)
+  (mytest :name "ift6755"
+          :default t
+          :token (pg/lookup-password
+                  :host "ift6755.slack.com"
+                  :user "philippe.gabriel.1@umontreal.ca")
+          :cookie (pg/lookup-password
+                   :host "ift6755.slack.com"
+                   :user "philippe.gabriel.1@umontreal.ca^cookie")
+          :subscribed-channels '((general questions random))
+          :modeline-enabled t)
   (evil-define-key 'normal slack-info-mode-map
     ",u" 'slack-room-update-messages)
   (evil-define-key 'normal slack-mode-map
@@ -1627,6 +1632,18 @@
 (use-package sx
   :straight t
   :commands sx-search)
+
+(require 'telega-alert)
+(require 'telega-dashboard)
+(use-package telega
+  :straight nil
+  :init (telega 1)
+  :config
+  (telega-alert-mode 1)
+  (add-to-list 'dashboard-items '(telega-chats . 5))
+  (variable-pitch-mode 1))
+;; :custom
+;; (telega-server-libs-prefix "~/.guix-extra-profiles/emacs/emacs"))
 
 (defun pg/wttrin-fetch-raw-string (query)
   "Get the weather information based on your QUERY."
@@ -1661,7 +1678,7 @@
   "Stops playback and kill the music daemon."
   (interactive)
   (emms-stop)
-  ;; (emms-player-mpd-disconnect)
+  (emms-player-mpd-disconnect)
   (call-process "killall" nil nil nil "mpd")
   (message "MPD Killed!"))
 
@@ -1711,14 +1728,13 @@ passed to the mpc program."
     (require 'emms-setup)
     (require 'emms-player-mpd)
     (emms-all)
-    (emms-player-mpd-connect)
     (setq emms-info-functions '(emms-info-mpd)
           emms-player-list '(emms-player-mpd))
     (add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
     (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
     :custom
-    (emms-source-file-default-directory "~/Music/")
-    (emms-player-mpd-music-directory "~/Music/")
+    (emms-source-file-default-directory "/home/phil-gab99/Music")
+    (emms-player-mpd-music-directory "/home/phil-gab99/Music")
     (emms-seek-seconds 5)
     (emms-volume-change-amount 5)
     :bind

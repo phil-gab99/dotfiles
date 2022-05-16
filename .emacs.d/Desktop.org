@@ -76,6 +76,7 @@ Make sure Emacs can find the font path from the ~desktop~ profile:
   "font-dejavu"
   "font-google-noto"
   "font-gnu-freefont"
+  "font-gnu-unifont"
   "font-liberation"
   "font-awesome"
   "font-google-material-design-icons"
@@ -897,11 +898,11 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage service
 
 ** Bluetooth Setup
 
-If you need to manually connect to Bluetooth audio devices using ~bluetoothctl~, enter these commands at the ~bluetoothctl~ prompt:
+If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, enter these commands at the ~bluetoothctl~ prompt:
 
 #+begin_src sh
 
-  system-alias "my-hostname" # To configure your laptop's device name
+  system-alias "my-hostname" # To configure your laptop's device name, ex: s76-laptop
   default-agent
   power on
   scan on

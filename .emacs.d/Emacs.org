@@ -22,8 +22,8 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 
 #+begin_src emacs-lisp
 
-;  (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
-;  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
+  ;; (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
+  ;; (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
 
 #+end_src
 
@@ -173,6 +173,9 @@ Check whether using emacs from phone or laptop for applying appropriate settings
                   eshell-mode-hook
                   sql-interactive-mode-hook
                   pdf-view-mode-hook
+                  telega-root-mode-hook
+                  telega-chat-mode
+                  telega-image-mode
                   sokoban-mode-hook
                   doc-view-mode-hook
                   mu4e-main-mode-hook
@@ -3435,14 +3438,16 @@ Allows for printing of emacs buffers.
     :commands slack-start
     :hook (slack-mode . corfu-mode)
     :config
-    (slack-register-team :name "ift6755"
-                         :default t
-                         :token (pg/lookup-password :host "ift6755.slack.com"
-                                                    :user "philippe.gabriel.1@umontreal.ca")
-                         :cookie (pg/lookup-password :host "ift6755.slack.com"
-                                                     :user "philippe.gabriel.1@umontreal.ca^cookie")
-                         :subscribed-channels '((general questions random))
-                         :modeline-enabled t)
+    (mytest :name "ift6755"
+            :default t
+            :token (pg/lookup-password
+                    :host "ift6755.slack.com"
+                    :user "philippe.gabriel.1@umontreal.ca")
+            :cookie (pg/lookup-password
+                     :host "ift6755.slack.com"
+                     :user "philippe.gabriel.1@umontreal.ca^cookie")
+            :subscribed-channels '((general questions random))
+            :modeline-enabled t)
     (evil-define-key 'normal slack-info-mode-map
       ",u" 'slack-room-update-messages)
     (evil-define-key 'normal slack-mode-map
@@ -3481,6 +3486,35 @@ Allows for printing of emacs buffers.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; "emacs-sx"
+
+#+end_src
+
+*** Package | telega
+
+#+begin_src emacs-lisp
+
+  (require 'telega-alert)
+  (require 'telega-dashboard)
+  (use-package telega
+    :straight nil
+    :init (telega 1)
+    :config
+    (telega-alert-mode 1)
+    (add-to-list 'dashboard-items '(telega-chats . 5))
+    (variable-pitch-mode 1))
+  ;; :custom
+  ;; (telega-server-libs-prefix "~/.guix-extra-profiles/emacs/emacs"))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "emacs-telega"
+  "emacs-telega-contrib"
+  ;; "tdlib"
+  ;; "libtgvoip"
 
 #+end_src
 
@@ -3537,7 +3571,7 @@ Allows for printing of emacs buffers.
     "Stops playback and kill the music daemon."
     (interactive)
     (emms-stop)
-    ;; (emms-player-mpd-disconnect)
+    (emms-player-mpd-disconnect)
     (call-process "killall" nil nil nil "mpd")
     (message "MPD Killed!"))
 
@@ -3587,14 +3621,13 @@ Allows for printing of emacs buffers.
       (require 'emms-setup)
       (require 'emms-player-mpd)
       (emms-all)
-      (emms-player-mpd-connect)
       (setq emms-info-functions '(emms-info-mpd)
             emms-player-list '(emms-player-mpd))
       (add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
       (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
       :custom
-      (emms-source-file-default-directory "~/Music/")
-      (emms-player-mpd-music-directory "~/Music/")
+      (emms-source-file-default-directory "/home/phil-gab99/Music")
+      (emms-player-mpd-music-directory "/home/phil-gab99/Music")
       (emms-seek-seconds 5)
       (emms-volume-change-amount 5)
       :bind

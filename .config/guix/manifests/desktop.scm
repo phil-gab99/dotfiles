@@ -22,6 +22,7 @@
    "font-dejavu"
    "font-google-noto"
    "font-gnu-freefont"
+   "font-gnu-unifont"
    "font-liberation"
    "font-awesome"
    "font-google-material-design-icons"

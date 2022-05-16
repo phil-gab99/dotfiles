@@ -167,6 +167,11 @@
    
    ;; "emacs-sx"
    
+   "emacs-telega"
+   "emacs-telega-contrib"
+   ;; "tdlib"
+   ;; "libtgvoip"
+   
    ;; "emacs-wttrin"
    
    "mpd"
