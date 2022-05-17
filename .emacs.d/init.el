@@ -1639,11 +1639,7 @@
   :straight nil
   :init (telega 1)
   :config
-  (telega-alert-mode 1)
-  (add-to-list 'dashboard-items '(telega-chats . 5))
-  (variable-pitch-mode 1))
-;; :custom
-;; (telega-server-libs-prefix "~/.guix-extra-profiles/emacs/emacs"))
+  (telega-alert-mode 1))
 
 (defun pg/wttrin-fetch-raw-string (query)
   "Get the weather information based on your QUERY."
