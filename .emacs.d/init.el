@@ -110,9 +110,9 @@
                 shell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
 
-(set-face-attribute 'default nil :font "JetBrains Mono" :height 120)
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono")
-(set-face-attribute 'variable-pitch nil :font "DejaVu Serif" :weight 'regular)
+(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'light)
+(set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'regular)
 
 (set-face-attribute 'italic nil :slant 'italic)
 
@@ -124,8 +124,8 @@
 ;; If a popup does happen, don't resize windows to be equal-sized
 (setq even-window-sizes nil)
 
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
-(setq auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
+      auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
 ;; (use-package guix
@@ -311,6 +311,7 @@
   (doom-modeline-modal-icon nil)
   (doom-modeline-enable-word-count t)
   (doom-modeline-indent-info t)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project)
   (doom-modeline-mu4e t))
 
 (use-package autothemer
@@ -329,13 +330,13 @@
                                   (redisplay)
                                   (run-hooks 'dashboard-after-initialize-hook))))
 
-;; (defun pg/display-startup-time ()
-;;   (let ((package-count 0) (time (float-time (time-subtract after-init-time before-init-time))))
-;;     (when (boundp 'straight--profile-cache)
-;;       (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
-;;     (if (zerop package-count)
-;;         (format "Emacs started in %.2f" time)
-;;       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
+(defun pg/display-startup-time ()
+  (let ((package-count 0) (time (float-time (time-subtract after-init-time before-init-time))))
+    (when (boundp 'straight--profile-cache)
+      (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
+    (if (zerop package-count)
+        (format "Emacs started in %.2f" time)
+      (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
 (use-package dashboard
   :straight t
@@ -345,7 +346,7 @@
                      (projects . 10)
                      (agenda . 5)))
   (dashboard-page-separator "\n\f\n")
-  ;; (dashboard-init-info #'pg/display-startup-time)
+  (dashboard-init-info #'pg/display-startup-time)
   :config
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
   (pg/dashboard-setup-startup-hook))
@@ -422,6 +423,8 @@
   :straight t
   :bind
   ("C-x k" . persp-kill-buffer*)
+  :custom
+  (persp-suppress-no-prefix-key-warning t)
   :config
   (unless (equal persp-mode t) (persp-mode)))
 
@@ -541,7 +544,7 @@
 
 (with-eval-after-load 'smartparens
   (sp-with-modes
-      '(smartparens-mode)
+      '(prog-mode)
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
 (use-package outshine
@@ -764,6 +767,7 @@
 
 (defun pg/lsp-mode-setup () ; Displays structure of cursor position for all buffers
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-lens-mode)
   (lsp-headerline-breadcrumb-mode))
 
 (use-package lsp-mode
@@ -907,6 +911,13 @@
   :custom
   (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
 
+(defun spring-boot-properties ()
+  "Makes appropriate calls when opening a spring properties file"
+  (when (not (equal nil (string-match-p "application\\(-?[^-]+\\)?\\.properties"
+                                        (file-name-nondirectory (buffer-file-name)))))
+    (progn (run-hooks 'prog-mode-hook)
+           (lsp-deferred))))
+
 (use-package lsp-java
   :straight t
   :hook (java-mode . lsp-deferred)
@@ -915,16 +926,16 @@
         ("C-<return>" . lsp-execute-code-action))
   :config
   (require 'dap-java)
+  (require 'lsp-java-boot)
+  (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
+  (add-hook 'find-file-hook #'spring-boot-properties)
   :custom
-  (lsp-enable-file-watchers nil)
   (lsp-java-configuration-runtimes '[( :name "JavaSE-17"
-                                       :path "/usr/lib/jvm/java-17-openjdk-amd64"
+                                       :path "~/.guix-extra-profiles/java/java"
                                        :default t)])
   (lsp-java-vmargs (list "-noverify" "--enable-preview"))
-  (lsp-java-java-path "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
-  (lsp-java-import-gradle-home "/opt/gradle/latest/bin/gradle")
-  (lsp-java-import-gradle-java-home "/usr/lib/jvm/java-17-openjdk-amd64/bin/java")
-  (lsp-java-server-install-dir "/home/phil-gab99/.emacs.d/lsp-servers/java-language-server/bin/"))
+  (lsp-java-java-path "java")
+  (lsp-java-import-gradle-java-home "~/.guix-extra-profiles/java/java"))
 
 (defun pg/gradle-run ()
   "Execute gradle run command"
@@ -1498,17 +1509,24 @@
 (add-hook 'org-mode-hook (lambda ()
                            (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
 
+(defun pg/timer-setup ()
+  "Sets up some parameters for the timer"
+  (setq org-clock-sound "~/Misc/ding.wav"))
+
 (defun pg/start-timer ()
+  "Begins Pomodoro timer with study timer"
   (interactive)
-  (setq org-clock-sound "~/Misc/ding.wav")
+  (pg/timer-setup)
   (pg/study-timer))
 
-(defun pg/start-with-break-timer () ;; For Minyi
+(defun pg/start-with-break-timer ()
+  "Begin Pomodoro timer with break timer"
   (interactive)
-  (setq org-clock-sound "~/Misc/ding.wav")
+  (pg/timer-setup)
   (pg/break-timer))
 
 (defun pg/stop-timer ()
+  "Stops the timer"
   (interactive)
   (setq org-clock-sound nil)
   (remove-hook 'org-timer-done-hook #'pg/study-timer)
@@ -1516,6 +1534,7 @@
   (org-timer-stop))
 
 (defun pg/study-timer ()
+  "Study timer for 1 hour"
   (add-hook 'org-timer-done-hook #'pg/break-timer)
   (remove-hook 'org-timer-done-hook #'pg/study-timer)
   (setq org-timer-default-timer "1:00:00")
@@ -1523,9 +1542,10 @@
   (call-interactively #'org-timer-set-timer))
 
 (defun pg/break-timer ()
+  "Break timer for 30 minutes"
   (add-hook 'org-timer-done-hook #'pg/study-timer)
   (remove-hook 'org-timer-done-hook #'pg/break-timer)
-  (setq org-timer-default-timer "15:00")
+  (setq org-timer-default-timer "30:00")
   (setq current-prefix-arg '(4)) ; Universal argument
   (call-interactively #'org-timer-set-timer))
 
@@ -1674,6 +1694,7 @@
   "Stops playback and kill the music daemon."
   (interactive)
   (emms-stop)
+  (emms-smart-browse)
   (emms-player-mpd-disconnect)
   (call-process "killall" nil nil nil "mpd")
   (message "MPD Killed!"))

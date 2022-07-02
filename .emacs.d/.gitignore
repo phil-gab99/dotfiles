@@ -21,3 +21,9 @@ url
 .dap-breakpoints
 .lsp-session-v1
 tutorial
+.cache/
+eclipse.jdt.ls/
+elpa/
+games/
+lsp-servers/
+workspace/

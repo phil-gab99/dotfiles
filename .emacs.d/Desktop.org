@@ -33,14 +33,14 @@ The ~xsettingsd~ configuration file. Below is the table for each property:
         
 #+end_src
 
-Make sure Emacs can find the font path from the ~desktop~ profile:
+Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
 #+begin_src xml :tangle ~/.config/fontconfig/fonts.conf
 
   <?xml version="1.0"?>
   <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
   <fontconfig>
-    <dir>~/.guix-extra-profiles/desktop/desktop/share/fonts</dir>
+    <dir>~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts</dir>
     <alias>
       <family>Apple Color Emoji</family>
       <prefer>
@@ -55,32 +55,40 @@ Make sure Emacs can find the font path from the ~desktop~ profile:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; Settin gs Manager
+  ;; Settings Manager
   "xsettingsd"
 
-  ;; GTK Themes
-  "arc-icon-theme"
-  "matcha-theme"
-  "hicolor-icon-theme"
-  "gnome-icon-theme"
-  "gnome-backgrounds"
-  "papirus-icon-theme"
-  "breeze-icons"
+#+end_src
 
-  ;; Fonts
-  "font-fira-code"
-  "font-jetbrains-mono"
-  "font-iosevka"
-  "font-iosevka-aile"
-  "font-abattis-cantarell"
-  "font-dejavu"
-  "font-google-noto"
-  "font-gnu-freefont"
-  "font-gnu-unifont"
-  "font-liberation"
-  "font-awesome"
-  "font-google-material-design-icons"
-  "gs-fonts"
+#+begin_src scheme :tangle ~/.config/guix/manifests/themes-fonts.scm :noweb yes
+
+  (specifications->manifest
+   '("compton"
+     "fontmanager"
+
+     ;; GTK Themes
+     "arc-icon-theme"
+     "matcha-theme"
+     "hicolor-icon-theme"
+     "gnome-icon-theme"
+     "gnome-backgrounds"
+     ;; "papirus-icon-theme" ;; Problematic package
+     "breeze-icons"
+
+     ;; Fonts
+     "font-fira-code"
+     "font-jetbrains-mono"
+     "font-iosevka"
+     "font-iosevka-aile"
+     "font-abattis-cantarell"
+     "font-dejavu"
+     "font-google-noto"
+     "font-gnu-freefont"
+     "font-gnu-unifont"
+     "font-liberation"
+     "font-awesome"
+     "font-google-material-design-icons"
+     "font-ghostscript"))
 
 #+end_src
 
@@ -365,9 +373,13 @@ In order to setup exwm for multiple monitors, the ~arandr~ and ~autorandr~ appli
 - ~autorandr --change~ - Changes to the appopriate profile with respect to the current display setup; the profile name can be explicitly given to change to it
 - ~autorandr~ - Displays the created profiles
 
+*Guix Packages*
+
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "autorandr"
+  "xrandr"
+  "arandr"
 
 #+end_src
 
@@ -624,208 +636,208 @@ For desktop notifications
 
 #+begin_src conf :tangle ~/.config/dunst/dunstrc :mkdirp yes
 
-    [global]
-    ### Display ###
-    monitor = 0
+  [global]
+  ### Display ###
+  monitor = 0
 
-    # The geometry of the window:
-    #   [{width}]x{height}[+/-{x}+/-{y}]
-    geometry = "250x10-10+50"
+  # The geometry of the window:
+  #   [{width}]x{height}[+/-{x}+/-{y}]
+  geometry = "250x10-10+50"
 
-    # Show how many messages are currently hidden (because of geometry).
-    indicate_hidden = yes
+  # Show how many messages are currently hidden (because of geometry).
+  indicate_hidden = yes
 
-    # Shrink window if it's smaller than the width.  Will be ignored if
-    # width is 0.
-    shrink = no
+  # Shrink window if it's smaller than the width.  Will be ignored if
+  # width is 0.
+  shrink = no
 
-    # The transparency of the window.  Range: [0; 100].
-    transparency = 10
+  # The transparency of the window.  Range: [0; 100].
+  transparency = 10
 
-    # The height of the entire notification.  If the height is smaller
-    # than the font height and padding combined, it will be raised
-    # to the font height and padding.
-    notification_height = 0
+  # The height of the entire notification.  If the height is smaller
+  # than the font height and padding combined, it will be raised
+  # to the font height and padding.
+  notification_height = 0
 
-    # Draw a line of "separator_height" pixel height between two
-    # notifications.
-    # Set to 0 to disable.
-    separator_height = 1
-    separator_color = frame
+  # Draw a line of "separator_height" pixel height between two
+  # notifications.
+  # Set to 0 to disable.
+  separator_height = 1
+  separator_color = frame
 
-    # Padding between text and separator.
-    padding = 8
+  # Padding between text and separator.
+  padding = 8
 
-    # Horizontal padding.
-    horizontal_padding = 8
+  # Horizontal padding.
+  horizontal_padding = 8
 
-    # Defines width in pixels of frame around the notification window.
-    # Set to 0 to disable.
-    frame_width = 2
+  # Defines width in pixels of frame around the notification window.
+  # Set to 0 to disable.
+  frame_width = 2
 
-    # Defines color of the frame around the notification window.
-    frame_color = "#89aaeb"
+  # Defines color of the frame around the notification window.
+  frame_color = "#89aaeb"
 
-    # Sort messages by urgency.
-    sort = yes
+  # Sort messages by urgency.
+  sort = yes
 
-    # Don't remove messages, if the user is idle (no mouse or keyboard input)
-    # for longer than idle_threshold seconds.
-    idle_threshold = 60
+  # Don't remove messages, if the user is idle (no mouse or keyboard input)
+  # for longer than idle_threshold seconds.
+  idle_threshold = 60
 
-    ### Text ###
+  ### Text ###
 
-    font = Cantarell 16
+  font = Cantarell 16
 
-    # The spacing between lines.  If the height is smaller than the
-    # font height, it will get raised to the font height.
-    line_height = 0
-    markup = full
+  # The spacing between lines.  If the height is smaller than the
+  # font height, it will get raised to the font height.
+  line_height = 0
+  markup = full
 
-    # The format of the message.  Possible variables are:
-    #   %a  appname
-    #   %s  summary
-    #   %b  body
-    #   %i  iconname (including its path)
-    #   %I  iconname (without its path)
-    #   %p  progress value if set ([  0%] to [100%]) or nothing
-    #   %n  progress value if set without any extra characters
-    #   %%  Literal %
-    # Markup is allowed
-    format = "<b>%s</b>\n%b"
+  # The format of the message.  Possible variables are:
+  #   %a  appname
+  #   %s  summary
+  #   %b  body
+  #   %i  iconname (including its path)
+  #   %I  iconname (without its path)
+  #   %p  progress value if set ([  0%] to [100%]) or nothing
+  #   %n  progress value if set without any extra characters
+  #   %%  Literal %
+  # Markup is allowed
+  format = "<b>%s</b>\n%b"
 
-    # Alignment of message text.
-    # Possible values are "left", "center" and "right".
-    alignment = left
+  # Alignment of message text.
+  # Possible values are "left", "center" and "right".
+  alignment = left
 
-    # Show age of message if message is older than show_age_threshold
-    # seconds.
-    # Set to -1 to disable.
-    show_age_threshold = 60
+  # Show age of message if message is older than show_age_threshold
+  # seconds.
+  # Set to -1 to disable.
+  show_age_threshold = 60
 
-    # Split notifications into multiple lines if they don't fit into
-    # geometry.
-    word_wrap = yes
+  # Split notifications into multiple lines if they don't fit into
+  # geometry.
+  word_wrap = yes
 
-    # When word_wrap is set to no, specify where to make an ellipsis in long lines.
-    # Possible values are "start", "middle" and "end".
-    ellipsize = middle
+  # When word_wrap is set to no, specify where to make an ellipsis in long lines.
+  # Possible values are "start", "middle" and "end".
+  ellipsize = middle
 
-    # Ignore newlines '\n' in notifications.
-    ignore_newline = no
+  # Ignore newlines '\n' in notifications.
+  ignore_newline = no
 
-    # Stack together notifications with the same content
-    stack_duplicates = true
+  # Stack together notifications with the same content
+  stack_duplicates = true
 
-    # Hide the count of stacked notifications with the same content
-    hide_duplicate_count = false
+  # Hide the count of stacked notifications with the same content
+  hide_duplicate_count = false
 
-    # Display indicators for URLs (U) and actions (A).
-    show_indicators = yes
+  # Display indicators for URLs (U) and actions (A).
+  show_indicators = yes
 
-    ### Icons ###
+  ### Icons ###
 
-    # Align icons left/right/off
-    icon_position = left
+  # Align icons left/right/off
+  icon_position = left
 
-    # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 88
+  # Scale larger icons down to this size, set to 0 to disable
+  max_icon_size = 88
 
-    # Paths to default icons.
-    # icon_path = ~/.icons/50x50/
+  # Paths to default icons.
+  # icon_path = ~/.icons/50x50/
 
-    ### History ###
+  ### History ###
 
-    # Should a notification popped up from history be sticky or timeout
-    # as if it would normally do.
-    sticky_history = no
+  # Should a notification popped up from history be sticky or timeout
+  # as if it would normally do.
+  sticky_history = no
 
-    # Maximum amount of notifications kept in history
-    history_length = 20
+  # Maximum amount of notifications kept in history
+  history_length = 20
 
-    ### Misc/Advanced ###
+  ### Misc/Advanced ###
 
-    # Browser for opening urls in context menu.
-    browser = qutebrowser
+  # Browser for opening urls in context menu.
+  browser = qutebrowser
 
-    # Always run rule-defined scripts, even if the notification is suppressed
-    always_run_script = true
+  # Always run rule-defined scripts, even if the notification is suppressed
+  always_run_script = true
 
-    # Define the title of the windows spawned by dunst
-    title = Dunst
+  # Define the title of the windows spawned by dunst
+  title = Dunst
 
-    # Define the class of the windows spawned by dunst
-    class = Dunst
+  # Define the class of the windows spawned by dunst
+  class = Dunst
 
-    startup_notification = false
-    verbosity = mesg
+  startup_notification = false
+  verbosity = mesg
 
-    # Define the corner radius of the notification window
-    # in pixel size. If the radius is 0, you have no rounded
-    # corners.
-    # The radius will be automatically lowered if it exceeds half of the
-    # notification height to avoid clipping text and/or icons.
-    corner_radius = 4
+  # Define the corner radius of the notification window
+  # in pixel size. If the radius is 0, you have no rounded
+  # corners.
+  # The radius will be automatically lowered if it exceeds half of the
+  # notification height to avoid clipping text and/or icons.
+  corner_radius = 4
 
-    mouse_left_click = close_current
-    mouse_middle_click = do_action
-    mouse_right_click = close_all
+  mouse_left_click = close_current
+  mouse_middle_click = do_action
+  mouse_right_click = close_all
 
-    # Experimental features that may or may not work correctly. Do not expect them
-    # to have a consistent behaviour across releases.
-    [experimental]
-    # Calculate the dpi to use on a per-monitor basis.
-    # If this setting is enabled the Xft.dpi value will be ignored and instead
-    # dunst will attempt to calculate an appropriate dpi value for each monitor
-    # using the resolution and physical size. This might be useful in setups
-    # where there are multiple screens with very different dpi values.
-    per_monitor_dpi = false
+  # Experimental features that may or may not work correctly. Do not expect them
+  # to have a consistent behaviour across releases.
+  [experimental]
+  # Calculate the dpi to use on a per-monitor basis.
+  # If this setting is enabled the Xft.dpi value will be ignored and instead
+  # dunst will attempt to calculate an appropriate dpi value for each monitor
+  # using the resolution and physical size. This might be useful in setups
+  # where there are multiple screens with very different dpi values.
+  per_monitor_dpi = false
 
-    [shortcuts]
+  [shortcuts]
 
-    # Shortcuts are specified as [modifier+][modifier+]...key
-    # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
-    # "mod3" and "mod4" (windows-key).
-    # Xev might be helpful to find names for keys.
+  # Shortcuts are specified as [modifier+][modifier+]...key
+  # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
+  # "mod3" and "mod4" (windows-key).
+  # Xev might be helpful to find names for keys.
 
-    # Close notification.
-    # close = ctrl+space
+  # Close notification.
+  # close = ctrl+space
 
-    # Close all notifications.
-    # close_all = ctrl+shift+space
+  # Close all notifications.
+  # close_all = ctrl+shift+space
 
-    # Redisplay last message(s).
-    # On the US keyboard layout "grave" is normally above TAB and left
-    # of "1". Make sure this key actually exists on your keyboard layout,
-    # e.g. check output of 'xmodmap -pke'
-    # history = mod4+n
+  # Redisplay last message(s).
+  # On the US keyboard layout "grave" is normally above TAB and left
+  # of "1". Make sure this key actually exists on your keyboard layout,
+  # e.g. check output of 'xmodmap -pke'
+  # history = mod4+n
 
-    # Context menu.
-    # context = ctrl+shift+period
+  # Context menu.
+  # context = ctrl+shift+period
 
-    [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#11bdbd"
-    foreground = "#ffffff"
-    timeout = 10
-    # Icon for notifications with low urgency, uncomment to enable
-    #icon = /path/to/icon
+  [urgency_low]
+  # IMPORTANT: colors have to be defined in quotation marks.
+  # Otherwise the "#" and following would be interpreted as a comment.
+  background = "#11bdbd"
+  foreground = "#ffffff"
+  timeout = 10
+  # Icon for notifications with low urgency, uncomment to enable
+  #icon = /path/to/icon
 
-    [urgency_normal]
-    background = "#1c1f26"
-    foreground = "#ffffff"
-    timeout = 10
-    # Icon for notifications with normal urgency, uncomment to enable
-    #icon = /path/to/icon
+  [urgency_normal]
+  background = "#1c1f26"
+  foreground = "#ffffff"
+  timeout = 10
+  # Icon for notifications with normal urgency, uncomment to enable
+  #icon = /path/to/icon
 
-    [urgency_critical]
-    background = "#900000"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
-    timeout = 10
-    # Icon for notifications with critical urgency, uncomment to enable
-    #icon = /path/to/icon
+  [urgency_critical]
+  background = "#900000"
+  foreground = "#ffffff"
+  frame_color = "#ff0000"
+  timeout = 10
+  # Icon for notifications with critical urgency, uncomment to enable
+  #icon = /path/to/icon
 
 #+end_src
 
@@ -1654,6 +1666,193 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 #+end_src
 
+*JMatrix Rules*
+
+#+begin_src conf :tangle ~/.config/qutebrowser/jmatrix-rules
+
+  # WARNING: This file can be overwritten easily with the :jmatrix-write-rules command
+  # When data is overwritten, formatting and comments will be lost.
+  # Please exercise caution when editing this file directly, and make sure to keep backups.
+  # * cookie css image media script xhr frame other
+
+  https-strict: behind-the-scene false
+  matrix-off: about-scheme true
+  matrix-off: behind-the-scene true
+  matrix-off: chrome-extension-scheme true
+  matrix-off: chrome-scheme true
+  matrix-off: moz-extension-scheme true
+  matrix-off: opera-scheme true
+  matrix-off: vivaldi-scheme true
+  matrix-off: wyciwyg-scheme true
+  matrix-off: qute-scheme true
+  noscript-spoof: * true
+  referrer-spoof: * true
+  referrer-spoof: behind-the-scene false
+  * * * block
+  * * css allow
+  * * frame block
+  * * image allow
+  * 1st-party * allow
+  * 1st-party frame allow
+
+  # Github
+  github.com * script allow
+
+  # Youtube
+  # youtube.com rr1---sn-t0a7sn7d.googlevideo.com xhr block
+  # youtube.com rr1---sn-8qu-t0a6.googlevideo.com xhr block
+  # youtube.com rr1---sn-8qu-t0ak.googlevideo.com xhr block
+  # youtube.com rr1---sn-t0a7ln7d.googlevideo.com xhr block
+  youtube.com rr1---sn-8qu-t0aee.googlevideo.com image block
+  youtube.com rr1---sn-8qu-t0aee.googlevideo.com xhr block
+  youtube.com rr1---sn-8qu-t0ak.googlevideo.com image block
+  youtube.com rr1---sn-8qu-t0a6.googlevideo.com image block
+  youtube.com rr2---sn-8qu-t0aee.googlevideo.com xhr block
+  youtube.com rr2---sn-t0a7sn7d.googlevideo.com xhr block
+  youtube.com rr3---sn-t0a7ln7d.googlevideo.com xhr block
+  youtube.com rr3---sn-t0a7sn7d.googlevideo.com xhr block
+  youtube.com rr3---sn-8qu-t0aee.googlevideo.com xhr block
+  youtube.com rr3---sn-8qu-t0aee.googlevideo.com image block
+  # youtube.com rr3---sn-t0a7sn7d.googlevideo.com xhr block
+  youtube.com rr4---sn-vgqsknll.googlevideo.com xhr block
+  youtube.com rr4---sn-8qu-t0ak.googlevideo.com xhr block
+  youtube.com rr4---sn-8qu-t0ay.googlevideo.com xhr block
+  youtube.com rr4---sn-8qu-t0ak.googlevideo.com image block
+  youtube.com rr4---sn-8qu-t0ay.googlevideo.com image block
+  youtube.com rr4---sn-t0a7ln7d.googlevideo.com xhr block
+  youtube.com r5---sn-8qu-t0ay.googlevideo.com other block
+  youtube.com rr5---sn-t0a7sn7d.googlevideo.com xhr block
+  youtube.com rr5---sn-t0a7ln7d.googlevideo.com xhr block
+  youtube.com rr5---sn-vgqsrnz7.googlevideo.com xhr block
+  youtube.com rr6---sn-8qu-t0ay.googlevideo.com xhr block
+  youtube.com rr6---sn-8qu-t0a6.googlevideo.com xhr block
+  youtube.com rr7---sn-8qu-t0a6.googlevideo.com xhr block
+  youtube.com rr7---sn-8qu-t0ay.googlevideo.com image block
+  youtube.com rr7---sn-8qu-t0ay.googlevideo.com xhr block
+  youtube.com rr7---sn-8qu-t0a6.googlevideo.com image block
+  youtube.com r8---sn-8qu-t0a6.googlevideo.com other allow
+  youtube.com rr8---sn-8qu-t0ak.googlevideo.com xhr block
+  youtube.com rr8---sn-8qu-t0ak.googlevideo.com image block
+  youtube.com rr8---sn-8qu-t0a6.googlevideo.com xhr block
+  # youtube.com yt3.ggpht.com image block
+  youtube.com tpc.googlesyndication.com image block
+  youtube.com tpc.googlesyndication.com script block
+  # youtube.com googleads.g.doubleclick.net image block
+  # youtube.com googleads.g.doubleclick.net xhr block
+  youtube.com jnn-pa.googleapis.com xhr allow
+  youtube.com static.doubleclick.net script allow
+  youtube.com www.googleadservices.com * block
+  youtube.com lh6.googleusercontent.com image block
+  # youtube.com fonts.googleapis.com css block
+  youtube.com fonts.gstatic.com other allow
+  youtube.com lh4.googleusercontent.com image block
+  # youtube.com www.gstatic.com image block
+  youtube.com www.gstatic.com script allow
+  youtube.com www.gstatic.com xhr allow
+  youtube.com play.google.com xhr allow
+  youtube.com www.google.com script allow
+  # youtube.com www.google.com image block
+  # youtube.com www.google.ca image block
+  youtube.com googlevideo.com xhr allow
+  youtube.com s.ytimg.com script allow
+  youtube.com s.ytimg.com xhr allow
+  youtube.com i.ytimg.com other allow
+  youtube.com suggestqueries-clients6.youtube.com script block
+
+  # Google
+  google.com content.googleapis.com frame allow
+  google.com content.googleapis.com script allow
+  google.com ssl.gstatic.com media allow
+  google.com ssl.gstatic.com script allow
+  google.com ssl.gstatic.com xhr allow
+  google.com translate.googleapis.com script allow
+  google.com translate.googleapis.com xhr allow
+  google.com translate.googleusercontent.com frame allow
+  google.com translate.googleusercontent.com script allow
+  google.com www.gstatic.com script allow
+  google.com www.gstatic.com xhr allow
+
+  # System Crafters
+  systemcrafters.cc * * allow
+  systemcrafters.net * * allow
+
+  # 9anime
+  9anime.st * media allow
+  9anime.st * xhr allow
+  9anime.st * script allow
+  9anime.st * frame allow
+  9anime.st * css allow
+  9anime.st player.min.js * block
+  9anime.st descendantmystery.com * block
+  # 9anime.st toglooman.com script block
+  # 9anime.st dozubatan.cpm script block
+  9anime.st outoctillerytor.com script block
+  # 9anime.st waust.at script block
+  9anime.st whos.amung.us * block
+  9anime.st rlxkmkyrvqt.com xhr block 
+  9anime.st my.rtmark.net xhr block
+  9anime.st offerimage.com xhr block
+  9anime.st rlxkmkyrvqt.com frame block
+  9anime.st v10.bunnycdn.se frame block
+  # 9anime.st v11.bunnycdn.se frame block
+  9anime.st offerimage.com image block
+  9anime.st inpage-push.com * block
+  9anime.st anicli.click xhr block
+  # 9anime.st goload.pro * block
+  9anime.st api.movcloud.net script block
+  9anime.st v6.bunnycdn.se frame block
+  9anime.st delivery.taroads.com xhr block
+  # 9anime.st ssl.p.jwpcdn.com script block
+  9anime.st dmbinqebajoeca.com xhr block
+  9anime.st zikroarg.com script block
+
+  # Narutospot.tv
+  naruspot.tv * frame allow
+  naruspot.tv * script allow
+  naruspot.tv * media allow
+
+  # My Anime List
+  myanimelist.net google.com script allow
+
+  # Studium
+  matrix-off: udemontreal-my.share true
+  matrix-off: studium.umontreal.ca true
+  # udemontreal-my.sharepoint.com * * allow
+  # udemontreal-my.sharepoint.com odspserviceworkerproxy.aspx script allow
+  # udemontreal-my.sharepoint.com res-1.cdn.office.net script allow
+  # udemontreal-my.sharepoint.com res-2.cdn.office.net script allow
+  # udemontreal-my.sharepoint.com res-2.cdn.office.net xhr allow
+  # udemontreal-my.sharepoint.com res-2.cdn.office.net other allow
+  # udemontreal-my.sharepoint.com browser.pipe.aria.microsoft.com script allow
+  # udemontreal-my.sharepoint.com browser.pipe.aria.microsoft.com xhr allow
+  # udemontreal-my.sharepoint.com cac-word-view.officeapps.live.com frame allow
+  # udemontreal-my.sharepoint.com cac-word-view.officeapps.live.com xhr allow
+  # udemontreal-my.sharepoint.com canadaeast1-mediap.svc.ms xhr allow
+  # udemontreal-my.sharepoint.com static2.sharepointonline.com other allow
+  # udemontreal-my.sharepoint.com ocws.officeapps.live.com xhr allow
+  # udemontreal-my.sharepoint.com statica.akamai.odsp.cdn.office.net script allow
+  # udemontreal-my.sharepoint.com graph.microsoft.com xhr allow
+  # udemontreal-my.sharepoint.com login.windows.net frame allow
+  # udemontreal-my.sharepoint.com clh-word-view-15.cdn.office.net script allow
+  # udemontreal-my.sharepoint.com chromewebdata script allow
+  # udemontreal-my.sharepoint.com udemontreal-my.sharepoint.com script allow
+
+  # Facebook
+  facebook.com static.xx.fbcdn.net script allow
+
+  # amazon.com
+  amazon.ca m.media-amazon.com other allow
+  amazon.ca m.media-amazon.com xhr allow
+  amazon.ca m.media-amazon.com script allow
+  amazon.ca m.media-amazon.com media allow
+  amazon.ca images-na.ssl-images-amazon.com other allow
+  amazon.ca images-na.ssl-images-amazon.com script allow
+
+  # LinkedIn
+  
+
+#+end_src
+
 *Guix Packages*
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/browsers.scm :noweb yes
@@ -1670,17 +1869,17 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
   [Default Applications]
   text/html=qutebrowser.desktop
-  x-scheme-handler/http=qutebrowser.desktop
-  x-scheme-handler/https=qutebrowser.desktop
-  x-scheme-handler/about=qutebrowser.desktop
-  x-scheme-handler/unknown=qutebrowser.desktop
-  application/xhtml+xml=qutebrowser.desktop
+  x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
+  x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
+  x-scheme-handler/about=org.qutebrowser.qutebrowser.desktop
+  x-scheme-handler/unknown=org.qutebrowser.qutebrowser.desktop
+  application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
 
   [Added Associations]
-  x-scheme-handler/http=qutebrowser.desktop;
-  text/html=qutebrowser.desktop;
-  application/xhtml+xml=qutebrowser.desktop;
-  x-scheme-handler/https=qutebrowser.desktop;
+  x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop;
+  text/html=org.qutebrowser.qutebrowser.desktop;
+  application/xhtml+xml=org.qutebrowser.qutebrowser.desktop;
+  x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop;
 
 #+end_src
 
@@ -1690,9 +1889,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "compton"
   "gucharmap"
-  "fontmanager"
   "brightnessctl"
   "xdg-utils"      ;; For xdg-open, etc
   "xdg-dbus-proxy" ;; For Flatpak
@@ -1764,7 +1961,7 @@ Applications to install which are otherwise difficult to install Guix systems.
   (specifications->manifest
    '("feh"
      "imagemagick"
-     "gimp"
+     ;; "gimp"
      "evince"
      "xournalpp"))
 
@@ -1876,8 +2073,6 @@ Applications to install which are otherwise difficult to install Guix systems.
   "xhost"
   "xmodmap"
   "setxkbmap"
-  "xrandr"
-  "arandr"
   "xss-lock"
   "libinput"
   "xinput"

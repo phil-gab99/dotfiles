@@ -1,6 +1,6 @@
 (specifications->manifest
  '("feh"
    "imagemagick"
-   "gimp"
+   ;; "gimp"
    "evince"
    "xournalpp"))

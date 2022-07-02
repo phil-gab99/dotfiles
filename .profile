@@ -28,7 +28,7 @@ fi
 #unset PULSE_CLIENTCONFIG
 
 # Export java path so that tools pick it up correctly
-export JAVA_HOME=$(dirname $(dirname $(realpath $(which java))))
+export JAVA_HOME=$(realpath $(dirname $(dirname $(which java))))
 
 # Export casting program for qutebrowser
 export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
