@@ -2047,6 +2047,7 @@ Applications to install which are otherwise difficult to install Guix systems.
   "sysfsutils"
   "zip"
   "unzip"
+  "p7zip"
   "trash-cli"
 
 #+end_src
@@ -2089,9 +2090,9 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/desktop.scm :noweb yes
 
-    (specifications->manifest
-     '(
-       <<packages>>
-       ))
+  (specifications->manifest
+   '(
+     <<packages>>
+     ))
 
 #+end_src

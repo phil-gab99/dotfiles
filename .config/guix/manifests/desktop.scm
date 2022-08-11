@@ -37,6 +37,7 @@
    "sysfsutils"
    "zip"
    "unzip"
+   "p7zip"
    "trash-cli"
    
    ;; "virt-manager"

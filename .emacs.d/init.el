@@ -1367,9 +1367,12 @@
 
 (use-package ox-reveal
   :straight t
-  :disabled ;; Test if working
+  ;; :disabled ;; Test if working
   :custom
-  (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"))
+  (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+  (org-reveal-hlevel 1)
+  (org-export-headline-levels 6)
+  (org-reveal-theme "league"))
 
 (use-package org-notify
   :straight t
