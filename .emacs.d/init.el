@@ -1,47 +1,6 @@
-(setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
-
-;; (setq native-comp-async-report-warnings-errors nil) ; Silence compiler warnings
-;; (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)) ; Set directory for cache storage
-
-(server-start)
-
-;; (require 'package) ; Initialize package sources
-
-;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-;;                          ("org" . "https://orgmode.org/elpa/")
-;;                          ("elpa" . "https://elpa.gnu.org/packages/")))
-;; (package-initialize)
-;; (setq package-enable-at-startup nil)
-;; (unless package-archive-contents
-;;   (package-refresh-contents))
-
-;; (unless (package-installed-p 'use-package) 
-;;   (package-install 'use-package))
-
-;; (require 'use-package)
-;; (setq use-package-always-ensure t)
-
-(unless (featurep 'straight)
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage)))
-
-(straight-use-package 'use-package)
-;;(setq straight-use-package-by-default t)
-;;(setq use-package-verbose t) For optimizing performance
-
 (push "~/.emacs.d/lisp" load-path)
 
-(require 'subr-x)
+;; (require 'subr-x)
 (setq pg/is-termux
       (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
 
@@ -50,89 +9,6 @@
                            ;; (frame-parameter (selected-frame) 'exwm-active)))
 
 (when pg/exwm-enabled (require 'pg-desktop))
-
-(setq inhibit-startup-message t)                                   ; Disable startup message
-(setq scroll-conservatively 1000)                                  ; Slow scrolling
-(unless pg/is-termux
-  (scroll-bar-mode 0)                                                ; Disable visible scrollbar
-  (tool-bar-mode 0)                                                  ; Disable toolbar
-  (tooltip-mode 0))
-
-(menu-bar-mode 0)                                                  ; Disable menu bar
-(setq split-width-threshold 185)                                   ; Width for splitting
-(global-set-key (kbd "M-<tab>") 'other-window)                     ; Bind alt tab to buffer switching
-
-;; Set frame transparency
-(unless (or pg/is-termux (not pg/exwm-enabled))
-  (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-  (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
-
-(require 'iso-transl)
-(define-key global-map (kbd "<Multi_key>") iso-transl-ctl-x-8-map) ; Bind compose key in case emacs captures it
-
-(setq tab-width 4)                    ; Set tab length
-(setq custom-buffer-indent 2)
-(setq-default indent-tabs-mode nil)   ; Disable tab caracter
-(show-paren-mode 1)                   ; Enable delimiters matching
-(save-place-mode 1)                   ; Remembers last cursor placement in file
-(column-number-mode)                  ; Show column numbers
-(mouse-avoidance-mode 'banish)        ; No mouse allowed
-(global-display-line-numbers-mode 1)  ; Show line numbers
-(setq display-line-numbers-type 'relative)
-(setq-default fill-column 80)         ; 80 caracter column indicator
-(setq vc-follow-symlinks t)
-(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-(add-hook 'compilation-filter-hook
-          (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
-
-(dolist (mode '(org-mode-hook         ; Disable line numbers for some modes
-                Info-mode-hook
-                eww-mode-hook
-                term-mode-hook
-                coming-mode-hook
-                gfm-view-mode-hook
-                compilation-mode-hook
-                dashboard-mode-hook
-                eshell-mode-hook
-                sql-interactive-mode-hook
-                pdf-view-mode-hook
-                telega-root-mode-hook
-                telega-chat-mode
-                telega-image-mode
-                sokoban-mode-hook
-                doc-view-mode-hook
-                mu4e-main-mode-hook
-                Man-mode-hook
-                simple-mpc-mode-hook
-                treemacs-mode-hook
-                vterm-mode-hook
-                geiser-repl-mode-hook
-                slack-mode-hook
-                shell-mode-hook))
-  (add-hook mode (lambda() (display-line-numbers-mode 0))))
-
-(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'light)
-(set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'regular)
-
-(set-face-attribute 'italic nil :slant 'italic)
-
-(setq display-buffer-base-action
-      '(display-buffer-reuse-mode-window
-        display-buffer-reuse-window
-        display-buffer-same-window))
-
-;; If a popup does happen, don't resize windows to be equal-sized
-(setq even-window-sizes nil)
-
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
-      auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
-
-(use-package guix
-  :straight nil)
 
 (use-package geiser
   :straight nil

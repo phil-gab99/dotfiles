@@ -2,8 +2,6 @@
  '("emacs"
    ;; "emacs-native-comp"
    
-   ;; "emacs-use-package"
-   
    ;; "emacs-exwm"
    ;; "emacs-desktop-environment"
    
