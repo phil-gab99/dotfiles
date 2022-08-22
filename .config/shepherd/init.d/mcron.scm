@@ -1,6 +1,7 @@
 (define mcron
   (make <service>
     #:provides '(mcron)
+    #:docstring "`mcron'"
     #:respawn? #t
     #:start (make-forkexec-constructor '("mcron"))
     #:stop (make-kill-destructor)))

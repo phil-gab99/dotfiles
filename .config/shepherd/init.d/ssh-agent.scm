@@ -4,6 +4,7 @@
   (make <service>
     #:provides '(ssh-agent)
     #:docstring "Run `ssh-agent'"
+    #:respawn? #t
     #:start (lambda ()
               (let ((socket-dir (string-append %user-runtime-dir "/ssh-agent")))
                 (unless (file-exists? socket-dir)
@@ -12,8 +13,7 @@
                 (fork+exec-command
                  `("ssh-agent" "-D" "-a" ,(string-append socket-dir "/socket"))
                  #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
-    #:stop (make-kill-destructor)
-    #:respawn? #t))
+    #:stop (make-kill-destructor)))
 
 (register-services ssh-agent)
 (start ssh-agent)

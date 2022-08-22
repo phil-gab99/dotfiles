@@ -8,7 +8,7 @@
    "hicolor-icon-theme"
    "gnome-icon-theme"
    "gnome-backgrounds"
-   ;; "papirus-icon-theme" ;; Problematic package
+   "papirus-icon-theme"
    "breeze-icons"
 
    ;; Fonts

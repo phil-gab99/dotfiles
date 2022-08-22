@@ -1,21 +1,20 @@
-# Export 'SHELL' to child processes.  Programs such as 'screen'
-# honor it and otherwise use /bin/sh.
+# Export 'SHELL' to child processes.  Programs such as 'screen' honor it and
+# otherwise use /bin/sh.
 export SHELL
 
-if [[ $- != *i* ]]
-then
-    # We are being invoked from a non-interactive shell.  If this
-    # is an SSH session (as in "ssh host command"), source
-    # /etc/profile so we get PATH and other essential variables.
+if [[ $- != *i* ]]; then
+    # We are being invoked from a non-interactive shell.  If this is an SSH
+    # session (as in "ssh host command"), source /etc/profile so we get PATH and
+    # other essential variables.
     [[ -n "$SSH_CLIENT" ]] && source /etc/profile
 
     # Don't do anything else.
     return
 fi
 
-#######################################################
+################################################################################
 # SOURCED ALIAS'S AND SCRIPTS
-#######################################################
+################################################################################
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
@@ -30,21 +29,9 @@ fi
 # Alias definitions
 if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi
 
-#######################################################
-# GUIX SETUP
-#######################################################
-
-# Adjust the prompt depending on whether we're in 'guix environment'.
-if [ -n "$GUIX_ENVIRONMENT" ]
-then
-    PS1='\u@\h \w [env]\$ '
-else
-    PS1='\u@\h \w\$ '
-fi
-
-#######################################################
+################################################################################
 # HISTORY CONTROL
-#######################################################
+################################################################################
 
 # Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -65,13 +52,14 @@ HISTFILESIZE=2000
 # Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-#######################################################
+################################################################################
 # NAVIGATION
-#######################################################
+################################################################################
 
 iatest=$(expr index "$-" i)
 
-# Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
+# Check the window size after each command and, if necessary, update the values
+# of LINES and COLUMNS
 shopt -s checkwinsize
 
 # Allow ctrl-S for history navigation (with ctrl-R)
@@ -84,9 +72,9 @@ if [[ $iatest > 0 ]]; then bind "set completion-ignore-case on"; fi
 # Show auto-completion list automatically, without double tab
 if [[ $iatest > 0 ]]; then bind "set show-all-if-ambiguous On"; fi
 
-#######################################################
+################################################################################
 # COLORED COMMANDS
-#######################################################
+################################################################################
 
 # To have colors for ls and all grep commands such as grep, egrep and zgrep
 export CLICOLOR=1
@@ -101,41 +89,18 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-#######################################################
+################################################################################
 # SPECIAL FUNCTIONS
-#######################################################
+################################################################################
 
-# Extracts any archive(s) (if unp isn't installed)
-function extract {
-    for archive in $*; do
-        if [ -f $archive ] ; then
-            case $archive in
-                *.tar.bz2) tar xvjf $archive ;;
-                *.tar.gz)  tar xvzf $archive ;;
-                *.bz2)     bunzip2 $archive ;;
-                *.rar)     rar x $archive ;;
-                *.gz)      gunzip $archive ;;
-                *.tar)     tar xvf $archive ;;
-                *.tbz2)    tar xvjf $archive ;;
-                *.tgz)     tar xvzf $archive ;;
-                *.zip)     unzip $archive ;;
-                *.Z)       uncompress $archive ;;
-                *.7z)      7z x $archive ;;
-                *)         echo "Can't extract '$archive'" ;;
-            esac
-        else
-            echo "'$archive' is not a valid file!"
-        fi
-    done
-}
-
+# Parses git current branch when inside git project
 function parse_git_branch {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
-#######################################################
+################################################################################
 # COLORED PROMPT
-#######################################################
+################################################################################
 
 function __setprompt {
     local LAST_COMMAND=$? # Must come first!
@@ -201,7 +166,7 @@ function __setprompt {
     fi
 
     # Date
-    PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]🕓 $(date +%a) $(date +%b-'%-m')" # Date
+    PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]🕓 $(date +%a) $(date +%b-'%-m')"
     PS1+=" $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
 
     # CPU
@@ -256,5 +221,13 @@ function __setprompt {
 
     # PS4 is used for tracing a script in debug mode
     PS4='\[${LIGHTGRAY}\]+\[${NOCOLOR}\] '
+
+    # Adjust the prompt depending on whether we're in 'guix environment'.
+    if [ -n "$GUIX_ENVIRONMENT" ]; then
+        PS1="$PS1 [dev] "
+        PS2="$PS2 [dev] "
+        PS3="$PS3 [dev] "
+        PS4="$PS4 [dev] "
+    fi
 }
 PROMPT_COMMAND='__setprompt'

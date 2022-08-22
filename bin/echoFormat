@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Outputs colon (i.e. ':') delimited environment variables in a readable format
+sed 's/:/\n/g' <<< "$1"

@@ -54,6 +54,3 @@ alias diskspace="du -S | sort -n -r | more"
 # Aliases for multi-versioned commands
 alias python="python3"
 alias cc="gcc"
-
-# Alias for viewing path variable
-alias path="sed 's/:/\n/g' <<< \"$PATH\""

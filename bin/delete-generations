@@ -1,0 +1,5 @@
+#!/bin/sh
+profile=$1
+generations=$2
+echo Deleting generations $generations of $profile
+guix package --profile=$HOME/.guix-extra-profiles/$profile/$profile --delete-generations=$generations

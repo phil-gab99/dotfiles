@@ -7,9 +7,7 @@
    ;; "emacs-exwm"
    ;; "emacs-desktop-environment"
    
-   ;; "emacs-guix"
-   
-   ;; "emacs-geiser-guile"
+   "emacs-guix"
    
    ;; "emacs-pinentry"
    ;; "pinentry-emacs"
@@ -52,6 +50,7 @@
    
    "mu"
    "isync"
+   "oauth2ms"
    
    ;; "emacs-mu4e-alert"
    

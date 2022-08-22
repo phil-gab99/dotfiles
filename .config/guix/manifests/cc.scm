@@ -5,7 +5,6 @@
    "clang"
    "ccls"
    "lld"
-   "gcc@10.3.0"
    "file"
    "elfutils"
    "go"))

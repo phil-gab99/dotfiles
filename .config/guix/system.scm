@@ -4,29 +4,30 @@
 (use-modules
  (gnu)
  (srfi srfi-1)
- (gnu system nss)
+ (gnu services)
  (gnu services pm)
  (gnu services cups)
  (gnu services desktop)
  (gnu services docker)
  (gnu services networking)
  (gnu services virtualization)
- (gnu packages wm)
- (gnu packages cups)
- (gnu packages vim)
- (gnu packages gtk)
- (gnu packages xorg)
- (gnu packages emacs)
- (gnu packages gnome)
- (gnu packages mtools)
- (gnu packages linux)
  (gnu packages audio)
- (gnu packages gnuzilla)
- (gnu packages pulseaudio)
- (gnu packages web-browsers)
- (gnu packages virtualization)
- (gnu packages version-control)
+ (gnu packages cups)
+ (gnu packages dns)
+ (gnu packages emacs)
+ (gnu packages file-systems)
+ (gnu packages gtk)
+ (gnu packages gnome)
+ (gnu packages linux)
+ (gnu packages mtools)
  (gnu packages package-management)
+ (gnu packages pulseaudio)
+ (gnu packages version-control)
+ (gnu packages vim)
+ (gnu packages virtualization)
+ (gnu packages web-browsers)
+ (gnu packages wm)
+ (gnu packages xorg)
  (nongnu packages linux)
  (nongnu system linux-initrd))
 
@@ -52,9 +53,10 @@
                 (home-directory "/home/phil-gab99")
                 (supplementary-groups
                  '("wheel"
-                   ;; "kvm"
+                   "kvm"
+                   "lp"
                    "input"
-                   ;; "libvirt"
+                   "libvirt"
                    "netdev"
                    "audio"
                    "video")))
@@ -67,40 +69,42 @@
          (specification->package "nss-certs")
          git
          ntfs-3g
-         ;; qemu
-         ;; libvirt
-         ;; exfat-utils
+         exfat-utils
          fuse-exfat
          vim
+         dnsmasq
          nix
          pulseaudio
+         sysfsutils
          tlp
-         ;; xf86-input-libinout
+         xf86-input-libinput
          gvfs)
    %base-packages))
  (services
-  (append
-   (list (service gnome-desktop-service-type)
-         (service openssh-service-type)
-         (service tor-service-type)
-         (service cups-service-type
-                  (cups-configuration
-                   (web-interface? #t)
-                   (extensions
-                    (list cups-filters))))
-         (service nix-service-type)
-         ;; (service libvirt-service-type
-         ;;          (libvirt-configuration
-         ;;           (unix-sock-group "libvirt")
-         ;;           (tls-port "16555")))
-         (service bluetooth-service-type)
-         ;; (service virtlog-service-type
-         ;;          (virtlog-configuration
-         ;;           (max-clients 1000)))
-         (set-xorg-configuration
-          (xorg-configuration
-           (keyboard-layout keyboard-layout))))
-   %desktop-services))
+  (cons*
+   (service openssh-service-type)
+   (service tor-service-type)
+   (service cups-service-type
+            (cups-configuration
+             (web-interface? #t)
+             (extensions
+              (list cups-filters))))
+   (service nix-service-type)
+   (service thermald-service-type)
+   (service bluetooth-service-type)
+   (service libvirt-service-type
+            (libvirt-configuration
+             (unix-sock-group "libvirt")
+             (tls-port "16555")))
+   (service virtlog-service-type
+            (virtlog-configuration
+             (max-clients 1000)))
+   (set-xorg-configuration
+    (xorg-configuration
+     (keyboard-layout keyboard-layout)))
+   (remove (lambda (service)
+             (eq? (service-kind service) gdm-service-type))
+           %desktop-services)))
  (bootloader
   (bootloader-configuration
    (bootloader grub-efi-bootloader)

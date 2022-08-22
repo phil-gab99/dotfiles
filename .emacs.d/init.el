@@ -88,6 +88,8 @@
           (lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
 (dolist (mode '(org-mode-hook         ; Disable line numbers for some modes
+                Info-mode-hook
+                eww-mode-hook
                 term-mode-hook
                 coming-mode-hook
                 gfm-view-mode-hook
@@ -106,6 +108,7 @@
                 simple-mpc-mode-hook
                 treemacs-mode-hook
                 vterm-mode-hook
+                geiser-repl-mode-hook
                 slack-mode-hook
                 shell-mode-hook))
   (add-hook mode (lambda() (display-line-numbers-mode 0))))
@@ -128,11 +131,16 @@
       auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
 
-;; (use-package guix
-  ;; :straight t)
+(use-package guix
+  :straight nil)
 
-;; (use-package geiser-guile
-  ;; :straight t)
+(use-package geiser
+  :straight nil
+  :bind (:map geiser-repl-mode-map
+              ("C-l" . geiser-repl-clear-buffer))
+  :config
+  (with-eval-after-load 'geiser-guile
+    (add-to-list 'geiser-guile-load-path "/run/current-system/profile/share/guile/site/3.0/")))
 
 (use-package auth-source
   :straight nil
@@ -433,9 +441,9 @@
     :straight '( :type git
                  :host github
                  :repo "djcb/mu"
-                 :branch "release/1.6"
-                 :files ("mu4e/*")
-                 :pre-build (("./autogen.sh") ("make")))
+                 :branch "release/1.8")
+                 ;(;:files ("mu4e/*")
+                 ;:pre-build (("./autogen.sh") ("make") ("make install")))
     :commands mu4e
     :hook (mu4e-compose-mode . corfu-mode)
     ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
@@ -502,7 +510,7 @@
     (mu4e t)
     :custom
     (mu4e-context-policy 'pick-first)
-    (mu4e-mu-binary (expand-file-name "mu/mu" (straight--repos-dir "mu")))
+    ;; (mu4e-mu-binary (expand-file-name "mu/mu" (straight--repos-dir "mu")))
     ;; (setq mu4e-bookmarks
     ;;       '((:name "Display Name" :query "Query" :key "Key" ...)))
     ))
@@ -588,6 +596,35 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . helpful-variable)
   ([remap describe-key] . helpful-key))
+
+;; Function for defining some behaviours for the major info-mode
+(defun pg/Info-mode-setup ()
+  (auto-fill-mode 0)
+  (setq-local face-remapping-alist '((default (:height 1.5) default)
+                                     (fixed-pitch (:height 1.5) fixed-pitch)
+                                     (info-menu-header (:height 1.5) info-menu-header)
+                                     (info-title-1 (:height 1.05) info-title-1)
+                                     (info-title-2 (:height 1.15) info-title-2)
+                                     (info-title-3 (:height 1.15) info-title-3)
+                                     (info-title-4 (:height 2.0) info-title-4)))
+  (set-face-attribute 'Info-quoted nil :foreground "orange" :inherit 'fixed-pitch)
+  (variable-pitch-mode 1)
+  (visual-line-mode 1))
+
+(use-package info
+  :straight nil
+  :hook (Info-mode . pg/Info-mode-setup))
+
+(defun pg/eww-mode-setup ()
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq-local face-remapping-alist '((variable-pitch (:height 2.0) variable-pitch)
+                                     (fixed-pitch (:height 2.0) fixed-pitch)
+                                     (default (:height 2.0) default))))
+
+(use-package eww
+  :straight nil
+  :hook (eww-mode . pg/eww-mode-setup))
 
 (use-package dired
   :straight nil
@@ -1367,7 +1404,6 @@
 
 (use-package ox-reveal
   :straight t
-  ;; :disabled ;; Test if working
   :custom
   (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
   (org-reveal-hlevel 1)
@@ -1378,7 +1414,7 @@
   :straight t
   :after org
   :custom
-  (user-mail-address "philippe.gabriel.1@umontreal.ca")
+  (user-mail-address "pgabriel999@hotmail.com")
   :config
   (org-notify-start)
   (setq org-notify-map nil)
@@ -1448,7 +1484,7 @@
 
 (use-package visual-fill-column
   :straight t
-  :hook ((org-mode gfm-view-mode) . pg/org-mode-visual-fill))
+  :hook ((org-mode gfm-view-mode Info-mode eww-mode) . pg/org-mode-visual-fill))
 
 (font-lock-add-keywords 'org-mode ; Replace '-' with bullets
                         '(("^ *\\([-]\\) "
@@ -1473,7 +1509,7 @@
                 (org-level-6 . 1.1)
                 (org-level-7 . 1.1)
                 (org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "DejaVu Sans" :weight 'regular :height (cdr face)))
+  (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
 
 (with-eval-after-load 'org ; Defer the body code until org is loaded
   (org-babel-do-load-languages ; Loads languages to be executed by org-babel
@@ -1629,16 +1665,16 @@
   :commands slack-start
   :hook (slack-mode . corfu-mode)
   :config
-  (mytest :name "ift6755"
-          :default t
-          :token (pg/lookup-password
-                  :host "ift6755.slack.com"
-                  :user "philippe.gabriel.1@umontreal.ca")
-          :cookie (pg/lookup-password
-                   :host "ift6755.slack.com"
-                   :user "philippe.gabriel.1@umontreal.ca^cookie")
-          :subscribed-channels '((general questions random))
-          :modeline-enabled t)
+  (slack-register-team :name "ift6755"
+                       :default t
+                       :token (pg/lookup-password
+                               :host "ift6755.slack.com"
+                               :user "philippe.gabriel.1@umontreal.ca")
+                       :cookie (pg/lookup-password
+                                :host "ift6755.slack.com"
+                                :user "philippe.gabriel.1@umontreal.ca^cookie")
+                       :subscribed-channels '((general questions random))
+                       :modeline-enabled t)
   (evil-define-key 'normal slack-info-mode-map
     ",u" 'slack-room-update-messages)
   (evil-define-key 'normal slack-mode-map

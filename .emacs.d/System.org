@@ -304,6 +304,42 @@ This script simply lists the profiles available to activate/update:
 
 #+end_src
 
+** List Profile Generations
+
+This script lists the generations of a given profile:
+
+#+begin_src sh
+
+  list-generations emacs
+
+#+end_src
+
+#+begin_src sh :tangle ~/bin/list-generations :shebang #!/bin/sh
+
+  profile=$1
+  guix package --profile=$HOME/.guix-extra-profiles/$profile/$profile --list-generations
+
+#+end_src
+
+** Delete Profile Generations
+
+This script deletes the generations of a given profile:
+
+#+begin_src sh
+
+  delete-generations emacs 1..5
+
+#+end_src
+
+#+begin_src sh :tangle ~/bin/delete-generations :shebang #!/bin/sh
+
+  profile=$1
+  generations=$2
+  echo Deleting generations $generations of $profile
+  guix package --profile=$HOME/.guix-extra-profiles/$profile/$profile --delete-generations=$generations
+
+#+end_src
+
 ** Activating Profiles
 
 This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs those profiles for the first time.

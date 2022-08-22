@@ -72,7 +72,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
      "hicolor-icon-theme"
      "gnome-icon-theme"
      "gnome-backgrounds"
-     ;; "papirus-icon-theme" ;; Problematic package
+     "papirus-icon-theme"
      "breeze-icons"
 
      ;; Fonts
@@ -162,8 +162,8 @@ Workspaces:
     (pg/start-panel)
     (pg/run-in-background "dunst")
     (pg/run-in-background "nm-applet")
+    (pg/run-in-background "udiskie -t")
     (pg/run-in-background "pasystray"))
-    ;; (pg/run-in-background "udiskie -t"))
 
   (require 'exwm-config)
   (require 'exwm-randr)
@@ -267,24 +267,6 @@ Allows for some of the keybindings to use while in exwm.
 
 #+end_src
 
-** Desktop environment
-
-It is necessary to run the following command for creating a sym link for the below file:
-~sudo ln -f ~~/.emacs.d/exwm/EXWM.desktop /usr/share/xsessions/EXWM.desktop~
-
-#+begin_src conf :tangle ~/.emacs.d/exwm/EXWM.desktop :mkdirp yes
-
-  [Desktop Entry]
-  Name=EXWM
-  Comment=Emacs Window Manager
-  Exec=sh /home/phil-gab99/.emacs.d/exwm/start-exwm.sh
-  TryExec=sh
-  Type=Application
-  X-LightDM-DesktopName=exwm
-  DesktopNames=exwm
-
-#+end_src
-
 ** Xsession
 
 How the launcher script will be called. Do not forget to make the symlink to the file if there is no need to pass by the gnome WM:
@@ -293,62 +275,7 @@ How the launcher script will be called. Do not forget to make the symlink to the
 
 #+begin_src sh  :tangle ~/.dotfiles/.xsession :shebang #!/bin/sh
 
-  ~/.emacs.d/exwm/start-exwm.sh
-
-#+end_src
-
-** Launcher script
-
-Script invoked by ~EXWM.desktop~ to start emacs and load the desktop environment configuration.
-
-#+begin_src sh :tangle ~/.emacs.d/exwm/start-exwm.sh :mkdirp yes :shebang #!/bin/sh
-
-  . ~/.profile
-
-  xset dpms 0 0 0 && xset -dpms && xset s off && xset s noblank # Prevent screen blank
-
-  xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Tapping Enabled" 1
-  xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
-  xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Natural Scrolling Enabled" 1
-  xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 1
-
-  start_daemons () {
-      if [ -z "$(pgrep -u phil-gab99 shepherd)" ]; then
-	  shepherd
-      fi
-      compton &
-      xsettingsd &
-      gnome-keyring-daemon --start --components=pkcs11 &
-      gnome-keyring-daemon --start --components=secrets &
-      # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-      export SSH_AUTH_SOCK
-  }
-
-  exwm () {
-      export EXWM=1
-      # Disable access control for the current user.
-      xhost "+SI:localuser:$USER"
-
-      # Make Java applications aware this is a non-reparenting window manager.
-      export _JAVA_AWT_WM_NONREPARENTING=1
-
-      # Set default cursor.
-      xsetroot -cursor_name left_ptr
-
-      # Set keyboard repeat rate.
-      # xset r rate 200 60
-
-      # For debugging
-      # xterm
-
-      # Finally start Emacs
-      # exec dbus-launch emacs --eval "(lerax-exwm-start nil t)"
-      exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/lisp/pg-desktop.el
-      # exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
-  }
-
-  start_daemons
-  exwm
+  exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/lisp/pg-desktop.el
 
 #+end_src
 
@@ -852,43 +779,133 @@ For desktop notifications
 
 * User Services
 
-Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage services that run in the background when logging in.
+Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-level services that run in the background when logging in.
 
 #+begin_src scheme :tangle ~/.config/shepherd/init.scm :mkdirp yes
+
+  (use-modules ((ice-9 ftw) #:select (scandir)))
+
+  ;; Run shepherd in background
+  (action 'shepherd 'daemonize)
+
+  ;; Load all the files in the directory 'init.d' with a suffix '.scm'.
+  (for-each
+   (lambda (file)
+     (load (string-append "init.d/" file)))
+   (scandir (string-append (dirname (current-filename)) "/init.d")
+            (lambda (file)
+              (string-suffix? ".scm" file))))
+
+#+end_src
+
+*GPG Agent*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/gpg-agent.scm :mkdirp yes
 
   (define gpg-agent
     (make <service>
       #:provides '(gpg-agent)
+      #:docstring "Runs `gpg-agent'"
       #:respawn? #t
       #:start (make-system-constructor "gpg-connect-agent /bye")
-      #:stop  (make-system-destructor "gpgconf --kill gpg-agent")))
+      #:stop (make-system-destructor "gpgconf --kill gpg-agent")))
+
+  (register-services gpg-agent)
+  (start gpg-agent)
+
+#+end_src
+
+*Mcron*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/mcron.scm :mkdirp yes
 
   (define mcron
     (make <service>
       #:provides '(mcron)
+      #:docstring "`mcron'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("mcron"))
-      #:stop  (make-kill-destructor)))
+      #:stop (make-kill-destructor)))
+
+  (register-services mcron)
+  (start mcron)
+
+#+end_src
+
+*Pulseaudio*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/pulseaudio.scm :mkdirp yes
 
   (define pulseaudio
     (make <service>
       #:provides '(pulseaudio)
+      #:docstring "Runs `pulseaudio'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("pulseaudio"))
-      #:stop  (make-kill-destructor)))
+      #:stop (make-kill-destructor)))
+
+  (register-services pulseaudio)
+  (start pulseaudio)
+
+#+end_src
+
+*SSH-Agent*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/ssh-agent.scm :mkdirp yes
+
+  (use-modules (shepherd support))
 
   (define ssh-agent
     (make <service>
       #:provides '(ssh-agent)
+      #:docstring "Run `ssh-agent'"
       #:respawn? #t
-      #:start (make-system-constructor "ssh-agent")
-      #:stop  (make-system-destructor "ssh-agent -k")))
+      #:start (lambda ()
+                (let ((socket-dir (string-append %user-runtime-dir "/ssh-agent")))
+                  (unless (file-exists? socket-dir)
+                    (mkdir-p socket-dir)
+                    (chmod socket-dir #o700))
+                  (fork+exec-command
+                   `("ssh-agent" "-D" "-a" ,(string-append socket-dir "/socket"))
+                   #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
+      #:stop (make-kill-destructor)))
 
-  (register-services gpg-agent mcron pulseaudio ssh-agent)
-  (action 'shepherd 'daemonize)
+  (register-services ssh-agent)
+  (start ssh-agent)
 
-  ;; Start user services
-  (for-each start '(gpg-agent mcron pulseaudio ssh-agent))
+#+end_src
+
+*Compton*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/compton.scm :mkdirp yes
+
+  (define compton
+    (make <service>
+      #:provides '(compton)
+      #:docstring "Runs `compton'"
+      #:respawn? #f
+      #:start (make-forkexec-constructor '("compton"))
+      #:stop (make-kill-destructor)))
+
+  (register-services compton)
+  (start compton)
+
+#+end_src
+
+*Xsettingsd*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/xsettingsd.scm :mkdirp yes
+
+  (define xsettingsd
+    (make <service>
+      #:provides '(xsettingsd)
+      #:docstring "Runs `xsettingsd'"
+      #:respawn? #f
+      #:start (make-forkexec-constructor '("xsettingsd"))
+      #:stop (make-kill-destructor)))
+
+  (register-services xsettingsd)
+  (start xsettingsd)
 
 #+end_src
 
@@ -1573,8 +1590,8 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   ################################################################################
   sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
   config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
-  # c.content.blocking.enabled = False
-  # c.content.blocking.method = null
+  # c.content.blocking.enabled = True
+  # c.content.blocking.method = "adblock"
   # c.content.blocking.adblock.lists = [
   #     'https://easylist.to/easylist/easylist.txt',
   #     'https://easylist.to/easylist/easyprivacy.txt',
@@ -1900,14 +1917,6 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 #+end_src
 
-** Disk Mounting
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; "udiskie"
-
-#+end_src
-
 ** Flatpak
 
 Applications to install which are otherwise difficult to install Guix systems.
@@ -1961,8 +1970,11 @@ Applications to install which are otherwise difficult to install Guix systems.
   (specifications->manifest
    '("feh"
      "imagemagick"
+     "libreoffice"
      ;; "gimp"
      "evince"
+     "simple-scan"
+     "xdg-desktop-portal-gtk"
      "xournalpp"))
 
 #+end_src
@@ -1992,6 +2004,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "net-tools"
+  "curl"
 
 #+end_src
 
@@ -2044,10 +2057,11 @@ Applications to install which are otherwise difficult to install Guix systems.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "openssh"
-  "sysfsutils"
+  "gnupg"
   "zip"
   "unzip"
   "p7zip"
+  "udiskie"
   "trash-cli"
 
 #+end_src
@@ -2058,7 +2072,9 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "virt-manager"
+  "virt-manager"
+  "virt-viewer"
+  "spice-vdagent"
 
 #+end_src
 

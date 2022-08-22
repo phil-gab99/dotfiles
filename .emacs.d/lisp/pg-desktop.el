@@ -45,8 +45,8 @@
   (pg/start-panel)
   (pg/run-in-background "dunst")
   (pg/run-in-background "nm-applet")
+  (pg/run-in-background "udiskie -t")
   (pg/run-in-background "pasystray"))
-  ;; (pg/run-in-background "udiskie -t"))
 
 (require 'exwm-config)
 (require 'exwm-randr)

@@ -22,11 +22,10 @@
    "shared-mime-info"
    "htop"
    
-   ;; "udiskie"
-   
    "flatpak"
    
    "net-tools"
+   "curl"
    
    "password-store"
    "mcron"
@@ -34,13 +33,16 @@
    "system-config-printer"
    
    "openssh"
-   "sysfsutils"
+   "gnupg"
    "zip"
    "unzip"
    "p7zip"
+   "udiskie"
    "trash-cli"
    
-   ;; "virt-manager"
+   "virt-manager"
+   "virt-viewer"
+   "spice-vdagent"
    
    "xev"
    "xset"
