@@ -1,7 +1,7 @@
 (specifications->manifest
  '("emacs"
    ;; "emacs-native-comp"
-   
+
    ;; "emacs-exwm"
    ;; "emacs-desktop-environment"
    
@@ -66,9 +66,17 @@
    
    ;; "emacs-emojify"
    
+   ;; "emacs-evil"
+   
+   ;; "emacs-evil-collection"
+   
    ;; "emacs-helpful"
    
+   ;; "emacs-visual-fill-column"
+   
    ;; "emacs-all-the-icons-dired"
+   
+   ;; "emacs-openwith"
    
    ;; "emacs-eshell-syntax-highlighting"
    
@@ -101,6 +109,10 @@
    
    ;; "emacs-plantuml-mode"
    
+   ;; "emacs-yasnippet"
+   
+   ;; "emacs-yasnippet-snippets"
+   
    ;; "emacs-ccls"
    
    ;; "emacs-sly"
@@ -125,10 +137,6 @@
    
    ;; "emacs-yaml-mode"
    
-   ;; "emacs-yasnippet"
-   
-   ;; "emacs-yasnippet-snippets"
-   
    ;; "emacs-alert"
    
    ;; "emacs-org"
@@ -149,13 +157,9 @@
    
    ;; "emacs-org-fragtog"
    
-   ;; "emacs-visual-fill-column"
-   
    ;; "emacs-pdf-tools"
    
    ;; "emacs-djvu"
-   
-   ;; "emacs-openwith"
    
    "ledger"
    ;; "emacs-ledger-mode"
@@ -174,10 +178,6 @@
    "mpd"
    "mpd-mpc"
    ;; "emacs-emms"
-   
-   ;; "emacs-evil"
-   
-   ;; "emacs-evil-collection"
    
    ;; "emacs-hydra"
    

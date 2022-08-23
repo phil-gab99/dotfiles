@@ -139,6 +139,11 @@
   (desktop-environment-brightness-normal-increment "5%+")
   (desktop-environment-brightness-normal-decrement "5%-"))
 
+(use-package app-launcher
+  :straight '(app-launcher
+              :host github
+              :repo "SebastienWae/app-launcher"))
+
 (defvar pg/polybar-process nil
   "Holds the process of the running Polybar instance, if any")
 

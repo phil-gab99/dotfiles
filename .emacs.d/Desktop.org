@@ -267,6 +267,17 @@ Allows for some of the keybindings to use while in exwm.
 
 #+end_src
 
+** Package | app-launcher
+
+#+begin_src emacs-lisp
+
+  (use-package app-launcher
+    :straight '(app-launcher
+                :host github
+                :repo "SebastienWae/app-launcher"))
+
+#+end_src
+
 ** Xsession
 
 How the launcher script will be called. Do not forget to make the symlink to the file if there is no need to pass by the gnome WM:
