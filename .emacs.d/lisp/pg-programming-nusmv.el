@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package nusmv-mode
   :straight nil
   :disabled ;; Need NuSMV binary

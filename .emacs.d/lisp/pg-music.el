@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (defun pg/start-mpd ()
   "Start MPD, connects to it and syncs the metadata cache."
   (interactive)

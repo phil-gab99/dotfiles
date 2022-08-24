@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package cc-mode
   :straight nil
   :config

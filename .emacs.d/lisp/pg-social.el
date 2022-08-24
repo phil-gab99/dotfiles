@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package slack
   :straight t
   :commands slack-start

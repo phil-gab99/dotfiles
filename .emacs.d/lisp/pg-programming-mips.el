@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package mips-mode
   :straight t
   :mode "\\.asm\\'"

@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package alloy-mode
   :straight nil
   :hook (alloy-mode . (lambda () (setq indent-tabs-mode nil)))

@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package dtk
   :straight t
   :commands dtk

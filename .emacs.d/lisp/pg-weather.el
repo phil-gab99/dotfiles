@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (defun pg/wttrin-fetch-raw-string (query)
   "Get the weather information based on your QUERY."
   (let ((url-user-agent "curl"))

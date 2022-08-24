@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package sudoku
   :straight t
   :custom

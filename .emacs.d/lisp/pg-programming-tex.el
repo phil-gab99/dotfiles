@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package tex
   :straight auctex
   :config

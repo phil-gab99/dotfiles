@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package groovy-mode
   :straight '(groovy-emacs-modes :type git
                                  :host github

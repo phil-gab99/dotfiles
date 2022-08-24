@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (defun pg/lsp-mode-setup () ; Displays structure of cursor position for all buffers
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-lens-mode)

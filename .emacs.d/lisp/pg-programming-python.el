@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package python-mode
   :straight nil
   :hook (python-mode . lsp-deferred)

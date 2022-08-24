@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package eshell-git-prompt
   :straight t
   :after eshell)

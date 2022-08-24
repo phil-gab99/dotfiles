@@ -7,50 +7,50 @@
    
    "emacs-guix"
    
-   ;; "emacs-pinentry"
-   ;; "pinentry-emacs"
+   "emacs-pinentry"
+   "pinentry-emacs"
    
-   ;; "emacs-password-store" ;; Issues with guix package
+   "emacs-password-store"
    
-   ;; "emacs-keycast"
+   "emacs-keycast"
    
-   ;; "emacs-marginalia"
+   "emacs-marginalia"
    
-   ;; "emacs-consult"
+   "emacs-consult"
    
-   ;; "emacs-orderless"
+   "emacs-orderless"
    
-   ;; "emacs-corfu"
+   "emacs-corfu"
    
-   ;; "emacs-vertico"
+   "emacs-vertico"
    
-   ;; "emacs-embark"
+   "emacs-embark"
    
-   ;; "emacs-prescient"
+   "emacs-prescient"
    
-   ;; "emacs-which-key"
+   "emacs-which-key"
    
-   ;; "emacs-helm"
+   "emacs-helm"
    
-   ;; "emacs-diminish"
+   "emacs-diminish"
    
-   ;; "emacs-all-the-icons"
+   "emacs-all-the-icons"
    
-   ;; "emacs-doom-modeline"
+   "emacs-doom-modeline"
    
    ;; "emacs-autothemer"
    
-   ;; "emacs-dashboard" ;; old version
+   ;; "emacs-dashboard" ;; old version 1.7.0, need 1.8.0
    
-   ;; "emacs-page-break-lines"
+   "emacs-page-break-lines"
    
-   ;; "emacs-perspective"
+   "emacs-perspective"
    
    "mu"
    "isync"
    "oauth2ms"
    
-   ;; "emacs-mu4e-alert"
+   "emacs-mu4e-alert"
    
    ;; "emacs-rainbow-delimiters"
    

@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (defun spring-boot-properties ()
   "Makes appropriate calls when opening a spring properties file"
   (when (not (equal nil (string-match-p "application\\(-?[^-]+\\)?\\.properties"

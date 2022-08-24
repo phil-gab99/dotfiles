@@ -1,27 +1,24 @@
-(require 'pg-startup)
-
-(use-package auth-source
-  :straight nil
-  :custom
-  (auth-sources '("~/.authinfo.gpg")))
+(require 'auth-source)
+(with-eval-after-load 'auth-source
+  (customize-set-variable 'auth-sources '("~/.authinfo.gpg")))
 
 (unless pg/is-termux
-  (use-package pinentry
-    :straight t
-    :custom
-    (epg-pinentry-mode 'loopback)
-    :config
+  (require 'epg-config)
+  (require 'pinentry)
+  (with-eval-after-load 'epg-config
+    (customize-set-variable 'epg-pinentry-mode 'loopback)
     (pinentry-start)))
 
-(use-package password-cache
-  :straight nil
-  :custom
-  (password-cache-expiry (* 60 60 2)))
+(require 'password-cache)
+(with-eval-after-load 'password-cache
+  (customize-set-variable 'password-cache-expiry (* 60 60 2)))
 
-(use-package password-store
-  :straight t)
+(require 'password-store)
+(with-eval-after-load 'password-store
+  (customize-set-variable 'password-store-time-before-clipboard-restore 60))
 
 (defun pg/lookup-password (&rest keys)
+  "Looks up passwords from `authinfo' entries."
   (let ((result (apply #'auth-source-search keys)))
     (if result
         (funcall (plist-get (car result) :secret))

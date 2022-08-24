@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package projectile
   :straight t
   :diminish projectile-mode

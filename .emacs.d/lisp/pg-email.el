@@ -1,31 +1,38 @@
-(require 'pg-startup)
-
 (unless pg/is-termux
-  (use-package mu4e
-    :straight '( :type git
-                 :host github
-                 :repo "djcb/mu"
-                 :branch "release/1.8")
-                 ;(;:files ("mu4e/*")
-                 ;:pre-build (("./autogen.sh") ("make") ("make install")))
-    :commands mu4e
-    :hook (mu4e-compose-mode . corfu-mode)
-    ;; :load-path "/usr/local/share/emacs/site-lisp/mu4e"
-    :config
-    (require 'mu4e-org)
-    ;; This is set to 't' to avoid mail syncing issues when using mbsync
-    (setq mu4e-change-filenames-when-moving t)
-
-    ;; Refresh mail using isync every 10 minutes
-    (setq mu4e-update-interval (* 10 60))
-    (setq mu4e-get-mail-command "mbsync -a")
-    (setq mu4e-maildir "~/Mail")
-    (setq message-send-mail-function 'smtpmail-send-it)
-    (setq mu4e-compose-format-flowed t)
-    (setq mu4e-compose-signature
-          (concat "Philippe Gabriel - \n[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
-                  "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
-    (setq mu4e-compose-signature-auto-include nil)
+  (straight-use-package '(mu4e :type git
+                               :host github
+                               :repo "djcb/mu"
+                               :branch "release/1.8"))
+  (require 'corfu)
+  (require 'mu4e)
+  (require 'mu4e-compose)
+  (require 'mu4e-context)
+  (require 'mu4e-draft)
+  (require 'mu4e-folders)
+  (require 'mu4e-org)
+  (require 'mu4e-server)
+  (require 'mu4e-update)
+  (require 'message)
+  (require 'smtpmail)
+  (with-eval-after-load 'mu4e
+    (add-hook 'mu4e-compose-mode-hook 'corfu-mode)
+    (customize-set-variable 'mu4e-change-filenames-when-moving t)
+    (customize-set-variable 'mu4e-update-interval (* 10 60))
+    (customize-set-variable 'mu4e-get-mail-command "mbsync -a")
+    ;; (customize-set-variable 'mu4e-maildir "~/Mail")
+    (customize-set-variable 'mu4e-compose-format-flowed t)
+    (customize-set-variable 'mu4e-compose-signature
+                            (concat "Philippe Gabriel - \n[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
+                                    "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
+    (customize-set-variable 'mu4e-compose-signature-auto-include nil)
+    (customize-set-variable 'message-send-mail-function 'smtpmail-send-it)
+    (customize-set-variable 'mu4e-maildir-shortcuts
+                            '(("/University/Inbox" . ?u)
+                              ("/University/Drafts" . ?d)
+                              ("/Main/Inbox" . ?m)
+                              ("/Main/Jobs" . ?j)
+                              ("/Main/University" . ?s)))
+    (customize-set-variable 'mu4e-context-policy 'pick-first)
 
     (setq mu4e-contexts
           (list
@@ -63,29 +70,13 @@
                     (mu4e-drafts-folder . "/University/Drafts")
                     (mu4e-sent-folder . "/University/Sent Items")
                     (mu4e-refile-folder . "/University/Archive")
-                    (mu4e-trash-folder . "/University/Deleted Items")))))
-
-    (setq mu4e-maildir-shortcuts
-          '(("/University/Inbox" . ?u)
-            ("/University/Drafts" . ?d)
-            ("/Main/Inbox" . ?m)
-            ("/Main/Jobs" . ?j)
-            ("/Main/University" . ?s)))
-    (mu4e t)
-    :custom
-    (mu4e-context-policy 'pick-first)
-    ;; (mu4e-mu-binary (expand-file-name "mu/mu" (straight--repos-dir "mu")))
-    ;; (setq mu4e-bookmarks
-    ;;       '((:name "Display Name" :query "Query" :key "Key" ...)))
-    ))
+                    (mu4e-trash-folder . "/University/Deleted Items"))))))
 
 (unless pg/is-termux
-  (use-package mu4e-alert
-    :straight t
-    :after mu4e
-    :custom
-    (mu4e-alert-notify-repeated-mails t)
-    :config
+  (require 'mu4e)
+  (require 'mu4e-alert)
+  (with-eval-after-load 'mu4e-alert
+    (customize-set-variable 'mu4e-alert-notify-repeated-mails t)
     (mu4e-alert-set-default-style 'notifications)
     (mu4e-alert-enable-notifications)
     (mu4e-alert-enable-mode-line-display)))

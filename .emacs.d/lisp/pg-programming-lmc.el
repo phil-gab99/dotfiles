@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (defvar lmc-java-mode-hook nil)
 
 ;; (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-java-mode))

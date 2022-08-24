@@ -1,11 +1,7 @@
-(require 'pg-startup)
+(require 'guix)
 
-(use-package guix
-  :straight nil)
-
-(use-package geiser
-  :straight nil
-  :bind (:map geiser-repl-mode-map
-              ("C-l" . geiser-repl-clear-buffer)))
+(require 'geiser)
+(with-eval-after-load 'geiser-repl
+  (bind-key "C-l" #'geiser-repl-clear-buffer geiser-repl-mode-map))
 
 (provide 'pg-guix)

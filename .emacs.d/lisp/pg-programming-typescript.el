@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package typescript-mode
   :straight t
   :mode "\\.ts\\'"

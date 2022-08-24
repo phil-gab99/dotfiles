@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package haskell-mode
   :straight t
   :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))

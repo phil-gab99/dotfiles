@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (require 'lsp-sqls)
 (use-package sql
    :straight nil

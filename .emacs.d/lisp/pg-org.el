@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the `img' directory with respect to the org-buffer's
   location and insert a link to this file."

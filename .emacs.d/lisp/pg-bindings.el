@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package hydra
   :straight t
   :defer t)

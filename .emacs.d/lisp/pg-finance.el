@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package ledger-mode
   :straight t
   :mode "\\.dat\\'"

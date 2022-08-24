@@ -16,12 +16,4 @@
 
 (straight-use-package 'use-package)
 
-;; (require 'subr-x)
-(setq pg/is-termux
-      (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
-
-(setq pg/exwm-enabled (and (not pg/is-termux)
-                           (eq window-system 'x)
-                           (frame-parameter (selected-frame) 'exwm-active)))
-
 (provide 'pg-startup)

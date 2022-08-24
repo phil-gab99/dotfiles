@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package doc-view
   :straight nil
   :mode ("\\.djvu\\'" . doc-view-mode))

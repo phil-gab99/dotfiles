@@ -1,96 +1,74 @@
-(require 'pg-startup)
-
-(use-package savehist
-  :straight nil
-  :custom
+(require 'savehist)
+(with-eval-after-load 'savehist
   (savehist-mode))
 
-(use-package marginalia
-  :straight t
-  :after vertico
-  :custom
-  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-  :config
+(require 'vertico)
+(require 'marginalia)
+
+(with-eval-after-load 'marginalia
+  (customize-set-variable 'marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   (marginalia-mode))
 
-(use-package consult
-  :straight t
-  :bind
-  ("C-s" . consult-line)
-  ("C-x b" . consult-buffer)
-  (:map minibuffer-local-map
-        ("C-r" . consult-history)))
+(require 'consult)
+(with-eval-after-load 'consult
+  (bind-key "C-s" #'consult-line)
+  (bind-key "C-x b" #'consult-buffer)
+  (bind-key "C-r" #'consult-history minibuffer-local-map))
 
-(use-package orderless
-  :straight t
-  :custom
-  (completion-styles '(orderless))
-  (completion-category-defaults nil)
-  (orderless-skip-highlighting nil)
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+(require 'orderless)
+(with-eval-after-load 'orderless
+  (customize-set-variable 'completion-styles '(orderless))
+  (customize-set-variable 'completion-category-defaults nil)
+  (customize-set-variable 'orderless-skip-highlighting nil)
+  (customize-set-variable 'completion-category-overrides '((file (styles basic partial-completion)))))
 
-(use-package corfu
-  :straight t
-  :bind
-  (:map corfu-map
-        ("C-j" . corfu-next)
-        ("C-k" . corfu-previous))
-  :custom
-  (corfu-cycle t))
+(require 'corfu)
+(with-eval-after-load 'corfu
+  (bind-key "C-j" #'corfu-next corfu-map)
+  (bind-key "C-k" #'corfu-previous corfu-map)
+  (customize-set-variable 'corfu-cycle t))
 
-(use-package vertico
-  :straight t
-  :bind
-  (:map vertico-map
-        ("C-j" . vertico-next)
-        ("C-k" . vertico-previous))
-  :custom
-  (vertico-cycle t)
-  :init
+(require 'vertico)
+(with-eval-after-load 'corfu
+  (bind-key "C-j" #'vertico-next vertico-map)
+  (bind-key "C-k" #'vertico-previous vertico-map)
+  (customize-set-variable 'vertico-cycle t)
   (vertico-mode))
 
-(use-package embark
-  :straight t
-  :bind
-  ("C-S-a" . embark-act)
-  (:map minibuffer-local-map
-        ("C-d" . embark-act))
-  :custom
-  (embark-confirm-act-all nil)
-  :config
+(require 'embark)
+(with-eval-after-load 'embark
+  (bind-key "C-S-a" #'embark-act)
+  (bind-key "C-d" #'embark-act minibuffer-local-map)
+  (customize-set-variable 'embark-confirm-act-all nil)
   (setq embark-action-indicator
         (lambda (map)
           (which-key--show-keymap "Embark" map nil nil 'no-paging)
           #'which-key--hide-popup-ignore-command)
         embark-become-indicator embark-action-indicator))
 
-(use-package embark-consult
-  :straight '(embark-consult :host github
-                             :repo "oantolin/embark"
-                             :files ("embark-consult.el"))
-  :after (embark consult)
-  :demand t
-  :hook
-  (embark-collect-mode . embark-consult-preview-minor-mode))
+(require 'embark)
+(require 'consult)
+(straight-use-package '(embark-consult :host github
+                                       :repo "oantolin/embark"
+                                       :files ("embark-consult.el")))
+(require 'embark-consult)
+(with-eval-after-load 'embark-consult
+  (add-hook 'embark-collect-mode-hook consult-preview-at-point-mode))
 
-(use-package prescient
-  :straight t)
+(require 'prescient)
 
-(use-package which-key
-  :straight t
-  :diminish which-key-mode
-  :config
+(require 'which-key)
+(with-eval-after-load 'which-key
   (which-key-mode)
-  (setq which-key-idle-delay 1)) ; Delay before popup in seconds
+  (customize-set-variable 'which-key-idle-delay 1)
+  (diminish 'which-key-mode))
 
-(use-package helm
-  :straight t
-  :after lsp-java
-  :bind
-  (:map helm-map
-        ("C-k" . helm-previous-line)
-        ("C-j" . helm-next-line))
-  :config
-  (helm-mode 1))
+(require 'helm)
+(with-eval-after-load 'helm
+  (bind-key "C-j" #'helm-next-line helm-map)
+  (bind-key "C-k" #'helm-previous-line helm-map)
+  (if (and (eq #'java-mode major-mode) (memq #'lsp-mode local-minor-modes))
+      (helm-mode 1)
+    (helm-mode 0)))
 
 (provide 'pg-completion)

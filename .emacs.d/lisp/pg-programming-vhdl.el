@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (flycheck-define-checker vhdl-tool
   "A VHDL syntax checker, type checker and linter using VHDL-Tool."
   :command ("vhdl-tool" "client" "lint" "--compact" "--stdin" "-f" source)

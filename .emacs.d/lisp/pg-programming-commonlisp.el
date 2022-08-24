@@ -1,3 +1,5 @@
+(require 'pg-startup)
+
 (use-package sly
   :straight t
   :custom
