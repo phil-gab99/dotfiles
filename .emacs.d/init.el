@@ -3,7 +3,8 @@
 (push "~/.emacs.d/lisp" load-path)
 
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-      pg/exwm-enabled (and (not pg/is-termux) (eq window-system 'x)))
+      pg/exwm-enabled (and (not pg/is-termux) (eq window-system 'x))
+      pg/is-gui (display-graphic-p))
 
 (dolist (package '(pg-startup
                    ;; pg-native-compilation

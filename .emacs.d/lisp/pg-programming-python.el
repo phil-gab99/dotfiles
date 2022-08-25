@@ -1,24 +1,16 @@
-(require 'pg-startup)
+(require 'python)
+(with-eval-after-load 'python
+  (add-hook 'python-mode-hook #'lsp-deferred)
+  (require 'dap-python)
+  (customize-set-variable 'dap-python-debugger 'debugpy))
 
-(use-package python-mode
-  :straight nil
-  :hook (python-mode . lsp-deferred)
-  :custom
-  ;;(python-shell-interpreter "python3")
-  ;;(dap-python-executable "python3")
-  (dap-python-debugger 'debugpy)
-  :config
-  (require 'dap-python))
+(straight-use-package 'lsp-python-ms)
+(with-eval-after-load 'lsp-mode
+  (require 'lsp-python-ms)
+  (with-eval-after-load 'lsp-python-ms
+    (add-hook 'python-mode-hook #'lsp-deferred)
+    (customize-set-variable 'lsp-python-ms-auto-install-server t)))
 
-(use-package lsp-python-ms
-  :straight t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :custom
-  (lsp-python-ms-executable
-   "~/.emacs.d/lsp-servers/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
-  :hook (python-mode . (lambda () (require 'lsp-python-ms) (lsp-deferred))))
-
-(use-package jupyter
-  :disabled) ;; Figure it out
+;; (require 'jupyter)
 
 (provide 'pg-programming-python)

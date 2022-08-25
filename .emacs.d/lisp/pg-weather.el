@@ -1,5 +1,3 @@
-(require 'pg-startup)
-
 (defun pg/wttrin-fetch-raw-string (query)
   "Get the weather information based on your QUERY."
   (let ((url-user-agent "curl"))
@@ -10,13 +8,11 @@
          (lambda (status) (switch-to-buffer (current-buffer))))
       (decode-coding-string (buffer-string) 'utf-8))))
 
-(use-package wttrin
-  :straight t
-  :commands wttrin
-  :config
+(unless (fboundp 'wttrin)
+  (autoload #'wttrin "wttrin" nil t))
+(with-eval-after-load 'wttrin
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
-  :custom
-  (wttrin-default-cities '("montreal"))
-  (wttrin-default-accept-language '("Accept-Language" . "en-US")))
+  (customize-set-variable 'wttrin-default-cities '("montreal"))
+  (customize-set-variable 'wttrin-default-accept-language '("Accept-Language" . "en-US")))
 
 (provide 'pg-weather)

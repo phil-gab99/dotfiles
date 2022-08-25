@@ -1,5 +1,3 @@
-(require 'pg-startup)
-
 (defun pg/eww-mode-setup ()
   (auto-fill-mode 0)
   (visual-line-mode 1)
@@ -7,8 +5,8 @@
                                      (fixed-pitch (:height 2.0) fixed-pitch)
                                      (default (:height 2.0) default))))
 
-(use-package eww
-  :straight nil
-  :hook (eww-mode . pg/eww-mode-setup))
+(require 'eww)
+(with-eval-after-load 'eww
+  (add-hook 'eww-mode-hook #'pg/eww-mode-setup))
 
 (provide 'pg-web)

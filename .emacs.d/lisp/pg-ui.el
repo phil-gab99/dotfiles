@@ -35,10 +35,10 @@
 
 (defun pg/dashboard-setup-startup-hook ()
   "Setup post initialization hooks."
-  (add-hook 'after-init-hook (lambda ()
+  (add-hook 'after-init-hook #'(lambda ()
                                ;; Display useful lists of items
                                (dashboard-insert-startupify-lists)))
-  (add-hook 'emacs-startup-hook (lambda ()
+  (add-hook 'emacs-startup-hook #'(lambda ()
                                   (switch-to-buffer dashboard-buffer-name)
                                   (goto-char (point-min))
                                   (redisplay)

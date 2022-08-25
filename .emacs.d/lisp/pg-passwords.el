@@ -6,7 +6,8 @@
   (require 'epg-config)
   (require 'pinentry)
   (with-eval-after-load 'epg-config
-    (customize-set-variable 'epg-pinentry-mode 'loopback)
+    (customize-set-variable 'epg-pinentry-mode 'loopback))
+  (with-eval-after-load 'pinentry
     (pinentry-start)))
 
 (require 'password-cache)

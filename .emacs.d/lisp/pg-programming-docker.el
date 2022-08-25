@@ -1,9 +1,6 @@
-(require 'pg-startup)
+(require 'docker)
 
-(use-package docker
-  :straight t)
-
-(use-package dockerfile-mode
-  :straight t)
+(with-eval-after-load 'docker
+  (require 'dockerfile-mode))
 
 (provide 'pg-programming-docker)

@@ -1,2 +1,3 @@
 (specifications->manifest
- '("postgresql@14.2"))
+ '("postgresql@14.2"
+   "sqls"))

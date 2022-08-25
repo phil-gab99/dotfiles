@@ -1,6 +1,3 @@
-(require 'pg-startup)
-
-(use-package git-modes
-  :straight t)
+(require 'git-modes)
 
 (provide 'pg-programming-git)

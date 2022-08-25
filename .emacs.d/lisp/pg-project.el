@@ -1,95 +1,78 @@
-(require 'pg-startup)
-
-(use-package projectile
-  :straight t
-  :diminish projectile-mode
-  :hook (lsp-mode . projectile-mode)
-  :custom ((projectile-completion-system 'vertico))
-  :init
-  (setq projectile-keymap-prefix (kbd "C-c p"))
+(straight-use-package 'projectile)
+(unless (fboundp 'projectile-mode)
+  (autoload #'projectile-mode "projectile" nil t))
+(with-eval-after-load 'projectile
+  (diminish 'projectile-mode)
+  (add-hook 'lsp-mode-hook #'projectile-mode)
+  (bind-key "C-c p" #'projectile-command-map projectile-mode-map)
   (when (file-directory-p "~/Projects")
-    (setq projectile-project-search-path '("~/Projects")))
-  (setq projectile-switch-project-action #'projectile-dired))
+    (customize-set-variable 'projectile-project-search-path '("~/Projects")))
+  (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
 
-(bind-keys*
- :map prog-mode-map
- ("C-p c" . projectile-run-project)
- ("C-p b" . projectile-compile-project))
+(unless (fboundp 'magit-status)
+  (autoload #'magit-status "magit" nil t))
+(unless (fboundp 'magit-get-current-branch)
+  (autoload #'magit-get-current-branch "magit" nil t))
+(with-eval-after-load 'magit
+  (customize-set-variable 'magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package magit
-  :straight t
-  :commands (magit-status magit-get-current-branch)
-  :config
-  (unbind-key "M-<tab>" 'magit-mode-map)
-  (unbind-key "M-<tab>" 'magit-section-mode-map)
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(require 'git-gutter)
+(unless (fboundp 'git-gutter-mode)
+  (autoload #'git-gutter-mode "git-gutter" nil t))
+(with-eval-after-load 'git-gutter
+  (dolist (mode '(text-mode-hook
+                  prog-mode-hook))
+    (add-hook mode #'git-gutter-mode))
+  (diminish 'git-gutter-mode)
+  (set-face-foreground 'git-gutter:added-sign "LightGreen")
+  (fringe-helper-define 'git-gutter:added-sign nil
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    ".........."
+    ".........."
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    ".........."
+    ".........."
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX")
 
-(use-package git-gutter
-  :straight git-gutter-fringe
-  :diminish git-gutter-mode
-  :hook ((text-mode . git-gutter-mode)
-         (prog-mode . git-gutter-mode))
-  :custom
-  (git-gutter-fr:side 'right-fringe)
-  :config
-  (unless pg/is-termux
-    (require 'git-gutter-fringe)
-    (set-face-foreground 'git-gutter-fr:added "LightGreen")
-    (fringe-helper-define 'git-gutter-fr:added nil
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      ".........."
-      ".........."
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      ".........."
-      ".........."
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX")
+  (set-face-foreground 'git-gutter:modified-sign "LightGoldenrod")
+  (fringe-helper-define 'git-gutter:modified-sign nil
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    ".........."
+    ".........."
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    ".........."
+    ".........."
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX")
 
-    (set-face-foreground 'git-gutter-fr:modified "LightGoldenrod")
-    (fringe-helper-define 'git-gutter-fr:modified nil
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      ".........."
-      ".........."
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      ".........."
-      ".........."
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX")
+  (set-face-foreground 'git-gutter:deleted-sign "LightCoral")
+  (fringe-helper-define 'git-gutter:deleted-sign nil
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    ".........."
+    ".........."
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    ".........."
+    ".........."
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"
+    "XXXXXXXXXX"))
 
-    (set-face-foreground 'git-gutter-fr:deleted "LightCoral")
-    (fringe-helper-define 'git-gutter-fr:deleted nil
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      ".........."
-      ".........."
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      ".........."
-      ".........."
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"
-      "XXXXXXXXXX"))
-
-  ;; These characters are used in terminal mode
-  (set-face-foreground 'git-gutter:added "LightGreen")
-  (set-face-foreground 'git-gutter:modified "LightGoldenrod")
-  (set-face-foreground 'git-gutter:deleted "LightCoral"))
-
-(use-package forge
-  :straight t
-  :after magit)
+(with-eval-after-load 'magit
+  (require 'forge))
 
 (provide 'pg-project)

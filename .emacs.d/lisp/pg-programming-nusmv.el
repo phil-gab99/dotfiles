@@ -14,7 +14,7 @@
   (nusmv-indent 4)
   :config
   (menu-bar-mode 0)
-  (add-hook 'nusmv-mode-hook (lambda () (run-hooks 'prog-mode-hook)))
+  (add-hook 'nusmv-mode-hook #'(lambda () (run-hooks 'prog-mode-hook)))
   (put 'nusmv-mode 'derived-mode-parent 'prog-mode))
 
 (provide 'pg-programming-nusmv)

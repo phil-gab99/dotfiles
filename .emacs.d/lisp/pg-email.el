@@ -3,19 +3,13 @@
                                :host github
                                :repo "djcb/mu"
                                :branch "release/1.8"))
-  (require 'corfu)
-  (require 'mu4e)
-  (require 'mu4e-compose)
-  (require 'mu4e-context)
-  (require 'mu4e-draft)
-  (require 'mu4e-folders)
-  (require 'mu4e-org)
-  (require 'mu4e-server)
-  (require 'mu4e-update)
-  (require 'message)
-  (require 'smtpmail)
+  (unless (fboundp 'mu4e)
+    (autoload #'mu4e "mu4e" nil t))
+  ;; (require 'mu4e)
   (with-eval-after-load 'mu4e
-    (add-hook 'mu4e-compose-mode-hook 'corfu-mode)
+    (require 'mu4e-org)
+    (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
+    (customize-set-variable 'mail-user-agent #'mu4e-user-agent)
     (customize-set-variable 'mu4e-change-filenames-when-moving t)
     (customize-set-variable 'mu4e-update-interval (* 10 60))
     (customize-set-variable 'mu4e-get-mail-command "mbsync -a")
@@ -70,12 +64,11 @@
                     (mu4e-drafts-folder . "/University/Drafts")
                     (mu4e-sent-folder . "/University/Sent Items")
                     (mu4e-refile-folder . "/University/Archive")
-                    (mu4e-trash-folder . "/University/Deleted Items"))))))
+                    (mu4e-trash-folder . "/University/Deleted Items")))))))
 
 (unless pg/is-termux
-  (require 'mu4e)
   (require 'mu4e-alert)
-  (with-eval-after-load 'mu4e-alert
+  (with-eval-after-load 'mu4e
     (customize-set-variable 'mu4e-alert-notify-repeated-mails t)
     (mu4e-alert-set-default-style 'notifications)
     (mu4e-alert-enable-notifications)

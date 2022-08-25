@@ -1,6 +1,3 @@
-(require 'pg-startup)
-
-(use-package yaml-mode
-  :straight t)
+(require 'yaml-mode)
 
 (provide 'pg-programming-yaml)

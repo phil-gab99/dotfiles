@@ -1,12 +1,12 @@
-(require 'pg-startup)
+(with-eval-after-load 'lsp-mode
+  (require 'haskell-mode)
+  (with-eval-after-load 'haskell-mode
+    (dolist (mode '(haskell-mode
+                    haskell-literate-mode))
+      (add-hook mode #'lsp-deferred))))
 
-(use-package haskell-mode
-  :straight t
-  :hook ((haskell-mode haskell-literate-mode) . lsp-deferred))
-
-(use-package lsp-haskell
-  :disabled ;; Not working on Haskell recently
-  :custom
-  (lsp-haskell-server-path "~/.ghcup/bin/haskell-language-server-8.10.6"))
+(straight-use-package 'lsp-haskell)
+(with-eval-after-load 'lsp-mode
+  (require 'lsp-haskell))
 
 (provide 'pg-programming-haskell)

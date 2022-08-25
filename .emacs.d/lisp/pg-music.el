@@ -1,5 +1,3 @@
-(require 'pg-startup)
-
 (defun pg/start-mpd ()
   "Start MPD, connects to it and syncs the metadata cache."
   (interactive)
@@ -67,7 +65,7 @@ passed to the mpc program."
     (emms-all)
     (setq emms-info-functions '(emms-info-mpd)
           emms-player-list '(emms-player-mpd))
-    (add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
+    (add-hook 'emms-playlist-cleared-hook #'emms-player-mpd-clear)
     (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
     :custom
     (emms-source-file-default-directory "/home/phil-gab99/Music")

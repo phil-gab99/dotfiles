@@ -1,7 +1,9 @@
-(require 'pg-startup)
-
-(use-package lsp-css
-  :straight nil
-  :hook ((css-mode less-css-mode scss-mode) . lsp-deferred))
+(with-eval-after-load 'lsp-mode
+  (require 'lsp-css)
+  (with-eval-after-load 'lps-css
+    (dolist (mode '(css-mode
+                    less-css-mode
+                    scss-mode))
+      (add-hook mode #'lsp-deferred))))
 
 (provide 'pg-programming-css)

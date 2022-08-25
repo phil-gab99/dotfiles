@@ -1,5 +1,3 @@
-(require 'pg-startup)
-
 (defvar lmc-java-mode-hook nil)
 
 ;; (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-java-mode))
@@ -25,10 +23,9 @@
 
   (set (make-local-variable 'font-lock-defaults) '(lmc-font-lock-defaults))
 
-  (setq-local comment-start "# ")
-  (setq-local comment-end "")
-
-  (setq-local indent-tabs-mode nil))
+  (setq-local comment-start "# "
+              comment-end ""
+              indent-tabs-mode nil))
 
 (define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
   "Major mode to edit LMC assembly code."
@@ -46,9 +43,9 @@
   (set (make-local-variable 'comment-start-skip)
        "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
 
-(use-package lmc
-  :straight t
-  :config
+(straight-use-package 'lmc)
+(require 'lmc)
+(with-eval-after-load 'lmc
   (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 (provide 'pg-programming-lmc)

@@ -52,128 +52,124 @@
    
    "emacs-mu4e-alert"
    
-   ;; "emacs-rainbow-delimiters"
+   "emacs-rainbow-delimiters"
    
-   ;; "emacs-highlight-indent-guides"
+   ;; "emacs-highlight-indent-guides" ;; Old version 0.8.5
    
-   ;; "emacs-undo-fu"
+   "emacs-smartparens"
    
-   ;; "emacs-smartparens"
+   "emacs-outshine"
    
-   ;; "emacs-outshine"
+   "emacs-rainbow-mode"
    
-   ;; "emacs-rainbow-mode"
+   "emacs-emojify"
    
-   ;; "emacs-emojify"
+   "emacs-evil"
    
-   ;; "emacs-evil"
+   "emacs-evil-collection"
    
-   ;; "emacs-evil-collection"
+   "emacs-helpful"
    
-   ;; "emacs-helpful"
+   "emacs-visual-fill-column"
    
-   ;; "emacs-visual-fill-column"
+   "emacs-all-the-icons-dired"
    
-   ;; "emacs-all-the-icons-dired"
+   "emacs-openwith"
    
-   ;; "emacs-openwith"
+   "emacs-eshell-syntax-highlighting"
    
-   ;; "emacs-eshell-syntax-highlighting"
-   
-   ;; "emacs-esh-autosuggest"
+   "emacs-esh-autosuggest"
    
    "emacs-vterm"
    
-   ;; "emacs-projectile"
+   ;; "emacs-projectile" ;; old version 2.5.0
    
-   ;; "emacs-magit"
+   "emacs-magit"
    
-   ;; "emacs-git-gutter"
+   "emacs-git-gutter"
    ;; "emacs-git-gutter-fringe"
    
-   ;; "emacs-forge"
+   "emacs-forge"
    
-   ;; "emacs-lsp-mode" ; Slightly behind in guix packages
+   "emacs-lsp-mode"
    
-   ;; "emacs-lsp-ui"
+   "emacs-lsp-ui"
    
-   ;; "emacs-lsp-treemacs"
+   "emacs-lsp-treemacs"
    
-   ;; "emacs-company"
+   "emacs-company"
    
-   ;; "emacs-company-box"
+   "emacs-company-box"
    
-   ;; "emacs-flycheck"
+   "emacs-flycheck"
    
-   ;; "emacs-dap-mode"
+   "emacs-dap-mode"
    
-   ;; "emacs-plantuml-mode"
+   "emacs-plantuml-mode"
    
-   ;; "emacs-yasnippet"
+   "emacs-yasnippet"
    
-   ;; "emacs-yasnippet-snippets"
+   "emacs-yasnippet-snippets"
    
-   ;; "emacs-ccls"
+   "emacs-ccls"
    
-   ;; "emacs-sly"
+   "emacs-sly"
    
-   ;; "emacs-docker"
+   "emacs-docker"
    
-   ;; "emacs-dockerfile-mode"
+   "emacs-dockerfile-mode"
    
-   ;; "emacs-git-modes"
+   "emacs-git-modes"
    
-   ;; "emacs-haskell-mode"
+   "emacs-haskell-mode"
    
-   ;; "emacs-lsp-java"
+   "emacs-lsp-java"
    
-   ;; "emacs-auctex"
+   "emacs-auctex"
    
-   ;; "emacs-company-auctex"
+   "emacs-company-auctex"
    
-   ;; "emacs-markdown-mode"
+   "emacs-markdown-mode"
    
-   ;; "emacs-typescript-mode"
+   "emacs-jupyter"
    
-   ;; "emacs-yaml-mode"
+   "emacs-typescript-mode"
    
-   ;; "emacs-alert"
+   "emacs-yaml-mode"
    
-   ;; "emacs-org"
+   "emacs-alert"
    
-   ;; "emacs-org-appear"
+   "emacs-org"
    
-   ;; "emacs-org-bullets"
+   "emacs-org-appear"
    
-   ;; "emacs-org-tree-slide"
+   "emacs-org-bullets"
    
-   ;; "emacs-ox-reveal"
+   "emacs-org-tree-slide"
    
-   ;; "emacs-org-mime"
+   "emacs-ox-reveal"
    
-   ;; "emacs-org-msg"
+   "emacs-org-msg"
    
-   ;; "emacs-org-roam"
+   "emacs-org-roam"
    
-   ;; "emacs-org-fragtog"
+   "emacs-org-fragtog"
    
-   ;; "emacs-pdf-tools"
+   "emacs-pdf-tools"
    
-   ;; "emacs-djvu"
+   "emacs-djvu"
    
    "ledger"
-   ;; "emacs-ledger-mode"
+   "emacs-ledger-mode"
    
-   ;; "emacs-slack" No cookies support
+   ;; "emacs-slack" ;; Older commit
    
-   ;; "emacs-sx"
+   "emacs-sx"
    
    "emacs-telega"
    "emacs-telega-contrib"
-   ;; "tdlib"
-   ;; "libtgvoip"
    
-   ;; "emacs-wttrin"
+   "emacs-wttrin"
    
    "mpd"
    "mpd-mpc"

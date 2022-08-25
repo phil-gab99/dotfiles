@@ -1,32 +1,31 @@
-(require 'pg-startup)
+(straight-use-package 'eshell-git-prompt)
+(with-eval-after-load 'eshell
+  (require 'eshell-git-prompt)
+  (with-eval-after-load 'eshell-git-prompt
+    (eshell-git-prompt-use-theme 'multiline2)))
 
-(use-package eshell-git-prompt
-  :straight t
-  :after eshell)
-
-(use-package eshell-syntax-highlighting
-  :straight t
-  :after eshell
-  :config
-  (eshell-syntax-highlighting-global-mode 1))
+(with-eval-after-load 'eshell
+  (require 'eshell-syntax-highlight)
+  (with-eval-after-load 'eshell-syntax-highlighting
+    (eshell-syntax-highlighting-global-mode t)))
 
 (defun pg/esh-autosuggest-setup ()
+  "Eshell autosuggest setup."
   (require 'company)
   (set-face-foreground 'company-preview-common nil)
   (set-face-background 'company-preview nil))
 
-(use-package esh-autosuggest
-  :straight t
-  :hook (eshell-mode . esh-autosuggest-mode)
-  :custom
-  (esh-autosuggest-delay 0.5)
-  :config
+(with-eval-after-load 'eshell
   (require 'esh-autosuggest)
-  (pg/esh-autosuggest-setup))
+  (with-eval-after-load 'esh-autosuggest
+    (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
+    (customize-set-variable 'esh-autosuggest-delay 0.5)
+    (pg/esh-autosuggest-setup)))
 
 (defun pg/configure-eshell ()
+  "Eshell setup."
   ;; Save command history when commands are entered
-  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+  (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)
 
   ;; Truncate buffer for performance
   (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
@@ -43,16 +42,12 @@
         eshell-hist-ignoredups t
         eshell-scroll-to-bottom-on-input t))
 
-(require 'em-tramp)
-(use-package eshell
-  :straight nil
-  :hook (eshell-first-time-mode . pg/configure-eshell)
-  :custom
-  (eshell-prefer-lisp-functions t)
-  :config
-  (eshell-git-prompt-use-theme 'multiline2))
+(require 'eshell)
+(with-eval-after-load 'eshell
+  (require 'em-tramp)
+  (add-hook 'eshell-first-time-mode-hook #'pg/configure-eshell)
+  (customize-set-variable 'eshell-prefer-lisp-functions t))
 
-(use-package vterm
-  :straight nil)
+(require 'vterm)
 
 (provide 'pg-shell)
