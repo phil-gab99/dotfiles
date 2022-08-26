@@ -58,6 +58,7 @@
 (with-eval-after-load 'exwm
   (require 'exwm-config)
   (require 'exwm-randr)
+  (require 'exwm-input)
 
   ;; When window "class" updates, use it to set the buffer name
   (add-hook 'exwm-update-class-hook #'pg/exwm-update-class)
@@ -71,13 +72,14 @@
   (add-hook 'exwm-randr-screen-change-hook #'pg/update-displays)
   (pg/update-displays)
 
+  ;; (exwm-input-set-key (kbd "s-SPC") 'app-launcher-run-app)
+  (global-set-key (kbd "s-SPC") 'app-launcher-run-app)
+
   ;; Configure some keybindings
   (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
 
   ;; C-q will enable the next key to be sent directly
   (define-key exwm-mode-map [?\C-q] 'exwm-input-send-next-key)
-
-  (exwm-input-set-key (kbd "s-SPC") 'app-launcher-run-app)
 
   (global-set-key (kbd "C-x B") #'exwm-workspace-switch-to-buffer)
 

@@ -14,11 +14,7 @@
 
 (straight-use-package 'dired-single)
 (with-eval-after-load 'dired
-  (require 'dired-single)
-  (unless (fboundp 'dired)
-    (autoload #'dired "dired-single" nil t))
-  (unless (fboundp 'dired-jump)
-    (autoload #'dired-jump "dired-single" nil t)))
+  (require 'dired-single))
 
 (straight-use-package 'all-the-icons-dired)
 (unless pg/is-termux

@@ -67,8 +67,7 @@
   (tab-bar-mode))
 
 (straight-use-package 'perspective)
-(unless (fboundp 'persp-kill-buffer*)
-  (autoload #'persp-kill-buffer* "perspective" nil t))
+(require 'perspective)
 (with-eval-after-load 'perspective
   (global-set-key (kbd "C-x k") #'persp-kill-buffer*)
   (customize-set-variable 'persp-suppress-no-prefix-key-warning t)

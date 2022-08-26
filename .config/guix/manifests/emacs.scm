@@ -8,7 +8,7 @@
    "emacs-guix"
    
    ;; "emacs-pinentry"
-   ;; "pinentry-emacs"
+   "pinentry-emacs"
    
    ;; "emacs-password-store"
    

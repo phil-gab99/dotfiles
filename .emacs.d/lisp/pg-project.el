@@ -1,6 +1,5 @@
 (straight-use-package 'projectile)
-(unless (fboundp 'projectile-mode)
-  (autoload #'projectile-mode "projectile" nil t))
+(require 'projectile)
 (with-eval-after-load 'projectile
   (diminish 'projectile-mode)
   (add-hook 'lsp-mode-hook #'projectile-mode)

@@ -1,10 +1,5 @@
 (straight-use-package 'helpful)
-(dolist (call '(helpful-callable
-                helpful-command
-                helpful-variable
-                helpful-key))
-  (unless (fboundp call)
-    (autoload call "helpful" nil t)))
+(require 'helpful)
 (with-eval-after-load 'helpful
   (global-set-key [remap describe-function] #'helpful-callable)
   (global-set-key [remap describe-command] #'helpful-command)

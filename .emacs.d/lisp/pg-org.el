@@ -42,7 +42,7 @@
   (setq evil-auto-indent nil))
 
 (straight-use-package 'org)
-(require 'org (expand-file-name "straight/build/org/org.el" user-emacs-directory))
+(require 'org)
 (with-eval-after-load 'org
   (set-face-attribute 'org-ellipsis nil :underline nil)
   (add-hook 'org-mode-hook #'pg/org-mode-setup)

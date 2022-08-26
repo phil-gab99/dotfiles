@@ -1,10 +1,12 @@
 (unless pg/is-termux
-  (straight-use-package '(mu :type git
-                             :host github
-                             :repo "djcb/mu"
-                             :branch "release/1.8"))
-  (require 'mu4e (expand-file-name "straight/repos/mu/mu4e/mu4e.el" user-emacs-directory))
+  (unless (fboundp 'mu4e)
+    (autoload #'mu4e "mu4e" nil t))
+  ;; (require 'mu4e (expand-file-name "straight/repos/mu/mu4e/mu4e.el" user-emacs-directory))
   (with-eval-after-load 'mu4e
+    (straight-use-package '(mu :type git
+                               :host github
+                               :repo "djcb/mu"
+                               :branch "release/1.8"))
     (require 'mu4e-org (expand-file-name "straight/repos/mu/mu4e/mu4e-org.el" user-emacs-directory))
     (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
     (customize-set-variable 'mail-user-agent #'mu4e-user-agent)

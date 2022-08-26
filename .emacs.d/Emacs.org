@@ -762,8 +762,7 @@ For organizing the buffer list
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
 
   (straight-use-package 'perspective)
-  (unless (fboundp 'persp-kill-buffer*)
-    (autoload #'persp-kill-buffer* "perspective" nil t))
+  (require 'perspective)
   (with-eval-after-load 'perspective
     (global-set-key (kbd "C-x k") #'persp-kill-buffer*)
     (customize-set-variable 'persp-suppress-no-prefix-key-warning t)
@@ -867,12 +866,14 @@ After having setup the file, make sure to run the following commands:
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-email.el
 
   (unless pg/is-termux
-    (straight-use-package '(mu :type git
-                               :host github
-                               :repo "djcb/mu"
-                               :branch "release/1.8"))
-    (require 'mu4e (expand-file-name "straight/repos/mu/mu4e/mu4e.el" user-emacs-directory))
+    (unless (fboundp 'mu4e)
+      (autoload #'mu4e "mu4e" nil t))
+    ;; (require 'mu4e (expand-file-name "straight/repos/mu/mu4e/mu4e.el" user-emacs-directory))
     (with-eval-after-load 'mu4e
+      (straight-use-package '(mu :type git
+                                 :host github
+                                 :repo "djcb/mu"
+                                 :branch "release/1.8"))
       (require 'mu4e-org (expand-file-name "straight/repos/mu/mu4e/mu4e-org.el" user-emacs-directory))
       (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
       (customize-set-variable 'mail-user-agent #'mu4e-user-agent)
@@ -1297,12 +1298,7 @@ Displays full documentations of the default help function.
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-help.el
 
   (straight-use-package 'helpful)
-  (dolist (call '(helpful-callable
-                  helpful-command
-                  helpful-variable
-                  helpful-key))
-    (unless (fboundp call)
-      (autoload call "helpful" nil t)))
+  (require 'helpful)
   (with-eval-after-load 'helpful
     (global-set-key [remap describe-function] #'helpful-callable)
     (global-set-key [remap describe-command] #'helpful-command)
@@ -1488,11 +1484,7 @@ Keeps a single dired buffer open at a time (to not have multiple buried buffers)
 
   (straight-use-package 'dired-single)
   (with-eval-after-load 'dired
-    (require 'dired-single)
-    (unless (fboundp 'dired)
-      (autoload #'dired "dired-single" nil t))
-    (unless (fboundp 'dired-jump)
-      (autoload #'dired-jump "dired-single" nil t)))
+    (require 'dired-single))
 
 #+end_src
 
@@ -1700,8 +1692,7 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
 
   (straight-use-package 'projectile)
-  (unless (fboundp 'projectile-mode)
-    (autoload #'projectile-mode "projectile" nil t))
+  (require 'projectile)
   (with-eval-after-load 'projectile
     (diminish 'projectile-mode)
     (add-hook 'lsp-mode-hook #'projectile-mode)
@@ -3003,7 +2994,7 @@ Org mode package for writing structured documents and more. Here are some useful
     (setq evil-auto-indent nil))
 
   (straight-use-package 'org)
-  (require 'org (expand-file-name "straight/build/org/org.el" user-emacs-directory))
+  (require 'org)
   (with-eval-after-load 'org
     (set-face-attribute 'org-ellipsis nil :underline nil)
     (add-hook 'org-mode-hook #'pg/org-mode-setup)
@@ -4121,60 +4112,66 @@ Allows for general custom keybindings definition to create own set of various ke
 #+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
 
   (push "~/.emacs.d/lisp" load-path)
+  (delq "/gnu/store/nbbi5y1f17ldmjkcdvh70v90lp0kphar-emacs-28.1/share/emacs/28.1/lisp/org" load-path)
 
   (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-	pg/exwm-enabled (and (not pg/is-termux) (eq window-system 'x))
-	pg/is-gui (display-graphic-p))
+        pg/exwm-enabled (and (not pg/is-termux) (eq window-system 'x))
+        pg/is-gui (display-graphic-p))
 
-  (dolist (package '(pg-startup
-		     ;; pg-native-compilation
-		     pg-ui
-		     pg-guix
-		     pg-passwords
-		     pg-keylog
-		     pg-completion
-		     pg-buffer
-		     pg-email
-		     pg-editing
-		     pg-help
-		     pg-web
-		     pg-file
-		     pg-shell
-
-		     pg-project
-		     pg-programming
-		     pg-programming-alloy
-		     pg-programming-cc
-		     pg-programming-commonlisp
-		     pg-programming-css
-		     pg-programming-docker
-		     pg-programming-git
-		     pg-programming-groovy
-		     pg-programming-haskell
-		     pg-programming-java
-		     pg-programming-lmc
-		     pg-programming-markdown
-		     pg-programming-mips
-		     pg-programming-python
-		     pg-programming-smtlibv2
-		     pg-programming-sql
-		     pg-programming-tex
-		     pg-programming-typescript
-		     pg-programming-vhdl
-		     pg-programming-yaml
-
-		     pg-notification
-		     pg-org
-		     pg-viewers
-		     ;; pg-bible
-		     pg-finance
-		     pg-social
-		     pg-weather
-		     pg-music
-		     pg-games
-		     pg-bindings))
-    (require package))
+  (require 'pg-startup)
+  (require 'pg-ui)
   (when pg/exwm-enabled (require 'pg-desktop))
+
+  (dolist (package '(;; pg-startup
+                     ;; pg-native-compilation
+                     ;; pg-ui
+                     pg-guix
+                     pg-passwords
+                     pg-keylog
+                     pg-completion
+                     pg-buffer
+                     pg-email
+                     pg-editing
+                     pg-help
+                     pg-web
+                     pg-file
+                     pg-shell
+
+                     pg-project
+                     pg-programming
+                     pg-programming-alloy
+                     pg-programming-cc
+                     pg-programming-commonlisp
+                     pg-programming-css
+                     pg-programming-docker
+                     pg-programming-git
+                     pg-programming-groovy
+                     pg-programming-haskell
+                     pg-programming-java
+                     pg-programming-lmc
+                     pg-programming-markdown
+                     pg-programming-mips
+                     pg-programming-python
+                     pg-programming-smtlibv2
+                     pg-programming-sql
+                     pg-programming-tex
+                     pg-programming-typescript
+                     pg-programming-vhdl
+                     pg-programming-yaml
+
+                     pg-notification
+                     ;; pg-org
+                     pg-viewers
+                     ;; pg-bible
+                     pg-finance
+                     pg-social
+                     pg-weather
+                     pg-music
+                     pg-games
+                     pg-bindings))
+    (require package))
+
+  (require 'pg-org)
 
 #+end_src
 
