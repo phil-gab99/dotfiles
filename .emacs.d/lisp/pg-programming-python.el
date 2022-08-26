@@ -11,6 +11,7 @@
     (add-hook 'python-mode-hook #'lsp-deferred)
     (customize-set-variable 'lsp-python-ms-auto-install-server t)))
 
+;; (straight-use-package 'jupyter)
 ;; (require 'jupyter)
 
 (provide 'pg-programming-python)

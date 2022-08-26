@@ -14,10 +14,13 @@
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+(straight-use-package 'diminish)
 (require 'diminish)
 
+(straight-use-package 'all-the-icons)
 (require 'all-the-icons)
 
+(straight-use-package 'doom-modeline)
 (require 'doom-modeline)
 (with-eval-after-load 'doom-modeline
   (doom-modeline-mode 1)
@@ -36,13 +39,13 @@
 (defun pg/dashboard-setup-startup-hook ()
   "Setup post initialization hooks."
   (add-hook 'after-init-hook #'(lambda ()
-                               ;; Display useful lists of items
-                               (dashboard-insert-startupify-lists)))
+			       ;; Display useful lists of items
+			       (dashboard-insert-startupify-lists)))
   (add-hook 'emacs-startup-hook #'(lambda ()
-                                  (switch-to-buffer dashboard-buffer-name)
-                                  (goto-char (point-min))
-                                  (redisplay)
-                                  (run-hooks 'dashboard-after-initialize-hook))))
+				  (switch-to-buffer dashboard-buffer-name)
+				  (goto-char (point-min))
+				  (redisplay)
+				  (run-hooks 'dashboard-after-initialize-hook))))
 
 (defun pg/display-startup-time ()
   "Displays some startip statistics."
@@ -50,21 +53,23 @@
     (when (boundp 'straight--profile-cache)
       (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
     (if (zerop package-count)
-        (format "Emacs started in %.2f" time)
+	(format "Emacs started in %.2f" time)
       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
 (straight-use-package 'dashboard)
-(require 'dashboard)
-(with-eval-after-load 'dashboard
-  (customize-set-variable 'dashboard-set-file-icons t)
-  (customize-set-variable 'dashboard-items '((recents . 10)
-                                             (projects . 10)
-                                             (agenda . 5)))
-  (customize-set-variable 'dashboard-page-separator "\n\f\n")
-  (customize-set-variable 'dashboard-init-info #'pg/display-startup-time)
-  (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
-  (pg/dashboard-setup-startup-hook))
+(with-eval-after-load 'projectile
+  (require 'dashboard)
+  (with-eval-after-load 'dashboard
+    (customize-set-variable 'dashboard-set-file-icons t)
+    (customize-set-variable 'dashboard-items '((recents . 10)
+					       (projects . 10)
+					       (agenda . 5)))
+    (customize-set-variable 'dashboard-page-separator "\n\f\n")
+    (customize-set-variable 'dashboard-init-info #'pg/display-startup-time)
+    (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
+    (pg/dashboard-setup-startup-hook)))
 
+(straight-use-package 'page-break-lines)
 (require 'page-break-lines)
 
 (provide 'pg-ui)

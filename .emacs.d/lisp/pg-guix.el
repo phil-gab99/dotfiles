@@ -4,6 +4,6 @@
 (unless (fboundp 'run-geiser)
   (autoload #'run-geiser "geiser-repl" nil t))
 (with-eval-after-load 'geiser-repl
-  (bind-key "C-l" #'geiser-repl-clear-buffer geiser-repl-mode-map))
+  (define-key geiser-repl-mode-map "C-l" #'geiser-repl-clear-buffer))
 
 (provide 'pg-guix)

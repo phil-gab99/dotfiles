@@ -1,13 +1,11 @@
 (unless pg/is-termux
-  (straight-use-package '(mu4e :type git
-                               :host github
-                               :repo "djcb/mu"
-                               :branch "release/1.8"))
-  (unless (fboundp 'mu4e)
-    (autoload #'mu4e "mu4e" nil t))
-  ;; (require 'mu4e)
+  (straight-use-package '(mu :type git
+                             :host github
+                             :repo "djcb/mu"
+                             :branch "release/1.8"))
+  (require 'mu4e (expand-file-name "straight/repos/mu/mu4e/mu4e.el" user-emacs-directory))
   (with-eval-after-load 'mu4e
-    (require 'mu4e-org)
+    (require 'mu4e-org (expand-file-name "straight/repos/mu/mu4e/mu4e-org.el" user-emacs-directory))
     (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
     (customize-set-variable 'mail-user-agent #'mu4e-user-agent)
     (customize-set-variable 'mu4e-change-filenames-when-moving t)
@@ -66,6 +64,7 @@
                     (mu4e-refile-folder . "/University/Archive")
                     (mu4e-trash-folder . "/University/Deleted Items")))))))
 
+(straight-use-package 'mu4e-alert)
 (unless pg/is-termux
   (require 'mu4e-alert)
   (with-eval-after-load 'mu4e

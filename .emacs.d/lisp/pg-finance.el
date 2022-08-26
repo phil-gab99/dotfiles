@@ -1,3 +1,4 @@
+(straight-use-package 'ledger-mode)
 (require 'ledger-mode)
 (with-eval-after-load 'ledger-mode
   (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))

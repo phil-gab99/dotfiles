@@ -409,7 +409,6 @@ If no profile names are provided, it walks the list of profile directories under
 
   GREEN='\033[1;32m'
   NC='\033[0m'
-  GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
 
   profiles=$*
   if [[ $# -eq 0 ]]; then
@@ -424,7 +423,7 @@ If no profile names are provided, it walks the list of profile directories under
     echo -e "${GREEN}Updating profile:" $profilePath "${NC}"
     echo
 
-    guix package --profile="$profilePath/$profileName" --manifest="$HOME/.config/guix/manifests/$profileName.scm"
+    guix package --profile="$profilePath/$profileName" --manifest="$HOME/.config/guix/manifests/$profileName.scm" --fallback
   done
 
 #+end_src

@@ -2,7 +2,7 @@
   (make <service>
     #:provides '(compton)
     #:docstring "Runs `compton'"
-    #:respawn? #f
+    #:respawn? #t
     #:start (make-forkexec-constructor '("compton"))
     #:stop (make-kill-destructor)))
 

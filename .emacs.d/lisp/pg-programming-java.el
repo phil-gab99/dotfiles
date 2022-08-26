@@ -5,10 +5,11 @@
     (progn (run-hooks 'prog-mode-hook)
            (lsp-deferred))))
 
+(straight-use-package 'lsp-java)
 (with-eval-after-load 'lsp-mode
   (require 'lsp-java)
   (with-eval-after-load 'lsp-java
-    (bind-key "C-<return>" #'lsp-execute-code-action lsp-mode-map)
+    (define-key lsp-mode-map "C-<return>" #'lsp-execute-code-action)
     (require 'dap-java)
     (require 'lsp-java-boot)
     (add-hook 'java-mode-hook #'lsp-deferred)

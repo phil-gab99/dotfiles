@@ -1,7 +1,6 @@
 #!/bin/sh
 GREEN='\033[1;32m'
 NC='\033[0m'
-GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
 
 profiles=$*
 if [[ $# -eq 0 ]]; then
@@ -16,5 +15,5 @@ for profile in $profiles; do
   echo -e "${GREEN}Updating profile:" $profilePath "${NC}"
   echo
 
-  guix package --profile="$profilePath/$profileName" --manifest="$HOME/.config/guix/manifests/$profileName.scm"
+  guix package --profile="$profilePath/$profileName" --manifest="$HOME/.config/guix/manifests/$profileName.scm" --fallback
 done

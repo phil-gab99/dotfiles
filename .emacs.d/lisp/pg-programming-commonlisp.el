@@ -1,3 +1,4 @@
+(straight-use-package 'sly)
 (require 'sly)
 (with-eval-after-load 'sly
   (customize-set-variable 'inferior-lisp-program "sbcl"))

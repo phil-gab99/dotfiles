@@ -63,6 +63,7 @@
                                "<~~" "<=//" "<->" "<<=>>" "|-|-|" "|=|=|" "/=/"))
   (global-ligature-mode 't))
 
+(straight-use-package 'rainbow-delimiters)
 (require 'rainbow-delimiters)
 (with-eval-after-load 'rainbow-delimiters
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
@@ -78,6 +79,7 @@
   (customize-set-variable 'highlight-indent-guides-responsive 'stack)
   (customize-set-variable 'highlight-indent-guides-method 'character))
 
+(straight-use-package 'smartparens)
 (require 'smartparens)
 (with-eval-after-load 'smartparens
   (diminish 'smartparens-mode)
@@ -86,6 +88,7 @@
       '(prog-mode)
     (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
 
+(straight-use-package 'outshine)
 (require 'outshine)
 (with-eval-after-load 'outshine
   (add-hook 'prog-mode-hook #'outshine-mode))
@@ -103,6 +106,7 @@
 (with-eval-after-load 'selectric-mode
    (fset #'selectric-type-sound #'pg/selectric-type-sound))
 
+(straight-use-package 'rainbow-mode)
 (require 'rainbow-mode)
 (with-eval-after-load 'rainbow-mode
   (diminish 'rainbow-mode)
@@ -115,6 +119,7 @@
                   less-css-mode-hook))
     (add-hook mode #'rainbow-mode)))
 
+(straight-use-package 'emojify)
 (require 'emojify)
 (with-eval-after-load 'emojify
   (global-emojify-mode))
@@ -122,16 +127,17 @@
 ;; Function for modes that should start in emacs mode
 (defun pg/evil-hook()
   (dolist (mode '(custom-mode
-		  eshell-mode
-		  git-rebase-mode
-		  erc-mode
-		  circe-server-mode
-		  circe-chat-mode
-		  circe-query-mode
-		  sauron-mode
-		  term-mode))
+                  eshell-mode
+                  git-rebase-mode
+                  erc-mode
+                  circe-server-mode
+                  circe-chat-mode
+                  circe-query-mode
+                  sauron-mode
+                  term-mode))
     (add-to-list 'evil-emacs-state-modes mode)))
 
+(straight-use-package 'evil)
 (customize-set-variable 'evil-want-keybinding nil)
 (require 'evil)
 (with-eval-after-load 'evil
@@ -142,16 +148,17 @@
   (customize-set-variable 'evil-want-fine-undo t)
   (evil-mode 1)
   (add-hook 'evil-mode-hook #'pg/evil-hook)
-  (bind-key "C-g" #'evil-normal-state evil-insert-state-map)
+  (define-key evil-insert-state-map (kbd "C-g") #'evil-normal-state)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-(require 'evil)
-(require 'evil-collection)
-(with-eval-after-load 'evil-collection
-  (diminish 'evil-collection-unimpaired-mode)
-  (evil-collection-init))
+(straight-use-package 'evil-collection)
+(with-eval-after-load 'evil
+  (require 'evil-collection)
+  (with-eval-after-load 'evil-collection
+    (diminish 'evil-collection-unimpaired-mode)
+    (evil-collection-init)))
 
 (provide 'pg-editing)

@@ -1,16 +1,15 @@
+(straight-use-package 'helpful)
 (dolist (call '(helpful-callable
                 helpful-command
                 helpful-variable
                 helpful-key))
   (unless (fboundp call)
     (autoload call "helpful" nil t)))
-
 (with-eval-after-load 'helpful
-  (bind-keys :package helpful
-             ([remap describe-function] . helpful-callable)
-             ([remap describe-command] . helpful-command)
-             ([remap describe-variable] . helpful-variable)
-             ([remap describe-key] . helpful-key)))
+  (global-set-key [remap describe-function] #'helpful-callable)
+  (global-set-key [remap describe-command] #'helpful-command)
+  (global-set-key [remap describe-variable] #'helpful-variable)
+  (global-set-key [remap describe-key] #'helpful-key))
 
 (defun pg/Info-mode-setup ()
   "Defining some behaviours for the major info-mode."
@@ -25,6 +24,7 @@
   (set-face-attribute 'Info-quoted nil :foreground "orange" :inherit 'fixed-pitch)
   (variable-pitch-mode 1)
   (visual-line-mode 1))
+
 (require 'info)
 (with-eval-after-load 'info
   (add-hook 'Info-mode-hook #'pg/Info-mode-setup))
@@ -35,6 +35,7 @@
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
+(straight-use-package 'visual-fill-column)
 (require 'visual-fill-column)
 (with-eval-after-load 'visual-fill-column
   (dolist (mode '(org-mode-hook

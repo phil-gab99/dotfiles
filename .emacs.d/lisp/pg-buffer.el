@@ -13,7 +13,7 @@
       (kbd "RET")   'bufler-list-buffer-switch
       (kbd "M-RET") 'bufler-list-buffer-peek
       "D"           'bufler-list-buffer-kill)
-    (bind-key "C-x C-b" #'bufler)
+    (global-set-key (kbd "C-x C-b") #'bufler)
     (setf bufler-groups
           (bufler-defgroups
 
@@ -66,10 +66,11 @@
   (customize-set-variable 'tab-bar-show 1)
   (tab-bar-mode))
 
+(straight-use-package 'perspective)
 (unless (fboundp 'persp-kill-buffer*)
   (autoload #'persp-kill-buffer* "perspective" nil t))
 (with-eval-after-load 'perspective
-  (bind-key "C-x k" #'persp-kill-buffer*)
+  (global-set-key (kbd "C-x k") #'persp-kill-buffer*)
   (customize-set-variable 'persp-suppress-no-prefix-key-warning t)
   (unless (equal persp-mode t) (persp-mode)))
 

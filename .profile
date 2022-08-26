@@ -110,6 +110,7 @@ xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 
 
 exwm () {
     export EXWM=1
+    # export EMACSLOADPATH="$HOME/.emacs.d/straight/repos"
     # Disable access control for the current user.
     xhost "+SI:localuser:$USER"
 

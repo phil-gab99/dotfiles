@@ -4,8 +4,9 @@
   (with-eval-after-load 'eshell-git-prompt
     (eshell-git-prompt-use-theme 'multiline2)))
 
+(straight-use-package 'eshell-syntax-highlighting)
 (with-eval-after-load 'eshell
-  (require 'eshell-syntax-highlight)
+  (require 'eshell-syntax-highlighting)
   (with-eval-after-load 'eshell-syntax-highlighting
     (eshell-syntax-highlighting-global-mode t)))
 
@@ -15,6 +16,7 @@
   (set-face-foreground 'company-preview-common nil)
   (set-face-background 'company-preview nil))
 
+(straight-use-package 'esh-autosuggest)
 (with-eval-after-load 'eshell
   (require 'esh-autosuggest)
   (with-eval-after-load 'esh-autosuggest
@@ -34,7 +36,6 @@
   (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
   (evil-normalize-keymaps)
 
-  (local-unset-key (kbd "M-<tab>"))
   (corfu-mode)
 
   (setq eshell-history-size 10000

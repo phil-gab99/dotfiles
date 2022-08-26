@@ -1,28 +1,23 @@
-(require 'sql)
-(with-eval-after-load 'sql
-  (add-hook 'sql-interactive-mode-hook #'(lambda () (toggle-truncate-lines t)))
-  ;; (customize-set-variable 'sql-postgres-login-params '((user :default "phil-gab99")
-  ;;                                                      (database :default "phil-gab99")
-  ;;                                                      (server :default "localhost")
-  ;;                                                      (port :default 5432)))
-  (customize-set-variable 'sql-connection-alist '((main (sql-product 'postgres)
-                                                        (sql-port 5432)
-                                                        (sql-server "localhost")
-                                                        (sql-user "phil-gab99")
-                                                        (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-                                                        (sql-database "phil-gab99"))
-                                                  (school (sql-product 'postgres)
+(with-eval-after-load 'lsp-sqls
+  (require 'sql)
+  (with-eval-after-load 'sql
+    (add-hook 'sql-interactive-mode-hook #'(lambda () (toggle-truncate-lines t)))
+    ;; (customize-set-variable 'sql-postgres-login-params '((user :default "phil-gab99")
+    ;;                                                      (database :default "phil-gab99")
+    ;;                                                      (server :default "localhost")
+    ;;                                                      (port :default 5432)))
+    (customize-set-variable 'sql-connection-alist '((main (sql-product 'postgres)
                                                           (sql-port 5432)
                                                           (sql-server "localhost")
                                                           (sql-user "phil-gab99")
                                                           (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-                                                          (sql-database "ift2935"))))
-
-  (use-package sql
-    :straight nil
-    :hook (sql-mode . lsp-deferred)
-    :config
-    :custom
+                                                          (sql-database "phil-gab99"))
+                                                    (school (sql-product 'postgres)
+                                                            (sql-port 5432)
+                                                            (sql-server "localhost")
+                                                            (sql-user "phil-gab99")
+                                                            (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                                                            (sql-database "ift2935"))))))
 
 (with-eval-after-load 'lsp-mode
   (require 'lsp-sqls)

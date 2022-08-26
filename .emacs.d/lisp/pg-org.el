@@ -4,24 +4,24 @@
   this file."
   (interactive)
   (setq imgpath (concat (let ((abspath (shell-command-to-string (concat "dirname " buffer-file-name))))
-                          (with-temp-buffer
-                            (call-process "echo" nil t nil "-n" abspath)
-                            (delete-char -1)  ;; delete trailing \n
-                            (buffer-string)))
-                        "/img/"))
+			  (with-temp-buffer
+			    (call-process "echo" nil t nil "-n" abspath)
+			    (delete-char -1)  ;; delete trailing \n
+			    (buffer-string)))
+			"/img/"))
   (if (not (f-dir-p imgpath))
       (make-directory imgpath))
   (setq filename
-        (concat
-         (make-temp-name
-          (concat imgpath
-                  (let ((bname (shell-command-to-string (concat "basename -s .org " buffer-file-name))))
-                    (with-temp-buffer
-                      (call-process "echo" nil t nil "-n" bname)
-                      (delete-char -1)  ;; delete trailing \n
-                      (buffer-string)))
-                  "_"
-                  (format-time-string "%Y%m%d_%H%M%S_"))) ".png"))
+	(concat
+	 (make-temp-name
+	  (concat imgpath
+		  (let ((bname (shell-command-to-string (concat "basename -s .org " buffer-file-name))))
+		    (with-temp-buffer
+		      (call-process "echo" nil t nil "-n" bname)
+		      (delete-char -1)  ;; delete trailing \n
+		      (buffer-string)))
+		  "_"
+		  (format-time-string "%Y%m%d_%H%M%S_"))) ".png"))
   (call-process "import" nil nil nil filename)
   (insert (concat "[[" filename "]]"))
   (org-display-inline-images))
@@ -41,8 +41,10 @@
   (diminish 'org-indent-mode)
   (setq evil-auto-indent nil))
 
-(require 'org)
+(straight-use-package 'org)
+(require 'org nil t)
 (with-eval-after-load 'org
+  (require 'org-compat)
   (set-face-attribute 'org-ellipsis nil :underline nil)
   (add-hook 'org-mode-hook #'pg/org-mode-setup)
   (customize-set-variable 'org-ellipsis " ▾")
@@ -53,87 +55,91 @@
   (customize-set-variable 'org-deadline-warning-days 7)
   (customize-set-variable 'org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
   (customize-set-variable 'org-agenda-exporter-settings '((ps-left-header
-                                                           (list 'org-agenda-write-buffer-name))
-                                                          (ps-right-header
-                                                           (list "/pagenumberstring load"
-                                                                 (lambda nil
-                                                                   (format-time-string "%d/%m/%Y"))))
-                                                          (ps-font-size
-                                                           '(12 . 11))
-                                                          (ps-top-margin 55)
-                                                          (ps-left-margin 35)
-                                                          (ps-right-margin 30)))
+							   (list 'org-agenda-write-buffer-name))
+							  (ps-right-header
+							   (list "/pagenumberstring load"
+								 (lambda nil
+								   (format-time-string "%d/%m/%Y"))))
+							  (ps-font-size
+							   '(12 . 11))
+							  (ps-top-margin 55)
+							  (ps-left-margin 35)
+							  (ps-right-margin 30)))
   (unless pg/is-termux
     (customize-set-variable 'org-agenda-files '("~/Documents/Org/Agenda/"))
     (customize-set-variable 'org-link-frame-setup '((vm . vm-visit-folder-other-frame)
-                                                    (vm-imap . vm-visit-imap-folder-other-frame)
-                                                    (gnus . org-gnus-no-new-news)
-                                                    (file . find-file)
-                                                    (wl . wl-other-frame)))
+						    (vm-imap . vm-visit-imap-folder-other-frame)
+						    (gnus . org-gnus-no-new-news)
+						    (file . find-file)
+						    (wl . wl-other-frame)))
     (customize-set-variable 'org-agenda-custom-commands
-                            '(("d" "Dashboard"
-                               ((agenda ""
-                                        ((org-deadline-warning-days 7)))
-                                (todo "TODO"
-                                      ((org-agenda-overriding-header "Tasks")))
-                                (tags-todo "agenda/ACTIVE"
-                                           ((org-agenda-overriding-header "Active Tasks")))))
-                              ("Z" "TODOs"
-                               ((todo "TODO"
-                                      ((org-agenda-overriding-header "Todos")))))
+			    '(("d" "Dashboard"
+			       ((agenda ""
+					((org-deadline-warning-days 7)))
+				(todo "TODO"
+				      ((org-agenda-overriding-header "Tasks")))
+				(tags-todo "agenda/ACTIVE"
+					   ((org-agenda-overriding-header "Active Tasks")))))
+			      ("Z" "TODOs"
+			       ((todo "TODO"
+				      ((org-agenda-overriding-header "Todos")))))
 
-                              ("m" "Misc" tags-todo "other")
+			      ("m" "Misc" tags-todo "other")
 
-                              ("s" "Schedule" agenda ""
-                               ((org-agenda-files
-                                 '("~/Documents/Org/Agenda/Schedule-S5-summer.org")))
-                               ("~/Documents/Schedule-S5-summer.pdf"))
+			      ("s" "Schedule" agenda ""
+			       ((org-agenda-files
+				 '("~/Documents/Org/Agenda/Schedule-S5-summer.org")))
+			       ("~/Documents/Schedule-S5-summer.pdf"))
 
-                              ("w" "Work Status"
-                               ((todo "WAIT"
-                                      ((org-agenda-overriding-header "Waiting")
-                                       (org-agenda-files org-agenda-files)))
-                                (todo "REVIEW"
-                                      ((org-agenda-overriding-header "In Review")
-                                       (org-agenda-files org-agenda-files)))
-                                (todo "HOLD"
-                                      ((org-agenda-overriding-header "On Hold")
-                                       (org-agenda-todo-list-sublevels nil)
-                                       (org-agenda-files org-agenda-files)))
-                                (todo "ACTIVE"
-                                      ((org-agenda-overriding-header "Active")
-                                       (org-agenda-files org-agenda-files)))
-                                (todo "COMPLETED"
-                                      ((org-agenda-overriding-header "Completed")
-                                       (org-agenda-files org-agenda-files)))
-                                (todo "CANC"
-                                      ((org-agenda-overriding-header "Cancelled")
-                                       (org-agenda-files org-agenda-files)))))))
+			      ("w" "Work Status"
+			       ((todo "WAIT"
+				      ((org-agenda-overriding-header "Waiting")
+				       (org-agenda-files org-agenda-files)))
+				(todo "REVIEW"
+				      ((org-agenda-overriding-header "In Review")
+				       (org-agenda-files org-agenda-files)))
+				(todo "HOLD"
+				      ((org-agenda-overriding-header "On Hold")
+				       (org-agenda-todo-list-sublevels nil)
+				       (org-agenda-files org-agenda-files)))
+				(todo "ACTIVE"
+				      ((org-agenda-overriding-header "Active")
+				       (org-agenda-files org-agenda-files)))
+				(todo "COMPLETED"
+				      ((org-agenda-overriding-header "Completed")
+				       (org-agenda-files org-agenda-files)))
+				(todo "CANC"
+				      ((org-agenda-overriding-header "Cancelled")
+				       (org-agenda-files org-agenda-files)))))))
     (customize-set-variable 'org-capture-templates
-                            `(("t" "Tasks / Projects")
-                              ("tt" "Task" entry
-                               (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
-                               "* TODO %?\n  DEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+			    `(("t" "Tasks / Projects")
 
-                              ("j" "Meetings")
-                              ("jm" "Meeting" entry
-                               (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
-                               "* TODO %? \n SCHEDULED: %U\n" :empty-lines 1)
 
-                              ("m" "Email Workflow")
-                              ("mr" "Follow Up" entry
-                               (file+olp "~/Documents/Org/Agenda/Mail.org" "Follow up")
-                               "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
+			      ("tt" "Task" entry
+			       (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
+			       "* TODO %?\n  DEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+
+			      ("j" "Meetings")
+			      ("jm" "Meeting" entry
+			       (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
+			       "* TODO %? \n SCHEDULED: %U\n" :empty-lines 1)
+
+			      ("m" "Email Workflow")
+			      ("mr" "Follow Up" entry
+			       (file+olp "~/Documents/Org/Agenda/Mail.org" "Follow up")
+			       "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
     (customize-set-variable 'org-format-latex-options
-                            (plist-put org-format-latex-options :scale 1.5))
+			    (plist-put org-format-latex-options :scale 1.5))
     (with-eval-after-load 'plant-uml-mode
       (customize-set-variable 'org-plantuml-jar-path "~/bin/plantuml.jar"))))
 
+(straight-use-package 'org-appear)
 (with-eval-after-load 'org
   (require 'org-appear)
   (with-eval-after-load 'org-appear
     (add-hook 'org-mode-hook #'org-appear-mode)))
 
+(straight-use-package 'org-bullets)
 (with-eval-after-load 'org
   (require 'org-bullets)
   (with-eval-after-load 'org-bullets
@@ -162,6 +168,7 @@
               org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
               face-remapping-alist '((default variable-pitch default))))
 
+(straight-use-package 'org-tree-slide)
 (with-eval-after-load 'org
   (require 'org-tree-slide)
   (with-eval-after-load 'org-tree-slide
@@ -176,6 +183,7 @@
     (customize-set-variable 'org-tree-slide-header t)
     (customize-set-variable 'org-image-actual-width nil)))
 
+(straight-use-package 'ox-reveal)
 (with-eval-after-load 'org
   (require 'ox-reveal)
   (with-eval-after-load 'ox-reveal
@@ -199,6 +207,7 @@
 ;;                 '(:time "2h" :period "5m" :actions -message)
 ;;                 '(:time "3d" :actions -email))
 
+(straight-use-package 'org-msg)
 (with-eval-after-load 'org
   (with-eval-after-load 'mu4e
     (require 'org-msg)
@@ -212,6 +221,7 @@
       (customize-set-variable 'org-msg-recipient-names nil)
       (org-msg-mode))))
 
+(straight-use-package 'org-roam)
 (unless pg/is-termux
   (with-eval-after-load 'org
     (require 'org-roam)
@@ -231,6 +241,7 @@
                                  :unnarrowed t)))
       (org-roam-setup))))
 
+(straight-use-package 'org-fragtog)
 (with-eval-after-load 'org
   (require 'org-fragtog)
   (with-eval-after-load 'org-fragtog

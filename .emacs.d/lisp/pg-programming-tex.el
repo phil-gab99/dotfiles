@@ -1,6 +1,6 @@
-(require 'auctex)
-(with-eval-after-load 'auctex
-  (require 'tex-site)
+(straight-use-package 'auctex)
+(require 'tex-site)
+(with-eval-after-load 'tex-site
   (add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   (add-hook 'TeX-mode-hook #'(lambda () (run-hooks 'prog-mode-hook)))
@@ -9,6 +9,7 @@
   (customize-set-variable 'TeX-view-program-selection '((output-pdf "PDF Tools")))
   (customize-set-variable 'TeX-source-correlate-start-server t))
 
+(straight-use-package 'company-auctex)
 (with-eval-after-load 'company
   (with-eval-after-load 'auctex
     (require 'company-auctex)

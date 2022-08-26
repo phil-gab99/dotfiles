@@ -4,11 +4,12 @@
 (with-eval-after-load 'projectile
   (diminish 'projectile-mode)
   (add-hook 'lsp-mode-hook #'projectile-mode)
-  (bind-key "C-c p" #'projectile-command-map projectile-mode-map)
+  (define-key projectile-mode-map (kbd "C-c p") #'projectile-command-map)
   (when (file-directory-p "~/Projects")
     (customize-set-variable 'projectile-project-search-path '("~/Projects")))
-  (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
+  (customize-set-variable 'projectile-switch-project-action #'projectile-dired))
 
+(straight-use-package 'magit)
 (unless (fboundp 'magit-status)
   (autoload #'magit-status "magit" nil t))
 (unless (fboundp 'magit-get-current-branch)
@@ -16,6 +17,7 @@
 (with-eval-after-load 'magit
   (customize-set-variable 'magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+(straight-use-package 'git-gutter)
 (require 'git-gutter)
 (unless (fboundp 'git-gutter-mode)
   (autoload #'git-gutter-mode "git-gutter" nil t))
@@ -24,54 +26,11 @@
                   prog-mode-hook))
     (add-hook mode #'git-gutter-mode))
   (diminish 'git-gutter-mode)
-  (set-face-foreground 'git-gutter:added-sign "LightGreen")
-  (fringe-helper-define 'git-gutter:added-sign nil
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    ".........."
-    ".........."
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    ".........."
-    ".........."
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX")
+  (set-face-foreground 'git-gutter:added "LightGreen")
+  (set-face-foreground 'git-gutter:modified "LightGoldenrod")
+  (set-face-foreground 'git-gutter:deleted "LightCoral"))
 
-  (set-face-foreground 'git-gutter:modified-sign "LightGoldenrod")
-  (fringe-helper-define 'git-gutter:modified-sign nil
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    ".........."
-    ".........."
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    ".........."
-    ".........."
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX")
-
-  (set-face-foreground 'git-gutter:deleted-sign "LightCoral")
-  (fringe-helper-define 'git-gutter:deleted-sign nil
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    ".........."
-    ".........."
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    ".........."
-    ".........."
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"
-    "XXXXXXXXXX"))
-
+(straight-use-package 'forge)
 (with-eval-after-load 'magit
   (require 'forge))
 

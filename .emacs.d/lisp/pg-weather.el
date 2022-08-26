@@ -8,6 +8,7 @@
          (lambda (status) (switch-to-buffer (current-buffer))))
       (decode-coding-string (buffer-string) 'utf-8))))
 
+(straight-use-package 'wttrin)
 (unless (fboundp 'wttrin)
   (autoload #'wttrin "wttrin" nil t))
 (with-eval-after-load 'wttrin

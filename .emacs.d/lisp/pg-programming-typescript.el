@@ -1,3 +1,4 @@
+(straight-use-package 'typescript-mode)
 (with-eval-after-load 'lsp
   (require 'typescript-mode)
   (with-eval-after-load 'typescript-mode

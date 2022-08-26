@@ -8,21 +8,22 @@
 (unless (fboundp 'dired)
   (autoload #'dired "dired" nil t))
 (with-eval-after-load 'dired
-  (bind-key "C-x C-j" #'dired-jump)
+  (global-set-key (kbd "C-x C-j") #'dired-jump)
   (evil-collection-define-key 'normal 'dired-mode-map "h" 'dired-single-up-directory "l" 'dired-single-buffer)
   (customize-set-variable 'dired-listing-switches "-agho --group-directories-first"))
 
 (straight-use-package 'dired-single)
-;; (require 'dired-single)
 (with-eval-after-load 'dired
+  (require 'dired-single)
   (unless (fboundp 'dired)
     (autoload #'dired "dired-single" nil t))
   (unless (fboundp 'dired-jump)
     (autoload #'dired-jump "dired-single" nil t)))
 
+(straight-use-package 'all-the-icons-dired)
 (unless pg/is-termux
-  (require 'all-the-icons-dired-mode)
-  (with-eval-after-load 'all-the-icons-dired-mode
+  (require 'all-the-icons-dired)
+  (with-eval-after-load 'all-the-icons-dired
     (add-hook 'dired-mode-hook #'all-the-icons-dired-mode)))
 
 (straight-use-package 'dired-hide-dotfiles)
@@ -33,6 +34,7 @@
     (add-hook 'dired-mode-hook #'dired-hide-dotfiles-mode)
     (evil-collection-define-key 'normal 'dired-mode-map "H" 'dired-hide-dotfiles-mode)))
 
+(straight-use-package 'openwith)
 (unless pg/is-termux
   (require 'openwith)
   (with-eval-after-load 'openwith
@@ -44,6 +46,6 @@
                               (,(openwith-make-extension-regexp '("odt"))
                                "libreoffice"
                                (file))))
-    (openwith-mode 1))
+    (openwith-mode 1)))
 
 (provide 'pg-file)

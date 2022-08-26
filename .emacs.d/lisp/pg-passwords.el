@@ -3,6 +3,7 @@
   (customize-set-variable 'auth-sources '("~/.authinfo.gpg")))
 
 (unless pg/is-termux
+  (straight-use-package 'pinentry)
   (require 'epg-config)
   (require 'pinentry)
   (with-eval-after-load 'epg-config
@@ -14,6 +15,7 @@
 (with-eval-after-load 'password-cache
   (customize-set-variable 'password-cache-expiry (* 60 60 2)))
 
+(straight-use-package 'password-store)
 (require 'password-store)
 (with-eval-after-load 'password-store
   (customize-set-variable 'password-store-time-before-clipboard-restore 60))

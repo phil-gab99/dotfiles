@@ -22,6 +22,7 @@
   (with-eval-after-load 'emojify
     (customize-set-variable 'slack-buffer-emojify t)))
 
+(straight-use-package 'sx)
 (unless (fboundp 'sx-search)
   (autoload #'sx-search "sx" nil t))
 

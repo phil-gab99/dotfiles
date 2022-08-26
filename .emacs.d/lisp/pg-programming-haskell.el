@@ -1,3 +1,4 @@
+(straight-use-package 'haskell-mode)
 (with-eval-after-load 'lsp-mode
   (require 'haskell-mode)
   (with-eval-after-load 'haskell-mode
