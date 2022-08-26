@@ -3003,7 +3003,7 @@ Org mode package for writing structured documents and more. Here are some useful
     (setq evil-auto-indent nil))
 
   (straight-use-package 'org)
-  (require 'org nil t)
+  (require 'org (expand-file-name "straight/build/org/org.el" user-emacs-directory))
   (with-eval-after-load 'org
     (set-face-attribute 'org-ellipsis nil :underline nil)
     (add-hook 'org-mode-hook #'pg/org-mode-setup)
@@ -3099,7 +3099,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-org"
+  ;; "emacs-org"
 
 #+end_src
 
