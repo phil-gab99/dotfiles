@@ -11,12 +11,12 @@
   :straight t
   :init
   (require 'bufler)
-  :after evil
+  :after evil-collection
   :commands bufler
   :bind
   ("C-x C-b" . bufler)
   :config
-  (evil-define-key 'normal 'bufler-list-mode-map
+  (evil-collection-define-key 'normal 'bufler-list-mode-map
     (kbd "RET")   'bufler-list-buffer-switch
     (kbd "M-RET") 'bufler-list-buffer-peek
     "D"           'bufler-list-buffer-kill)

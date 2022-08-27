@@ -7,9 +7,6 @@
                      :host github
                      :repo "djcb/mu"
                      :branch "release/1.8")
-    :init
-    (require 'mu4e)
-    (require 'mu4e-org)
     :hook
     (mu4e-compose-mode . corfu-mode)
     (mu4e-main-mode . (lambda () (mu4e t)))
@@ -19,7 +16,7 @@
     (mu4e-change-filenames-when-moving t)
     (mu4e-update-interval (* 10 60))
     (mu4e-get-mail-command "mbsync -a")
-    (mu4e-maildir (expand-file-name "~/Mail"))
+    ;; (mu4e-maildir (expand-file-name "~/Mail"))
     (mu4e-compose-format-flowed t)
     (mu4e-compose-signature
      (concat "Philippe Gabriel - \n"
@@ -34,7 +31,8 @@
        ("/Main/Jobs" . ?j)
        ("/Main/University" . ?s)))
     (mu4e-context-policy 'pick-first)
-    :custom
+    :config
+    (require 'mu4e-org)
     (setq mu4e-contexts
           (list
            ;; Main account
