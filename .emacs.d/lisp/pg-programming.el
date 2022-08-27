@@ -1,3 +1,6 @@
+;;; pg-programming.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defun pg/lsp-mode-setup ()
   "Displays structure of cursor position for all buffers."
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
@@ -7,6 +10,7 @@
 (use-package lsp-mode
   :straight t
   :init
+  (require 'lsp-mode)
   (require 'lsp-completion)
   :commands (lsp lsp-deferred)
   :hook
@@ -19,6 +23,8 @@
 
 (use-package lsp-ui
   :straight t
+  :init
+  (require 'lsp-ui)
   :after lsp-mode
   :hook
   (lsp-mode . lsp-ui-mode)
@@ -29,6 +35,8 @@
 
 (use-package lsp-treemacs
   :straight t
+  :init
+  (require 'lsp-treemacs)
   :after lsp)
 
 (defvar company-mode/enable-yas t
@@ -43,6 +51,8 @@
 
 (use-package company
   :straight t
+  :init
+  (require 'company)
   :hook
   (prog-mode . company-mode)
   :custom
@@ -59,24 +69,32 @@
 
 (use-package company-box
   :straight t
+  :init
+  (require 'company-box)
   :after company
   :hook
   (company-mode . company-box-mode))
 
 (use-package company-prescient
   :straight t
+  :init
+  (require 'company-prescient)
   :after (company prescient)
   :custom
   (company-prescient-mode 1))
 
 (use-package flycheck
   :straight t
+  :init
+  (require 'flycheck)
   :after lsp-mode
   :hook
   (lsp-mode-hook . flycheck-mode))
 
 (use-package dap-mode
   :straight t
+  :init
+  (require 'dap-mode)
   :after lsp-mode
   :custom
   (dap-mode 1)
@@ -85,6 +103,8 @@
 
 (use-package plantuml-mode
   :straight t
+  :init
+  (require 'plantuml-mode)
   :custom
   (plantuml-indent-level 4)
   (plantuml-jar-path "~/bin/plantuml.jar")
@@ -92,6 +112,8 @@
 
 (use-package comment-dwim-2
   :straight t
+  :init
+  (require 'comment-dwim-2)
   :bind
   ("M-/" . comment-dwim-2)
   (:map org-mode-map
@@ -99,7 +121,9 @@
 
 (use-package yasnippet
   :straight t
-  :after company
+  :init
+  (require 'yasnippet)
+  :after (company diminish)
   :diminish yas-minor-mode
   :hook
   (prog-mode . yas-minor-mode)
@@ -109,6 +133,8 @@
   (yas-global-mode 1))
 
 (use-package yasnippet-snippets
-  :straight t)
+  :straight t
+  :init
+  (require 'yasnippet-snippets))
 
 (provide 'pg-programming)

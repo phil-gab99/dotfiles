@@ -1,3 +1,6 @@
+;;; pg-ui.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (setq inhibit-startup-message t  ; Disable startup message
       scroll-conservatively 1000 ; Slow scrolling
       split-width-threshold 185) ; Width for splitting
@@ -15,13 +18,19 @@
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 (use-package diminish
-  :straight t)
+  :straight t
+  :init
+  (require 'diminish))
 
 (use-package all-the-icons
-  :straight t)
+  :straight t
+  :init
+  (require 'all-the-icons))
 
 (use-package doom-modeline
   :straight t
+  :init
+  (require 'doom-modeline)
   :custom
   (doom-modeline-height 15)
   (doom-modeline-modal-icon nil)
@@ -34,6 +43,8 @@
 
 (use-package autothemer
   :straight t
+  :init
+  (require 'autothemer)
   :config
   (load-theme 'onedark-variant t))
 
@@ -61,18 +72,21 @@
   :straight t
   :init
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
+  (require 'dashboard)
   :after projectile
   :custom
-  (customize-set-variable 'dashboard-set-file-icons t)
-  (customize-set-variable 'dashboard-items '((recents . 5)
-                                             (projects . 10)
-                                             (agenda . 5)))
-  (customize-set-variable 'dashboard-page-separator "\n\f\n")
-  (customize-set-variable 'dashboard-init-info #'pg/display-startup-time)
+  (dashboard-set-file-icons t)
+  (dashboard-items '((recents . 5)
+                     (projects . 10)
+                     (agenda . 5)))
+  (dashboard-page-separator "\n\f\n")
+  (dashboard-init-info #'pg/display-startup-time)
   :config
   (pg/dashboard-setup-startup-hook))
 
 (use-package page-break-lines
-  :straight t)
+  :straight t
+  :init
+  (require 'page-break-lines))
 
 (provide 'pg-ui)

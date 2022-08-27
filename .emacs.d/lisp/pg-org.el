@@ -1,3 +1,6 @@
+;;; pg-org.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the `img'
     directory with respect to the org-buffer's location and insert a link to
@@ -43,6 +46,8 @@
 
 (use-package org
   :straight t
+  :init
+  (require 'org)
   :hook
   (org-mode . pg/org-mode-setup)
   :custom
@@ -131,12 +136,16 @@
 
 (use-package org-appear
   :straight t
+  :init
+  (require 'org-appear)
   :after org
   :hook
   (org-mode . org-appear-mode))
 
 (use-package org-bullets
   :straight t
+  :init
+  (require 'org-bullets)
   :after org
   :hook
   (org-mode . org-bullets-mode)
@@ -167,6 +176,8 @@
 
 (use-package org-tree-slide
   :straight t
+  :init
+  (require 'org-tree-slide)
   :after org
   :hook
   ((org-tree-slide-before-move-next
@@ -182,6 +193,8 @@
 
 (use-package ox-reveal
   :straight t
+  :init
+  (require 'ox-reveal)
   :after org
   :custom
   (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
@@ -191,12 +204,14 @@
 
 (use-package org-notify
   :straight t
+  :init
+  (require 'org-notify)
   :after org
   :config
   (org-notify-start)
   (setq org-notify-map nil)
-  (org-notify-add 'default '(:time "1w" :actions -notify/window :period "1h" :duration 5))
-  (org-notify-add 'meeting '(:time "1w" :actions -email :period "1d")))
+  (org-notify-add 'default '(:time "1w" :actions notify/window :period "1h" :duration 5))
+  (org-notify-add 'meeting '(:time "1w" :actions email :period "1d")))
 
 ;; (org-notify-add 'appt
 ;;                 '(:time "-1s" :period "20s" :duration 10 :actions (-message -ding))
@@ -206,6 +221,8 @@
 
 (use-package org-msg
   :straight t
+  :init
+  (require 'org-msg)
   :after (org mu4e)
   :custom
   (org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t")
@@ -220,6 +237,8 @@
 
 (use-package org-roam
   :straight t
+  :init
+  (require 'org-roam)
   :after org
   :custom
   (org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -239,9 +258,11 @@
 
 (use-package org-fragtog
   :straight t
+  :init
+  (require 'org-fragtog)
   :after org
   :hook
-  (org-mode . org-fragtog))
+  (org-mode . org-fragtog-mode))
 
 (font-lock-add-keywords 'org-mode ; Replace '-' with bullets
                         '(("^ *\\([-]\\) "

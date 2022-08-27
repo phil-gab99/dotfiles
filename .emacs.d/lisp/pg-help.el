@@ -1,5 +1,10 @@
+;;; pg-help.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package helpful
   :straight t
+  :init
+  (require 'helpful)
   :bind
   ([remap describe-function] . helpful-callable)
   ([remap describe-command] . helpful-command)
@@ -22,6 +27,8 @@
 
 (use-package info
   :straight nil
+  :init
+  (require 'info)
   :hook
   (Info-mode-hook . pg/Info-mode-setup))
 
@@ -33,6 +40,8 @@
 
 (use-package visual-fill-column
   :straight t
+  :init
+  (require 'visual-fill-column)
   :hook
   ((org-mode
     gfm-view-mode

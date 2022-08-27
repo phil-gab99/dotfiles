@@ -1,3 +1,6 @@
+;;; pg-music.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defun pg/start-mpd ()
   "Start MPD, connects to it and syncs the metadata cache."
   (interactive)
@@ -59,6 +62,7 @@
 (use-package emms
   :straight t
   :init
+  (require 'emms)
   (require 'emms-setup)
   (require 'emms-player-mpd)
   (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
@@ -68,7 +72,7 @@
   (emms-info-functions '(emms-info-mpd))
   (emms-player-list '(emms-player-mpd))
   :bind
-  (:map emms-browser-mode
+  (:map emms-browser-mode-map
         ("<XF86AudioPrev>" . emms-previous)
         ("<XF86AudioNext>" . emms-next)
         ("<XF86AudioPlay>" . emms-pause)
@@ -79,6 +83,7 @@
 (use-package emms-mode-line-cycle
   :straight t
   :init
+  (require 'emms-mode-line-cycle)
   (require 'emms-mode-line-icon)
   :after emms
   :custom

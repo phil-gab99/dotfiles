@@ -1,11 +1,18 @@
+;;; pg-shell.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package eshell-git-prompt
   :straight t
+  :init
+  (require 'eshell-git-prompt)
   :after eshell
   :config
   (eshell-git-prompt-use-theme 'multiline2))
 
 (use-package eshell-syntax-highlighting
   :straight t
+  :init
+  (require 'eshell-syntax-highlighting)
   :after eshell
   :custom
   (eshell-syntax-highlighting-global-mode t))
@@ -18,6 +25,8 @@
 
 (use-package esh-autosuggest
   :straight t
+  :init
+  (require 'esh-autosuggest)
   :after eshell
   :hook
   (eshell-mode . esh-autosuggest-mode)
@@ -48,6 +57,7 @@
 (use-package eshell
   :straight nil
   :init 
+  (require 'eshell)
   (require 'em-tramp)
   :hook
   (eshell-first-time-mode . pg/configure-eshell)
@@ -55,6 +65,8 @@
   (eshell-prefer-lisp-functions t))
 
 (use-package vterm
-  :straight nil)
+  :straight nil
+  :init
+  (require 'vterm))
 
 (provide 'pg-shell)

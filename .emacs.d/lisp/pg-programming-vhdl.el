@@ -1,3 +1,6 @@
+;;; pg-programming-vhdl.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (flycheck-define-checker vhdl-tool
   "A VHDL syntax checker, type checker and linter using VHDL-Tool."
   :command ("vhdl-tool" "client" "lint" "--compact" "--stdin" "-f" source)
@@ -10,6 +13,9 @@
 (use-package vhdl-tools
   :disabled
   :straight t
+  :init
+  (require 'vhdl-tools)
+  :after flycheck
   :hook
   (vhdl-mode . lsp-deferred)
   :config

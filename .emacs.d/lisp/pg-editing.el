@@ -1,3 +1,6 @@
+;;; pg-editing.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (setq tab-width 4                     ; Set tab length
       custom-buffer-indent 2
       display-line-numbers-type 'relative)
@@ -48,6 +51,8 @@
   :straight '(ligature :type git
                        :host github
                        :repo "mickeynp/ligature.el")
+  :init
+  (require 'ligature)
   :config
   (ligature-set-ligatures 't '("++" "--" "/=" "&&" "||" "||=" "->" "=>" "::" "__" "==" "===" "!=" "=/=" "!=="
                                "<=" ">=" "<=>" "/*" "*/" "//" "///" "\\n" "\\\\" "<<" "<<<" "<<=" ">>" ">>>" ">>="
@@ -65,15 +70,22 @@
 
 (use-package rainbow-delimiters
   :straight t
+  :init
+  (require 'rainbow-delimiters)
   :hook
   (prog-mode . rainbow-delimiters-mode))
 
 (use-package abbrev
   :straight nil
+  :init
+  (require 'abbrev)
+  :after diminish
   :diminish abbrev-mode)
 
 (use-package highlight-indent-guides
   :straight t
+  :init
+  (require 'highlight-indent-guides)
   :hook
   (prog-mode . highlight-indent-guides-mode)
   :custom
@@ -82,15 +94,17 @@
 
 (use-package smartparens
   :straight t
+  :init
+  (require 'smartparens)
+  :after diminish
   :diminish smartparens-mode
   :config
-  (smartparens-global-mode)
-  (sp-with-modes
-      '(prog-mode)
-    (sp-local-pair "{" nil :post-handlers '(:add ("||\n[i]" "RET")))))
+  (smartparens-global-mode))
 
 (use-package outshine
   :straight t
+  :init
+  (require 'outshine)
   :hook
   (prog-mode . outshine-mode))
 
@@ -106,10 +120,15 @@
   :disabled
   :straight t
   :init
+  (require 'selectric-mode)
+  :init
   (fset #'selectric-type-sound #'pg/selectric-type-sound))
 
 (use-package rainbow-mode
   :straight t
+  :init
+  (require 'rainbow-mode)
+  :after diminish
   :diminish rainbow-mode
   :hook
   ((org-mode
@@ -122,11 +141,13 @@
 
 (use-package emojify
   :straight t
+  :init
+  (require 'emojify)
   :config
   (global-emojify-mode))
 
-;; Function for modes that should start in emacs mode
 (defun pg/evil-hook()
+  "Modes that should start in emacs mode"
   (dolist (mode '(custom-mode
                   eshell-mode
                   git-rebase-mode
@@ -142,6 +163,7 @@
   :straight t
   :init
   (customize-set-variable 'evil-want-keybinding nil)
+  (require 'evil)
   :hook
   (evil-mode . pg/evil-hook)
   :custom
@@ -163,7 +185,9 @@
 
 (use-package evil-collection
   :straight t
-  :after evil
+  :init
+  (require 'evil-collection)
+  :after (evil diminish)
   :diminish evil-collection-unimpaired-mode
   :config
   (evil-collection-init))

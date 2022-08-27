@@ -1,3 +1,6 @@
+;;; pg-weather.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defun pg/wttrin-fetch-raw-string (query)
   "Get the weather information based on your QUERY."
   (let ((url-user-agent "curl"))
@@ -10,6 +13,8 @@
 
 (use-package wttrin
   :straight t
+  :init
+  (require 'wttrin)
   :init
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
   :commands wttrin

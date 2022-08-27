@@ -1,3 +1,6 @@
+;;; pg-programming-java.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defun pg/spring-boot-properties ()
   "Makes appropriate calls when opening a spring properties file."
   (when (not (equal nil (string-match-p "application\\(-?[^-]+\\)?\\.properties"
@@ -8,6 +11,7 @@
 (use-package lsp-java
   :straight t
   :init
+  (require 'lsp-java)
   (dolist (feature '(dap-java
                      lsp-java-boot))
     (require feature))

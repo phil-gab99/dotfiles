@@ -1,5 +1,10 @@
+;;; pg-social.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package slack
   :straight t
+  :init
+  (require 'slack)
   :init (require 'emojify)
   :after evil
   :commands slack-start
@@ -26,13 +31,17 @@
 
 (use-package sx
   :straight t
+  :init
+  (require 'sx)
   :commands sx-search)
 
 (use-package telega
   :straight nil
   :init
+  (require 'telega)
   (require 'telega-alert)
   (require 'telega-dashboard)
+  :after org
   :custom
   (telega-alert-mode 1)
   :config

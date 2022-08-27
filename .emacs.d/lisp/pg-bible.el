@@ -1,6 +1,11 @@
+;;; pg-bible.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package dtk
   :disabled
   :straight t
+  :init
+  (require 'dtk)
   :after evil
   :hook
   (dtk-mode . (lambda ()
@@ -17,6 +22,6 @@
     (kbd "C-b") 'dtk-backward-chapter
     "q" 'dtk-quit
     "c" 'dtk-clear-dtk-buffer
-    "s" 'dtk-search)
+    "s" 'dtk-search))
 
 (provide 'pg-bible)

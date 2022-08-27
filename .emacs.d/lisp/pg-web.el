@@ -1,3 +1,6 @@
+;;; pg-web.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defun pg/eww-mode-setup ()
   (auto-fill-mode 0)
   (visual-line-mode 1)
@@ -7,6 +10,8 @@
 
 (use-package eww
   :straight nil
+  :init
+  (require 'eww)
   :hook
   (eww-mode . pg/eww-mode-setup))
 

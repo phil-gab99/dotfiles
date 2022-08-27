@@ -1,9 +1,17 @@
+;;; pg-guix.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package guix
   :straight nil
+  :init
+  (require 'guix)
   :commands guix)
 
 (use-package geiser
   :straight nil
+  :init
+  (require 'geiser)
+  :after guix
   :commands run-geiser
   :bind
   (:map geiser-repl-mode-map

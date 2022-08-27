@@ -1,17 +1,25 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
-(add-to-list 'load-path "~/.emacs.d/lisp")
+(push "~/.emacs.d/lisp" load-path)
 
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-      pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
+      pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p))
+      load-prefer-newer t
+      use-short-answers t)
 
-(dolist (package '(pg-startup
+;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
+
+(require 'pg-startup)
+
+(dolist (package '(pg-ui
+                   pg-org
+                   pg-completion
+                   pg-editing
+                   pg-bindings
                    ;; pg-native-compilation
-                   pg-ui
                    pg-guix
                    pg-passwords
                    pg-keylog
-                   pg-completion
                    pg-buffer
                    pg-email
                    pg-editing
@@ -22,7 +30,7 @@
 
                    pg-project
                    pg-programming
-                   pg-programming-alloy
+                   ;; pg-programming-alloy
                    pg-programming-cc
                    pg-programming-commonlisp
                    pg-programming-css
@@ -35,23 +43,21 @@
                    pg-programming-markdown
                    pg-programming-mips
                    pg-programming-python
-                   pg-programming-smtlibv2
+                   ;; pg-programming-smtlibv2
                    pg-programming-sql
                    pg-programming-tex
                    pg-programming-typescript
-                   pg-programming-vhdl
+                   ;; pg-programming-vhdl
                    pg-programming-yaml
 
                    pg-notification
-                   pg-org
                    pg-viewers
-                   ;; pg-bible
+                   pg-bible
                    pg-finance
                    pg-social
                    pg-weather
                    pg-music
-                   pg-games
-                   pg-bindings))
+                   pg-games))
   (require package))
 
 (when pg/exwm-enabled (require 'pg-desktop))

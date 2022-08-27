@@ -1,3 +1,6 @@
+;;; pg-startup.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (server-start)
 
 (unless (featurep 'straight)

@@ -1,5 +1,10 @@
+;;; pg-programming-sql.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package sql
   :straight nil
+  :init
+  (require 'sql)
   :hook
   (sql-interactive-mode . (lambda ()
                             (toggle-truncate-lines t)))
@@ -19,6 +24,8 @@
 
 (use-package lsp-sqls
   :straight nil
+  :init
+  (require 'lsp-sqls)
   :after (sql lsp-mode)
   :hook
   (sql-mode . lsp-deferred)
@@ -35,6 +42,8 @@
 
 (use-package sql-indent
   :straight t
+  :init
+  (require 'sql-indent)
   :after sql
   :hook
   (sql-mode . sqlind-minor-mode)

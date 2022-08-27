@@ -1,5 +1,10 @@
+;;; pg-games.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package sudoku
   :straight t
+  :init
+  (require 'sudoku)
   :commands sudoku
   :custom
   (sudoku-style 'unicode)
@@ -7,6 +12,8 @@
 
 (use-package sokoban
   :straight t
+  :init
+  (require 'sokoban)
   :after evil
   :commands (sokoban sokoban-goto-level)
   :config

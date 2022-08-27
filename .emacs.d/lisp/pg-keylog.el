@@ -1,3 +1,6 @@
+;;; pg-keylog.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (define-minor-mode pg/keycast-mode
   "Show current command and its key binding in the mode line (fix for use with
       doom-mode-line)."
@@ -9,6 +12,8 @@
 
 (use-package keycast
   :straight t
+  :init
+  (require 'keycast)
   :custom
   (keycast-mode-line-format "%2s%k%c%2s")
   :config

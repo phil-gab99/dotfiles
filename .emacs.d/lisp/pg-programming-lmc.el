@@ -1,3 +1,6 @@
+;;; pg-programming-lmc.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (defvar lmc-java-mode-hook nil)
 
 ;; (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-java-mode))
@@ -45,6 +48,8 @@
 
 (use-package lmc
   :straight t
+  :init
+  (require 'lmc)
   :init
   (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 

@@ -1,11 +1,16 @@
+;;; pg-finance.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package ledger-mode
   :straight t
+  :init
+  (require 'ledger-mode)
   :mode "\\.dat$"
   :hook
   (ledger-mode . company-mode)
   :custom
-  (customize-set-variable 'ledger-reconcile-default-commodity "CAD")
-  (customize-set-variable 'ledger-binary-path (expand-file-name "~/.guix-extra-profiles/emacs/emacs/bin/ledger"))
-  (customize-set-variable 'ledger-clear-whole-transaction t))
+  (ledger-reconcile-default-commodity "CAD")
+  (ledger-binary-path (expand-file-name "~/.guix-extra-profiles/emacs/emacs/bin/ledger"))
+  (ledger-clear-whole-transaction t))
 
 (provide 'pg-finance)

@@ -1,5 +1,11 @@
+;;; pg-project.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package projectile
   :straight t
+  :init
+  (require 'projectile)
+  :after diminish
   :diminish projectile-mode
   :hook
   (lsp-mode . projectile-mode)
@@ -7,19 +13,24 @@
   (projectile-switch-project-action #'projectile-dired)
   :bind
   (:map projectile-mode-map
-        ("C-c p" . projectile-command-map))
+	("C-c p" . projectile-command-map))
   :config
   (when (file-directory-p "~/Projects")
     (customize-set-variable 'projectile-project-search-path '("~/Projects"))))
 
 (use-package magit
   :straight t
+  :init
+  (require 'magit)
   :commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package git-gutter
   :straight t
+  :init
+  (require 'git-gutter)
+  :after diminish
   :diminish git-gutter-mode
   :hook
   ((text-mode-hook
@@ -31,6 +42,8 @@
 
 (use-package forge
   :straight t
+  :init
+  (require 'forge)
   :after magit)
 
 (provide 'pg-project)

@@ -1,5 +1,10 @@
+;;; pg-programming-tex.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package tex
   :straight auctex
+  :init
+  (require 'tex)
   :mode ("\\.tex$" . latex-mode)
   :hook
   (TeX-mode-hook . (lambda ()
@@ -14,6 +19,8 @@
 
 (use-package company-auctex
   :straight t
+  :init
+  (require 'company-auctex)
   :after (company auctex)
   :config
   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))

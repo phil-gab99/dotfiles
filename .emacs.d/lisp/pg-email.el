@@ -1,3 +1,6 @@
+;;; pg-email.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (unless pg/is-termux
   (use-package mu4e
     :straight '(mu4e :type git
@@ -5,6 +8,7 @@
                      :repo "djcb/mu"
                      :branch "release/1.8")
     :init
+    (require 'mu4e)
     (require 'mu4e-org)
     :hook
     (mu4e-compose-mode . corfu-mode)
@@ -15,7 +19,7 @@
     (mu4e-change-filenames-when-moving t)
     (mu4e-update-interval (* 10 60))
     (mu4e-get-mail-command "mbsync -a")
-    ;; (mu4e-maildir "~/Mail")
+    (mu4e-maildir (expand-file-name "~/Mail"))
     (mu4e-compose-format-flowed t)
     (mu4e-compose-signature
      (concat "Philippe Gabriel - \n"
@@ -71,6 +75,8 @@
 
 (use-package mu4e-alert
   :straight t
+  :init
+  (require 'mu4e-alert)
   :custom
   (mu4e-alert-notify-repeated-mails t)
   :config

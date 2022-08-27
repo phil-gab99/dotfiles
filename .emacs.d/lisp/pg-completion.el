@@ -1,10 +1,17 @@
-(use-package savhist
+;;; pg-completion.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
+(use-package savehist
   :straight nil
+  :init
+  (require 'savehist)
   :config
-  (savhist-mode))
+  (savehist-mode))
 
 (use-package marginalia
   :straight t
+  :init
+  (require 'marginalia)
   :after vertico
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy
@@ -15,6 +22,8 @@
 
 (use-package consult
   :straight t
+  :init
+  (require 'consult)
   :bind
   ("C-s" . consult-line)
   ("C-x b" . consult-buffer)
@@ -23,6 +32,8 @@
 
 (use-package orderless
   :straight t
+  :init
+  (require 'orderless)
   :after vertico
   :custom
   (completion-styles '(orderless))
@@ -32,6 +43,8 @@
 
 (use-package corfu
   :straight t
+  :init
+  (require 'corfu)
   :custom
   (corfu-cycle t)
   :bind
@@ -41,6 +54,8 @@
 
 (use-package vertico
   :straight t
+  :init
+  (require 'vertico)
   :custom
   (vertico-cycle t)
   :bind
@@ -52,6 +67,8 @@
 
 (use-package embark
   :straight t
+  :init
+  (require 'embark)
   :custom
   (embark-confirm-act-all nil)
   :bind
@@ -69,15 +86,22 @@
   :straight '(embark-consult :host github
                              :repo "oantolin/embark"
                              :files ("embark-consult.el"))
+  :init
+  (require 'embark-consult)
   :after (embark consult)
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package prescient
-  :straight t)
+  :straight t
+  :init
+  (require 'prescient))
 
 (use-package which-key
   :straight t
+  :init
+  (require 'which-key)
+  :after diminish
   :diminish which-key-mode
   :custom
   (which-key-idle-delay 1)
@@ -93,6 +117,8 @@
 
 (use-package helm
   :straight t
+  :init
+  (require 'helm)
   :after lsp-java
   :hook
   (java-mode . pg/helm-lsp-java)

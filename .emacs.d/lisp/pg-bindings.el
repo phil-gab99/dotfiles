@@ -1,5 +1,10 @@
+;;; pg-bindings.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (use-package hydra
-  :straight t)
+  :straight t
+  :init
+  (require 'hydra))
 
 (defhydra hydra-text-scale (:timeout 5)
   "Scale text."
@@ -54,11 +59,15 @@
 
 (use-package iso-transl
   :straight nil
+  :init
+  (require 'iso-transl)
   :bind
-  ((kbd "<Multi_key>") . iso-transl-ctl-x-8-map))
+  ("<Multi_key>" . iso-transl-ctl-x-8-map))
 
 (use-package general
   :straight t
+  :init
+  (require 'general)
   :after (evil which-key)
   :config
   (general-create-definer pg/leader-keys

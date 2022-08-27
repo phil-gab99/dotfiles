@@ -1,3 +1,6 @@
+;;; pg-buffer.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
 (setq even-window-sizes nil
       display-buffer-base-action
       '(display-buffer-reuse-mode-window
@@ -6,6 +9,8 @@
 
 (use-package bufler
   :straight t
+  :init
+  (require 'bufler)
   :after evil
   :commands bufler
   :bind
@@ -60,18 +65,24 @@
 
 (use-package winner
   :straight nil
+  :init
+  (require 'winner)
   :config
   (winner-mode))
 
 (use-package tab-bar
   :straight nil
+  :init
+  (require 'tab-bar)
   :custom
-  (customize-set-variable 'tab-bar-show 1)
+  (tab-bar-show 1)
   :config
   (tab-bar-mode))
 
 (use-package perspective
   :straight t
+  :init
+  (require 'perspective)
   :custom
   (persp-suppress-no-prefix-key-warning t)
   :bind
