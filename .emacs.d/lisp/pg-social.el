@@ -1,13 +1,19 @@
-(straight-use-package 'slack)
-(unless (fboundp 'slack-start)
-  (autoload #'slack-start "slack" nil t))
-(with-eval-after-load 'slack
+(use-package slack
+  :straight t
+  :init (require 'emojify)
+  :after evil
+  :commands slack-start
+  :custom
+  (slack-prefer-current-team t)
+  (slack-buffer-emojify t)
+  :config
   (slack-register-team :name "ift6755"
                        :default t
                        :token (pg/lookup-password :host "ift6755.slack.com" :user "philippe.gabriel.1@umontreal.ca")
                        :cookie (pg/lookup-password :host "ift6755.slack.com" :user "philippe.gabriel.1@umontreal.ca^cookie")
                        :subscribed-channels '((general questions random))
                        :modeline-enabled t)
+
   (evil-define-key 'normal slack-info-mode-map
     ",u" 'slack-room-update-messages)
   (evil-define-key 'normal slack-mode-map
@@ -16,21 +22,20 @@
     ",rs" 'slack-message-show-reaction-users
     ",mm" 'slack-message-write-another-buffer
     ",me" 'slack-message-edit
-    ",md" 'slack-message-delete)
-  (customize-set-variable 'slack-prefer-current-team t)
-  (require 'emojify)
-  (with-eval-after-load 'emojify
-    (customize-set-variable 'slack-buffer-emojify t)))
+    ",md" 'slack-message-delete))
 
-(straight-use-package 'sx)
-(unless (fboundp 'sx-search)
-  (autoload #'sx-search "sx" nil t))
+(use-package sx
+  :straight t
+  :commands sx-search)
 
-(require 'telega)
-(with-eval-after-load 'telega
+(use-package telega
+  :straight nil
+  :init
   (require 'telega-alert)
   (require 'telega-dashboard)
-  (telega 1)
-  (customize-set-variable 'telega-alert-mode 1))
+  :custom
+  (telega-alert-mode 1)
+  :config
+  (telega 1))
 
 (provide 'pg-social)

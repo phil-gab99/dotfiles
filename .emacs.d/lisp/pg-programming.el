@@ -4,30 +4,32 @@
   (lsp-lens-mode)
   (lsp-headerline-breadcrumb-mode))
 
-(straight-use-package 'lsp-mode)
-(unless (fboundp 'lsp)
-  (autoload #'lsp "lsp-mode" nil t))
-(unless (fboundp 'lsp-deferred)
-  (autoload #'lsp-deferred "lsp-mode" nil t))
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'pg/lsp-mode-setup)
+(use-package lsp-mode
+  :straight t
+  :init
   (require 'lsp-completion)
-  (lsp-enable-which-key-integration t)
-  (customize-set-variable 'lsp-completion-provider :none)
-  (customize-set-variable 'lsp-keymap-prefix "C-c l"))
+  :commands (lsp lsp-deferred)
+  :hook
+  (lsp-mode-hook . pg/lsp-mode-setup)
+  :custom
+  (lsp-completion-provider :none)
+  (lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
 
-(straight-use-package 'lsp-ui)
-(with-eval-after-load 'lsp-mode
-  (require 'lsp-ui)
-  (with-eval-after-load 'lsp-ui
-    (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-    (customize-set-variable 'lsp-ui-doc-position 'bottom)
-    (customize-set-variable 'lsp-ui-doc-show-with-cursor t)
-    (customize-set-variable 'lsp-ui-doc-include-signature t)))
+(use-package lsp-ui
+  :straight t
+  :after lsp-mode
+  :hook
+  (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-doc-include-signature t))
 
-(straight-use-package 'lsp-treemacs)
-(with-eval-after-load 'lsp-mode
-  (require 'lsp-treemacs))
+(use-package lsp-treemacs
+  :straight t
+  :after lsp)
 
 (defvar company-mode/enable-yas t
   "Enable yasnippet for all backends.")
@@ -39,73 +41,74 @@
     (append (if (consp backend) backend (list backend))
             '(:with company-yasnippet))))
 
-(straight-use-package 'company)
-(with-eval-after-load 'lsp-mode
-  (require 'company (expand-file-name "straight/repos/company-mode/company.el" user-emacs-directory))
-  (with-eval-after-load 'company
-    (add-hook 'prog-mode-hook #'company-mode)
-    (define-key company-active-map "<tab>" #'company-complete-selection)
-    (define-key lsp-mode-map "<tab>" #'company-indent-or-complete-common)
-    (customize-set-variable 'company-minimum-prefix-length 1)
-    (customize-set-variable 'company-idle-delay 0.0)
-    (customize-set-variable 'company-tooltip-minimum-width 40)
-    (customize-set-variable 'company-tooltip-maximum-width 60)
-    (customize-set-variable 'company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+(use-package company
+  :straight t
+  :hook
+  (prog-mode . company-mode)
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0)
+  (company-tooltip-minimum-width 40)
+  (company-tooltip-maximum-width 60)
+  (company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  :bind
+  (:map company-active-map
+        ("<tab>" . company-complete-selection))
+  (:map lsp-mode-map
+        ("<tab>" . company-indent-or-complete-common)))
 
-(straight-use-package 'company-box)
-(with-eval-after-load 'company
-  (require 'company-box (expand-file-name "straight/repos/company-box/company-box.el" user-emacs-directory))
-  (with-eval-after-load 'company-box
-    (add-hook 'company-mode-hook #'company-box-mode)))
+(use-package company-box
+  :straight t
+  :after company
+  :hook
+  (company-mode . company-box-mode))
 
-(straight-use-package 'company-prescient)
-(with-eval-after-load 'company
-  (with-eval-after-load 'prescient
-    (require 'company-prescient)
-    (with-eval-after-load 'company-prescient
-      (company-prescient-mode 1))))
+(use-package company-prescient
+  :straight t
+  :after (company prescient)
+  :custom
+  (company-prescient-mode 1))
 
-(straight-use-package 'flycheck)
-(with-eval-after-load 'lsp-mode
-  (require 'flycheck)
-  (with-eval-after-load 'flycheck
-    (add-hook 'lsp-mode-hook #'flycheck-mode)))
+(use-package flycheck
+  :straight t
+  :after lsp-mode
+  :hook
+  (lsp-mode-hook . flycheck-mode))
 
-(straight-use-package 'dap-mode)
-(with-eval-after-load 'lsp-mode
-  (require 'dap-mode)
-  (with-eval-after-load 'dap-mode
-    (customize-set-variable 'dap-mode 1)
-    (customize-set-variable 'dap-ui-mode 1)
-    (customize-set-variable 'dap-ui-controls-mode 1)))
+(use-package dap-mode
+  :straight t
+  :after lsp-mode
+  :custom
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (dap-ui-controls-mode 1))
 
-(straight-use-package 'plantuml-mode)
-(require 'plantuml-mode)
-(with-eval-after-load 'plantuml-mode
-  (customize-set-variable 'plantuml-indent-level 4)
-  (customize-set-variable 'plantuml-jar-path "~/bin/plantuml.jar")
-  (customize-set-variable 'plantuml-default-exec-mode 'jar))
+(use-package plantuml-mode
+  :straight t
+  :custom
+  (plantuml-indent-level 4)
+  (plantuml-jar-path "~/bin/plantuml.jar")
+  (plantuml-default-exec-mode 'jar))
 
-(straight-use-package 'comment-dwim-2)
-(unless (fboundp 'comment-dwim-2)
-  (autoload #'comment-dwim-2 "comment-dwim-2" nil t))
-(unless (fboundp 'org-comment-dwim-2)
-  (autoload #'org-comment-dwim-2 "comment-dwim-2" nil t))
-(require 'comment-dwim-2)
-(with-eval-after-load 'comment-dwim-2
-  (global-set-key (kbd "M-/") #'comment-dwim-2)
-  (define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2))
+(use-package comment-dwim-2
+  :straight t
+  :bind
+  ("M-/" . comment-dwim-2)
+  (:map org-mode-map
+        ("M-/" . org-comment-dwim-2)))
 
-(straight-use-package 'yasnippet)
-(require 'yasnippet)
-(with-eval-after-load 'yasnippet
-  (diminish 'yas-minor-mode)
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
-  (add-hook 'yas-minor-mode-hook #'(lambda () (yas-activate-extra-mode 'fundamental-mode)))
+(use-package yasnippet
+  :straight t
+  :after company
+  :diminish yas-minor-mode
+  :hook
+  (prog-mode . yas-minor-mode)
+  (yas-minor-mode . (lambda ()
+                      (yas-activate-extra-mode 'fundamental-mode)))
+  :config
   (yas-global-mode 1))
 
-(straight-use-package 'yasnippet-snippets)
-(with-eval-after-load 'yasnippet
-  (require 'yasnippet-snippets))
+(use-package yasnippet-snippets
+  :straight t)
 
 (provide 'pg-programming)

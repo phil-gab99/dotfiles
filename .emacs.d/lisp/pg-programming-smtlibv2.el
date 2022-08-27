@@ -1,4 +1,5 @@
-;; (straight-use-package 'z3-mode)
-;; (require 'z3-mode)
+(use-package z3-mode
+  :disabled
+  :straight t)
 
 (provide 'pg-programming-smtlibv2)

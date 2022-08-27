@@ -1,25 +1,28 @@
-(defun spring-boot-properties ()
+(defun pg/spring-boot-properties ()
   "Makes appropriate calls when opening a spring properties file."
   (when (not (equal nil (string-match-p "application\\(-?[^-]+\\)?\\.properties"
                                         (file-name-nondirectory (buffer-file-name)))))
     (progn (run-hooks 'prog-mode-hook)
            (lsp-deferred))))
 
-(straight-use-package 'lsp-java)
-(with-eval-after-load 'lsp-mode
-  (require 'lsp-java)
-  (with-eval-after-load 'lsp-java
-    (define-key lsp-mode-map "C-<return>" #'lsp-execute-code-action)
-    (require 'dap-java)
-    (require 'lsp-java-boot)
-    (add-hook 'java-mode-hook #'lsp-deferred)
-    (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
-    (add-hook 'find-file-hook #'spring-boot-properties)
-    (customize-set-variable 'lsp-java-configuration-runtimes '[( :name "JavaSE-17"
-                                                                 :path "~/.guix-extra-profiles/java/java"
-                                                                 :default t)])
-    (customize-set-variable 'lsp-java-vmargs (list "-noverify" "--enable-preview"))
-    (customize-set-variable 'lsp-java-java-path "java")
-    (customize-set-variable 'lsp-java-import-gradle-java-home "~/.guix-extra-profiles/java/java")))
+(use-package lsp-java
+  :straight t
+  :init
+  (dolist (feature '(dap-java
+                     lsp-java-boot))
+    (require feature))
+  :hook
+  (java-mode . (lsp-deferred lsp-java-boot-lens-mode))
+  (find-file . pg/spring-boot-properties)
+  :custom
+  (lsp-java-configuration-runtimes '[( :name "JavaSE-17"
+                                       :path (expand-file-name "~/.guix-extra-profiles/java/java")
+                                       :default t)])
+  (lsp-java-vmargs (list "-noverify" "--enable-preview"))
+  (lsp-java-java-path "java")
+  (lsp-java-import-gradle-java-home (expand-file-name "~/.guix-extra-profiles/java/java"))
+  :bind
+  (:map lsp-mode-map
+        ("C-<return>" . lsp-execute-code-action)))
 
 (provide 'pg-programming-java)

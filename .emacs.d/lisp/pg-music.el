@@ -56,36 +56,36 @@
     (pg/call-mpc nil (list "volume" volume-change-string)))
   (pg/message-current-volume))
 
-(straight-use-package 'emms)
-(unless pg/is-termux
-  (require 'emms)
-  (with-eval-after-load 'emms
-    (require 'emms-setup)
-    (require 'emms-player-mpd)
-    (emms-all)
-    (setq emms-info-functions '(emms-info-mpd)
-          emms-player-list '(emms-player-mpd))
-    (add-hook 'emms-playlist-cleared-hook #'emms-player-mpd-clear)
-    (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
+(use-package emms
+  :straight t
+  :init
+  (require 'emms-setup)
+  (require 'emms-player-mpd)
+  (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
+  :hook
+  (emms-playlist-cleared . emms-player-mpd-clear)
+  :custom
+  (emms-info-functions '(emms-info-mpd))
+  (emms-player-list '(emms-player-mpd))
+  :bind
+  (:map emms-browser-mode
+        ("<XF86AudioPrev>" . emms-previous)
+        ("<XF86AudioNext>" . emms-next)
+        ("<XF86AudioPlay>" . emms-pause)
+        ("<XF86AudioStop>" . emms-stop))
+  :config
+  (emms-all))
 
-    ;;      (bind-keys :package emms
-    ;;		 ("<XF86AudioPrev>" . emms-previous)
-    ;;		 ("<XF86AudioNext>" . emms-next)
-    ;;		 ("<XF86AudioPlay>" . emms-pause)
-    ;;		 ("<XF86AudioStop>" . emms-stop))
-    (customize-set-variable 'emms-source-file-default-directory "/home/phil-gab99/Music")
-    (customize-set-variable 'emms-player-mpd-music-directory "/home/phil-gab99/Music")
-    (customize-set-variable 'emms-seek-seconds 5)
-    (customize-set-variable 'emms-volume-change-amount 5)))
-
-(straight-use-package 'emms-mode-line-cycle)
-(with-eval-after-load 'emms
-  (require 'emms-mode-line-cycle)
-  (with-eval-after-load 'emms-mode-line-cycle
-    (emms-mode-line 1)
-    (emms-playing-time 1)
-    (require 'emms-mode-line-icon)
-    (customize-set-variable 'emms-mode-line-cycle-use-icon-p t)
-    (emms-mode-line-cycle 1)))
+(use-package emms-mode-line-cycle
+  :straight t
+  :init
+  (require 'emms-mode-line-icon)
+  :after emms
+  :custom
+  (emms-mode-line-cycle-use-icon-p t)
+  :config
+  (emms-mode-line 1)
+  (emms-playing-time 1)
+  (emms-mode-line-cycle 1))
 
 (provide 'pg-music)

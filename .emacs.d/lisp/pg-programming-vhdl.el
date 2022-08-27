@@ -7,11 +7,14 @@
   ((warning line-start (file-name) ":" line ":" column ":w:" (message) line-end)
    (error line-start (file-name) ":" line ":" column ":e:" (message) line-end)))
 
-(straight-use-package 'vhdl-tools)
-(require 'vhdl-tools)
-(with-eval-after-load 'vhdl-tools
-  (add-hook 'vhdl-mode-hook #'lsp-deferred)
+(use-package vhdl-tools
+  :disabled
+  :straight t
+  :hook
+  (vhdl-mode . lsp-deferred)
+  :config
   (add-to-list 'flycheck-checkers 'vhdl-tool)
-  (customize-set-variable 'lsp-vhdl-server-path "~/.emacs.d/lsp-servers/vhdl-tool"))
+  :custom
+  (lsp-vhdl-server-path "~/.emacs.d/lsp-servers/vhdl-tool"))
 
 (provide 'pg-programming-vhdl)

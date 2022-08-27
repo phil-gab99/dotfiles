@@ -1,17 +1,19 @@
-(require 'python)
-(with-eval-after-load 'python
-  (add-hook 'python-mode-hook #'lsp-deferred)
-  (require 'dap-python)
-  (customize-set-variable 'dap-python-debugger 'debugpy))
+(use-package lsp-python-ms
+  :straight t
+  :after (python lsp-mode)
+  :hook
+  (python-mode . lsp-deferred)
+  :custom
+  (lsp-python-ms-auto-install-server t))
 
-(straight-use-package 'lsp-python-ms)
-(with-eval-after-load 'lsp-mode
-  (require 'lsp-python-ms)
-  (with-eval-after-load 'lsp-python-ms
-    (add-hook 'python-mode-hook #'lsp-deferred)
-    (customize-set-variable 'lsp-python-ms-auto-install-server t)))
+(use-package dap-python
+  :straight nil
+  :after (python lsp-mode)
+  :custom
+  (dap-python-debugger 'debugpy))
 
-;; (straight-use-package 'jupyter)
-;; (require 'jupyter)
+(use-package jupyter
+  :disabled
+  :straight t)
 
 (provide 'pg-programming-python)

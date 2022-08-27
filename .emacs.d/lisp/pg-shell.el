@@ -1,14 +1,14 @@
-(straight-use-package 'eshell-git-prompt)
-(with-eval-after-load 'eshell
-  (require 'eshell-git-prompt)
-  (with-eval-after-load 'eshell-git-prompt
-    (eshell-git-prompt-use-theme 'multiline2)))
+(use-package eshell-git-prompt
+  :straight t
+  :after eshell
+  :config
+  (eshell-git-prompt-use-theme 'multiline2))
 
-(straight-use-package 'eshell-syntax-highlighting)
-(with-eval-after-load 'eshell
-  (require 'eshell-syntax-highlighting)
-  (with-eval-after-load 'eshell-syntax-highlighting
-    (eshell-syntax-highlighting-global-mode t)))
+(use-package eshell-syntax-highlighting
+  :straight t
+  :after eshell
+  :custom
+  (eshell-syntax-highlighting-global-mode t))
 
 (defun pg/esh-autosuggest-setup ()
   "Eshell autosuggest setup."
@@ -16,13 +16,15 @@
   (set-face-foreground 'company-preview-common nil)
   (set-face-background 'company-preview nil))
 
-(straight-use-package 'esh-autosuggest)
-(with-eval-after-load 'eshell
-  (require 'esh-autosuggest)
-  (with-eval-after-load 'esh-autosuggest
-    (add-hook 'eshell-mode-hook #'esh-autosuggest-mode)
-    (customize-set-variable 'esh-autosuggest-delay 0.5)
-    (pg/esh-autosuggest-setup)))
+(use-package esh-autosuggest
+  :straight t
+  :after eshell
+  :hook
+  (eshell-mode . esh-autosuggest-mode)
+  :custom
+  (esh-autosuggest-delay 0.5)
+  :config
+  (pg/esh-autosuggest-setup))
 
 (defun pg/configure-eshell ()
   "Eshell setup."
@@ -43,12 +45,16 @@
         eshell-hist-ignoredups t
         eshell-scroll-to-bottom-on-input t))
 
-(require 'eshell)
-(with-eval-after-load 'eshell
+(use-package eshell
+  :straight nil
+  :init 
   (require 'em-tramp)
-  (add-hook 'eshell-first-time-mode-hook #'pg/configure-eshell)
-  (customize-set-variable 'eshell-prefer-lisp-functions t))
+  :hook
+  (eshell-first-time-mode . pg/configure-eshell)
+  :custom
+  (eshell-prefer-lisp-functions t))
 
-(require 'vterm)
+(use-package vterm
+  :straight nil)
 
 (provide 'pg-shell)

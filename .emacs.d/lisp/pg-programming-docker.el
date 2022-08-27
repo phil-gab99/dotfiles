@@ -1,8 +1,8 @@
-(straight-use-package 'docker)
-(require 'docker)
+(use-package docker
+  :straight t)
 
-(straight-use-package 'dockerfile-mode)
-(with-eval-after-load 'docker
-  (require 'dockerfile-mode))
+(use-package dockerfile-mode
+  :straight t
+  :after docker)
 
 (provide 'pg-programming-docker)

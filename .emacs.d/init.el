@@ -1,19 +1,13 @@
 (setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
 
-(push "~/.emacs.d/lisp" load-path)
-(delq "/gnu/store/nbbi5y1f17ldmjkcdvh70v90lp0kphar-emacs-28.1/share/emacs/28.1/lisp/org" load-path)
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-      pg/exwm-enabled (and (not pg/is-termux) (eq window-system 'x))
-      pg/is-gui (display-graphic-p))
+      pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
 
-(require 'pg-startup)
-(require 'pg-ui)
-(when pg/exwm-enabled (require 'pg-desktop))
-
-(dolist (package '(;; pg-startup
+(dolist (package '(pg-startup
                    ;; pg-native-compilation
-                   ;; pg-ui
+                   pg-ui
                    pg-guix
                    pg-passwords
                    pg-keylog
@@ -49,7 +43,7 @@
                    pg-programming-yaml
 
                    pg-notification
-                   ;; pg-org
+                   pg-org
                    pg-viewers
                    ;; pg-bible
                    pg-finance
@@ -60,6 +54,6 @@
                    pg-bindings))
   (require package))
 
-(require 'pg-org)
+(when pg/exwm-enabled (require 'pg-desktop))
 
 (setq gc-cons-threshold (* 2 1000 1000))

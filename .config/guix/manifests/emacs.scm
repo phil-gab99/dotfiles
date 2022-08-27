@@ -5,6 +5,8 @@
    ;; "emacs-exwm"
    ;; "emacs-desktop-environment"
    
+   "emacs-use-package"
+   
    "emacs-guix"
    
    ;; "emacs-pinentry"

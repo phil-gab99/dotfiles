@@ -43,9 +43,9 @@
   (set (make-local-variable 'comment-start-skip)
        "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
 
-(straight-use-package 'lmc)
-(require 'lmc)
-(with-eval-after-load 'lmc
+(use-package lmc
+  :straight t
+  :init
   (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 (provide 'pg-programming-lmc)

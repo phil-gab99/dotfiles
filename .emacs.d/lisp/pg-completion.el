@@ -1,85 +1,104 @@
-(require 'savehist)
-(with-eval-after-load 'savehist
-  (savehist-mode))
+(use-package savhist
+  :straight nil
+  :config
+  (savhist-mode))
 
-(straight-use-package 'marginalia)
-(with-eval-after-load 'vertico
-  (require 'marginalia)
-  (with-eval-after-load 'marginalia
-    (customize-set-variable 'marginalia-annotators '(marginalia-annotators-heavy
-                                                     marginalia-annotators-light
-                                                     nil))
-    (marginalia-mode)))
+(use-package marginalia
+  :straight t
+  :after vertico
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy
+                           marginalia-annotators-light
+                           nil))
+  :config
+  (marginalia-mode))
 
-(straight-use-package 'consult)
-(require 'consult)
-(with-eval-after-load 'consult
-  (global-set-key (kbd "C-s") #'consult-line)
-  (global-set-key (kbd "C-x b") #'consult-buffer)
-  (define-key minibuffer-local-map (kbd "C-r") #'consult-history))
+(use-package consult
+  :straight t
+  :bind
+  ("C-s" . consult-line)
+  ("C-x b" . consult-buffer)
+  (:map minibuffer-local-map
+        ("C-r" . consult-history)))
 
-(straight-use-package 'orderless)
-(with-eval-after-load 'vertico
-  (require 'orderless)
-  (with-eval-after-load 'orderless
-    (customize-set-variable 'completion-styles '(orderless))
-    (customize-set-variable 'completion-category-defaults nil)
-    (customize-set-variable 'orderless-skip-highlighting nil)
-    (customize-set-variable 'completion-category-overrides '((file (styles basic partial-completion))))))
+(use-package orderless
+  :straight t
+  :after vertico
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-defaults nil)
+  (orderless-skip-highlighting nil)
+  (completion-category-overrides '((file (styles basic partial-completion)))))
 
-(straight-use-package 'corfu)
-(require 'corfu)
-(with-eval-after-load 'corfu
-  (define-key corfu-map (kbd "C-j") #'corfu-next)
-  (define-key corfu-map (kbd "C-k") #'corfu-previous)
-  (customize-set-variable 'corfu-cycle t))
+(use-package corfu
+  :straight t
+  :custom
+  (corfu-cycle t)
+  :bind
+  (:map corfu-map
+        ("C-j" . corfu-next)
+        ("C-k" . corfu-previous)))
 
-(straight-use-package 'vertico)
-(require 'vertico)
-(with-eval-after-load 'vertico
-  (define-key vertico-map (kbd "C-j") #'vertico-next)
-  (define-key vertico-map (kbd "C-k") #'vertico-previous)
-  (customize-set-variable 'vertico-cycle t)
+(use-package vertico
+  :straight t
+  :custom
+  (vertico-cycle t)
+  :bind
+  (:map vertico-map
+        ("C-j" . vertico-next)
+        ("C-k" . vertico-previous))
+  :config
   (vertico-mode))
 
-(straight-use-package 'embark)
-(require 'embark)
-(with-eval-after-load 'embark
-  (global-set-key (kbd "C-S-a") #'embark-act)
-  (define-key minibuffer-local-map (kbd "C-d") #'embark-act)
-  (customize-set-variable 'embark-confirm-act-all nil)
+(use-package embark
+  :straight t
+  :custom
+  (embark-confirm-act-all nil)
+  :bind
+  ("C-S-a" . embark-act)
+  (:map minibuffer-local-map
+        ("C-d" . embark-act))
+  :config
   (setq embark-action-indicator
         (lambda (map)
           (which-key--show-keymap "Embark" map nil nil 'no-paging)
           #'which-key--hide-popup-ignore-command)
         embark-become-indicator embark-action-indicator))
 
-(straight-use-package '(embark-consult :host github
-                                       :repo "oantolin/embark"
-                                       :files ("embark-consult.el")))
-(require 'embark-consult)
-(with-eval-after-load 'embark
-  (with-eval-after-load 'consult
-    (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)))
+(use-package embark-consult
+  :straight '(embark-consult :host github
+                             :repo "oantolin/embark"
+                             :files ("embark-consult.el"))
+  :after (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
-(straight-use-package 'prescient)
-(require 'prescient)
+(use-package prescient
+  :straight t)
 
-(straight-use-package 'which-key)
-(require 'which-key)
-(with-eval-after-load 'which-key
-  (which-key-mode)
-  (customize-set-variable 'which-key-idle-delay 1)
-  (diminish 'which-key-mode))
+(use-package which-key
+  :straight t
+  :diminish which-key-mode
+  :custom
+  (which-key-idle-delay 1)
+  :config
+  (which-key-mode))
 
-(straight-use-package 'helm)
-(with-eval-after-load 'lsp-java
-  (require 'helm)
-  (with-eval-after-load 'helm
-    (define-key helm-map (kbd "C-j") #'helm-next-line)
-    (define-key helm-map (kbd "C-k") #'helm-previous-line)
-    (if (and (eq #'java-mode major-mode) (memq #'lsp-mode local-minor-modes))
-        (helm-mode 1)
-      (helm-mode 0))))
+(defun pg/helm-lsp-java ()
+  "Enables `helm' when `lsp-java' is running."
+  (if (and (eq #'java-mode major-mode)
+           (memq #'lsp-mode local-minor-modes))
+      (helm-mode 1)
+    (helm-mode 0)))
+
+(use-package helm
+  :straight t
+  :after lsp-java
+  :hook
+  (java-mode . pg/helm-lsp-java)
+  :bind
+  (:map helm-map
+        ("C-j" . helm-next-line)
+        ("C-k" . helm-previous-line)))
 
 (provide 'pg-completion)

@@ -1,6 +1,7 @@
-(straight-use-package 'sly)
-(require 'sly)
-(with-eval-after-load 'sly
-  (customize-set-variable 'inferior-lisp-program "sbcl"))
+(use-package sly
+  :straight t
+  :after lisp-mode
+  :custom
+  (inferior-lisp-program "sbcl"))
 
 (provide 'pg-programming-commonlisp)

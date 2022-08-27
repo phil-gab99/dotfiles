@@ -1,4 +1,4 @@
-(straight-use-package 'git-modes)
-(require 'git-modes)
+(use-package git-modes
+  :straight t)
 
 (provide 'pg-programming-git)

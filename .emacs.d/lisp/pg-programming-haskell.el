@@ -1,13 +1,11 @@
-(straight-use-package 'haskell-mode)
-(with-eval-after-load 'lsp-mode
-  (require 'haskell-mode)
-  (with-eval-after-load 'haskell-mode
-    (dolist (mode '(haskell-mode
-                    haskell-literate-mode))
-      (add-hook mode #'lsp-deferred))))
+(use-package haskell-mode
+  :straight t)
 
-(straight-use-package 'lsp-haskell)
-(with-eval-after-load 'lsp-mode
-  (require 'lsp-haskell))
+(use-package lsp-haskell
+  :straight t
+  :after lsp-mode
+  :hook
+  ((haskell-mode
+    haskell-literate-mode) . lsp-deferred))
 
 (provide 'pg-programming-haskell)

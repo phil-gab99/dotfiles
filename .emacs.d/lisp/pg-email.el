@@ -1,33 +1,36 @@
 (unless pg/is-termux
-  (unless (fboundp 'mu4e)
-    (autoload #'mu4e "mu4e" nil t))
-  ;; (require 'mu4e (expand-file-name "straight/repos/mu/mu4e/mu4e.el" user-emacs-directory))
-  (with-eval-after-load 'mu4e
-    (straight-use-package '(mu :type git
-                               :host github
-                               :repo "djcb/mu"
-                               :branch "release/1.8"))
-    (require 'mu4e-org (expand-file-name "straight/repos/mu/mu4e/mu4e-org.el" user-emacs-directory))
-    (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
-    (customize-set-variable 'mail-user-agent #'mu4e-user-agent)
-    (customize-set-variable 'mu4e-change-filenames-when-moving t)
-    (customize-set-variable 'mu4e-update-interval (* 10 60))
-    (customize-set-variable 'mu4e-get-mail-command "mbsync -a")
-    ;; (customize-set-variable 'mu4e-maildir "~/Mail")
-    (customize-set-variable 'mu4e-compose-format-flowed t)
-    (customize-set-variable 'mu4e-compose-signature
-                            (concat "Philippe Gabriel - \n[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
-                                    "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
-    (customize-set-variable 'mu4e-compose-signature-auto-include nil)
-    (customize-set-variable 'message-send-mail-function 'smtpmail-send-it)
-    (customize-set-variable 'mu4e-maildir-shortcuts
-                            '(("/University/Inbox" . ?u)
-                              ("/University/Drafts" . ?d)
-                              ("/Main/Inbox" . ?m)
-                              ("/Main/Jobs" . ?j)
-                              ("/Main/University" . ?s)))
-    (customize-set-variable 'mu4e-context-policy 'pick-first)
-
+  (use-package mu4e
+    :straight '(mu4e :type git
+                     :host github
+                     :repo "djcb/mu"
+                     :branch "release/1.8")
+    :init
+    (require 'mu4e-org)
+    :hook
+    (mu4e-compose-mode . corfu-mode)
+    (mu4e-main-mode . (lambda () (mu4e t)))
+    :commands mu4e
+    :custom
+    (mail-user-agent #'mu4e-user-agent)
+    (mu4e-change-filenames-when-moving t)
+    (mu4e-update-interval (* 10 60))
+    (mu4e-get-mail-command "mbsync -a")
+    ;; (mu4e-maildir "~/Mail")
+    (mu4e-compose-format-flowed t)
+    (mu4e-compose-signature
+     (concat "Philippe Gabriel - \n"
+             "[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
+             "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
+    (mu4e-compose-signature-auto-include nil)
+    (message-send-mail-function 'smtpmail-send-it)
+    (mu4e-maildir-shortcuts
+     '(("/University/Inbox" . ?u)
+       ("/University/Drafts" . ?d)
+       ("/Main/Inbox" . ?m)
+       ("/Main/Jobs" . ?j)
+       ("/Main/University" . ?s)))
+    (mu4e-context-policy 'pick-first)
+    :custom
     (setq mu4e-contexts
           (list
            ;; Main account
@@ -66,13 +69,13 @@
                     (mu4e-refile-folder . "/University/Archive")
                     (mu4e-trash-folder . "/University/Deleted Items")))))))
 
-(straight-use-package 'mu4e-alert)
-(unless pg/is-termux
-  (require 'mu4e-alert)
-  (with-eval-after-load 'mu4e
-    (customize-set-variable 'mu4e-alert-notify-repeated-mails t)
-    (mu4e-alert-set-default-style 'notifications)
-    (mu4e-alert-enable-notifications)
-    (mu4e-alert-enable-mode-line-display)))
+(use-package mu4e-alert
+  :straight t
+  :custom
+  (mu4e-alert-notify-repeated-mails t)
+  :config
+  (mu4e-alert-set-default-style 'notifications)
+  (mu4e-alert-enable-notifications)
+  (mu4e-alert-enable-mode-line-display))
 
 (provide 'pg-email)

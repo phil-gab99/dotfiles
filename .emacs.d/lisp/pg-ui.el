@@ -14,38 +14,39 @@
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-(straight-use-package 'diminish)
-(require 'diminish)
+(use-package diminish
+  :straight t)
 
-(straight-use-package 'all-the-icons)
-(require 'all-the-icons)
+(use-package all-the-icons
+  :straight t)
 
-(straight-use-package 'doom-modeline)
-(require 'doom-modeline)
-(with-eval-after-load 'doom-modeline
-  (doom-modeline-mode 1)
-  (customize-set-variable 'doom-modeline-height 15)
-  (customize-set-variable 'doom-modeline-modal-icon nil)
-  (customize-set-variable 'doom-modeline-enable-word-count t)
-  (customize-set-variable 'doom-modeline-indent-info t)
-  (customize-set-variable 'doom-modeline-buffer-file-name-style 'truncate-except-project)
-  (customize-set-variable 'doom-modeline-mu4e t))
+(use-package doom-modeline
+  :straight t
+  :custom
+  (doom-modeline-height 15)
+  (doom-modeline-modal-icon nil)
+  (doom-modeline-enable-word-count t)
+  (doom-modeline-indent-info t)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project)
+  (doom-modeline-mu4e t)
+  :config
+  (doom-modeline-mode 1))
 
-(straight-use-package 'autothemer)
-(require 'autothemer)
-(with-eval-after-load 'autothemer
+(use-package autothemer
+  :straight t
+  :config
   (load-theme 'onedark-variant t))
 
 (defun pg/dashboard-setup-startup-hook ()
   "Setup post initialization hooks."
   (add-hook 'after-init-hook #'(lambda ()
-			       ;; Display useful lists of items
-			       (dashboard-insert-startupify-lists)))
+                                 ;; Display useful lists of items
+                                 (dashboard-insert-startupify-lists)))
   (add-hook 'emacs-startup-hook #'(lambda ()
-				  (switch-to-buffer dashboard-buffer-name)
-				  (goto-char (point-min))
-				  (redisplay)
-				  (run-hooks 'dashboard-after-initialize-hook))))
+                                    (switch-to-buffer dashboard-buffer-name)
+                                    (goto-char (point-min))
+                                    (redisplay)
+                                    (run-hooks 'dashboard-after-initialize-hook))))
 
 (defun pg/display-startup-time ()
   "Displays some startip statistics."
@@ -53,23 +54,25 @@
     (when (boundp 'straight--profile-cache)
       (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
     (if (zerop package-count)
-	(format "Emacs started in %.2f" time)
+        (format "Emacs started in %.2f" time)
       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
-(straight-use-package 'dashboard)
-(with-eval-after-load 'projectile
-  (require 'dashboard)
-  (with-eval-after-load 'dashboard
-    (customize-set-variable 'dashboard-set-file-icons t)
-    (customize-set-variable 'dashboard-items '((recents . 10)
-					       (projects . 10)
-					       (agenda . 5)))
-    (customize-set-variable 'dashboard-page-separator "\n\f\n")
-    (customize-set-variable 'dashboard-init-info #'pg/display-startup-time)
-    (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
-    (pg/dashboard-setup-startup-hook)))
+(use-package dashboard
+  :straight t
+  :init
+  (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
+  :after projectile
+  :custom
+  (customize-set-variable 'dashboard-set-file-icons t)
+  (customize-set-variable 'dashboard-items '((recents . 5)
+                                             (projects . 10)
+                                             (agenda . 5)))
+  (customize-set-variable 'dashboard-page-separator "\n\f\n")
+  (customize-set-variable 'dashboard-init-info #'pg/display-startup-time)
+  :config
+  (pg/dashboard-setup-startup-hook))
 
-(straight-use-package 'page-break-lines)
-(require 'page-break-lines)
+(use-package page-break-lines
+  :straight t)
 
 (provide 'pg-ui)

@@ -1,3 +1,7 @@
+(use-package typescript-mode
+  :straight t
+  :mode "\\.ts$")
+
 (straight-use-package 'typescript-mode)
 (with-eval-after-load 'lsp
   (require 'typescript-mode)
@@ -7,5 +11,13 @@
     (require 'dap-node)
     (with-eval-after-load 'dap-node
       (dap-node-setup))))
+
+(use-package dap-node
+  :straight nil
+  :after (typescript-mode lsp-mode)
+  :hook
+  (typescript-mode . lsp-deferred)
+  :config
+  (dap-node-setup))
 
 (provide 'pg-programming-typescript)

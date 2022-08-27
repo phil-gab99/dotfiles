@@ -1,13 +1,12 @@
-(require 'doc-view)
-(with-eval-after-load 'doc-view
-  (add-to-list 'auto-mode-alist '("\\.djvu\\'" . doc-view-mode)))
+(use-package doc-view
+  :straight nil
+  :mode "\\.djvu$")
 
-(straight-use-package 'pdf-tools)
-(require 'pdf-tools)
-(with-eval-after-load 'pdf-tools
-  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode)))
+(use-package pdf-tools
+  :straight t
+  :mode "\\.pdf$")
 
-(straight-use-package 'djvu)
-(require 'djvu)
+(use-package djvu
+  :straight t)
 
 (provide 'pg-viewers)

@@ -1,24 +1,26 @@
-(require 'cc-mode)
-(with-eval-after-load 'cc-mode
-  (dolist (mode '(c-mode
-                  c++-mode
-                  objc-mode))
-   (add-hook mode #'lsp-deferred))
-  (customize-set-variable 'company-clang-executable (expand-file-name "~/.guix-extra-profiles/cc/cc/bin/clang"))
-  (require 'cc-vars)
-  (with-eval-after-load 'cc-vars
-    (customize-set-variable 'c-basic-offset 4)))
+(use-package cc-mode
+  :straight nil
+  :hook
+  ((c-mode
+    c++-mode
+    objc-mode) . lsp-deferred)
+  :custom
+  (company-clang-executable (expand-file-name "~/.guix-extra-profiles/cc/cc/bin/clang")))
 
-(straight-use-package 'company-c-headers)
-(with-eval-after-load 'cc-mode
-  (with-eval-after-load 'company
-    (require 'company-c-headers)
-    (with-eval-after-load 'company-c-headers
-      (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))))
+(use-package cc-vars
+  :straight nil
+  :after cc-mode
+  :custom
+  (c-basic-offset 4))
 
-(straight-use-package 'ccls)
-(with-eval-after-load 'cc-mode
-  (with-eval-after-load 'lsp-mode
-    (require 'ccls)))
+(use-package company-c-headers
+  :straight t
+  :after (cc-mode company)
+  :config
+  (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
+
+(use-package ccls
+  :straight t
+  :after (cc-mode lsp-mode))
 
 (provide 'pg-programming-cc)

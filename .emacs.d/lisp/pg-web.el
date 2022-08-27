@@ -5,8 +5,9 @@
                                      (fixed-pitch (:height 2.0) fixed-pitch)
                                      (default (:height 2.0) default))))
 
-(require 'eww)
-(with-eval-after-load 'eww
-  (add-hook 'eww-mode-hook #'pg/eww-mode-setup))
+(use-package eww
+  :straight nil
+  :hook
+  (eww-mode . pg/eww-mode-setup))
 
 (provide 'pg-web)
