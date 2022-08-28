@@ -231,6 +231,9 @@
   (org-msg-greeting-name-limit 3)
   (org-message-convert-citation t)
   (org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
+  (org-msg-default-alternatives '((new html)
+                                  (reply-to-text html)
+                                  (reply-to-html html)))
   (org-msg-recipient-names nil)
   :config
   (org-msg-mode))

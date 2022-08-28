@@ -11,10 +11,9 @@
   :straight nil
   :init
   (require 'geiser)
-  :after guix
-  :commands run-geiser
-  :bind
-  (:map geiser-repl-mode-map
-        ("C-l" . geiser-repl-clear-buffer)))
+  :after guix)
+  ;; :bind
+  ;; (:map geiser-repl-mode-map
+  ;;       ("C-l" . geiser-repl-clear-buffer)))
 
 (provide 'pg-guix)

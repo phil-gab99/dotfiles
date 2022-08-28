@@ -43,15 +43,15 @@ Some initializations are first set up.
   (unless (featurep 'straight)
     (defvar bootstrap-version)
     (let ((bootstrap-file
-	   (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	  (bootstrap-version 5))
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
       (unless (file-exists-p bootstrap-file)
-	(with-current-buffer
-	    (url-retrieve-synchronously
-	     "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	     'silent 'inhibit-cookies)
-	  (goto-char (point-max))
-	  (eval-print-last-sexp)))
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
       (load bootstrap-file nil 'nomessage)))
 
 #+end_src
@@ -156,11 +156,10 @@ Scheme REPL.
     :straight nil
     :init
     (require 'geiser)
-    :after guix
-    :commands run-geiser
-    :bind
-    (:map geiser-repl-mode-map
-          ("C-l" . geiser-repl-clear-buffer)))
+    :after guix)
+    ;; :bind
+    ;; (:map geiser-repl-mode-map
+    ;;       ("C-l" . geiser-repl-clear-buffer)))
 
 #+end_src
 
@@ -1072,10 +1071,10 @@ After having setup the file, make sure to run the following commands:
                        :host github
                        :repo "djcb/mu"
                        :branch "release/1.8")
+      :commands mu4e
       :hook
       (mu4e-compose-mode . corfu-mode)
-      (mu4e-main-mode . (lambda () (mu4e t)))
-      :commands mu4e
+      ;; (mu4e-main-mode . (lambda () (mu4e t)))
       :custom
       (mail-user-agent #'mu4e-user-agent)
       (mu4e-change-filenames-when-moving t)
@@ -1468,8 +1467,9 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
   (use-package evil
     :straight t
-    :init
+    :preface
     (customize-set-variable 'evil-want-keybinding nil)
+    :init
     (require 'evil)
     :hook
     (evil-mode . pg/evil-hook)
@@ -2109,7 +2109,9 @@ Steps to get working:
     :straight t
     :init
     (require 'forge)
-    :after magit)
+    :after magit
+    :custom
+    (forge-add-default-bindings nil))
 
 #+end_src
 
@@ -2854,6 +2856,13 @@ Some general tools for programming:
 
 *Guix Packages*
 
+#+begin_src scheme :tangle ~/.config/guix/manifests/haskell.scm
+
+  (specifications->manifest
+   '("ghc@8"))
+
+#+end_src
+
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; "emacs-haskell-mode"
@@ -2865,6 +2874,7 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-haskell.el
 
   (use-package lsp-haskell
+    :disabled
     :straight t
     :init
     (require 'lsp-haskell)
@@ -3135,7 +3145,7 @@ Custom syntax highlighting for LMC assembly language.
   (use-package markdown-mode
     :straight t
     :init
-    (require 'markdown)
+    (require 'markdown-mode)
     :hook
     (gfm-view-mode . (lambda ()
                        (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
@@ -3356,8 +3366,6 @@ Custom syntax highlighting for LMC assembly language.
 
   (use-package lsp-sqls
     :straight nil
-    :init
-    (require 'lsp-sqls)
     :after (sql lsp-mode)
     :hook
     (sql-mode . lsp-deferred)
@@ -3917,6 +3925,9 @@ Allows for markup language when composing email
     (org-msg-greeting-name-limit 3)
     (org-message-convert-citation t)
     (org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
+    (org-msg-default-alternatives '((new html)
+                                    (reply-to-text html)
+                                    (reply-to-html html)))
     (org-msg-recipient-names nil)
     :config
     (org-msg-mode))
@@ -4320,8 +4331,7 @@ Allows for viewing of pdfs.
   (use-package slack
     :straight t
     :init
-    (require 'slack)
-    :init (require 'emojify)
+    (require 'emojify)
     :after evil
     :commands slack-start
     :custom

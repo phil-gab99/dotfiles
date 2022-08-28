@@ -24,8 +24,6 @@
 
 (use-package lsp-sqls
   :straight nil
-  :init
-  (require 'lsp-sqls)
   :after (sql lsp-mode)
   :hook
   (sql-mode . lsp-deferred)

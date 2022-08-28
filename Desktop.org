@@ -1,5 +1,5 @@
 #+title: Emacs Desktop Environment
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+author: Philippe Gabriel
 
 * Fonts
 
@@ -98,7 +98,7 @@ Various settings and packages to alllow emacs to act as the operating system.
 
 ** Package | app-launcher
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
   (use-package app-launcher
     :straight '(app-launcher :host github
@@ -118,12 +118,12 @@ Managing windows:
 - ~s-SPC~ - Select an app to open
 
 Workspaces:
-- ~s-(0-9)~ - Switch to numbered workspace (~~~ can also be used instead of ~0~)
+- ~s-(0-9)~ - Switch to numbered workspace (=~= can also be used instead of ~0~)
 - ~s-w~ - Workspace selector
 - ~C-c RET~ - Move window to numbered workspace (EXWM windows are attached to a single workspace)
 - ~C-x B~ - Move to any buffer across all workspaces
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
   (defun pg/exwm-update-class ()
     "Sets buffer names to be app names."
@@ -250,7 +250,7 @@ Workspaces:
 
 Allows for some of the keybindings to use while in exwm.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
   (use-package desktop-environment
     :straight t
@@ -314,7 +314,7 @@ In order to setup exwm for multiple monitors, the ~arandr~ and ~autorandr~ appli
 
 Some utility functions.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
   (defvar pg/polybar-process nil
     "Holds the process of the running Polybar instance, if any")
@@ -546,7 +546,7 @@ Some utility functions:
 | ~debug~                              | Print debugging information                                                                     |
 | ~help~                               | Show this help message                                                                          |
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
   (defun pg/dunstctl (cmd)
     "Calls dunst special commands."
@@ -2125,7 +2125,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 * Desktop Profile
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
 
   (provide 'pg-desktop)
 

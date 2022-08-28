@@ -7,10 +7,10 @@
                      :host github
                      :repo "djcb/mu"
                      :branch "release/1.8")
+    :commands mu4e
     :hook
     (mu4e-compose-mode . corfu-mode)
-    (mu4e-main-mode . (lambda () (mu4e t)))
-    :commands mu4e
+    ;; (mu4e-main-mode . (lambda () (mu4e t)))
     :custom
     (mail-user-agent #'mu4e-user-agent)
     (mu4e-change-filenames-when-moving t)

@@ -4,8 +4,7 @@
 (use-package slack
   :straight t
   :init
-  (require 'slack)
-  :init (require 'emojify)
+  (require 'emojify)
   :after evil
   :commands slack-start
   :custom

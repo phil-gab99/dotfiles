@@ -7,6 +7,7 @@
   (require 'haskell-mode))
 
 (use-package lsp-haskell
+  :disabled
   :straight t
   :init
   (require 'lsp-haskell)

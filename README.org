@@ -1,0 +1,36 @@
+* Dotfiles
+
+This repo is the home of my custom system configuration. It still needs some more work in order to eventually allow consistent computing experience across multiple machines with respect to system type. My primary machine is a GNU/Linux system using the GNU Guix distribution.
+
+** Principles
+
+The configuration files attempt to create an effective and satisfying daily use of my machine, be it for work-related tasks, gaming, etc...
+
+The below principles are the ones I try to follow most in my configuration:
+
+*** Keyboard Focused
+
+I prefer tools that prioritize the use of keybindings over mouse motions for achieving an efficient workflow. Tools such as GNU Emacs and Qutebrowser are such tools which greatly enhance one's keyboard-driven experience and promote this principle.
+
+*** Minimal Distractions
+
+I prefer a system which offers a minimal setup and allows me to better focus on my tasks at hand. GNU/Linux systems are the closest to allowing me to achieve such a goal and the GNU Guix system allows for a truly minimal working setup via system-level and user-level configurations.
+
+*** Text-based Configuration
+
+I prefer configuring the various tools of my workflow using text-based configurations as opposed to programs which might behave in undesirable ways. This enables me to save my configuration and source control it (as is done in this repository) which then allows me to sync this configuration across multiple devices and experiment on different branches.
+
+The GNU Guix allows me to apply this principle over the entire system, as the system-level and user-level configuration are managed through a text-based configuration following the Guile Scheme language.
+
+*** Highly Customizable
+
+I prefer tools which are highly customizable through their configuration. This allows me to customize them to fit in with my personal workflow and other tools that I tend to use. GNU Emacs is by far the most customizable and an important factor of my workflow.
+
+*** Literate Configuration
+
+To ease readability, I have migrated most of my configuration files to a literate configuration using Emacs' Org Mode. Below are the various Org files containing most of my configuration:
+
+- [[file:Emacs.org][Emacs]]
+- [[file:Desktop.org][Desktop Environment]]
+- [[file:System.org][Guix System Configuration]]
+

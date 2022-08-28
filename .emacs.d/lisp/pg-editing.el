@@ -161,8 +161,9 @@
 
 (use-package evil
   :straight t
-  :init
+  :preface
   (customize-set-variable 'evil-want-keybinding nil)
+  :init
   (require 'evil)
   :hook
   (evil-mode . pg/evil-hook)

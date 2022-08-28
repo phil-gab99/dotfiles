@@ -44,6 +44,8 @@
   :straight t
   :init
   (require 'forge)
-  :after magit)
+  :after magit
+  :custom
+  (forge-add-default-bindings nil))
 
 (provide 'pg-project)
