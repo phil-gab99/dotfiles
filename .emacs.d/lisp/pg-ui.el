@@ -1,6 +1,7 @@
 ;;; pg-ui.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(load-theme 'onedark-variant t)  ; Load onedark theme
 (setq inhibit-startup-message t  ; Disable startup message
       scroll-conservatively 1000 ; Slow scrolling
       split-width-threshold 185) ; Width for splitting
@@ -40,13 +41,6 @@
   (doom-modeline-mu4e t)
   :config
   (doom-modeline-mode 1))
-
-(use-package autothemer
-  :straight t
-  :init
-  (require 'autothemer)
-  :config
-  (load-theme 'onedark-variant t))
 
 (defun pg/dashboard-setup-startup-hook ()
   "Setup post initialization hooks."

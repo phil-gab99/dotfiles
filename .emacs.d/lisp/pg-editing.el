@@ -171,12 +171,13 @@
   (evil-want-integration t)
   (evil-want-C-u-scroll t)
   (evil-want-C-i-jump nil)
-  (evil-want-Y-yank-to-eol t)
+  ;; (evil-want-Y-yank-to-eol t)
   (evil-want-fine-undo t)
   :bind
   (:map evil-insert-state-map
         ("C-g" . evil-normal-state))
   :config
+  (customize-set-variable 'evil-want-Y-yank-to-eol t)
   (evil-mode 1)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)

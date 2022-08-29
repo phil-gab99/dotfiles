@@ -640,6 +640,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
 
+  (load-theme 'onedark-variant t)  ; Load onedark theme
   (setq inhibit-startup-message t  ; Disable startup message
         scroll-conservatively 1000 ; Slow scrolling
         split-width-threshold 185) ; Width for splitting
@@ -723,29 +724,6 @@ Customizes the look of the modeline for better aesthetic.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; "emacs-doom-modeline"
-
-#+end_src
-
-*** Package | autothemer
-
-Important to disable current theme ~M-x disable-theme~ in order to experiment.
-
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
-
-  (use-package autothemer
-    :straight t
-    :init
-    (require 'autothemer)
-    :config
-    (load-theme 'onedark-variant t))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; "emacs-autothemer"
 
 #+end_src
 
@@ -1477,12 +1455,13 @@ Allows usage of vim-like keybindings for some modes in emacs.
     (evil-want-integration t)
     (evil-want-C-u-scroll t)
     (evil-want-C-i-jump nil)
-    (evil-want-Y-yank-to-eol t)
+    ;; (evil-want-Y-yank-to-eol t)
     (evil-want-fine-undo t)
     :bind
     (:map evil-insert-state-map
           ("C-g" . evil-normal-state))
     :config
+    (customize-set-variable 'evil-want-Y-yank-to-eol t)
     (evil-mode 1)
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
@@ -1591,7 +1570,7 @@ Displays full documentations in place of the default help function.
     :init
     (require 'info)
     :hook
-    (Info-mode-hook . pg/Info-mode-setup))
+    (Info-mode . pg/Info-mode-setup))
 
 #+end_src
 
@@ -2483,7 +2462,6 @@ Some general tools for programming:
      ;; "webkitgtk"
      ;; "guile"
      "pkg-config"
-     "glibc"
      "glib"
      "glib:bin"
      ;; "check"
@@ -2563,6 +2541,7 @@ Some general tools for programming:
   (specifications->manifest
    '("gcc-toolchain@10.3.0"
      "texinfo"
+     "glibc"
      "llvm"
      "clang"
      "ccls"

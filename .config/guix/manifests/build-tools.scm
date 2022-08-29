@@ -12,7 +12,6 @@
    ;; "webkitgtk"
    ;; "guile"
    "pkg-config"
-   "glibc"
    "glib"
    "glib:bin"
    ;; "check"

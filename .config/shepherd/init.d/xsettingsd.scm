@@ -7,4 +7,3 @@
     #:stop (make-kill-destructor)))
 
 (register-services xsettingsd)
-(start xsettingsd)

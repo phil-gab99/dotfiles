@@ -123,7 +123,7 @@ c.content.autoplay = False
 sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
 config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
 # c.content.blocking.enabled = True
-# c.content.blocking.method = "adblock"
+# c.content.blocking.method = "auto"
 # c.content.blocking.adblock.lists = [
 #     'https://easylist.to/easylist/easylist.txt',
 #     'https://easylist.to/easylist/easyprivacy.txt',
@@ -152,8 +152,6 @@ config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
 ################################################################################
 
 ## Normal mode ##
-
-# Swap J and K for tab switching
 config.bind('J', 'tab-prev')
 config.bind('K', 'tab-next')
 config.unbind('d') # Don't close tab on lower-case 'd'
@@ -162,7 +160,7 @@ config.bind(',m', 'spawn mpv {url}')
 config.bind(',M', 'hint links spawn mpv {hint-url}')
 
 ## Command mode ##
-config.bind('<Ctrl-g>', 'mode-leave', mode='command')
+config.bind('<ctrl-g>', 'mode-leave', mode='command')
 config.bind('<ctrl-j>', 'completion-item-focus --history next', mode='command')
 config.bind('<ctrl-k>', 'completion-item-focus --history prev', mode='command')
 
@@ -170,10 +168,10 @@ config.bind('<ctrl-k>', 'completion-item-focus --history prev', mode='command')
 config.bind('<Ctrl-g>', 'mode-leave', mode='hint')
 
 ## Insert mode ##
-config.bind('<Ctrl-g>', 'mode-leave', mode='insert')
+config.bind('<ctrl-g>', 'mode-leave', mode='insert')
 
 ## Prompt mode ##
-config.bind('<Ctrl-g>', 'mode-leave', mode='prompt')
+config.bind('<ctrl-g>', 'mode-leave', mode='prompt')
 config.bind('<ctrl-j>', 'prompt-item-focus next', mode='prompt')
 config.bind('<ctrl-k>', 'prompt-item-focus prev', mode='prompt')
 config.unbind('<Tab>', mode='prompt')

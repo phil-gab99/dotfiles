@@ -6,12 +6,6 @@
   "Sets buffer names to be app names."
   (exwm-workspace-rename-buffer exwm-class-name))
 
-(defun pg/set-wallpaper ()
-  "Sets desktop wallpaper."
-  (interactive)
-  (start-process-shell-command "feh" nil "feh --bg-scale ~/Pictures/ferdinand-stohr-NFs6dRTBgaM-unsplash.jpg"))
-;; (start-process-shell-command "feh" nil "feh --bg-scale /usr/share/backgrounds/System76-Fractal_Mountains-by_Kate_Hazen_of_System76.png"))
-
 (defun pg/configure-window-by-class ()
   "Per application configuration."
   (pcase exwm-class-name
@@ -21,26 +15,35 @@
     ("edu-mit-csail-sdg-alloy4whole-Alloy" (exwm-layout-hide-mode-line))))
 
 (defun pg/run-in-background (command)
-  "Runs a process in the background"
+  "Runs a process in the background."
   (let ((command-parts (split-string command "[ ]+")))
     (apply #'call-process `(,(car command-parts) nil 0 nil ,@(cdr command-parts)))))
+
+(defun pg/herd-service (service)
+  "Starts herd process."
+  (start-process-shell-command "herd start" nil (concat "herd start " service)))
+
+(defun pg/set-wallpaper ()
+  "Sets desktop wallpaper."
+  (interactive)
+  (pg/herd-service "feh"))
 
 (defun pg/update-displays ()
   "Multiple display management."
   (interactive)
-  (pg/run-in-background "autorandr --change --force")
+  (pg/herd-service "autorandr")
   ;; Change this with respect to the different screen configuration
   ;; Check arandr for display names
-  (setq exwm-randr-workspace-monitor-plist
-        (pcase (shell-command-to-string "autorandr --detected")
-          ("work\n" '(5 "HDMI-1"))
-          ("work+\n" '(5 "HDMI-1"))
-          ("jclab\n" '(5 "HDMI-1"))
-          ("aa-1140\n" '(5 "HDMI-1"))
-          ("rg-e310\n" '(5 "HDMI-1"))
-          ("jc-s139\n" '(5 "HDMI-1"))
-          ("jc-s1139\n" '(5 "DP-1"))
-          ("entertainment\n" '(5 "HDMI-1"))))
+  (customize-set-variable 'exwm-randr-workspace-monitor-plist
+                          (pcase (shell-command-to-string "autorandr --detected")
+                            ("work\n" '(5 "HDMI-1"))
+                            ("work+\n" '(5 "HDMI-1"))
+                            ("jclab\n" '(5 "HDMI-1"))
+                            ("aa-1140\n" '(5 "HDMI-1"))
+                            ("rg-e310\n" '(5 "HDMI-1"))
+                            ("jc-s139\n" '(5 "HDMI-1"))
+                            ("jc-s1139\n" '(5 "DP-1"))
+                            ("entertainment\n" '(5 "HDMI-1"))))
   (pg/set-wallpaper)
   (message "Display config: %s"
            (string-trim (shell-command-to-string "autorandr --current"))))
@@ -48,10 +51,13 @@
 (defun pg/exwm-startup ()
   "Initializations."
   (pg/start-panel)
-  (pg/run-in-background "dunst")
-  (pg/run-in-background "nm-applet")
-  (pg/run-in-background "udiskie -t")
-  (pg/run-in-background "pasystray"))
+  (pg/herd-service "compton")
+  (pg/herd-service "xsettingsd")
+  (pg/herd-service "dunst")
+  (pg/herd-service "nm-applet")
+  (pg/herd-service "udiskie")
+  (pg/herd-service "pasystray")
+  (pg/herd-service "xmodmap"))
 
 (use-package exwm
   :straight t
@@ -114,9 +120,6 @@
   :config
   (pg/update-displays)
   (exwm-input-set-key (kbd "s-SPC") 'app-launcher-run-app)
-
-  ;; Configure some keybindings
-  (start-process-shell-command "xmodmap" nil "xmodmap ~/.emacs.d/exwm/Xmodmap")
 
   (exwm-randr-enable)
   (exwm-enable))

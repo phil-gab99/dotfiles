@@ -1,6 +1,7 @@
 (specifications->manifest
  '("gcc-toolchain@10.3.0"
    "texinfo"
+   "glibc"
    "llvm"
    "clang"
    "ccls"

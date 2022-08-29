@@ -1,7 +1,5 @@
-#export QUARTUS_ROOTDIR="/home/phil-gab99/Packages/Quartus/altera/13.0sp1/quartus"
-#export PRINTER="Canon_MF642C_643C_644C_aa_7c_a2_8_"
-#export PATH="$PATH:$QUARTUS_ROOTDIR/bin:$QUARTUS_ROOTDIR_OVERRIDE/bin"
-export PATH="$HOME/bin:$PATH"
+# Append user scripts to path
+export PATH="$PATH:$HOME/bin"
 
 # Load the default Guix profile
 GUIX_PROFILE="$HOME/.guix-profile"
@@ -22,6 +20,9 @@ done
 if [ -f /run/current-system/profile/etc/profile.d/nix.sh ]; then
   . /run/current-system/profile/etc/profile.d/nix.sh
 fi
+
+# Append libraries from Nix user packages to library path
+export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
 # Don't use the system-wide PulseAudio configuration
 #unset PULSE_CONFIG
@@ -47,6 +48,9 @@ export CC="gcc"
 
 # Some scripts make use of path to config directory
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# Some script make use of path to cache directory
+export XDG_CACHE_HOME="$HOME/.cache"
 
 # Make Flatpak apps visible to launcher
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share"
@@ -93,6 +97,16 @@ xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-font
 export VISUAL=emacsclient
 export EDITOR="$VISUAL"
 
+# Less specific variables
+export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
+
+# Python specific variables
+export PYTHONHISTORY=$XDG_CACHE_HOME/.python_history
+export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages"
+
+# Bash specific variables
+export HISTFILE=$XDG_CACHE_HOME/.bash_history
+
 Start the shepherd daemon
 if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
     shepherd -l $XDG_CONFIG_HOME/shepherd/shepherd.log
@@ -110,8 +124,6 @@ xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 
 
 exwm () {
     export EXWM=1
-    # Disable access control for the current user.
-    # xhost "+SI:localuser:$USER"
 
     # Make Java applications aware this is a non-reparenting window manager.
     export _JAVA_AWT_WM_NONREPARENTING=1
@@ -121,11 +133,6 @@ exwm () {
 
     # For debugging
     # xterm
-
-    # Finally start Emacs
-    # exec dbus-launch emacs --eval "(lerax-exwm-start nil t)"
-    # exec dbus-launch --exit-with-session emacs -mm -debug-init -l ~/.emacs.d/lisp/pg-desktop.el
-    # exec dbus-launch --exit-with-session emacs -mm -debug-init --use-exwm
 }
 
 exwm

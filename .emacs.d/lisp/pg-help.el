@@ -30,7 +30,7 @@
   :init
   (require 'info)
   :hook
-  (Info-mode-hook . pg/Info-mode-setup))
+  (Info-mode . pg/Info-mode-setup))
 
 (defun pg/docs-visual-fill ()
   "Applies text soft wrap."

@@ -40,8 +40,6 @@
    
    ;; "emacs-doom-modeline"
    
-   ;; "emacs-autothemer"
-   
    ;; "emacs-dashboard" ;; old version 1.7.0, need 1.8.0
    
    ;; "emacs-page-break-lines"
