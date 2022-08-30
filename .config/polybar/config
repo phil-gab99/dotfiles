@@ -45,10 +45,10 @@ font-1 = "Font Awesome:size=14;2"
 font-2 = "Material Icons:size=14;5"
 font-3 = "Fira Mono:size=12;-3"
 
-modules-left = exwm-workspace cpu memory temperature
-modules-right = battery backlight date
+modules-left = exwm-workspace xkeyboard cpu memory
+modules-right = temperature battery backlight date
 
-tray-position = right
+tray-position = center
 tray-padding = 2
 tray-maxsize = 28
 ; tray-background = #ffffff
@@ -61,8 +61,18 @@ cursor-scroll = ns-resize
 type = custom/ipc
 hook-0 = emacsclient -e "(pg/exwm-workspace-current-index)" | sed -e 's/^"//' -e 's/"$//'
 initial = 1
-;format-underline = ${colors.underline-1}
+; format-underline = ${colors.underline-1}
 format-padding = 1
+
+[module/xkeyboard]
+type = internal/xkeyboard
+; blacklist-0 = num lock
+format = |   <label-layout>
+format-prefix-font = 1
+format-prefix-foreground = ${colors.foreground-alt}
+label-layout = %icon% %name%
+label-indicator-padding = 2
+label-indicator-margin = 1
 
 [module/memory]
 type = internal/memory
@@ -83,7 +93,7 @@ bar-used-empty-foreground = #444444
 type = internal/cpu
 interval = 2
 format = | <label> CPU <ramp-coreload>
-;format-underline = ${colors.underline-1}
+; format-underline = ${colors.underline-1}
 ; click-left = emacsclient -e "(proced)"
 label =  %percentage%%
 ramp-coreload-spacing = 0
@@ -102,7 +112,7 @@ type = internal/temperature
 thermal-zone = 0
 interval = 0.5
 warn-temperature = 60
-format =  |  <ramp> <label>
+format = <ramp> <label> |
 ;format-underline = ${colors.underline-1}
 format-warn = <ramp> <label-warn>
 ;format-warn-underline = ${self.format-underline}

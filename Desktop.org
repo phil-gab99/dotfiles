@@ -392,10 +392,10 @@ Below is the config file with the various parameters.
   font-2 = "Material Icons:size=14;5"
   font-3 = "Fira Mono:size=12;-3"
 
-  modules-left = exwm-workspace cpu memory temperature
-  modules-right = battery backlight date
+  modules-left = exwm-workspace xkeyboard cpu memory
+  modules-right = temperature battery backlight date
 
-  tray-position = right
+  tray-position = center
   tray-padding = 2
   tray-maxsize = 28
   ; tray-background = #ffffff
@@ -408,8 +408,18 @@ Below is the config file with the various parameters.
   type = custom/ipc
   hook-0 = emacsclient -e "(pg/exwm-workspace-current-index)" | sed -e 's/^"//' -e 's/"$//'
   initial = 1
-  ;format-underline = ${colors.underline-1}
+  ; format-underline = ${colors.underline-1}
   format-padding = 1
+
+  [module/xkeyboard]
+  type = internal/xkeyboard
+  ; blacklist-0 = num lock
+  format = |   <label-layout>
+  format-prefix-font = 1
+  format-prefix-foreground = ${colors.foreground-alt}
+  label-layout = %icon% %name%
+  label-indicator-padding = 2
+  label-indicator-margin = 1
 
   [module/memory]
   type = internal/memory
@@ -430,7 +440,7 @@ Below is the config file with the various parameters.
   type = internal/cpu
   interval = 2
   format = | <label> CPU <ramp-coreload>
-  ;format-underline = ${colors.underline-1}
+  ; format-underline = ${colors.underline-1}
   ; click-left = emacsclient -e "(proced)"
   label =  %percentage%%
   ramp-coreload-spacing = 0
@@ -449,7 +459,7 @@ Below is the config file with the various parameters.
   thermal-zone = 0
   interval = 0.5
   warn-temperature = 60
-  format =  |  <ramp> <label>
+  format = <ramp> <label> |
   ;format-underline = ${colors.underline-1}
   format-warn = <ramp> <label-warn>
   ;format-warn-underline = ${self.format-underline}
@@ -670,7 +680,7 @@ For desktop notifications
   max_icon_size = 88
 
   # Paths to default icons.
-  # icon_path = ~/.icons/50x50/
+  icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/status/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/devices/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/emblems/
 
   ### History ###
 
@@ -1032,22 +1042,6 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
       #:start (make-system-constructor "xmodmap ~/.xmodmaprc")))
 
   (register-services xmodmap)
-
-#+end_src
-
-*Polybar*
-
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/polybar.scm :mkdirp yes
-
-  (define polybar
-    (make <service>
-      #:provides '(polybar)
-      #:docstring "Runs `polybar'"
-      #:respawn? #t
-      #:start (make-system-constructor "polybar panel")
-      #:stop (make-kill-destructor)))
-
-  (register-services polybar)
 
 #+end_src
 
