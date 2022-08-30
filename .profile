@@ -101,35 +101,32 @@ export EDITOR="$VISUAL"
 export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
 
 # Python specific variables
-export PYTHONHISTORY=$XDG_CACHE_HOME/.python_history
-export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages"
+export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/hystory.py
+[[ -v PYTHONPATH ]] \
+&& export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+|| export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
-Start the shepherd daemon
+# Start the shepherd daemon
 if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
     shepherd -l $XDG_CONFIG_HOME/shepherd/shepherd.log
 fi
+
+# System 76 charge thresholds set to safe charge
+[ -f ~/bin/safe-charge ] && . ~/bin/safe-charge
 
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
 
 xset dpms -2 0 0 && xset -dpms && xset s off && xset s noblank # Prevent screen blank
 
-xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Tapping Enabled" 1
-xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
-xinput set-prop "PNP0C50:00 04F3:311D Touchpad" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Natural Scrolling Enabled" 1
-
 exwm () {
     export EXWM=1
 
     # Make Java applications aware this is a non-reparenting window manager.
     export _JAVA_AWT_WM_NONREPARENTING=1
-
-    # Set default cursor.
-    xsetroot -cursor_name left_ptr
 
     # For debugging
     # xterm

@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+GREEN='\033[1;32m'
+BLUE='\033[1;34m'
+NC='\033[0m'
+
+echo -e "\n${GREEN}Updating ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
+
+sudo guix system -L ~/.config/guix --fallback reconfigure ~/.config/guix/systems/$HOSTNAME.scm
