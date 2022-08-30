@@ -91,8 +91,8 @@
 
                               ("s" "Schedule" agenda ""
                                ((org-agenda-files
-                                 '("~/Documents/Org/Agenda/Schedule-S5-summer.org")))
-                               ("~/Documents/Schedule-S5-summer.pdf"))
+                                 '("~/Documents/Org/Agenda/Schedule-S6.org")))
+                               ("~/Documents/Schedule-S6.pdf"))
 
                               ("w" "Work Status"
                                ((todo "WAIT"

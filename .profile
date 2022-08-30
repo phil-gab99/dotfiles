@@ -55,6 +55,10 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # Make Flatpak apps visible to launcher
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share"
 
+# Make Nix apps visible to launcher
+export PATH="$PATH:$HOME/.nix-profile/bin"
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.nix-profile/share"
+
 # Make applications in other profiles visible to launcher
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/audio/audio/share"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/browsers/browsers/share"

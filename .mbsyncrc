@@ -31,6 +31,7 @@ User philippe.gabriel.1@umontreal.ca
 Port 993
 PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"umontreal.ca\\\" :user \\\"philippe.gabriel.1\\\")\" | cut -d '\"' -f2"
 SSLType IMAPS
+AuthMechs PLAIN
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore umontreal-remote

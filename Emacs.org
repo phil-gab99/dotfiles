@@ -972,7 +972,7 @@ After having setup the file, make sure to run the following commands:
 - ~mu init --maildir=~/Mail --my-address=address1@domain1.com --my-address=address2@domain2.com ...~ - For all different addresses
 - ~mu index~ - To index the given addresses
 
-#+begin_src conf :tangle ~/.mbsyncrc
+#+begin_src conf :tangle (file-truename "~/.mbsyncrc") :mkdirp yes
 
   # Main hotmail account
   IMAPAccount hotmail
@@ -3678,8 +3678,8 @@ Org mode package for writing structured documents and more. Here are some useful
 
                                 ("s" "Schedule" agenda ""
                                  ((org-agenda-files
-                                   '("~/Documents/Org/Agenda/Schedule-S5-summer.org")))
-                                 ("~/Documents/Schedule-S5-summer.pdf"))
+                                   '("~/Documents/Org/Agenda/Schedule-S6.org")))
+                                 ("~/Documents/Schedule-S6.pdf"))
 
                                 ("w" "Work Status"
                                  ((todo "WAIT"
@@ -4159,7 +4159,7 @@ Allows for viewing of pdfs.
     :straight t
     :init
     (require 'pdf-tools)
-    :mode "\\.pdf$")
+    :mode ("\\.pdf$" . pdf-tools-install))
 
 #+end_src
 

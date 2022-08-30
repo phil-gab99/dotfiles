@@ -106,7 +106,7 @@ icon_position = left
 max_icon_size = 88
 
 # Paths to default icons.
-icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/status/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/devices/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/emblems/
+icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/status/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/devices/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/emblems/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/panel/22/
 
 ### History ###
 

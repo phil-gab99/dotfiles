@@ -11,7 +11,7 @@
   :straight t
   :init
   (require 'pdf-tools)
-  :mode "\\.pdf$")
+  :mode ("\\.pdf$" . pdf-tools-install))
 
 (use-package djvu
   :straight t

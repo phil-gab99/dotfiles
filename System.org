@@ -112,7 +112,10 @@ Override the default ~%desktop-services~ to add the ~udev~ charge threshold conf
                                         (udev-configuration
                                          (inherit config)
                                          (rules (cons %charge-thresholds-udev-rule
-                                                      (udev-configuration-rules config)))))))
+                                                      (udev-configuration-rules config)))))
+                     (network-manager-service-type config =>
+                                                   (network-manager-configuration (inherit config)
+                                                                                  (vpn-plugins (list network-manager-openvpn))))))
 
 #+end_src
 
@@ -492,7 +495,7 @@ This script makes it easy to update the system to the latest configuration based
 
 * Nix Package Manager
 
-#+begin_src conf :tangle ~/.nix-channels
+#+begin_src conf :tangle (file-truename "~/.nix-channels")
 
   https://nixos.org/channels/nixpkgs-unstable nixpkgs
 

@@ -54,7 +54,10 @@
                                       (udev-configuration
                                        (inherit config)
                                        (rules (cons %charge-thresholds-udev-rule
-                                                    (udev-configuration-rules config)))))))
+                                                    (udev-configuration-rules config)))))
+                   (network-manager-service-type config =>
+                                                 (network-manager-configuration (inherit config)
+                                                                                (vpn-plugins (list network-manager-openvpn))))))
 
 (define %xorg-libinput-config
   "Section \"InputClass\"

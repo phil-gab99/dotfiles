@@ -1,13 +1,13 @@
 [Default Applications]
 text/html=qutebrowser.desktop
-x-scheme-handler/http=qutebrowser.desktop
-x-scheme-handler/https=qutebrowser.desktop
-x-scheme-handler/about=qutebrowser.desktop
-x-scheme-handler/unknown=qutebrowser.desktop
-application/xhtml+xml=qutebrowser.desktop
+x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
+x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
+x-scheme-handler/about=org.qutebrowser.qutebrowser.desktop
+x-scheme-handler/unknown=org.qutebrowser.qutebrowser.desktop
+application/xhtml+xml=org.qutebrowser.qutebrowser.desktop
 
 [Added Associations]
-x-scheme-handler/http=qutebrowser.desktop;
-text/html=qutebrowser.desktop;
-application/xhtml+xml=qutebrowser.desktop;
-x-scheme-handler/https=qutebrowser.desktop;
+x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop;
+text/html=org.qutebrowser.qutebrowser.desktop;
+application/xhtml+xml=org.qutebrowser.qutebrowser.desktop;
+x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop;
