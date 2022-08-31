@@ -26,16 +26,6 @@
   (pg/call-mpc nil "update")
   (message "MPD Database Updated!"))
 
-(defun pg/convert-number-to-relative-string (number)
-  "Convert an integer NUMBER to a prefixed string.
-
-      The prefix is either - or +. This is useful for mpc commands
-      like volume and seek."
-  (let ((number-string (number-to-string number)))
-    (if (> number 0)
-        (concat "+" number-string)
-      number-string)))
-
 (defun pg/call-mpc (destination mpc-args)
   "Call mpc with `call-process'.
 
@@ -45,32 +35,18 @@
       (setq mpc-args (list mpc-args)))
   (apply 'call-process "mpc" nil destination nil mpc-args))
 
-(defun pg/message-current-volume ()
-  "Return the current volume."
-  (message "%s"
-           (with-temp-buffer
-             (pg/call-mpc t "volume")
-             (delete-char -1)  ;; delete trailing \n
-             (buffer-string))))
-
-(defun pg/emms-volume-amixer-change (amount)
-  "Change amixer master volume by AMOUNT."
-  (let ((volume-change-string (pg/convert-number-to-relative-string amount)))
-    (pg/call-mpc nil (list "volume" volume-change-string)))
-  (pg/message-current-volume))
-
 (use-package emms
   :straight t
   :init
   (require 'emms)
   (require 'emms-setup)
   (require 'emms-player-mpd)
-  (fset #'emms-volume-amixer-change #'pg/emms-volume-amixer-change)
   :hook
   (emms-playlist-cleared . emms-player-mpd-clear)
   :custom
-  (emms-info-functions '(emms-info-mpd))
+  (emms-player-mpd-music-directory "/home/phil-gab99/Music")
   (emms-player-list '(emms-player-mpd))
+  (emms-volume-change-function #'emms-volume-mpd-change)
   :bind
   (:map emms-browser-mode-map
         ("<XF86AudioPrev>" . emms-previous)
@@ -78,13 +54,23 @@
         ("<XF86AudioPlay>" . emms-pause)
         ("<XF86AudioStop>" . emms-stop))
   :config
+  (add-to-list 'emms-player-list 'emms-player-mpd)
   (emms-all))
+
+(defun pg/emms-mode-line-cycle--icon-function (&optional title initialp)
+  "Format the current track TITLE like `emms-mode-line-icon-function'.
+If INITIALP is no-nil, initialized."
+  (concat " "
+          emms-mode-line-icon-before-format
+          ;; (emms-propertize "NP:" 'display emms-mode-line-icon-image-cache)
+          (emms-mode-line-cycle--playlist-current title initialp)))
 
 (use-package emms-mode-line-cycle
   :straight t
   :init
   (require 'emms-mode-line-cycle)
   (require 'emms-mode-line-icon)
+  (fset #'emms-mode-line-cycle--icon-function #'pg/emms-mode-line-cycle--icon-function)
   :after emms
   :custom
   (emms-mode-line-cycle-use-icon-p t)

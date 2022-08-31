@@ -15,17 +15,18 @@
   :custom
   (dired-listing-switches "-agho --group-directories-first")
   :bind
-  ("C-x C-j" . dired-jump)
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "h" 'dired-single-up-directory
-    "l" 'dired-single-buffer))
+  ("C-x C-j" . dired-jump))
 
 (use-package dired-single
   :straight t
   :init
   (require 'dired-single)
-  :after dired)
+  :after dired
+  :commands (dired dired-jump)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))
 
 (unless pg/is-termux
   (use-package all-the-icons-dired

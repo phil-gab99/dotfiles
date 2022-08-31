@@ -1057,6 +1057,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
    '("alsa-utils"
      "pavucontrol"
      "pasystray"
+     "playerctl"
      "mpd"
      "mpd-mpc"
      "bluez"))

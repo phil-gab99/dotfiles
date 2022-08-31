@@ -32,6 +32,9 @@
   (eshell-mode . esh-autosuggest-mode)
   :custom
   (esh-autosuggest-delay 0.5)
+  :bind
+  (:map esh-autosuggest-active-map
+        ("<tab>" . company-complete-selection))
   :config
   (pg/esh-autosuggest-setup))
 
