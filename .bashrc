@@ -199,7 +199,7 @@ function __setprompt {
     fi
 
     # Total size of files in current directory
-    PS1+="(\[${GREEN}\]$(ls -lah | grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]:"
+    PS1+="(\[${GREEN}\]$(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]:"
 
     # Number of files
     PS1+="\[${GREEN}\]\$(ls -A -1 | wc -l)\[${LIGHTGRAY}\])"
