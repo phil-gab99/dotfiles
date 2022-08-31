@@ -50,7 +50,6 @@
   :straight t
   :init
   (require 'lmc)
-  :init
   (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 (provide 'pg-programming-lmc)
