@@ -3097,7 +3097,6 @@ Custom syntax highlighting for LMC assembly language.
     :straight t
     :init
     (require 'lmc)
-    :init
     (fset #'lmc-asm-mode #'pg/lmc-asm-mode))
 
 #+end_src
