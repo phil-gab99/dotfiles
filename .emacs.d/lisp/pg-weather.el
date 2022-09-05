@@ -15,7 +15,6 @@
   :straight t
   :init
   (require 'wttrin)
-  :init
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
   :commands wttrin
   :custom

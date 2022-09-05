@@ -5,4 +5,4 @@ NC='\033[0m'
 
 echo -e "\n${GREEN}Updating ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
 
-sudo guix system -L ~/.config/guix --fallback reconfigure ~/.config/guix/systems/$HOSTNAME.scm
+sudo guix system -L $XDG_CONFIG_HOME/guix --fallback reconfigure $XDG_CONFIG_HOME/guix/systems/$HOSTNAME.scm

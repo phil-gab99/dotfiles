@@ -66,6 +66,7 @@ This base configuration is shared between all of the machines I manage with Guix
     #:use-module (gnu packages xorg)
     #:use-module (gnu services cups)
     #:use-module (gnu services desktop)
+    #:use-module (gnu services docker)
     #:use-module (gnu services networking)
     #:use-module (gnu services pm)
     #:use-module (gnu services virtualization)
@@ -89,16 +90,16 @@ Add a ~udev~ rule to enable members of the ~charge~ group to control charging th
 
 #+begin_src scheme :tangle ~/.config/guix/systems/base.scm
 
-    (define %charge-thresholds-udev-rule
-      (udev-rule
-       "90-charge-thresholds.rules"
-       (string-append "KERNEL==\"BAT0\", "
-                      "SUBSYSTEM==\"power_supply\", "
-                      "RUN+=\"/run/current-system/profile/bin/chgrp charge /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\""
-                      "\n"
-                      "KERNEL==\"BAT0\", "
-                      "SUBSYSTEM==\"power_supply\", "
-                      "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
+  (define %charge-thresholds-udev-rule
+    (udev-rule
+     "90-charge-thresholds.rules"
+     (string-append "KERNEL==\"BAT0\", "
+                    "SUBSYSTEM==\"power_supply\", "
+                    "RUN+=\"/run/current-system/profile/bin/chgrp charge /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\""
+                    "\n"
+                    "KERNEL==\"BAT0\", "
+                    "SUBSYSTEM==\"power_supply\", "
+                    "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
 
 #+end_src
 
@@ -178,7 +179,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                                              "input"
                                              "libvirt"
                                              "charge"
-                                             ;; "docker"
+                                             "docker"
                                              ;; "realtime"  ;; Enable realtime scheduling
                                              "lp"        ;; control bluetooth devices
                                              "audio"     ;; control audio devices
@@ -233,6 +234,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
       (cons*
        (service slim-service-type
                 (slim-configuration
+                 (theme-name "0.x")
                  (xorg-configuration
                   (xorg-configuration
                    (keyboard-layout keyboard-layout)
@@ -245,6 +247,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                  (extensions
                   (list cups-filters))))
        (service nix-service-type)
+       (service docker-service-type)
        (service libvirt-service-type
                 (libvirt-configuration
                  (unix-sock-group "libvirt")
@@ -343,7 +346,7 @@ This script lists the generations of a given profile:
 #+begin_src sh :tangle ~/bin/list-generations :shebang #!/bin/sh
 
   profile=$1
-  guix package --profile=$HOME/.guix-extra-profiles/$profile/$profile --list-generations
+  guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
 
 #+end_src
 
@@ -360,9 +363,8 @@ This script deletes the generations of a given profile:
 #+begin_src sh :tangle ~/bin/delete-generations :shebang #!/bin/sh
 
   profile=$1
-  generations=$2
-  echo Deleting generations $generations of $profile
-  guix package --profile=$HOME/.guix-extra-profiles/$profile/$profile --delete-generations=$generations
+  echo Deleting all generations from $profile
+  guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --delete-generations
 
 #+end_src
 
@@ -382,11 +384,10 @@ For example:
   GREEN='\033[1;32m'
   RED='\033[1;30m'
   NC='\033[0m'
-  GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
 
   profiles=$*
   if [[ $# -eq 0 ]]; then
-      profiles="$HOME/.config/guix/manifests/*.scm";
+      profiles="$XDG_CONFIG_HOME/guix/manifests/*.scm";
   fi
 
   for profile in $profiles; do
@@ -449,7 +450,7 @@ If no profile names are provided, it walks the list of profile directories under
     echo -e "${GREEN}Updating profile:" $profilePath "${NC}"
     echo
 
-    guix package --profile="$profilePath/$profileName" --manifest="$HOME/.config/guix/manifests/$profileName.scm" --fallback
+    guix package --profile="$profilePath/$profileName" --manifest="$XDG_CONFIG_HOME/guix/manifests/$profileName.scm" --fallback
   done
 
 #+end_src
@@ -466,8 +467,8 @@ This script makes it easy to update all channels to the latest commit based on a
 
 #+begin_src sh :tangle ~/bin/update-channels :shebang #!/bin/sh
 
-  guix pull --channels=$HOME/.config/guix/base-channels.scm
-  guix describe --format=channels > ~/.config/guix/channels.scm
+  guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm
+  guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
 
 #+end_src
 
@@ -489,7 +490,7 @@ This script makes it easy to update the system to the latest configuration based
 
   echo -e "\n${GREEN}Updating ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
 
-  sudo guix system -L ~/.config/guix --fallback reconfigure ~/.config/guix/systems/$HOSTNAME.scm
+  sudo guix system -L $XDG_CONFIG_HOME/guix --fallback reconfigure $XDG_CONFIG_HOME/guix/systems/$HOSTNAME.scm
 
 #+end_src
 

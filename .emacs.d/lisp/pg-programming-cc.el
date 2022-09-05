@@ -10,7 +10,7 @@
     c++-mode
     objc-mode) . lsp-deferred)
   :custom
-  (company-clang-executable (expand-file-name "~/.guix-extra-profiles/cc/cc/bin/clang")))
+  (company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
 
 (use-package cc-vars
   :straight nil

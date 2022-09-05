@@ -44,7 +44,7 @@
   :hook
   (emms-playlist-cleared . emms-player-mpd-clear)
   :custom
-  (emms-player-mpd-music-directory "/home/phil-gab99/Music")
+  (emms-player-mpd-music-directory (expand-file-name "~/Music"))
   (emms-player-list '(emms-player-mpd))
   (emms-volume-change-function #'emms-volume-mpd-change)
   :bind

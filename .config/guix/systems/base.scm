@@ -20,6 +20,7 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu services cups)
   #:use-module (gnu services desktop)
+  #:use-module (gnu services docker)
   #:use-module (gnu services networking)
   #:use-module (gnu services pm)
   #:use-module (gnu services virtualization)
@@ -108,7 +109,7 @@ EndSection
                                            "input"
                                            "libvirt"
                                            "charge"
-                                           ;; "docker"
+                                           "docker"
                                            ;; "realtime"  ;; Enable realtime scheduling
                                            "lp"        ;; control bluetooth devices
                                            "audio"     ;; control audio devices
@@ -163,6 +164,7 @@ EndSection
     (cons*
      (service slim-service-type
               (slim-configuration
+               (theme-name "0.x")
                (xorg-configuration
                 (xorg-configuration
                  (keyboard-layout keyboard-layout)
@@ -175,6 +177,7 @@ EndSection
                (extensions
                 (list cups-filters))))
      (service nix-service-type)
+     (service docker-service-type)
      (service libvirt-service-type
               (libvirt-configuration
                (unix-sock-group "libvirt")

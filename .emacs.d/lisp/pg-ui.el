@@ -70,6 +70,7 @@
   :after projectile
   :custom
   (dashboard-set-file-icons t)
+  (dashboard-match-agenda-entry "task")
   (dashboard-items '((recents . 5)
                      (projects . 10)
                      (agenda . 5)))

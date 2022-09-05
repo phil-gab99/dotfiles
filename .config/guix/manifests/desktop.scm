@@ -32,6 +32,9 @@
    
    "system-config-printer"
    
+   "syncthing"
+   "syncthing-gtk"
+   
    "openssh"
    "gnupg"
    "zip"

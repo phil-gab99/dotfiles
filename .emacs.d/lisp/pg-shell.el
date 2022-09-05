@@ -59,7 +59,7 @@
 
 (use-package eshell
   :straight nil
-  :init 
+  :init
   (require 'eshell)
   (require 'em-tramp)
   :hook

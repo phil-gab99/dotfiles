@@ -15,5 +15,5 @@ for profile in $profiles; do
   echo -e "${GREEN}Updating profile:" $profilePath "${NC}"
   echo
 
-  guix package --profile="$profilePath/$profileName" --manifest="$HOME/.config/guix/manifests/$profileName.scm" --fallback
+  guix package --profile="$profilePath/$profileName" --manifest="$XDG_CONFIG_HOME/guix/manifests/$profileName.scm" --fallback
 done

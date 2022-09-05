@@ -50,8 +50,8 @@
   (use-package openwith
     :disabled
     :straight t
-  :init
-  (require 'openwith)
+    :init
+    (require 'openwith)
     :custom
     (large-file-warning-threshold nil) 
     (openwith-associations `((,(openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))

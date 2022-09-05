@@ -20,11 +20,11 @@
   (find-file . pg/spring-boot-properties)
   :custom
   (lsp-java-configuration-runtimes '[( :name "JavaSE-17"
-                                       :path (expand-file-name "~/.guix-extra-profiles/java/java")
+                                       :path (concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")
                                        :default t)])
   (lsp-java-vmargs (list "-noverify" "--enable-preview"))
   (lsp-java-java-path "java")
-  (lsp-java-import-gradle-java-home (expand-file-name "~/.guix-extra-profiles/java/java"))
+  (lsp-java-import-gradle-java-home (concat (getenv "GUIX_EXTRA_PROFILES") "/java/java"))
   :bind
   (:map lsp-mode-map
         ("C-<return>" . lsp-execute-code-action)))

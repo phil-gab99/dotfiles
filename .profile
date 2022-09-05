@@ -28,9 +28,6 @@ export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 #unset PULSE_CONFIG
 #unset PULSE_CLIENTCONFIG
 
-# Export ssh-agent socket
-export SSH_AUTH_SOCK=${XDG_RUNTIME_DIR-$XDG_CACHE_HOME}/ssh-agent/socket
-
 # Export java path so that tools pick it up correctly
 export JAVA_HOME=$(realpath $(dirname $(dirname $(which java))))
 

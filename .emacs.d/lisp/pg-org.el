@@ -117,15 +117,14 @@
     (customize-set-variable 'org-capture-templates
                             `(("t" "Tasks / Projects")
 
-
                               ("tt" "Task" entry
                                (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
-                               "* TODO %?\n  DEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+                               "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
                               ("j" "Meetings")
                               ("jm" "Meeting" entry
                                (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
-                               "* TODO %? \n SCHEDULED: %U\n" :empty-lines 1)
+                               "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
                               ("m" "Email Workflow")
                               ("mr" "Follow Up" entry

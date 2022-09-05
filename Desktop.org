@@ -178,6 +178,7 @@ Workspaces:
     (pg/herd-service "xsettingsd")
     (pg/herd-service "dunst")
     (pg/herd-service "nm-applet")
+    (pg/herd-service "syncthing-gtk")
     (pg/herd-service "udiskie")
     (pg/herd-service "pasystray")
     (pg/herd-service "xmodmap"))
@@ -1045,6 +1046,37 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+end_src
 
+*Syncthing*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/syncthing.scm :mkdirp yes
+
+  (define syncthing
+    (make <service>
+      #:provides '(syncthing)
+      #:respawn? #t
+      #:start (make-forkexec-constructor '("syncthing" "-no-browser"))
+      #:stop (make-kill-destructor)))
+
+  (register-services syncthing)
+  (start syncthing)
+
+#+end_src
+
+*Syncthing-gtk*
+
+#+begin_src scheme :tangle ~/.config/shepherd/init.d/syncthing.scm :mkdirp yes
+
+  (define syncthing-gtk
+    (make <service>
+      #:provides '(syncthing-gtk)
+      #:respawn? #t
+      #:start (make-forkexec-constructor '("syncthing-gtk" "--minimized"))
+      #:stop (make-kill-destructor)))
+
+  (register-services syncthing-gtk)
+
+#+end_src
+
 * Applications
 
 ** Audio Device Control
@@ -1811,6 +1843,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   fb https://www.facebook.com/philippe.gabriel99
   li https://www.linkedin.com/in/philippe-gabriel-52b945149/
   sb https://www.scotiaonline.scotiabank.com/online/views/accounts/summary/summaryStandard.bns?SBL=all&convid=60975
+  rbc https://www1.royalbank.com/sgw1/olb/index-en/#/summary
   ctfs https://www.ctfs.com/content/dash/en/private/Summary.html
   naruto https://www18.naruspot.tv/
   ygo https://9anime.st/watch-anime/yugioh-go-rush/eps/001
@@ -1912,6 +1945,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   youtube.com s.ytimg.com xhr allow
   youtube.com i.ytimg.com other allow
   youtube.com suggestqueries-clients6.youtube.com script block
+  youtube.com ad.doubleclick.net
 
   # Google
   google.com content.googleapis.com frame allow
@@ -2187,6 +2221,15 @@ Applications to install which are otherwise difficult to install Guix systems.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "system-config-printer"
+
+#+end_src
+
+** Synching
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  "syncthing"
+  "syncthing-gtk"
 
 #+end_src
 

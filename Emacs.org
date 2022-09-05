@@ -154,12 +154,16 @@ Scheme REPL.
 
   (use-package geiser
     :straight nil
-    :init
-    (require 'geiser)
-    :after guix)
-    ;; :bind
-    ;; (:map geiser-repl-mode-map
-    ;;       ("C-l" . geiser-repl-clear-buffer)))
+    :commands geiser-guile
+    :custom
+    (geiser-guile-load-init-file-p t)
+    (geiser-guile-manual-lookup-other-window-p t)
+    (geiser-guile-load-path '("/run/current-system/profile/share/guile/3.0"))
+    (geiser-repl-history-filename (concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))
+    (geiser-guile-init-file (concat (getenv "XDG_CONFIG_HOME") "/geiser/geiser-guile"))
+    :bind
+    (:map geiser-repl-mode-map
+          ("C-l" . geiser-repl-clear-buffer)))
 
 #+end_src
 
@@ -759,6 +763,7 @@ Customizes the look of the modeline for better aesthetic.
     :after projectile
     :custom
     (dashboard-set-file-icons t)
+    (dashboard-match-agenda-entry "task")
     (dashboard-items '((recents . 5)
                        (projects . 10)
                        (agenda . 5)))
@@ -856,6 +861,7 @@ Customizes the look of the modeline for better aesthetic.
             ;; Grouping browser windows
             (group
              (group-or "Browsers"
+                       (name-match "Qutebrowser" (rx bos "qutebrowser"))
                        (name-match "Firefox" (rx bos "firefox"))))
 
             (group
@@ -1369,7 +1375,6 @@ For surrounding delimiter matching and autocompletion.
     :straight t
     :init
     (require 'selectric-mode)
-    :init
     (fset #'selectric-type-sound #'pg/selectric-type-sound))
 
 #+end_src
@@ -1804,8 +1809,8 @@ Togglable option for hiding dot files.
     (use-package openwith
       :disabled
       :straight t
-    :init
-    (require 'openwith)
+      :init
+      (require 'openwith)
       :custom
       (large-file-warning-threshold nil) 
       (openwith-associations `((,(openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
@@ -1942,7 +1947,7 @@ Some configurations to the built-in eshell.
 
   (use-package eshell
     :straight nil
-    :init 
+    :init
     (require 'eshell)
     (require 'em-tramp)
     :hook
@@ -2534,7 +2539,7 @@ Some general tools for programming:
       c++-mode
       objc-mode) . lsp-deferred)
     :custom
-    (company-clang-executable (expand-file-name "~/.guix-extra-profiles/cc/cc/bin/clang")))
+    (company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
 
 #+end_src
 
@@ -2569,6 +2574,7 @@ Some general tools for programming:
     (c-basic-offset 4))
 
 #+end_src
+
 ***** Package | company-c-headers
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
@@ -2910,11 +2916,11 @@ Some general tools for programming:
     (find-file . pg/spring-boot-properties)
     :custom
     (lsp-java-configuration-runtimes '[( :name "JavaSE-17"
-                                         :path (expand-file-name "~/.guix-extra-profiles/java/java")
+                                         :path (concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")
                                          :default t)])
     (lsp-java-vmargs (list "-noverify" "--enable-preview"))
     (lsp-java-java-path "java")
-    (lsp-java-import-gradle-java-home (expand-file-name "~/.guix-extra-profiles/java/java"))
+    (lsp-java-import-gradle-java-home (concat (getenv "GUIX_EXTRA_PROFILES") "/java/java"))
     :bind
     (:map lsp-mode-map
           ("C-<return>" . lsp-execute-code-action)))
@@ -3707,15 +3713,14 @@ Org mode package for writing structured documents and more. Here are some useful
       (customize-set-variable 'org-capture-templates
                               `(("t" "Tasks / Projects")
 
-
                                 ("tt" "Task" entry
                                  (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
-                                 "* TODO %?\n  DEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+                                 "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
                                 ("j" "Meetings")
                                 ("jm" "Meeting" entry
                                  (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
-                                 "* TODO %? \n SCHEDULED: %U\n" :empty-lines 1)
+                                 "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
                                 ("m" "Email Workflow")
                                 ("mr" "Follow Up" entry
@@ -4273,7 +4278,7 @@ Allows for viewing of pdfs.
     (ledger-mode . company-mode)
     :custom
     (ledger-reconcile-default-commodity "CAD")
-    (ledger-binary-path (expand-file-name "~/.guix-extra-profiles/emacs/emacs/bin/ledger"))
+    (ledger-binary-path (concat (getenv "GUIX_EXTRA_PROFILES") "/emacs/emacs/bin/ledger"))
     (ledger-clear-whole-transaction t))
 
 #+end_src
@@ -4431,7 +4436,6 @@ Allows for viewing of pdfs.
     :straight t
     :init
     (require 'wttrin)
-    :init
     (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
     :commands wttrin
     :custom
@@ -4514,7 +4518,7 @@ Allows for viewing of pdfs.
     :hook
     (emms-playlist-cleared . emms-player-mpd-clear)
     :custom
-    (emms-player-mpd-music-directory "/home/phil-gab99/Music")
+    (emms-player-mpd-music-directory (expand-file-name "~/Music"))
     (emms-player-list '(emms-player-mpd))
     (emms-volume-change-function #'emms-volume-mpd-change)
     :bind
@@ -4868,9 +4872,10 @@ Allows for general custom keybindings definition to create own set of various ke
   (push "~/.emacs.d/lisp" load-path)
 
   (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-        pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p))
-        load-prefer-newer t
-        use-short-answers t)
+        pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
+
+  (customize-set-variable 'load-prefer-newer t)
+  (customize-set-variable 'use-short-answers t)
 
   ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 

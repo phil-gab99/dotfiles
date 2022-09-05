@@ -10,7 +10,7 @@
   (ledger-mode . company-mode)
   :custom
   (ledger-reconcile-default-commodity "CAD")
-  (ledger-binary-path (expand-file-name "~/.guix-extra-profiles/emacs/emacs/bin/ledger"))
+  (ledger-binary-path (concat (getenv "GUIX_EXTRA_PROFILES") "/emacs/emacs/bin/ledger"))
   (ledger-clear-whole-transaction t))
 
 (provide 'pg-finance)

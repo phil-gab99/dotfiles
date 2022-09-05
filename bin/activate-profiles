@@ -2,11 +2,10 @@
 GREEN='\033[1;32m'
 RED='\033[1;30m'
 NC='\033[0m'
-GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
 
 profiles=$*
 if [[ $# -eq 0 ]]; then
-    profiles="$HOME/.config/guix/manifests/*.scm";
+    profiles="$XDG_CONFIG_HOME/guix/manifests/*.scm";
 fi
 
 for profile in $profiles; do

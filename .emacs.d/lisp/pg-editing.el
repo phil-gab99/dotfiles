@@ -121,7 +121,6 @@
   :straight t
   :init
   (require 'selectric-mode)
-  :init
   (fset #'selectric-type-sound #'pg/selectric-type-sound))
 
 (use-package rainbow-mode

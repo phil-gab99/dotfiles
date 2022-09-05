@@ -32,6 +32,7 @@
           ;; Grouping browser windows
           (group
            (group-or "Browsers"
+                     (name-match "Qutebrowser" (rx bos "qutebrowser"))
                      (name-match "Firefox" (rx bos "firefox"))))
 
           (group

@@ -3,9 +3,10 @@
 (push "~/.emacs.d/lisp" load-path)
 
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-      pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p))
-      load-prefer-newer t
-      use-short-answers t)
+      pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
+
+(customize-set-variable 'load-prefer-newer t)
+(customize-set-variable 'use-short-answers t)
 
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 

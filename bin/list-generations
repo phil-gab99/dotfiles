@@ -1,3 +1,3 @@
 #!/bin/sh
 profile=$1
-guix package --profile=$HOME/.guix-extra-profiles/$profile/$profile --list-generations
+guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
