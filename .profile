@@ -35,7 +35,7 @@ export JAVA_HOME=$(realpath $(dirname $(dirname $(which java))))
 export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
 
 # Make sure we can reach the GPG agent for SSH auth
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
 # Make sure `ls` collates dotfiles first (for dired)
 export LC_COLLATE="C"

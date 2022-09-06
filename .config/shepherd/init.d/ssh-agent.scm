@@ -15,5 +15,5 @@
                  #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
     #:stop (make-kill-destructor)))
 
-(register-services ssh-agent)
-(start ssh-agent)
+;; (register-services ssh-agent)
+;; (start ssh-agent)

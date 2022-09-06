@@ -880,8 +880,8 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
                    #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
       #:stop (make-kill-destructor)))
 
-  (register-services ssh-agent)
-  (start ssh-agent)
+  ;; (register-services ssh-agent)
+  ;; (start ssh-agent)
 
 #+end_src
 
