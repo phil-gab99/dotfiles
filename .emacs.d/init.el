@@ -2,6 +2,19 @@
 
 (push "~/.emacs.d/lisp" load-path)
 
+(defun close-all-buffers ()
+  "Closes all emacs buffers."
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+(defun pg/save-buffers-kill-emacs ()
+  "Closes all emacs buffers before exiting emacs."
+  (interactive)
+  (close-all-buffers)
+  (save-buffers-kill-emacs))
+
+(global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
+
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
       pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
 
@@ -17,7 +30,7 @@
                    pg-completion
                    pg-editing
                    pg-bindings
-                   ;; pg-native-compilation
+                   pg-native-compilation
                    pg-guix
                    pg-passwords
                    pg-keylog

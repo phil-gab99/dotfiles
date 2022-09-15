@@ -11,7 +11,7 @@
    "polybar"
    
    "dunst"
-   "libnotify"  ; For notify-send
+   "libnotify" ;; For notify-send
    
    "gucharmap"
    "brightnessctl"
@@ -44,6 +44,7 @@
    "trash-cli"
    
    "virt-manager"
+   "gtksourceview@4"
    "virt-viewer"
    "spice-vdagent"
    

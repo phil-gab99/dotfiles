@@ -121,9 +121,7 @@ fi
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
 
-xset dpms -2 0 0 && xset -dpms && xset s off && xset s noblank # Prevent screen blank
-
-exwm () {
+function exwm {
     export EXWM=1
 
     # Make Java applications aware this is a non-reparenting window manager.

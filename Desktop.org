@@ -1,5 +1,6 @@
 #+title: Emacs Desktop Environment
 #+author: Philippe Gabriel
+#+PROPERTY: header-args:sh :tangle-mode (identity #o555)
 
 * Fonts
 
@@ -263,9 +264,7 @@ Allows for some of the keybindings to use while in exwm.
     :custom
     (desktop-environment-brightness-normal-increment "5%+")
     (desktop-environment-brightness-normal-decrement "5%-")
-    :bind
-    (:map desktop-environment-mode-map
-          ("<XF86AudioPlay>" . nil))
+    (desktop-environment-music-toggle-command "mpc toggle")
     :config
     (desktop-environment-mode))
 
@@ -560,12 +559,12 @@ Some utility functions:
   (defun pg/disable-desktop-notifications ()
     "Stops notifications from popping."
     (interactive)
-    (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\""))
+    (start-process-shell-command "dunstctl" nil "dunstctl set-paused true"))
 
   (defun pg/enable-desktop-notifications ()
     "Enables notifications to pop."
     (interactive)
-    (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\""))
+    (start-process-shell-command "dunstctl" nil "dunstctl set-paused false"))
 
 #+end_src
 
@@ -783,7 +782,7 @@ For desktop notifications
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "dunst"
-  "libnotify"  ; For notify-send
+  "libnotify" ;; For notify-send
 
 #+end_src
 
@@ -927,10 +926,12 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
       #:docstring "Runs `mpd'"
       #:respawn? #f
       #:start (make-forkexec-constructor '("mpd")
+                                         #:pid-file "~/.config/mpd/mpd.pid"
                                          #:log-file "~/.config/mpd/mpd.log")
       #:stop (make-kill-destructor)))
 
   (register-services mpd)
+  ;; (start mpd)
 
 #+end_src
 
@@ -1089,7 +1090,6 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
    '("alsa-utils"
      "pavucontrol"
      "pasystray"
-     "playerctl"
      "mpd"
      "mpd-mpc"
      "bluez"))
@@ -1719,7 +1719,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
   # Render web contents using dark theme
   # Type - Bool
-  c.colors.webpage.darkmode.enabled = True
+  c.colors.webpage.darkmode.enabled = False
 
   # Which images to apply dark mode to
   # Type - String
@@ -1730,7 +1730,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
   # Background color for webpages
   # Type - QtColor
-  c.colors.webpage.bg = 'black'
+  # c.colors.webpage.bg = 'black'
 
   ################################################################################
   # EDITING
@@ -1840,15 +1840,17 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   st https://studium.umontreal.ca/my/index.php
   sc https://academique-dmz.synchro.umontreal.ca
   cups http://localhost:631
+  sync http://localhost:8384
   fb https://www.facebook.com/philippe.gabriel99
-  li https://www.linkedin.com/in/philippe-gabriel-52b945149/
+  li https://www.linkedin.com/in/philippe-gabriel-52b945149
   sb https://www.scotiaonline.scotiabank.com/online/views/accounts/summary/summaryStandard.bns?SBL=all&convid=60975
-  rbc https://www1.royalbank.com/sgw1/olb/index-en/#/summary
+  rbc https://secure.royalbank.com/statics/login-service-ui/index#/full/signin?LANGUAGE=ENGLISH
   ctfs https://www.ctfs.com/content/dash/en/private/Summary.html
-  naruto https://www18.naruspot.tv/
+  naruto https://www18.naruspot.tv
   ygo https://9anime.st/watch-anime/yugioh-go-rush/eps/001
   op https://9anime.st/watch-anime/one-piece/eps/001
   mal https://myanimelist.net/animelist/Ramenphile
+  whatsapp https://web.whatsapp.com
   msdesk http://mydesk.morganstanley.com
 
 #+end_src
@@ -2042,6 +2044,9 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   linkedin.com * image allow
   linkedin.com * xhr allow
 
+  # CodeBoot
+  codeboot.org * * allow
+
 #+end_src
 
 *Guix Packages*
@@ -2119,7 +2124,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Wacom tablet scripts*
 
-#+begin_src sh :tangle ~/bin/wacom-laptop :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/wacom-laptop :shebang #!/bin/env sh
 
   xinput map-to-output "Wacom Intuos PT S Pen stylus" eDP-1
   xinput map-to-output "Wacom Intuos PT S Pen eraser" eDP-1
@@ -2128,12 +2133,20 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/wacom-screen :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/wacom-screen :shebang #!/bin/env sh
 
   xinput map-to-output "Wacom Intuos PT S Pen stylus" HDMI-1
   xinput map-to-output "Wacom Intuos PT S Pen eraser" HDMI-1
 
   echo "Mapped to HDMI!"
+
+#+end_src
+
+*Screenshot to clipboard*
+
+#+begin_src sh :tangle ~/bin/scrot-clipboard :shebang #!/bin/env sh
+
+  scrot -s -e 'xclip -selection clipboard -t image/png -i $f && rm -f $f'
 
 #+end_src
 
@@ -2144,6 +2157,8 @@ Applications to install which are otherwise difficult to install Guix systems.
   (specifications->manifest
    '("feh"
      "imagemagick"
+     "scrot"
+     "xclip"
      "libreoffice"
      ;; "gimp"
      "evince"
@@ -2153,7 +2168,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+end_src
 
-** Media Players
+** Video Players
 
 *Guix Packages*
 
@@ -2256,6 +2271,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   "virt-manager"
+  "gtksourceview@4"
   "virt-viewer"
   "spice-vdagent"
 

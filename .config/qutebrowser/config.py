@@ -80,7 +80,7 @@ c.fonts.statusbar = '12pt Cantarell'
 
 # Render web contents using dark theme
 # Type - Bool
-c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.enabled = False
 
 # Which images to apply dark mode to
 # Type - String
@@ -91,7 +91,7 @@ c.colors.webpage.darkmode.policy.images = 'never'
 
 # Background color for webpages
 # Type - QtColor
-c.colors.webpage.bg = 'black'
+# c.colors.webpage.bg = 'black'
 
 ################################################################################
 # EDITING

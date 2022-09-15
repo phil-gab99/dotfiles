@@ -69,7 +69,7 @@ Some initializations are first set up.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-use-package"
+  (specification->package "emacs-use-package")
 
 #+end_src
 
@@ -142,7 +142,7 @@ Emacs interface for guix package manager.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-guix"
+  (first (lookup-inferior-packages inferior "emacs-guix"))
 
 #+end_src
 
@@ -164,6 +164,14 @@ Scheme REPL.
     :bind
     (:map geiser-repl-mode-map
           ("C-l" . geiser-repl-clear-buffer)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  (first (lookup-inferior-packages inferior "emacs-geiser"))
 
 #+end_src
 
@@ -231,8 +239,8 @@ Scheme REPL.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-pinentry"
-  "pinentry-emacs"
+  ;; (specification->package "emacs-pinentry")
+  (specification->package "pinentry-emacs")
 
 #+end_src
 
@@ -264,7 +272,7 @@ Scheme REPL.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-password-store"
+  ;; (specification->package "emacs-password-store")
 
 #+end_src
 
@@ -332,7 +340,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-keycast"
+  ;; (specification->package "emacs-keycast")
 
 #+end_src
 
@@ -390,7 +398,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-marginalia"
+  ;; (specification->package "emacs-marginalia")
 
 #+end_src
 
@@ -414,7 +422,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-consult"
+  ;; (specification->package "emacs-consult")
 
 #+end_src
 
@@ -439,7 +447,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-orderless"
+  ;; (specification->package "emacs-orderless")
 
 #+end_src
 
@@ -464,7 +472,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-corfu"
+  ;; (specification->package "emacs-corfu")
 
 #+end_src
 
@@ -491,7 +499,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-vertico"
+  ;; (specification->package "emacs-vertico")
 
 #+end_src
 
@@ -522,7 +530,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-embark"
+  ;; (specification->package "emacs-embark")
 
 #+end_src
 
@@ -557,7 +565,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-prescient"
+  ;; (specification->package "emacs-prescient")
 
 #+end_src
 
@@ -584,7 +592,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-which-key"
+  ;; (specification->package "emacs-which-key")
 
 #+end_src
 
@@ -617,7 +625,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-helm"
+  ;; (specification->package "emacs-helm")
 
 #+end_src
 
@@ -678,7 +686,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-diminish"
+  ;; (specification->package "emacs-diminish")
 
 #+end_src
 
@@ -697,7 +705,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-all-the-icons"
+  ;; (specification->package "emacs-all-the-icons")
 
 #+end_src
 
@@ -727,7 +735,7 @@ Customizes the look of the modeline for better aesthetic.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-doom-modeline"
+  ;; (specification->package "emacs-doom-modeline")
 
 #+end_src
 
@@ -778,7 +786,7 @@ Customizes the look of the modeline for better aesthetic.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-dashboard" ;; old version 1.7.0, need 1.8.0
+  ;; (specification->package "emacs-dashboard") ;; old version 1.7.0, need 1.8.0
 
 #+end_src
 
@@ -797,7 +805,7 @@ Customizes the look of the modeline for better aesthetic.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-page-break-lines"
+  ;; (specification->package "emacs-page-break-lines")
 
 #+end_src
 
@@ -949,7 +957,7 @@ For organizing the buffer list
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-perspective"
+  ;; (specification->package "emacs-perspective")
 
 #+end_src
 
@@ -1039,9 +1047,9 @@ After having setup the file, make sure to run the following commands:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "mu"
-  "isync"
-  "oauth2ms"
+  (specification->package "mu")
+  (specification->package "isync")
+  (specification->package "oauth2ms")
 
 #+end_src
 
@@ -1144,7 +1152,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-mu4e-alert"
+  ;; (specification->package "emacs-mu4e-alert")
 
 #+end_src
 
@@ -1271,7 +1279,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-rainbow-delimiters"
+  ;; (specification->package "emacs-rainbow-delimiters")
 
 #+end_src
 
@@ -1308,7 +1316,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-highlight-indent-guides" ;; Old version 0.8.5
+  ;; (specification->package "emacs-highlight-indent-guides") ;; Old version 0.8.5
 
 #+end_src
 
@@ -1333,7 +1341,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-smartparens"
+  ;; (specification->package "emacs-smartparens")
 
 #+end_src
 
@@ -1354,7 +1362,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-outshine"
+  ;; (specification->package "emacs-outshine")
 
 #+end_src
 
@@ -1404,7 +1412,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-rainbow-mode"
+  ;; (specification->package "emacs-rainbow-mode")
 
 #+end_src
 
@@ -1425,7 +1433,7 @@ For surrounding delimiter matching and autocompletion.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-emojify"
+  ;; (specification->package "emacs-emojify")
 
 #+end_src
 
@@ -1480,7 +1488,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-evil"
+  ;; (specification->package "emacs-evil")
 
 #+end_src
 
@@ -1503,7 +1511,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-evil-collection"
+  ;; (specification->package "emacs-evil-collection")
 
 #+end_src
 
@@ -1548,7 +1556,7 @@ Displays full documentations in place of the default help function.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-helpful"
+  ;; (specification->package "emacs-helpful")
 
 #+end_src
 
@@ -1605,7 +1613,7 @@ Displays full documentations in place of the default help function.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-visual-fill-column"
+  ;; (specification->package "emacs-visual-fill-column")
 
 #+end_src
 
@@ -1779,7 +1787,7 @@ Displays icons in dired-mode.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-all-the-icons-dired"
+  ;; (specification->package "emacs-all-the-icons-dired")
 
 #+end_src
 
@@ -1828,7 +1836,7 @@ Togglable option for hiding dot files.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-openwith"
+  ;; (specification->package "emacs-openwith")
 
 #+end_src
 
@@ -1883,7 +1891,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-eshell-syntax-highlighting"
+  ;; (specification->package "emacs-eshell-syntax-highlighting")
 
 #+end_src
 
@@ -1916,7 +1924,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-esh-autosuggest"
+  ;; (specification->package "emacs-esh-autosuggest")
 
 #+end_src
 
@@ -1972,7 +1980,7 @@ Some configurations to the built-in eshell.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-vterm"
+  (specification->package "emacs-vterm")
 
 #+end_src
 
@@ -2028,7 +2036,7 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-projectile" ;; old version 2.5.0
+  ;; (specification->package "emacs-projectile") ;; old version 2.5.0
 
 #+end_src
 
@@ -2052,7 +2060,7 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-magit"
+  ;; (specification->package "emacs-magit")
 
 #+end_src
 
@@ -2080,8 +2088,8 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-git-gutter"
-  ;; "emacs-git-gutter-fringe"
+  ;; (specification->package "emacs-git-gutter")
+  ;; (specification->package "emacs-git-gutter-fringe")
 
 #+end_src
 
@@ -2107,7 +2115,7 @@ Steps to get working:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-forge"
+  ;; (specification->package "emacs-forge")
 
 #+end_src
 
@@ -2163,7 +2171,7 @@ The ~lsp-ui-doc-focus-frame~ command allows to access the documentation frame of
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-lsp-mode"
+  ;; (specification->package "emacs-lsp-mode")
 
 #+end_src
 
@@ -2191,7 +2199,7 @@ Displays useful doc on hover.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-lsp-ui"
+  ;; (specification->package "emacs-lsp-ui")
 
 #+end_src
 
@@ -2213,7 +2221,7 @@ Tree views in emacs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-lsp-treemacs"
+  ;; (specification->package "emacs-lsp-treemacs")
 
 #+end_src
 
@@ -2257,7 +2265,7 @@ For auto-completions while coding.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-company"
+  ;; (specification->package "emacs-company")
 
 #+end_src
 
@@ -2281,7 +2289,7 @@ Includes icons for company mode suggestions.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-company-box"
+  ;; (specification->package "emacs-company-box")
 
 #+end_src
 
@@ -2321,7 +2329,7 @@ Syntax checking.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-flycheck"
+  ;; (specification->package "emacs-flycheck")
 
 #+end_src
 
@@ -2347,7 +2355,7 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-dap-mode"
+  ;; (specification->package "emacs-dap-mode")
 
 #+end_src
 
@@ -2372,7 +2380,7 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-plantuml-mode"
+  ;; (specification->package "emacs-plantuml-mode")
 
 #+end_src
 
@@ -2416,7 +2424,7 @@ Allows for code snippets for different languages.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-yasnippet"
+  ;; (specification->package "emacs-yasnippet")
 
 #+end_src
 
@@ -2437,7 +2445,7 @@ Collection of code snippets for yasnippet.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-yasnippet-snippets"
+  ;; (specification->package "emacs-yasnippet-snippets")
 
 #+end_src
 
@@ -2605,7 +2613,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-ccls"
+  ;; (specification->package "emacs-ccls")
 
 #+end_src
 
@@ -2646,7 +2654,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-sly"
+  ;; (specification->package "emacs-sly")
 
 #+end_src
 
@@ -2719,7 +2727,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-docker"
+  ;; (specification->package "emacs-docker")
 
 #+end_src
 
@@ -2739,7 +2747,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-dockerfile-mode"
+  ;; (specification->package "emacs-dockerfile-mode")
 
 #+end_src
 
@@ -2777,7 +2785,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-git-modes"
+  ;; (specification->package "emacs-git-modes")
 
 #+end_src
 
@@ -2854,7 +2862,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-haskell-mode"
+  ;; (specification->package "emacs-haskell-mode")
 
 #+end_src
 
@@ -2931,16 +2939,31 @@ Some general tools for programming:
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/java.scm
 
-  (specifications->manifest
-   '("openjdk@17:jdk"
-     "openjdk@17:doc"
-     "maven"))
+  (use-modules
+   (guix inferior)
+   (guix channels)
+   (srfi srfi-1))
+
+  (define channels
+    (list
+     (channel (name 'guix)
+              (url "https://git.savannah.gnu.org/git/guix.git")
+              (commit "d039f9dc151eed8017a7f54682dbf713221b8005"))))
+
+  (define inferior
+    (inferior-for-channels channels))
+
+  (packages->manifest
+   (list
+    (specification->package+output "openjdk@17:jdk")
+    (specification->package+output "openjdk@17:doc")
+    (first (lookup-inferior-packages inferior "maven"))))
 
 #+end_src
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-lsp-java"
+  ;; (specification->package "emacs-lsp-java")
 
 #+end_src
 
@@ -2997,7 +3020,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-auctex"
+  ;; (specification->package "emacs-auctex")
 
 #+end_src
 
@@ -3019,7 +3042,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-company-auctex"
+  ;; (specification->package "emacs-company-auctex")
 
 #+end_src
 
@@ -3145,7 +3168,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-markdown-mode"
+  ;; (specification->package "emacs-markdown-mode")
 
 #+end_src
 
@@ -3235,8 +3258,9 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/python.scm
 
-    (specifications->manifest
-     '("python"))
+  (specifications->manifest
+   '("python"
+     "node"))
 
 #+end_src
 
@@ -3256,7 +3280,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-jupyter"
+  ;; (specification->package "emacs-jupyter")
 
 #+end_src
 
@@ -3423,7 +3447,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-typescript-mode"
+  ;; (specification->package "emacs-typescript-mode")
 
 #+end_src
 
@@ -3522,7 +3546,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-yaml-mode"
+  ;; (specification->package "emacs-yaml-mode")
 
 #+end_src
 
@@ -3562,7 +3586,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-alert"
+  ;; (specification->package "emacs-alert")
 
 #+end_src
 
@@ -3735,7 +3759,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org"
+  ;; (specification->package "emacs-org")
 
 #+end_src
 
@@ -3759,7 +3783,7 @@ Toggles visibility of emphasis markers.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-appear"
+  ;; (specification->package "emacs-org-appear")
 
 #+end_src
 
@@ -3785,7 +3809,7 @@ Customizes the heading bullets.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-bullets"
+  ;; (specification->package "emacs-org-bullets")
 
 #+end_src
 
@@ -3798,16 +3822,14 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
   (defun pg/presentation-setup ()
     "Setup before starting org presentation."
     (org-display-inline-images)
-    (variable-pitch-mode 1)
     (setq-local doom-modeline-minor-modes t
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
-                face-remapping-alist '((default (:height 1.25) default)
-                                       (header-line (:height 4.5) variable-pitch)
-                                       (variable-pitch (:height 1.25) variable-pitch)
+                face-remapping-alist '((default (:height 1.75) default)
                                        (org-table (:height 1.5) org-table)
                                        (org-verbatim (:height 1.5) org-verbatim)
                                        (org-code (:height 1.5) org-code)
-                                       (org-block (:height 1.5) org-block))))
+                                       (org-block (:height 1.5) org-block)))
+    (variable-pitch-mode 1))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."
@@ -3840,7 +3862,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-tree-slide"
+  ;; (specification->package "emacs-org-tree-slide")
 
 #+end_src
 
@@ -3865,7 +3887,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-ox-reveal"
+  ;; (specification->package "emacs-ox-reveal")
 
 #+end_src
 
@@ -3925,7 +3947,7 @@ Allows for markup language when composing email
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-msg"
+  ;; (specification->package "emacs-org-msg")
 
 #+end_src
 
@@ -3948,10 +3970,10 @@ Helps with note-taking strategies.
                                    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                       "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                    :unnarrowed t)
-                                  ("e" "economy" plain
+                                  ("s" "design" plain
                                    "%?"
-                                   :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                      "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                   :if-new (file+head "IFT-6253/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                      "#+title: ift6253-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                    :unnarrowed t)))
     :config
     (org-roam-setup))
@@ -3962,7 +3984,7 @@ Helps with note-taking strategies.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-roam"
+  ;; (specification->package "emacs-org-roam")
 
 #+end_src
 
@@ -3986,7 +4008,7 @@ Allows display of latex fragments in org files.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-org-fragtog"
+  ;; (specification->package "emacs-org-fragtog")
 
 #+end_src
 
@@ -4042,6 +4064,7 @@ Customizes behaviour of code blocks. Some useful constructs to know:
                                  ;; (jupyter . t)
                                  (python . t)))
 
+    (customize-set-variable 'org-babel-python-command "python3")
     (setq org-confirm-babel-evaluate nil)
 
     (require 'org-tempo) ; Allows defined snippets to expand into appropriate code blocks
@@ -4175,7 +4198,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-pdf-tools"
+  ;; (specification->package "emacs-pdf-tools")
 
 #+end_src
 
@@ -4194,7 +4217,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-djvu"
+  ;; (specification->package "emacs-djvu")
 
 #+end_src
 
@@ -4287,8 +4310,8 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "ledger"
-  ;; "emacs-ledger-mode"
+  (specification->package "ledger")
+  ;; (specification->package "emacs-ledger-mode")
 
 #+end_src
 
@@ -4348,7 +4371,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-slack" ;; Older commit
+  ;; (specification->package "emacs-slack") ;; Older commit
 
 #+end_src
 
@@ -4368,7 +4391,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-sx"
+  ;; (specification->package "emacs-sx")
 
 #+end_src
 
@@ -4377,6 +4400,7 @@ Allows for viewing of pdfs.
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-social.el
 
   (use-package telega
+    :disabled
     :straight nil
     :init
     (require 'telega)
@@ -4394,8 +4418,8 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "emacs-telega"
-  "emacs-telega-contrib"
+  (first (lookup-inferior-packages inferior "emacs-telega"))
+  (first (lookup-inferior-packages inferior "emacs-telega-contrib"))
 
 #+end_src
 
@@ -4448,7 +4472,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-wttrin"
+  ;; (specification->package "emacs-wttrin")
 
 #+end_src
 
@@ -4510,17 +4534,19 @@ Allows for viewing of pdfs.
     (apply 'call-process "mpc" nil destination nil mpc-args))
 
   (use-package emms
+    :disabled
     :straight t
     :init
     (require 'emms)
     (require 'emms-setup)
-    (require 'emms-player-mpd)
-    :hook
-    (emms-playlist-cleared . emms-player-mpd-clear)
+    ;; (require 'emms-player-mpd)
+    ;; :hook
+    ;; (emms-playlist-cleared . emms-player-mpd-clear)
     :custom
-    (emms-player-mpd-music-directory (expand-file-name "~/Music"))
-    (emms-player-list '(emms-player-mpd))
-    (emms-volume-change-function #'emms-volume-mpd-change)
+    (emms-source-file-default-directory (expand-file-name "~/Music"))
+    ;; (emms-player-mpd-music-directory (expand-file-name "~/Music"))
+    ;; (emms-player-list '(emms-player-mpd))
+    ;; (emms-volume-change-function #'emms-volume-mpd-change)
     :bind
     (:map emms-browser-mode-map
           ("<XF86AudioPrev>" . emms-previous)
@@ -4528,8 +4554,10 @@ Allows for viewing of pdfs.
           ("<XF86AudioPlay>" . emms-pause)
           ("<XF86AudioStop>" . emms-stop))
     :config
-    (add-to-list 'emms-player-list 'emms-player-mpd)
-    (emms-all))
+    (emms-all)
+    (emms-default-players))
+    ;; (add-to-list 'emms-player-list 'emms-player-mpd)
+    ;; (emms-all))
 
 #+end_src
 
@@ -4537,7 +4565,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-emms"
+  ;; (specification->package "emacs-emms")
 
 #+end_src
 
@@ -4554,6 +4582,7 @@ Allows for viewing of pdfs.
             (emms-mode-line-cycle--playlist-current title initialp)))
 
   (use-package emms-mode-line-cycle
+    :disabled
     :straight t
     :init
     (require 'emms-mode-line-cycle)
@@ -4573,7 +4602,19 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-emms-mode-line-cycle"
+  ;; (specification->package "emacs-emms-mode-line-cycle")
+
+#+end_src
+
+*** Package | simple-mpc
+
+#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-music.el
+
+  (use-package simple-mpc
+    :straight t
+    :bind
+    (:map simple-mpc-mode-map)
+          ("<XF86AudioPlay>" . simple-mpc-toggle))
 
 #+end_src
 
@@ -4717,7 +4758,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-hydra"
+  ;; (specification->package "emacs-hydra")
 
 #+end_src
 
@@ -4853,7 +4894,7 @@ Allows for general custom keybindings definition to create own set of various ke
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; "emacs-general"
+  ;; (specification->package "emacs-general")
 
 #+end_src
 
@@ -4871,6 +4912,19 @@ Allows for general custom keybindings definition to create own set of various ke
 
   (push "~/.emacs.d/lisp" load-path)
 
+  (defun close-all-buffers ()
+    "Closes all emacs buffers."
+    (interactive)
+    (mapc 'kill-buffer (buffer-list)))
+
+  (defun pg/save-buffers-kill-emacs ()
+    "Closes all emacs buffers before exiting emacs."
+    (interactive)
+    (close-all-buffers)
+    (save-buffers-kill-emacs))
+
+  (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
+
   (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
         pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
 
@@ -4886,7 +4940,7 @@ Allows for general custom keybindings definition to create own set of various ke
                      pg-completion
                      pg-editing
                      pg-bindings
-                     ;; pg-native-compilation
+                     pg-native-compilation
                      pg-guix
                      pg-passwords
                      pg-keylog
@@ -4938,14 +4992,29 @@ Allows for general custom keybindings definition to create own set of various ke
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/emacs.scm :noweb yes
 
-  (specifications->manifest
-   '("emacs"
-     ;; "emacs-native-comp"
+  (use-modules
+   (guix inferior)
+   (guix channels)
+   (srfi srfi-1))
 
-     ;; "emacs-exwm"
-     ;; "emacs-desktop-environment"
-     <<packages>>
-     ))
+  (define channels
+    (list
+     (channel (name 'guix)
+              (url "https://git.savannah.gnu.org/git/guix.git")
+              (commit "36b38bb4f3f4926431ae2a6d6ae79d5ad0d3d079"))))
+
+  (define inferior
+    (inferior-for-channels channels))
+
+  (packages->manifest
+   (list
+    (specification->package "emacs")
+    ;; (specification->package "emacs-native-comp")
+
+    ;; (specification->package "emacs-exwm")
+    ;; (specification->package "emacs-desktop-environment")
+    <<packages>>
+    ))
 
 #+end_src
 

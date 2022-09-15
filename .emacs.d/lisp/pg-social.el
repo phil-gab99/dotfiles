@@ -35,6 +35,7 @@
   :commands sx-search)
 
 (use-package telega
+  :disabled
   :straight nil
   :init
   (require 'telega)

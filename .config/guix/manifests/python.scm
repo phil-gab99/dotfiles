@@ -1,2 +1,3 @@
 (specifications->manifest
- '("python"))
+ '("python"
+   "node"))

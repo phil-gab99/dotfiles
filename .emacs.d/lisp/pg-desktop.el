@@ -132,9 +132,7 @@
   :custom
   (desktop-environment-brightness-normal-increment "5%+")
   (desktop-environment-brightness-normal-decrement "5%-")
-  :bind
-  (:map desktop-environment-mode-map
-        ("<XF86AudioPlay>" . nil))
+  (desktop-environment-music-toggle-command "mpc toggle")
   :config
   (desktop-environment-mode))
 
@@ -180,11 +178,11 @@
 (defun pg/disable-desktop-notifications ()
   "Stops notifications from popping."
   (interactive)
-  (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_PAUSE\""))
+  (start-process-shell-command "dunstctl" nil "dunstctl set-paused true"))
 
 (defun pg/enable-desktop-notifications ()
   "Enables notifications to pop."
   (interactive)
-  (start-process-shell-command "notify-send" nil "notify-send \"DUNST_COMMAND_RESUME\""))
+  (start-process-shell-command "dunstctl" nil "dunstctl set-paused false"))
 
 (provide 'pg-desktop)

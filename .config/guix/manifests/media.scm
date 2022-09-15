@@ -1,6 +1,8 @@
 (specifications->manifest
  '("feh"
    "imagemagick"
+   "scrot"
+   "xclip"
    "libreoffice"
    ;; "gimp"
    "evince"

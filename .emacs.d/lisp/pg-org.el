@@ -154,16 +154,14 @@
 (defun pg/presentation-setup ()
   "Setup before starting org presentation."
   (org-display-inline-images)
-  (variable-pitch-mode 1)
   (setq-local doom-modeline-minor-modes t
               org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
-              face-remapping-alist '((default (:height 1.25) default)
-                                     (header-line (:height 4.5) variable-pitch)
-                                     (variable-pitch (:height 1.25) variable-pitch)
+              face-remapping-alist '((default (:height 1.75) default)
                                      (org-table (:height 1.5) org-table)
                                      (org-verbatim (:height 1.5) org-verbatim)
                                      (org-code (:height 1.5) org-code)
-                                     (org-block (:height 1.5) org-block))))
+                                     (org-block (:height 1.5) org-block)))
+  (variable-pitch-mode 1))
 
 (defun pg/presentation-end ()
   "Cleanup after ending org presentation."
@@ -250,10 +248,10 @@
                                  :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                     "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                  :unnarrowed t)
-                                ("e" "economy" plain
+                                ("s" "design" plain
                                  "%?"
-                                 :if-new (file+head "ECN-1000/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                    "#+title: ecn1000-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                 :if-new (file+head "IFT-6253/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                    "#+title: ift6253-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                  :unnarrowed t)))
   :config
   (org-roam-setup))
@@ -300,6 +298,7 @@
                                ;; (jupyter . t)
                                (python . t)))
 
+  (customize-set-variable 'org-babel-python-command "python3")
   (setq org-confirm-babel-evaluate nil)
 
   (require 'org-tempo) ; Allows defined snippets to expand into appropriate code blocks
