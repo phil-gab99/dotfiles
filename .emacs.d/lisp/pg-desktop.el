@@ -43,6 +43,7 @@
                             ("rg-e310\n" '(5 "HDMI-1"))
                             ("jc-s139\n" '(5 "HDMI-1"))
                             ("jc-s1139\n" '(5 "DP-1"))
+                            ("rg-p310\n" '(5 "DP-1"))
                             ("entertainment\n" '(5 "HDMI-1"))))
   (pg/set-wallpaper)
   (message "Display config: %s"

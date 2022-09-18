@@ -46,21 +46,25 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map "H" 'dired-hide-dotfiles-mode))
 
-(unless pg/is-termux
-  (use-package openwith
-    :disabled
-    :straight t
-    :init
-    (require 'openwith)
-    :custom
-    (large-file-warning-threshold nil) 
-    (openwith-associations `((,(openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
-                              "mpv"
-                              (file))
-                             (,(openwith-make-extension-regexp '("odt"))
-                              "libreoffice"
-                              (file))))
-    :config
+(unless pg/is-termux 
+  (straight-use-package 'openwith)
+  (when (require 'openwith nil 'noerror)
+    (customize-set-variable 'large-file-warning-threshold nil)
+    (customize-set-variable 'openwith-associations `((,(openwith-make-extension-regexp '("mpg"
+                                                                                         "mpeg"
+                                                                                         "mp4"
+                                                                                         "avi"
+                                                                                         "wmv"
+                                                                                         "mov"
+                                                                                         "flv"
+                                                                                         "ogm"
+                                                                                         "ogg"
+                                                                                         "mkv"))
+                                                      "mpv"
+                                                      (file))
+                                                     (,(openwith-make-extension-regexp '("odt"))
+                                                      "libreoffice"
+                                                      (file))))
     (openwith-mode 1)))
 
 (provide 'pg-file)

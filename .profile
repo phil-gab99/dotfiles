@@ -102,7 +102,7 @@ export EDITOR="$VISUAL"
 export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
 
 # Python specific variables
-export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/hystory.py
+export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
 [[ -v PYTHONPATH ]] \
 && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
 || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"

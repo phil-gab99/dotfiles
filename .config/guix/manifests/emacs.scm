@@ -20,7 +20,7 @@
   ;; (specification->package "emacs-exwm")
   ;; (specification->package "emacs-desktop-environment")
   
-  (specification->package "emacs-use-package")
+  ;; (specification->package "emacs-use-package")
   
   (first (lookup-inferior-packages inferior "emacs-guix"))
   

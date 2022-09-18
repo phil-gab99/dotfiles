@@ -3,3 +3,5 @@ xinput map-to-output "Wacom Intuos PT S Pen stylus" eDP-1
 xinput map-to-output "Wacom Intuos PT S Pen eraser" eDP-1
 
 echo "Mapped to laptop!"
+
+exit 0

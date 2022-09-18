@@ -69,7 +69,7 @@ Some initializations are first set up.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  (specification->package "emacs-use-package")
+  ;; (specification->package "emacs-use-package")
 
 #+end_src
 
@@ -1813,21 +1813,25 @@ Togglable option for hiding dot files.
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
 
-  (unless pg/is-termux
-    (use-package openwith
-      :disabled
-      :straight t
-      :init
-      (require 'openwith)
-      :custom
-      (large-file-warning-threshold nil) 
-      (openwith-associations `((,(openwith-make-extension-regexp '("mpg" "mpeg" "mp4" "avi" "wmv" "mov" "flv" "ogm" "ogg" "mkv"))
-                                "mpv"
-                                (file))
-                               (,(openwith-make-extension-regexp '("odt"))
-                                "libreoffice"
-                                (file))))
-      :config
+  (unless pg/is-termux 
+    (straight-use-package 'openwith)
+    (when (require 'openwith nil 'noerror)
+      (customize-set-variable 'large-file-warning-threshold nil)
+      (customize-set-variable 'openwith-associations `((,(openwith-make-extension-regexp '("mpg"
+                                                                                           "mpeg"
+                                                                                           "mp4"
+                                                                                           "avi"
+                                                                                           "wmv"
+                                                                                           "mov"
+                                                                                           "flv"
+                                                                                           "ogm"
+                                                                                           "ogg"
+                                                                                           "mkv"))
+                                                        "mpv"
+                                                        (file))
+                                                       (,(openwith-make-extension-regexp '("odt"))
+                                                        "libreoffice"
+                                                        (file))))
       (openwith-mode 1)))
 
 #+end_src

@@ -1,5 +1,6 @@
 # Enable custom ~/.python_history location on Python interactive console
 # Set PYTHONSTARTUP to this file on ~/.profile or similar for this to work
+# Currently sets history to ~/.cache/.python_history
 
 import atexit
 import os
@@ -19,7 +20,7 @@ def write_history(path):
 
 history = os.path.join(os.environ.get('XDG_CACHE_HOME') or
                        os.path.expanduser('~/.cache'),
-                       'python_history')
+                       '.python_history')
 try:
     readline.read_history_file(history)
 except FileNotFoundError:
