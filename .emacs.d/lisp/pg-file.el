@@ -64,6 +64,9 @@
                                                       (file))
                                                      (,(openwith-make-extension-regexp '("odt"))
                                                       "libreoffice"
+                                                      (file))
+                                                     (,(openwith-make-extension-regexp '("xopp"))
+                                                      "xournalpp"
                                                       (file))))
     (openwith-mode 1)))
 

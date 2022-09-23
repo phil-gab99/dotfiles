@@ -1,21 +1,21 @@
 ;;; pg-editing.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(setq tab-width 4                     ; Set tab length
+(setq tab-width 4                     ;; Set tab length
       custom-buffer-indent 2
       display-line-numbers-type 'relative)
-(setq-default indent-tabs-mode nil    ; Disable tab caracter
-              fill-column 80)         ; 80 caracter column indicator
-(show-paren-mode 1)                   ; Enable delimiters matching
-(save-place-mode 1)                   ; Remembers last cursor placement in file
-(column-number-mode)                  ; Show column numbers
-(mouse-avoidance-mode 'banish)        ; No mouse allowed
-(global-display-line-numbers-mode 1)  ; Show line numbers
+(setq-default indent-tabs-mode nil    ;; Disable tab caracter
+              fill-column 80)         ;; 80 caracter column indicator
+(show-paren-mode 1)                   ;; Enable delimiters matching
+(save-place-mode 1)                   ;; Remembers last cursor placement in file
+(column-number-mode)                  ;; Show column numbers
+(mouse-avoidance-mode 'banish)        ;; No mouse allowed
+(global-display-line-numbers-mode 1)  ;; Show line numbers
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 (add-hook 'compilation-filter-hook
           #'(lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
-(dolist (mode '(org-mode-hook         ; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
                 Info-mode-hook
                 eww-mode-hook
                 term-mode-hook
@@ -47,66 +47,68 @@
 
 (set-face-attribute 'italic nil :slant 'italic)
 
-(use-package ligature
-  :straight '(ligature :type git
-                       :host github
-                       :repo "mickeynp/ligature.el")
-  :init
-  (require 'ligature)
-  :config
-  (ligature-set-ligatures 't '("++" "--" "/=" "&&" "||" "||=" "->" "=>" "::" "__" "==" "===" "!=" "=/=" "!=="
-                               "<=" ">=" "<=>" "/*" "*/" "//" "///" "\\n" "\\\\" "<<" "<<<" "<<=" ">>" ">>>" ">>="
-                               "|=" "^=" "**" "?." "</" "<!--" "</>" "-->" "/>" "www" "##" "###" "####" "#####"
-                               "######" "--" "---" "----" "-----" "------" "====" "=====" "======" "[]" "<>" "<~>"
-                               "??" ".." "..." "=~" "!~" ":=" "..<" "!!" ":::" "=!=" "=:=" "<:<" "..=" "::<"
-                               "#{" "#(" "#_" "#_(" "#?" "#:" ".-" ";;" "~@" "<-" "#{}" "|>" "=>>" "=<<" ">=>" "<=<"
-                               "=>=" "=<=" "<$" "<$>" "$>" "<+" "<+>" "+>" "<*" "<*>" "*>" "<|>" ".=" "#=" "+++" "***"
-                               ":>:" ":<:" "<|||" "<||" "<|" "||>" "|||>" "[|" "|]" "~-" "~~" "%%" "/\\" "\\/" "-|" "_|"
-                               "_|_" "|-" "||-" ":>" ":<" ">:" "<:" "::>" "<::" ">::" "{|" "|}" "#[" "]#" "::="
-                               "#!" "#=" "->>" ">-" ">>-" "->-" "->>-" "=>>=" ">>->" ">>=>" "|->" "|=>" "~>" "~~>" "//=>"
-                               "<<-" "-<" "-<<" "-||" "-<-" "-<<-" "=<" "=|" "=||" "=<<=" "<-<<" "<=<<" "<-|" "<=|" "<~"
-                               "<~~" "<=//" "<->" "<<=>>" "|-|-|" "|=|=|" "/=/"))
-  (global-ligature-mode 't))
+(straight-use-package '(ligature :type git
+                                 :host github
+                                 :repo "mickeynp/ligature.el"))
+(require 'ligature)
+(with-eval-after-load 'ligature
+  (ligature-set-ligatures 't
+                          '("++" "--" "/=" "&&" "||" "||=" "->" "=>" "::" "__"
+                            "==" "===" "!=" "=/=" "!==" "<=" ">=" "<=>" "/*"
+                            "*/" "//" "///" "\\n" "\\\\" "<<" "<<<" "<<=" ">>"
+                            ">>>" ">>=" "|=" "^=" "**" "?." "</" "<!--" "</>"
+                            "-->" "/>" "www" "##" "###" "####" "#####" "######"
+                            "--" "---" "----" "-----" "------" "====" "====="
+                            "======" "[]" "<>" "<~>" "??" ".." "..." "=~" "!~"
+                            ":=" "..<" "!!" ":::" "=!=" "=:=" "<:<" "..=" "::<"
+                            "#{" "#(" "#_" "#_(" "#?" "#:" ".-" ";;" "~@" "<-"
+                            "#{}" "|>" "=>>" "=<<" ">=>" "<=<" "=>=" "=<=" "<$"
+                            "<$>" "$>" "<+" "<+>" "+>" "<*" "<*>" "*>" "<|>"
+                            ".=" "#=" "+++" "***" ":>:" ":<:" "<|||" "<||" "<|"
+                            "||>" "|||>" "[|" "|]" "~-" "~~" "%%" "/\\" "\\/"
+                            "-|" "_|" "_|_" "|-" "||-" ":>" ":<" ">:" "<:" "::>"
+                            "<::" ">::" "{|" "|}" "#[" "]#" "::=" "#!" "#="
+                            "->>" ">-" ">>-" "->-" "->>-" "=>>=" ">>->" ">>=>"
+                            "|->" "|=>" "~>" "~~>" "//=>" "<<-" "-<" "-<<" "-||"
+                            "-<-" "-<<-" "=<" "=|" "=||" "=<<=" "<-<<" "<=<<"
+                            "<-|" "<=|" "<~" "<~~" "<=//" "<->" "<<=>>" "|-|-|"
+                            "|=|=|" "/=/"))
+  (global-ligature-mode))
 
-(use-package rainbow-delimiters
-  :straight t
-  :init
-  (require 'rainbow-delimiters)
-  :hook
-  (prog-mode . rainbow-delimiters-mode))
+(straight-use-package 'rainbow-delimiters)
+(unless (fboundp 'rainbow-delimiters-mode)
+  (autoload #'rainbow-delimiters-mode "rainbow-delimiters" nil t))
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
-(use-package abbrev
-  :straight nil
-  :init
-  (require 'abbrev)
-  :after diminish
-  :diminish abbrev-mode)
+(require 'abbrev)
+(with-eval-after-load 'abbrev
+  (if (fboundp 'diminish)
+      (diminish #'abbrev-mode)
+    (with-eval-after-load 'diminish
+      (diminish #'abbrev-mode))))
 
-(use-package highlight-indent-guides
-  :straight t
-  :init
-  (require 'highlight-indent-guides)
-  :hook
-  (prog-mode . highlight-indent-guides-mode)
-  :custom
-  (highlight-indent-guides-responsive 'stack)
-  (highlight-indent-guides-method 'character))
+(straight-use-package 'highlight-indent-guides)
+(unless (fboundp 'highlight-indent-guides-mode)
+  (autoload #'highlight-indent-guides-mode "rainbow-delimiters" nil t))
+(add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
+(with-eval-after-load 'highlight-indent-guides
+  (pg/customize-set-variables
+   '((highlight-indent-guides-responsive . stack)
+     (highlight-indent-guides-method . character))))
 
-(use-package smartparens
-  :straight t
-  :init
-  (require 'smartparens)
-  :after diminish
-  :diminish smartparens-mode
-  :config
-  (smartparens-global-mode))
+(straight-use-package 'smartparens)
+(require 'smartparens)
+(with-eval-after-load 'smartparens
+  (smartparens-global-mode)
+  (if (boundp 'diminish)
+      (diminish #'smartparens-global-mode)
+    (with-eval-after-load 'diminish
+      (diminish #'smartparens-global-mode))))
 
-(use-package outshine
-  :straight t
-  :init
-  (require 'outshine)
-  :hook
-  (prog-mode . outshine-mode))
+(straight-use-package 'outshine)
+(unless (fboundp 'outshine-mode)
+  (autoload #'outshine-mode "outshine" nil t))
+(add-hook 'prog-mode-hook #'outshine-mode)
 
 (defun pg/selectric-type-sound ()
   "Make the sound of the printing element hitting the paper."
@@ -116,37 +118,37 @@
       (if (= (current-column) (current-fill-column))
           (selectric-make-sound (format "%sping.wav" selectric-files-path))))))
 
-(use-package selectric-mode
-  :disabled
-  :straight t
-  :init
-  (require 'selectric-mode)
-  (fset #'selectric-type-sound #'pg/selectric-type-sound))
+(straight-use-package 'selectric-mode)
+;; (fset #'selectric-type-sound #'pg/selectric-type-sound)
+;; (require 'selectric-mode)
 
-(use-package rainbow-mode
-  :straight t
-  :init
-  (require 'rainbow-mode)
-  :after diminish
-  :diminish rainbow-mode
-  :hook
-  ((org-mode
-    emacs-lisp-mode
-    web-mode
-    typescript-mode
-    css-mode
-    scss-mode
-    less-css-mode) . rainbow-mode))
+(straight-use-package 'rainbow-mode)
+(unless (fboundp 'rainbow-mode)
+  (autoload #'rainbow-mode "rainbow-mode" nil t))
+(dolist (mode '(org-mode-hook
+                emacs-lorg-mode-hook
+                org-mode-hook
+                typescrorg-mode-hook
+                org-mode-hook
+                scss-mode-hook
+                less-css-mode-hook))
+  (add-hook mode #'rainbow-mode))
+(with-eval-after-load 'rainbow-mode
+  (if (boundp 'diminish)
+      (diminish #'rainbow-mode)
+    (with-eval-after-load 'diminish
+      (diminish #'rainbow-mode))))
 
-(use-package emojify
-  :straight t
-  :init
-  (require 'emojify)
-  :config
+(straight-use-package 'emojify)
+(require 'emojify)
+(with-eval-after-load 'emojify
   (global-emojify-mode))
 
 (defun pg/evil-hook()
-  "Modes that should start in emacs mode"
+  "Configuration of some default modes."
+  (dolist (mode '(messages-buffer-mode
+                  dashboard-mode))
+    (evil-set-initial-state mode 'normal))
   (dolist (mode '(custom-mode
                   eshell-mode
                   git-rebase-mode
@@ -158,39 +160,32 @@
                   term-mode))
     (add-to-list 'evil-emacs-state-modes mode)))
 
-(use-package evil
-  :straight t
-  :preface
-  (customize-set-variable 'evil-want-keybinding nil)
-  :init
-  (require 'evil)
-  :hook
-  (evil-mode . pg/evil-hook)
-  :custom
-  (evil-want-integration t)
-  (evil-want-C-u-scroll t)
-  (evil-want-C-i-jump nil)
-  ;; (evil-want-Y-yank-to-eol t)
-  (evil-want-fine-undo t)
-  :bind
-  (:map evil-insert-state-map
-        ("C-g" . evil-normal-state))
-  :config
-  (customize-set-variable 'evil-want-Y-yank-to-eol t)
+(straight-use-package 'evil)
+(customize-set-variable 'evil-want-keybinding nil)
+(require 'evil)
+(with-eval-after-load 'evil
+  (add-hook 'evil-mode-hook #'pg/evil-hook)
+  (pg/customize-set-variables
+   '((evil-want-integration . t)
+     (evil-want-C-u-scroll . t)
+     (evil-want-C-i-jump . nil)
+     (evil-want-Y-yank-to-eol . t)
+     (evil-want-fine-undo . t)))
+  (unless (fboundp 'evil-normal-state)
+    (autoload #'evil-normal-state "evil-states"))
+  (define-key evil-insert-state-map (kbd "C-g") #'evil-normal-state)
   (evil-mode 1)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-  (dolist (mode '(messages-buffer-mode
-                  dashboard-mode))
-    (evil-set-initial-state mode 'normal)))
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
-(use-package evil-collection
-  :straight t
-  :init
+(straight-use-package 'evil-collection)
+(with-eval-after-load 'evil
   (require 'evil-collection)
-  :after (evil diminish)
-  :diminish evil-collection-unimpaired-mode
-  :config
-  (evil-collection-init))
+  (with-eval-after-load 'evil-collection
+    (evil-collection-init)
+    (if (boundp 'diminish)
+        (diminish #'evil-collection-unimpaired-mode)
+      (with-eval-after-load 'diminish
+        (diminish #'evil-collection-unimpaired-mode)))))
 
 (provide 'pg-editing)

@@ -310,6 +310,7 @@
   (add-to-list 'org-structure-template-alist '("asm" . "src mips"))
   (add-to-list 'org-structure-template-alist '("cc" . "src c"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
   (add-to-list 'org-structure-template-alist '("py" . "src python"))
   (add-to-list 'org-structure-template-alist '("sql" . "src sql"))
 

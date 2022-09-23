@@ -16,7 +16,7 @@
                      lsp-java-boot))
     (require feature))
   :hook
-  (java-mode . (lsp-deferred lsp-java-boot-lens-mode))
+  ;; (java-mode . (lsp-deferred lsp-java-boot-lens-mode))
   (find-file . pg/spring-boot-properties)
   :custom
   (lsp-java-configuration-runtimes '[( :name "JavaSE-17"

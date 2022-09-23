@@ -6,7 +6,7 @@
    "arc-icon-theme"
    "matcha-theme"
    "hicolor-icon-theme"
-   "gnome-icon-theme"
+   ;; "gnome-icon-theme"
    "gnome-backgrounds"
    "papirus-icon-theme"
    "breeze-icons"

@@ -47,10 +47,12 @@
   (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
 
   ;; Bind some useful keys for evil-mode
-  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
-  (evil-normalize-keymaps)
+  (with-eval-after-load 'evil
+    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
+    (evil-normalize-keymaps))
 
-  (corfu-mode)
+  (with-eval-after-load 'corfu
+    (corfu-mode))
 
   (setq eshell-history-size 10000
         eshell-buffer-maximum-lines 10000

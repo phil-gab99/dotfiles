@@ -32,6 +32,9 @@ alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END
 # Search files in the current folder
 alias find="find . | grep "
 
+# Provenance of commands including aliases
+alias which='alias | which --tty-only --read-alias --show-dot --show-tilde'
+
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                # show hidden files
 alias ls='ls -AFh --color=always' # add colors and file type extensions

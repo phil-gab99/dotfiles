@@ -1,15 +1,15 @@
 ;;; pg-ui.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(load-theme 'onedark-variant t)  ; Load onedark theme
-(setq inhibit-startup-message t  ; Disable startup message
-      scroll-conservatively 1000 ; Slow scrolling
-      split-width-threshold 185) ; Width for splitting
+(load-theme 'onedark-variant t)  ;; Load onedark theme
+(setq inhibit-startup-message t  ;; Disable startup message
+      scroll-conservatively 1000 ;; Slow scrolling
+      split-width-threshold 185) ;; Width for splitting
 (unless pg/is-termux
-  (scroll-bar-mode 0)            ; Disable visible scrollbar
-  (tool-bar-mode 0)              ; Disable toolbar
+  (scroll-bar-mode 0)            ;; Disable visible scrollbar
+  (tool-bar-mode 0)              ;; Disable toolbar
   (tooltip-mode 0))
-(menu-bar-mode 0)                ; Disable menu bar
+(menu-bar-mode 0)                ;; Disable menu bar
 
 ;; Set frame transparency
 (unless (or pg/is-termux (not pg/exwm-enabled))
@@ -18,28 +18,22 @@
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-(use-package diminish
-  :straight t
-  :init
-  (require 'diminish))
+(straight-use-package 'diminish)
+(require 'diminish)
 
-(use-package all-the-icons
-  :straight t
-  :init
-  (require 'all-the-icons))
+(straight-use-package 'all-the-icons)
+(require 'all-the-icons)
 
-(use-package doom-modeline
-  :straight t
-  :init
-  (require 'doom-modeline)
-  :custom
-  (doom-modeline-height 15)
-  (doom-modeline-modal-icon nil)
-  (doom-modeline-enable-word-count t)
-  (doom-modeline-indent-info t)
-  (doom-modeline-buffer-file-name-style 'truncate-except-project)
-  (doom-modeline-mu4e t)
-  :config
+(straight-use-package 'doom-modeline)
+(require 'doom-modeline)
+(with-eval-after-load 'doom-modeline
+  (pg/customize-set-variables
+   '((doom-modeline-height . 17)
+     (doom-modeline-modal-icon . t)
+     (doom-modeline-enable-word-count . t)
+     (doom-modeline-indent-info . t)
+     (doom-modeline-buffer-file-name-style . truncate-except-project)
+     (doom-modeline-mu4e . t)))
   (doom-modeline-mode 1))
 
 (defun pg/dashboard-setup-startup-hook ()
@@ -62,26 +56,23 @@
         (format "Emacs started in %.2f" time)
       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
-(use-package dashboard
-  :straight t
-  :init
+
+(straight-use-package 'dashboard)
+(with-eval-after-load 'projectile
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
   (require 'dashboard)
-  :after projectile
-  :custom
-  (dashboard-set-file-icons t)
-  (dashboard-match-agenda-entry "task")
-  (dashboard-items '((recents . 5)
-                     (projects . 10)
-                     (agenda . 5)))
-  (dashboard-page-separator "\n\f\n")
-  (dashboard-init-info #'pg/display-startup-time)
-  :config
-  (pg/dashboard-setup-startup-hook))
+  (with-eval-after-load 'dashboard
+    (pg/customize-set-variables
+     `((dashboard-set-file-icons . t)
+       (dashboard-match-agenda-entry . "task")
+       (dashboard-items . ((recents . 5)
+                           (projects . 10)
+                           (agenda . 5)))
+       (dashboard-page-separator . "\n\f\n")
+       (dashboard-init-info . ,#'pg/display-startup-time)))
+    (pg/dashboard-setup-startup-hook)))
 
-(use-package page-break-lines
-  :straight t
-  :init
-  (require 'page-break-lines))
+(straight-use-package 'page-break-lines)
+(require 'page-break-lines)
 
 (provide 'pg-ui)

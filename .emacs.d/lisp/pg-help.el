@@ -1,15 +1,19 @@
 ;;; pg-help.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package helpful
-  :straight t
-  :init
-  (require 'helpful)
-  :bind
-  ([remap describe-function] . helpful-callable)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . helpful-variable)
-  ([remap describe-key] . helpful-key))
+(straight-use-package 'helpful)
+(unless (fboundp 'helpful-callable)
+  (autoload #'helpful-callable "helpful" nil t))
+(global-set-key [remap describe-function] #'helpful-callable)
+(unless (fboundp 'helpful-command)
+  (autoload #'helpful-command "helpful" nil t))
+(global-set-key [remap describe-command] #'helpful-command)
+(unless (fboundp 'helpful-variable)
+  (autoload #'helpful-variable "helpful" nil t))
+(global-set-key [remap describe-variable] #'helpful-variable)
+(unless (fboundp 'helpful-key)
+  (autoload #'helpful-key "helpful" nil t))
+(global-set-key [remap describe-key] #'helpful-key)
 
 (defun pg/Info-mode-setup ()
   "Defining some behaviours for the major info-mode."
@@ -25,27 +29,24 @@
   (variable-pitch-mode 1)
   (visual-line-mode 1))
 
-(use-package info
-  :straight nil
-  :init
-  (require 'info)
-  :hook
-  (Info-mode . pg/Info-mode-setup))
+(require 'info)
+(with-eval-after-load 'info
+  (add-hook 'Info-mode-hook #'pg/Info-mode-setup))
 
 (defun pg/docs-visual-fill ()
   "Applies text soft wrap."
-  (setq visual-fill-column-width 150
-        visual-fill-column-center-text t)
+  (pg/customize-set-variables
+   '((visual-fill-column-width . 150)
+     (visual-fill-column-center-text . t)))
   (visual-fill-column-mode 1))
 
-(use-package visual-fill-column
-  :straight t
-  :init
-  (require 'visual-fill-column)
-  :hook
-  ((org-mode
-    gfm-view-mode
-    Info-mode
-    eww-mode) . pg/docs-visual-fill))
+(straight-use-package 'visual-fill-column)
+(unless (fboundp 'visual-fill-column-mode)
+  (autoload #'visual-fill-column-mode "visual-fill-column" nil t))
+(dolist (mode '(org-mode-hook
+                gfm-view-mode-hook
+                Info-mode-hook
+                eww-mode-hook))
+  (add-hook mode #'pg/docs-visual-fill))
 
 (provide 'pg-help)

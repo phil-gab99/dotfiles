@@ -39,6 +39,7 @@
                             ("work\n" '(5 "HDMI-1"))
                             ("work+\n" '(5 "HDMI-1"))
                             ("jclab\n" '(5 "HDMI-1"))
+                            ("jb-0305\n" '(5 "HDMI-1"))
                             ("aa-1140\n" '(5 "HDMI-1"))
                             ("rg-e310\n" '(5 "HDMI-1"))
                             ("jc-s139\n" '(5 "HDMI-1"))

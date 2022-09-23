@@ -25,6 +25,9 @@
 
 (require 'pg-startup)
 
+(if pg/exwm-enabled
+    (require 'pg-desktop))
+
 (dolist (package '(pg-ui
                    pg-org
                    pg-completion
@@ -73,7 +76,5 @@
                    pg-music
                    pg-games))
   (require package))
-
-(when pg/exwm-enabled (require 'pg-desktop))
 
 (setq gc-cons-threshold (* 2 1000 1000))

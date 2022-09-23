@@ -8,11 +8,8 @@
                                      (fixed-pitch (:height 2.0) fixed-pitch)
                                      (default (:height 2.0) default))))
 
-(use-package eww
-  :straight nil
-  :init
-  (require 'eww)
-  :hook
-  (eww-mode . pg/eww-mode-setup))
+(require 'eww)
+(with-eval-after-load 'eww
+  (add-hook 'eww-mode-hook #'pg/eww-mode-setup))
 
 (provide 'pg-web)

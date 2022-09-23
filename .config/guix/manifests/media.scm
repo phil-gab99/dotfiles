@@ -8,4 +8,5 @@
    "evince"
    "simple-scan"
    "xdg-desktop-portal-gtk"
+   ;; "xournal"
    "xournalpp"))

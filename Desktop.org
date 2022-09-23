@@ -71,7 +71,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
      "arc-icon-theme"
      "matcha-theme"
      "hicolor-icon-theme"
-     "gnome-icon-theme"
+     ;; "gnome-icon-theme"
      "gnome-backgrounds"
      "papirus-icon-theme"
      "breeze-icons"
@@ -163,6 +163,7 @@ Workspaces:
                               ("work\n" '(5 "HDMI-1"))
                               ("work+\n" '(5 "HDMI-1"))
                               ("jclab\n" '(5 "HDMI-1"))
+                              ("jb-0305\n" '(5 "HDMI-1"))
                               ("aa-1140\n" '(5 "HDMI-1"))
                               ("rg-e310\n" '(5 "HDMI-1"))
                               ("jc-s139\n" '(5 "HDMI-1"))
@@ -681,7 +682,7 @@ For desktop notifications
   max_icon_size = 88
 
   # Paths to default icons.
-  icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/status/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/devices/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/gnome/256x256/emblems/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/panel/22/
+  icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/status/128@2x/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/devices/128@2x/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/emblems/64@2x/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/panel/22/
 
   ### History ###
 
@@ -927,6 +928,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
       #:docstring "Runs `mpd'"
       #:respawn? #f
       #:start (make-forkexec-constructor '("mpd")
+                                         #:pid-file "~/.config/mpd/mpd.pid"
                                          #:log-file "~/.config/mpd/mpd.log")
       #:stop (make-kill-destructor)))
 
@@ -2126,8 +2128,8 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src sh :tangle ~/bin/wacom-laptop :shebang #!/bin/env sh
 
-  xinput map-to-output "Wacom Intuos PT S Pen stylus" eDP-1
-  xinput map-to-output "Wacom Intuos PT S Pen eraser" eDP-1
+  xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" eDP-1
+  xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" eDP-1
 
   echo "Mapped to laptop!"
 
@@ -2137,8 +2139,8 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src sh :tangle ~/bin/wacom-screen :shebang #!/bin/env sh
 
-  xinput map-to-output "Wacom Intuos PT S Pen stylus" HDMI-1
-  xinput map-to-output "Wacom Intuos PT S Pen eraser" HDMI-1
+  xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
+  xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1
 
   echo "Mapped to HDMI!"
 
@@ -2170,6 +2172,7 @@ Applications to install which are otherwise difficult to install Guix systems.
      "evince"
      "simple-scan"
      "xdg-desktop-portal-gtk"
+     ;; "xournal"
      "xournalpp"))
 
 #+end_src
