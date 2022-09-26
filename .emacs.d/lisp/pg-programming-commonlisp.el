@@ -1,12 +1,10 @@
 ;;; pg-programming-commonlisp.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package sly
-  :straight t
-  :init
-  (require 'sly)
-  :after lisp-mode
-  :custom
-  (inferior-lisp-program "sbcl"))
+(straight-use-package 'sly)
+(unless (fboundp 'sly)
+  (autoload #'sly "sly" nil t))
+(with-eval-after-load 'sly
+  (customize-set-variable 'inferior-lisp-program "sbcl"))
 
 (provide 'pg-programming-commonlisp)

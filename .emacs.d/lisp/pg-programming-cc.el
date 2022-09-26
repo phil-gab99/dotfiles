@@ -1,37 +1,29 @@
 ;;; pg-programming-cc.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package cc-mode
-  :straight nil
-  :init
-  (require 'cc-mode)
-  :hook
-  ((c-mode
-    c++-mode
-    objc-mode) . lsp-deferred)
-  :custom
-  (company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
+(with-eval-after-load 'cc-mode
+  (customize-set-variable 'company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
 
-(use-package cc-vars
-  :straight nil
-  :init
-  (require 'cc-vars)
-  :after cc-mode
-  :custom
-  (c-basic-offset 4))
+(with-eval-after-load 'cc-mode
+  (require 'cc-vars))
+(with-eval-after-load 'cc-vars
+  (customize-set-variable 'c-basic-offset 4))
 
-(use-package company-c-headers
-  :straight t
-  :init
-  (require 'company-c-headers)
-  :after (cc-mode company)
-  :config
+(straight-use-package 'company-c-headers)
+(with-eval-after-load 'company
+  (with-eval-after-load 'cc-mode
+    (require 'company-c-headers)))
+(with-eval-after-load 'company-c-headers
   (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
 
-(use-package ccls
-  :straight t
-  :init
-  (require 'ccls)
-  :after (cc-mode lsp-mode))
+(straight-use-package 'ccls)
+(with-eval-after-load 'cc-mode
+  (with-eval-after-load 'lsp-mode
+    (require 'ccls)))
+(with-eval-after-load 'ccls
+  (dolist (mode '(c-mode-hook
+                  c++-mode-hook
+                  objc-mode-hook))
+    (add-hook mode #'lsp-deferred)))
 
 (provide 'pg-programming-cc)

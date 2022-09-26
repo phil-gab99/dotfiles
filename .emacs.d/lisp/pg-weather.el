@@ -11,14 +11,13 @@
          (lambda (status) (switch-to-buffer (current-buffer))))
       (decode-coding-string (buffer-string) 'utf-8))))
 
-(use-package wttrin
-  :straight t
-  :init
-  (require 'wttrin)
+(straight-use-package 'wttrin)
+(unless (fboundp 'wttrin)
+  (autoload #'wttrin "wttrin" nil t))
+(with-eval-after-load 'wttrin
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
-  :commands wttrin
-  :custom
-  (wttrin-default-cities '("montreal"))
-  (wttrin-default-accept-language '("Accept-Language" . "en-US")))
+  (pg/customize-set-variables
+   '((wttrin-default-cities . ("montreal"))
+     (wttrin-default-accept-language . ("Accept-Language" . "en-US")))))
 
 (provide 'pg-weather)

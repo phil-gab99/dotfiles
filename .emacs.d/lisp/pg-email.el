@@ -60,17 +60,22 @@
                                       (mu4e-drafts-folder . "/University/Drafts")
                                       (mu4e-sent-folder . "/University/Sent Items")
                                       (mu4e-refile-folder . "/University/Archive")
-                                      (mu4e-trash-folder . "/University/Deleted Items")))))))
+                                      (mu4e-trash-folder . "/University/Deleted Items")))))
+    (with-eval-after-load 'general
+      (pg/leader-keys
+        "m" '(:ignore t :which-key "email")
+        "md" '(mu4e :which-key "dashboard")
+        "mc" '(mu4e-compose-new :which-key "compose")))))
 
 (straight-use-package 'mu4e-alert)
 (with-eval-after-load 'mu4e
-  (require 'mu4e-alert)
-  (with-eval-after-load 'mu4e-alert
-    (pg/customize-set-variables
-     '((mu4e-alert-notify-repeated-mails . t)
-       (mu4e-alert-email-notification-types . (subjects))))
-    (mu4e-alert-set-default-style 'notifications)
-    (mu4e-alert-enable-notifications)
-    (mu4e-alert-enable-mode-line-display)))
+  (require 'mu4e-alert))
+(with-eval-after-load 'mu4e-alert
+  (pg/customize-set-variables
+   '((mu4e-alert-notify-repeated-mails . t)
+     (mu4e-alert-email-notification-types . (subjects))))
+  (mu4e-alert-set-default-style 'notifications)
+  (mu4e-alert-enable-notifications)
+  (mu4e-alert-enable-mode-line-display))
 
 (provide 'pg-email)

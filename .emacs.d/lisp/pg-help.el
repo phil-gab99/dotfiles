@@ -14,6 +14,19 @@
 (unless (fboundp 'helpful-key)
   (autoload #'helpful-key "helpful" nil t))
 (global-set-key [remap describe-key] #'helpful-key)
+(unless (fboundp 'helpful-symbol)
+  (autoload #'helpful-symbol "helpful" nil t))
+(global-set-key [remap describe-symbol] #'helpful-symbol)
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "h" '(:ignore t :which-key "help")
+    "hk" '(helpful-key :which-key "key")
+    "hf" '(helpful-callable :which-key "command")
+    "hv" '(helpful-variable :which-key "variable")
+    "hb" '(describe-bindings :which-key "bindings")
+    "hc" '(describe-face :which-key "face")
+    "hp" '(describe-package :which-key "package")
+    "hk" '(helpful-kill-buffers :which-key "quit")))
 
 (defun pg/Info-mode-setup ()
   "Defining some behaviours for the major info-mode."

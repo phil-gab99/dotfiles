@@ -3,41 +3,44 @@
 
 (defun pg/lsp-mode-setup ()
   "Displays structure of cursor position for all buffers."
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-lens-mode)
   (lsp-headerline-breadcrumb-mode))
 
-(use-package lsp-mode
-  :straight t
-  :init
-  (require 'lsp-mode)
+(straight-use-package 'lsp-mode)
+(unless (fboundp 'lsp)
+  (autoload #'lsp "lsp-mode" nil t))
+(unless (fboundp 'lsp-deferred)
+  (autoload #'lsp-deferred "lsp-mode" nil t))
+(with-eval-after-load 'lsp
   (require 'lsp-completion)
-  :commands (lsp lsp-deferred)
-  :hook
-  (lsp-mode-hook . pg/lsp-mode-setup)
-  :custom
-  (lsp-completion-provider :none)
-  (lsp-keymap-prefix "C-c l")
-  :config
+  (add-hook 'lsp-mode-hook #'pg/lsp-mode-setup)
+  (pg/customize-set-variables
+   '((lsp-completion-provider . :none)
+     (lsp-keymap-prefix . "C-c l")))
   (lsp-enable-which-key-integration t))
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "l" '(:ignore t :which-key "lsp")))
 
-(use-package lsp-ui
-  :straight t
-  :init
-  (require 'lsp-ui)
-  :after lsp-mode
-  :hook
-  (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom)
-  (lsp-ui-doc-show-with-cursor t)
-  (lsp-ui-doc-include-signature t))
+(straight-use-package 'lsp-ui)
+(unless (fboundp 'lsp-ui-mode)
+  (autoload #'lsp-ui-mode "lsp-ui" nil t))
+(add-hook 'lsp-mode-hook #'lsp-ui-mode)
+(with-eval-after-load 'lsp-ui
+  (pg/customize-set-variables
+   '((lsp-ui-doc-position . bottom)
+     (lsp-ui-doc-show-with-cursor . t)
+     (lsp-ui-doc-include-signature . t))))
 
-(use-package lsp-treemacs
-  :straight t
-  :init
-  (require 'lsp-treemacs)
-  :after lsp)
+(straight-use-package 'lsp-treemacs)
+(with-eval-after-load 'lsp-mode
+  (require 'lsp-treemacs))
+(with-eval-after-load 'lsp-treemacs
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "lt" '(treemacs :which-key "tree")
+      "lo" '(lsp-treemacs-symbols :which-key "outline")
+      "le" '(lsp-treemacs-errors-list :which-key "errors"))))
 
 (defvar company-mode/enable-yas t
   "Enable yasnippet for all backends.")
@@ -49,92 +52,88 @@
     (append (if (consp backend) backend (list backend))
             '(:with company-yasnippet))))
 
-(use-package company
-  :straight t
-  :init
-  (require 'company)
-  :hook
-  (prog-mode . company-mode)
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0)
-  (company-tooltip-minimum-width 40)
-  (company-tooltip-maximum-width 60)
-  (company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-  :bind
-  (:map company-active-map
-        ("<tab>" . company-complete-selection))
-  (:map lsp-mode-map
-        ("<tab>" . company-indent-or-complete-common)))
+(straight-use-package 'company)
+(unless (fboundp 'company-mode)
+  (autoload #'company-mode "company" nil t))
+(add-hook 'prog-mode-hook #'company-mode)
+(unless (fboundp 'company-complete-selection)
+  (autoload #'company-complete-selection "company" nil t))
+(if (boundp 'company-active-map)
+    (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "<tab>") #'company-complete-selection)))
+(with-eval-after-load 'lsp-mode
+  (unless (fboundp 'company-indent-or-complete-common)
+    (autoload #'company-indent-or-complete-common "company" nil t))
+  (define-key lsp-mode-map (kbd "<tab>") #'company-indent-or-complete-common))
+(with-eval-after-load 'company
+  (pg/customize-set-variables
+   '((company-minimum-prefix-length . 1)
+     (company-idle-delay . 0.0)
+     (company-tooltip-minimum-width . 40)
+     (company-tooltip-maximum-width . 60)))
+  (with-eval-after-load 'yasnippet
+    (customize-set-variable 'company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
-(use-package company-box
-  :straight t
-  :init
-  (require 'company-box)
-  :after company
-  :hook
-  (company-mode . company-box-mode))
+(straight-use-package 'company-box)
+(unless (fboundp 'company-box-mode)
+  (autoload #'company-box-mode "company-box" nil t))
+(with-eval-after-load 'company
+  (add-hook 'company-mode-hook #'company-box-mode))
 
-(use-package company-prescient
-  :straight t
-  :init
-  (require 'company-prescient)
-  :after (company prescient)
-  :custom
-  (company-prescient-mode 1))
+(straight-use-package 'company-prescient)
+(with-eval-after-load 'company
+  (require 'prescient)
+  (with-eval-after-load 'prescient
+    (require 'company-prescient)))
+(with-eval-after-load 'company-prescient
+  (customize-set-variable 'company-prescient-mode 1))
 
-(use-package flycheck
-  :straight t
-  :init
-  (require 'flycheck)
-  :after lsp-mode
-  :hook
-  (lsp-mode-hook . flycheck-mode))
+(straight-use-package 'flycheck)
+(unless (fboundp 'flycheck-mode)
+  (autoload #'flycheck-mode "flycheck" nil t))
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'flycheck-mode))
 
-(use-package dap-mode
-  :straight t
-  :init
-  (require 'dap-mode)
-  :after lsp-mode
-  :custom
-  (dap-mode 1)
-  (dap-ui-mode 1)
-  (dap-ui-controls-mode 1))
+(straight-use-package 'dap-mode)
+(with-eval-after-load 'lsp-mode
+  (require 'dap-mode))
+(with-eval-after-load 'dap-mode
+  (pg/customize-set-variables
+   '((dap-mode . 1)
+     (dap-ui-mode . 1)
+     (dap-ui-controls-mode . 1))))
 
-(use-package plantuml-mode
-  :straight t
-  :init
-  (require 'plantuml-mode)
-  :custom
-  (plantuml-indent-level 4)
-  (plantuml-jar-path "~/bin/plantuml.jar")
-  (plantuml-default-exec-mode 'jar))
+(straight-use-package 'plantuml-mode)
+(with-eval-after-load 'plantuml-mode
+  (pg/customize-set-variables
+   `((plantuml-indent-level . 4)
+     (plantuml-jar-path . ,(expand-file-name "~/bin/plantuml.jar"))
+     (plantuml-default-exec-mode jar))))
 
-(use-package comment-dwim-2
-  :straight t
-  :init
-  (require 'comment-dwim-2)
-  :bind
-  ("M-/" . comment-dwim-2)
-  (:map org-mode-map
-        ("M-/" . org-comment-dwim-2)))
+(straight-use-package 'comment-dwim-2)
+(unless (fboundp 'comment-dwim-2)
+  (autoload #'comment-dwim-2 "comment-dwim-2" nil t))
+(global-set-key (kbd "M-/") #'comment-dwim-2)
+(unless (fboundp 'org-comment-dwim-2)
+  (autoload #'org-comment-dwim-2 "comment-dwim-2" nil t))
+(define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2)
 
-(use-package yasnippet
-  :straight t
-  :init
-  (require 'yasnippet)
-  :after (company diminish)
-  :diminish yas-minor-mode
-  :hook
-  (prog-mode . yas-minor-mode)
-  (yas-minor-mode . (lambda ()
-                      (yas-activate-extra-mode 'fundamental-mode)))
-  :config
-  (yas-global-mode 1))
+(straight-use-package 'yasnippet)
+(unless (fboundp 'yas-minor-mode)
+  (autoload #'yas-minor-mode "yasnippet" nil t))
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+(with-eval-after-load 'yasnippet
+  (add-hook 'yas-minor-mode-hook #'(lambda ()
+                                     (yas-activate-extra-mode 'fundamental-mode)))
+  (yas-global-mode)
+  (if (fboundp 'diminish)
+      (diminish 'yas-minor-mode)
+    (with-eval-after-load 'diminish)
+    (diminish 'yas-minor-mode)))
 
-(use-package yasnippet-snippets
-  :straight t
-  :init
+(straight-use-package 'yasnippet-snippets)
+(with-eval-after-load 'yasnippet
   (require 'yasnippet-snippets))
 
 (provide 'pg-programming)

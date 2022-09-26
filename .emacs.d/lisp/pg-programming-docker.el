@@ -1,15 +1,8 @@
 ;;; pg-programming-docker.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package docker
-  :straight t
-  :init
-  (require 'docker))
+(straight-use-package 'docker)
 
-(use-package dockerfile-mode
-  :straight t
-  :init
-  (require 'dockerfile-mode)
-  :after docker)
+(straight-use-package 'dockerfile-mode)
 
 (provide 'pg-programming-docker)

@@ -1,10 +1,20 @@
 ;;; pg-bindings.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package hydra
-  :straight t
-  :init
-  (require 'hydra))
+(straight-use-package 'general)
+(with-eval-after-load 'which-key
+  (with-eval-after-load 'evil
+    (require 'general)))
+
+(with-eval-after-load 'general
+  (general-create-definer pg/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC"))
+
+(straight-use-package 'hydra)
+(unless (fboundp 'defhydra)
+  (autoload #'defhydra "hydra"))
 
 (defhydra hydra-text-scale (:timeout 5)
   "Scale text."
@@ -57,118 +67,20 @@
   ("l" persp-next "next")
   ("h" persp-prev "prev"))
 
-(use-package iso-transl
-  :straight nil
-  :init
-  (require 'iso-transl)
-  :bind
-  ("<Multi_key>" . iso-transl-ctl-x-8-map))
-
-(use-package general
-  :straight t
-  :init
-  (require 'general)
-  :after (evil which-key)
-  :config
-  (general-create-definer pg/leader-keys
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
-
+(with-eval-after-load 'general
   (pg/leader-keys
-
-    ;; Chat
-    "c" '(:ignore t :which-key "social")
-    "cs" '(:ignore t :which-key "slack")
-    "css" '(slack-start :which-key "start")
-    "csc" '(slack-channel-select :which-key "channels")
-    "csm" '(slack-im-select :which-key "message")
-    "csr" '(slack-message-add-reaction :which-key "react")
-
-    ;; Mail
-    "m" '(:ignore t :which-key "email")
-    "md" '(mu4e :which-key "dashboard")
-    "mo" '(org-mime-edit-mail-in-org-mode :which-key "org edit")
-    "mc" '(mu4e-compose-new :which-key "compose")
-
-
-    ;; Scaling
     "s" '(:ignore t :which-key "scaling")
     "st" '(hydra-text-scale/body :which-key "scale text")
     "sw" '(hydra-window-scale/body :which-key "scale window")
     "sx" '(hydra-x-window-scale/body :which-key "scale x window")
 
-
-    ;; Window navigations
     "w" '(:ignore t :which-key "window")
     "wm" '(hydra-window-move/body :which-key "move")
     "ws" '(hydra-window-swap/body :which-key "swap")
-    "wc" '(hydra-window-change/body :which-key "change")
+    "wc" '(hydra-window-change/body :which-key "change")))
 
-    "wu" '(winner-undo :which-key "undo config")
-    "wr" '(winner-redo :which-key "redo config")
-
-    "wp" '(:ignore t :which-key "persp")
-    "wpc" '(persp-switch :which-key "create")
-    "wps" '(hydra-perspective-switch/body :which-key "switch")
-    "wpa" '(persp-add-buffer :which-key "add buf")
-    "wpu" '(persp-set-buffer :which-key "set buf")
-    "wpk" '(persp-kill :which-key "remove")
-
-    "wt" '(:ignore t :which-key "tabs")
-    "wtt" '(tab-new :which-key "create")
-    "wtw" '(tab-close :which-key "close")
-    "wtr" '(tab-rename :which-key "name")
-    "wts" '(tab-switch :which-key "switch")
-    "wtu" '(tab-undo :which-key "undo")
-
-
-    ;; Project management
-    "p" '(:ignore t :which-key "project")
-    "ps" '(pg/eshell :which-key "eshell")
-    "pg" '(:ignore t :which-key "git")
-    "pgs" '(magit-status :which-key "status")
-    "pgc" '(magit-clone :which-key "clone")
-    "pp" '(:ignore t :which-key "projectile")
-    "ppr" '(projectile-run-project :which-key "run")
-    "ppc" '(projectile-compile-project :which-key "compile")
-    "ppf" '(projectile-find-file :which-key "find file")
-
-
-    ;; Lsp mode
-    "l" '(:ignore t :which-key "lsp")
-
-    "ld" '(:ignore t :which-key "doc")
-    "ldf" '(lsp-ui-doc-focus-frame :which-key "focus frame")
-    "ldu" '(lsp-ui-doc-unfocus-frame :which-key "unfocus frame")
-
-    "li" '(:ignore t :which-key "info")
-    "lit" '(treemacs :which-key "tree")
-    "lio" '(lsp-treemacs-symbols :which-key "outline")
-    "lie" '(lsp-treemacs-errors-list :which-key "errors")
-
-
-    ;; Org mode
-    "o" '(:ignore t :which-key "org")
-
-    "ot" '(:ignore t :which-key "pomodoro")
-    "ott" '(pg/start-timer :which-key "start")
-    "otb" '(pg/start-with-break-timer :which-key "break")
-    "ots" '(pg/stop-timer :which-key "stop")
-    "otp" '(org-timer-pause-or-continue :which-key "pause")
-
-    "os" '(org-screenshot :which-key "screenshot")
-    "oc" '(org-capture :which-key "capture")
-    "op" '(org-tree-slide-mode :which-key "slide")
-
-    "ol" '(:ignore t :which-key "links")
-    "olo" '(org-open-at-point :which-key "open")
-    "olb" '(org-mark-ring-goto :which-key "back")
-
-    "on" '(:ignore t :which-key "notes")
-    "onl" '(org-roam-buffer-toggle :which-key "links")
-    "onf" '(org-roam-node-find :which-key "find/create")
-    "oni" '(org-roam-node-insert :which-key "insert/create")
-    "ons" '(org-id-get-create :which-key "create subheading")))
+(require 'iso-transl)
+(with-eval-after-load 'iso-transl
+  (global-set-key (kbd "<Multi_key>") #'iso-transl-ctl-x-8-map))
 
 (provide 'pg-bindings)

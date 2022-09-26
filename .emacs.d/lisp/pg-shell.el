@@ -1,77 +1,68 @@
 ;;; pg-shell.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package eshell-git-prompt
-  :straight t
-  :init
-  (require 'eshell-git-prompt)
-  :after eshell
-  :config
+(straight-use-package 'eshell-git-prompt)
+(with-eval-after-load 'eshell
+  (require 'eshell-git-prompt))
+(with-eval-after-load 'eshell-git-prompt
   (eshell-git-prompt-use-theme 'multiline2))
 
-(use-package eshell-syntax-highlighting
-  :straight t
-  :init
-  (require 'eshell-syntax-highlighting)
-  :after eshell
-  :custom
-  (eshell-syntax-highlighting-global-mode t))
+(straight-use-package 'eshell-syntax-highlighting)
+(with-eval-after-load 'eshell
+  (require 'eshell-syntax-highlighting))
+(with-eval-after-load 'eshell-syntax-highlighting
+  (customize-set-variable 'eshell-syntax-highlighting-global-mode t))
 
-(defun pg/esh-autosuggest-setup ()
-  "Eshell autosuggest setup."
-  (require 'company)
-  (set-face-foreground 'company-preview-common nil)
-  (set-face-background 'company-preview nil))
-
-(use-package esh-autosuggest
-  :straight t
-  :init
-  (require 'esh-autosuggest)
-  :after eshell
-  :hook
-  (eshell-mode . esh-autosuggest-mode)
-  :custom
-  (esh-autosuggest-delay 0.5)
-  :bind
-  (:map esh-autosuggest-active-map
-        ("<tab>" . company-complete-selection))
-  :config
-  (pg/esh-autosuggest-setup))
+(straight-use-package 'esh-autosuggest)
+(with-eval-after-load 'eshell
+  (unless (fboundp 'esh-autosuggest-mode)
+    (autoload #'esh-autosuggest-mode "esh-autosuggest" nil t))
+  (add-hook 'eshell-mode-hook #'esh-autosuggest-mode))
+(with-eval-after-load 'esh-autosuggest
+  (customize-set-variable 'esh-autosuggest-delay 0.5))
 
 (defun pg/configure-eshell ()
   "Eshell setup."
-  ;; Save command history when commands are entered
-  (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)
-
-  ;; Truncate buffer for performance
-  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-
-  ;; Bind some useful keys for evil-mode
   (with-eval-after-load 'evil
-    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
+    (evil-define-key '(normal insert visual) eshell-mode-map
+      (kbd "<home>") #'eshell-bol)
     (evil-normalize-keymaps))
 
   (with-eval-after-load 'corfu
     (corfu-mode))
 
-  (setq eshell-history-size 10000
-        eshell-buffer-maximum-lines 10000
-        eshell-hist-ignoredups t
-        eshell-scroll-to-bottom-on-input t))
+  (require 'em-hist)
+  (with-eval-after-load 'em-hist
+    (pg/customize-set-variables
+     '((eshell-history-size . 10000)
+       (eshell-hist-ignoredups . t)))
+    (require 'esh-cmd)
+    (with-eval-after-load 'esh-cmd
+      (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)))
 
-(use-package eshell
-  :straight nil
-  :init
-  (require 'eshell)
+  (require 'esh-mode)
+  (with-eval-after-load 'esh-mode
+    (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+    (pg/customize-set-variables
+     '((eshell-buffer-maximum-lines . 10000)
+       (eshell-scroll-to-bottom-on-input . t)))))
+
+(require 'esh-mode)
+(with-eval-after-load 'esh-mode
+  (add-hook 'eshell-first-time-mode-hook #'pg/configure-eshell))
+(unless (fboundp 'eshell)
+  (autoload #'eshell "eshell" nil t))
+(with-eval-after-load 'eshell
   (require 'em-tramp)
-  :hook
-  (eshell-first-time-mode . pg/configure-eshell)
-  :custom
-  (eshell-prefer-lisp-functions t))
+  (customize-set-variable 'eshell-prefer-lisp-functions t))
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "pe" '(eshell :which-key "eshell")))
 
-(use-package vterm
-  :straight nil
-  :init
-  (require 'vterm))
+(unless (fboundp 'vterm)
+  (autoload #'vterm "vterm" nil t))
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "pv" '(vterm :which-key "vterm")))
 
 (provide 'pg-shell)

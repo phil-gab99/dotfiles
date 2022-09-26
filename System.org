@@ -104,7 +104,24 @@ Add a ~udev~ rule to enable members of the ~charge~ group to control charging th
 
 #+end_src
 
-Override the default ~%desktop-services~ to add the ~udev~ charge threshold configuration.
+Add a ~udev~ rule to enable members of the ~spice~ group to enable USB redirection with virtual machines.
+
+#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
+
+  (define %spice-devices-udev-rule
+    (udev-rule
+     "50-spice.rules"
+     (string-append "SUBSYSTEM==\"usb\", "
+                    "GROUP=\"spice\", "
+                    "MODE=\"0660\""
+                    "\n"
+                    "SUBSYSTEM==\"usb-device\", "
+                    "GROUP=\"spice\", "
+                    "MODE=\"0660\"")))
+
+#+end_src
+
+Override the default ~%desktop-services~ to add ~udev~ rules and apply other configuration.
 
 #+begin_src scheme :tangle ~/.config/guix/systems/base.scm
 
@@ -117,8 +134,9 @@ Override the default ~%desktop-services~ to add the ~udev~ charge threshold conf
                      (udev-service-type config =>
                                         (udev-configuration
                                          (inherit config)
-                                         (rules (cons %charge-thresholds-udev-rule
-                                                      (udev-configuration-rules config)))))
+                                         (rules (cons* %charge-thresholds-udev-rule
+                                                       %spice-devices-udev-rule
+                                                       (udev-configuration-rules config)))))
                      (network-manager-service-type config =>
                                                    (network-manager-configuration (inherit config)
                                                                                   (vpn-plugins (list network-manager-openvpn))))))
@@ -179,6 +197,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                      (home-directory "/home/phil-gab99")
                      (supplementary-groups '("wheel"     ;; sudo
                                              "netdev"    ;; network devices
+                                             "spice"     ;; usb devices
                                              "kvm"
                                              "tty"
                                              "input"
@@ -191,11 +210,13 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                                              "video")))  ;; control video devices
        %base-user-accounts))
 
-     ;; Add the `charge' group
+     ;; Add extra groupes
      (groups
-      (cons
+      (cons*
        (user-group (system? #t)
                    (name "charge"))
+       (user-group (system? #t)
+                   (name "spice"))
        %base-groups))
 
      ;; Partition mounted on /boot/efi.
@@ -206,7 +227,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
 
      ;; File system to be overridden
      (file-systems
-      (cons*
+      (cons
        (file-system (mount-point "/tmp")
                     (device "none")
                     (type "tmpfs")

@@ -1,50 +1,48 @@
 ;;; pg-file.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
-      auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t))
-      vc-follow-symlinks t)
+(pg/customize-set-variables
+ `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+   (auto-save-file-name-transforms . ((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+   (vc-follow-symlinks . t)))
 
-(use-package dired
-  :straight nil
-  :init
-  (require 'dired)
-  :after evil-collection
-  :commands (dired dired-jump)
-  :custom
-  (dired-listing-switches "-agho --group-directories-first")
-  :bind
-  ("C-x C-j" . dired-jump))
+(unless (fboundp 'dired)
+  (autoload #'dired "dired" nil t))
+(unless (fboundp 'dired-jump)
+  (autoload #'dired-jump "dired" nil t))
+(global-set-key (kbd "C-x C-j") #'dired-jump)
+(with-eval-after-load 'dired
+  (customize-set-variable 'dired-listing-switches "-agho --group-directories-first"))
 
-(use-package dired-single
-  :straight t
-  :init
-  (require 'dired-single)
-  :after dired
-  :commands (dired dired-jump)
-  :config
+(straight-use-package 'dired-single)
+(with-eval-after-load 'dired
+  (require 'dired-single))
+(with-eval-after-load 'dired-single
+  (if (boundp 'dired-mode-map)
+      (progn
+        (define-key dired-mode-map [remap dired-find-file] 'dired-single-buffer)
+        (define-key dired-mode-map [remap dired-mouse-find-file-other-window] 'dired-single-buffer-mouse)
+        (define-key dired-mode-map [remap dired-up-directory] 'dired-single-up-directory)))
+  (unless (fboundp 'evil-collection-define-key)
+    (autoload #'evil-collection-define-key "evil-collection"))
   (evil-collection-define-key 'normal 'dired-mode-map
-    "h" 'dired-single-up-directory
-    "l" 'dired-single-buffer))
+    "h" #'dired-single-up-directory
+    "l" #'dired-single-buffer))
 
+(straight-use-package 'all-the-icons-dired)
 (unless pg/is-termux
-  (use-package all-the-icons-dired
-    :straight t
-    :init
-    (require 'all-the-icons-dired)
-    :hook
-    (dired-mode . all-the-icons-dired-mode)))
+  (unless (fboundp 'all-the-icons-dired-mode)
+    (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
+  (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
 
-(use-package dired-hide-dotfiles
-  :straight t
-  :init
-  (require 'dired-hide-dotfiles)
-  :after (dired evil-collection)
-  :hook
-  (dired-mode-hook . dired-hide-dotfiles-mode)
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map "H" 'dired-hide-dotfiles-mode))
+(straight-use-package 'dired-hide-dotfiles)
+(with-eval-after-load 'dired
+  (unless (fboundp 'dired-hide-dotfiles-mode)
+    (autoload #'dired-hide-dotfiles-mode "dired-hide-dotfiles" nil t))
+  (add-hook 'dired-mode-hook #'dired-hide-dotfiles-mode)
+  (with-eval-after-load 'evil-collection
+    (evil-collection-define-key 'normal 'dired-mode-map
+      "H" #'dired-hide-dotfiles-mode)))
 
 (unless pg/is-termux 
   (straight-use-package 'openwith)

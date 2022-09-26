@@ -119,8 +119,9 @@
           (selectric-make-sound (format "%sping.wav" selectric-files-path))))))
 
 (straight-use-package 'selectric-mode)
-;; (fset #'selectric-type-sound #'pg/selectric-type-sound)
-;; (require 'selectric-mode)
+(fset #'selectric-type-sound #'pg/selectric-type-sound)
+(unless (fboundp 'selectric-mode)
+  (autoload #'selectric-mode "selectric-mode" nil t))
 
 (straight-use-package 'rainbow-mode)
 (unless (fboundp 'rainbow-mode)
@@ -180,12 +181,12 @@
 
 (straight-use-package 'evil-collection)
 (with-eval-after-load 'evil
-  (require 'evil-collection)
-  (with-eval-after-load 'evil-collection
-    (evil-collection-init)
-    (if (boundp 'diminish)
-        (diminish #'evil-collection-unimpaired-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'evil-collection-unimpaired-mode)))))
+  (require 'evil-collection))
+(with-eval-after-load 'evil-collection
+  (evil-collection-init)
+  (if (boundp 'diminish)
+      (diminish #'evil-collection-unimpaired-mode)
+    (with-eval-after-load 'diminish
+      (diminish #'evil-collection-unimpaired-mode))))
 
 (provide 'pg-editing)

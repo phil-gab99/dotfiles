@@ -1,21 +1,16 @@
 ;;; pg-viewers.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package doc-view
-  :straight nil
-  :init
-  (require 'doc-view)
-  :mode "\\.djvu$")
+(unless (fboundp 'doc-view-mode)
+  (autoload #'doc-view-mode "doc-view" nil t))
+(add-to-list 'auto-mode-alist '("\\.djvu$" . doc-view-mode))
 
-(use-package pdf-tools
-  :straight t
-  :init
-  (require 'pdf-tools)
-  :mode ("\\.pdf$" . pdf-tools-install))
+(straight-use-package 'pdf-tools)
+(unless (fboundp 'pdf-view-mode)
+  (autoload #'pdf-view-mode "pdf-tools" nil t))
+(add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
 
-(use-package djvu
-  :straight t
-  :init
-  (require 'djvu))
+(straight-use-package 'djvu)
+(require 'djvu)
 
 (provide 'pg-viewers)

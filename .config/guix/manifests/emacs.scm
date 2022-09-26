@@ -20,8 +20,6 @@
   ;; (specification->package "emacs-exwm")
   ;; (specification->package "emacs-desktop-environment")
   
-  ;; (specification->package "emacs-use-package")
-  
   (first (lookup-inferior-packages inferior "emacs-guix"))
   
   (first (lookup-inferior-packages inferior "emacs-geiser"))
@@ -192,8 +190,8 @@
   
   ;; (specification->package "emacs-emms-mode-line-cycle")
   
-  ;; (specification->package "emacs-hydra")
-  
   ;; (specification->package "emacs-general")
+  
+  ;; (specification->package "emacs-hydra")
   
   ))

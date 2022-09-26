@@ -35,59 +35,50 @@
       (setq mpc-args (list mpc-args)))
   (apply 'call-process "mpc" nil destination nil mpc-args))
 
-(use-package emms
-  :disabled
-  :straight t
-  :init
-  (require 'emms)
-  (require 'emms-setup)
-  ;; (require 'emms-player-mpd)
-  ;; :hook
-  ;; (emms-playlist-cleared . emms-player-mpd-clear)
-  :custom
-  (emms-source-file-default-directory (expand-file-name "~/Music"))
-  ;; (emms-player-mpd-music-directory (expand-file-name "~/Music"))
-  ;; (emms-player-list '(emms-player-mpd))
-  ;; (emms-volume-change-function #'emms-volume-mpd-change)
-  :bind
-  (:map emms-browser-mode-map
-        ("<XF86AudioPrev>" . emms-previous)
-        ("<XF86AudioNext>" . emms-next)
-        ("<XF86AudioPlay>" . emms-pause)
-        ("<XF86AudioStop>" . emms-stop))
-  :config
-  (emms-all)
-  (emms-default-players))
-  ;; (add-to-list 'emms-player-list 'emms-player-mpd)
-  ;; (emms-all))
+;; (straight-use-package 'emms)
+;; (unless (fboundp 'emms-smart-browse)
+;;   (autoload #'emms-smart-browse "emms" nil t))
+;; (with-eval-after-load 'emms
+;;   (require 'emms-setup)
+;;   (require 'emms-player-mpd)
+;;   (add-hook 'emms-playlist-cleared #'emms-player-mpd-clear)
+;;   (pg/customize-set-variables
+;;    `((emms-source-file-default-directory . ,(expand-file-name "~/Music"))
+;;      (emms-player-mpd-music-directory . ,(expand-file-name "~/Music"))
+;;      (emms-player-list . (emms-player-mpd))
+;;      (emms-volume-change-function ,#'emms-volume-mpd-change)))
+;;   (emms-all)
+;;   (emms-default-players)
+;;   (add-to-list 'emms-player-list 'emms-player-mpd)
+;;   (dolist (binding `((,(kbd "<XF86AudioPrev>") . ,#'emms-previous)
+;;                      (,(kbd "<XF86AudioNext>") . ,#'emms-next)
+;;                      (,(kbd "<XF86AudioPlay>") . ,#'emms-pause)
+;;                      (,(kbd "<XF86AudioStop>") . ,#'emms-stop)))
+;;     (define-key emms-browser-mode-map (car binding) (cdr binding))))
 
 (defun pg/emms-mode-line-cycle--icon-function (&optional title initialp)
-  "Format the current track TITLE like `emms-mode-line-icon-function'.
-If INITIALP is no-nil, initialized."
+  "Format the current track TITLE like `emms-mode-line-icon-function'. If
+  INITIALP is no-nil, initialized."
   (concat " "
           emms-mode-line-icon-before-format
           ;; (emms-propertize "NP:" 'display emms-mode-line-icon-image-cache)
           (emms-mode-line-cycle--playlist-current title initialp)))
 
-(use-package emms-mode-line-cycle
-  :disabled
-  :straight t
-  :init
-  (require 'emms-mode-line-cycle)
-  (require 'emms-mode-line-icon)
-  (fset #'emms-mode-line-cycle--icon-function #'pg/emms-mode-line-cycle--icon-function)
-  :after emms
-  :custom
-  (emms-mode-line-cycle-use-icon-p t)
-  :config
-  (emms-mode-line 1)
-  (emms-playing-time 1)
-  (emms-mode-line-cycle 1))
+;; (straight-use-package 'emms-mode-line-cycle)
+;; (with-eval-after-load 'emms
+;;   (require 'emms-mode-line-cycle))
+;; (with-eval-after-load 'emms-mode-line-cycle
+;;   (require 'emms-mode-line-icon)
+;;   (fset #'emms-mode-line-cycle--icon-function #'pg/emms-mode-line-cycle--icon-function)
+;;   (customize-set-variable 'emms-mode-line-cycle-use-icon-p t)
+;;   (emms-mode-line 1)
+;;   (emms-playing-time 1)
+;;   (emms-mode-line-cycle 1))
 
-(use-package simple-mpc
-  :straight t
-  :bind
-  (:map simple-mpc-mode-map)
-        ("<XF86AudioPlay>" . simple-mpc-toggle))
+(straight-use-package 'simple-mpc)
+(unless (fboundp 'simple-mpc)
+  (autoload #'simple-mpc "simple-mpc" nil t))
+(with-eval-after-load 'simple-mpc
+  (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
 
 (provide 'pg-music)

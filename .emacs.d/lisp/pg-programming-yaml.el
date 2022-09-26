@@ -1,9 +1,6 @@
 ;;; pg-programming-yaml.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package yaml-mode
-  :straight t
-  :init
-  (require 'yaml-mode))
+(straight-use-package 'yaml-mode)
 
 (provide 'pg-programming-yaml)

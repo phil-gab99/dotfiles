@@ -1,6 +1,6 @@
-(use-package app-launcher
-  :straight '(app-launcher :host github
-                           :repo "SebastienWae/app-launcher"))
+(straight-use-package '(app-launcher :host github
+                                     :repo "SebastienWae/app-launcher"))
+(require 'app-launcher)
 
 (defun pg/exwm-update-class ()
   "Sets buffer names to be app names."
@@ -58,85 +58,91 @@
   (pg/herd-service "dunst")
   (pg/herd-service "nm-applet")
   (pg/herd-service "syncthing-gtk")
+  (pg/herd-service "xss-lock")
   (pg/herd-service "udiskie")
   (pg/herd-service "pasystray")
   (pg/herd-service "xmodmap"))
 
-(use-package exwm
-  :straight t
-  :init
-  (require 'exwm-config)
-  (require 'exwm-randr)
-  (require 'exwm-input)
-  :after app-launcher
-  :hook
+(straight-use-package 'exwm)
+(require 'exwm)
+(require 'exwm-config)
+(require 'exwm-randr)
+(require 'exwm-input)
+(with-eval-after-load 'exwm
+
   ;; When window "class" updates, use it to set the buffer name
-  (exwm-update-class . pg/exwm-update-class)
+  (add-hook 'exwm-update-class-hook #'pg/exwm-update-class)
   ;; When exwm starts up
-  (exwm-init . pg/exwm-startup)
+  (add-hook 'exwm-init-hook #'pg/exwm-startup)
   ;; Configure launching of some x windows
-  (exwm-manage-finish . pg/configure-window-by-class)
+  (add-hook 'exwm-manage-finish-hook #'pg/configure-window-by-class)
   ;; Smart display adpatation
-  (exwm-randr-screen-change . pg/update-displays)
-  :custom
-  (exwm-workspace-number 6)
-  (exwm-workspace-show-all-buffers t)
-  (exwm-input-prefix-keys '(?\C-x
-                            ?\C-g
-                            ?\C-h
-                            ?\M-x
-                            ?\M-`
-                            ?\M-&
-                            ?\M-:
-                            ?\C-\s)) ;; C-SPC
-  (exwm-input-global-keys
-   ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-   `(([?\s-r] . exwm-reset)
+  (add-hook 'exwm-randr-screen-change-hook #'pg/update-displays)
 
-     ;; Switch between char and line mode
-     ([?\s-s] . exwm-input-toggle-keyboard)
+  (pg/customize-set-variables
+   `((exwm-workspace-number . 6)
+     (exwm-workspace-show-all-buffers . t)
+     (exwm-input-prefix-keys . (?\C-x
+                                ?\C-g
+                                ?\C-h
+                                ?\M-x
+                                ?\M-`
+                                ?\M-&
+                                ?\M-:
+                                ?\C-\s)) ;; C-SPC
+     ;; Reset to line-mode (C-c C-k switches to char-mode via
+     ;; `exwm-input-release-keyboard')
+     (exwm-input-global-keys . (([?\s-r] . exwm-reset)
 
-     ;; Launch applications via shell command
-     ([?\s-t] . (lambda (command)
-                  (interactive (list (read-shell-command "$ ")))
-                  (start-process-shell-command command nil command)))
+                                ;; Switch between char and line mode
+                                ([?\s-s] . exwm-input-toggle-keyboard)
 
-     ;; Switch workspace
-     ([?\s-w] . exwm-workspace-switch)
+                                ;; Launch applications via shell command
+                                ([?\s-t] . (lambda (command)
+                                             (interactive (list (read-shell-command "$ ")))
+                                             (start-process-shell-command command nil command)))
 
-     ;; Bind the tilde key to workspace 0 when switching/creating
-     ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+                                ;; Switch workspace
+                                ([?\s-w] . exwm-workspace-switch)
 
-     ;; 's-N': Switch to certain workspace with Super plus a number key (0 - 9)
-     ,@(mapcar (lambda (i)
-                 `(,(kbd (format "s-%d" i)) .
-                   (lambda ()
-                     (interactive)
-                     (exwm-workspace-switch-create ,i))))
-               (number-sequence 0 9))))
-  (exwm-manage-configurations
-   '(((string-equal exwm-class-name "Nyxt") char-mode t)))
-  :bind
-  ("C-x B" . exwm-workspace-switch-to-buffer)
-  (:map exwm-mode-map
-        ("C-q" . exwm-input-send-next-key))
-  :config
+                                ;; Bind the tilde key to workspace 0 when
+                                ;; switching/creating
+                                ([?\s-`] . (lambda ()
+                                             (interactive)
+                                             (exwm-workspace-switch-create 0)))
+
+                                ;; 's-N': Switch to certain workspace with Super
+                                ;; plus a number key (0 - 9)
+                                ,@(mapcar (lambda (i)
+                                            `(,(kbd (format "s-%d" i)) .
+                                              (lambda ()
+                                                (interactive)
+                                                (exwm-workspace-switch-create ,i))))
+                                          (number-sequence 0 9))))
+     (exwm-manage-configurations . (((string-equal exwm-class-name "Nyxt") char-mode t)))))
+  (global-set-key (kbd "C-x B") #'exwm-workspace-switch-to-buffer)
+  (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
+
   (pg/update-displays)
-  (exwm-input-set-key (kbd "s-SPC") 'app-launcher-run-app)
+  (with-eval-after-load 'app-launcher
+    (exwm-input-set-key (kbd "s-SPC") #'app-launcher-run-app))
 
   (exwm-randr-enable)
   (exwm-enable))
 
-(use-package desktop-environment
-  :straight t
-  :after exwm
-  :diminish desktop-environment-mode
-  :custom
-  (desktop-environment-brightness-normal-increment "5%+")
-  (desktop-environment-brightness-normal-decrement "5%-")
-  (desktop-environment-music-toggle-command "mpc toggle")
-  :config
-  (desktop-environment-mode))
+(straight-use-package 'desktop-environment)
+(with-eval-after-load 'exwm
+  (require 'desktop-environment))
+(with-eval-after-load 'desktop-environment
+  (pg/customize-set-variables
+   '((desktop-environment-brightness-normal-increment . "5%+")
+     (desktop-environment-brightness-normal-decrement . "5%-")
+     (desktop-environment-music-toggle-command . "mpc toggle")))
+  (desktop-environment-mode)
+  (if (fboundp 'diminish)
+      (diminish #'desktop-environment-mode)
+    (with-eval-after-load 'diminish
+      (diminish #'desktop-environment-mode))))
 
 (defvar pg/polybar-process nil
   "Holds the process of the running Polybar instance, if any")

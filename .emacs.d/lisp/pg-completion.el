@@ -7,12 +7,12 @@
 
 (straight-use-package 'marginalia)
 (with-eval-after-load 'vertico
-  (require 'marginalia)
-  (with-eval-after-load 'marginalia
-    (customize-set-variable 'marginalia-annotators '(marginalia-annotators-heavy
-                                                     marginalia-annotators-light
-                                                     nil))
-    (marginalia-mode)))
+  (require 'marginalia))
+(with-eval-after-load 'marginalia
+  (customize-set-variable 'marginalia-annotators '(marginalia-annotators-heavy
+                                                   marginalia-annotators-light
+                                                   nil))
+  (marginalia-mode))
 
 (straight-use-package 'consult)
 (unless (fboundp 'consult-line)
@@ -26,13 +26,13 @@
 
 (straight-use-package 'orderless)
 (with-eval-after-load 'vertico
-  (require 'orderless)
-  (with-eval-after-load 'orderless
-    (pg/customize-set-variables
-     '((completion-styles . (orderless))
-       (completion-category-defaults . nil)
-       (orderless-skip-highlighting . nil)
-       (completion-category-overrides . ((file (styles basic partial-completion))))))))
+  (require 'orderless))
+(with-eval-after-load 'orderless
+  (pg/customize-set-variables
+   '((completion-styles . (orderless))
+     (completion-category-defaults . nil)
+     (orderless-skip-highlighting . nil)
+     (completion-category-overrides . ((file (styles basic partial-completion)))))))
 
 (straight-use-package 'corfu)
 (unless (fboundp 'corfu-next)
@@ -73,15 +73,15 @@
   (unless (fboundp 'embark-act)
     (autoload #'embark-act "embark" nil t))
   (global-set-key (kbd "C-S-a") #'embark-act)
-  (define-key minibuffer-local-map (kbd "C-d") #'embark-act)
-  (with-eval-after-load 'embark
-    (customize-set-variable 'embark-confirm-act-all nil)
-    (setq embark-action-indicator
-          (lambda
-            (map)
-            (which-key--show-keymap "Embark" map nil nil 'no-paging)
-            #'which-key--hide-popup-ignore-command)
-          embark-become-indicator embark-action-indicator)))
+  (define-key minibuffer-local-map (kbd "C-d") #'embark-act))
+(with-eval-after-load 'embark
+  (customize-set-variable 'embark-confirm-act-all nil)
+  (setq embark-action-indicator
+        (lambda
+          (map)
+          (which-key--show-keymap "Embark" map nil nil 'no-paging)
+          #'which-key--hide-popup-ignore-command)
+        embark-become-indicator embark-action-indicator))
 
 (straight-use-package '(embark-consult :host github
                                        :repo "oantolin/embark"
@@ -92,7 +92,6 @@
     (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)))
 
 (straight-use-package 'prescient)
-(require 'prescient)
 
 (straight-use-package 'which-key)
 (require 'which-key)

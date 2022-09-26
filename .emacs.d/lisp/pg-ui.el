@@ -29,7 +29,7 @@
 (with-eval-after-load 'doom-modeline
   (pg/customize-set-variables
    '((doom-modeline-height . 17)
-     (doom-modeline-modal-icon . t)
+     (doom-modeline-modal-icon . nil)
      (doom-modeline-enable-word-count . t)
      (doom-modeline-indent-info . t)
      (doom-modeline-buffer-file-name-style . truncate-except-project)
@@ -56,21 +56,20 @@
         (format "Emacs started in %.2f" time)
       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
-
 (straight-use-package 'dashboard)
 (with-eval-after-load 'projectile
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
-  (require 'dashboard)
-  (with-eval-after-load 'dashboard
-    (pg/customize-set-variables
-     `((dashboard-set-file-icons . t)
-       (dashboard-match-agenda-entry . "task")
-       (dashboard-items . ((recents . 5)
-                           (projects . 10)
-                           (agenda . 5)))
-       (dashboard-page-separator . "\n\f\n")
-       (dashboard-init-info . ,#'pg/display-startup-time)))
-    (pg/dashboard-setup-startup-hook)))
+  (require 'dashboard))
+(with-eval-after-load 'dashboard
+  (pg/customize-set-variables
+   `((dashboard-set-file-icons . t)
+     (dashboard-match-agenda-entry . "task")
+     (dashboard-items . ((recents . 5)
+                         (projects . 10)
+                         (agenda . 5)))
+     (dashboard-page-separator . "\n\f\n")
+     (dashboard-init-info . ,#'pg/display-startup-time)))
+  (pg/dashboard-setup-startup-hook))
 
 (straight-use-package 'page-break-lines)
 (require 'page-break-lines)

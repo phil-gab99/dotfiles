@@ -1,8 +1,11 @@
-(setq gc-cons-threshold (* 50 1000 1000)) ; Sets garbage collection threshold high enough
+;;; init.el -*- lexical-binding: t; -*-
+;; Author: Philippe Gabriel
+
+(setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
 
 (push "~/.emacs.d/lisp" load-path)
 
-(defun close-all-buffers ()
+(defun pg/close-all-buffers ()
   "Closes all emacs buffers."
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
@@ -10,29 +13,46 @@
 (defun pg/save-buffers-kill-emacs ()
   "Closes all emacs buffers before exiting emacs."
   (interactive)
-  (close-all-buffers)
+  (pg/close-all-buffers)
   (save-buffers-kill-emacs))
+
+(defun pg/customize-set-variables (custom-sets)
+  "Sets the default value of variables. The `custom-sets' argument represents
+  a plist where each entry's key is the custom variable one wishes to set and
+  the corresponding value is the value to set to the custom variable."
+  (if (mapcar (lambda (setting)
+                (let ((custom (car setting))
+                      (value (cdr setting)))
+                  (customize-set-variable custom value)))
+              custom-sets)
+      t
+    nil))
 
 (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-      pg/exwm-enabled (and (not pg/is-termux) (display-graphic-p)))
+      pg/exwm-enabled (and (not pg/is-termux)
+                           (display-graphic-p))
+      pg/is-guix-system (and (eq system-type 'gnu/linux)
+                             (require 'f)
+                             (string-equal (f-read "/etc/issue") "\nThis is the GNU system.  Welcome.\n")))
 
-(customize-set-variable 'load-prefer-newer t)
-(customize-set-variable 'use-short-answers t)
+(pg/customize-set-variables
+ `((load-prefer-newer . t)
+   (use-short-answers . t)
+   (auto-save-list-file-prefix . ,(expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))))
 
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 
 (require 'pg-startup)
 
-(if pg/exwm-enabled
-    (require 'pg-desktop))
+(if pg/exwm-enabled (require 'pg-desktop))
 
 (dolist (package '(pg-ui
+                   pg-bindings
                    pg-org
                    pg-completion
                    pg-editing
-                   pg-bindings
                    pg-native-compilation
                    pg-guix
                    pg-passwords
@@ -49,14 +69,14 @@
                    pg-programming
                    ;; pg-programming-alloy
                    pg-programming-cc
-                   pg-programming-commonlisp
+                   ;; pg-programming-commonlisp
                    pg-programming-css
                    pg-programming-docker
                    pg-programming-git
                    pg-programming-groovy
                    pg-programming-haskell
                    pg-programming-java
-                   pg-programming-lmc
+                   ;; pg-programming-lmc
                    pg-programming-markdown
                    pg-programming-mips
                    pg-programming-python
@@ -69,7 +89,7 @@
 
                    pg-notification
                    pg-viewers
-                   pg-bible
+                   ;; pg-bible
                    pg-finance
                    pg-social
                    pg-weather

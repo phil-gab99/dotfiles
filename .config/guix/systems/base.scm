@@ -49,6 +49,17 @@
                   "SUBSYSTEM==\"power_supply\", "
                   "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
 
+(define %spice-devices-udev-rule
+  (udev-rule
+   "50-spice.rules"
+   (string-append "SUBSYSTEM==\"usb\", "
+                  "GROUP=\"spice\", "
+                  "MODE=\"0660\""
+                  "\n"
+                  "SUBSYSTEM==\"usb-device\", "
+                  "GROUP=\"spice\", "
+                  "MODE=\"0660\"")))
+
 (define %my-desktop-services
   (modify-services %desktop-services
                    (elogind-service-type config =>
@@ -58,8 +69,9 @@
                    (udev-service-type config =>
                                       (udev-configuration
                                        (inherit config)
-                                       (rules (cons %charge-thresholds-udev-rule
-                                                    (udev-configuration-rules config)))))
+                                       (rules (cons* %charge-thresholds-udev-rule
+                                                     %spice-devices-udev-rule
+                                                     (udev-configuration-rules config)))))
                    (network-manager-service-type config =>
                                                  (network-manager-configuration (inherit config)
                                                                                 (vpn-plugins (list network-manager-openvpn))))))
@@ -108,6 +120,7 @@ EndSection
                    (home-directory "/home/phil-gab99")
                    (supplementary-groups '("wheel"     ;; sudo
                                            "netdev"    ;; network devices
+                                           "spice"     ;; usb devices
                                            "kvm"
                                            "tty"
                                            "input"
@@ -120,11 +133,13 @@ EndSection
                                            "video")))  ;; control video devices
      %base-user-accounts))
 
-   ;; Add the `charge' group
+   ;; Add extra groupes
    (groups
-    (cons
+    (cons*
      (user-group (system? #t)
                  (name "charge"))
+     (user-group (system? #t)
+                 (name "spice"))
      %base-groups))
 
    ;; Partition mounted on /boot/efi.
@@ -135,7 +150,7 @@ EndSection
 
    ;; File system to be overridden
    (file-systems
-    (cons*
+    (cons
      (file-system (mount-point "/tmp")
                   (device "none")
                   (type "tmpfs")

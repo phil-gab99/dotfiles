@@ -1,14 +1,10 @@
 ;;; pg-programming-css.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(use-package lsp-css
-  :straight nil
-  :init
-  (require 'lsp-css)
-  :after lsp-mode
-  :hook
-  ((css-mode
-    less-css-mode
-    scss-mode) . lsp-deferred))
+(with-eval-after-load 'lsp-mode
+  (dolist (mode '(css-mode-hook
+                  less-css-mode-hook
+                  scss-mode-hook))
+    (add-hook mode #'lsp-deferred)))
 
 (provide 'pg-programming-css)
