@@ -1,5 +1,4 @@
 ;;; onedark-variant-theme.el --- One Dark Variant color theme
-
 ;; Author: Philippe Gabriel
 
 (deftheme onedark-variant

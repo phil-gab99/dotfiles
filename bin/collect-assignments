@@ -1,0 +1,70 @@
+#!/bin/env sh
+if [ $# -lt 1 ]
+then
+    echo "Usage: collect-assignments $OPTION $TOSKIP"
+    echo 
+    echo "Available options:"
+    echo "    --unzip     Unzips zip archives files starting at current directory."
+    echo "    --open      Opens file using appropriate program."
+    echo "    --collect   Collects corrections into a corr directory."
+    echo
+
+    exit 1
+fi
+
+count=0
+OPTION=$1
+TOSKIP=${2:-0}
+
+function apply {
+    for f in ./"$1"/*; do
+        if [ -d "$f" ]; then
+            apply "$f"
+        elif [ -f "$f" ]; then
+            case "$OPTION" in
+                --unzip)
+                    ABS=$(realpath "$f")
+                    DIR=$(dirname "$ABS")
+                    case "$f" in
+                        *.zip) unzip "$f" -d "$DIR";;
+                        *) ;;
+                    esac
+                    ;;
+                --open)
+                    case "$f" in
+                        *.pdf) xournalpp "$f";;
+                        *.lmc) emacsclient "$f";;
+                        *.hs) emacsclient "$f";;
+                        *.txt) emacsclient "$f";;
+                        *) ;;
+                    esac
+                    ;;
+                --collect)
+                    case "$f" in
+                        corr-*.pdf) mv "$f" ../*-corr/;;
+                        *) ;; # echo "$f"
+                    esac
+                    ;;
+                *)
+                    echo "Unknown option"
+                    exit 2
+                    ;;
+            esac
+        fi
+    done
+}
+
+for d in *; do
+    if [ -d "$d" ]; then
+        echo "---------------------"
+        ls "$d"
+        echo "---------------------"
+        echo
+        if [ $count -ge $TOSKIP ]; then
+            apply "$d"
+        fi
+        ((count++))
+    fi
+done
+
+exit 0

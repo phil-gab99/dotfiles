@@ -1,3 +1,6 @@
-#!/bin/sh
+#!/bin/env sh
+for music in $*; do
+    youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
+done
 
-youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $1
+exit 0

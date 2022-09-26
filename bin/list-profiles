@@ -1,15 +1,2 @@
-#!/bin/sh
-echo -e "\nAvailable profiles are:\n"
-for profile in "$HOME/.config/guix/manifests/*.scm"; do
-    profileName=$(basename -s .scm $profile)
-    echo "$profileName"
-done
-
-echo -e "\n\nYour active profiles are:\n"
-profiles=$(guix package --list-profiles)
-for active in $profiles; do
-    base=$(basename $active)
-    if [ "$base" != "current" ] && [ "$base" != ".guix-profile" ]; then
-        echo "$base"
-    fi
-done
+#!/bin/env sh
+guix package --list-profiles

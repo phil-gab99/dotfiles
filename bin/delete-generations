@@ -1,4 +1,3 @@
-#!/bin/sh
+#!/bin/env sh
 profile=$1
-echo Deleting all generations from $profile
 guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --delete-generations

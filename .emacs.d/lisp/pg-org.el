@@ -65,7 +65,7 @@
      (org-log-into-drawer . t)
      (org-deadline-warning-days . 7)
      (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
-     (org-plantuml-jar-path . "~/bin/plantuml.jar")
+     (org-plantuml-jar-path . "~/Packages/plantuml.jar")
      (org-babel-python-command . "python3")
      (org-confirm-babel-evaluate . nil)
      (org-agenda-exporter-settings . ((ps-left-header (org-agenda-write-buffer-name))

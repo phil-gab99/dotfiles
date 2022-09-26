@@ -1,12 +1,13 @@
-(specifications->manifest
- '("feh"
-   "imagemagick"
-   "scrot"
-   "xclip"
-   "libreoffice"
-   ;; "gimp"
-   "evince"
-   "simple-scan"
-   "xdg-desktop-portal-gtk"
-   ;; "xournal"
-   "xournalpp"))
+(packages->manifest
+ (list
+  (specification-> "feh")
+  (specification-> "imagemagick")
+  (specification-> "scrot")
+  (specification-> "xclip")
+  (specification-> "libreoffice")
+  ;; (specification-> "gimp")
+  (specification-> "evince")
+  (specification-> "simple-scan")
+  (specification-> "xdg-desktop-portal-gtk")
+  ;; (specification-> "xournal")
+  (specification-> "xournalpp")))

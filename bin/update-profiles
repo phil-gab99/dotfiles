@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env sh
 GREEN='\033[1;32m'
 NC='\033[0m'
 
@@ -17,3 +17,5 @@ for profile in $profiles; do
 
   guix package --profile="$profilePath/$profileName" --manifest="$XDG_CONFIG_HOME/guix/manifests/$profileName.scm" --fallback
 done
+
+exit 0

@@ -1,11 +1,12 @@
-(specifications->manifest
- '("mpv"
-   "youtube-dl"
-   "gstreamer"
-   "gst-plugins-base"
-   "gst-plugins-good"
-   "gst-plugins-bad"
-   "gst-plugins-ugly"
-   "gst-libav"
-   "intel-vaapi-driver"
-   "libva-utils"))
+(packages->manifest
+ (list
+  (specification->package "mpv")
+  (specification->package "youtube-dl")
+  (specification->package "gstreamer")
+  (specification->package "gst-plugins-base")
+  (specification->package "gst-plugins-good")
+  (specification->package "gst-plugins-bad")
+  (specification->package "gst-plugins-ugly")
+  (specification->package "gst-libav")
+  (specification->package "intel-vaapi-driver")
+  (specification->package "libva-utils")))

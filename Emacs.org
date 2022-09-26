@@ -1,5 +1,6 @@
 #+title: Emacs configuration
 #+author: Philippe Gabriel
+#+PROPERTY: header-args :tangle-mode (identity #o444)
 
 Below is a sectioned configuration of emacs. Each code blocks gets written out to its own module file before being required by the ~~/.emacs.d/init.el~ config file.
 
@@ -106,11 +107,11 @@ Emacs interface for guix package manager.
 
   (unless pg/is-guix-system
     (unless (fboundp 'guix)
-      (autoload #'guix "guix" nil t))
-    (with-eval-after-load 'general
-      (pg/leader-keys
-        "G" '(:ignore t :which-key "Guix")
-        "Gg" '(guix :which-key "Guix"))))
+      (autoload #'guix "guix" nil t)))
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "G" '(:ignore t :which-key "Guix")
+      "Gg" '(guix :which-key "Guix")))
 
 #+end_src
 
@@ -2348,7 +2349,7 @@ Allows writing textual descriptions for creating uml diagrams
   (with-eval-after-load 'plantuml-mode
     (pg/customize-set-variables
      `((plantuml-indent-level . 4)
-       (plantuml-jar-path . ,(expand-file-name "~/bin/plantuml.jar"))
+       (plantuml-jar-path . ,(expand-file-name "~/Packages/plantuml.jar"))
        (plantuml-default-exec-mode jar))))
 
 #+end_src
@@ -2440,25 +2441,26 @@ Some general tools for programming:
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/build-tools.scm
 
-  (specifications->manifest
-   '("meson"
-     "ninja"
-     "autoconf"
-     "automake"
-     "libtool"
-     "gmime"
-     "xapian"
-     "docker"
-     ;; "gtk+"
-     ;; "gtk+:bin"
-     ;; "webkitgtk"
-     ;; "guile"
-     "pkg-config"
-     "glib"
-     "glib:bin"
-     ;; "check"
-     "make"
-     "cmake"))
+  (packages->manifest
+   (list
+    (specification->package "meson")
+    (specification->package "ninja")
+    (specification->package "autoconf")
+    (specification->package "automake")
+    (specification->package "libtool")
+    (specification->package "gmime")
+    (specification->package "xapian")
+    (specification->package "docker")
+    ;; (specification->package "gtk+")
+    ;; (specification->package "gtk+:bin")
+    ;; (specification->package "webkitgtk")
+    ;; (specification->package "guile")
+    (specification->package "pkg-config")
+    (specification->package "glib")
+    (specification->package+output "glib:bin")
+    ;; (specification->package "check")
+    (specification->package "make")
+    (specification->package "cmake")))
 
 #+end_src
 
@@ -2517,17 +2519,18 @@ Some general tools for programming:
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/cc.scm
 
-  (specifications->manifest
-   '("gcc-toolchain@10.3.0"
-     "texinfo"
-     "glibc"
-     "llvm"
-     "clang"
-     "ccls"
-     "lld"
-     "file"
-     "elfutils"
-     "go"))
+  (packages->manifest
+   (list
+    (specification->package "gcc-toolchain@10.3.0")
+    (specification->package "texinfo")
+    (specification->package "glibc")
+    (specification->package "llvm")
+    (specification->package "clang")
+    (specification->package "ccls")
+    (specification->package "lld")
+    (specification->package "file")
+    (specification->package "elfutils")
+    (specification->package "go")))
 
 #+end_src
 
@@ -2795,9 +2798,10 @@ Some general tools for programming:
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/haskell.scm
 
-  (specifications->manifest
-   '("ghc@8"
-     "ghc@8:doc"))
+  (packages->manifest
+   (list
+    (specification->package "ghc@8")
+    (specification->package+output "ghc@8:doc")))
 
 #+end_src
 
@@ -2948,9 +2952,10 @@ Some general tools for programming:
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/latex.scm
 
-  (specifications->manifest
-   '("rubber"
-     "texlive"))
+  (packages->manifest
+   (list
+    (specification->package "rubber")
+    (specification->package "texlive")))
 
 #+end_src
 
@@ -3202,9 +3207,10 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/python.scm
 
-  (specifications->manifest
-   '("python"
-     "node"))
+  (packages->manifest
+   (list
+    (specification->package "python")
+    (specification->package "node")))
 
 #+end_src
 
@@ -3298,9 +3304,10 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/sql.scm
 
-  (specifications->manifest
-   '("postgresql@14.2"
-     "sqls"))
+  (packages->manifest
+   (list
+    (specification->package "postgresql@14.2")
+    (specification->package "sqls")))
 
 #+end_src
 
@@ -3608,7 +3615,7 @@ Org mode package for writing structured documents and more. Here are some useful
        (org-log-into-drawer . t)
        (org-deadline-warning-days . 7)
        (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
-       (org-plantuml-jar-path . "~/bin/plantuml.jar")
+       (org-plantuml-jar-path . "~/Packages/plantuml.jar")
        (org-babel-python-command . "python3")
        (org-confirm-babel-evaluate . nil)
        (org-agenda-exporter-settings . ((ps-left-header (org-agenda-write-buffer-name))

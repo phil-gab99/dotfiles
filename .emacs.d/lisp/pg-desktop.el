@@ -94,6 +94,8 @@
      ;; `exwm-input-release-keyboard')
      (exwm-input-global-keys . (([?\s-r] . exwm-reset)
 
+                                ([?\s-\s] . app-launcher-run-app)
+
                                 ;; Switch between char and line mode
                                 ([?\s-s] . exwm-input-toggle-keyboard)
 
@@ -124,8 +126,6 @@
   (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
 
   (pg/update-displays)
-  (with-eval-after-load 'app-launcher
-    (exwm-input-set-key (kbd "s-SPC") #'app-launcher-run-app))
 
   (exwm-randr-enable)
   (exwm-enable))

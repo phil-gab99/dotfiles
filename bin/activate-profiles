@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env sh
 GREEN='\033[1;32m'
 RED='\033[1;30m'
 NC='\033[0m'
@@ -15,7 +15,7 @@ for profile in $profiles; do
 
     profilePath="$GUIX_EXTRA_PROFILES/$profileName"
 
-    manifestPath=$HOME/.config/guix/manifests/$profileName.scm
+    manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
 
   if [ -f $manifestPath ]; then
     echo
@@ -31,8 +31,12 @@ for profile in $profiles; do
         . "$GUIX_PROFILE"/etc/profile
     else
         echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+        exit 2
     fi
   else
     echo "No profile found at path" $profilePath
+    exit 1
   fi
 done
+
+exit 0

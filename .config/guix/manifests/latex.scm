@@ -1,3 +1,4 @@
-(specifications->manifest
- '("rubber"
-   "texlive"))
+(packages->manifest
+ (list
+  (specification->package "rubber")
+  (specification->package "texlive")))

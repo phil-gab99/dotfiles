@@ -3,11 +3,11 @@
 
 (unless pg/is-guix-system
   (unless (fboundp 'guix)
-    (autoload #'guix "guix" nil t))
-  (with-eval-after-load 'general
-    (pg/leader-keys
-      "G" '(:ignore t :which-key "Guix")
-      "Gg" '(guix :which-key "Guix"))))
+    (autoload #'guix "guix" nil t)))
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "G" '(:ignore t :which-key "Guix")
+    "Gg" '(guix :which-key "Guix")))
 
 (unless pg/is-guix-system
   (unless (fboundp 'geiser-guile)

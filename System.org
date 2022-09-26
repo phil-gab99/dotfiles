@@ -324,15 +324,15 @@ Define the ~base-operating-system~ which will be inherited by all machine config
 
 #+end_src
 
-* Profile Management
+* Guix Profile Management
 
-Profiles get installed under the ~~/.guix-extra-profiles~ path and sourced by ~~/.profile~ when logging in.
+Guix profiles get installed under the ~~/.guix-extra-profiles~ path and sourced by ~~/.profile~ when logging in.
 
 A couple of shell scripts for managing the profiles:
 
-** List Available profiles
+** List Active Profiles
 
-This script simply lists the profiles available to activate/update:
+This script simply lists the active profiles:
 
 #+begin_src sh
 
@@ -340,22 +340,9 @@ This script simply lists the profiles available to activate/update:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/list-profiles :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/list-profiles :shebang #!/bin/env sh
 
-  echo -e "\nAvailable profiles are:\n"
-  for profile in "$HOME/.config/guix/manifests/*.scm"; do
-      profileName=$(basename -s .scm $profile)
-      echo "$profileName"
-  done
-
-  echo -e "\n\nYour active profiles are:\n"
-  profiles=$(guix package --list-profiles)
-  for active in $profiles; do
-      base=$(basename $active)
-      if [ "$base" != "current" ] && [ "$base" != ".guix-profile" ]; then
-          echo "$base"
-      fi
-  done
+  guix package --list-profiles
 
 #+end_src
 
@@ -369,7 +356,7 @@ This script lists the generations of a given profile:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/list-generations :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/list-generations :shebang #!/bin/env sh
 
   profile=$1
   guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
@@ -382,22 +369,20 @@ This script deletes the generations of a given profile:
 
 #+begin_src sh
 
-  delete-generations emacs 1..5
+  delete-generations emacs
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/delete-generations :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/delete-generations :shebang #!/bin/env sh
 
   profile=$1
-  echo Deleting all generations from $profile
   guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --delete-generations
 
 #+end_src
 
 ** Activating Profiles
 
-This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs those profiles for the first time.
-For example:
+This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs those profiles for the first time:
 
 #+begin_src sh
 
@@ -405,7 +390,7 @@ For example:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/activate-profiles :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/activate-profiles :shebang #!/bin/env sh
 
   GREEN='\033[1;32m'
   RED='\033[1;30m'
@@ -423,7 +408,7 @@ For example:
 
       profilePath="$GUIX_EXTRA_PROFILES/$profileName"
 
-      manifestPath=$HOME/.config/guix/manifests/$profileName.scm
+      manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
 
     if [ -f $manifestPath ]; then
       echo
@@ -439,18 +424,22 @@ For example:
           . "$GUIX_PROFILE"/etc/profile
       else
           echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+          exit 2
       fi
     else
       echo "No profile found at path" $profilePath
+      exit 1
     fi
   done
+
+  exit 0
 
 #+end_src
 
 ** Updating Profiles
 
 This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs any updates to the packages contained within them.
-If no profile names are provided, it walks the list of profile directories under ~~/.guix-extra-profiles~ and updates each one of them.
+If no profile names are provided, it walks the list of profile directories under ~~/.guix-extra-profiles~ and updates each one of them:
 
 #+begin_src sh
 
@@ -458,7 +447,7 @@ If no profile names are provided, it walks the list of profile directories under
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/update-profiles :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/update-profiles :shebang #!/bin/env sh
 
   GREEN='\033[1;32m'
   NC='\033[0m'
@@ -479,11 +468,13 @@ If no profile names are provided, it walks the list of profile directories under
     guix package --profile="$profilePath/$profileName" --manifest="$XDG_CONFIG_HOME/guix/manifests/$profileName.scm" --fallback
   done
 
+  exit 0
+
 #+end_src
 
 ** Updating Channels
 
-This script makes it easy to update all channels to the latest commit based on an original channel file (see the Channels section at the top of this document).
+This script makes it easy to update all channels to the latest commit based on an original channel file (see the Channels section at the top of this document):
 
 #+begin_src sh
 
@@ -491,10 +482,12 @@ This script makes it easy to update all channels to the latest commit based on a
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/update-channels :shebang #!/bin/sh
+#+begin_src sh :tangle ~/bin/update-channels :shebang #!/bin/env sh
 
   guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm
   guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
+
+  exit 0
 
 #+end_src
 
@@ -518,7 +511,240 @@ This script makes it easy to update the system to the latest configuration based
 
   sudo guix system -L $XDG_CONFIG_HOME/guix --fallback reconfigure $XDG_CONFIG_HOME/guix/systems/$HOSTNAME.scm
 
+  exit 0
+
 #+end_src
+
+* General Profile Management
+
+Configuration files and scripts for basic gnu/linux profile
+
+** Scripts
+
+*** Pretty Print
+
+This script pretty prints colon delimited variables such as ~$PATH~:
+
+#+begin_src sh
+
+  echoFormat $PATH
+
+#+end_src
+
+#+begin_src sh :tangle ~/bin/echoFormat :shebang #!/bin/env sh
+
+  IFS=:
+  for i in $1; do
+      echo $i
+  done
+
+  exit 0
+
+#+end_src
+
+*** Archive Extractor
+
+This script extract most known archive formats:
+
+#+begin_src sh
+
+  extract foo.zip
+
+#+end_src
+
+#+begin_src sh :tangle ~/bin/extract :shebang #!/bin/env sh
+
+  for archive in $*; do
+      if [ -f $archive ] ; then
+          case $archive in
+              *.tar.bz2) tar xvjf "$archive" ;;
+              *.tar.gz)  tar xvzf "$archive" ;;
+              *.bz2)     bunzip2 "$archive" ;;
+              *.rar)     rar x "$archive" ;;
+              *.gz)      gunzip "$archive" ;;
+              *.tar)     tar xvf "$archive" ;;
+              *.tbz2)    tar xvjf "$archive" ;;
+              *.tgz)     tar xvzf "$archive" ;;
+              *.zip)     unzip "$archive" ;;
+              *.Z)       uncompress "$archive" ;;
+              *.7z)      7z x "$archive" ;;
+              *)         echo "Can't extract '$archive'" ;;
+          esac
+      else
+          echo "'$archive' is not a valid file!"
+      fi
+  done
+
+  exit 0
+
+#+end_src
+
+*** Charge thresholds
+
+These scripts adjust the charge threshold for a System76 laptop:
+
+#+begin_src sh
+
+  safe-charge
+
+#+end_src
+
+*Max Charge*
+
+#+begin_src sh :tangle ~/bin/max-charge :shebang #!/bin/env sh
+
+  echo 0 > /sys/class/power_supply/BAT0/charge_control_start_threshold
+  echo 100 > /sys/class/power_supply/BAT0/charge_control_end_threshold
+  echo "Max Charge Enabled - 100%"
+
+  exit 0
+
+#+end_src
+
+*Normal Charge*
+
+#+begin_src sh :tangle ~/bin/normal-charge :shebang #!/bin/env sh
+
+  echo 60 > /sys/class/power_supply/BAT0/charge_control_start_threshold
+  echo 81 > /sys/class/power_supply/BAT0/charge_control_end_threshold
+  echo "Normal Charge Enabled - 80%"
+
+  exit 0
+
+#+end_src
+
+*Safe charge*
+
+#+begin_src sh :tangle ~/bin/safe-charge :shebang #!/bin/env sh
+
+  echo 50 > /sys/class/power_supply/BAT0/charge_control_start_threshold
+  echo 61 > /sys/class/power_supply/BAT0/charge_control_end_threshold
+  echo "Safe Charge Enabled - 60%"
+
+  exit 0
+
+#+end_src
+
+*** Mail Setup
+
+This script sets up email accounts using ~mu~:
+
+#+begin_src sh
+
+  mail-init
+
+#+end_src
+
+#+begin_src sh :tangle ~/bin/mail-init :shebang #!/bin/env sh
+
+  mu init -m ~/Mail --my-address=pgabriel999@hotmail.com --my-address=philippe.gabriel.1@umontreal.ca
+  mu index
+
+  exit 0
+
+#+end_src
+
+*** TA Script
+
+This is a script I tend to use when correcting student assignments to speed up my workflow.
+
+#+begin_src sh :tangle ~/bin/collect-assignments :shebang #!/bin/env sh
+
+  if [ $# -lt 1 ]
+  then
+      echo "Usage: collect-assignments $OPTION $TOSKIP"
+      echo 
+      echo "Available options:"
+      echo "    --unzip     Unzips zip archives files starting at current directory."
+      echo "    --open      Opens file using appropriate program."
+      echo "    --collect   Collects corrections into a corr directory."
+      echo
+
+      exit 1
+  fi
+
+  count=0
+  OPTION=$1
+  TOSKIP=${2:-0}
+
+  function apply {
+      for f in ./"$1"/*; do
+          if [ -d "$f" ]; then
+              apply "$f"
+          elif [ -f "$f" ]; then
+              case "$OPTION" in
+                  --unzip)
+                      ABS=$(realpath "$f")
+                      DIR=$(dirname "$ABS")
+                      case "$f" in
+                          *.zip) unzip "$f" -d "$DIR";;
+                          *) ;;
+                      esac
+                      ;;
+                  --open)
+                      case "$f" in
+                          *.pdf) xournalpp "$f";;
+                          *.lmc) emacsclient "$f";;
+                          *.hs) emacsclient "$f";;
+                          *.txt) emacsclient "$f";;
+                          *) ;;
+                      esac
+                      ;;
+                  --collect)
+                      case "$f" in
+                          corr-*.pdf) mv "$f" ../*-corr/;;
+                          *) ;; # echo "$f"
+                      esac
+                      ;;
+                  *)
+                      echo "Unknown option"
+                      exit 2
+                      ;;
+              esac
+          fi
+      done
+  }
+
+  for d in *; do
+      if [ -d "$d" ]; then
+          echo "---------------------"
+          ls "$d"
+          echo "---------------------"
+          echo
+          if [ $count -ge $TOSKIP ]; then
+              apply "$d"
+          fi
+          ((count++))
+      fi
+  done
+
+  exit 0
+
+#+end_src
+
+*** Boot fix
+
+This is not a script though just a set of commands I need to run when Guix fails to boot properly
+
+#+begin_src sh :tangle ~/bin/boot-fix :shebang #!/bin/env sh
+
+  # Run ls (hd0) or (hd1) and select the appropriate partitions until /boot/grub/ is found
+  # Then apply the following (Below is the appropriate values for this machine)
+
+  set prefix=(hd1,3)/boot/grub/
+  set root=(hd1,3)
+  insmod linux
+  insmod normal
+  normal
+
+  # It should boot normally afterwards
+  # Run update-system to have it run normally
+
+#+end_src
+
+** Configuration
+
+
 
 * Nix Package Manager
 

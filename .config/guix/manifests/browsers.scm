@@ -1,3 +1,4 @@
-(specifications->manifest
- '(;; "nyxt"
-   "qutebrowser"))
+(packages->manifest
+ (list
+  ;; (specification->package "nyxt")
+  (specification->package "qutebrowser")))

@@ -1,4 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/env sh
+IFS=:
+for i in $1; do
+    echo $i
+done
 
-# Outputs colon (i.e. ':') delimited environment variables in a readable format
-sed 's/:/\n/g' <<< "$1"
+exit 0

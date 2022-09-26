@@ -1,19 +1,20 @@
-(specifications->manifest
- '("meson"
-   "ninja"
-   "autoconf"
-   "automake"
-   "libtool"
-   "gmime"
-   "xapian"
-   "docker"
-   ;; "gtk+"
-   ;; "gtk+:bin"
-   ;; "webkitgtk"
-   ;; "guile"
-   "pkg-config"
-   "glib"
-   "glib:bin"
-   ;; "check"
-   "make"
-   "cmake"))
+(packages->manifest
+ (list
+  (specification->package "meson")
+  (specification->package "ninja")
+  (specification->package "autoconf")
+  (specification->package "automake")
+  (specification->package "libtool")
+  (specification->package "gmime")
+  (specification->package "xapian")
+  (specification->package "docker")
+  ;; (specification->package "gtk+")
+  ;; (specification->package "gtk+:bin")
+  ;; (specification->package "webkitgtk")
+  ;; (specification->package "guile")
+  (specification->package "pkg-config")
+  (specification->package "glib")
+  (specification->package+output "glib:bin")
+  ;; (specification->package "check")
+  (specification->package "make")
+  (specification->package "cmake")))

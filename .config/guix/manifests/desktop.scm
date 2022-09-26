@@ -1,61 +1,61 @@
-(specifications->manifest
- '(
+(packages->manifest
+ (list
    
    ;; Settings Manager
-   "xsettingsd"
+   (specification->package "xsettingsd")
    
-   "autorandr"
-   "xrandr"
-   "arandr"
+   (specification->package "autorandr")
+   (specification->package "xrandr")
+   (specification->package "arandr")
    
-   "polybar"
+   (specification->package "polybar")
    
-   "dunst"
-   "libnotify" ;; For notify-send
+   (specification->package "dunst")
+   (specification->package "libnotify") ;; For notify-send
    
-   "gucharmap"
-   "brightnessctl"
-   "xdg-utils"      ;; For xdg-open, etc
-   "xdg-dbus-proxy" ;; For Flatpak
-   "gtk+:bin"       ;; For gtk-launch
-   "glib:bin"       ;; For gio-launch-desktop
-   "shared-mime-info"
-   "htop"
+   (specification->package "gucharmap")
+   (specification->package "brightnessctl")
+   (specification->package "xdg-utils")       ;; For xdg-open, etc
+   (specification->package "xdg-dbus-proxy")  ;; For Flatpak
+   (specification->package+output "gtk+:bin") ;; For gtk-launch
+   (specification->package+output "glib:bin") ;; For gio-launch-desktop
+   (specification->package "shared-mime-info")
+   (specification->package "htop")
    
-   "flatpak"
+   (specification->package "flatpak")
    
-   "net-tools"
-   "curl"
+   (specification->package "net-tools")
+   (specification->package "curl")
    
-   "password-store"
-   "mcron"
+   (specification->package "password-store")
+   (specification->package "mcron")
    
-   "system-config-printer"
+   (specification->package "system-config-printer")
    
-   "syncthing"
-   "syncthing-gtk"
+   (specification->package "syncthing")
+   (specification->package "syncthing-gtk")
    
-   "openssh"
-   "gnupg"
-   "zip"
-   "unzip"
-   "p7zip"
-   "udiskie"
-   "trash-cli"
+   (specification->package "openssh")
+   (specification->package "gnupg")
+   (specification->package "zip")
+   (specification->package "unzip")
+   (specification->package "p7zip")
+   (specification->package "udiskie")
+   (specification->package "trash-cli")
    
-   "virt-manager"
-   "gtksourceview@4"
-   "virt-viewer"
-   "spice-vdagent"
+   (specification-package "virt-manager")
+   (specification-package "gtksourceview@4")
+   (specification-package "virt-viewer")
+   (specification-package "spice-vdagent")
    
-   "xev"
-   "xset"
-   "xrdb"
-   "xhost"
-   "xmodmap"
-   "setxkbmap"
-   "xss-lock"
-   "libinput"
-   "xinput"
+   (specification->package "xev")
+   (specification->package "xset")
+   (specification->package "xrdb")
+   (specification->package "xhost")
+   (specification->package "xmodmap")
+   (specification->package "setxkbmap")
+   (specification->package "xss-lock")
+   (specification->package "libinput")
+   (specification->package "xinput")
    
    ))

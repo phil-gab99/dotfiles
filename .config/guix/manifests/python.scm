@@ -1,3 +1,4 @@
-(specifications->manifest
- '("python"
-   "node"))
+(packages->manifest
+ (list
+  (specification->package "python")
+  (specification->package "node")))

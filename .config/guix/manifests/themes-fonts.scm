@@ -1,27 +1,28 @@
-(specifications->manifest
- '("compton"
-   "fontmanager"
+(packages->manifest
+ (list
+  (specification->package "compton")
+  (specification->package "fontmanager")
 
-   ;; GTK Themes
-   "arc-icon-theme"
-   "matcha-theme"
-   "hicolor-icon-theme"
-   ;; "gnome-icon-theme"
-   "gnome-backgrounds"
-   "papirus-icon-theme"
-   "breeze-icons"
+  ;; GTK Themes
+  (specification->package "arc-icon-theme")
+  (specification->package "matcha-theme")
+  (specification->package "hicolor-icon-theme")
+  ;; (specification->package "gnome-icon-theme")
+  (specification->package "gnome-backgrounds")
+  (specification->package "papirus-icon-theme")
+  (specification->package "breeze-icons")
 
-   ;; Fonts
-   "font-fira-code"
-   "font-jetbrains-mono"
-   "font-iosevka"
-   "font-iosevka-aile"
-   "font-abattis-cantarell"
-   "font-dejavu"
-   "font-google-noto"
-   "font-gnu-freefont"
-   "font-gnu-unifont"
-   "font-liberation"
-   "font-awesome"
-   "font-google-material-design-icons"
-   "font-ghostscript"))
+  ;; Fonts
+  (specification->package "font-fira-code")
+  (specification->package "font-jetbrains-mono")
+  (specification->package "font-iosevka")
+  (specification->package "font-iosevka-aile")
+  (specification->package "font-abattis-cantarell")
+  (specification->package "font-dejavu")
+  (specification->package "font-google-noto")
+  (specification->package "font-gnu-freefont")
+  (specification->package "font-gnu-unifont")
+  (specification->package "font-liberation")
+  (specification->package "font-awesome")
+  (specification->package "font-google-material-design-icons")
+  (specification->package "font-ghostscript")))

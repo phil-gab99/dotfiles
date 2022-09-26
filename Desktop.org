@@ -1,5 +1,6 @@
 #+title: Emacs Desktop Environment
 #+author: Philippe Gabriel
+#+PROPERTY: header-args    :tangle-mode (identity #o444)
 #+PROPERTY: header-args:sh :tangle-mode (identity #o555)
 
 * Fonts
@@ -57,39 +58,40 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; Settings Manager
-  "xsettingsd"
+  (specification->package "xsettingsd")
 
 #+end_src
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/themes-fonts.scm :noweb yes
 
-  (specifications->manifest
-   '("compton"
-     "fontmanager"
+  (packages->manifest
+   (list
+    (specification->package "compton")
+    (specification->package "fontmanager")
 
-     ;; GTK Themes
-     "arc-icon-theme"
-     "matcha-theme"
-     "hicolor-icon-theme"
-     ;; "gnome-icon-theme"
-     "gnome-backgrounds"
-     "papirus-icon-theme"
-     "breeze-icons"
+    ;; GTK Themes
+    (specification->package "arc-icon-theme")
+    (specification->package "matcha-theme")
+    (specification->package "hicolor-icon-theme")
+    ;; (specification->package "gnome-icon-theme")
+    (specification->package "gnome-backgrounds")
+    (specification->package "papirus-icon-theme")
+    (specification->package "breeze-icons")
 
-     ;; Fonts
-     "font-fira-code"
-     "font-jetbrains-mono"
-     "font-iosevka"
-     "font-iosevka-aile"
-     "font-abattis-cantarell"
-     "font-dejavu"
-     "font-google-noto"
-     "font-gnu-freefont"
-     "font-gnu-unifont"
-     "font-liberation"
-     "font-awesome"
-     "font-google-material-design-icons"
-     "font-ghostscript"))
+    ;; Fonts
+    (specification->package "font-fira-code")
+    (specification->package "font-jetbrains-mono")
+    (specification->package "font-iosevka")
+    (specification->package "font-iosevka-aile")
+    (specification->package "font-abattis-cantarell")
+    (specification->package "font-dejavu")
+    (specification->package "font-google-noto")
+    (specification->package "font-gnu-freefont")
+    (specification->package "font-gnu-unifont")
+    (specification->package "font-liberation")
+    (specification->package "font-awesome")
+    (specification->package "font-google-material-design-icons")
+    (specification->package "font-ghostscript")))
 
 #+end_src
 
@@ -218,6 +220,8 @@ Workspaces:
        ;; `exwm-input-release-keyboard')
        (exwm-input-global-keys . (([?\s-r] . exwm-reset)
 
+                                  ([?\s-\s] . app-launcher-run-app)
+
                                   ;; Switch between char and line mode
                                   ([?\s-s] . exwm-input-toggle-keyboard)
 
@@ -248,8 +252,6 @@ Workspaces:
     (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
 
     (pg/update-displays)
-    (with-eval-after-load 'app-launcher
-      (exwm-input-set-key (kbd "s-SPC") #'app-launcher-run-app))
 
     (exwm-randr-enable)
     (exwm-enable))
@@ -303,9 +305,9 @@ In order to setup exwm for multiple monitors, the ~arandr~ and ~autorandr~ appli
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "autorandr"
-  "xrandr"
-  "arandr"
+  (specification->package "autorandr")
+  (specification->package "xrandr")
+  (specification->package "arandr")
 
 #+end_src
 
@@ -533,7 +535,7 @@ Below is the config file with the various parameters.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "polybar"
+  (specification->package "polybar")
 
 #+end_src
 
@@ -789,8 +791,8 @@ For desktop notifications
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "dunst"
-  "libnotify" ;; For notify-send
+  (specification->package "dunst")
+  (specification->package "libnotify") ;; For notify-send
 
 #+end_src
 
@@ -1109,13 +1111,14 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/audio.scm :noweb yes
 
-  (specifications->manifest
-   '("alsa-utils"
-     "pavucontrol"
-     "pasystray"
-     "mpd"
-     "mpd-mpc"
-     "bluez"))
+  (packages->manifest
+   (list
+    (specification-> "alsa-utils")
+    (specification-> "pavucontrol")
+    (specification-> "pasystray")
+    (specification-> "mpd")
+    (specification-> "mpd-mpc")
+    (specification-> "bluez")))
 
 #+end_src
 
@@ -2085,9 +2088,10 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/browsers.scm :noweb yes
 
-  (specifications->manifest
-   '(;; "nyxt"
-     "qutebrowser"))
+  (packages->manifest
+   (list
+    ;; (specification->package "nyxt")
+    (specification->package "qutebrowser")))
 
 #+end_src
 
@@ -2117,14 +2121,14 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "gucharmap"
-  "brightnessctl"
-  "xdg-utils"      ;; For xdg-open, etc
-  "xdg-dbus-proxy" ;; For Flatpak
-  "gtk+:bin"       ;; For gtk-launch
-  "glib:bin"       ;; For gio-launch-desktop
-  "shared-mime-info"
-  "htop"
+  (specification->package "gucharmap")
+  (specification->package "brightnessctl")
+  (specification->package "xdg-utils")       ;; For xdg-open, etc
+  (specification->package "xdg-dbus-proxy")  ;; For Flatpak
+  (specification->package+output "gtk+:bin") ;; For gtk-launch
+  (specification->package+output "glib:bin") ;; For gio-launch-desktop
+  (specification->package "shared-mime-info")
+  (specification->package "htop")
 
 #+end_src
 
@@ -2148,7 +2152,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "flatpak"
+  (specification->package "flatpak")
 
 #+end_src
 
@@ -2192,38 +2196,52 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/media.scm :noweb yes
 
-  (specifications->manifest
-   '("feh"
-     "imagemagick"
-     "scrot"
-     "xclip"
-     "libreoffice"
-     ;; "gimp"
-     "evince"
-     "simple-scan"
-     "xdg-desktop-portal-gtk"
-     ;; "xournal"
-     "xournalpp"))
+  (packages->manifest
+   (list
+    (specification-> "feh")
+    (specification-> "imagemagick")
+    (specification-> "scrot")
+    (specification-> "xclip")
+    (specification-> "libreoffice")
+    ;; (specification-> "gimp")
+    (specification-> "evince")
+    (specification-> "simple-scan")
+    (specification-> "xdg-desktop-portal-gtk")
+    ;; (specification-> "xournal")
+    (specification-> "xournalpp")))
 
 #+end_src
 
 ** Video Players
 
+*Download music script*
+
+#+begin_src sh :tangle ~/bin/download-music :shebang #!/bin/env sh
+
+  for music in $*; do
+      youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
+  done
+
+  exit 0
+
+#+end_src
+
 *Guix Packages*
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/video.scm :noweb yes
 
-  (specifications->manifest
-   '("mpv"
-     "youtube-dl"
-     "gstreamer"
-     "gst-plugins-base"
-     "gst-plugins-good"
-     "gst-plugins-bad"
-     "gst-plugins-ugly"
-     "gst-libav"
-     "intel-vaapi-driver"
-     "libva-utils"))
+  (packages->manifest
+   (list
+    (specification->package "mpv")
+    (specification->package "youtube-dl")
+    (specification->package "gstreamer")
+    (specification->package "gst-plugins-base")
+    (specification->package "gst-plugins-good")
+    (specification->package "gst-plugins-bad")
+    (specification->package "gst-plugins-ugly")
+    (specification->package "gst-libav")
+    (specification->package "intel-vaapi-driver")
+    (specification->package "libva-utils")))
 
 #+end_src
 
@@ -2231,8 +2249,8 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "net-tools"
-  "curl"
+  (specification->package "net-tools")
+  (specification->package "curl")
 
 #+end_src
 
@@ -2240,12 +2258,14 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Password sync script*
 
-#+begin_src sh :tangle ~/bin/sync-passwords :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/bin/sync-passwords :shebang #!/bin/env sh
 
   pass git pull
   pass git push
 
   notify-send -i "emblem-synchronizing" "Passwords synced!"
+
+  exit 0
 
 #+end_src
 
@@ -2263,8 +2283,8 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "password-store"
-  "mcron"
+  (specification->package "password-store")
+  (specification->package "mcron")
 
 #+end_src
 
@@ -2274,7 +2294,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "system-config-printer"
+  (specification->package "system-config-printer")
 
 #+end_src
 
@@ -2282,8 +2302,8 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "syncthing"
-  "syncthing-gtk"
+  (specification->package "syncthing")
+  (specification->package "syncthing-gtk")
 
 #+end_src
 
@@ -2293,13 +2313,13 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "openssh"
-  "gnupg"
-  "zip"
-  "unzip"
-  "p7zip"
-  "udiskie"
-  "trash-cli"
+  (specification->package "openssh")
+  (specification->package "gnupg")
+  (specification->package "zip")
+  (specification->package "unzip")
+  (specification->package "p7zip")
+  (specification->package "udiskie")
+  (specification->package "trash-cli")
 
 #+end_src
 
@@ -2309,10 +2329,10 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "virt-manager"
-  "gtksourceview@4"
-  "virt-viewer"
-  "spice-vdagent"
+  (specification-package "virt-manager")
+  (specification-package "gtksourceview@4")
+  (specification-package "virt-viewer")
+  (specification-package "spice-vdagent")
 
 #+end_src
 
@@ -2322,15 +2342,15 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  "xev"
-  "xset"
-  "xrdb"
-  "xhost"
-  "xmodmap"
-  "setxkbmap"
-  "xss-lock"
-  "libinput"
-  "xinput"
+  (specification->package "xev")
+  (specification->package "xset")
+  (specification->package "xrdb")
+  (specification->package "xhost")
+  (specification->package "xmodmap")
+  (specification->package "setxkbmap")
+  (specification->package "xss-lock")
+  (specification->package "libinput")
+  (specification->package "xinput")
 
 #+end_src
 
@@ -2344,8 +2364,8 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :tangle ~/.config/guix/manifests/desktop.scm :noweb yes
 
-  (specifications->manifest
-   '(
+  (packages->manifest
+   (list
      <<packages>>
      ))
 
