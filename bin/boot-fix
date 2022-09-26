@@ -9,4 +9,4 @@ insmod normal
 normal
 
 # It should boot normally afterwards
-# Run update-system to have it run normally
+# Run update-system to have it boot normally

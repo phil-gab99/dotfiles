@@ -47,9 +47,10 @@ function apply {
                     ;;
                 *)
                     echo "Unknown option"
-                    exit 2
+                    exit 1
                     ;;
             esac
+            sleep 2
         fi
     done
 }
@@ -58,9 +59,10 @@ for d in *; do
     if [ -d "$d" ]; then
         echo "---------------------"
         ls "$d"
-        echo "---------------------"
+        echo "------------------"
         echo
         if [ $count -ge $TOSKIP ]; then
+            echo "Working on $count"
             apply "$d"
         fi
         ((count++))

@@ -698,9 +698,10 @@ This is a script I tend to use when correcting student assignments to speed up m
                       ;;
                   *)
                       echo "Unknown option"
-                      exit 2
+                      exit 1
                       ;;
               esac
+              sleep 2
           fi
       done
   }
@@ -709,9 +710,10 @@ This is a script I tend to use when correcting student assignments to speed up m
       if [ -d "$d" ]; then
           echo "---------------------"
           ls "$d"
-          echo "---------------------"
+          echo "------------------"
           echo
           if [ $count -ge $TOSKIP ]; then
+              echo "Working on $count"
               apply "$d"
           fi
           ((count++))
@@ -738,7 +740,7 @@ This is not a script though just a set of commands I need to run when Guix fails
   normal
 
   # It should boot normally afterwards
-  # Run update-system to have it run normally
+  # Run update-system to have it boot normally
 
 #+end_src
 
