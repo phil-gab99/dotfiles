@@ -52,153 +52,154 @@
 
 (straight-use-package 'org)
 (require 'org)
+
 (with-eval-after-load 'org
   (add-hook 'org-mode-hook #'pg/org-mode-setup)
   (add-hook 'org-mode-hook #'(lambda ()
                                (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
 
+(pg/customize-set-variables
+ `((org-ellipsis . " ▾")
+   (org-hide-emphasis-markers . t)
+   (org-agenda-start-with-log-mode . t)
+   (org-log-done . time)
+   (org-log-into-drawer . t)
+   (org-deadline-warning-days . 7)
+   (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
+   (org-plantuml-jar-path . "~/Packages/plantuml.jar")
+   (org-babel-python-command . "python3")
+   (org-confirm-babel-evaluate . nil)
+   (org-agenda-exporter-settings . ((ps-left-header (org-agenda-write-buffer-name))
+                                    (ps-right-header ("/pagenumberstring load" ,(lambda ()
+                                                                                  (format-time-string "%d/%m/%Y"))))
+                                    (ps-font-size (12 . 11))
+                                    (ps-top-margin 55)
+                                    (ps-left-margin 35)
+                                    (ps-right-margin 30)))))
+
+(font-lock-add-keywords 'org-mode ;; Replace '-' with bullets
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region
+                                         (match-beginning 1) (match-end 1) "•"))))))
+(require 'org-indent)
+(set-face-attribute 'org-ellipsis nil :underline nil)
+(set-face-attribute 'org-block nil :foreground nil :background "gray5" :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil :foreground "orange" :inherit 'fixed-pitch)
+(set-face-attribute 'org-verbatim nil :foreground "green" :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil :foreground "thistle3" :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+(dolist (face '((org-level-1 . 1.2)
+                (org-level-2 . 1.1)
+                (org-level-3 . 1.05)
+                (org-level-4 . 1.0)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
+
+(org-babel-do-load-languages ;; Loads languages to be executed by org-babel
+ 'org-babel-load-languages '((emacs-lisp . t)
+                             (java . t)
+                             (shell . t)
+                             (plantuml . t)
+                             ;; (jupyter . t)
+                             (python . t)))
+
+(require 'org-tempo) ;; Allows defined snippets to expand into appropriate code blocks
+(dolist (template '(("sh" . "src shell")
+                    ("java" . "src java")
+                    ("als" . "src alloy")
+                    ("puml" . "src plantuml")
+                    ("vhd" . "src vhdl")
+                    ("asm" . "src mips")
+                    ("cc" . "src c")
+                    ("el" . "src emacs-lisp")
+                    ("hs" . "src haskell")
+                    ("py" . "src python")
+                    ("sql" . "src sql")))
+  (add-to-list 'org-structure-template-alist template))
+(dolist (src '(("als" . alloy)
+               ("plantuml" . plantuml)))
+  (add-to-list 'org-src-lang-modes src))
+
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "o" '(:ignore t :which-key "org")
+    "os" '(org-screenshot :which-key "screenshot")
+    "oc" '(org-capture :which-key "capture")
+    "oa" '(org-agenda :which-key "agenda")
+    "ot" '(org-todo-list :which-key "todos")
+    "ol" '(:ignore t :which-key "links")
+    "olo" '(org-open-at-point :which-key "open")
+    "olb" '(org-mark-ring-goto :which-key "back")))
+
+(unless pg/is-termux
   (pg/customize-set-variables
-   `((org-ellipsis . " ▾")
-     (org-hide-emphasis-markers . t)
-     (org-agenda-start-with-log-mode . t)
-     (org-log-done . time)
-     (org-log-into-drawer . t)
-     (org-deadline-warning-days . 7)
-     (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
-     (org-plantuml-jar-path . "~/Packages/plantuml.jar")
-     (org-babel-python-command . "python3")
-     (org-confirm-babel-evaluate . nil)
-     (org-agenda-exporter-settings . ((ps-left-header (org-agenda-write-buffer-name))
-                                      (ps-right-header ("/pagenumberstring load" ,(lambda ()
-                                                                                    (format-time-string "%d/%m/%Y"))))
-                                      (ps-font-size (12 . 11))
-                                      (ps-top-margin 55)
-                                      (ps-left-margin 35)
-                                      (ps-right-margin 30)))))
+   `((org-agenda-files . ("~/Documents/Agenda/"))
+     (org-link-frame-setup . ((vm . vm-visit-folder-other-frame)
+                              (vm-imap . vm-visit-imap-folder-other-frame)
+                              (gnus . org-gnus-no-new-news)
+                              (file . find-file)
+                              (wl . wl-other-frame)))
+     (org-agenda-custom-commands . (("d" "Dashboard"
+                                     ((agenda ""
+                                              ((org-deadline-warning-days 7)))
+                                      (todo "TODO"
+                                            ((org-agenda-overriding-header "Tasks")))
+                                      (tags-todo "agenda/ACTIVE"
+                                                 ((org-agenda-overriding-header "Active Tasks")))))
 
-  (font-lock-add-keywords 'org-mode ;; Replace '-' with bullets
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region
-                                           (match-beginning 1) (match-end 1) "•"))))))
-  (require 'org-indent)
-  (set-face-attribute 'org-ellipsis nil :underline nil)
-  (set-face-attribute 'org-block nil :foreground nil :background "gray5" :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil :foreground "orange" :inherit 'fixed-pitch)
-  (set-face-attribute 'org-verbatim nil :foreground "green" :inherit 'fixed-pitch)
-  (set-face-attribute 'org-table nil :foreground "thistle3" :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+                                    ("Z" "TODOs"
+                                     ((todo "TODO"
+                                            ((org-agenda-overriding-header "Todos")))))
 
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
+                                    ("m" "Misc" tags-todo "other")
 
-  (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
-   'org-babel-load-languages '((emacs-lisp . t)
-                               (java . t)
-                               (shell . t)
-                               (plantuml . t)
-                               ;; (jupyter . t)
-                               (python . t)))
+                                    ("s" "Schedule" agenda ""
+                                     (,(org-agenda-files (expand-file-name "~/Documents/Agenda/Schedule-S6.org")))
+                                     ("~/Documents/Schedule-S6.pdf"))
 
-  (require 'org-tempo) ;; Allows defined snippets to expand into appropriate code blocks
-  (dolist (template '(("sh" . "src shell")
-                      ("java" . "src java")
-                      ("als" . "src alloy")
-                      ("puml" . "src plantuml")
-                      ("vhd" . "src vhdl")
-                      ("asm" . "src mips")
-                      ("cc" . "src c")
-                      ("el" . "src emacs-lisp")
-                      ("hs" . "src haskell")
-                      ("py" . "src python")
-                      ("sql" . "src sql")))
-    (add-to-list 'org-structure-template-alist template))
-  (dolist (src '(("als" . alloy)
-                 ("plantuml" . plantuml)))
-    (add-to-list 'org-src-lang-modes src))
+                                    ("w" "Work Status"
+                                     ((todo "WAIT"
+                                            ((org-agenda-overriding-header "Waiting")
+                                             (org-agenda-files org-agenda-files)))
+                                      (todo "REVIEW"
+                                            ((org-agenda-overriding-header "In Review")
+                                             (org-agenda-files org-agenda-files)))
+                                      (todo "HOLD"
+                                            ((org-agenda-overriding-header "On Hold")
+                                             (org-agenda-todo-list-sublevels nil)
+                                             (org-agenda-files org-agenda-files)))
+                                      (todo "ACTIVE"
+                                            ((org-agenda-overriding-header "Active")
+                                             (org-agenda-files org-agenda-files)))
+                                      (todo "COMPLETED"
+                                            ((org-agenda-overriding-header "Completed")
+                                             (org-agenda-files org-agenda-files)))
+                                      (todo "CANC"
+                                            ((org-agenda-overriding-header "Cancelled")
+                                             (org-agenda-files org-agenda-files)))))))
+     (org-capture-templates . (("t" "Tasks / Projects")
 
-  (with-eval-after-load 'general
-    (pg/leader-keys
-      "o" '(:ignore t :which-key "org")
-      "os" '(org-screenshot :which-key "screenshot")
-      "oc" '(org-capture :which-key "capture")
-      "oa" '(org-agenda :which-key "agenda")
-      "ot" '(org-todo-list :which-key "todos")
-      "ol" '(:ignore t :which-key "links")
-      "olo" '(org-open-at-point :which-key "open")
-      "olb" '(org-mark-ring-goto :which-key "back")))
+                               ("tt" "Task" entry
+                                (file+olp "~/Documents/Agenda/Tasks.org" "Active")
+                                "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
-  (unless pg/is-termux
-    (pg/customize-set-variables
-     `((org-agenda-files . ("~/Documents/Org/Agenda/"))
-       (org-link-frame-setup . ((vm . vm-visit-folder-other-frame)
-                                (vm-imap . vm-visit-imap-folder-other-frame)
-                                (gnus . org-gnus-no-new-news)
-                                (file . find-file)
-                                (wl . wl-other-frame)))
-       (org-agenda-custom-commands . (("d" "Dashboard"
-                                       ((agenda ""
-                                                ((org-deadline-warning-days 7)))
-                                        (todo "TODO"
-                                              ((org-agenda-overriding-header "Tasks")))
-                                        (tags-todo "agenda/ACTIVE"
-                                                   ((org-agenda-overriding-header "Active Tasks")))))
+                               ("j" "Meetings")
+                               ("jm" "Meeting" entry
+                                (file+olp "~/Documents/Agenda/Tasks.org" "Waiting")
+                                "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
-                                      ("Z" "TODOs"
-                                       ((todo "TODO"
-                                              ((org-agenda-overriding-header "Todos")))))
-
-                                      ("m" "Misc" tags-todo "other")
-
-                                      ("s" "Schedule" agenda ""
-                                       (,(org-agenda-files (expand-file-name "~/Documents/Org/Agenda/Schedule-S6.org")))
-                                       ("~/Documents/Schedule-S6.pdf"))
-
-                                      ("w" "Work Status"
-                                       ((todo "WAIT"
-                                              ((org-agenda-overriding-header "Waiting")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "REVIEW"
-                                              ((org-agenda-overriding-header "In Review")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "HOLD"
-                                              ((org-agenda-overriding-header "On Hold")
-                                               (org-agenda-todo-list-sublevels nil)
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "ACTIVE"
-                                              ((org-agenda-overriding-header "Active")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "COMPLETED"
-                                              ((org-agenda-overriding-header "Completed")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "CANC"
-                                              ((org-agenda-overriding-header "Cancelled")
-                                               (org-agenda-files org-agenda-files)))))))
-       (org-capture-templates . (("t" "Tasks / Projects")
-
-                                 ("tt" "Task" entry
-                                  (file+olp "~/Documents/Org/Agenda/Tasks.org" "Active")
-                                  "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
-
-                                 ("j" "Meetings")
-                                 ("jm" "Meeting" entry
-                                  (file+olp "~/Documents/Org/Agenda/Tasks.org" "Waiting")
-                                  "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
-
-                                 ("m" "Email Workflow")
-                                 ("mr" "Follow Up" entry
-                                  (file+olp "~/Documents/Org/Agenda/Mail.org" "Follow up")
-                                  "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
-       (org-format-latex-options . ,(plist-put org-format-latex-options :scale 1.5))))))
+                               ("m" "Email Workflow")
+                               ("mr" "Follow Up" entry
+                                (file+olp "~/Documents/Agenda/Mail.org" "Follow up")
+                                "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
+     (org-format-latex-options . ,(plist-put org-format-latex-options :scale 1.5))))))
 
 (straight-use-package 'org-appear)
 (with-eval-after-load 'org
@@ -298,6 +299,8 @@
 
 (straight-use-package 'org-roam)
 (with-eval-after-load 'org
+  (if pg/is-windows-system
+      (straight-use-package 'emacsql-sqlite3))
   (require 'org-roam))
 (with-eval-after-load 'org-roam
   (pg/customize-set-variables

@@ -25,8 +25,8 @@ fi
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
 # Don't use the system-wide PulseAudio configuration
-#unset PULSE_CONFIG
-#unset PULSE_CLIENTCONFIG
+unset PULSE_CONFIG
+unset PULSE_CLIENTCONFIG
 
 # Export java path so that tools pick it up correctly
 export JAVA_HOME=$(realpath $(dirname $(dirname $(which java))))

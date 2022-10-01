@@ -28,14 +28,14 @@
       t
     nil))
 
-(global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
+;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
 (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
+      pg/is-linux-system (eq system-type 'gnu/linux)
+      pg/is-windows-system (eq system-type 'windows-nt)
       pg/exwm-enabled (and (not pg/is-termux)
-                           (display-graphic-p))
-      pg/is-guix-system (and (eq system-type 'gnu/linux)
-                             (require 'f)
-                             (string-equal (f-read "/etc/issue") "\nThis is the GNU system.  Welcome.\n")))
+                           (display-graphic-p)
+                           pg/is-linux-system))
 
 (pg/customize-set-variables
  `((load-prefer-newer . t)
@@ -55,10 +55,10 @@
                    pg-editing
                    pg-native-compilation
                    pg-guix
-                   pg-passwords
+                   ;; pg-passwords
                    pg-keylog
                    pg-buffer
-                   pg-email
+                   ;; pg-email
                    pg-editing
                    pg-help
                    pg-web

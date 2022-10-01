@@ -59,6 +59,8 @@
   (pg/leader-keys
     "pe" '(eshell :which-key "eshell")))
 
+(unless pg/is-linux-system
+  (straight-use-package 'vterm))
 (unless (fboundp 'vterm)
   (autoload #'vterm "vterm" nil t))
 (with-eval-after-load 'general

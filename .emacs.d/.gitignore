@@ -30,3 +30,6 @@ workspace/
 request
 %backup%~
 history
+icons
+org-persist
+server
