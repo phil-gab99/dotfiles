@@ -58,12 +58,12 @@
   (pg/herd-service "dunst")
   (pg/herd-service "nm-applet")
   (pg/herd-service "syncthing-gtk")
-  ;; (pg/herd-service "xss-lock")
+  (pg/herd-service "xss-lock")
   (pg/herd-service "udiskie")
   (pg/herd-service "pasystray")
   (pg/herd-service "xmodmap"))
 
-(straight-use-package 'exwm)
+;; (straight-use-package 'exwm)
 (require 'exwm)
 (require 'exwm-config)
 (require 'exwm-randr)
@@ -130,7 +130,7 @@
   (exwm-randr-enable)
   (exwm-enable))
 
-(straight-use-package 'desktop-environment)
+;; (straight-use-package 'desktop-environment)
 (with-eval-after-load 'exwm
   (require 'desktop-environment))
 (with-eval-after-load 'desktop-environment
