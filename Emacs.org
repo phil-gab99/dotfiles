@@ -8,7 +8,7 @@ Below is a sectioned configuration of emacs. Each code blocks gets written out t
 
 ** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-startup.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
 
   ;;; pg-startup.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -19,7 +19,7 @@ Below is a sectioned configuration of emacs. Each code blocks gets written out t
 
 Starting a server for displaying polybar info
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-startup.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
 
   (unless pg/is-windows-system
     (server-start))
@@ -30,7 +30,7 @@ Starting a server for displaying polybar info
 
 Some initializations are first set up.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-startup.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
 
   (unless (featurep 'straight)
     (defvar bootstrap-version)
@@ -50,7 +50,7 @@ Some initializations are first set up.
 
 ** Startup package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-startup.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
 
   (provide 'pg-startup)
 
@@ -60,7 +60,7 @@ Some initializations are first set up.
 
 ** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-native-compilation.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-native-compilation.el
 
   ;;; pg-native-compilation.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -71,7 +71,7 @@ Some initializations are first set up.
 
 Some settings specific to the ~emacs-native-comp~ version of emacs
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-native-compilation.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-native-compilation.el
 
   (when (featurep 'native-compile)
     (customize-set-variable 'native-comp-async-report-warnings-errors nil)                          ;; Silence compiler warnings
@@ -81,7 +81,7 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 
 ** Native compilation package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-native-compilation.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-native-compilation.el
 
   (provide 'pg-native-compilation)
 
@@ -93,7 +93,7 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-guix.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-guix.el
 
   ;;; pg-guix.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -104,7 +104,7 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 
 Emacs interface for guix package manager.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-guix.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-guix.el
 
   (unless pg/is-linux-system
     (unless (fboundp 'guix)
@@ -128,7 +128,7 @@ Emacs interface for guix package manager.
 
 Scheme REPL.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-guix.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-guix.el
 
   (unless pg/is-linux-system
     (unless (fboundp 'geiser-guile)
@@ -159,7 +159,7 @@ Scheme REPL.
 
 *** System management package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-guix.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-guix.el
 
   (provide 'pg-guix)
 
@@ -169,7 +169,7 @@ Scheme REPL.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   ;;; pg-passwords.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -178,7 +178,7 @@ Scheme REPL.
 
 *** Package | auth-source
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (require 'auth-source)
   (with-eval-after-load 'auth-source
@@ -188,7 +188,7 @@ Scheme REPL.
 
 *** Package | epg-config
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (unless (or pg/is-termux
               pg/is-windows-system)
@@ -200,7 +200,7 @@ Scheme REPL.
 
 *** Package | pinentry
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (unless (or pg/is-termux
               pg/is-windows-system)
@@ -222,7 +222,7 @@ Scheme REPL.
 
 *** Package | password-cache
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (require 'password-cache)
   (with-eval-after-load 'password-cache
@@ -232,7 +232,7 @@ Scheme REPL.
 
 *** Package | password-store
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (straight-use-package 'password-store)
   (require 'password-store)
@@ -254,7 +254,7 @@ Scheme REPL.
 
 *** Password lookup
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (defun pg/lookup-password (&rest keys)
     "Looks up passwords from `authinfo' entries."
@@ -267,7 +267,7 @@ Scheme REPL.
 
 *** Password utilities package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (provide 'pg-passwords)
 
@@ -277,7 +277,7 @@ Scheme REPL.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-keylog.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-keylog.el
 
   ;;; pg-keylog.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -288,7 +288,7 @@ Scheme REPL.
 
 Useful when starting out with the various keybindings and when presenting to an audience.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-keylog.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-keylog.el
 
   (define-minor-mode pg/keycast-mode
     "Show current command and its key binding in the mode line (fix for use with
@@ -319,7 +319,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Keybind log package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-keylog.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-keylog.el
 
   (provide 'pg-keylog)
 
@@ -329,7 +329,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   ;;; pg-completion.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -338,7 +338,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | savehist
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (require 'savehist)
   (with-eval-after-load 'savehist
@@ -348,7 +348,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | marginalia
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'marginalia)
   (with-eval-after-load 'vertico
@@ -371,7 +371,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | consult
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'consult)
   (unless (fboundp 'consult-line)
@@ -395,7 +395,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | orderless
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'orderless)
   (with-eval-after-load 'vertico
@@ -419,7 +419,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | corfu
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'corfu)
   (unless (fboundp 'corfu-next)
@@ -450,7 +450,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | vertico
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'vertico)
   (require 'vertico)
@@ -481,7 +481,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | embark
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'embark)
   (with-eval-after-load 'vertico
@@ -510,7 +510,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | embark-consult
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package '(embark-consult :host github
                                          :repo "oantolin/embark"
@@ -524,7 +524,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 *** Package | prescient
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'prescient)
 
@@ -542,7 +542,7 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 Displays additional keybindings subsequent to prefix keybindings
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'which-key)
   (require 'which-key)
@@ -566,7 +566,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 *** Package | helm
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'helm)
   (unless (fboundp 'helm-next-line)
@@ -593,7 +593,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 *** Command completion framework package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-completion.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (provide 'pg-completion)
 
@@ -603,7 +603,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   ;;; pg-ui.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -612,7 +612,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 *** UI basic settings
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (load-theme 'onedark-variant t)  ;; Load onedark theme
   (setq inhibit-startup-message t  ;; Disable startup message
@@ -635,7 +635,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 *** Package | diminish
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (straight-use-package 'diminish)
   (require 'diminish)
@@ -652,7 +652,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 *** Package | all-the-icons
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (straight-use-package 'all-the-icons)
   (require 'all-the-icons)
@@ -671,7 +671,7 @@ Displays additional keybindings subsequent to prefix keybindings
 
 Customizes the look of the modeline for better aesthetic.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (straight-use-package 'doom-modeline)
   (require 'doom-modeline)
@@ -697,7 +697,7 @@ Customizes the look of the modeline for better aesthetic.
 
 *** Package | dashboard
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (defun pg/dashboard-setup-startup-hook ()
     "Setup post initialization hooks."
@@ -746,7 +746,7 @@ Customizes the look of the modeline for better aesthetic.
 
 *** Package | page-break-lines
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (straight-use-package 'page-break-lines)
   (require 'page-break-lines)
@@ -763,7 +763,7 @@ Customizes the look of the modeline for better aesthetic.
 
 *** UI enhancement package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-ui.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (provide 'pg-ui)
 
@@ -773,7 +773,7 @@ Customizes the look of the modeline for better aesthetic.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   ;;; pg-buffer.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -782,7 +782,7 @@ Customizes the look of the modeline for better aesthetic.
 
 *** Window basic management
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   (setq even-window-sizes nil
         display-buffer-base-action
@@ -794,7 +794,7 @@ Customizes the look of the modeline for better aesthetic.
 
 *** Package | bufler
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   (straight-use-package 'bufler)
   (unless (fboundp 'bufler)
@@ -858,7 +858,7 @@ Customizes the look of the modeline for better aesthetic.
 
 For window configurations
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   (require 'winner)
   (with-eval-after-load 'winner
@@ -872,7 +872,7 @@ For window configurations
 
 *** Package | tab-bar
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   (require 'tab-bar)
   (with-eval-after-load 'tab-bar
@@ -893,7 +893,7 @@ For window configurations
 
 For organizing the buffer list
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   (straight-use-package 'perspective)
   (require 'perspective)
@@ -923,7 +923,7 @@ For organizing the buffer list
 
 *** Window management package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-buffer.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
 
   (provide 'pg-buffer)
 
@@ -933,7 +933,7 @@ For organizing the buffer list
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-email.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
 
   ;;; pg-email.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -946,7 +946,7 @@ After having setup the file, make sure to run the following commands:
 - ~mu init --maildir=~/Mail --my-address=address1@domain1.com --my-address=address2@domain2.com ...~ - For all different addresses
 - ~mu index~ - To index the given addresses
 
-#+begin_src conf :tangle (file-truename "~/.mbsyncrc") :mkdirp yes
+#+begin_src conf :tangle ~/.dotfiles/.mbsyncrc
 
   # Main hotmail account
   IMAPAccount hotmail
@@ -1015,7 +1015,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Package | mu4e
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-email.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
 
   (unless pg/is-termux
     (straight-use-package '(mu4e :type git
@@ -1089,7 +1089,7 @@ After having setup the file, make sure to run the following commands:
 
 Allows for notification pop-up and mode line count when receiving emails
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-email.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
 
   (straight-use-package 'mu4e-alert)
   (with-eval-after-load 'mu4e
@@ -1114,7 +1114,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 *** Email management package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-email.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
 
   (provide 'pg-email)
 
@@ -1124,7 +1124,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   ;;; pg-editing.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -1133,7 +1133,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 *** Basic editing configuration
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (setq tab-width 4                     ;; Set tab length
         custom-buffer-indent 2
@@ -1179,7 +1179,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 *** Fonts
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
   (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'light)
@@ -1191,7 +1191,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 *** Package | ligature
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package '(ligature :type git
                                    :host github
@@ -1228,7 +1228,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 Colors matching delimiters with different colours for distinguishability.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'rainbow-delimiters)
   (unless (fboundp 'rainbow-delimiters-mode)
@@ -1247,7 +1247,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 *** Package | abbrev-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (require 'abbrev)
   (with-eval-after-load 'abbrev
@@ -1260,7 +1260,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 *** Package | highlight-indent-guides
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'highlight-indent-guides)
   (unless (fboundp 'highlight-indent-guides-mode)
@@ -1285,7 +1285,7 @@ Colors matching delimiters with different colours for distinguishability.
 
 For surrounding delimiter matching and autocompletion.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'smartparens)
   (require 'smartparens)
@@ -1308,7 +1308,7 @@ For surrounding delimiter matching and autocompletion.
 
 *** Package | outshine
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'outshine)
   (unless (fboundp 'outshine-mode)
@@ -1327,7 +1327,7 @@ For surrounding delimiter matching and autocompletion.
 
 *** Package | selectric-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (defun pg/selectric-type-sound ()
     "Make the sound of the printing element hitting the paper."
@@ -1346,7 +1346,7 @@ For surrounding delimiter matching and autocompletion.
 
 *** Package | rainbow-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'rainbow-mode)
   (unless (fboundp 'rainbow-mode)
@@ -1377,7 +1377,7 @@ For surrounding delimiter matching and autocompletion.
 
 *** Package | emojify
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'emojify)
   (require 'emojify)
@@ -1398,7 +1398,7 @@ For surrounding delimiter matching and autocompletion.
 
 Allows usage of vim-like keybindings for some modes in emacs.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (defun pg/evil-hook()
     "Configuration of some default modes."
@@ -1446,7 +1446,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 *** Package | evil-collection
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (straight-use-package 'evil-collection)
   (with-eval-after-load 'evil
@@ -1470,7 +1470,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 *** Editing experience package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-editing.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (provide 'pg-editing)
 
@@ -1480,7 +1480,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-help.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
 
   ;;; pg-help.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -1491,7 +1491,7 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 Displays full documentations in place of the default help function.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-help.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
 
   (straight-use-package 'helpful)
   (unless (fboundp 'helpful-callable)
@@ -1532,7 +1532,7 @@ Displays full documentations in place of the default help function.
 
 *** Package | Info
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-help.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
 
   (defun pg/Info-mode-setup ()
     "Defining some behaviours for the major info-mode."
@@ -1556,7 +1556,7 @@ Displays full documentations in place of the default help function.
 
 *** Package | visual-fill-column
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-help.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
 
   (defun pg/docs-visual-fill ()
     "Applies text soft wrap."
@@ -1586,7 +1586,7 @@ Displays full documentations in place of the default help function.
 
 *** Help documentation package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-help.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
 
   (provide 'pg-help)
 
@@ -1596,7 +1596,7 @@ Displays full documentations in place of the default help function.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-web.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
 
   ;;; pg-web.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -1605,7 +1605,7 @@ Displays full documentations in place of the default help function.
 
 *** Package | eww
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-web.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
 
   (defun pg/eww-mode-setup ()
     (auto-fill-mode 0)
@@ -1622,7 +1622,7 @@ Displays full documentations in place of the default help function.
 
 *** Web design package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-web.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
 
   (provide 'pg-web)
 
@@ -1632,7 +1632,7 @@ Displays full documentations in place of the default help function.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   ;;; pg-file.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -1643,7 +1643,7 @@ Displays full documentations in place of the default help function.
 
 Some settings to manage where emacs stores backup files (such as the =~= backup files).
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (pg/customize-set-variables
    `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
@@ -1697,7 +1697,7 @@ Keybindings for other useful operations:
 - ~S~ - Create a symbolic link to this file
 - ~L~ - Load an Emacs Lisp file into Emacs
   
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (unless (fboundp 'dired)
     (autoload #'dired "dired" nil t))
@@ -1713,7 +1713,7 @@ Keybindings for other useful operations:
 
 Keeps a single dired buffer open at a time (to not have multiple buried buffers).
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (straight-use-package 'dired-single)
   (with-eval-after-load 'dired
@@ -1736,7 +1736,7 @@ Keeps a single dired buffer open at a time (to not have multiple buried buffers)
 
 Displays icons in dired-mode.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (straight-use-package 'all-the-icons-dired)
   (unless pg/is-termux
@@ -1758,7 +1758,7 @@ Displays icons in dired-mode.
 
 Togglable option for hiding dot files.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (straight-use-package 'dired-hide-dotfiles)
   (with-eval-after-load 'dired
@@ -1773,7 +1773,7 @@ Togglable option for hiding dot files.
 
 *** Package | openwith
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (unless pg/is-termux 
     (straight-use-package 'openwith)
@@ -1811,7 +1811,7 @@ Togglable option for hiding dot files.
 
 *** File management package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-file.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
   (provide 'pg-file)
 
@@ -1821,7 +1821,7 @@ Togglable option for hiding dot files.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   ;;; pg-shell.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -1832,7 +1832,7 @@ Togglable option for hiding dot files.
 
 Adds more detail to the prompt in eshell with custome themes.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   (straight-use-package 'eshell-git-prompt)
   (with-eval-after-load 'eshell
@@ -1844,7 +1844,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 *** Package | eshell-syntax-highlighting
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   (straight-use-package 'eshell-syntax-highlighting)
   (with-eval-after-load 'eshell
@@ -1862,7 +1862,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 *** Package | esh-autosuggest
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   (straight-use-package 'esh-autosuggest)
   (with-eval-after-load 'eshell
@@ -1884,7 +1884,7 @@ Adds more detail to the prompt in eshell with custome themes.
 
 Some configurations to the built-in eshell.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   (defun pg/configure-eshell ()
     "Eshell setup."
@@ -1928,7 +1928,7 @@ Some configurations to the built-in eshell.
 
 *** Package | vterm
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   (unless pg/is-linux-system
     (straight-use-package 'vterm))
@@ -1950,7 +1950,7 @@ Some configurations to the built-in eshell.
 
 *** Shell customization package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-shell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
   (provide 'pg-shell)
 
@@ -1960,7 +1960,7 @@ Some configurations to the built-in eshell.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
   ;;; pg-project.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -1975,7 +1975,7 @@ Allows for git projects management. Accessed using the ~C-c p~ prefix. Some impo
 - ~C-c p s r~ - Allows for use of the ~ripgrep~ command across the current reopository. Useful along with ~C-c C-o~ to pop out the results from the minibuffer into another buffer.
 Note that the emacs built-in local dir creation can also be used and is more flexible.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
   (straight-use-package 'projectile)
   (require 'projectile)
@@ -2013,7 +2013,7 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
 Allows for git commands to be applied to the current repository using the command ~C-x g~ which invokes a ~git status~ command with some additional information. Typing ~?~ invokes a list of possible commands, typing ~?~ again invokes the help function for the different commands and typing ~?~ a third time invokes the manual for the package.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
   (straight-use-package 'magit)
   (unless (fboundp 'magit-status)
@@ -2046,7 +2046,7 @@ Allows for git commands to be applied to the current repository using the comman
 
 *** Package | git-gutter
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
   (straight-use-package 'git-gutter)
   (unless (fboundp 'git-gutter-mode)
@@ -2080,7 +2080,7 @@ Adds git forges to magit.
 Steps to get working:
 - Run ~forge-pull~ at the current git repo
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
   (straight-use-package 'forge)
   (with-eval-after-load 'magit
@@ -2103,7 +2103,7 @@ Steps to get working:
 
 *** Project management and version control package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-project.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
   (provide 'pg-project)
 
@@ -2113,7 +2113,7 @@ Steps to get working:
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   ;;; pg-programming.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2125,7 +2125,7 @@ Steps to get working:
 Language Server Protocol for basic IDE functionalities. See [[https://emacs-lsp.github.io/lsp-mode/page/languages/][here]] for how to setup for different languages.
 The ~lsp-ui-doc-focus-frame~ command allows to access the documentation frame of the pop-up.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (defun pg/lsp-mode-setup ()
     "Displays structure of cursor position for all buffers."
@@ -2162,7 +2162,7 @@ The ~lsp-ui-doc-focus-frame~ command allows to access the documentation frame of
 
 Displays useful doc on hover.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'lsp-ui)
   (unless (fboundp 'lsp-ui-mode)
@@ -2188,7 +2188,7 @@ Displays useful doc on hover.
 
 Tree views in emacs.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'lsp-treemacs)
   (with-eval-after-load 'lsp-mode
@@ -2214,7 +2214,7 @@ Tree views in emacs.
 
 For auto-completions while coding.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (defvar company-mode/enable-yas t
     "Enable yasnippet for all backends.")
@@ -2263,7 +2263,7 @@ For auto-completions while coding.
 
 Includes icons for company mode suggestions.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'company-box)
   (unless (fboundp 'company-box-mode)
@@ -2285,7 +2285,7 @@ Includes icons for company mode suggestions.
 
 Remembers autocomplete selections.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'company-prescient)
   (with-eval-after-load 'company
@@ -2301,7 +2301,7 @@ Remembers autocomplete selections.
 
 Syntax checking.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'flycheck)
   (unless (fboundp 'flycheck-mode)
@@ -2323,7 +2323,7 @@ Syntax checking.
 
 Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.github.io/dap-mode/page/configuration/][here]] for how to setup for different languages.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'dap-mode)
   (with-eval-after-load 'lsp-mode
@@ -2348,7 +2348,7 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
 
 Allows writing textual descriptions for creating uml diagrams
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'plantuml-mode)
   (with-eval-after-load 'plantuml-mode
@@ -2369,7 +2369,7 @@ Allows writing textual descriptions for creating uml diagrams
 
 *** Package | comment-dwin-2
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'comment-dwim-2)
   (unless (fboundp 'comment-dwim-2)
@@ -2385,7 +2385,7 @@ Allows writing textual descriptions for creating uml diagrams
 
 Allows for code snippets for different languages.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'yasnippet)
   (unless (fboundp 'yas-minor-mode)
@@ -2414,7 +2414,7 @@ Allows for code snippets for different languages.
 
 Collection of code snippets for yasnippet.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (straight-use-package 'yasnippet-snippets)
   (with-eval-after-load 'yasnippet
@@ -2432,7 +2432,7 @@ Collection of code snippets for yasnippet.
 
 *** IDE functionalities package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
   (provide 'pg-programming)
 
@@ -2473,7 +2473,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-alloy.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-alloy.el
 
   ;;; pg-programming-alloy.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2482,7 +2482,7 @@ Some general tools for programming:
 
 ***** HOLD Package | alloy-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-alloy.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-alloy.el
 
   ;; (straight-use-package 'alloy-mode)
   ;; (with-eval-after-load 'alloy-mode
@@ -2494,7 +2494,7 @@ Some general tools for programming:
 
 ***** Alloy package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-alloy.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-alloy.el
 
   (provide 'pg-programming-alloy)
 
@@ -2504,7 +2504,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   ;;; pg-programming-cc.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2513,7 +2513,7 @@ Some general tools for programming:
 
 ***** Package | cc-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   (with-eval-after-load 'cc-mode
     (customize-set-variable 'company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
@@ -2541,7 +2541,7 @@ Some general tools for programming:
 
 ***** Package | cc-vars
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   (with-eval-after-load 'cc-mode
     (require 'cc-vars))
@@ -2552,7 +2552,7 @@ Some general tools for programming:
 
 ***** Package | company-c-headers
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   (straight-use-package 'company-c-headers)
   (with-eval-after-load 'company
@@ -2565,7 +2565,7 @@ Some general tools for programming:
 
 ***** Package | ccls
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   (straight-use-package 'ccls)
   (with-eval-after-load 'cc-mode
@@ -2589,7 +2589,7 @@ Some general tools for programming:
 
 ***** C languages package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-cc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   (provide 'pg-programming-cc)
 
@@ -2599,7 +2599,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-commonlisp.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-commonlisp.el
 
   ;;; pg-programming-commonlisp.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2608,7 +2608,7 @@ Some general tools for programming:
 
 ***** Package | sly
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-commonlisp.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-commonlisp.el
 
   (straight-use-package 'sly)
   (unless (fboundp 'sly)
@@ -2628,7 +2628,7 @@ Some general tools for programming:
 
 ***** Common lisp package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-commonlisp.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-commonlisp.el
 
   (provide 'pg-programming-commonlisp)
 
@@ -2638,7 +2638,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-css.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-css.el
 
   ;;; pg-programming-css.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2647,7 +2647,7 @@ Some general tools for programming:
 
 ***** Package | lsp-css
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-css.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-css.el
 
   (with-eval-after-load 'lsp-mode
     (dolist (mode '(css-mode-hook
@@ -2659,7 +2659,7 @@ Some general tools for programming:
 
 ***** Css package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-css.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-css.el
 
   (provide 'pg-programming-css)
 
@@ -2669,7 +2669,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-docker.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
 
   ;;; pg-programming-docker.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2678,7 +2678,7 @@ Some general tools for programming:
 
 ***** Package | docker
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-docker.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
 
   (straight-use-package 'docker)
 
@@ -2694,7 +2694,7 @@ Some general tools for programming:
 
 ***** Package | dockerfile-mode
      
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-docker.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
 
   (straight-use-package 'dockerfile-mode)
 
@@ -2710,7 +2710,7 @@ Some general tools for programming:
 
 ***** Docker package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-docker.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
 
   (provide 'pg-programming-docker)
 
@@ -2720,7 +2720,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-git.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-git.el
 
   ;;; pg-programming-git.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2729,7 +2729,7 @@ Some general tools for programming:
 
 ***** Package | git-modes
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-git.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-git.el
 
   (straight-use-package 'git-modes)
 
@@ -2745,7 +2745,7 @@ Some general tools for programming:
 
 ***** Git package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-git.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-git.el
 
   (provide 'pg-programming-git)
 
@@ -2755,7 +2755,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-groovy.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
   ;;; pg-programming-groovy.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2764,7 +2764,7 @@ Some general tools for programming:
 
 ***** Package | groovy-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-groovy.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
   (straight-use-package '(groovy-emacs-modes :type git
                                              :host github
@@ -2774,7 +2774,7 @@ Some general tools for programming:
 
 ***** Groovy package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-groovy.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
   (provide 'pg-programming-groovy)
 
@@ -2784,7 +2784,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-haskell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
   ;;; pg-programming-haskell.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2793,7 +2793,7 @@ Some general tools for programming:
 
 ***** Package | haskell-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-haskell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
   (straight-use-package 'haskell-mode)
 
@@ -2818,7 +2818,7 @@ Some general tools for programming:
 
 ***** Package | lsp-haskell
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-haskell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
   ;; (straight-use-package 'lsp-haskell)
   ;; (with-eval-after-load 'haskell-mode
@@ -2832,7 +2832,7 @@ Some general tools for programming:
 
 ***** Haskell package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-haskell.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
   (provide 'pg-programming-haskell)
 
@@ -2842,7 +2842,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-java.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-java.el
 
   ;;; pg-programming-java.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2851,7 +2851,7 @@ Some general tools for programming:
 
 ***** Package | lsp-java
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-java.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-java.el
 
   (defun pg/spring-boot-properties ()
     "Makes appropriate calls when opening a spring properties file."
@@ -2916,7 +2916,7 @@ Some general tools for programming:
 
 ***** Java package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-java.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-java.el
 
   (provide 'pg-programming-java)
 
@@ -2926,7 +2926,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-tex.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-tex.el
 
   ;;; pg-programming-tex.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -2935,7 +2935,7 @@ Some general tools for programming:
 
 ***** Package | auctex
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-tex.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-tex.el
 
   (straight-use-package 'auctex)
   (require 'tex)
@@ -2972,7 +2972,7 @@ Some general tools for programming:
 
 ***** HOLD Package | company-auctex
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-tex.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-tex.el
 
   ;; (straight-use-package 'company-auctex)
   ;; (with-eval-after-load 'company
@@ -2993,7 +2993,7 @@ Some general tools for programming:
 
 ***** LaTeX package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-tex.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-tex.el
 
   (provide 'pg-programming-tex)
 
@@ -3003,7 +3003,7 @@ Some general tools for programming:
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-lmc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-lmc.el
 
   ;;; pg-programming-lmc.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3014,7 +3014,7 @@ Some general tools for programming:
 
 Custom syntax highlighting for LMC assembly language.
       
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-lmc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-lmc.el
 
   (defvar lmc-java-mode-hook nil)
 
@@ -3049,7 +3049,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | lmc
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-lmc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-lmc.el
 
   (define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
     "Major mode to edit LMC assembly code."
@@ -3074,7 +3074,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Lmc package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-lmc.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-lmc.el
 
   (provide 'pg-programming-lmc)
 
@@ -3084,7 +3084,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-markdown.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-markdown.el
 
   ;;; pg-programming-markdown.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3093,7 +3093,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | markdown-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-markdown.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-markdown.el
 
   (straight-use-package 'markdown-mode)
   (with-eval-after-load 'markdown-mode
@@ -3113,7 +3113,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Markdown package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-markdown.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-markdown.el
 
   (provide 'pg-programming-markdown)
 
@@ -3123,7 +3123,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-mips.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-mips.el
 
   ;;; pg-programming-mips.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3132,7 +3132,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | mips-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-mips.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-mips.el
 
   (straight-use-package 'mips-mode)
   (unless (fboundp 'mips-mode)
@@ -3145,7 +3145,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Mips package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-mips.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-mips.el
 
   (provide 'pg-programming-mips)
 
@@ -3167,7 +3167,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-python.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   ;;; pg-programming-python.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3185,7 +3185,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | lsp-pyright
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-python.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (straight-use-package 'lsp-pyright)
   (with-eval-after-load 'python
@@ -3198,7 +3198,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | dap-python
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-python.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (with-eval-after-load 'python
     (with-eval-after-load 'lsp-mode
@@ -3221,7 +3221,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** TODO Package | jupyter
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-python.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   ;; (straight-use-package 'jupyter)
 
@@ -3237,7 +3237,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Python package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-python.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (provide 'pg-programming-python)
 
@@ -3247,7 +3247,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-smtlibv2.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-smtlibv2.el
 
   ;;; pg-programming-smtlibv2.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3256,7 +3256,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** HOLD Package | z3-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-smtlibv2.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-smtlibv2.el
 
   ;; (straight-use-package 'z3-mode)
 
@@ -3264,7 +3264,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** SMTLibv2 package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-smtlibv2.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-smtlibv2.el
 
   (provide 'pg-programming-smtlibv2)
 
@@ -3274,7 +3274,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-sql.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-sql.el
 
   ;;; pg-programming-sql.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3283,7 +3283,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | sql
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-sql.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-sql.el
 
   (with-eval-after-load 'sql
     (add-hook 'sql-interactive-mode-hook #'(lambda ()
@@ -3318,7 +3318,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | lsp-sql
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-sql.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-sql.el
 
   (with-eval-after-load 'sql
     (with-eval-after-load 'lsp-mode
@@ -3343,7 +3343,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | sql-indent
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-sql.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-sql.el
 
   (straight-use-package 'sql-indent)
   (with-eval-after-load 'sql
@@ -3356,7 +3356,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** SQL package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-sql.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-sql.el
 
   (provide 'pg-programming-sql)
 
@@ -3366,7 +3366,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-typescript.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-typescript.el
 
   ;;; pg-programming-typescript.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3375,7 +3375,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | typescript-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-typescript.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-typescript.el
 
   (straight-use-package 'typescript-mode)
   (unless (fboundp 'typescript-mode)
@@ -3396,7 +3396,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | dap-node
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-typescript.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-typescript.el
 
   (with-eval-after-load 'typescript-mode
     (with-eval-after-load 'lsp-mode
@@ -3409,7 +3409,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Typescript package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-typescript.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-typescript.el
 
   (provide 'pg-programming-typescript)
 
@@ -3419,7 +3419,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-vhdl.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
 
   ;;; pg-programming-vhdl.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3428,7 +3428,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** TODO Package | vhdl-tools
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-vhdl.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
 
   ;; (unless (fboundp 'flycheck-define-checker)
   ;;   (autoload #'flycheck-define-checker "flycheck"))
@@ -3454,7 +3454,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** VHDL package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-vhdl.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
 
   (provide 'pg-programming-vhdl)
 
@@ -3464,7 +3464,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-yaml.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-yaml.el
 
   ;;; pg-programming-yaml.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3473,7 +3473,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | yaml-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-yaml.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-yaml.el
 
   (straight-use-package 'yaml-mode)
 
@@ -3489,7 +3489,7 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** YAML package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-programming-yaml.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-yaml.el
 
   (provide 'pg-programming-yaml)
 
@@ -3499,7 +3499,7 @@ Custom syntax highlighting for LMC assembly language.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-notification.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-notification.el
 
   ;;; pg-notification.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3508,7 +3508,7 @@ Custom syntax highlighting for LMC assembly language.
 
 *** Package | alert
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-notification.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-notification.el
 
   (unless pg/is-windows-system
     (straight-use-package 'alert)
@@ -3528,7 +3528,7 @@ Custom syntax highlighting for LMC assembly language.
 
 *** Notification package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-notification.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-notification.el
 
   (provide 'pg-notification)
 
@@ -3538,7 +3538,7 @@ Custom syntax highlighting for LMC assembly language.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   ;;; pg-org.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -3555,7 +3555,7 @@ Org mode package for writing structured documents and more. Here are some useful
 - ~M-RET~ - Adds another entry below the current header/bullet point of the same rank. 
 - ~C-RET~ - Adds another entry after the current section occupied by the current header of the same rank.
   
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (defun org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the `img'
@@ -3772,7 +3772,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
 Toggles visibility of emphasis markers.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-appear)
   (with-eval-after-load 'org
@@ -3794,7 +3794,7 @@ Toggles visibility of emphasis markers.
 
 Customizes the heading bullets.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-bullets)
   (with-eval-after-load 'org
@@ -3818,7 +3818,7 @@ Customizes the heading bullets.
 
 Allows for creation of slideshow presentations in emacs with org mode. The ~org-beamer-export-to-pdf~ command can be used to export the presentation as a pdf file - it requires ~pdflatex~. More detail [[https://orgmode.org/worg/exporters/beamer/tutorial.html][here]].
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (defun pg/presentation-setup ()
     "Setup before starting org presentation."
@@ -3871,7 +3871,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 *** Package | ox-reveal
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'ox-reveal)
   (unless (fboundp 'org-reveal-export-to-html)
@@ -3897,7 +3897,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 Handles notifications of scheduled tasks.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-notify)
   (with-eval-after-load 'org
@@ -3920,7 +3920,7 @@ Handles notifications of scheduled tasks.
 
 Allows for markup language when composing email
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-msg)
   (with-eval-after-load 'org
@@ -3954,7 +3954,7 @@ Allows for markup language when composing email
 
 Helps with note-taking strategies.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-roam)
   (with-eval-after-load 'org
@@ -3997,7 +3997,7 @@ Helps with note-taking strategies.
 
 Allows display of latex fragments in org files.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-fragtog)
   (with-eval-after-load 'org
@@ -4018,7 +4018,7 @@ Allows display of latex fragments in org files.
 
 Custom pomodoro timer
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (defun pg/timer-setup ()
     "Sets up some parameters for the timer"
@@ -4072,7 +4072,7 @@ Custom pomodoro timer
 
 *** Org package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-org.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (provide 'pg-org)
 
@@ -4082,7 +4082,7 @@ Custom pomodoro timer
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-viewers.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   ;;; pg-viewers.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4091,7 +4091,7 @@ Custom pomodoro timer
 
 *** Package | doc-view
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-viewers.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   (unless (fboundp 'doc-view-mode)
     (autoload #'doc-view-mode "doc-view" nil t))
@@ -4103,7 +4103,7 @@ Custom pomodoro timer
 
 Allows for viewing of pdfs.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-viewers.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   (straight-use-package 'pdf-tools)
   (unless (fboundp 'pdf-view-mode)
@@ -4122,7 +4122,7 @@ Allows for viewing of pdfs.
 
 *** Package | djvu
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-viewers.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   (straight-use-package 'djvu)
   (require 'djvu)
@@ -4139,7 +4139,7 @@ Allows for viewing of pdfs.
 
 *** Viewers package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-viewers.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   (provide 'pg-viewers)
 
@@ -4149,7 +4149,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bible.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bible.el
 
   ;;; pg-bible.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4158,7 +4158,7 @@ Allows for viewing of pdfs.
 
 *** Package | dtk
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bible.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bible.el
 
   (straight-use-package 'dtk)
   (unless (fboundp 'dtk)
@@ -4185,7 +4185,7 @@ Allows for viewing of pdfs.
 
 *** Bible package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bible.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bible.el
 
   (provide 'pg-bible)
 
@@ -4195,7 +4195,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-finance.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-finance.el
 
   ;;; pg-finance.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4204,7 +4204,7 @@ Allows for viewing of pdfs.
 
 *** Package | ledger-mode
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-finance.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-finance.el
 
   (straight-use-package 'ledger-mode)
   (unless (fboundp 'ledger-mode)
@@ -4232,7 +4232,7 @@ Allows for viewing of pdfs.
 
 *** Finances package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-finance.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-finance.el
 
   (provide 'pg-finance)
 
@@ -4242,7 +4242,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-social.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
   ;;; pg-social.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4251,7 +4251,7 @@ Allows for viewing of pdfs.
 
 *** Package | slack
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-social.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
   (straight-use-package 'slack)
   (unless (fboundp 'slack-start)
@@ -4296,7 +4296,7 @@ Allows for viewing of pdfs.
 
 *** Package | sx
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-social.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
   (straight-use-package 'sx)
   (unless (fboundp 'sx-search)
@@ -4314,7 +4314,7 @@ Allows for viewing of pdfs.
 
 *** Package | telega
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-social.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
 ;;  (unless (fboundp 'telega)
 ;;    (autoload #'telega "telega" nil t))
@@ -4336,7 +4336,7 @@ Allows for viewing of pdfs.
 
 *** Social package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-social.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
   (provide 'pg-social)
 
@@ -4346,7 +4346,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-weather.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-weather.el
 
   ;;; pg-weather.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4355,7 +4355,7 @@ Allows for viewing of pdfs.
 
 *** Package | wttrin
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-weather.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-weather.el
 
   (defun pg/wttrin-fetch-raw-string (query)
     "Get the weather information based on your QUERY."
@@ -4388,7 +4388,7 @@ Allows for viewing of pdfs.
 
 *** Weather package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-weather.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-weather.el
 
   (provide 'pg-weather)
 
@@ -4398,7 +4398,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-music.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
 
   ;;; pg-music.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4407,7 +4407,7 @@ Allows for viewing of pdfs.
 
 *** Package | emms
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-music.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
 
   (defun pg/start-mpd ()
     "Start MPD, connects to it and syncs the metadata cache."
@@ -4476,7 +4476,7 @@ Allows for viewing of pdfs.
 
 *** Package | emms-mode-line-cycle
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-music.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
 
   (defun pg/emms-mode-line-cycle--icon-function (&optional title initialp)
     "Format the current track TITLE like `emms-mode-line-icon-function'. If
@@ -4509,7 +4509,7 @@ Allows for viewing of pdfs.
 
 *** Package | simple-mpc
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-music.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
 
   (straight-use-package 'simple-mpc)
   (unless (fboundp 'simple-mpc)
@@ -4521,7 +4521,7 @@ Allows for viewing of pdfs.
 
 *** Music package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-music.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
 
   (provide 'pg-music)
 
@@ -4531,7 +4531,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-games.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-games.el
 
   ;;; pg-games.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4540,7 +4540,7 @@ Allows for viewing of pdfs.
 
 *** Package | sudoku
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-games.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-games.el
 
   (straight-use-package 'sudoku)
   (unless (fboundp 'sudoku)
@@ -4554,7 +4554,7 @@ Allows for viewing of pdfs.
 
 *** Package | sokoban
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-games.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-games.el
 
   (straight-use-package 'sokoban)
   (unless (fboundp 'sokoban)
@@ -4573,7 +4573,7 @@ Allows for viewing of pdfs.
 
 *** Games package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-games.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-games.el
 
   (provide 'pg-games)
 
@@ -4583,7 +4583,7 @@ Allows for viewing of pdfs.
 
 *** Package header
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bindings.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bindings.el
 
   ;;; pg-bindings.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
@@ -4594,7 +4594,7 @@ Allows for viewing of pdfs.
 
 Allows for general custom keybindings definition to create own set of various keybindings.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bindings.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bindings.el
 
   (straight-use-package 'general)
   (with-eval-after-load 'which-key
@@ -4621,7 +4621,7 @@ Allows for general custom keybindings definition to create own set of various ke
 
 Allows the creation of keymaps for related commands and the ability to repeat terminal commands. Works in conjunction with the ~general~ package.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bindings.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bindings.el
 
   (straight-use-package 'hydra)
   (unless (fboundp 'defhydra)
@@ -4702,7 +4702,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 *** Package | iso-transl
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bindings.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bindings.el
 
   (require 'iso-transl)
   (with-eval-after-load 'iso-transl
@@ -4712,7 +4712,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 *** Keybindings package
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-bindings.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bindings.el
 
   (provide 'pg-bindings)
 
@@ -4720,7 +4720,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 * Emacs Profile
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
   ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel

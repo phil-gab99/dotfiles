@@ -284,7 +284,7 @@ Allows for some of the keybindings to use while in exwm.
 
 Remapping some keys to work inside of the desktop environment
 
-#+begin_src sh :tangle (file-truename "~/.xmodmaprc") :mkdirp yes
+#+begin_src sh :tangle ~/.dotfiles/.xmodmaprc
 
   clear lock
   clear control
@@ -353,7 +353,7 @@ Some utility functions.
 
 Below is the config file with the various parameters.
 
-#+begin_src conf :tangle ~/.dotfiles/.config/polybar/config :mkdirp yes
+#+begin_src conf :tangle ~/.dotfiles/.config/polybar/config
 
   ; Docs: https://github.com/polybar/polybar
   ;==========================================================
@@ -580,7 +580,7 @@ Some utility functions:
 
 For desktop notifications
 
-#+begin_src conf :tangle ~/.dotfiles/.config/dunst/dunstrc :mkdirp yes
+#+begin_src conf :tangle ~/.dotfiles/.config/dunst/dunstrc
 
   [global]
   ### Display ###
@@ -800,7 +800,7 @@ For desktop notifications
 
 Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-level services that run in the background when logging in.
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.scm
 
   (use-modules ((ice-9 ftw) #:select (scandir)))
 
@@ -819,7 +819,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** GPG-Agent
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/gpg-agent.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/gpg-agent.scm
 
   (define gpg-agent
     (make <service>
@@ -836,7 +836,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Mcron
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mcron.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mcron.scm
 
   (define mcron
     (make <service>
@@ -853,7 +853,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Pulseaudio
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pulseaudio.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pulseaudio.scm
 
   (define pulseaudio
     (make <service>
@@ -870,7 +870,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** SSH-Agent
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/ssh-agent.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/ssh-agent.scm
 
   (use-modules (shepherd support))
 
@@ -896,7 +896,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Compton
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/compton.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/compton.scm
 
   (define compton
     (make <service>
@@ -912,7 +912,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xsettingsd
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xsettingsd.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xsettingsd.scm
 
   (define xsettingsd
     (make <service>
@@ -928,7 +928,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** MPD
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mpd.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mpd.scm
 
   (define mpd
     (make <service>
@@ -947,7 +947,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Feh
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/feh.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/feh.scm
 
   (define feh
     (make <service>
@@ -963,7 +963,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Dunst
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/dunst.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/dunst.scm
 
   (define dunst
     (make <service>
@@ -979,7 +979,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Nm-applet
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/nm-applet.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/nm-applet.scm
 
   (define nm-applet
     (make <service>
@@ -995,7 +995,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Udiskie
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/udiskie.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/udiskie.scm
 
   (define udiskie
     (make <service>
@@ -1011,7 +1011,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Pasystray
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pasystray.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pasystray.scm
 
   (define pasystray
     (make <service>
@@ -1027,7 +1027,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Autorandr
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/autorandr.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/autorandr.scm
 
   (define autorandr
     (make <service>
@@ -1043,7 +1043,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xmodmap
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xmodmap.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xmodmap.scm
 
   (define xmodmap
     (make <service>
@@ -1059,7 +1059,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Syncthing
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm
 
   (define syncthing
     (make <service>
@@ -1075,7 +1075,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Syncthing-gtk
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm
 
   (define syncthing-gtk
     (make <service>
@@ -1090,7 +1090,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** XSS-lock
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xss-lock.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xss-lock.scm
 
   (define xss-lock
     (make <service>
@@ -2097,7 +2097,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 ** Default Applications
 
-#+begin_src conf :tangle (file-truename "~/.config/mimeapps.list") :mkdirp yes
+#+begin_src conf :tangle ~/.dotfiles/.config/mimeapps.list
 
   [Default Applications]
   text/html=qutebrowser.desktop
