@@ -58,7 +58,7 @@
   (pg/herd-service "dunst")
   (pg/herd-service "nm-applet")
   (pg/herd-service "syncthing-gtk")
-  (pg/herd-service "xss-lock")
+  ;; (pg/herd-service "xss-lock")
   (pg/herd-service "udiskie")
   (pg/herd-service "pasystray")
   (pg/herd-service "xmodmap"))

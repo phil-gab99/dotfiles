@@ -120,8 +120,8 @@ c.content.autoplay = False
 ################################################################################
 # ADBLOCKING - TODO
 ################################################################################
-sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
-config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
+# sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
+# config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
 # c.content.blocking.enabled = True
 # c.content.blocking.method = "auto"
 # c.content.blocking.adblock.lists = [

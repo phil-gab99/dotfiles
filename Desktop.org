@@ -21,7 +21,7 @@ The ~xsettingsd~ configuration file. Below is the table for each property:
 | Xft/Hinting                   | integer | Text hinting                   | 0 (no), 1 (yes), -1 (default)              |
 | Xft/RGBA                      | string  | Text subpixel rendering        | none, rgb, bgr, vrgb, vbgr                 |
 
-#+begin_src conf :tangle ~/.config/xsettingsd/xsettingsd.conf
+#+begin_src conf :tangle ~/.dotfiles/.config/xsettingsd/xsettingsd.conf
 
   Gtk/DecorationLayout "menu:minimize,maximize,close"
   Gtk/FontName "Cantarell 12"
@@ -37,7 +37,7 @@ The ~xsettingsd~ configuration file. Below is the table for each property:
 
 Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
-#+begin_src xml :tangle ~/.config/fontconfig/fonts.conf
+#+begin_src xml :tangle ~/.dotfiles/.config/fontconfig/fonts.conf
 
   <?xml version="1.0"?>
   <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
@@ -62,7 +62,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
 #+end_src
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/themes-fonts.scm :noweb yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/themes-fonts.scm :noweb yes
 
   (packages->manifest
    (list
@@ -101,7 +101,7 @@ Various settings and packages to alllow emacs to act as the operating system.
 
 ** Package | app-launcher
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
   (straight-use-package '(app-launcher :host github
                                        :repo "SebastienWae/app-launcher"))
@@ -126,7 +126,7 @@ Workspaces:
 - ~C-c RET~ - Move window to numbered workspace (EXWM windows are attached to a single workspace)
 - ~C-x B~ - Move to any buffer across all workspaces
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
   (defun pg/exwm-update-class ()
     "Sets buffer names to be app names."
@@ -184,7 +184,7 @@ Workspaces:
     (pg/herd-service "dunst")
     (pg/herd-service "nm-applet")
     (pg/herd-service "syncthing-gtk")
-    (pg/herd-service "xss-lock")
+    ;; (pg/herd-service "xss-lock")
     (pg/herd-service "udiskie")
     (pg/herd-service "pasystray")
     (pg/herd-service "xmodmap"))
@@ -262,7 +262,7 @@ Workspaces:
 
 Allows for some of the keybindings to use while in exwm.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
   (straight-use-package 'desktop-environment)
   (with-eval-after-load 'exwm
@@ -315,7 +315,7 @@ In order to setup exwm for multiple monitors, the ~arandr~ and ~autorandr~ appli
 
 Some utility functions.
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
   (defvar pg/polybar-process nil
     "Holds the process of the running Polybar instance, if any")
@@ -353,7 +353,7 @@ Some utility functions.
 
 Below is the config file with the various parameters.
 
-#+begin_src conf :tangle ~/.config/polybar/config :mkdirp yes
+#+begin_src conf :tangle ~/.dotfiles/.config/polybar/config :mkdirp yes
 
   ; Docs: https://github.com/polybar/polybar
   ;==========================================================
@@ -557,7 +557,7 @@ Some utility functions:
 | ~debug~                              | Print debugging information                                                                     |
 | ~help~                               | Show this help message                                                                          |
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
   (defun pg/dunstctl (cmd)
     "Calls dunst special commands."
@@ -580,7 +580,7 @@ Some utility functions:
 
 For desktop notifications
 
-#+begin_src conf :tangle ~/.config/dunst/dunstrc :mkdirp yes
+#+begin_src conf :tangle ~/.dotfiles/.config/dunst/dunstrc :mkdirp yes
 
   [global]
   ### Display ###
@@ -800,7 +800,7 @@ For desktop notifications
 
 Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-level services that run in the background when logging in.
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.scm :mkdirp yes
 
   (use-modules ((ice-9 ftw) #:select (scandir)))
 
@@ -819,7 +819,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** GPG-Agent
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/gpg-agent.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/gpg-agent.scm :mkdirp yes
 
   (define gpg-agent
     (make <service>
@@ -836,7 +836,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Mcron
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/mcron.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mcron.scm :mkdirp yes
 
   (define mcron
     (make <service>
@@ -853,7 +853,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Pulseaudio
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/pulseaudio.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pulseaudio.scm :mkdirp yes
 
   (define pulseaudio
     (make <service>
@@ -870,7 +870,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** SSH-Agent
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/ssh-agent.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/ssh-agent.scm :mkdirp yes
 
   (use-modules (shepherd support))
 
@@ -896,7 +896,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Compton
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/compton.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/compton.scm :mkdirp yes
 
   (define compton
     (make <service>
@@ -912,7 +912,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xsettingsd
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/xsettingsd.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xsettingsd.scm :mkdirp yes
 
   (define xsettingsd
     (make <service>
@@ -928,7 +928,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** MPD
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/mpd.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mpd.scm :mkdirp yes
 
   (define mpd
     (make <service>
@@ -947,7 +947,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Feh
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/feh.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/feh.scm :mkdirp yes
 
   (define feh
     (make <service>
@@ -963,7 +963,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Dunst
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/dunst.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/dunst.scm :mkdirp yes
 
   (define dunst
     (make <service>
@@ -979,7 +979,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Nm-applet
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/nm-applet.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/nm-applet.scm :mkdirp yes
 
   (define nm-applet
     (make <service>
@@ -995,7 +995,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Udiskie
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/udiskie.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/udiskie.scm :mkdirp yes
 
   (define udiskie
     (make <service>
@@ -1011,7 +1011,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Pasystray
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/pasystray.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pasystray.scm :mkdirp yes
 
   (define pasystray
     (make <service>
@@ -1027,7 +1027,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Autorandr
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/autorandr.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/autorandr.scm :mkdirp yes
 
   (define autorandr
     (make <service>
@@ -1043,7 +1043,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xmodmap
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/xmodmap.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xmodmap.scm :mkdirp yes
 
   (define xmodmap
     (make <service>
@@ -1059,7 +1059,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Syncthing
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/syncthing.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm :mkdirp yes
 
   (define syncthing
     (make <service>
@@ -1075,7 +1075,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Syncthing-gtk
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/syncthing.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm :mkdirp yes
 
   (define syncthing-gtk
     (make <service>
@@ -1090,7 +1090,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** XSS-lock
 
-#+begin_src scheme :tangle ~/.config/shepherd/init.d/xss-lock.scm :mkdirp yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xss-lock.scm :mkdirp yes
 
   (define xss-lock
     (make <service>
@@ -1109,7 +1109,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 *Guix Packages*
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/audio.scm :noweb yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/audio.scm :noweb yes
 
   (packages->manifest
    (list
@@ -1145,7 +1145,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *init.lisp*
     
-#+begin_src lisp :tangle ~/.config/nyxt/init.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/init.lisp
 
   (in-package #:nyxt-user)
 
@@ -1192,7 +1192,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *evil-mode.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/evil-mode.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/evil-mode.lisp
 
   (in-package #:nyxt-user)
 
@@ -1406,7 +1406,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *status.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/status.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/status.lisp
 
   (in-package #:nyxt-user)
 
@@ -1432,7 +1432,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *adblock.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/adblock.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/adblock.lisp
 
   (in-package #:nyxt)
 
@@ -1450,7 +1450,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *style.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/style.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/style.lisp
 
   (in-package #:nyxt-user)
 
@@ -1583,7 +1583,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *freestance.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/freestance.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/freestance.lisp
 
   (in-package #:nyxt-user)
 
@@ -1595,7 +1595,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *dark-reader.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/dark-reader.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/dark-reader.lisp
 
   (in-package #:nyxt-user)
 
@@ -1610,7 +1610,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *search-engines.lisp*
 
-#+begin_src lisp :tangle ~/.config/nyxt/search-engines.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/search-engines.lisp
 
   (in-package #:nyxt-user)
 
@@ -1661,7 +1661,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *Main configuration*
 
-#+begin_src python :tangle ~/.config/qutebrowser/config.py :noweb yes
+#+begin_src python :tangle ~/.dotfiles/.config/qutebrowser/config.py :noweb yes
 
   import sys, os
 
@@ -1785,8 +1785,8 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   ################################################################################
   # ADBLOCKING - TODO
   ################################################################################
-  sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
-  config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
+  # sys.path.append(os.path.join(sys.path[0], 'jmatrix'))
+  # config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
   # c.content.blocking.enabled = True
   # c.content.blocking.method = "auto"
   # c.content.blocking.adblock.lists = [
@@ -1856,7 +1856,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *Relevant bookmarks*
 
-#+begin_src conf :tangle ~/.config/qutebrowser/quickmarks
+#+begin_src conf :tangle ~/.dotfiles/.config/qutebrowser/quickmarks
 
   gn https://github.com/notifications
   dot https://github.com/phil-gab99/dotfiles
@@ -1883,7 +1883,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *JMatrix Rules*
 
-#+begin_src conf :tangle ~/.config/qutebrowser/jmatrix-rules
+#+begin_src conf :tangle ~/.dotfiles/.config/qutebrowser/jmatrix-rules
 
   # WARNING: This file can be overwritten easily with the :jmatrix-write-rules command
   # When data is overwritten, formatting and comments will be lost.
@@ -2086,7 +2086,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
 *Guix Packages*
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/browsers.scm :noweb yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/browsers.scm :noweb yes
 
   (packages->manifest
    (list
@@ -2160,7 +2160,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Wacom tablet scripts*
 
-#+begin_src sh :tangle ~/bin/wacom-laptop :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/wacom-laptop :shebang #!/bin/env sh
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" eDP-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" eDP-1
@@ -2171,7 +2171,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/wacom-screen :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/wacom-screen :shebang #!/bin/env sh
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1
@@ -2184,7 +2184,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Screenshot to clipboard*
 
-#+begin_src sh :tangle ~/bin/scrot-clipboard :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/scrot-clipboard :shebang #!/bin/env sh
 
   scrot -s -e 'xclip -selection clipboard -t image/png -i $f && rm -f $f'
 
@@ -2194,7 +2194,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Guix Packages*
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/media.scm :noweb yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/media.scm :noweb yes
 
   (packages->manifest
    (list
@@ -2216,7 +2216,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Download music script*
 
-#+begin_src sh :tangle ~/bin/download-music :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/download-music :shebang #!/bin/env sh
 
   for music in $*; do
       youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
@@ -2228,7 +2228,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Guix Packages*
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/video.scm :noweb yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/video.scm :noweb yes
 
   (packages->manifest
    (list
@@ -2258,7 +2258,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Password sync script*
 
-#+begin_src sh :tangle ~/bin/sync-passwords :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/sync-passwords :shebang #!/bin/env sh
 
   pass git pull
   pass git push
@@ -2271,7 +2271,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Scheduling with mcron*
 
-#+begin_src scheme :tangle ~/.config/cron/pass-sync.guile
+#+begin_src scheme :tangle ~/.dotfiles/.config/cron/pass-sync.guile
 
   (job
    '(next-hour (range 0 24 4))
@@ -2356,13 +2356,13 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 * Desktop Profile
 
-#+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-desktop.el
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
   (provide 'pg-desktop)
 
 #+end_src
 
-#+begin_src scheme :tangle ~/.config/guix/manifests/desktop.scm :noweb yes
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/desktop.scm :noweb yes
 
   (packages->manifest
    (list

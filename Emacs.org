@@ -190,7 +190,8 @@ Scheme REPL.
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
 
-  (unless pg/is-termux
+  (unless (or pg/is-termux
+              pg/is-windows-system)
     (require 'epg-config)
     (with-eval-after-load 'epg-config
       (customize-set-variable 'epg-pinentry-mode 'loopback)))
@@ -201,7 +202,8 @@ Scheme REPL.
 
 #+begin_src emacs-lisp :tangle ~/.emacs.d/lisp/pg-passwords.el
 
-  (unless pg/is-termux
+  (unless (or pg/is-termux
+              pg/is-windows-system)
     (straight-use-package 'pinentry)
     (require 'pinentry)
     (with-eval-after-load 'pinentry
