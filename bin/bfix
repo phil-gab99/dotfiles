@@ -1,4 +1,3 @@
-#!/bin/env sh
 # Run ls (hd0) or (hd1) and select the appropriate partitions until /boot/grub/ is found
 # Then apply the following (Below is the appropriate values for this machine)
 

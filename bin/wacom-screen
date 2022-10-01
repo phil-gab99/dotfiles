@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
 xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1
 

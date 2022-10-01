@@ -5,7 +5,7 @@
 
 * Channels
 
-#+begin_src scheme :tangle ~/.config/guix/base-channels.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/base-channels.scm
 
   (list (channel
          (name 'flat)
@@ -43,10 +43,11 @@
 
 This base configuration is shared between all of the machines I manage with Guix.
 
-#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
   (define-module (systems base)
     #:use-module (gnu)
+    #:use-module (gnu packages)
     #:use-module (gnu packages audio)
     #:use-module (gnu packages cups)
     #:use-module (gnu packages dns)
@@ -89,7 +90,7 @@ This base configuration is shared between all of the machines I manage with Guix
 
 Add a ~udev~ rule to enable members of the ~charge~ group to control charging thresholds.
 
-#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
   (define %charge-thresholds-udev-rule
     (udev-rule
@@ -104,26 +105,9 @@ Add a ~udev~ rule to enable members of the ~charge~ group to control charging th
 
 #+end_src
 
-Add a ~udev~ rule to enable members of the ~spice~ group to enable USB redirection with virtual machines.
-
-#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
-
-  (define %spice-devices-udev-rule
-    (udev-rule
-     "50-spice.rules"
-     (string-append "SUBSYSTEM==\"usb\", "
-                    "GROUP=\"spice\", "
-                    "MODE=\"0660\""
-                    "\n"
-                    "SUBSYSTEM==\"usb-device\", "
-                    "GROUP=\"spice\", "
-                    "MODE=\"0660\"")))
-
-#+end_src
-
 Override the default ~%desktop-services~ to add ~udev~ rules and apply other configuration.
 
-#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
   (define %my-desktop-services
     (modify-services %desktop-services
@@ -135,17 +119,17 @@ Override the default ~%desktop-services~ to add ~udev~ rules and apply other con
                                         (udev-configuration
                                          (inherit config)
                                          (rules (cons* %charge-thresholds-udev-rule
-                                                       %spice-devices-udev-rule
                                                        (udev-configuration-rules config)))))
                      (network-manager-service-type config =>
-                                                   (network-manager-configuration (inherit config)
-                                                                                  (vpn-plugins (list network-manager-openvpn))))))
+                                                   (network-manager-configuration
+                                                    (inherit config)
+                                                    (vpn-plugins (list network-manager-openvpn))))))
 
 #+end_src
 
 Use the ~libinput~ driver for all input devices since it's a bit more modern than the default.
 
-#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
   (define %xorg-libinput-config
     "Section \"InputClass\"
@@ -174,7 +158,7 @@ Use the ~libinput~ driver for all input devices since it's a bit more modern tha
 
 Define the ~base-operating-system~ which will be inherited by all machine configurations. TODO
 
-#+begin_src scheme :tangle ~/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
   (define-public base-operating-system
     (operating-system
@@ -197,14 +181,12 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                      (home-directory "/home/phil-gab99")
                      (supplementary-groups '("wheel"     ;; sudo
                                              "netdev"    ;; network devices
-                                             "spice"     ;; usb devices
                                              "kvm"
                                              "tty"
                                              "input"
                                              "libvirt"
                                              "charge"
                                              "docker"
-                                             ;; "realtime"  ;; Enable realtime scheduling
                                              "lp"        ;; control bluetooth devices
                                              "audio"     ;; control audio devices
                                              "video")))  ;; control video devices
@@ -215,8 +197,6 @@ Define the ~base-operating-system~ which will be inherited by all machine config
       (cons*
        (user-group (system? #t)
                    (name "charge"))
-       (user-group (system? #t)
-                   (name "spice"))
        %base-groups))
 
      ;; Partition mounted on /boot/efi.
@@ -240,7 +220,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
        (list emacs
              emacs-exwm
              emacs-desktop-environment
-             nss-certs     ;; for HTTPS access
+             nss-certs
              git
              ntfs-3g
              exfat-utils
@@ -249,7 +229,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
              nix
              pulseaudio
              xf86-input-libinput
-             gvfs          ;; for user mounts
+             gvfs
              xterm
              bluez
              bluez-alsa)
@@ -258,15 +238,11 @@ Define the ~base-operating-system~ which will be inherited by all machine config
      ;; System services
      (services
       (cons*
-       (service slim-service-type
-                (slim-configuration
-                 (theme-name "0.x")
-                 (xorg-configuration
-                  (xorg-configuration
-                   (keyboard-layout keyboard-layout)
-                   (extra-config (list %xorg-libinput-config))))))
+       (set-xorg-configuration
+        (xorg-configuration
+         (keyboard-layout keyboard-layout)
+         (extra-config (list %xorg-libinput-config))))
        (service openssh-service-type)
-       (service tor-service-type)
        (service cups-service-type
                 (cups-configuration
                  (web-interface? #t)
@@ -281,13 +257,10 @@ Define the ~base-operating-system~ which will be inherited by all machine config
        (service virtlog-service-type
                 (virtlog-configuration
                  (max-clients 1000)))
-       ;; (service thermald-service-type)
        (extra-special-file "/bin/env"
                            (file-append coreutils "/bin/env"))
        (bluetooth-service #:auto-enable? #t)
-       (remove (lambda (service)
-                 (eq? (service-kind service) gdm-service-type))
-               %my-desktop-services)))))
+       %my-desktop-services))))
 
 #+end_src
 
@@ -295,7 +268,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
 
 *** s76-laptop
 
-#+begin_src scheme :tangle ~/.config/guix/systems/s76-laptop.scm
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/s76-laptop.scm
 
   (define-module (systems s76-laptop)
     #:use-module (systems base)
@@ -310,15 +283,18 @@ Define the ~base-operating-system~ which will be inherited by all machine config
    (swap-devices
     (list
      (swap-space (target
-                  (uuid "5c2ecf42-19e0-46c0-ba33-51ced052be15")))))
+                  (uuid "007cbe9f-5d70-4ded-bd10-898993e4de74")))))
 
    (file-systems
     (cons*
      (file-system (device "/dev/nvme0n1p1")
                   (mount-point "/boot/efi")
                   (type "vfat"))
-     (file-system (device "/dev/nvme0n1p3")
+     (file-system (device "/dev/nvme0n1p2")
                   (mount-point "/")
+                  (type "ext4"))
+     (file-system (device "/dev/nvme0n1p4")
+                  (mount-point "/home")
                   (type "ext4"))
      %base-file-systems)))
 
@@ -340,7 +316,7 @@ This script simply lists the active profiles:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/list-profiles :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/list-profiles :shebang #!/usr/bin/env sh
 
   guix package --list-profiles
 
@@ -356,7 +332,7 @@ This script lists the generations of a given profile:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/list-generations :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/list-generations :shebang #!/usr/bin/env sh
 
   profile=$1
   guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
@@ -373,7 +349,7 @@ This script deletes the generations of a given profile:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/delete-generations :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/delete-generations :shebang #!/usr/bin/env sh
 
   profile=$1
   guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --delete-generations
@@ -390,7 +366,7 @@ This script accepts a space-separated list of manifest file names (without exten
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/activate-profiles :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/activate-profiles :shebang #!/usr/bin/env sh
 
   GREEN='\033[1;32m'
   RED='\033[1;30m'
@@ -447,7 +423,7 @@ If no profile names are provided, it walks the list of profile directories under
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/update-profiles :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/update-profiles :shebang #!/usr/bin/env sh
 
   GREEN='\033[1;32m'
   NC='\033[0m'
@@ -482,7 +458,7 @@ This script makes it easy to update all channels to the latest commit based on a
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/update-channels :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/update-channels :shebang #!/usr/bin/env sh
 
   guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm
   guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
@@ -501,7 +477,7 @@ This script makes it easy to update the system to the latest configuration based
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/update-system :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/update-system :shebang #!/usr/bin/env sh
 
   GREEN='\033[1;32m'
   BLUE='\033[1;34m'
@@ -531,7 +507,7 @@ This script pretty prints colon delimited variables such as ~$PATH~:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/echoFormat :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/echoFormat :shebang #!/usr/bin/env sh
 
   IFS=:
   for i in $1; do
@@ -552,7 +528,7 @@ This script extract most known archive formats:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/extract :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/extract :shebang #!/usr/bin/env sh
 
   for archive in $*; do
       if [ -f $archive ] ; then
@@ -591,7 +567,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Max Charge*
 
-#+begin_src sh :tangle ~/bin/max-charge :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/max-charge :shebang #!/usr/bin/env sh
 
   echo 0 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 100 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -603,7 +579,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Normal Charge*
 
-#+begin_src sh :tangle ~/bin/normal-charge :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/normal-charge :shebang #!/usr/bin/env sh
 
   echo 60 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 81 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -615,7 +591,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Safe charge*
 
-#+begin_src sh :tangle ~/bin/safe-charge :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/safe-charge :shebang #!/usr/bin/env sh
 
   echo 50 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 61 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -635,7 +611,7 @@ This script sets up email accounts using ~mu~:
 
 #+end_src
 
-#+begin_src sh :tangle ~/bin/mail-init :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/mail-init :shebang #!/usr/bin/env sh
 
   mu init -m ~/Mail --my-address=pgabriel999@hotmail.com --my-address=philippe.gabriel.1@umontreal.ca
   mu index
@@ -648,7 +624,7 @@ This script sets up email accounts using ~mu~:
 
 This is a script I tend to use when correcting student assignments to speed up my workflow.
 
-#+begin_src sh :tangle ~/bin/collect-assignments :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/collect-assignments :shebang #!/usr/bin/env sh
 
   if [ $# -lt 1 ]
   then
@@ -728,7 +704,7 @@ This is a script I tend to use when correcting student assignments to speed up m
 
 This is not a script though just a set of commands I need to run when Guix fails to boot properly
 
-#+begin_src sh :tangle ~/bin/boot-fix :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/bfix
 
   # Run ls (hd0) or (hd1) and select the appropriate partitions until /boot/grub/ is found
   # Then apply the following (Below is the appropriate values for this machine)
@@ -750,7 +726,7 @@ This is not a script though just a set of commands I need to run when Guix fails
 
 * Nix Package Manager
 
-#+begin_src conf :tangle (file-truename "~/.nix-channels")
+#+begin_src conf :tangle ~/.dotfiles/.nix-channels
 
   https://nixos.org/channels/nixpkgs-unstable nixpkgs
 

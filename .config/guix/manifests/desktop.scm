@@ -18,7 +18,7 @@
    (specification->package "xdg-utils")       ;; For xdg-open, etc
    (specification->package "xdg-dbus-proxy")  ;; For Flatpak
    (specification->package+output "gtk+:bin") ;; For gtk-launch
-   (specification->package+output "glib:bin") ;; For gio-launch-desktop
+   ;; (specification->package+output "glib:bin") ;; For gio-launch-desktop
    (specification->package "shared-mime-info")
    (specification->package "htop")
    
@@ -43,10 +43,10 @@
    (specification->package "udiskie")
    (specification->package "trash-cli")
    
-   (specification-package "virt-manager")
-   (specification-package "gtksourceview@4")
-   (specification-package "virt-viewer")
-   (specification-package "spice-vdagent")
+   (specification->package "virt-manager")
+   (specification->package "gtksourceview@4")
+   (specification->package "virt-viewer")
+   (specification->package "spice-vdagent")
    
    (specification->package "xev")
    (specification->package "xset")

@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 scrot -s -e 'xclip -selection clipboard -t image/png -i $f && rm -f $f'
 
 exit 0

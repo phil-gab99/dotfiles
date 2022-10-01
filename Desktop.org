@@ -1113,12 +1113,12 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
   (packages->manifest
    (list
-    (specification-> "alsa-utils")
-    (specification-> "pavucontrol")
-    (specification-> "pasystray")
-    (specification-> "mpd")
-    (specification-> "mpd-mpc")
-    (specification-> "bluez")))
+    (specification->package "alsa-utils")
+    (specification->package "pavucontrol")
+    (specification->package "pasystray")
+    (specification->package "mpd")
+    (specification->package "mpd-mpc")
+    (specification->package "bluez")))
 
 #+end_src
 
@@ -2126,7 +2126,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   (specification->package "xdg-utils")       ;; For xdg-open, etc
   (specification->package "xdg-dbus-proxy")  ;; For Flatpak
   (specification->package+output "gtk+:bin") ;; For gtk-launch
-  (specification->package+output "glib:bin") ;; For gio-launch-desktop
+  ;; (specification->package+output "glib:bin") ;; For gio-launch-desktop
   (specification->package "shared-mime-info")
   (specification->package "htop")
 
@@ -2160,7 +2160,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Wacom tablet scripts*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/wacom-laptop :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/wacom-laptop :shebang #!/usr/bin/env sh
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" eDP-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" eDP-1
@@ -2171,7 +2171,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/wacom-screen :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/wacom-screen :shebang #!/usr/bin/env sh
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1
@@ -2184,7 +2184,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Screenshot to clipboard*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/scrot-clipboard :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/scrot-clipboard :shebang #!/usr/bin/env sh
 
   scrot -s -e 'xclip -selection clipboard -t image/png -i $f && rm -f $f'
 
@@ -2198,17 +2198,17 @@ Applications to install which are otherwise difficult to install Guix systems.
 
   (packages->manifest
    (list
-    (specification-> "feh")
-    (specification-> "imagemagick")
-    (specification-> "scrot")
-    (specification-> "xclip")
-    (specification-> "libreoffice")
-    ;; (specification-> "gimp")
-    (specification-> "evince")
-    (specification-> "simple-scan")
-    (specification-> "xdg-desktop-portal-gtk")
-    ;; (specification-> "xournal")
-    (specification-> "xournalpp")))
+    (specification->package "feh")
+    (specification->package "imagemagick")
+    (specification->package "scrot")
+    (specification->package "xclip")
+    (specification->package "libreoffice")
+    ;; (specification->package "gimp")
+    (specification->package "evince")
+    (specification->package "simple-scan")
+    (specification->package "xdg-desktop-portal-gtk")
+    ;; (specification->package "xournal")
+    (specification->package "xournalpp")))
 
 #+end_src
 
@@ -2216,7 +2216,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Download music script*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/download-music :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/download-music :shebang #!/usr/bin/env sh
 
   for music in $*; do
       youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
@@ -2258,7 +2258,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 *Password sync script*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/sync-passwords :shebang #!/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/sync-passwords :shebang #!/usr/bin/env sh
 
   pass git pull
   pass git push
@@ -2329,10 +2329,10 @@ Applications to install which are otherwise difficult to install Guix systems.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  (specification-package "virt-manager")
-  (specification-package "gtksourceview@4")
-  (specification-package "virt-viewer")
-  (specification-package "spice-vdagent")
+  (specification->package "virt-manager")
+  (specification->package "gtksourceview@4")
+  (specification->package "virt-viewer")
+  (specification->package "spice-vdagent")
 
 #+end_src
 

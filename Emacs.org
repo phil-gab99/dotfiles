@@ -3311,7 +3311,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (packages->manifest
    (list
-    (specification->package "postgresql@14.2")
+    (specification->package "postgresql")
     (specification->package "sqls")))
 
 #+end_src
@@ -4770,7 +4770,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (require 'pg-startup)
 
-  (if pg/exwm-enabled (require 'pg-desktop))
+  ;; (if pg/exwm-enabled (require 'pg-desktop))
 
   (dolist (package '(pg-ui
                      pg-bindings

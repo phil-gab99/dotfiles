@@ -11,14 +11,17 @@
  (swap-devices
   (list
    (swap-space (target
-                (uuid "5c2ecf42-19e0-46c0-ba33-51ced052be15")))))
+                (uuid "007cbe9f-5d70-4ded-bd10-898993e4de74")))))
 
  (file-systems
   (cons*
    (file-system (device "/dev/nvme0n1p1")
                 (mount-point "/boot/efi")
                 (type "vfat"))
-   (file-system (device "/dev/nvme0n1p3")
+   (file-system (device "/dev/nvme0n1p2")
                 (mount-point "/")
+                (type "ext4"))
+   (file-system (device "/dev/nvme0n1p4")
+                (mount-point "/home")
                 (type "ext4"))
    %base-file-systems)))

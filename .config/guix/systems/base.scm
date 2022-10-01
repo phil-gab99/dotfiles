@@ -1,5 +1,6 @@
 (define-module (systems base)
   #:use-module (gnu)
+  #:use-module (gnu packages)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages cups)
   #:use-module (gnu packages dns)
@@ -49,17 +50,6 @@
                   "SUBSYSTEM==\"power_supply\", "
                   "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
 
-(define %spice-devices-udev-rule
-  (udev-rule
-   "50-spice.rules"
-   (string-append "SUBSYSTEM==\"usb\", "
-                  "GROUP=\"spice\", "
-                  "MODE=\"0660\""
-                  "\n"
-                  "SUBSYSTEM==\"usb-device\", "
-                  "GROUP=\"spice\", "
-                  "MODE=\"0660\"")))
-
 (define %my-desktop-services
   (modify-services %desktop-services
                    (elogind-service-type config =>
@@ -70,11 +60,11 @@
                                       (udev-configuration
                                        (inherit config)
                                        (rules (cons* %charge-thresholds-udev-rule
-                                                     %spice-devices-udev-rule
                                                      (udev-configuration-rules config)))))
                    (network-manager-service-type config =>
-                                                 (network-manager-configuration (inherit config)
-                                                                                (vpn-plugins (list network-manager-openvpn))))))
+                                                 (network-manager-configuration
+                                                  (inherit config)
+                                                  (vpn-plugins (list network-manager-openvpn))))))
 
 (define %xorg-libinput-config
   "Section \"InputClass\"
@@ -120,14 +110,12 @@ EndSection
                    (home-directory "/home/phil-gab99")
                    (supplementary-groups '("wheel"     ;; sudo
                                            "netdev"    ;; network devices
-                                           "spice"     ;; usb devices
                                            "kvm"
                                            "tty"
                                            "input"
                                            "libvirt"
                                            "charge"
                                            "docker"
-                                           ;; "realtime"  ;; Enable realtime scheduling
                                            "lp"        ;; control bluetooth devices
                                            "audio"     ;; control audio devices
                                            "video")))  ;; control video devices
@@ -138,8 +126,6 @@ EndSection
     (cons*
      (user-group (system? #t)
                  (name "charge"))
-     (user-group (system? #t)
-                 (name "spice"))
      %base-groups))
 
    ;; Partition mounted on /boot/efi.
@@ -163,7 +149,7 @@ EndSection
      (list emacs
            emacs-exwm
            emacs-desktop-environment
-           nss-certs     ;; for HTTPS access
+           nss-certs
            git
            ntfs-3g
            exfat-utils
@@ -172,7 +158,7 @@ EndSection
            nix
            pulseaudio
            xf86-input-libinput
-           gvfs          ;; for user mounts
+           gvfs
            xterm
            bluez
            bluez-alsa)
@@ -181,15 +167,11 @@ EndSection
    ;; System services
    (services
     (cons*
-     (service slim-service-type
-              (slim-configuration
-               (theme-name "0.x")
-               (xorg-configuration
-                (xorg-configuration
-                 (keyboard-layout keyboard-layout)
-                 (extra-config (list %xorg-libinput-config))))))
+     (set-xorg-configuration
+      (xorg-configuration
+       (keyboard-layout keyboard-layout)
+       (extra-config (list %xorg-libinput-config))))
      (service openssh-service-type)
-     (service tor-service-type)
      (service cups-service-type
               (cups-configuration
                (web-interface? #t)
@@ -204,10 +186,7 @@ EndSection
      (service virtlog-service-type
               (virtlog-configuration
                (max-clients 1000)))
-     ;; (service thermald-service-type)
      (extra-special-file "/bin/env"
                          (file-append coreutils "/bin/env"))
      (bluetooth-service #:auto-enable? #t)
-     (remove (lambda (service)
-               (eq? (service-kind service) gdm-service-type))
-             %my-desktop-services)))))
+     %my-desktop-services))))

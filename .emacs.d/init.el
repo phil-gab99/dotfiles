@@ -46,7 +46,7 @@
 
 (require 'pg-startup)
 
-(if pg/exwm-enabled (require 'pg-desktop))
+;; (if pg/exwm-enabled (require 'pg-desktop))
 
 (dolist (package '(pg-ui
                    pg-bindings

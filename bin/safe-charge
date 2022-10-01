@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 echo 50 > /sys/class/power_supply/BAT0/charge_control_start_threshold
 echo 61 > /sys/class/power_supply/BAT0/charge_control_end_threshold
 echo "Safe Charge Enabled - 60%"

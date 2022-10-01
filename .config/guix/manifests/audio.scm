@@ -1,8 +1,8 @@
 (packages->manifest
  (list
-  (specification-> "alsa-utils")
-  (specification-> "pavucontrol")
-  (specification-> "pasystray")
-  (specification-> "mpd")
-  (specification-> "mpd-mpc")
-  (specification-> "bluez")))
+  (specification->package "alsa-utils")
+  (specification->package "pavucontrol")
+  (specification->package "pasystray")
+  (specification->package "mpd")
+  (specification->package "mpd-mpc")
+  (specification->package "bluez")))

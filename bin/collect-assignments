@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 if [ $# -lt 1 ]
 then
     echo "Usage: collect-assignments $OPTION $TOSKIP"

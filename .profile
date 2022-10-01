@@ -18,7 +18,7 @@ done
 
 # Load Nix environment
 if [ -f /run/current-system/profile/etc/profile.d/nix.sh ]; then
-  . /run/current-system/profile/etc/profile.d/nix.sh
+    . /run/current-system/profile/etc/profile.d/nix.sh
 fi
 
 # Append libraries from Nix user packages to library path
@@ -117,7 +117,7 @@ if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
 fi
 
 # System 76 charge thresholds set to safe charge
-[ -f ~/bin/safe-charge ] && . ~/bin/safe-charge
+[ -f ~/bin/safe-charge ] && . ~/bin/safe-charge &
 
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
