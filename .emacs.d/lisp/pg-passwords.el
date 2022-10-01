@@ -6,13 +6,13 @@
   (customize-set-variable 'auth-sources '("~/.authinfo.gpg")))
 
 (unless (or pg/is-termux
-            pg/is-windows-system)
+            pg/is-windows)
   (require 'epg-config)
   (with-eval-after-load 'epg-config
     (customize-set-variable 'epg-pinentry-mode 'loopback)))
 
 (unless (or pg/is-termux
-            pg/is-windows-system)
+            pg/is-windows)
   (straight-use-package 'pinentry)
   (require 'pinentry)
   (with-eval-after-load 'pinentry

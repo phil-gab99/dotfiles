@@ -1,15 +1,15 @@
 ;;; pg-guix.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(unless pg/is-linux-system
+(unless (not pg/is-guix-system)
   (unless (fboundp 'guix)
     (autoload #'guix "guix" nil t))
   (with-eval-after-load 'general
     (pg/leader-keys
-     "G" '(:ignore t :which-key "Guix")
-     "Gg" '(guix :which-key "Guix"))))
+      "G" '(:ignore t :which-key "Guix")
+      "Gg" '(guix :which-key "Guix"))))
 
-(unless pg/is-linux-system
+(unless (not pg/is-guix-system)
   (unless (fboundp 'geiser-guile)
     (autoload #'geiser-guile "geiser" nil t))
   (unless (fboundp 'geiser-repl-clear-buffer)

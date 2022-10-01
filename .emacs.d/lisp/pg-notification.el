@@ -1,7 +1,7 @@
 ;;; pg-notification.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(unless pg/is-windows-system
+(unless pg/is-windows
   (straight-use-package 'alert)
   (require 'alert)
   (with-eval-after-load 'alert

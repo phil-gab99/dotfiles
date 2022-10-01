@@ -8,6 +8,13 @@
                                :branch "release/1.8"))
   (unless (fboundp 'mu4e)
     (autoload #'mu4e "mu4e" nil t))
+  (unless (fboundp 'mu4e-compose-new)
+    (autoload #'mu4e-compose-new "mu4e" nil t))
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "m" '(:ignore t :which-key "email")
+      "md" '(mu4e :which-key "dashboard")
+      "mc" '(mu4e-compose-new :which-key "compose")))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)
     (unless (fboundp 'corfu-mode)
@@ -60,12 +67,7 @@
                                       (mu4e-drafts-folder . "/University/Drafts")
                                       (mu4e-sent-folder . "/University/Sent Items")
                                       (mu4e-refile-folder . "/University/Archive")
-                                      (mu4e-trash-folder . "/University/Deleted Items")))))
-    (with-eval-after-load 'general
-      (pg/leader-keys
-        "m" '(:ignore t :which-key "email")
-        "md" '(mu4e :which-key "dashboard")
-        "mc" '(mu4e-compose-new :which-key "compose")))))
+                                      (mu4e-trash-folder . "/University/Deleted Items")))))))
 
 (straight-use-package 'mu4e-alert)
 (with-eval-after-load 'mu4e

@@ -21,7 +21,7 @@ Starting a server for displaying polybar info
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
 
-  (unless pg/is-windows-system
+  (unless pg/is-windows
     (server-start))
 
 #+end_src
@@ -106,13 +106,13 @@ Emacs interface for guix package manager.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-guix.el
 
-  (unless pg/is-linux-system
+  (unless (not pg/is-guix-system)
     (unless (fboundp 'guix)
       (autoload #'guix "guix" nil t))
     (with-eval-after-load 'general
       (pg/leader-keys
-       "G" '(:ignore t :which-key "Guix")
-       "Gg" '(guix :which-key "Guix"))))
+        "G" '(:ignore t :which-key "Guix")
+        "Gg" '(guix :which-key "Guix"))))
 
 #+end_src
 
@@ -126,11 +126,11 @@ Emacs interface for guix package manager.
 
 *** Package | geiser
 
-Scheme REPL.
+Scheme REPL
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-guix.el
 
-  (unless pg/is-linux-system
+  (unless (not pg/is-guix-system)
     (unless (fboundp 'geiser-guile)
       (autoload #'geiser-guile "geiser" nil t))
     (unless (fboundp 'geiser-repl-clear-buffer)
@@ -191,7 +191,7 @@ Scheme REPL.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (unless (or pg/is-termux
-              pg/is-windows-system)
+              pg/is-windows)
     (require 'epg-config)
     (with-eval-after-load 'epg-config
       (customize-set-variable 'epg-pinentry-mode 'loopback)))
@@ -203,7 +203,7 @@ Scheme REPL.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
   (unless (or pg/is-termux
-              pg/is-windows-system)
+              pg/is-windows)
     (straight-use-package 'pinentry)
     (require 'pinentry)
     (with-eval-after-load 'pinentry
@@ -626,8 +626,8 @@ Displays additional keybindings subsequent to prefix keybindings
 
   ;; Set frame transparency
   (unless (or pg/is-termux (not pg/exwm-enabled))
-    (set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-    (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+    (set-frame-parameter (selected-frame) 'alpha '(80 . 80))
+    (add-to-list 'default-frame-alist '(alpha . (80 . 80)))
     (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
@@ -1024,6 +1024,13 @@ After having setup the file, make sure to run the following commands:
                                  :branch "release/1.8"))
     (unless (fboundp 'mu4e)
       (autoload #'mu4e "mu4e" nil t))
+    (unless (fboundp 'mu4e-compose-new)
+      (autoload #'mu4e-compose-new "mu4e" nil t))
+    (with-eval-after-load 'general
+      (pg/leader-keys
+        "m" '(:ignore t :which-key "email")
+        "md" '(mu4e :which-key "dashboard")
+        "mc" '(mu4e-compose-new :which-key "compose")))
     (with-eval-after-load 'mu4e
       (require 'mu4e-org)
       (unless (fboundp 'corfu-mode)
@@ -1076,12 +1083,7 @@ After having setup the file, make sure to run the following commands:
                                         (mu4e-drafts-folder . "/University/Drafts")
                                         (mu4e-sent-folder . "/University/Sent Items")
                                         (mu4e-refile-folder . "/University/Archive")
-                                        (mu4e-trash-folder . "/University/Deleted Items")))))
-      (with-eval-after-load 'general
-        (pg/leader-keys
-          "m" '(:ignore t :which-key "email")
-          "md" '(mu4e :which-key "dashboard")
-          "mc" '(mu4e-compose-new :which-key "compose")))))
+                                        (mu4e-trash-folder . "/University/Deleted Items")))))))
 
 #+end_src
 
@@ -1930,7 +1932,7 @@ Some configurations to the built-in eshell.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
 
-  (unless pg/is-linux-system
+  (unless pg/is-guix-system
     (straight-use-package 'vterm))
   (unless (fboundp 'vterm)
     (autoload #'vterm "vterm" nil t))
@@ -3510,7 +3512,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-notification.el
 
-  (unless pg/is-windows-system
+  (unless pg/is-windows
     (straight-use-package 'alert)
     (require 'alert)
     (with-eval-after-load 'alert
@@ -3958,7 +3960,7 @@ Helps with note-taking strategies.
 
   (straight-use-package 'org-roam)
   (with-eval-after-load 'org
-    (if pg/is-windows-system
+    (if pg/is-windows
         (straight-use-package 'emacsql-sqlite3))
     (require 'org-roam))
   (with-eval-after-load 'org-roam
@@ -4105,10 +4107,10 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
-  (straight-use-package 'pdf-tools)
-  (unless (fboundp 'pdf-view-mode)
-    (autoload #'pdf-view-mode "pdf-tools" nil t))
-  (add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
+  ;; (straight-use-package 'pdf-tools)
+  ;; (unless (fboundp 'pdf-view-mode)
+  ;;   (autoload #'pdf-view-mode "pdf-tools" nil t))
+  ;; (add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
 
 #+end_src
 
@@ -4514,6 +4516,11 @@ Allows for viewing of pdfs.
   (straight-use-package 'simple-mpc)
   (unless (fboundp 'simple-mpc)
     (autoload #'simple-mpc "simple-mpc" nil t))
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "a" '(:ignore t :which-key "pass")
+      "ac" '(password-store-copy :which-key "copy")
+      "af" '(password-store-copy-field :which-key "copy field")))
   (with-eval-after-load 'simple-mpc
     (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
 
@@ -4755,8 +4762,11 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   ;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
   (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-        pg/is-linux-system (eq system-type 'gnu/linux)
-        pg/is-windows-system (eq system-type 'windows-nt)
+        pg/is-windows (eq system-type 'windows-nt)
+        pg/is-linux (eq system-type 'gnu/linux)
+        pg/is-guix-system (and pg/is-linux
+                               (string-match-p (regexp-quote "(guix@guix)")
+                                               (shell-command-to-string "cat /proc/version")))
         pg/exwm-enabled (and (not pg/is-termux)
                              (display-graphic-p)
                              pg/is-linux-system))
@@ -4779,10 +4789,10 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-editing
                      pg-native-compilation
                      pg-guix
-                     ;; pg-passwords
+                     pg-passwords
                      pg-keylog
                      pg-buffer
-                     ;; pg-email
+                     pg-email
                      pg-editing
                      pg-help
                      pg-web

@@ -78,6 +78,11 @@
 (straight-use-package 'simple-mpc)
 (unless (fboundp 'simple-mpc)
   (autoload #'simple-mpc "simple-mpc" nil t))
+(with-eval-after-load 'general
+  (pg/leader-keys
+    "a" '(:ignore t :which-key "pass")
+    "ac" '(password-store-copy :which-key "copy")
+    "af" '(password-store-copy-field :which-key "copy field")))
 (with-eval-after-load 'simple-mpc
   (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
 
