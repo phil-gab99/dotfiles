@@ -38,7 +38,7 @@
                                              (shell-command-to-string "cat /proc/version")))
       pg/exwm-enabled (and (not pg/is-termux)
                            (display-graphic-p)
-                           pg/is-linux-system))
+                           pg/is-linux))
 
 (pg/customize-set-variables
  `((load-prefer-newer . t)

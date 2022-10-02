@@ -6,7 +6,7 @@ if [[ $- != *i* ]]; then
     # We are being invoked from a non-interactive shell.  If this is an SSH
     # session (as in "ssh host command"), source /etc/profile so we get PATH and
     # other essential variables.
-    [[ -n "$SSH_CLIENT" ]] && source /etc/profile
+    [[ -n "$SSH_CLIENT" ]] && . /etc/profile
 
     # Don't do anything else.
     return
@@ -27,7 +27,7 @@ elif [ -f /etc/bash_completion ]; then
 fi
 
 # Alias definitions
-if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases; fi
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 ################################################################################
 # HISTORY CONTROL
