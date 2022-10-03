@@ -1031,6 +1031,9 @@ After having setup the file, make sure to run the following commands:
         "m" '(:ignore t :which-key "email")
         "md" '(mu4e :which-key "dashboard")
         "mc" '(mu4e-compose-new :which-key "compose")))
+    (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - \n"
+                                                            "[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
+                                                            "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
     (with-eval-after-load 'mu4e
       (require 'mu4e-org)
       (unless (fboundp 'corfu-mode)
@@ -1042,9 +1045,6 @@ After having setup the file, make sure to run the following commands:
          (mu4e-update-interval . ,(* 10 60))
          (mu4e-get-mail-command . "mbsync -a")
          (mu4e-compose-format-flowed . t)
-         (mu4e-compose-signature . ,(concat "Philippe Gabriel - \n"
-                                            "[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
-                                            "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
          (mu4e-compose-signature-auto-include . nil)
          (message-send-mail-function . ,#'smtpmail-send-it)
          (mu4e-maildir-shortcuts . (("/University/Inbox" . 117)
@@ -1424,11 +1424,12 @@ Allows usage of vim-like keybindings for some modes in emacs.
   (with-eval-after-load 'evil
     (add-hook 'evil-mode-hook #'pg/evil-hook)
     (pg/customize-set-variables
-     '((evil-want-integration . t)
+     `((evil-want-integration . t)
        (evil-want-C-u-scroll . t)
        (evil-want-C-i-jump . nil)
        (evil-want-Y-yank-to-eol . t)
-       (evil-want-fine-undo . t)))
+       (evil-want-fine-undo . t)
+       (evil-undo-system . ,#'undo-redo)))
     (unless (fboundp 'evil-normal-state)
       (autoload #'evil-normal-state "evil-states"))
     (define-key evil-insert-state-map (kbd "C-g") #'evil-normal-state)
@@ -3669,7 +3670,7 @@ Org mode package for writing structured documents and more. Here are some useful
                                (python . t)))
 
   (require 'org-tempo) ;; Allows defined snippets to expand into appropriate code blocks
-  (dolist (template '(("sh" . "src shell")
+  (dolist (template '(("sh" . "src sh")
                       ("java" . "src java")
                       ("als" . "src alloy")
                       ("puml" . "src plantuml")
@@ -4107,10 +4108,11 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
-  ;; (straight-use-package 'pdf-tools)
-  ;; (unless (fboundp 'pdf-view-mode)
-  ;;   (autoload #'pdf-view-mode "pdf-tools" nil t))
-  ;; (add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
+  (unless pg/is-guix-system
+    (straight-use-package 'pdf-tools))
+  (unless (fboundp 'pdf-view-mode)
+    (autoload #'pdf-view-mode "pdf-tools" nil t))
+  (add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
 
 #+end_src
 
@@ -4118,7 +4120,7 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; (specification->package "emacs-pdf-tools")
+  (specification->package "emacs-pdf-tools")
 
 #+end_src
 

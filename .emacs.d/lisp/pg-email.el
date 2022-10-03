@@ -15,6 +15,9 @@
       "m" '(:ignore t :which-key "email")
       "md" '(mu4e :which-key "dashboard")
       "mc" '(mu4e-compose-new :which-key "compose")))
+  (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - \n"
+                                                          "[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
+                                                          "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)
     (unless (fboundp 'corfu-mode)
@@ -26,9 +29,6 @@
        (mu4e-update-interval . ,(* 10 60))
        (mu4e-get-mail-command . "mbsync -a")
        (mu4e-compose-format-flowed . t)
-       (mu4e-compose-signature . ,(concat "Philippe Gabriel - \n"
-                                          "[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
-                                          "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
        (mu4e-compose-signature-auto-include . nil)
        (message-send-mail-function . ,#'smtpmail-send-it)
        (mu4e-maildir-shortcuts . (("/University/Inbox" . 117)

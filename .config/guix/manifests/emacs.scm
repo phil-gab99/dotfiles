@@ -170,7 +170,7 @@
   
   ;; (specification->package "emacs-org-fragtog")
   
-  ;; (specification->package "emacs-pdf-tools")
+  (specification->package "emacs-pdf-tools")
   
   ;; (specification->package "emacs-djvu")
   

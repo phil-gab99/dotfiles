@@ -530,9 +530,9 @@ This script extract most known archive formats:
 
 #+begin_src sh :tangle ~/.dotfiles/bin/extract :shebang #!/usr/bin/env sh
 
-  for archive in $*; do
-      if [ -f $archive ] ; then
-          case $archive in
+  for archive in "$@"; do
+      if [ -f "$archive" ] ; then
+          case "$archive" in
               *.tar.bz2) tar xvjf "$archive" ;;
               *.tar.gz)  tar xvzf "$archive" ;;
               *.bz2)     bunzip2 "$archive" ;;
@@ -624,11 +624,17 @@ This script sets up email accounts using ~mu~:
 
 This is a script I tend to use when correcting student assignments to speed up my workflow.
 
+#+begin_src sh
+
+  collect-assignments --unzip 3
+
+#+end_src
+
 #+begin_src sh :tangle ~/.dotfiles/bin/collect-assignments :shebang #!/usr/bin/env sh
 
   if [ $# -lt 1 ]
   then
-      echo "Usage: collect-assignments $OPTION $TOSKIP"
+      echo "Usage: collect-assignments option [toskip]"
       echo 
       echo "Available options:"
       echo "    --unzip     Unzips zip archives files starting at current directory."
@@ -722,7 +728,7 @@ This is not a script though just a set of commands I need to run when Guix fails
 
 ** Configuration
 
-
+*** General Profile
 
 * Nix Package Manager
 

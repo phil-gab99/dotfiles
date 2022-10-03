@@ -92,9 +92,6 @@ export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/python/python/share/info"
 export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/info"
 export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/video/video/share/info"
 
-# Ensure that font folders are loaded correctly
-xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
-
 # We're in Emacs
 export VISUAL=emacsclient
 export EDITOR="$VISUAL"
@@ -117,13 +114,16 @@ if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
 fi
 
 # System 76 charge thresholds set to safe charge
-[ -f ~/bin/safe-charge ] && . ~/bin/safe-charge &
+[ -f ~/bin/safe-charge ] && ~/bin/safe-charge
 
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
 
 function exwm {
     export EXWM=1
+
+    # Ensure that font folders are loaded correctly
+    xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
 
     # Make Java applications aware this is a non-reparenting window manager.
     export _JAVA_AWT_WM_NONREPARENTING=1

@@ -111,7 +111,7 @@
                              (python . t)))
 
 (require 'org-tempo) ;; Allows defined snippets to expand into appropriate code blocks
-(dolist (template '(("sh" . "src shell")
+(dolist (template '(("sh" . "src sh")
                     ("java" . "src java")
                     ("als" . "src alloy")
                     ("puml" . "src plantuml")

@@ -167,11 +167,12 @@
 (with-eval-after-load 'evil
   (add-hook 'evil-mode-hook #'pg/evil-hook)
   (pg/customize-set-variables
-   '((evil-want-integration . t)
+   `((evil-want-integration . t)
      (evil-want-C-u-scroll . t)
      (evil-want-C-i-jump . nil)
      (evil-want-Y-yank-to-eol . t)
-     (evil-want-fine-undo . t)))
+     (evil-want-fine-undo . t)
+     (evil-undo-system . ,#'undo-redo)))
   (unless (fboundp 'evil-normal-state)
     (autoload #'evil-normal-state "evil-states"))
   (define-key evil-insert-state-map (kbd "C-g") #'evil-normal-state)
