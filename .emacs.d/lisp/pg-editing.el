@@ -45,8 +45,6 @@
 (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'light)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'regular)
 
-(set-face-attribute 'italic nil :slant 'italic)
-
 (straight-use-package '(ligature :type git
                                  :host github
                                  :repo "mickeynp/ligature.el"))

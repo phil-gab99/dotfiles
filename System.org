@@ -622,7 +622,7 @@ This script sets up email accounts using ~mu~:
 
 *** TA Script
 
-This is a script I tend to use when correcting student assignments to speed up my workflow.
+This is a script I tend to use when correcting student assignments to speed up my workflow:
 
 #+begin_src sh
 
@@ -728,11 +728,19 @@ This is not a script though just a set of commands I need to run when Guix fails
 
 ** Configuration
 
-*** General Profile
+*** Git profile
+
+#+begin_src conf :tangle ~/.dotfiles/.gitconfig
+
+  [user]
+          name = Philippe Gabriel
+          email = pgabriel999@hotmail.com
+
+#+end_src
 
 * Nix Package Manager
 
-#+begin_src conf :tangle ~/.dotfiles/.nix-channels
+#+begin_src fundamental :tangle ~/.dotfiles/.nix-channels
 
   https://nixos.org/channels/nixpkgs-unstable nixpkgs
 

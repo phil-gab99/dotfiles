@@ -4,7 +4,7 @@
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the `img'
   directory with respect to the org-buffer's location and insert a link to
-  this file."
+  this file. Requires `imageMagick' for undertaking screenshots."
   (interactive)
   (setq imgpath (concat (let ((abspath (shell-command-to-string (concat "dirname " buffer-file-name))))
                           (with-temp-buffer
@@ -82,16 +82,6 @@
                            (0 (prog1 () (compose-region
                                          (match-beginning 1) (match-end 1) "•"))))))
 (require 'org-indent)
-(set-face-attribute 'org-ellipsis nil :underline nil)
-(set-face-attribute 'org-block nil :foreground nil :background "gray5" :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :foreground "orange" :inherit 'fixed-pitch)
-(set-face-attribute 'org-verbatim nil :foreground "green" :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil :foreground "thistle3" :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
-
 (dolist (face '((org-level-1 . 1.2)
                 (org-level-2 . 1.1)
                 (org-level-3 . 1.05)
@@ -327,7 +317,8 @@
 (straight-use-package 'org-fragtog)
 (with-eval-after-load 'org
   (unless (fboundp 'org-fragtog-mode)
-    (autoload #'org-fragtog-mode "org-fragtog" nil t)))
+    (autoload #'org-fragtog-mode "org-fragtog" nil t))
+  (add-hook 'org-mode-hook #'org-fragtog-mode))
 
 (defun pg/timer-setup ()
   "Sets up some parameters for the timer"

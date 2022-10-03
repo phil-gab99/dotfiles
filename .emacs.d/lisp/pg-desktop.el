@@ -35,17 +35,17 @@
   ;; Change this with respect to the different screen configuration
   ;; Check arandr for display names
   (customize-set-variable 'exwm-randr-workspace-monitor-plist
-                          (pcase (shell-command-to-string "autorandr --detected")
-                            ("work\n" '(5 "HDMI-1"))
-                            ("work+\n" '(5 "HDMI-1"))
-                            ("jclab\n" '(5 "HDMI-1"))
-                            ("jb-0305\n" '(5 "HDMI-1"))
-                            ("aa-1140\n" '(5 "HDMI-1"))
-                            ("rg-e310\n" '(5 "HDMI-1"))
-                            ("jc-s139\n" '(5 "HDMI-1"))
-                            ("jc-s1139\n" '(5 "DP-1"))
-                            ("rg-p310\n" '(5 "DP-1"))
-                            ("entertainment\n" '(5 "HDMI-1"))))
+                          (pcase (string-trim (shell-command-to-string "autorandr --detected"))
+                            ("work" '(5 "HDMI-1"))
+                            ("work+" '(5 "HDMI-1"))
+                            ("jclab" '(5 "HDMI-1"))
+                            ("jb-0305" '(5 "HDMI-1"))
+                            ("aa-1140" '(5 "HDMI-1"))
+                            ("rg-e310" '(5 "HDMI-1"))
+                            ("jc-s139" '(5 "HDMI-1"))
+                            ("jc-s1139" '(5 "DP-1"))
+                            ("rg-p310" '(5 "DP-1"))
+                            ("entertainment" '(5 "HDMI-1"))))
   (pg/set-wallpaper)
   (message "Display config: %s"
            (string-trim (shell-command-to-string "autorandr --current"))))
@@ -63,7 +63,8 @@
   (pg/herd-service "pasystray")
   (pg/herd-service "xmodmap"))
 
-;; (straight-use-package 'exwm)
+(unless pg/is-guix-system
+  (straight-use-package 'exwm))
 (require 'exwm)
 (require 'exwm-config)
 (require 'exwm-randr)
@@ -130,7 +131,8 @@
   (exwm-randr-enable)
   (exwm-enable))
 
-;; (straight-use-package 'desktop-environment)
+(unless pg/is-guix-system
+  (straight-use-package 'desktop-environment))
 (with-eval-after-load 'exwm
   (require 'desktop-environment))
 (with-eval-after-load 'desktop-environment

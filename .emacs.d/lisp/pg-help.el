@@ -38,7 +38,6 @@
                                      (info-title-2 (:height 1.15) info-title-2)
                                      (info-title-3 (:height 1.15) info-title-3)
                                      (info-title-4 (:height 2.0) info-title-4)))
-  (set-face-attribute 'Info-quoted nil :foreground "orange" :inherit 'fixed-pitch)
   (variable-pitch-mode 1)
   (visual-line-mode 1))
 

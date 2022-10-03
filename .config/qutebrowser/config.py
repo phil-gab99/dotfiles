@@ -91,7 +91,14 @@ c.colors.webpage.darkmode.policy.images = 'never'
 
 # Background color for webpages
 # Type - QtColor
-# c.colors.webpage.bg = 'black'
+c.colors.webpage.bg = 'black'
+
+# Value to use for `prefers-color-scheme' for websites
+# Type - String
+# Values - auto  -> Use the system-wide color scheme setting
+#          dark  -> Force a dark theme
+#          light -> Force a light theme
+c.colors.webpage.preferred_color_scheme = 'dark'
 
 ################################################################################
 # EDITING

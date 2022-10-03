@@ -161,17 +161,17 @@ Workspaces:
     ;; Change this with respect to the different screen configuration
     ;; Check arandr for display names
     (customize-set-variable 'exwm-randr-workspace-monitor-plist
-                            (pcase (shell-command-to-string "autorandr --detected")
-                              ("work\n" '(5 "HDMI-1"))
-                              ("work+\n" '(5 "HDMI-1"))
-                              ("jclab\n" '(5 "HDMI-1"))
-                              ("jb-0305\n" '(5 "HDMI-1"))
-                              ("aa-1140\n" '(5 "HDMI-1"))
-                              ("rg-e310\n" '(5 "HDMI-1"))
-                              ("jc-s139\n" '(5 "HDMI-1"))
-                              ("jc-s1139\n" '(5 "DP-1"))
-                              ("rg-p310\n" '(5 "DP-1"))
-                              ("entertainment\n" '(5 "HDMI-1"))))
+                            (pcase (string-trim (shell-command-to-string "autorandr --detected"))
+                              ("work" '(5 "HDMI-1"))
+                              ("work+" '(5 "HDMI-1"))
+                              ("jclab" '(5 "HDMI-1"))
+                              ("jb-0305" '(5 "HDMI-1"))
+                              ("aa-1140" '(5 "HDMI-1"))
+                              ("rg-e310" '(5 "HDMI-1"))
+                              ("jc-s139" '(5 "HDMI-1"))
+                              ("jc-s1139" '(5 "DP-1"))
+                              ("rg-p310" '(5 "DP-1"))
+                              ("entertainment" '(5 "HDMI-1"))))
     (pg/set-wallpaper)
     (message "Display config: %s"
              (string-trim (shell-command-to-string "autorandr --current"))))
@@ -189,7 +189,8 @@ Workspaces:
     (pg/herd-service "pasystray")
     (pg/herd-service "xmodmap"))
 
-  ;; (straight-use-package 'exwm)
+  (unless pg/is-guix-system
+    (straight-use-package 'exwm))
   (require 'exwm)
   (require 'exwm-config)
   (require 'exwm-randr)
@@ -264,7 +265,8 @@ Allows for some of the keybindings to use while in exwm.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-desktop.el
 
-  ;; (straight-use-package 'desktop-environment)
+  (unless pg/is-guix-system
+    (straight-use-package 'desktop-environment))
   (with-eval-after-load 'exwm
     (require 'desktop-environment))
   (with-eval-after-load 'desktop-environment
@@ -690,7 +692,7 @@ For desktop notifications
   max_icon_size = 88
 
   # Paths to default icons.
-  icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/status/128@2x/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/devices/128@2x/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/emblems/64@2x/:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Arc/panel/22/
+  icon_path = /home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Papirus/48x48@2x/status:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Papirus/128x128/devices:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Papirus/48x48@2x/emblems:/home/phil-gab99/.guix-extra-profiles/themes-fonts/themes-fonts/share/icons/Papirus/24x24@2x/panel
 
   ### History ###
 
@@ -935,8 +937,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
       #:provides '(mpd)
       #:docstring "Runs `mpd'"
       #:respawn? #f
-      #:start (make-forkexec-constructor '("mpd")
-                                         #:pid-file "/home/phil-gab99/.config/mpd.pid")
+      #:start (make-forkexec-constructor '("mpd"))
       #:stop (make-kill-destructor)))
 
   (register-services mpd)
@@ -1755,7 +1756,14 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
   # Background color for webpages
   # Type - QtColor
-  # c.colors.webpage.bg = 'black'
+  c.colors.webpage.bg = 'black'
+
+  # Value to use for `prefers-color-scheme' for websites
+  # Type - String
+  # Values - auto  -> Use the system-wide color scheme setting
+  #          dark  -> Force a dark theme
+  #          light -> Force a light theme
+  c.colors.webpage.preferred_color_scheme = 'dark'
 
   ################################################################################
   # EDITING

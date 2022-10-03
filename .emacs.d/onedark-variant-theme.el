@@ -5,44 +5,48 @@
   "One Dark Variant - My onedark variant custom theme.")
 
 (defvar onedark-variant-colors-alist
-  '(("onedark-variant-whitestd"   . "#cccccc")
-    ("onedark-variant-white"      . "#ffffff")
-    ("onedark-variant-gold"       . "#eead0e")
-    ("onedark-variant-black"      . "#282c34")
-    ("onedark-variant-dark"       . "#000000")
-    ("onedark-variant-doc-box"    . "#1a1a1a")
-    ("onedark-variant-cursorbg"   . "#4682d9")
-    ("onedark-variant-regionbg"   . "#494949")
-    ("onedark-variant-regionds"   . "#828997")
-    ("onedark-variant-blue"       . "#00bfff")
-    ("onedark-variant-green"      . "#2cff64")
-    ("onedark-variant-keywords"   . "#c678dd")
-    ("onedark-variant-strings"    . "#98c379")
-    ("onedark-variant-docs"       . "#98f979")
-    ("onedark-variant-modebox"    . "#181a1f")
-    ("onedark-variant-comments"   . "#737373")
-    ("onedark-variant-types"      . "#ecbe7b")
-    ("onedark-variant-vars"       . "#ff6347")
-    ("onedark-variant-link"       . "#61afef")
-    ("onedark-variant-constants"  . "#eead0e")
-    ("onedark-variant-tags"       . "#00eeee")
-    ("onedark-variant-builtin"    . "#00cdcd")
-    ("onedark-variant-preproc"    . "#7b447b")
-    ("onedark-variant-shexec"     . "#afeeee")
-    ("onedark-variant-modelnfg"   . "#9da5b4")
-    ("onedark-variant-modelnbg"   . "#21252b")
-    ("onedark-variant-modelndiff" . "#ff4c35")
-    ("onedark-variant-modelninfg" . "#5b6268")
-    ("onedark-variant-modelninbg" . "#21242b")
-    ("onedark-variant-lnnumfg"    . "#8f8f8f")
-    ("onedark-variant-lnnumbg"    . "#202231")
-    ("onedark-variant-lnsltfg"    . "#fefefe")
-    ("onedark-variant-mu4eheader" . "#ff83fa")
-    ("onedark-variant-parenmatch" . "#c678dd")
-    ("onedark-variant-error"      . "#ff6666")
-    ("onedark-variant-warn"       . "#f2db05")
-    ("onedark-variant-minibuf"    . "#f0fff0")
-    ("onedark-variant-eviln"      . "#818ff4"))
+  '(("onedark-variant-whitestd"    . "#cccccc")
+    ("onedark-variant-white"       . "#ffffff")
+    ("onedark-variant-gold"        . "#eead0e")
+    ("onedark-variant-black"       . "#282c34")
+    ("onedark-variant-dark"        . "#000000")
+    ("onedark-variant-doc-box"     . "#1a1a1a")
+    ("onedark-variant-cursorbg"    . "#4682d9")
+    ("onedark-variant-regionbg"    . "#494949")
+    ("onedark-variant-regionds"    . "#828997")
+    ("onedark-variant-blue"        . "#00bfff")
+    ("onedark-variant-green"       . "#2cff64")
+    ("onedark-variant-keywords"    . "#c678dd")
+    ("onedark-variant-strings"     . "#98c379")
+    ("onedark-variant-docs"        . "#98f979")
+    ("onedark-variant-modebox"     . "#181a1f")
+    ("onedark-variant-comments"    . "#737373")
+    ("onedark-variant-codeblockbg" . "#0d0d0d")
+    ("onedark-variant-code"        . "#ffa500")
+    ("onedark-variant-verbatim"    . "#00ff00")
+    ("onedark-variant-table"       . "#cdb5cd")
+    ("onedark-variant-types"       . "#ecbe7b")
+    ("onedark-variant-vars"        . "#ff6347")
+    ("onedark-variant-link"        . "#61afef")
+    ("onedark-variant-constants"   . "#eead0e")
+    ("onedark-variant-tags"        . "#00eeee")
+    ("onedark-variant-builtin"     . "#00cdcd")
+    ("onedark-variant-preproc"     . "#7b447b")
+    ("onedark-variant-shexec"      . "#afeeee")
+    ("onedark-variant-modelnfg"    . "#9da5b4")
+    ("onedark-variant-modelnbg"    . "#21252b")
+    ("onedark-variant-modelndiff"  . "#ff4c35")
+    ("onedark-variant-modelninfg"  . "#5b6268")
+    ("onedark-variant-modelninbg"  . "#21242b")
+    ("onedark-variant-lnnumfg"     . "#8f8f8f")
+    ("onedark-variant-lnnumbg"     . "#202231")
+    ("onedark-variant-lnsltfg"     . "#fefefe")
+    ("onedark-variant-mu4eheader"  . "#ff83fa")
+    ("onedark-variant-parenmatch"  . "#c678dd")
+    ("onedark-variant-error"       . "#ff6666")
+    ("onedark-variant-warn"        . "#f2db05")
+    ("onedark-variant-minibuf"     . "#f0fff0")
+    ("onedark-variant-eviln"       . "#818ff4"))
   "List of One Dark Variant colors.")
 
 (defmacro onedark-variant-with-color-variables (&rest body)
@@ -62,6 +66,7 @@
   `(cursor                   ((t ( :background ,onedark-variant-cursorbg))))
   `(default                  ((t ( :foreground ,onedark-variant-whitestd
                                    :background ,onedark-variant-black))))
+  `(italic                   ((t ( :slant italic))))
   `(link                     ((t ( :foreground ,onedark-variant-link
                                    :weight bold
                                    :underline t))))
@@ -91,6 +96,10 @@
   `(Man-underline  ((t ( :foreground ,onedark-variant-keywords
                          :underline t))))
 
+  ;; Info
+  `(Info-quoted    ((t ( :foreground ,onedark-variant-code
+                         :inherit (fixed-pitch)))))
+
   ;; Org
   `(org-hide                  ((t ( :foreground ,onedark-variant-black))))
   `(org-level-4               ((t ( :foreground ,onedark-variant-green))))
@@ -100,6 +109,24 @@
   `(org-document-title        ((t ( :foreground ,onedark-variant-whitestd
                                     :weight bold))))
   `(org-document-info         ((t ( :foreground ,onedark-variant-whitestd))))
+  `(org-ellipsis              ((t ( :underline nil))))
+  `(org-block                 ((t ( :foreground nil
+                                    :background ,onedark-variant-codeblockbg
+                                    :inherit (fixed-pitch)))))
+  `(org-code                  ((t ( :foreground ,onedark-variant-code
+                                    :inherit (fixed-pitch)))))
+  `(org-verbatim              ((t ( :foreground ,onedark-variant-verbatim
+                                    :inherit (fixed-pitch)))))
+  `(org-table                 ((t ( :foreground ,onedark-variant-table
+                                    :inherit (shaodw
+                                              fixed-pitch)))))
+  `(org-indent                ((t ( :inherit (org-hide
+                                              fixed-pitch)))))
+  `(org-special-keyword       ((t ( :inherit (font-lock-comment-face
+                                              fixed-pitch)))))
+  `(org-meta-line             ((t ( :inherit (font-lock-comment-face
+                                              fixed-pitch)))))
+  `(org-checkbox              ((t ( :inherit (fixed-pitch)))))
 
   ;; Outshine
   `(outshine-level-4 ((t ( :foreground ,onedark-variant-green))))
