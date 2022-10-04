@@ -56,19 +56,19 @@ c.session.lazy_restore = True
 
 # Font family for standard fonts
 # Type - FontFamily
-c.fonts.web.family.standard = 'Bitstream Vera Sans'
+c.fonts.web.family.standard = 'Noto Sans'
 
 # Font family for serif fonts
 # Type - FontFamily
-c.fonts.web.family.serif = 'Bitstream Vera Serif'
+c.fonts.web.family.serif = 'Noto Serif'
 
 # Font family for sans-serif fonts.
 # Type: FontFamily
-c.fonts.web.family.sans_serif = 'Bitstream Vera Sans'
+c.fonts.web.family.sans_serif = 'Noto Sans'
 
 # Font family for fixed fonts.
 # Type: FontFamily
-c.fonts.web.family.fixed = 'Fira Mono'
+c.fonts.web.family.fixed = 'Fira Code'
 
 # Font used for hints
 # Type - Font

@@ -1,15 +1,15 @@
 ;;; pg-ui.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(load-theme 'onedark-variant t)  ;; Load onedark theme
-(setq inhibit-startup-message t  ;; Disable startup message
-      scroll-conservatively 1000 ;; Slow scrolling
-      split-width-threshold 185) ;; Width for splitting
+(load-theme 'pg-onedark-variant t) ;; Load onedark theme
+(setq inhibit-startup-message t    ;; Disable startup message
+      scroll-conservatively 1000   ;; Slow scrolling
+      split-width-threshold 185)   ;; Width for splitting
 (unless pg/is-termux
-  (scroll-bar-mode 0)            ;; Disable visible scrollbar
-  (tool-bar-mode 0)              ;; Disable toolbar
+  (scroll-bar-mode 0)              ;; Disable visible scrollbar
+  (tool-bar-mode 0)                ;; Disable toolbar
   (tooltip-mode 0))
-(menu-bar-mode 0)                ;; Disable menu bar
+(menu-bar-mode 0)                  ;; Disable menu bar
 
 ;; Set frame transparency
 (unless (or pg/is-termux (not pg/exwm-enabled))

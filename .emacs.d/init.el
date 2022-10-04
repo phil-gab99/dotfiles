@@ -3,7 +3,9 @@
 
 (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
 
-(push "~/.emacs.d/lisp" load-path)
+(dolist (path '("~/.emacs.d/lisp"
+                "~/.emacs.d/themes"))
+  (push path load-path))
 
 (defun pg/close-all-buffers ()
   "Closes all emacs buffers."

@@ -555,7 +555,7 @@ This script extract most known archive formats:
 
 #+end_src
 
-*** Charge thresholds
+*** Charge Thresholds
 
 These scripts adjust the charge threshold for a System76 laptop:
 
@@ -706,7 +706,7 @@ This is a script I tend to use when correcting student assignments to speed up m
 
 #+end_src
 
-*** Boot fix
+*** Boot Fix
 
 This is not a script though just a set of commands I need to run when Guix fails to boot properly
 
@@ -728,13 +728,813 @@ This is not a script though just a set of commands I need to run when Guix fails
 
 ** Configuration
 
-*** Git profile
+*** Git Profile
 
 #+begin_src conf :tangle ~/.dotfiles/.gitconfig
 
   [user]
           name = Philippe Gabriel
           email = pgabriel999@hotmail.com
+
+#+end_src
+
+*** X Session
+
+Acting with respect to window manager selected
+
+#+begin_src sh :tangle ~/.dotfiles/.xsession
+
+  DEFAULT_SESSION=exwm
+
+  case $1 in
+      *exwm)
+          # Running in EXWM
+          export EXWM=1
+
+          # Ensure that font folders are loaded correctly
+          xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
+
+          # Make Java applications aware this is a non-reparenting window manager.
+          export _JAVA_AWT_WM_NONREPARENTING=1
+
+          # For debugging
+          # xterm
+
+          exec $1
+          ;;
+      *)
+          exec $DEFAULT_SESSION
+          ;;
+  esac
+
+#+end_src
+
+*** X Defaults
+
+Xsession default values
+
+#+begin_src conf :tangle ~/.dotfiles/.Xdefaults
+
+  XTerm*utf8: always
+  XTerm*metaSendsEscape: true
+
+#+end_src
+
+*** Bash Configuration
+
+**** Bash Profile
+
+#+begin_src shell :tangle ~/.dotfiles/.bash_profile
+
+  # Defer to .profile
+  [ -f ~/.profile ] && . ~/.profile
+
+#+end_src
+
+**** Bash Aliases
+
+#+begin_src shell :tangle ~/.dotfiles/.bash_aliases :shebang ### -*- mode: sh; -*-
+
+  #######################################################
+  # GENERAL ALIAS'S
+  #######################################################
+
+  # alias ls='ls -p --color=auto'
+  # alias dir='dir --color=auto'
+  # alias vdir='vdir --color=auto'
+
+  alias grep='grep --color=always'
+  alias fgrep='grep -F --color=always'
+  alias egrep='grep -E --color=always'
+
+  # To temporarily bypass an alias, we preceed the command with a \
+  # EG: the ls command is aliased, but to use the normal ls command you would type \ls
+
+  # Add an "alert" alias for long running commands.  Use like so:
+  #   sleep 10; alert
+  # alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+  # Alias's to modified commands
+  alias cp='cp -iv'
+  alias mv='mv -iv'
+  alias rm='rm -iv'
+  alias mkdir='mkdir -p'
+  alias ps='ps auxf'
+  alias ping='ping -c 10'
+  alias less='less -R'
+  alias vi='vim'
+  alias qutebrowser='qutebrowser --qt-flag disable-seccomp-filter-sandbox'
+  alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
+
+  # Search files in the current folder
+  alias find="find . | grep "
+
+  # Provenance of commands including aliases
+  alias which='alias | which --tty-only --read-alias --show-dot --show-tilde'
+
+  # Alias's for multiple directory listing commands
+  alias la='ls -Alh'                # show hidden files
+  alias ls='ls -AFh --color=always' # add colors and file type extensions
+  alias lx='ls -lXBh'               # sort by extension
+  alias lk='ls -lSrh'               # sort by size
+  alias lc='ls -lcrh'               # sort by change time
+  alias lu='ls -lurh'               # sort by access time
+  alias lr='ls -lRh'                # recursive ls
+  alias lt='ls -ltrh'               # sort by date
+  alias lm='ls -alh |more'          # pipe through 'more'
+  alias lw='ls -xAh'                # wide listing format
+  alias ll='ls -Fls'                # long listing format
+  alias labc='ls -lap'              # alphabetical sort
+  alias lf="ls -l | egrep -v '^d'"  # files only
+  alias ldir="ls -l | egrep '^d'"   # directories only
+
+  # Alias to show disk space
+  alias diskspace="du -S | sort -n -r | more"
+
+  # Aliases for multi-versioned commands
+  alias python="python3"
+  alias cc="gcc"
+
+#+end_src
+
+**** Bash Terminal Configuration
+
+#+begin_src shell :tangle ~/.dotfiles/.bashrc
+
+  # Export 'SHELL' to child processes.  Programs such as 'screen' honor it and
+  # otherwise use /bin/sh.
+  export SHELL
+
+  if [[ $- != *i* ]]; then
+      # We are being invoked from a non-interactive shell.  If this is an SSH
+      # session (as in "ssh host command"), source /etc/profile so we get PATH and
+      # other essential variables.
+      [[ -n "$SSH_CLIENT" ]] && . /etc/profile
+
+      # Don't do anything else.
+      return
+  fi
+
+  ################################################################################
+  # SOURCED ALIAS'S AND SCRIPTS
+  ################################################################################
+
+  # Source global definitions
+  [ -f /etc/bashrc ] && . /etc/bashrc
+
+  # Enable bash programmable completion features in interactive shells
+  [ -f /run/current-system/profile/share/bash-completion/bash-completion ] && . /run/current-system/profile/share/bash-completion/bash-completion
+
+  # Alias definitions
+  [ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+  ################################################################################
+  # HISTORY CONTROL
+  ################################################################################
+
+  # Don't put duplicate lines or lines starting with space in the history.
+  # See bash(1) for more options
+  HISTCONTROL=ignoreboth
+
+  # Append to the history file, don't overwrite it
+  shopt -s histappend
+  PROMPT_COMMAND='history -a'
+
+  # For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+  HISTSIZE=1000
+  HISTFILESIZE=2000
+
+  # If set, the pattern "**" used in a pathname expansion context will
+  # match all files and zero or more directories and subdirectories.
+  #shopt -s globstar
+
+  # Make less more friendly for non-text input files, see lesspipe(1)
+  [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+  ################################################################################
+  # NAVIGATION
+  ################################################################################
+
+  iatest=$(expr index "$-" i)
+
+  # Check the window size after each command and, if necessary, update the values
+  # of LINES and COLUMNS
+  shopt -s checkwinsize
+
+  # Allow ctrl-S for history navigation (with ctrl-R)
+  stty -ixon
+
+  # Ignore case on auto-completion
+  # Show auto-completion list automatically, without double tab
+  # Note: bind used instead of sticking these in .inputrc
+  if [ $iatest > 0 ]; then
+      bind "set show-all-if-ambiguous On";
+      bind "set completion-ignore-case on";
+  fi
+
+  ################################################################################
+  # COLORED COMMANDS
+  ################################################################################
+
+  # To have colors for ls and all grep commands such as grep, egrep and zgrep
+  export CLICOLOR=1
+  export LS_COLORS='no=00:fi=00:di=00;33:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:*.xml=00;31:'
+
+  # Color for manpages in less makes manpages a little easier to read
+  export LESS_TERMCAP_mb=$'\E[01;31m'
+  export LESS_TERMCAP_md=$'\E[01;31m'
+  export LESS_TERMCAP_me=$'\E[0m'
+  export LESS_TERMCAP_se=$'\E[0m'
+  export LESS_TERMCAP_so=$'\E[01;44;33m'
+  export LESS_TERMCAP_ue=$'\E[0m'
+  export LESS_TERMCAP_us=$'\E[01;32m'
+
+  ################################################################################
+  # SPECIAL FUNCTIONS
+  ################################################################################
+
+  # Parses git current branch when inside git project
+  function parse_git_branch {
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+  }
+
+  ################################################################################
+  # COLORED PROMPT
+  ################################################################################
+
+  function __setprompt {
+      local LAST_COMMAND=$? # Must come first!
+
+      # Define colors
+      local LIGHTGRAY="\033[0;37m"
+      local WHITE="\033[1;37m"
+      local BLACK="\033[0;30m"
+      local DARKGRAY="\033[1;30m"
+      local RED="\033[0;31m"
+      local LIGHTRED="\033[1;31m"
+      local GREEN="\033[0;32m"
+      local LIGHTGREEN="\033[1;32m"
+      local BROWN="\033[0;33m"
+      local YELLOW="\033[1;33m"
+      local BLUE="\033[0;34m"
+      local LIGHTBLUE="\033[1;34m"
+      local MAGENTA="\033[0;35m"
+      local LIGHTMAGENTA="\033[1;35m"
+      local CYAN="\033[0;36m"
+      local LIGHTCYAN="\033[1;36m"
+      local NOCOLOR="\033[0m"
+
+      # Show error exit code if there is one
+      if [[ $LAST_COMMAND != 0 ]]; then
+          PS1="\[${LIGHTGRAY}\](\[${LIGHTRED}\]ERROR\[${LIGHTGRAY}\])-(\[${MAGENTA}\]Exit Code \[${LIGHTRED}\]${LAST_COMMAND}\[${LIGHTGRAY}\])-(\[${LIGHTGRAY}\]"
+          if [[ $LAST_COMMAND == 1 ]]; then
+              PS1+="General error"
+          elif [ $LAST_COMMAND == 2 ]; then
+              PS1+="Missing keyword, command, or permission problem"
+          elif [ $LAST_COMMAND == 126 ]; then
+              PS1+="Permission problem or command is not an executable"
+          elif [ $LAST_COMMAND == 127 ]; then
+              PS1+="Command not found"
+          elif [ $LAST_COMMAND == 128 ]; then
+              PS1+="Invalid argument to exit"
+          elif [ $LAST_COMMAND == 129 ]; then
+              PS1+="Fatal error signal 1"
+          elif [ $LAST_COMMAND == 130 ]; then
+              PS1+="Script terminated by Control-C"
+          elif [ $LAST_COMMAND == 131 ]; then
+              PS1+="Fatal error signal 3"
+          elif [ $LAST_COMMAND == 132 ]; then
+              PS1+="Fatal error signal 4"
+          elif [ $LAST_COMMAND == 133 ]; then
+              PS1+="Fatal error signal 5"
+          elif [ $LAST_COMMAND == 134 ]; then
+              PS1+="Fatal error signal 6"
+          elif [ $LAST_COMMAND == 135 ]; then
+              PS1+="Fatal error signal 7"
+          elif [ $LAST_COMMAND == 136 ]; then
+              PS1+="Fatal error signal 8"
+          elif [ $LAST_COMMAND == 137 ]; then
+              PS1+="Fatal error signal 9"
+          elif [ $LAST_COMMAND -gt 255 ]; then
+              PS1+="Exit status out of range"
+          else
+              PS1+="Unknown error code"
+          fi
+          PS1+="\[${LIGHTGRAY}\])\[${NOCOLOR}\]\n"
+      else
+          PS1=""
+      fi
+
+      # Date
+      PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]🕓 $(date +%a) $(date +%b-'%-m')"
+      PS1+=" $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
+
+      # CPU
+      PS1+="(\[${MAGENTA}\] CPU $(cpu)%"
+
+      # Jobs
+      PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]\j"
+
+      # Network Connections (for a server - comment out for non-server)
+      # PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"
+
+      PS1+="\[${LIGHTGRAY}\])-"
+
+      # User and server
+      local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
+      local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
+      if [ $SSH2_IP ] || [ $SSH_IP ] ; then
+          PS1+="(\[${RED}\]\u@\h"
+      else
+          PS1+="(\[${RED}\]\u"
+      fi
+
+      # Current directory
+      PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\]📁 \w\[${LIGHTGRAY}\])-"
+
+      # Git branch
+      local BRANCH=$(parse_git_branch)
+      if [ "$BRANCH" != "" ]; then
+          PS1+="\[${LIGHTGRAY}\](\[${LIGHTGREEN}\]⎇ ${BRANCH}\[${LIGHTGRAY}\])-"
+      fi
+
+      # Total size of files in current directory
+      PS1+="(\[${GREEN}\]$(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]:"
+
+      # Number of files
+      PS1+="\[${GREEN}\]\$(ls -A -1 | wc -l)\[${LIGHTGRAY}\])"
+
+      # Skip to the next line
+      PS1+="\n└─"
+
+      if [[ $EUID -ne 0 ]]; then
+          PS1+="\[${GREEN}\]$\[${NOCOLOR}\] " # Normal user
+      else
+          PS1+="\[${RED}\]$\[${NOCOLOR}\] " # Root user
+      fi
+
+      # PS2 is used to continue a command using the \ character
+      PS2="\[${LIGHTGRAY}\]$\[${NOCOLOR}\] "
+
+      # PS3 is used to enter a number choice in a script
+      PS3='Please enter a number from above list: '
+
+      # PS4 is used for tracing a script in debug mode
+      PS4='\[${LIGHTGRAY}\]+\[${NOCOLOR}\] '
+
+      # Adjust the prompt depending on whether we're in 'guix environment'.
+      if [ -n "$GUIX_ENVIRONMENT" ]; then
+          PS1="$PS1 [dev] "
+          PS2="$PS2 [dev] "
+          PS3="$PS3 [dev] "
+          PS4="$PS4 [dev] "
+      fi
+  }
+  PROMPT_COMMAND='__setprompt'
+
+#+end_src
+
+*** General Profile
+
+#+begin_src shell :tangle ~/.dotfiles/.profile
+
+  # Append user scripts to path
+  export PATH="$PATH:$HOME/bin"
+
+  # Load the default Guix profile
+  GUIX_PROFILE="$HOME/.guix-profile"
+  . "$GUIX_PROFILE"/etc/profile
+
+  # Load additional Guix profiles
+  export GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
+  for i in $GUIX_EXTRA_PROFILES/*; do
+      profile=$i/$(basename "$i")
+      if [ -f "$profile"/etc/profile ]; then
+          GUIX_PROFILE="$profile"
+          . "$GUIX_PROFILE"/etc/profile
+      fi
+      unset profile
+  done
+
+  # Load Nix environment
+  if [ -f /run/current-system/profile/etc/profile.d/nix.sh ]; then
+      . /run/current-system/profile/etc/profile.d/nix.sh
+  fi
+
+  # Append libraries from Nix user packages to library path
+  export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
+
+  # Don't use the system-wide PulseAudio configuration
+  unset PULSE_CONFIG
+  unset PULSE_CLIENTCONFIG
+
+  # Export java path so that tools pick it up correctly
+  export JAVA_HOME=$(realpath $(dirname $(dirname $(which java))))
+
+  # Export casting program for qutebrowser
+  export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
+
+  # Make sure we can reach the GPG agent for SSH auth
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+
+  # Make sure `ls` collates dotfiles first (for dired)
+  export LC_COLLATE="C"
+
+  # Many build scripts expect CC to contain the compiler command
+  export CC="gcc"
+
+  # Some scripts make use of path to config directory
+  export XDG_CONFIG_HOME="$HOME/.config"
+
+  # Some script make use of path to cache directory
+  export XDG_CACHE_HOME="$HOME/.cache"
+
+  # Make Flatpak apps visible to launcher
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share"
+
+  # Make Nix apps visible to launcher
+  export PATH="$PATH:$HOME/.nix-profile/bin"
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.nix-profile/share"
+
+  # Make applications in other profiles visible to launcher
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/audio/audio/share"
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/browsers/browsers/share"
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/latex/latex/share"
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/media/media/share"
+  export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share"
+
+  # Make manual pages in other profiles visible
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/audio/audio/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/browsers/browsers/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/build-tools/build-tools/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/cc/cc/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/desktop/desktop/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/emacs/emacs/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/java/java/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/latex/latex/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/media/media/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/perl/perl/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/python/python/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/video/video/share/man"
+
+  # Make info nodes in other profiles visible
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/audio/audio/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/browsers/browsers/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/build-tools/build-tools/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/cc/cc/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/desktop/desktop/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/emacs/emacs/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/java/java/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/latex/latex/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/media/media/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/python/python/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/info"
+  export INFOPATH="$INFOPATH:$GUIX_EXTRA_PROFILES/video/video/share/info"
+
+  # We're in Emacs
+  export VISUAL=emacsclient
+  export EDITOR="$VISUAL"
+
+  # Less specific variables
+  export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
+
+  # Python specific variables
+  export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
+  [[ -v PYTHONPATH ]] \
+      && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+          || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+
+  # Bash specific variables
+  export HISTFILE=$XDG_CACHE_HOME/.bash_history
+
+  # Start the shepherd daemon
+  if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
+      shepherd -l $XDG_CONFIG_HOME/shepherd/shepherd.log
+  fi
+
+  # System 76 charge thresholds set to safe charge
+  [ -f ~/bin/safe-charge ] && ~/bin/safe-charge
+
+  # Load .bashrc to get login environment
+  [ -f ~/.bashrc ] && . ~/.bashrc
+
+#+end_src
+
+*** Node Package Manager Configuration
+
+#+begin_src shell :tangle ~/.dotfiles/.npmrc
+
+  prefix=~/.npm
+
+#+end_src
+
+*** Termux
+
+**** Termux Properties
+
+#+begin_src conf :tangle ~/.dotfiles/.termux/termux.properties
+
+  ### After making changes and saving you need to run `termux-reload-settings`
+  ### to update the terminal.  All information here can also be found on the
+  ### wiki: https://wiki.termux.com/wiki/Terminal_Settings
+
+  ###############
+  # General
+  ###############
+
+  ### Allow external applications to execute arbitrary commands within Termux.
+  ### This potentially could be a security issue, so option is disabled by
+  ### default. Uncomment to enable.
+  # allow-external-apps = true
+
+  ### Default working directory that will be used when launching the app.
+  default-working-directory = /data/data/com.termux/files/home
+
+  ### Uncomment to disable toasts shown on terminal session change.
+  # disable-terminal-session-change-toast = true
+
+  ### Uncomment to not show soft keyboard on application start.
+  # hide-soft-keyboard-on-startup = true
+
+  ### Uncomment to let keyboard toggle button to enable or disable software
+  ### keyboard instead of showing/hiding it.
+  # soft-keyboard-toggle-behaviour = enable/disable
+
+  ### Adjust terminal scrollback buffer. Max is 50000. May have negative
+  ### impact on performance.
+  # terminal-transcript-rows = 2000
+
+  ### Uncomment to use volume keys for adjusting volume and not for the
+  ### extra keys functionality.
+  # volume-keys = volume
+
+  ###############
+  # Fullscreen mode
+  ###############
+
+  ### Uncomment to let Termux start in full screen mode.
+  fullscreen = true
+
+  ### Uncomment to attempt workaround layout issues when running in full screen
+  ### mode.
+  # use-fullscreen-workaround = true
+
+  ###############
+  # Cursor
+  ###############
+
+  ### Cursor blink rate. Values 0, 100 - 2000.
+  terminal-cursor-blink-rate = 5
+
+  ### Cursor style: block, bar, underline.
+  # terminal-cursor-style = bar
+
+  ###############
+  # Extra keys
+  ###############
+
+  ### Settings for choosing which set of symbols to use for illustrating keys.
+  ### Choose between default, arrows-only, arrows-all, all and none
+  # extra-keys-style = default
+
+  ### Force capitalize all text in extra keys row button labels.
+  # extra-keys-text-all-caps = true
+
+  ### Default extra-key configuration
+  # extra-keys = [[ESC, TAB, CTRL, ALT, {key: '-', popup: '|'}, DOWN, UP]]
+
+  ### Two rows with more keys
+  # extra-keys = [['ESC','/','-','HOME','UP','END','PGUP'], \
+  #               ['TAB','CTRL','ALT','LEFT','DOWN','RIGHT','PGDN']]
+  extra-keys = [['ESC','CTRL','/','UP','-'], \
+  ['TAB','ALT','LEFT','DOWN','RIGHT']]
+
+  ### Configuration with additional popup keys (swipe up from an extra key)
+  # extra-keys = [[ \
+  #   {key: ESC, popup: {macro: "CTRL f d", display: "tmux exit"}}, \
+  #   {key: CTRL, popup: {macro: "CTRL f BKSP", display: "tmux ←"}}, \
+  #   {key: ALT, popup: {macro: "CTRL f TAB", display: "tmux →"}}, \
+  #   {key: TAB, popup: {macro: "ALT a", display: A-a}}, \
+  #   {key: LEFT, popup: HOME}, \
+  #   {key: DOWN, popup: PGDN}, \
+  #   {key: UP, popup: PGUP}, \
+  #   {key: RIGHT, popup: END}, \
+  #   {macro: "ALT j", display: A-j, popup: {macro: "ALT g", display: A-g}}, \
+  #   {key: KEYBOARD, popup: {macro: "CTRL d", display: exit}} \
+  # ]]
+
+  ###############
+  # Colors/themes
+  ###############
+
+  ### Force black colors for drawer and dialogs
+  # use-black-ui = true
+
+  ###############
+  # HW keyboard shortcuts
+  ###############
+
+  ### Disable hardware keyboard shortcuts.
+  # disable-hardware-keyboard-shortcuts = true
+
+  ### Open a new terminal with ctrl + t (volume down + t)
+  # shortcut.create-session = ctrl + t
+
+  ### Go one session down with (for example) ctrl + 2
+  # shortcut.next-session = ctrl + 2
+
+  ### Go one session up with (for example) ctrl + 1
+  # shortcut.previous-session = ctrl + 1
+
+  ### Rename a session with (for example) ctrl + n
+  # shortcut.rename-session = ctrl + n
+
+  ###############
+  # Bell key
+  ###############
+
+  ### Vibrate device (default).
+  # bell-character = vibrate
+
+  ### Beep with a sound.
+  # bell-character = beep
+
+  ### Ignore bell character.
+  bell-character = ignore
+
+  ###############
+  # Back key
+  ###############
+
+  ### Send the Escape key.
+  # back-key=escape
+
+  ### Hide keyboard or leave app (default).
+  # back-key=back
+
+  ###############
+  # Keyboard issue workarounds
+  ###############
+
+  ### Letters might not appear until enter is pressed on Samsung devices
+  # enforce-char-based-input = true
+
+  ### ctrl+space (for marking text in emacs) does not work on some devices
+  # ctrl-space-workaround = true
+
+#+end_src
+
+**** Termux Color Properties
+
+#+begin_src conf :tangle ~/.dotfiles/.termux/color.properties
+
+  foreground=#adb0a2
+  background=#292b2e
+  cursor=#eead0e
+  color0=#1C2023
+  color1=#C7AE95
+  color2=#cc5279
+  color3=#6690da
+  color4=#000000
+  color5=#C795AE
+  color6=#4f97d7
+  color7=#C7CCD1
+  color8=#747C84
+  color9=#C7AE95
+  color10=#95C7AE
+  color11=#AEC795
+  color12=#bb6dc4
+  color13=#C795AE
+  color14=#95AEC7
+  color15=#F3F4F5
+  color16=#C7C795
+  color17=#C79595
+  color18=#393F45
+  color19=#565E65
+  color20=#ADB3BA
+  color21=#DFE2E5
+
+#+end_src
+
+**** Termux Startup
+
+#+begin_src sh :tangle ~/.dotfiles/.termux/boot/emacs :shebang #!/usr/bin/env sh
+
+  emacs
+
+#+end_src
+
+*** Python
+
+#+begin_src python :tangle ~/.dotfiles/.config/python/history.py
+
+  # Enable custom ~/.python_history location on Python interactive console
+  # Set PYTHONSTARTUP to this file on ~/.profile or similar for this to work
+  # Currently sets history to ~/.cache/.python_history
+
+  import atexit
+  import os
+  import readline
+  import time
+
+
+  def write_history(path):
+      import os
+      import readline
+      try:
+          os.makedirs(os.path.dirname(path), mode=0o700, exist_ok=True)
+          readline.write_history_file(path)
+      except OSError:
+          pass
+
+
+  history = os.path.join(os.environ.get('XDG_CACHE_HOME') or
+                         os.path.expanduser('~/.cache'),
+                         '.python_history')
+  try:
+      readline.read_history_file(history)
+  except FileNotFoundError:
+      pass
+
+  # Prevents creation of default history if custom is empty
+  if readline.get_current_history_length() == 0:
+      readline.add_history(f'# History created at {time.asctime()}')
+
+  atexit.register(write_history, history)
+  del (atexit, os, readline, time, history, write_history)
+
+#+end_src
+
+*** Terminal Text Editors
+
+**** Nano
+
+#+begin_src conf :tangle ~/.dotfiles/.config/nano/nanorc
+
+  # Include all the syntax highlighting modules.
+  include /run/current-system/profile/share/nano/*.nanorc
+
+#+end_src
+
+**** Vim
+
+#+begin_src shell :tangle ~/.dotfiles/.vimrc
+
+  " Encoding "
+  set encoding=utf-8
+
+  " Syntax "
+  syntax on
+
+  " Line numbers "
+  set number
+  set relativenumber
+  set ruler
+  set laststatus=2
+
+  " Search features "
+  set hlsearch
+  set showmatch
+  set incsearch
+  set ignorecase
+  set smartcase
+
+  " Mode "
+  set showmode
+
+  " Commands "
+  set showcmd
+  set wildmenu
+  set wildmode=list:longest
+
+  " Indentation "
+  set tabstop=4
+  set softtabstop=4
+  set shiftwidth=4
+  set textwidth=80
+  set expandtab
+  set smartindent
+
+  " Delimiter matching "
+  set showmatch
+
+  " Key Mappings "
+  nnoremap j gj
+  nnoremap k gk
+
+  " Color theme "
+  if !has('gui running')
+     set t_Co=256
+  endif
+
+  set background=dark
+  set termguicolors
+  colorscheme slate
+
+  " Miscellaneous "
+  set backupdir=~/.cache/vim
+  set dir=~/.cache/vim
 
 #+end_src
 

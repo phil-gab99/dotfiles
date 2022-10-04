@@ -10,8 +10,8 @@ export GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
 for i in $GUIX_EXTRA_PROFILES/*; do
     profile=$i/$(basename "$i")
     if [ -f "$profile"/etc/profile ]; then
-	GUIX_PROFILE="$profile"
-	. "$GUIX_PROFILE"/etc/profile
+        GUIX_PROFILE="$profile"
+        . "$GUIX_PROFILE"/etc/profile
     fi
     unset profile
 done
@@ -102,8 +102,8 @@ export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
 # Python specific variables
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
 [[ -v PYTHONPATH ]] \
-&& export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
-|| export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+    && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+        || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history
@@ -118,18 +118,3 @@ fi
 
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
-
-function exwm {
-    export EXWM=1
-
-    # Ensure that font folders are loaded correctly
-    xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
-
-    # Make Java applications aware this is a non-reparenting window manager.
-    export _JAVA_AWT_WM_NONREPARENTING=1
-
-    # For debugging
-    # xterm
-}
-
-exwm

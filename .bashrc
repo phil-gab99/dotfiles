@@ -17,14 +17,10 @@ fi
 ################################################################################
 
 # Source global definitions
-if [ -f /etc/bashrc ]; then . /etc/bashrc; fi
+[ -f /etc/bashrc ] && . /etc/bashrc
 
 # Enable bash programmable completion features in interactive shells
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
+[ -f /run/current-system/profile/share/bash-completion/bash-completion ] && . /run/current-system/profile/share/bash-completion/bash-completion
 
 # Alias definitions
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
@@ -66,11 +62,12 @@ shopt -s checkwinsize
 stty -ixon
 
 # Ignore case on auto-completion
-# Note: bind used instead of sticking these in .inputrc
-if [[ $iatest > 0 ]]; then bind "set completion-ignore-case on"; fi
-
 # Show auto-completion list automatically, without double tab
-if [[ $iatest > 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+# Note: bind used instead of sticking these in .inputrc
+if [ $iatest > 0 ]; then
+    bind "set show-all-if-ambiguous On";
+    bind "set completion-ignore-case on";
+fi
 
 ################################################################################
 # COLORED COMMANDS
