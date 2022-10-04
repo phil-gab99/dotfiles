@@ -64,7 +64,7 @@ stty -ixon
 # Ignore case on auto-completion
 # Show auto-completion list automatically, without double tab
 # Note: bind used instead of sticking these in .inputrc
-if [ $iatest > 0 ]; then
+if [ $iatest -gt 0 ]; then
     bind "set show-all-if-ambiguous On";
     bind "set completion-ignore-case on";
 fi
