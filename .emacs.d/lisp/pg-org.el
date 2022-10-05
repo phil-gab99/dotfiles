@@ -274,13 +274,13 @@
   (with-eval-after-load 'mu4e
     (require 'org-msg)))
 (with-eval-after-load 'org-msg
+  (customize-set-variable 'org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
   (pg/customize-set-variables
    `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
      (org-msg-startup . "indent inlineimages hidestars")
      (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
      (org-msg-greeting-name-limit . 3)
      (org-message-convert-citation . t)
-     (org-msg-signature ,(concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
      (org-msg-default-alternatives . ((new html)
                                       (reply-to-text html)
                                       (reply-to-html html)))

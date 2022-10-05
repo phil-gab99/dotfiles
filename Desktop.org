@@ -565,8 +565,12 @@ Some utility functions:
     "Calls dunst special commands."
     (start-process-shell-command "dunstctl" nil (concat "dunstctl " cmd)))
 
-  (exwm-input-set-key (kbd "s-n") (lambda () (interactive) (pg/dunstctl "history-pop")))
-  (exwm-input-set-key (kbd "s-c") (lambda () (interactive) (pg/dunstctl "close")))
+  (exwm-input-set-key (kbd "s-n") (lambda ()
+                                    (interactive)
+                                    (pg/dunstctl "history-pop")))
+  (exwm-input-set-key (kbd "s-c") (lambda ()
+                                    (interactive)
+                                    (pg/dunstctl "close-all")))
 
   (defun pg/disable-desktop-notifications ()
     "Stops notifications from popping."
@@ -2172,14 +2176,14 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
 
   # Background color for webpages
   # Type - QtColor
-  c.colors.webpage.bg = 'black'
+  # c.colors.webpage.bg = 'black'
 
   # Value to use for `prefers-color-scheme' for websites
   # Type - String
   # Values - auto  -> Use the system-wide color scheme setting
   #          dark  -> Force a dark theme
   #          light -> Force a light theme
-  c.colors.webpage.preferred_color_scheme = 'dark'
+  # c.colors.webpage.preferred_color_scheme = 'dark'
 
   ################################################################################
   # EDITING
@@ -2301,6 +2305,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   mal https://myanimelist.net/animelist/Ramenphile
   whatsapp https://web.whatsapp.com
   msdesk http://mydesk.morganstanley.com
+  ta https://www.synchro.umontreal.ca/psc/upprpr9/EMPLOYEE/EMPL/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL
 
 #+end_src
 

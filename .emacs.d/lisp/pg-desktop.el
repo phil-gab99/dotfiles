@@ -182,8 +182,12 @@
   "Calls dunst special commands."
   (start-process-shell-command "dunstctl" nil (concat "dunstctl " cmd)))
 
-(exwm-input-set-key (kbd "s-n") (lambda () (interactive) (pg/dunstctl "history-pop")))
-(exwm-input-set-key (kbd "s-c") (lambda () (interactive) (pg/dunstctl "close")))
+(exwm-input-set-key (kbd "s-n") (lambda ()
+                                  (interactive)
+                                  (pg/dunstctl "history-pop")))
+(exwm-input-set-key (kbd "s-c") (lambda ()
+                                  (interactive)
+                                  (pg/dunstctl "close-all")))
 
 (defun pg/disable-desktop-notifications ()
   "Stops notifications from popping."
