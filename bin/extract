@@ -4,6 +4,7 @@ for archive in "$@"; do
         case "$archive" in
             *.tar.bz2) tar xvjf "$archive" ;;
             *.tar.gz)  tar xvzf "$archive" ;;
+            *.tar.xz)  tar xvzf "$archive" ;;
             *.bz2)     bunzip2 "$archive" ;;
             *.rar)     rar x "$archive" ;;
             *.gz)      gunzip "$archive" ;;

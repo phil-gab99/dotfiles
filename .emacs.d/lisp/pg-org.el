@@ -270,9 +270,9 @@
 ;;                 '(:time "3d" :actions -email))
 
 (straight-use-package 'org-msg)
-(with-eval-after-load 'org
-  (with-eval-after-load 'mu4e
-    (require 'org-msg)))
+(unless (fboundp 'org-msg-mode)
+  (autoload #'org-msg-mode "org-msg" nil t))
+(add-hook 'mu4e-compose-pre-hook #'org-msg-mode)
 (with-eval-after-load 'org-msg
   (customize-set-variable 'org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
   (pg/customize-set-variables
@@ -284,8 +284,7 @@
      (org-msg-default-alternatives . ((new html)
                                       (reply-to-text html)
                                       (reply-to-html html)))
-     (org-msg-recipient-names . nil)))
-  (org-msg-mode))
+     (org-msg-recipient-names . nil))))
 
 (straight-use-package 'org-roam)
 (with-eval-after-load 'org

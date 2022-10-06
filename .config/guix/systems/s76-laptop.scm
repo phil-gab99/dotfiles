@@ -1,7 +1,8 @@
 (define-module (systems s76-laptop)
   #:use-module (systems base)
-  #:use-module (gnu)
-  #:use-module (gnu packages file-systems))
+  #:use-module (gnu))
+
+(use-package-modules file-systems)
 
 (operating-system
  (inherit base-operating-system)

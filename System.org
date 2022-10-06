@@ -48,43 +48,41 @@ This base configuration is shared between all of the machines I manage with Guix
   (define-module (systems base)
     #:use-module (gnu)
     #:use-module (gnu packages)
-    #:use-module (gnu packages audio)
-    #:use-module (gnu packages cups)
-    #:use-module (gnu packages dns)
-    #:use-module (gnu packages emacs)
-    #:use-module (gnu packages emacs-xyz)
-    #:use-module (gnu packages file-systems)
-    #:use-module (gnu packages gnome)
-    #:use-module (gnu packages gtk)
-    #:use-module (gnu packages linux)
-    #:use-module (gnu packages mtools)
-    #:use-module (gnu packages package-management)
-    #:use-module (gnu packages pulseaudio)
-    #:use-module (gnu packages version-control)
-    #:use-module (gnu packages vim)
-    #:use-module (gnu packages virtualization)
-    #:use-module (gnu packages web-browsers)
-    #:use-module (gnu packages wm)
-    #:use-module (gnu packages xorg)
-    #:use-module (gnu services cups)
-    #:use-module (gnu services desktop)
-    #:use-module (gnu services docker)
-    #:use-module (gnu services networking)
-    #:use-module (gnu services pm)
-    #:use-module (gnu services virtualization)
-    #:use-module (gnu system nss)
     #:use-module (nongnu packages linux)
     #:use-module (srfi srfi-1))
 
-  (use-service-modules nix
-                       desktop
-                       xorg
-                       networking
+  (use-package-modules audio
+                       certs
                        cups
-                       ssh)
+                       dns
+                       emacs
+                       emacs-xyz
+                       file-systems
+                       gnome
+                       gtk
+                       linux
+                       mtools
+                       package-management
+                       pulseaudio
+                       shells
+                       version-control
+                       vim
+                       virtualization
+                       web-browsers
+                       wm
+                       xorg)
 
-  (use-package-modules certs
-                       shells)
+  (use-service-modules cups
+                       desktop
+                       docker
+                       networking
+                       nix
+                       pm
+                       ssh
+                       virtualization
+                       xorg)
+
+  (use-system-modules nss)
 
 #+end_src
 
@@ -272,8 +270,9 @@ Define the ~base-operating-system~ which will be inherited by all machine config
 
   (define-module (systems s76-laptop)
     #:use-module (systems base)
-    #:use-module (gnu)
-    #:use-module (gnu packages file-systems))
+    #:use-module (gnu))
+
+  (use-package-modules file-systems)
 
   (operating-system
    (inherit base-operating-system)
@@ -535,6 +534,7 @@ This script extract most known archive formats:
           case "$archive" in
               *.tar.bz2) tar xvjf "$archive" ;;
               *.tar.gz)  tar xvzf "$archive" ;;
+              *.tar.xz)  tar xvzf "$archive" ;;
               *.bz2)     bunzip2 "$archive" ;;
               *.rar)     rar x "$archive" ;;
               *.gz)      gunzip "$archive" ;;
@@ -669,6 +669,7 @@ This is a script I tend to use when correcting student assignments to speed up m
                           *.lmc) emacsclient "$f";;
                           *.hs) emacsclient "$f";;
                           *.txt) emacsclient "$f";;
+                          *.py) emacsclient "$f";;
                           *) ;;
                       esac
                       ;;
@@ -693,12 +694,12 @@ This is a script I tend to use when correcting student assignments to speed up m
           echo "---------------------"
           ls "$d"
           echo "------------------"
-          echo
           if [ $count -ge $TOSKIP ]; then
               echo "Working on $count"
               apply "$d"
           fi
           ((count++))
+          echo
       fi
   done
 

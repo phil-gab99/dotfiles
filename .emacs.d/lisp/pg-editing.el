@@ -19,7 +19,10 @@
                 Info-mode-hook
                 eww-mode-hook
                 term-mode-hook
+                inferior-python-mode-hook
+                inferior-haskell-mode-hook
                 coming-mode-hook
+                helpful-mode-hook
                 gfm-view-mode-hook
                 compilation-mode-hook
                 dashboard-mode-hook

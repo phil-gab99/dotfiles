@@ -1,43 +1,41 @@
 (define-module (systems base)
   #:use-module (gnu)
   #:use-module (gnu packages)
-  #:use-module (gnu packages audio)
-  #:use-module (gnu packages cups)
-  #:use-module (gnu packages dns)
-  #:use-module (gnu packages emacs)
-  #:use-module (gnu packages emacs-xyz)
-  #:use-module (gnu packages file-systems)
-  #:use-module (gnu packages gnome)
-  #:use-module (gnu packages gtk)
-  #:use-module (gnu packages linux)
-  #:use-module (gnu packages mtools)
-  #:use-module (gnu packages package-management)
-  #:use-module (gnu packages pulseaudio)
-  #:use-module (gnu packages version-control)
-  #:use-module (gnu packages vim)
-  #:use-module (gnu packages virtualization)
-  #:use-module (gnu packages web-browsers)
-  #:use-module (gnu packages wm)
-  #:use-module (gnu packages xorg)
-  #:use-module (gnu services cups)
-  #:use-module (gnu services desktop)
-  #:use-module (gnu services docker)
-  #:use-module (gnu services networking)
-  #:use-module (gnu services pm)
-  #:use-module (gnu services virtualization)
-  #:use-module (gnu system nss)
   #:use-module (nongnu packages linux)
   #:use-module (srfi srfi-1))
 
-(use-service-modules nix
-                     desktop
-                     xorg
-                     networking
+(use-package-modules audio
+                     certs
                      cups
-                     ssh)
+                     dns
+                     emacs
+                     emacs-xyz
+                     file-systems
+                     gnome
+                     gtk
+                     linux
+                     mtools
+                     package-management
+                     pulseaudio
+                     shells
+                     version-control
+                     vim
+                     virtualization
+                     web-browsers
+                     wm
+                     xorg)
 
-(use-package-modules certs
-                     shells)
+(use-service-modules cups
+                     desktop
+                     docker
+                     networking
+                     nix
+                     pm
+                     ssh
+                     virtualization
+                     xorg)
+
+(use-system-modules nss)
 
 (define %charge-thresholds-udev-rule
   (udev-rule

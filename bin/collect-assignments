@@ -36,6 +36,7 @@ function apply {
                         *.lmc) emacsclient "$f";;
                         *.hs) emacsclient "$f";;
                         *.txt) emacsclient "$f";;
+                        *.py) emacsclient "$f";;
                         *) ;;
                     esac
                     ;;
@@ -60,12 +61,12 @@ for d in *; do
         echo "---------------------"
         ls "$d"
         echo "------------------"
-        echo
         if [ $count -ge $TOSKIP ]; then
             echo "Working on $count"
             apply "$d"
         fi
         ((count++))
+        echo
     fi
 done
 

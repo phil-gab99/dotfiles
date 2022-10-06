@@ -65,7 +65,7 @@
    `((dashboard-set-file-icons . t)
      (dashboard-match-agenda-entry . "task")
      (dashboard-items . ((recents . 5)
-                         (projects . 10)
+                         (projects . 5)
                          (agenda . 5)))
      (dashboard-page-separator . "\n\f\n")
      (dashboard-init-info . ,#'pg/display-startup-time)))

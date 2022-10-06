@@ -6,8 +6,9 @@
     (autoload #'guix "guix" nil t))
   (with-eval-after-load 'general
     (pg/leader-keys
-      "G" '(:ignore t :which-key "Guix")
-      "Gg" '(guix :which-key "Guix"))))
+      "G" '(:ignore t :which-key "guix")
+      "Gg" '(guix :which-key "guix")
+      "Gs" '((lambda () (interactive) (dired "/run/current-system/profile/share/guile/site/3.0/")) :which-key "source"))))
 
 (unless (not pg/is-guix-system)
   (unless (fboundp 'geiser-guile)
