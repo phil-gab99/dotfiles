@@ -2,7 +2,7 @@
   (make <service>
     #:provides '(mpd)
     #:docstring "Runs `mpd'"
-    #:respawn? #f
+    #:respawn? #t
     #:start (make-forkexec-constructor '("mpd"))
     #:stop (make-kill-destructor)))
 

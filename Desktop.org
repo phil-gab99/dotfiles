@@ -941,7 +941,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
     (make <service>
       #:provides '(mpd)
       #:docstring "Runs `mpd'"
-      #:respawn? #f
+      #:respawn? #t
       #:start (make-forkexec-constructor '("mpd"))
       #:stop (make-kill-destructor)))
 

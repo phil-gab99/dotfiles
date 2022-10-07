@@ -9,7 +9,7 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (when (file-directory-p "~/Projects")
-    (customize-set-variable 'projectile-project-search-path "~/Projects"))
+    (customize-set-variable 'projectile-project-search-path '("~/Projects")))
   (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
   (if (boundp 'diminish)
       (diminish #'projectile-mode)
