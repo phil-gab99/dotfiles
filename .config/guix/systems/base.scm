@@ -114,6 +114,7 @@ EndSection
                                            "libvirt"
                                            "charge"
                                            "docker"
+                                           "disk"      ;; mounting secondary hard drive
                                            "lp"        ;; control bluetooth devices
                                            "audio"     ;; control audio devices
                                            "video")))  ;; control video devices

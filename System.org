@@ -154,7 +154,7 @@ Use the ~libinput~ driver for all input devices since it's a bit more modern tha
 
 #+end_src
 
-Define the ~base-operating-system~ which will be inherited by all machine configurations. TODO
+Define the ~base-operating-system~ which will be inherited by all machine configurations.
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
@@ -185,6 +185,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                                              "libvirt"
                                              "charge"
                                              "docker"
+                                             "disk"      ;; mounting secondary hard drive
                                              "lp"        ;; control bluetooth devices
                                              "audio"     ;; control audio devices
                                              "video")))  ;; control video devices
