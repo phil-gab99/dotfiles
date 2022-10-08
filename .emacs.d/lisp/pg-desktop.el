@@ -95,6 +95,14 @@
      ;; `exwm-input-release-keyboard')
      (exwm-input-global-keys . (([?\s-r] . exwm-reset)
 
+                                ([?\s-n] . (lambda ()
+                                             (interactive)
+                                             (pg/dunstctl "history-pop")))
+
+                                ([?\s-c] . (lambda ()
+                                             (interactive)
+                                             (pg/dunstctl "close")))
+
                                 ([?\s-\s] . app-launcher-run-app)
 
                                 ;; Switch between char and line mode
@@ -181,14 +189,6 @@
 (defun pg/dunstctl (cmd)
   "Calls dunst special commands."
   (start-process-shell-command "dunstctl" nil (concat "dunstctl " cmd)))
-
-(with-eval-after-load 'exwm
-  (exwm-input-set-key (kbd "s-n") (lambda ()
-                                    (interactive)
-                                    (pg/dunstctl "history-pop")))
-  (exwm-input-set-key (kbd "s-c") (lambda ()
-                                    (interactive)
-                                    (pg/dunstctl "close-all"))))
 
 (defun pg/disable-desktop-notifications ()
   "Stops notifications from popping."

@@ -3,8 +3,8 @@
     #:provides '(mpd)
     #:docstring "Runs `mpd'"
     #:respawn? #t
-    #:start (make-forkexec-constructor '("mpd"))
-    #:stop (make-kill-destructor)))
+    #:start (make-system-constructor "mpd")
+    #:stop (make-system-destructor "mpd --kill")))
 
 (register-services mpd)
 ;; (start mpd)
