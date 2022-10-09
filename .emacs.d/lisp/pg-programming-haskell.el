@@ -2,6 +2,8 @@
 ;; Author: Philippe Gabriel
 
 (straight-use-package 'haskell-mode)
+(with-eval-after-load 'haskell-mode
+  (customize-set-variable 'haskell-process-type 'ghci))
 
 ;; (straight-use-package 'lsp-haskell)
 ;; (with-eval-after-load 'haskell-mode

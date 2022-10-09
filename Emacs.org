@@ -3041,6 +3041,8 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
   (straight-use-package 'haskell-mode)
+  (with-eval-after-load 'haskell-mode
+    (customize-set-variable 'haskell-process-type 'ghci))
 
 #+end_src
 
