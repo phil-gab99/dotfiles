@@ -18,6 +18,12 @@
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+(with-eval-after-load 'diminish
+  (dolist (mode '(auto-revert-mode
+                  buffer-face-mode
+                  visual-line-mode))
+    (diminish mode)))
+
 (straight-use-package 'diminish)
 (require 'diminish)
 

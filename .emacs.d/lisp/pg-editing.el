@@ -102,9 +102,9 @@
 (with-eval-after-load 'smartparens
   (smartparens-global-mode)
   (if (boundp 'diminish)
-      (diminish #'smartparens-global-mode)
+      (diminish #'smartparens-mode)
     (with-eval-after-load 'diminish
-      (diminish #'smartparens-global-mode))))
+      (diminish #'smartparens-mode))))
 
 (straight-use-package 'outshine)
 (unless (fboundp 'outshine-mode)

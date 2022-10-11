@@ -873,6 +873,12 @@ Theme inspired by the popular Atom One Dark theme.
     (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+  (with-eval-after-load 'diminish
+    (dolist (mode '(auto-revert-mode
+                    buffer-face-mode
+                    visual-line-mode))
+      (diminish mode)))
+
 #+end_src
 
 *** Package | diminish
@@ -1537,9 +1543,9 @@ For surrounding delimiter matching and autocompletion.
   (with-eval-after-load 'smartparens
     (smartparens-global-mode)
     (if (boundp 'diminish)
-        (diminish #'smartparens-global-mode)
+        (diminish #'smartparens-mode)
       (with-eval-after-load 'diminish
-        (diminish #'smartparens-global-mode))))
+        (diminish #'smartparens-mode))))
 
 #+end_src
 
