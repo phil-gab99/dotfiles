@@ -1272,6 +1272,8 @@ These are scripts to help quickly configure the screen onto which is mapped the 
   [user]
           name = Philippe Gabriel
           email = pgabriel999@hotmail.com
+  [github]
+          user = phil-gab99
 
 #+end_src
 
@@ -2109,7 +2111,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
 
 **** Termux Color Properties
 
-#+begin_src conf :tangle ~/.dotfiles/.termux/color.properties
+#+begin_src conf :tangle ~/.dotfiles/.termux/colors.properties
 
   foreground=#adb0a2
   background=#292b2e
