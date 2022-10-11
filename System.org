@@ -399,7 +399,7 @@ This script accepts a space-separated list of manifest file names (without exten
           . "$GUIX_PROFILE"/etc/profile
       else
           echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
-          exit 2
+          exit 1
       fi
     else
       echo "No profile found at path" $profilePath

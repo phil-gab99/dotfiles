@@ -31,7 +31,7 @@ for profile in $profiles; do
         . "$GUIX_PROFILE"/etc/profile
     else
         echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
-        exit 2
+        exit 1
     fi
   else
     echo "No profile found at path" $profilePath
