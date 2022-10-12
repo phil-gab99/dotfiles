@@ -2274,6 +2274,7 @@ Applications to install which are otherwise difficult to install Guix systems.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   (specification->package "virt-manager")
+  (specification->package "dconf")
   (specification->package "gtksourceview@4")
   (specification->package "virt-viewer")
   (specification->package "spice-vdagent")
