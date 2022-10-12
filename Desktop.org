@@ -216,7 +216,7 @@ Workspaces:
                                   ?\M-`
                                   ?\M-&
                                   ?\M-:
-                                  ?\C-\s)) ;; C-SPC
+                                  ?\C-\s))
        ;; Reset to line-mode (C-c C-k switches to char-mode via
        ;; `exwm-input-release-keyboard')
        (exwm-input-global-keys . (([?\s-r] . exwm-reset)
@@ -933,7 +933,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+end_src
 
-** MPD
+** Mpd
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mpd.scm
 

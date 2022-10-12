@@ -1243,6 +1243,9 @@ These are scripts to help quickly configure the screen onto which is mapped the 
   # Less specific variables
   export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
 
+  # Guile specific variables
+  export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
+
   # Python specific variables
   export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
   [[ -v PYTHONPATH ]] \
@@ -1948,6 +1951,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
   colorscheme slate
 
   " Miscellaneous
+  set viminfofile=~/.cache/vim/viminfo
   set backupdir=~/.cache/vim
   set dir=~/.cache/vim
 

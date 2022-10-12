@@ -90,7 +90,7 @@
                                 ?\M-`
                                 ?\M-&
                                 ?\M-:
-                                ?\C-\s)) ;; C-SPC
+                                ?\C-\s))
      ;; Reset to line-mode (C-c C-k switches to char-mode via
      ;; `exwm-input-release-keyboard')
      (exwm-input-global-keys . (([?\s-r] . exwm-reset)

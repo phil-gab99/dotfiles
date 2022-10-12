@@ -99,6 +99,9 @@ export EDITOR="$VISUAL"
 # Less specific variables
 export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
 
+# Guile specific variables
+export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
+
 # Python specific variables
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
 [[ -v PYTHONPATH ]] \

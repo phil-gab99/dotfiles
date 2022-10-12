@@ -45,5 +45,6 @@ set background=dark
 colorscheme slate
 
 " Miscellaneous
+set viminfofile=~/.cache/vim/viminfo
 set backupdir=~/.cache/vim
 set dir=~/.cache/vim
