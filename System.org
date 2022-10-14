@@ -2147,7 +2147,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
 
 **** Termux Startup
 
-#+begin_src sh :tangle ~/.dotfiles/.termux/boot/emacs :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/.termux/boot/emacs :shebang #!/bin/env sh
 
   emacs
 
