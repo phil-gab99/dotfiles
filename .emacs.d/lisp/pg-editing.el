@@ -17,6 +17,7 @@
 
 (dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
                 Info-mode-hook
+                ielm-mode-hook
                 eww-mode-hook
                 term-mode-hook
                 inferior-python-mode-hook

@@ -20,8 +20,12 @@
     (with-eval-after-load 'geiser
       (define-key geiser-repl-mode-map (kbd "C-l") #'geiser-repl-clear-buffer)))
   (with-eval-after-load 'geiser
+    (unless (fboundp 'corfu-mode)
+      (autoload #'corfu-mode "corfu" nil t))
+    (add-hook 'geiser-repl-mode-hook #'corfu-mode)
     (pg/customize-set-variables
      `((geiser-guile-load-init-file-p . t)
+       (geiser-repl-company-p . nil)
        (geiser-guile-manual-lookup-other-window-p . t)
        (geiser-guile-load-path . ("/run/current-system/profile/share/guile/3.0"))
        (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))

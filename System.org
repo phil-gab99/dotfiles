@@ -1218,6 +1218,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
   export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/latex/latex/share/man"
   export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/media/media/share/man"
   export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/perl/perl/share/man"
+  export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/prolog/prolog/share/man"
   export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/python/python/share/man"
   export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/man"
   export MANPATH="$MANPATH:$GUIX_EXTRA_PROFILES/video/video/share/man"

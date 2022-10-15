@@ -141,8 +141,12 @@ Scheme REPL
       (with-eval-after-load 'geiser
         (define-key geiser-repl-mode-map (kbd "C-l") #'geiser-repl-clear-buffer)))
     (with-eval-after-load 'geiser
+      (unless (fboundp 'corfu-mode)
+        (autoload #'corfu-mode "corfu" nil t))
+      (add-hook 'geiser-repl-mode-hook #'corfu-mode)
       (pg/customize-set-variables
        `((geiser-guile-load-init-file-p . t)
+         (geiser-repl-company-p . nil)
          (geiser-guile-manual-lookup-other-window-p . t)
          (geiser-guile-load-path . ("/run/current-system/profile/share/guile/3.0"))
          (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))
@@ -1401,6 +1405,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
   (dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
                   Info-mode-hook
+                  ielm-mode-hook
                   eww-mode-hook
                   term-mode-hook
                   inferior-python-mode-hook
@@ -2967,6 +2972,18 @@ Some general tools for programming:
 
 #+end_src
 
+**** Emacs Lisp
+
+***** Package | ielm
+
+#+begin_src emacs-lisp
+
+  (unless (fboundp 'corfu-mode)
+    (autoload #'corfu-mode "corfu" nil t))
+  (add-hook 'ielm-mode-hook #'corfu-mode)
+
+#+end_src
+
 **** Git
 
 ***** Package header
@@ -3413,6 +3430,24 @@ Custom syntax highlighting for LMC assembly language.
   (packages->manifest
    (list
     (specification->package "perl@5.34")))
+
+#+end_src
+
+**** Prolog
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-prolog.el
+
+  (straight-use-package 'prolog)
+  (unless (fboundp 'prolog-mode)
+    (autoload #'prolog-mode "prolog" nil t))
+
+#+end_src
+
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/prolog.scm
+
+  (packages->manifest
+   (list
+    (specification->package "swi-prolog")))
 
 #+end_src
 
