@@ -145,7 +145,7 @@
                                       ("m" "Misc" tags-todo "other")
 
                                       ("s" "Schedule" agenda ""
-                                       (,(org-agenda-files (expand-file-name "~/Documents/Agenda/Schedule-S6.org")))
+                                       ((org-agenda-files org-agenda-files))
                                        ("~/Documents/Schedule-S6.pdf"))
 
                                       ("w" "Work Status"
