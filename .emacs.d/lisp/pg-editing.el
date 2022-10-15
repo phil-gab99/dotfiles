@@ -22,6 +22,7 @@
                 term-mode-hook
                 inferior-python-mode-hook
                 inferior-haskell-mode-hook
+                prolog-inferior-mode-hook
                 coming-mode-hook
                 helpful-mode-hook
                 gfm-view-mode-hook
