@@ -324,7 +324,7 @@
   (pg/study-timer))
 
 (defun pg/start-with-break-timer ()
-  "Begin Pomodoro timer with break timer"
+  "Begins Pomodoro timer with break timer"
   (interactive)
   (pg/timer-setup)
   (pg/break-timer))
