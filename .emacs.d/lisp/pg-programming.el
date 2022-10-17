@@ -78,7 +78,7 @@
 (straight-use-package 'company-box)
 (unless (fboundp 'company-box-mode)
   (autoload #'company-box-mode "company-box" nil t))
-(add-hook 'company-mode-hook #'company-box-mode))
+(add-hook 'company-mode-hook #'company-box-mode)
 
 (straight-use-package 'company-prescient)
 (with-eval-after-load 'company

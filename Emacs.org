@@ -1227,31 +1227,31 @@ After having setup the file, make sure to run the following commands:
   SyncState *
 
   # University account
-  IMAPAccount umontreal
-  Host outlook.office365.com
-  User philippe.gabriel.1@umontreal.ca
-  Port 993
-  PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"umontreal.ca\\\" :user \\\"philippe.gabriel.1\\\")\" | cut -d '\"' -f2"
-  SSLType IMAPS
-  AuthMechs PLAIN
-  CertificateFile /etc/ssl/certs/ca-certificates.crt
+  # IMAPAccount umontreal
+  # Host outlook.office365.com
+  # User philippe.gabriel.1@umontreal.ca
+  # Port 993
+  # PassCmd oauth2ms
+  # SSLType IMAPS
+  # AuthMechs XOAUTH2
+  # CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-  IMAPStore umontreal-remote
-  Account umontreal
+  # IMAPStore umontreal-remote
+  # Account umontreal
 
-  MaildirStore umontreal-local
-  SubFolders Verbatim
-  Path /home/phil-gab99/Mail/University/
-  Inbox /home/phil-gab99/Mail/University/Inbox
+  # MaildirStore umontreal-local
+  # SubFolders Verbatim
+  # Path /home/phil-gab99/Mail/University/
+  # Inbox /home/phil-gab99/Mail/University/Inbox
 
-  Channel umontreal
-  Far :umontreal-remote:
-  Near :umontreal-local:
-  Patterns *
-  CopyArrivalDate yes
-  Create Both
-  Expunge Both
-  SyncState *
+  # Channel umontreal
+  # Far :umontreal-remote:
+  # Near :umontreal-local:
+  # Patterns *
+  # CopyArrivalDate yes
+  # Create Both
+  # Expunge Both
+  # SyncState *
 
 #+end_src
 
@@ -2518,7 +2518,7 @@ Includes icons for company mode suggestions.
   (straight-use-package 'company-box)
   (unless (fboundp 'company-box-mode)
     (autoload #'company-box-mode "company-box" nil t))
-  (add-hook 'company-mode-hook #'company-box-mode))
+  (add-hook 'company-mode-hook #'company-box-mode)
 
 #+end_src
 
