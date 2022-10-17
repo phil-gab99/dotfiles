@@ -53,21 +53,22 @@
                                       (mu4e-sent-folder . "/Main/Sent")
                                       (mu4e-refile-folder . "/Main/Archive")
                                       (mu4e-trash-folder . "/Main/Deleted")))
-           (make-mu4e-context :name "University"
-                              :match-func (lambda (msg)
-                                            (when msg
-                                              (string-prefix-p "/University"
-                                                               (mu4e-message-field msg :maildir))))
-                              :vars '((user-mail-address . "philippe.gabriel.1@umontreal.ca")
-                                      (user-full-name . "Philippe Gabriel")
-                                      (smtpmail-smtp-server . "smtp.office365.com")
-                                      (smtpmail-smtp-user . "philippe.gabriel.1@umontreal.ca")
-                                      (smtpmail-smtp-service . 587)
-                                      (smtpmail-stream-type . starttls)
-                                      (mu4e-drafts-folder . "/University/Drafts")
-                                      (mu4e-sent-folder . "/University/Sent Items")
-                                      (mu4e-refile-folder . "/University/Archive")
-                                      (mu4e-trash-folder . "/University/Deleted Items")))))))
+           ;; (make-mu4e-context :name "University"
+           ;;                    :match-func (lambda (msg)
+           ;;                                  (when msg
+           ;;                                    (string-prefix-p "/University"
+           ;;                                                     (mu4e-message-field msg :maildir))))
+           ;;                    :vars '((user-mail-address . "philippe.gabriel.1@umontreal.ca")
+           ;;                            (user-full-name . "Philippe Gabriel")
+           ;;                            (smtpmail-smtp-server . "smtp.office365.com")
+           ;;                            (smtpmail-smtp-user . "philippe.gabriel.1@umontreal.ca")
+           ;;                            (smtpmail-smtp-service . 587)
+           ;;                            (smtpmail-stream-type . starttls)
+           ;;                            (mu4e-drafts-folder . "/University/Drafts")
+           ;;                            (mu4e-sent-folder . "/University/Sent Items")
+           ;;                            (mu4e-refile-folder . "/University/Archive")
+           ;;                            (mu4e-trash-folder . "/University/Deleted Items")))
+           ))))
 
 (straight-use-package 'mu4e-alert)
 (with-eval-after-load 'mu4e
