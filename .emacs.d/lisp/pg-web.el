@@ -7,9 +7,6 @@
   (setq-local face-remapping-alist '((variable-pitch (:height 2.0) variable-pitch)
                                      (fixed-pitch (:height 2.0) fixed-pitch)
                                      (default (:height 2.0) default))))
-
-(require 'eww)
-(with-eval-after-load 'eww
-  (add-hook 'eww-mode-hook #'pg/eww-mode-setup))
+(add-hook 'eww-mode-hook #'pg/eww-mode-setup)
 
 (provide 'pg-web)

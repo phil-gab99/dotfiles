@@ -20,10 +20,9 @@
 (with-eval-after-load 'cc-mode
   (with-eval-after-load 'lsp-mode
     (require 'ccls)))
-(with-eval-after-load 'ccls
-  (dolist (mode '(c-mode-hook
-                  c++-mode-hook
-                  objc-mode-hook))
-    (add-hook mode #'lsp-deferred)))
+(dolist (mode '(c-mode-hook
+                c++-mode-hook
+                objc-mode-hook))
+  (add-hook mode #'lsp-deferred))
 
 (provide 'pg-programming-cc)

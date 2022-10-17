@@ -1,9 +1,15 @@
 ;;; pg-programming-sql.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(unless (fboundp 'lsp-deferred)
+  (autoload #'lsp-deferred "lsp-mode" nil t))
+(add-hook 'sql-mode-hook #'lsp-deferred)
+(unless (fboundp 'sqlind-minor-mode)
+  (autoload #'sqlind-minor-mode "sql-indent" nil t))
+(add-hook 'sql-mode-hook #'sqlind-minor-mode)
+(add-hook 'sql-interactive-mode-hook #'(lambda ()
+                                         (toggle-truncate-lines t)))
 (with-eval-after-load 'sql
-  (add-hook 'sql-interactive-mode-hook #'(lambda ()
-                                           (toggle-truncate-lines t)))
   (customize-set-variable 'sql-connection-alist
                           '((main (sql-product 'postgres)
                                   (sql-port 5432)
@@ -22,7 +28,6 @@
   (with-eval-after-load 'lsp-mode
     (require 'lsp-sqls)))
 (with-eval-after-load 'lsp-sqls
-  (add-hook 'sql-mode-hook #'lsp-deferred)
   (customize-set-variable 'lsp-sqls-connections
                           `(,(cl-pairlis '(driver dataSourceName)
                                          `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
@@ -41,7 +46,6 @@
 (with-eval-after-load 'sql
   (require 'sql-indent))
 (with-eval-after-load 'sql-indent
-  (add-hook 'sql-mode-hook #'sqlind-minor-mode)
   (setq-default sqlind-basic-offset 4))
 
 (provide 'pg-programming-sql)

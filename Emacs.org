@@ -140,10 +140,10 @@ Scheme REPL
         (define-key geiser-repl-mode-map (kbd "C-l") #'geiser-repl-clear-buffer)
       (with-eval-after-load 'geiser
         (define-key geiser-repl-mode-map (kbd "C-l") #'geiser-repl-clear-buffer)))
+    (unless (fboundp 'corfu-mode)
+      (autoload #'corfu-mode "corfu" nil t))
+    (add-hook 'geiser-repl-mode-hook #'corfu-mode)
     (with-eval-after-load 'geiser
-      (unless (fboundp 'corfu-mode)
-        (autoload #'corfu-mode "corfu" nil t))
-      (add-hook 'geiser-repl-mode-hook #'corfu-mode)
       (pg/customize-set-variables
        `((geiser-guile-load-init-file-p . t)
          (geiser-repl-company-p . nil)
@@ -520,10 +520,10 @@ Useful when starting out with the various keybindings and when presenting to an 
   (straight-use-package '(embark-consult :host github
                                          :repo "oantolin/embark"
                                          :files ("embark-consult.el")))
+  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
   (with-eval-after-load 'embark
     (with-eval-after-load 'consult
-      (require 'embark-consult)
-      (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)))
+      (require 'embark-consult)))
 
 #+end_src
 
@@ -1278,6 +1278,9 @@ After having setup the file, make sure to run the following commands:
       (autoload #'mu4e "mu4e" nil t))
     (unless (fboundp 'mu4e-compose-new)
       (autoload #'mu4e-compose-new "mu4e" nil t))
+    (unless (fboundp 'corfu-mode)
+      (autoload #'corfu-mode "corfu" nil t))
+    (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
     (with-eval-after-load 'general
       (pg/leader-keys
         "m" '(:ignore t :which-key "email")
@@ -1288,9 +1291,6 @@ After having setup the file, make sure to run the following commands:
                                                             "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
     (with-eval-after-load 'mu4e
       (require 'mu4e-org)
-      (unless (fboundp 'corfu-mode)
-        (autoload #'corfu-mode "corfu" nil t))
-      (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
       (pg/customize-set-variables
        `((mail-user-agent . ,#'mu4e-user-agent)
          (mu4e-change-filenames-when-moving . t)
@@ -1432,7 +1432,8 @@ Allows for notification pop-up and mode line count when receiving emails
                   geiser-repl-mode-hook
                   slack-mode-hook
                   shell-mode-hook))
-    (add-hook mode #'(lambda() (display-line-numbers-mode 0))))
+    (add-hook mode #'(lambda ()
+                       (display-line-numbers-mode 0))))
 
 #+end_src
 
@@ -1675,9 +1676,9 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
   (straight-use-package 'evil)
   (customize-set-variable 'evil-want-keybinding nil)
+  (add-hook 'evil-mode-hook #'pg/evil-hook)
   (require 'evil)
   (with-eval-after-load 'evil
-    (add-hook 'evil-mode-hook #'pg/evil-hook)
     (pg/customize-set-variables
      `((evil-want-integration . t)
        (evil-want-C-u-scroll . t)
@@ -1804,10 +1805,7 @@ Displays full documentations in place of the default help function.
                                        (info-title-4 (:height 2.0) info-title-4)))
     (variable-pitch-mode 1)
     (visual-line-mode 1))
-
-  (require 'info)
-  (with-eval-after-load 'info
-    (add-hook 'Info-mode-hook #'pg/Info-mode-setup))
+  (add-hook 'Info-mode-hook #'pg/Info-mode-setup)
 
 #+end_src
 
@@ -1870,10 +1868,7 @@ Displays full documentations in place of the default help function.
     (setq-local face-remapping-alist '((variable-pitch (:height 2.0) variable-pitch)
                                        (fixed-pitch (:height 2.0) fixed-pitch)
                                        (default (:height 2.0) default))))
-
-  (require 'eww)
-  (with-eval-after-load 'eww
-    (add-hook 'eww-mode-hook #'pg/eww-mode-setup))
+  (add-hook 'eww-mode-hook #'pg/eww-mode-setup)
 
 #+end_src
 
@@ -2236,10 +2231,8 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
   (straight-use-package 'projectile)
   (require 'projectile)
-  (with-eval-after-load 'lsp-mode
-    (add-hook 'lsp-mode-hook #'projectile-mode))
+  (add-hook 'lsp-mode-hook #'projectile-mode)
   (with-eval-after-load 'projectile
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (when (file-directory-p "~/Projects")
       (customize-set-variable 'projectile-project-search-path '("~/Projects")))
@@ -2390,13 +2383,13 @@ The ~lsp-ui-doc-focus-frame~ command allows to access the documentation frame of
     (lsp-headerline-breadcrumb-mode))
 
   (straight-use-package 'lsp-mode)
+  (add-hook 'lsp-mode-hook #'pg/lsp-mode-setup)
   (unless (fboundp 'lsp)
     (autoload #'lsp "lsp-mode" nil t))
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (with-eval-after-load 'lsp
     (require 'lsp-completion)
-    (add-hook 'lsp-mode-hook #'pg/lsp-mode-setup)
     (pg/customize-set-variables
      '((lsp-completion-provider . :none)
        (lsp-keymap-prefix . "C-c l")))
@@ -2525,8 +2518,7 @@ Includes icons for company mode suggestions.
   (straight-use-package 'company-box)
   (unless (fboundp 'company-box-mode)
     (autoload #'company-box-mode "company-box" nil t))
-  (with-eval-after-load 'company
-    (add-hook 'company-mode-hook #'company-box-mode))
+  (add-hook 'company-mode-hook #'company-box-mode))
 
 #+end_src
 
@@ -2563,8 +2555,7 @@ Syntax checking.
   (straight-use-package 'flycheck)
   (unless (fboundp 'flycheck-mode)
     (autoload #'flycheck-mode "flycheck" nil t))
-  (with-eval-after-load 'lsp-mode
-    (add-hook 'lsp-mode-hook #'flycheck-mode))
+  (add-hook 'lsp-mode-hook #'flycheck-mode)
 
 #+end_src
 
@@ -2648,9 +2639,9 @@ Allows for code snippets for different languages.
   (unless (fboundp 'yas-minor-mode)
     (autoload #'yas-minor-mode "yasnippet" nil t))
   (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'yas-minor-mode-hook #'(lambda ()
+                                     (yas-activate-extra-mode 'fundamental-mode)))
   (with-eval-after-load 'yasnippet
-    (add-hook 'yas-minor-mode-hook #'(lambda ()
-                                       (yas-activate-extra-mode 'fundamental-mode)))
     (yas-global-mode)
     (if (fboundp 'diminish)
         (diminish 'yas-minor-mode)
@@ -2742,9 +2733,9 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-alloy.el
 
   ;; (straight-use-package 'alloy-mode)
+  ;; (add-hook 'alloy-mode-hook #'(lambda ()
+  ;;                                (setq indent-tabs-mode nil)))
   ;; (with-eval-after-load 'alloy-mode
-  ;;   (add-hook 'alloy-mode-hook #'(lambda ()
-  ;;                                  (setq indent-tabs-mode nil)))
   ;;   (customize-set-variable 'alloy-base-offset 4))
 
 #+end_src
@@ -2828,11 +2819,10 @@ Some general tools for programming:
   (with-eval-after-load 'cc-mode
     (with-eval-after-load 'lsp-mode
       (require 'ccls)))
-  (with-eval-after-load 'ccls
-    (dolist (mode '(c-mode-hook
-                    c++-mode-hook
-                    objc-mode-hook))
-      (add-hook mode #'lsp-deferred)))
+  (dolist (mode '(c-mode-hook
+                  c++-mode-hook
+                  objc-mode-hook))
+    (add-hook mode #'lsp-deferred))
 
 #+end_src
 
@@ -2906,11 +2896,12 @@ Some general tools for programming:
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-css.el
 
-  (with-eval-after-load 'lsp-mode
-    (dolist (mode '(css-mode-hook
-                    less-css-mode-hook
-                    scss-mode-hook))
-      (add-hook mode #'lsp-deferred)))
+  (unless (fboundp 'lsp-deferred)
+    (autoload #'lsp-deferred "lsp-mode" nil t))
+  (dolist (mode '(css-mode-hook
+                  less-css-mode-hook
+                  scss-mode-hook))
+    (add-hook mode #'lsp-deferred))
 
 #+end_src
 
@@ -3132,14 +3123,19 @@ Some general tools for programming:
              (lsp-deferred))))
 
   (straight-use-package 'lsp-java)
+  (unless (fboundp 'lsp-deferred)
+    (autoload #'lsp-deferred "lsp-mode" nil t))
+  (add-hook 'java-mode-hook #'lsp-deferred)
+  (unless (fboundp 'lsp-java-boot-lens-mode)
+    (autoload #'lsp-java-boot-lens-mode "lsp-java-boot" nil t))
+  (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
   (with-eval-after-load 'lsp-mode
     (require 'lsp-java))
   (with-eval-after-load 'lsp-java
+    (add-hook 'find-file-hook #'pg/spring-boot-properties)
     (dolist (feature '(dap-java
                        lsp-java-boot))
       (require feature))
-    (add-hook 'java-mode-hook #'lsp-deferred)
-    (add-hook 'find-file-hook #'pg/spring-boot-properties)
     (define-key lsp-mode-map (kbd "C-<return>") #'lsp-execute-code-action)
     (pg/customize-set-variables
      `((lsp-java-configuration-runtimes . [( :name "JavaSE-17"
@@ -3148,8 +3144,6 @@ Some general tools for programming:
        (lsp-java-vmargs . ,(list "-noverify" "--enable-preview"))
        (lsp-java-java-path . "java")
        (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
-  (with-eval-after-load 'lsp-java-boot
-    (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
 
 #+end_src
 
@@ -3209,18 +3203,19 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-tex.el
 
   (straight-use-package 'auctex)
-  (require 'tex)
+  (add-hook 'TeX-mode-hook #'(lambda nil (run-hooks 'prog-mode-hook)))
+  (unless (fboundp 'TeX-revert-document-buffer)
+    (autoload #'TeX-revert-document-buffer "tex-mode" nil t))
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  (unless (fboundp 'latex-mode)
+    (autoload #'latex-mode "tex-mode" nil t))
+  (add-to-list 'auto-mode-alist '("\\.tex$" . latex-mode))
   (with-eval-after-load 'tex
     (pg/customize-set-variables
      '((latex-run-command . "pdflatex")
        (TeX-view-program-selection . ((output-pdf "PDF Tools")))
        (TeX-source-correlate-start-server . t)))
-    (put 'tex-mode 'derived-mode-parent 'prog-mode)
-    (unless (fboundp 'latex-mode)
-      (autoload #'latex-mode "tex-mode" nil t))
-    (add-to-list 'auto-mode-alist '("\\.tex$" . latex-mode))
-    (add-hook 'TeX-mode-hook #'(lambda nil (run-hooks 'prog-mode-hook)))
-    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
+    (put 'tex-mode 'derived-mode-parent 'prog-mode))
 
 #+end_src
 
@@ -3367,10 +3362,9 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-markdown.el
 
   (straight-use-package 'markdown-mode)
-  (with-eval-after-load 'markdown-mode
-    (add-hook 'gfm-view-mode-hook (lambda ()
-                                    (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                                                       (markdown-code-face (:height 1.5) fixed-pitch))))))
+  (add-hook 'gfm-view-mode-hook (lambda ()
+                                  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                                                     (markdown-code-face (:height 1.5) fixed-pitch)))))
 
 #+end_src
 
@@ -3486,8 +3480,13 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp
 
+  (unless (fboundp 'lsp-deferred)
+    (autoload #'lsp-deferred "lsp-mode" nil t))
+  (add-hook 'python-mode-hook #'lsp-deferred)
   (with-eval-after-load 'python
-    (customize-set-variable 'python-indent-offset 4))
+    (pg/customize-set-variables
+     '((python-fill-docstring-style . django)
+       (python-indent-offset . 4))))
 
 #+end_src
 
@@ -3499,8 +3498,6 @@ Custom syntax highlighting for LMC assembly language.
   (with-eval-after-load 'python
     (with-eval-after-load 'lsp-mode
       (require 'lsp-pyright)))
-  (with-eval-after-load 'lsp-pyright
-    (add-hook 'python-mode #'lsp-deferred))
 
 #+end_src
 
@@ -3593,9 +3590,15 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-sql.el
 
+  (unless (fboundp 'lsp-deferred)
+    (autoload #'lsp-deferred "lsp-mode" nil t))
+  (add-hook 'sql-mode-hook #'lsp-deferred)
+  (unless (fboundp 'sqlind-minor-mode)
+    (autoload #'sqlind-minor-mode "sql-indent" nil t))
+  (add-hook 'sql-mode-hook #'sqlind-minor-mode)
+  (add-hook 'sql-interactive-mode-hook #'(lambda ()
+                                           (toggle-truncate-lines t)))
   (with-eval-after-load 'sql
-    (add-hook 'sql-interactive-mode-hook #'(lambda ()
-                                             (toggle-truncate-lines t)))
     (customize-set-variable 'sql-connection-alist
                             '((main (sql-product 'postgres)
                                     (sql-port 5432)
@@ -3632,7 +3635,6 @@ Custom syntax highlighting for LMC assembly language.
     (with-eval-after-load 'lsp-mode
       (require 'lsp-sqls)))
   (with-eval-after-load 'lsp-sqls
-    (add-hook 'sql-mode-hook #'lsp-deferred)
     (customize-set-variable 'lsp-sqls-connections
                             `(,(cl-pairlis '(driver dataSourceName)
                                            `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
@@ -3657,7 +3659,6 @@ Custom syntax highlighting for LMC assembly language.
   (with-eval-after-load 'sql
     (require 'sql-indent))
   (with-eval-after-load 'sql-indent
-    (add-hook 'sql-mode-hook #'sqlind-minor-mode)
     (setq-default sqlind-basic-offset 4))
 
 #+end_src
@@ -3689,10 +3690,11 @@ Custom syntax highlighting for LMC assembly language.
   (unless (fboundp 'typescript-mode)
     (autoload #'typescript-mode "typescript-mode" nil t))
   (add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+  (unless (fboundp 'lsp-deferred)
+    (autoload #'lsp-deferred "lsp-mode" nil t))
+  (add-hook 'typescript-mode-hook #'lsp-deferred)
 
 #+end_src
-
-
 
 *Guix Packages*
 
@@ -3710,7 +3712,6 @@ Custom syntax highlighting for LMC assembly language.
     (with-eval-after-load 'lsp-mode
       (require 'dap-node)))
   (with-eval-after-load 'dap-node
-    (add-hook 'typescript-mode-hook #'lsp-deferred)
     (dap-node-setup))
 
 #+end_src
@@ -3910,12 +3911,10 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (straight-use-package 'org)
   (require 'org)
-
+  (add-hook 'org-mode-hook #'pg/org-mode-setup)
+  (add-hook 'org-mode-hook #'(lambda ()
+                               (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
   (with-eval-after-load 'org
-    (add-hook 'org-mode-hook #'pg/org-mode-setup)
-    (add-hook 'org-mode-hook #'(lambda ()
-                                 (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
-
     (pg/customize-set-variables
      `((org-ellipsis . " ▾")
        (org-hide-emphasis-markers . t)
@@ -4067,10 +4066,9 @@ Toggles visibility of emphasis markers.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-appear)
-  (with-eval-after-load 'org
-    (unless (fboundp 'org-appear-mode)
-      (autoload #'org-appear-mode "org-appear" nil t))
-    (add-hook 'org-mode-hook #'org-appear-mode))
+  (unless (fboundp 'org-appear-mode)
+    (autoload #'org-appear-mode "org-appear" nil t))
+  (add-hook 'org-mode-hook #'org-appear-mode)
 
 #+end_src
 
@@ -4089,10 +4087,9 @@ Customizes the heading bullets.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-bullets)
-  (with-eval-after-load 'org
-    (unless (fboundp 'org-bullets-mode)
-      (autoload #'org-bullets-mode "org-bullets" nil t))
-    (add-hook 'org-mode-hook #'org-bullets-mode))
+  (unless (fboundp 'org-bullets-mode)
+    (autoload #'org-bullets-mode "org-bullets" nil t))
+  (add-hook 'org-mode-hook #'org-bullets-mode)
   (with-eval-after-load 'org-bullets
     (customize-set-variable 'org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
@@ -4291,10 +4288,9 @@ Allows display of latex fragments in org files.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (straight-use-package 'org-fragtog)
-  (with-eval-after-load 'org
-    (unless (fboundp 'org-fragtog-mode)
-      (autoload #'org-fragtog-mode "org-fragtog" nil t))
-    (add-hook 'org-mode-hook #'org-fragtog-mode))
+  (unless (fboundp 'org-fragtog-mode)
+    (autoload #'org-fragtog-mode "org-fragtog" nil t))
+  (add-hook 'org-mode-hook #'org-fragtog-mode)
 
 #+end_src
 
@@ -4456,10 +4452,10 @@ Allows for viewing of pdfs.
   (straight-use-package 'dtk)
   (unless (fboundp 'dtk)
     (autoload #'dtk "dtk" nil t))
+  (add-hook 'dtk-mode-hook #'(lambda ()
+                               (setq-local face-remapping-alist
+                                           '((default (:height 1.5) variable-pitch)))))
   (with-eval-after-load 'dtk
-    (add-hook 'dtk-mode-hook #'(lambda ()
-                                 (setq-local face-remapping-alist
-                                             '((default (:height 1.5) variable-pitch)))))
     (pg/customize-set-variables
      '((dtk-module . "KJV")
        (dtk-module-category . "Biblical Texts")
@@ -4503,14 +4499,14 @@ Allows for viewing of pdfs.
   (unless (fboundp 'ledger-mode)
     (autoload #'ledger-mode "ledger-mode" nil t))
   (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode))
+  (unless (fboundp 'company-mode)
+    (autoload #'company-mode "company" nil t))
+  (add-hook 'ledger-mode-hook #'company-mode)
   (with-eval-after-load 'ledger-mode
     (pg/customize-set-variables
      `((ledger-reconcile-default-commodity . "CAD")
        (ledger-binary-path . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/emacs/emacs/bin/ledger"))
-       (ledger-clear-whole-transaction . t)))
-    (unless (fboundp 'company-mode)
-      (autoload #'company-mode "company" nil t))
-    (add-hook 'ledger-mode-hook #'company-mode))
+       (ledger-clear-whole-transaction . t))))
 
 #+end_src
 

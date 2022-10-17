@@ -5,8 +5,6 @@
 (with-eval-after-load 'python
   (with-eval-after-load 'lsp-mode
     (require 'lsp-pyright)))
-(with-eval-after-load 'lsp-pyright
-  (add-hook 'python-mode #'lsp-deferred))
 
 (with-eval-after-load 'python
   (with-eval-after-load 'lsp-mode

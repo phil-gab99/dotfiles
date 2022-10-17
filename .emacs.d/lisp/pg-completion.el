@@ -86,10 +86,10 @@
 (straight-use-package '(embark-consult :host github
                                        :repo "oantolin/embark"
                                        :files ("embark-consult.el")))
+(add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
 (with-eval-after-load 'embark
   (with-eval-after-load 'consult
-    (require 'embark-consult)
-    (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)))
+    (require 'embark-consult)))
 
 (straight-use-package 'prescient)
 

@@ -4,10 +4,10 @@
 (straight-use-package 'dtk)
 (unless (fboundp 'dtk)
   (autoload #'dtk "dtk" nil t))
+(add-hook 'dtk-mode-hook #'(lambda ()
+                             (setq-local face-remapping-alist
+                                         '((default (:height 1.5) variable-pitch)))))
 (with-eval-after-load 'dtk
-  (add-hook 'dtk-mode-hook #'(lambda ()
-                               (setq-local face-remapping-alist
-                                           '((default (:height 1.5) variable-pitch)))))
   (pg/customize-set-variables
    '((dtk-module . "KJV")
      (dtk-module-category . "Biblical Texts")

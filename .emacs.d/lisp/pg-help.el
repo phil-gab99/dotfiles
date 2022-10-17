@@ -40,10 +40,7 @@
                                      (info-title-4 (:height 2.0) info-title-4)))
   (variable-pitch-mode 1)
   (visual-line-mode 1))
-
-(require 'info)
-(with-eval-after-load 'info
-  (add-hook 'Info-mode-hook #'pg/Info-mode-setup))
+(add-hook 'Info-mode-hook #'pg/Info-mode-setup)
 
 (defun pg/docs-visual-fill ()
   "Applies text soft wrap."

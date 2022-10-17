@@ -9,14 +9,19 @@
            (lsp-deferred))))
 
 (straight-use-package 'lsp-java)
+(unless (fboundp 'lsp-deferred)
+  (autoload #'lsp-deferred "lsp-mode" nil t))
+(add-hook 'java-mode-hook #'lsp-deferred)
+(unless (fboundp 'lsp-java-boot-lens-mode)
+  (autoload #'lsp-java-boot-lens-mode "lsp-java-boot" nil t))
+(add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
 (with-eval-after-load 'lsp-mode
   (require 'lsp-java))
 (with-eval-after-load 'lsp-java
+  (add-hook 'find-file-hook #'pg/spring-boot-properties)
   (dolist (feature '(dap-java
                      lsp-java-boot))
     (require feature))
-  (add-hook 'java-mode-hook #'lsp-deferred)
-  (add-hook 'find-file-hook #'pg/spring-boot-properties)
   (define-key lsp-mode-map (kbd "C-<return>") #'lsp-execute-code-action)
   (pg/customize-set-variables
    `((lsp-java-configuration-runtimes . [( :name "JavaSE-17"
@@ -25,7 +30,5 @@
      (lsp-java-vmargs . ,(list "-noverify" "--enable-preview"))
      (lsp-java-java-path . "java")
      (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
-(with-eval-after-load 'lsp-java-boot
-  (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
 
 (provide 'pg-programming-java)

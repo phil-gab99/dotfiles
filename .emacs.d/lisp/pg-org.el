@@ -46,12 +46,10 @@
 
 (straight-use-package 'org)
 (require 'org)
-
+(add-hook 'org-mode-hook #'pg/org-mode-setup)
+(add-hook 'org-mode-hook #'(lambda ()
+                             (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
 (with-eval-after-load 'org
-  (add-hook 'org-mode-hook #'pg/org-mode-setup)
-  (add-hook 'org-mode-hook #'(lambda ()
-                               (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
-
   (pg/customize-set-variables
    `((org-ellipsis . " ▾")
      (org-hide-emphasis-markers . t)
@@ -186,16 +184,14 @@
        (org-format-latex-options . ,(plist-put org-format-latex-options :scale 1.5))))))
 
 (straight-use-package 'org-appear)
-(with-eval-after-load 'org
-  (unless (fboundp 'org-appear-mode)
-    (autoload #'org-appear-mode "org-appear" nil t))
-  (add-hook 'org-mode-hook #'org-appear-mode))
+(unless (fboundp 'org-appear-mode)
+  (autoload #'org-appear-mode "org-appear" nil t))
+(add-hook 'org-mode-hook #'org-appear-mode)
 
 (straight-use-package 'org-bullets)
-(with-eval-after-load 'org
-  (unless (fboundp 'org-bullets-mode)
-    (autoload #'org-bullets-mode "org-bullets" nil t))
-  (add-hook 'org-mode-hook #'org-bullets-mode))
+(unless (fboundp 'org-bullets-mode)
+  (autoload #'org-bullets-mode "org-bullets" nil t))
+(add-hook 'org-mode-hook #'org-bullets-mode)
 (with-eval-after-load 'org-bullets
   (customize-set-variable 'org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
@@ -308,10 +304,9 @@
       "oni" '(org-roam-node-insert :which-key "insert/create"))))
 
 (straight-use-package 'org-fragtog)
-(with-eval-after-load 'org
-  (unless (fboundp 'org-fragtog-mode)
-    (autoload #'org-fragtog-mode "org-fragtog" nil t))
-  (add-hook 'org-mode-hook #'org-fragtog-mode))
+(unless (fboundp 'org-fragtog-mode)
+  (autoload #'org-fragtog-mode "org-fragtog" nil t))
+(add-hook 'org-mode-hook #'org-fragtog-mode)
 
 (defun pg/timer-setup ()
   "Sets up some parameters for the timer"

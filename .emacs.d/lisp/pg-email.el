@@ -10,6 +10,9 @@
     (autoload #'mu4e "mu4e" nil t))
   (unless (fboundp 'mu4e-compose-new)
     (autoload #'mu4e-compose-new "mu4e" nil t))
+  (unless (fboundp 'corfu-mode)
+    (autoload #'corfu-mode "corfu" nil t))
+  (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
   (with-eval-after-load 'general
     (pg/leader-keys
       "m" '(:ignore t :which-key "email")
@@ -20,9 +23,6 @@
                                                           "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)
-    (unless (fboundp 'corfu-mode)
-      (autoload #'corfu-mode "corfu" nil t))
-    (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
     (pg/customize-set-variables
      `((mail-user-agent . ,#'mu4e-user-agent)
        (mu4e-change-filenames-when-moving . t)

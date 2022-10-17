@@ -44,7 +44,8 @@
                 geiser-repl-mode-hook
                 slack-mode-hook
                 shell-mode-hook))
-  (add-hook mode #'(lambda() (display-line-numbers-mode 0))))
+  (add-hook mode #'(lambda ()
+                     (display-line-numbers-mode 0))))
 
 (set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
 (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'light)
@@ -166,9 +167,9 @@
 
 (straight-use-package 'evil)
 (customize-set-variable 'evil-want-keybinding nil)
+(add-hook 'evil-mode-hook #'pg/evil-hook)
 (require 'evil)
 (with-eval-after-load 'evil
-  (add-hook 'evil-mode-hook #'pg/evil-hook)
   (pg/customize-set-variables
    `((evil-want-integration . t)
      (evil-want-C-u-scroll . t)

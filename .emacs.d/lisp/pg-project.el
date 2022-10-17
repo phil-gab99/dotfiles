@@ -3,10 +3,8 @@
 
 (straight-use-package 'projectile)
 (require 'projectile)
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'projectile-mode))
+(add-hook 'lsp-mode-hook #'projectile-mode)
 (with-eval-after-load 'projectile
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (when (file-directory-p "~/Projects")
     (customize-set-variable 'projectile-project-search-path '("~/Projects")))

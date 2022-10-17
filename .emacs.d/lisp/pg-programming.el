@@ -7,13 +7,13 @@
   (lsp-headerline-breadcrumb-mode))
 
 (straight-use-package 'lsp-mode)
+(add-hook 'lsp-mode-hook #'pg/lsp-mode-setup)
 (unless (fboundp 'lsp)
   (autoload #'lsp "lsp-mode" nil t))
 (unless (fboundp 'lsp-deferred)
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (with-eval-after-load 'lsp
   (require 'lsp-completion)
-  (add-hook 'lsp-mode-hook #'pg/lsp-mode-setup)
   (pg/customize-set-variables
    '((lsp-completion-provider . :none)
      (lsp-keymap-prefix . "C-c l")))
@@ -78,8 +78,7 @@
 (straight-use-package 'company-box)
 (unless (fboundp 'company-box-mode)
   (autoload #'company-box-mode "company-box" nil t))
-(with-eval-after-load 'company
-  (add-hook 'company-mode-hook #'company-box-mode))
+(add-hook 'company-mode-hook #'company-box-mode))
 
 (straight-use-package 'company-prescient)
 (with-eval-after-load 'company
@@ -92,8 +91,7 @@
 (straight-use-package 'flycheck)
 (unless (fboundp 'flycheck-mode)
   (autoload #'flycheck-mode "flycheck" nil t))
-(with-eval-after-load 'lsp-mode
-  (add-hook 'lsp-mode-hook #'flycheck-mode))
+(add-hook 'lsp-mode-hook #'flycheck-mode)
 
 (straight-use-package 'dap-mode)
 (with-eval-after-load 'lsp-mode
@@ -123,9 +121,9 @@
 (unless (fboundp 'yas-minor-mode)
   (autoload #'yas-minor-mode "yasnippet" nil t))
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+(add-hook 'yas-minor-mode-hook #'(lambda ()
+                                   (yas-activate-extra-mode 'fundamental-mode)))
 (with-eval-after-load 'yasnippet
-  (add-hook 'yas-minor-mode-hook #'(lambda ()
-                                     (yas-activate-extra-mode 'fundamental-mode)))
   (yas-global-mode)
   (if (fboundp 'diminish)
       (diminish 'yas-minor-mode)
