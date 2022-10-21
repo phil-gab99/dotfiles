@@ -515,7 +515,6 @@ This script extract most known archive formats:
               *.tar.gz)  tar xvzf "$archive" ;;
               *.tar.xz)  tar xvzf "$archive" ;;
               *.bz2)     bunzip2 "$archive" ;;
-              *.rar)     rar x "$archive" ;;
               *.gz)      gunzip "$archive" ;;
               *.tar)     tar xvf "$archive" ;;
               *.tbz2)    tar xvjf "$archive" ;;
@@ -523,6 +522,7 @@ This script extract most known archive formats:
               *.zip)     unzip "$archive" ;;
               *.Z)       uncompress "$archive" ;;
               *.7z)      7z x "$archive" ;;
+              *.rar)     unrar x "$archive" ;;
               *)         echo "Can't extract '$archive'" ;;
           esac
       else
@@ -720,7 +720,7 @@ This is a script I tend to use when correcting student assignments to speed up m
       echo "Usage: collect-assignments option [toskip]"
       echo 
       echo "Available options:"
-      echo "    --unzip     Unzips zip archives files starting at current directory."
+      echo "    --extract   Unzips zip archives files starting at current directory."
       echo "    --open      Opens file using appropriate program."
       echo "    --collect   Collects corrections into a corr directory."
       echo
@@ -738,19 +738,22 @@ This is a script I tend to use when correcting student assignments to speed up m
               apply "$f"
           elif [ -f "$f" ]; then
               case "$OPTION" in
-                  --unzip)
+                  --extract)
                       ABS=$(realpath "$f")
                       DIR=$(dirname "$ABS")
                       case "$f" in
                           *.zip) unzip "$f" -d "$DIR";;
+                          *.rar) unrar x "$f" "$DIR" ;;
                           *) ;;
                       esac
                       ;;
                   --open)
                       case "$f" in
                           *.pdf) xournalpp "$f";;
+                          *.docx) libreoffice "$f";;
                           *.lmc) emacsclient "$f";;
                           *.hs) emacsclient "$f";;
+                          *.sh) emacsclient "$f";;
                           *.txt) emacsclient "$f";;
                           *.py) emacsclient "$f";;
                           *) ;;
@@ -758,7 +761,7 @@ This is a script I tend to use when correcting student assignments to speed up m
                       ;;
                   --collect)
                       case "$f" in
-                          corr-*.pdf) mv "$f" ../*-corr/;;
+                          corr-*) mv "$f" ../*-corr/;;
                           *) ;; # echo "$f"
                       esac
                       ;;
@@ -767,7 +770,6 @@ This is a script I tend to use when correcting student assignments to speed up m
                       exit 1
                       ;;
               esac
-              sleep 2
           fi
       done
   }
@@ -779,6 +781,7 @@ This is a script I tend to use when correcting student assignments to speed up m
           echo "------------------"
           if [ $count -ge $TOSKIP ]; then
               echo "Working on $count"
+              sleep 2
               apply "$d"
           fi
           ((count++))
@@ -1732,7 +1735,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
   ##################
 
   # Start in fullscreen mode by default.
-  #fs=yes
+  fs=yes
 
   # force starting with centered window
   #geometry=50%:50%

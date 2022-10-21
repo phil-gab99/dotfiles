@@ -6,7 +6,6 @@ for archive in "$@"; do
             *.tar.gz)  tar xvzf "$archive" ;;
             *.tar.xz)  tar xvzf "$archive" ;;
             *.bz2)     bunzip2 "$archive" ;;
-            *.rar)     rar x "$archive" ;;
             *.gz)      gunzip "$archive" ;;
             *.tar)     tar xvf "$archive" ;;
             *.tbz2)    tar xvjf "$archive" ;;
@@ -14,6 +13,7 @@ for archive in "$@"; do
             *.zip)     unzip "$archive" ;;
             *.Z)       uncompress "$archive" ;;
             *.7z)      7z x "$archive" ;;
+            *.rar)     unrar x "$archive" ;;
             *)         echo "Can't extract '$archive'" ;;
         esac
     else

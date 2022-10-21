@@ -4,7 +4,7 @@ then
     echo "Usage: collect-assignments option [toskip]"
     echo 
     echo "Available options:"
-    echo "    --unzip     Unzips zip archives files starting at current directory."
+    echo "    --extract   Unzips zip archives files starting at current directory."
     echo "    --open      Opens file using appropriate program."
     echo "    --collect   Collects corrections into a corr directory."
     echo
@@ -22,19 +22,22 @@ function apply {
             apply "$f"
         elif [ -f "$f" ]; then
             case "$OPTION" in
-                --unzip)
+                --extract)
                     ABS=$(realpath "$f")
                     DIR=$(dirname "$ABS")
                     case "$f" in
                         *.zip) unzip "$f" -d "$DIR";;
+                        *.rar) unrar x "$f" "$DIR" ;;
                         *) ;;
                     esac
                     ;;
                 --open)
                     case "$f" in
                         *.pdf) xournalpp "$f";;
+                        *.docx) libreoffice "$f";;
                         *.lmc) emacsclient "$f";;
                         *.hs) emacsclient "$f";;
+                        *.sh) emacsclient "$f";;
                         *.txt) emacsclient "$f";;
                         *.py) emacsclient "$f";;
                         *) ;;
@@ -42,7 +45,7 @@ function apply {
                     ;;
                 --collect)
                     case "$f" in
-                        corr-*.pdf) mv "$f" ../*-corr/;;
+                        corr-*) mv "$f" ../*-corr/;;
                         *) ;; # echo "$f"
                     esac
                     ;;
@@ -51,7 +54,6 @@ function apply {
                     exit 1
                     ;;
             esac
-            sleep 2
         fi
     done
 }
@@ -63,6 +65,7 @@ for d in *; do
         echo "------------------"
         if [ $count -ge $TOSKIP ]; then
             echo "Working on $count"
+            sleep 2
             apply "$d"
         fi
         ((count++))

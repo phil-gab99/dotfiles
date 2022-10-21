@@ -166,11 +166,13 @@ Workspaces:
                               ("work+" '(5 "HDMI-1"))
                               ("jclab" '(5 "HDMI-1"))
                               ("jb-0305" '(5 "HDMI-1"))
+                              ("jb-4205" '(5 "HDMI-1"))
                               ("aa-1140" '(5 "HDMI-1"))
                               ("rg-e310" '(5 "HDMI-1"))
                               ("jc-s139" '(5 "HDMI-1"))
                               ("jc-s1139" '(5 "DP-1"))
                               ("rg-p310" '(5 "DP-1"))
+                              ("cm-z240" '(5 "HDMI-1"))
                               ("entertainment" '(5 "HDMI-1"))))
     (pg/set-wallpaper)
     (message "Display config: %s"
@@ -1891,6 +1893,7 @@ If need to manually connect to Bluetooth audio devices using ~bluetoothctl~, ent
   whatsapp https://web.whatsapp.com
   msdesk http://mydesk.morganstanley.com
   ta https://www.synchro.umontreal.ca/psc/upprpr9/EMPLOYEE/EMPL/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL
+  timer https://fullscreentimer.com/
 
 #+end_src
 
@@ -2263,6 +2266,7 @@ Applications to install which are otherwise difficult to install Guix systems.
   (specification->package "zip")
   (specification->package "unzip")
   (specification->package "p7zip")
+  (specification->package "unrar")
   (specification->package "udiskie")
   (specification->package "trash-cli")
 

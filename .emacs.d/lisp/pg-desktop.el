@@ -40,11 +40,13 @@
                             ("work+" '(5 "HDMI-1"))
                             ("jclab" '(5 "HDMI-1"))
                             ("jb-0305" '(5 "HDMI-1"))
+                            ("jb-4205" '(5 "HDMI-1"))
                             ("aa-1140" '(5 "HDMI-1"))
                             ("rg-e310" '(5 "HDMI-1"))
                             ("jc-s139" '(5 "HDMI-1"))
                             ("jc-s1139" '(5 "DP-1"))
                             ("rg-p310" '(5 "DP-1"))
+                            ("cm-z240" '(5 "HDMI-1"))
                             ("entertainment" '(5 "HDMI-1"))))
   (pg/set-wallpaper)
   (message "Display config: %s"

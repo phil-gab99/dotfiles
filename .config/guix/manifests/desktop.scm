@@ -40,6 +40,7 @@
    (specification->package "zip")
    (specification->package "unzip")
    (specification->package "p7zip")
+   (specification->package "unrar")
    (specification->package "udiskie")
    (specification->package "trash-cli")
    
