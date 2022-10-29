@@ -2100,7 +2100,7 @@ This is a script I tend to use when correcting student assignments to speed up m
 
 #+begin_src sh
 
-  collect-assignments --unzip 3
+  collect-assignments --extract 3
 
 #+end_src
 

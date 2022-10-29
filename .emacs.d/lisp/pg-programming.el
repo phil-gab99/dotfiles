@@ -106,7 +106,7 @@
 (with-eval-after-load 'plantuml-mode
   (pg/customize-set-variables
    `((plantuml-indent-level . 4)
-     (plantuml-jar-path . ,(expand-file-name "~/Packages/plantuml.jar"))
+     (plantuml-jar-path . ,(expand-file-name "~/.guix-extra-profiles/emacs/emacs/share/java/plantuml.jar"))
      (plantuml-default-exec-mode jar))))
 
 (straight-use-package 'comment-dwim-2)

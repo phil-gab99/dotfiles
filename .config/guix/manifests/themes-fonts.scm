@@ -7,7 +7,7 @@
   (specification->package "arc-icon-theme")
   (specification->package "matcha-theme")
   (specification->package "hicolor-icon-theme")
-  ;; (specification->package "gnome-icon-theme")
+  (specification->package "adwaita-icon-theme")
   (specification->package "gnome-backgrounds")
   (specification->package "papirus-icon-theme")
   (specification->package "breeze-icons")

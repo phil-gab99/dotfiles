@@ -120,6 +120,7 @@
   
   ;; (specification->package "emacs-dap-mode")
   
+  (specification->package "plantuml")
   ;; (specification->package "emacs-plantuml-mode")
   
   ;; (specification->package "emacs-yasnippet")
