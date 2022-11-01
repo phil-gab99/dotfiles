@@ -3,8 +3,8 @@
 
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the `img'
-  directory with respect to the org-buffer's location and insert a link to
-  this file. Requires `imageMagick' for undertaking screenshots."
+    directory with respect to the org-buffer's location and insert a link to
+    this file. Requires `imageMagick' for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
@@ -25,7 +25,7 @@
 
 (defun org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
-  table."
+    table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
 
@@ -99,13 +99,16 @@
                       ("puml" . "src plantuml")
                       ("vhd" . "src vhdl")
                       ("asm" . "src mips")
+                      ("lmc" . "src lmc-java")
                       ("cc" . "src c")
                       ("el" . "src emacs-lisp")
                       ("hs" . "src haskell")
                       ("py" . "src python")
                       ("sql" . "src sql")))
     (add-to-list 'org-structure-template-alist template))
+
   (dolist (src '(("als" . alloy)
+                 ("lmc-java" . lmc-java)
                  ("plantuml" . plantuml)))
     (add-to-list 'org-src-lang-modes src))
 

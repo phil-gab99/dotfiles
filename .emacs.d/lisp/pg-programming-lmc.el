@@ -3,7 +3,7 @@
 
 (defvar lmc-java-mode-hook nil)
 
-;; (add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-java-mode))
+(add-to-list 'auto-mode-alist '("\\.lmc\\'" . lmc-java-mode))
 
 (defconst lmc-java-font-lock-defaults
   (list
@@ -22,9 +22,9 @@
 
 (define-derived-mode lmc-java-mode prog-mode "LMC"
   "Major mode for editing lmc files"
-  :syntax-table lmc-mode-syntax-table
+  :syntax-table lmc-java-mode-syntax-table
 
-  (set (make-local-variable 'font-lock-defaults) '(lmc-font-lock-defaults))
+  (set (make-local-variable 'font-lock-defaults) '(lmc-java-font-lock-defaults))
 
   (setq-local comment-start "# "
               comment-end ""

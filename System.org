@@ -496,6 +496,8 @@ Configuration files and scripts for basic gnu/linux profile
 
 ** Applications
 
+*** Mars
+
 #+begin_src conf :tangle ~/.dotfiles/.local/share/applications/Mars.desktop
 
   [Desktop Entry]
@@ -504,6 +506,20 @@ Configuration files and scripts for basic gnu/linux profile
   Name=Mars
   Comment=A MIPS Simulator
   Exec=java -jar /home/phil-gab99/Packages/Mars4_5.jar
+  Terminal=false
+
+#+end_src
+
+*** LMC - Little Man Computer
+
+#+begin_src conf :tangle ~/.dotfiles/.local/share/applications/LMC.desktop
+
+  [Desktop Entry]
+  Type=Application
+  Version=1.0
+  Name=LMC
+  Comment=Little Man Computer
+  Exec=java -jar /home/phil-gab99/Packages/LMC.jar
   Terminal=false
 
 #+end_src
