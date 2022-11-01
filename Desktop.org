@@ -168,6 +168,7 @@ Workspaces:
                               ("jb-0305" '(5 "HDMI-1"))
                               ("jb-4205" '(5 "HDMI-1"))
                               ("aa-1140" '(5 "HDMI-1"))
+                              ("aa-1340" '(5 "HDMI-1"))
                               ("rg-e310" '(5 "HDMI-1"))
                               ("jc-s139" '(5 "HDMI-1"))
                               ("jc-s1139" '(5 "DP-1"))
@@ -205,8 +206,6 @@ Workspaces:
     (add-hook 'exwm-init-hook #'pg/exwm-startup)
     ;; Configure launching of some x windows
     (add-hook 'exwm-manage-finish-hook #'pg/configure-window-by-class)
-    ;; Smart display adpatation
-    (add-hook 'exwm-randr-screen-change-hook #'pg/update-displays)
 
     (pg/customize-set-variables
      `((exwm-workspace-number . 6)
