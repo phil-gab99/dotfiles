@@ -2044,7 +2044,8 @@ Togglable option for hiding dot files.
                                                                                            "mkv"))
                                                         "mpv"
                                                         (file))
-                                                       (,(openwith-make-extension-regexp '("odt"))
+                                                       (,(openwith-make-extension-regexp '("odt"
+                                                                                           "ods"))
                                                         "libreoffice"
                                                         (file))
                                                        (,(openwith-make-extension-regexp '("xopp"))
@@ -5111,7 +5112,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-groovy
                      pg-programming-haskell
                      pg-programming-java
-                     ;; pg-programming-lmc
+                     pg-programming-lmc
                      pg-programming-markdown
                      pg-programming-mips
                      pg-programming-prolog

@@ -60,7 +60,8 @@
                                                                                          "mkv"))
                                                       "mpv"
                                                       (file))
-                                                     (,(openwith-make-extension-regexp '("odt"))
+                                                     (,(openwith-make-extension-regexp '("odt"
+                                                                                         "ods"))
                                                       "libreoffice"
                                                       (file))
                                                      (,(openwith-make-extension-regexp '("xopp"))

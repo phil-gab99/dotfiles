@@ -80,7 +80,7 @@
                    pg-programming-groovy
                    pg-programming-haskell
                    pg-programming-java
-                   ;; pg-programming-lmc
+                   pg-programming-lmc
                    pg-programming-markdown
                    pg-programming-mips
                    pg-programming-prolog
