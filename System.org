@@ -518,7 +518,7 @@ Configuration files and scripts for basic gnu/linux profile
   Type=Application
   Version=1.0
   Name=LMC
-  Comment=Little Man Computer
+  Comment=Little Man Computer, an assembly language simulator
   Exec=java -jar /home/phil-gab99/Packages/LMC.jar
   Terminal=false
 
