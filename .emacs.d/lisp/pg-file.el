@@ -12,7 +12,7 @@
   (autoload #'dired-jump "dired" nil t))
 (global-set-key (kbd "C-x C-j") #'dired-jump)
 (with-eval-after-load 'dired
-  (customize-set-variable 'dired-listing-switches "-agho --group-directories-first"))
+  (customize-set-variable 'dired-listing-switches "-Alh --group-directories-first"))
 
 (straight-use-package 'dired-single)
 (with-eval-after-load 'dired
