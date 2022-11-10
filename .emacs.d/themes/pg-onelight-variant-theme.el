@@ -44,7 +44,7 @@
     ("pg-onelight-variant-mu4eheader"  . "#ff83fa")
     ("pg-onelight-variant-parenmatch"  . "#c678dd")
     ("pg-onelight-variant-error"       . "#ff6666")
-    ("pg-onelight-variant-warn"        . "#f2db05")
+    ("pg-onelight-variant-warn"        . "#8b5a00")
     ("pg-onelight-variant-minibuf"     . "#0000ff")
     ("pg-onelight-variant-eviln"       . "#818ff4"))
   "List of One Dark Variant colors.")
@@ -153,7 +153,7 @@
    `(doom-modeline-buffer-modified   ((t ( :foreground ,pg-onelight-variant-modelndiff))))
    `(doom-modeline-urgent            ((t ( :foreground ,pg-onelight-variant-error))))
    `(doom-modeline-lsp-success       ((t ( :foreground ,pg-onelight-variant-docs))))
-   `(doom-modeline-buffer-major-mode ((t ( :foreground ,pg-onelight-variant-blue))))
+   `(doom-modeline-buffer-major-mode ((t ( :foreground ,pg-onelight-variant-tags))))
    `(doom-modeline-evil-normal-state ((t ( :foreground ,pg-onelight-variant-eviln
                                            :weight bold))))
 
