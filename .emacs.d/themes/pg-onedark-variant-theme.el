@@ -2,7 +2,7 @@
 ;; Author: Philippe Gabriel
 
 (deftheme pg-onedark-variant
-  "One Dark Variant - My pg-onedark variant custom theme.")
+  "One Dark Variant - My pg-onedark-variant custom theme.")
 
 (defvar pg-onedark-variant-colors-alist
   '(("pg-onedark-variant-whitestd"    . "#cccccc")

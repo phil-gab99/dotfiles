@@ -2,6 +2,7 @@
 ;; Author: Philippe Gabriel
 
 (load-theme 'pg-onedark-variant t) ;; Load onedark theme
+;; (load-theme 'pg-onelight-variant t) ;; Load onedark theme
 (setq inhibit-startup-message t    ;; Disable startup message
       scroll-conservatively 1000   ;; Slow scrolling
       split-width-threshold 185)   ;; Width for splitting
