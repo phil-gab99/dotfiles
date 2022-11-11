@@ -257,6 +257,8 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                  (max-clients 1000)))
        (extra-special-file "/bin/env"
                            (file-append coreutils "/bin/env"))
+       (extra-special-file "/lib64/ld-linux-x86-64.so.2"
+                           (file-append glibc "/lib/ld-linux-x86-64.so.2"))
        (bluetooth-service #:auto-enable? #t)
        %my-desktop-services))))
 
@@ -598,7 +600,7 @@ Configuration files and scripts for basic gnu/linux profile
   alias diskspace="du -S | sort -n -r | more"
 
   # Aliases for multi-versioned commands
-  alias python="python3"
+  # alias python="python3"
   alias cc="gcc"
 
 #+end_src
@@ -633,6 +635,15 @@ Configuration files and scripts for basic gnu/linux profile
 
   # Alias definitions
   [ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+  # Anaconda script initializations
+  __conda_setup="$('conda' 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  # else
+  #     [ -f $GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh ] && . $GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh
+  fi
+  unset __conda_setup
 
   ################################################################################
   # HISTORY CONTROL
@@ -798,6 +809,9 @@ Configuration files and scripts for basic gnu/linux profile
       # Current directory
       PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\]📁 \w\[${LIGHTGRAY}\])-"
 
+      # Anaconda environment
+      PS1+="\[${LIGHTGRAY}\](\[${LIGHTRED}\] $CONDA_DEFAULT_ENV\[${LIGHTGRAY}\])-"
+
       # Git branch
       local BRANCH=$(parse_git_branch)
       if [ "$BRANCH" != "" ]; then
@@ -840,6 +854,15 @@ Configuration files and scripts for basic gnu/linux profile
 
 #+end_src
 
+*** Conda Configuration
+**** Conda Initialization
+
+#+begin_src conf :tangle ~/.dotfiles/.condarc
+
+  changeps1: False
+
+#+end_src
+
 *** General Profile
 
 #+begin_src shell :tangle ~/.dotfiles/.profile
@@ -869,6 +892,9 @@ Configuration files and scripts for basic gnu/linux profile
 
   # Append libraries from Nix user packages to library path
   export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
+
+  # Append libraries for Anaconda
+  export LD_LIBRARY_PATH="$GUIX_EXTRA_PROFILES/python/python/lib"
 
   # Don't use the system-wide PulseAudio configuration
   unset PULSE_CONFIG
@@ -951,9 +977,9 @@ Configuration files and scripts for basic gnu/linux profile
 
   # Python specific variables
   export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
-  [[ -v PYTHONPATH ]] \
-      && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
-          || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+  # [[ -v PYTHONPATH ]] \
+  #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+  #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
   # Bash specific variables
   export HISTFILE=$XDG_CACHE_HOME/.bash_history

@@ -24,6 +24,9 @@ fi
 # Append libraries from Nix user packages to library path
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
+# Append libraries for Anaconda
+export LD_LIBRARY_PATH="$GUIX_EXTRA_PROFILES/python/python/lib"
+
 # Don't use the system-wide PulseAudio configuration
 unset PULSE_CONFIG
 unset PULSE_CLIENTCONFIG
@@ -105,9 +108,9 @@ export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
 
 # Python specific variables
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
-[[ -v PYTHONPATH ]] \
-    && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
-        || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+# [[ -v PYTHONPATH ]] \
+#     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+#         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history

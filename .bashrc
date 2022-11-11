@@ -25,6 +25,15 @@ fi
 # Alias definitions
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
+# Anaconda script initializations
+__conda_setup="$('conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+# else
+#     [ -f $GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh ] && . $GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh
+fi
+unset __conda_setup
+
 ################################################################################
 # HISTORY CONTROL
 ################################################################################
@@ -188,6 +197,9 @@ function __setprompt {
 
     # Current directory
     PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\]📁 \w\[${LIGHTGRAY}\])-"
+
+    # Anaconda environment
+    PS1+="\[${LIGHTGRAY}\](\[${LIGHTRED}\] $CONDA_DEFAULT_ENV\[${LIGHTGRAY}\])-"
 
     # Git branch
     local BRANCH=$(parse_git_branch)
