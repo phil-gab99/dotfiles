@@ -50,8 +50,8 @@
                      (display-line-numbers-mode 0))))
 
 (set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
-(set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light :inherit 'default)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular :inherit 'default)
+(set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular)
 
 (straight-use-package '(ligature :type git
                                  :host github

@@ -4,4 +4,4 @@
              (ice-9 colorized))
 
 (activate-readline)
-(activate-colorized)
+;; (activate-colorized)

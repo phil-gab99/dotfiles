@@ -149,8 +149,7 @@ Scheme REPL
          (geiser-repl-company-p . nil)
          (geiser-guile-manual-lookup-other-window-p . t)
          (geiser-guile-load-path . ("/run/current-system/profile/share/guile/3.0"))
-         (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))
-         (geiser-guile-init-file . ,(concat (getenv "XDG_CONFIG_HOME") "/geiser/geiser-guile"))))))
+         (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))))
 
 #+end_src
 
@@ -1683,8 +1682,8 @@ Allows for notification pop-up and mode line count when receiving emails
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
   (set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
-  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light :inherit 'default)
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular :inherit 'default)
+  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light)
+  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular)
 
 #+end_src
 
@@ -3605,6 +3604,9 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-markdown.el
 
   (straight-use-package 'markdown-mode)
+  (add-hook 'gfm-view-mode-hook (lambda ()
+                                  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                                                     (markdown-code-face (:height 1.0) org-code)))))
   (with-eval-after-load 'markdown-mode
     (dolist (face '((markdown-header-face-1 . 1.9)
                     (markdown-header-face-2 . 1.7)
@@ -3613,9 +3615,6 @@ Custom syntax highlighting for LMC assembly language.
                     (markdown-header-face-5 . 1.1)
                     (markdown-header-face-6 . 1.05)))
       (set-face-attribute (car face) nil :weight 'regular :height (cdr face))))
-  (add-hook 'gfm-view-mode-hook (lambda ()
-                                  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                                                     (markdown-code-face (:height 1.5) fixed-pitch)))))
 
 #+end_src
 

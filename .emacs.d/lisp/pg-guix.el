@@ -28,7 +28,6 @@
        (geiser-repl-company-p . nil)
        (geiser-guile-manual-lookup-other-window-p . t)
        (geiser-guile-load-path . ("/run/current-system/profile/share/guile/3.0"))
-       (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))
-       (geiser-guile-init-file . ,(concat (getenv "XDG_CONFIG_HOME") "/geiser/geiser-guile"))))))
+       (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))))
 
 (provide 'pg-guix)
