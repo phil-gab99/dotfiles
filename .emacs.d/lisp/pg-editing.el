@@ -39,6 +39,8 @@
                 mu4e-main-mode-hook
                 Man-mode-hook
                 simple-mpc-mode-hook
+                elfeed-search-mode-hook
+                elfeed-show-mode-hook
                 treemacs-mode-hook
                 vterm-mode-hook
                 geiser-repl-mode-hook
@@ -48,8 +50,8 @@
                      (display-line-numbers-mode 0))))
 
 (set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :weight 'light)
-(set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light :inherit 'default)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular :inherit 'default)
 
 (straight-use-package '(ligature :type git
                                  :host github

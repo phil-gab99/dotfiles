@@ -171,6 +171,8 @@
   
   ;; (specification->package "emacs-org-fragtog")
   
+  ;; (specification->package "emacs-elfeed")
+  
   (specification->package "emacs-pdf-tools")
   
   ;; (specification->package "emacs-djvu")
