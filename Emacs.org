@@ -2037,7 +2037,7 @@ Displays full documentations in place of the default help function.
     "Defining some behaviours for the major info-mode."
     (auto-fill-mode 0)
     (setq-local face-remapping-alist '((default (:height 1.5) default)
-                                       (fixed-pitch (:height 1.5) fixed-pitch)
+                                       (fixed-pitch (:height 1.0) fixed-pitch)
                                        (info-menu-header (:height 1.5) info-menu-header)
                                        (info-title-1 (:height 1.05) info-title-1)
                                        (info-title-2 (:height 1.15) info-title-2)
@@ -2105,9 +2105,9 @@ Displays full documentations in place of the default help function.
   (defun pg/eww-mode-setup ()
     (auto-fill-mode 0)
     (visual-line-mode 1)
-    (setq-local face-remapping-alist '((variable-pitch (:height 2.0) variable-pitch)
-                                       (fixed-pitch (:height 2.0) fixed-pitch)
-                                       (default (:height 2.0) default))))
+    (setq-local face-remapping-alist '((variable-pitch (:height 1.0) variable-pitch)
+                                       (fixed-pitch (:height 1.0) fixed-pitch)
+                                       (default (:height 1.5) default))))
   (add-hook 'eww-mode-hook #'pg/eww-mode-setup)
 
 #+end_src
@@ -3728,14 +3728,15 @@ Custom syntax highlighting for LMC assembly language.
 
 ***** Package | python
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'python-mode-hook #'lsp-deferred)
   (with-eval-after-load 'python
     (pg/customize-set-variables
-     '((python-fill-docstring-style . django)
+     `((python-fill-docstring-style . django)
+       (python-shell-virtualenv-path . ,(expand-file-name "~/.conda/envs/ift1016/"))
        (python-indent-offset . 4))))
 
 #+end_src
@@ -3748,6 +3749,11 @@ Custom syntax highlighting for LMC assembly language.
   (with-eval-after-load 'python
     (with-eval-after-load 'lsp-mode
       (require 'lsp-pyright)))
+
+  (with-eval-after-load 'lsp-pyright
+    (pg/customize-set-variables
+     `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/ift1016/"))
+       (lsp-pyright-venv-directory . "envs"))))
 
 #+end_src
 

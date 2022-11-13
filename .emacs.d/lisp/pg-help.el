@@ -32,7 +32,7 @@
   "Defining some behaviours for the major info-mode."
   (auto-fill-mode 0)
   (setq-local face-remapping-alist '((default (:height 1.5) default)
-                                     (fixed-pitch (:height 1.5) fixed-pitch)
+                                     (fixed-pitch (:height 1.0) fixed-pitch)
                                      (info-menu-header (:height 1.5) info-menu-header)
                                      (info-title-1 (:height 1.05) info-title-1)
                                      (info-title-2 (:height 1.15) info-title-2)
