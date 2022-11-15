@@ -2,7 +2,7 @@
 ;; Author: Philippe Gabriel
 
 (load-theme 'pg-onedark-variant t) ;; Load onedark theme
-;; (load-theme 'pg-onelight-variant t) ;; Load onedark theme
+;; (load-theme 'pg-onelight-variant t) ;; Load onelight theme
 (setq inhibit-startup-message t    ;; Disable startup message
       scroll-conservatively 1000   ;; Slow scrolling
       split-width-threshold 185)   ;; Width for splitting
@@ -19,14 +19,14 @@
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+(straight-use-package 'diminish)
+(require 'diminish)
+
 (with-eval-after-load 'diminish
   (dolist (mode '(auto-revert-mode
                   buffer-face-mode
                   visual-line-mode))
     (diminish mode)))
-
-(straight-use-package 'diminish)
-(require 'diminish)
 
 (straight-use-package 'all-the-icons)
 (require 'all-the-icons)

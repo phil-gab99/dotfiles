@@ -1097,7 +1097,7 @@ Theme inspired by the popular Atom One Dark theme.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (load-theme 'pg-onedark-variant t) ;; Load onedark theme
-  ;; (load-theme 'pg-onelight-variant t) ;; Load onedark theme
+  ;; (load-theme 'pg-onelight-variant t) ;; Load onelight theme
   (setq inhibit-startup-message t    ;; Disable startup message
         scroll-conservatively 1000   ;; Slow scrolling
         split-width-threshold 185)   ;; Width for splitting
@@ -1114,12 +1114,6 @@ Theme inspired by the popular Atom One Dark theme.
     (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
-  (with-eval-after-load 'diminish
-    (dolist (mode '(auto-revert-mode
-                    buffer-face-mode
-                    visual-line-mode))
-      (diminish mode)))
-
 #+end_src
 
 *** Package | diminish
@@ -1128,6 +1122,12 @@ Theme inspired by the popular Atom One Dark theme.
 
   (straight-use-package 'diminish)
   (require 'diminish)
+
+  (with-eval-after-load 'diminish
+    (dolist (mode '(auto-revert-mode
+                    buffer-face-mode
+                    visual-line-mode))
+      (diminish mode)))
 
 #+end_src
 
