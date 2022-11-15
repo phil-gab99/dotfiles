@@ -1,6 +1,17 @@
 ;;; pg-social.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(with-eval-after-load 'erc
+  (unless (fboundp 'corfu-mode)
+    (autoload #'corfu-mode "corfu" nil t))
+  (add-hook 'erc-mode-hook #'corfu-mode)
+  (pg/customize-set-variables
+   '((erc-server . "irc.libera.chat")
+     (erc-nick . "phil-gab99")
+     (erc-user . "Philippe Gabriel")
+     (erc-kill-buffer-on-part . t)
+     (erc-auto-query . bury))))
+
 (straight-use-package 'slack)
 (unless (fboundp 'slack-start)
   (autoload #'slack-start "slack" nil t))
