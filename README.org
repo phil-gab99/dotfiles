@@ -33,4 +33,5 @@ To ease readability, I have migrated most of my configuration files to a literat
 - [[file:Emacs.org][Emacs]]
 - [[file:Desktop.org][Desktop Environment]]
 - [[file:System.org][Guix System Configuration]]
+- [[file:README.org][General Application Configurations]]
 
