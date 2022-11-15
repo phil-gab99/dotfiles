@@ -498,27 +498,3 @@ This script makes it easy to update the system to the latest configuration based
 
 #+end_src
 
-* Nix Package Manager
-
-#+begin_src fundamental :tangle ~/.dotfiles/.nix-channels
-
-  https://nixos.org/channels/nixpkgs-unstable nixpkgs
-
-#+end_src
-
-The channel needs to be updated before any packages can be installed:
-
-#+begin_src sh
-
-  nix-channel --update
-
-#+end_src
-
-Installing packages:
-
-#+begin_src sh
-
-  nix-env -i nodejs dotnet-sdk gh hledger
-  nix-env -iA nixpkgs.nodejs-12_x # For a specific version
-
-#+end_src
