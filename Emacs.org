@@ -4392,19 +4392,20 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     (setq-local doom-modeline-minor-modes t
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
                 face-remapping-alist '((default (:height 1.75) default)
-                                       (org-table (:height 1.5) org-table)
-                                       (org-verbatim (:height 1.5) org-verbatim)
-                                       (org-code (:height 1.5) org-code)
-                                       (org-block (:height 1.5) org-block)))
+                                       (org-table (:height 1.0) org-table)
+                                       (org-verbatim (:height 1.0) org-verbatim)
+                                       (org-code (:height 1.0) org-code)
+                                       (org-block (:height 1.0) org-block)))
+    (org-latex-preview)
     (variable-pitch-mode 1))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."
     (variable-pitch-mode 0)
-    (org-latex-preview)
     (setq-local doom-modeline-minor-modes nil
                 org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
-                face-remapping-alist '((default variable-pitch default))))
+                face-remapping-alist '((default variable-pitch default)))
+    (org-latex-preview))
 
   (straight-use-package 'org-tree-slide)
   (unless (fboundp 'org-tree-slide-mode)

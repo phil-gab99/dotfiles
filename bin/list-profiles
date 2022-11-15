@@ -1,2 +1,4 @@
 #!/usr/bin/env sh
 guix package --list-profiles
+
+exit 0

@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 profile=$1
 guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --delete-generations
+
+exit 0
