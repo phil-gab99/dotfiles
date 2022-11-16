@@ -1,7 +1,8 @@
 ;;; pg-email.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(unless pg/is-termux
+(unless (or pg/is-termux
+            pg/is-windows)
   (straight-use-package '(mu4e :type git
                                :host github
                                :repo "djcb/mu"
@@ -70,15 +71,17 @@
            ;;                            (mu4e-trash-folder . "/University/Deleted Items")))
            ))))
 
-(straight-use-package 'mu4e-alert)
-(with-eval-after-load 'mu4e
-  (require 'mu4e-alert))
-(with-eval-after-load 'mu4e-alert
-  (pg/customize-set-variables
-   '((mu4e-alert-notify-repeated-mails . t)
-     (mu4e-alert-email-notification-types . (subjects))))
-  (mu4e-alert-set-default-style 'notifications)
-  (mu4e-alert-enable-notifications)
-  (mu4e-alert-enable-mode-line-display))
+(unless (or pg/is-termux
+            pg/is-windows)
+  (straight-use-package 'mu4e-alert)
+  (with-eval-after-load 'mu4e
+    (require 'mu4e-alert))
+  (with-eval-after-load 'mu4e-alert
+    (pg/customize-set-variables
+     '((mu4e-alert-notify-repeated-mails . t)
+       (mu4e-alert-email-notification-types . (subjects))))
+    (mu4e-alert-set-default-style 'notifications)
+    (mu4e-alert-enable-notifications)
+    (mu4e-alert-enable-mode-line-display)))
 
 (provide 'pg-email)

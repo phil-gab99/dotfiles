@@ -22,15 +22,16 @@
 (with-eval-after-load 'password-cache
   (customize-set-variable 'password-cache-expiry (* 60 60 2)))
 
-(straight-use-package 'password-store)
-(require 'password-store)
-(with-eval-after-load 'password-store
-  (customize-set-variable 'password-store-time-before-clipboard-restore 60)
-  (with-eval-after-load 'general
-    (pg/leader-keys
-      "a" '(:ignore t :which-key "pass")
-      "ac" '(password-store-copy :which-key "copy")
-      "af" '(password-store-copy-field :which-key "copy field"))))
+(unless pg/is-windows
+  (straight-use-package 'password-store)
+  (require 'password-store)
+  (with-eval-after-load 'password-store
+    (customize-set-variable 'password-store-time-before-clipboard-restore 60)
+    (with-eval-after-load 'general
+      (pg/leader-keys
+        "a" '(:ignore t :which-key "pass")
+        "ac" '(password-store-copy :which-key "copy")
+        "af" '(password-store-copy-field :which-key "copy field")))))
 
 (defun pg/lookup-password (&rest keys)
   "Looks up passwords from `authinfo' entries."

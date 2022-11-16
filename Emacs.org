@@ -238,15 +238,16 @@ Scheme REPL
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
-  (straight-use-package 'password-store)
-  (require 'password-store)
-  (with-eval-after-load 'password-store
-    (customize-set-variable 'password-store-time-before-clipboard-restore 60)
-    (with-eval-after-load 'general
-      (pg/leader-keys
-        "a" '(:ignore t :which-key "pass")
-        "ac" '(password-store-copy :which-key "copy")
-        "af" '(password-store-copy-field :which-key "copy field"))))
+  (unless pg/is-windows
+    (straight-use-package 'password-store)
+    (require 'password-store)
+    (with-eval-after-load 'password-store
+      (customize-set-variable 'password-store-time-before-clipboard-restore 60)
+      (with-eval-after-load 'general
+        (pg/leader-keys
+          "a" '(:ignore t :which-key "pass")
+          "ac" '(password-store-copy :which-key "copy")
+          "af" '(password-store-copy-field :which-key "copy field")))))
 
 #+end_src
 
@@ -1506,7 +1507,8 @@ After having setup the file, make sure to run the following commands:
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
 
-  (unless pg/is-termux
+  (unless (or pg/is-termux
+              pg/is-windows)
     (straight-use-package '(mu4e :type git
                                  :host github
                                  :repo "djcb/mu"
@@ -1583,16 +1585,18 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
 
-  (straight-use-package 'mu4e-alert)
-  (with-eval-after-load 'mu4e
-    (require 'mu4e-alert))
-  (with-eval-after-load 'mu4e-alert
-    (pg/customize-set-variables
-     '((mu4e-alert-notify-repeated-mails . t)
-       (mu4e-alert-email-notification-types . (subjects))))
-    (mu4e-alert-set-default-style 'notifications)
-    (mu4e-alert-enable-notifications)
-    (mu4e-alert-enable-mode-line-display))
+  (unless (or pg/is-termux
+              pg/is-windows)
+    (straight-use-package 'mu4e-alert)
+    (with-eval-after-load 'mu4e
+      (require 'mu4e-alert))
+    (with-eval-after-load 'mu4e-alert
+      (pg/customize-set-variables
+       '((mu4e-alert-notify-repeated-mails . t)
+         (mu4e-alert-email-notification-types . (subjects))))
+      (mu4e-alert-set-default-style 'notifications)
+      (mu4e-alert-enable-notifications)
+      (mu4e-alert-enable-mode-line-display)))
 
 #+end_src
 
@@ -5129,11 +5133,6 @@ Allows for viewing of pdfs.
   (straight-use-package 'simple-mpc)
   (unless (fboundp 'simple-mpc)
     (autoload #'simple-mpc "simple-mpc" nil t))
-  (with-eval-after-load 'general
-    (pg/leader-keys
-      "a" '(:ignore t :which-key "pass")
-      "ac" '(password-store-copy :which-key "copy")
-      "af" '(password-store-copy-field :which-key "copy field")))
   (with-eval-after-load 'simple-mpc
     (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
 
