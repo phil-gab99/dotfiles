@@ -11,14 +11,14 @@ alias grep='grep --color=always'
 alias fgrep='grep -F --color=always'
 alias egrep='grep -E --color=always'
 
-# To temporarily bypass an alias, we preceed the command with a \
+# To temporarily bypass an alias, we precede the command with a '\'
 # EG: the ls command is aliased, but to use the normal ls command you would type \ls
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 # alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Alias's to modified commands
+# Aliases to modified commands
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
@@ -58,3 +58,6 @@ alias diskspace="du -S | sort -n -r | more"
 # Aliases for multi-versioned commands
 # alias python="python3"
 alias cc="gcc"
+
+# Aliases for specific parameters when running some apps
+alias spyder="spyder --no-web-widgets"
