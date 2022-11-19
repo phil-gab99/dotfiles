@@ -16,6 +16,7 @@
           #'(lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
 (dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
+                org-agenda-mode-hook
                 erc-mode-hook
                 erc-list-menu-mode-hook
                 Info-mode-hook

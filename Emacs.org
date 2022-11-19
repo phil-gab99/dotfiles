@@ -1647,6 +1647,7 @@ Allows for notification pop-up and mode line count when receiving emails
             #'(lambda () (ansi-color-apply-on-region (point-min) (point-max))))
 
   (dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
+                  org-agenda-mode-hook
                   erc-mode-hook
                   erc-list-menu-mode-hook
                   Info-mode-hook
