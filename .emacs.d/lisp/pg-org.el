@@ -248,14 +248,15 @@
      (org-export-headline-levels . 6)
      (org-reveal-theme . "league"))))
 
-(straight-use-package 'org-notify)
-(with-eval-after-load 'org
-  (require 'org-notify))
-(with-eval-after-load 'org-notify
-  (org-notify-start)
-  (setq org-notify-map nil)
-  (org-notify-add 'default '(:time "1w" :actions notify/window :period "1h" :duration 5))
-  (org-notify-add 'meeting '(:time "1w" :actions email :period "1d")))
+(unless pg/is-windows
+  (straight-use-package 'org-notify)
+  (with-eval-after-load 'org
+    (require 'org-notify))
+  (with-eval-after-load 'org-notify
+    (org-notify-start)
+    (setq org-notify-map nil)
+    (org-notify-add 'default '(:time "1w" :actions notify/window :period "1h" :duration 5))
+    (org-notify-add 'meeting '(:time "1w" :actions email :period "1d"))))
 
 ;; (org-notify-add 'appt
 ;;                 '(:time "-1s" :period "20s" :duration 10 :actions (-message -ding))
