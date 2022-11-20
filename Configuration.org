@@ -155,8 +155,6 @@ Configuration files and scripts for basic gnu/linux profile
   __conda_setup="$('conda' 'shell.bash' 'hook' 2> /dev/null)"
   if [ $? -eq 0 ]; then
       eval "$__conda_setup"
-  # else
-  #     [ -f $GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh ] && . $GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh
   fi
   unset __conda_setup
 
