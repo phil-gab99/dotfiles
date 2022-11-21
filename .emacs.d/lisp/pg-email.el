@@ -38,6 +38,10 @@
                                   ("/Main/Jobs" . 106)
                                   ("/Main/University" . 115)))
        (mu4e-context-policy . pick-first)))
+    (add-to-list 'mu4e-bookmarks
+                 '( :name "Starred"
+                    :query "flag:flagged"
+                    :key ?f))
     (setq mu4e-contexts
           (list
            (make-mu4e-context :name "Main"
