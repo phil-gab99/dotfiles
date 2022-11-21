@@ -4505,9 +4505,9 @@ Allows for markup language when composing email
     (autoload #'org-msg-mode "org-msg" nil t))
   (add-hook 'mu4e-compose-pre-hook #'org-msg-mode)
   (with-eval-after-load 'org-msg
-    (customize-set-variable 'org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
     (pg/customize-set-variables
      `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
+       (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
        (org-msg-startup . "indent inlineimages hidestars")
        (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
        (org-msg-greeting-name-limit . 3)
@@ -5368,9 +5368,10 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (save-buffers-kill-emacs))
 
   (defun pg/customize-set-variables (custom-sets)
-    "Sets the default value of variables. The `custom-sets' argument represents
-    a plist where each entry's key is the custom variable one wishes to set and
-    the corresponding value is the value to set to the custom variable."
+    "Sets the value of custom variables using `customize-set-variable'. The
+    `custom-sets' argument represents a plist where each entry's key is the
+    custom variable one wishes to set and the corresponding value is the value
+    to set to the custom variable."
     (if (mapcar (lambda (setting)
                   (let ((custom (car setting))
                         (value (cdr setting)))

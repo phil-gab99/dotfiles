@@ -18,9 +18,10 @@
   (save-buffers-kill-emacs))
 
 (defun pg/customize-set-variables (custom-sets)
-  "Sets the default value of variables. The `custom-sets' argument represents
-  a plist where each entry's key is the custom variable one wishes to set and
-  the corresponding value is the value to set to the custom variable."
+  "Sets the value of custom variables using `customize-set-variable'. The
+  `custom-sets' argument represents a plist where each entry's key is the
+  custom variable one wishes to set and the corresponding value is the value
+  to set to the custom variable."
   (if (mapcar (lambda (setting)
                 (let ((custom (car setting))
                       (value (cdr setting)))

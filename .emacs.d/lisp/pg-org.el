@@ -269,9 +269,9 @@
   (autoload #'org-msg-mode "org-msg" nil t))
 (add-hook 'mu4e-compose-pre-hook #'org-msg-mode)
 (with-eval-after-load 'org-msg
-  (customize-set-variable 'org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
   (pg/customize-set-variables
    `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
+     (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
      (org-msg-startup . "indent inlineimages hidestars")
      (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
      (org-msg-greeting-name-limit . 3)
