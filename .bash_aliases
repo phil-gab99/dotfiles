@@ -1,24 +1,28 @@
-### -*- mode: sh; -*-
-#######################################################
-# GENERAL ALIAS'S
-#######################################################
+### -*- sh -*-
+################################################################################
+# GENERAL ALIASES
+################################################################################
 
-# alias ls='ls -p --color=auto'
-# alias dir='dir --color=auto'
-# alias vdir='vdir --color=auto'
+# Add an "alert" alias for long running commands.
+# Use like so: sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+# CPU usage command
+alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
+
+# Alias to show disk space
+alias diskspace="du -S | sort -n -r | more"
+
+################################################################################
+# MODIFIED COMMANDS ALIASES
+################################################################################
+
+# Grep aliases
 alias grep='grep --color=always'
 alias fgrep='grep -F --color=always'
 alias egrep='grep -E --color=always'
 
-# To temporarily bypass an alias, we precede the command with a '\'
-# EG: the ls command is aliased, but to use the normal ls command you would type \ls
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Aliases to modified commands
+# Additional flags to regular commands
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
@@ -26,9 +30,22 @@ alias mkdir='mkdir -p'
 alias ps='ps auxf'
 alias ping='ping -c 10'
 alias less='less -R'
-alias vi='vim'
-alias qutebrowser='qutebrowser --qt-flag disable-seccomp-filter-sandbox'
-alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
+
+# Directory listing aliases
+alias ls='ls -AFh --color=always' # Add colors and file type extensions
+alias la='ls -Alh'                # Show hidden files
+alias lx='ls -lXBh'               # Sort by extension
+alias lk='ls -lSrh'               # Sort by size
+alias lc='ls -lcrh'               # Sort by change time
+alias lu='ls -lurh'               # Sort by access time
+alias lr='ls -lRh'                # Recursive ls
+alias lt='ls -ltrh'               # Sort by date
+alias lm='ls -alh | more'         # Pipe through 'more'
+alias lw='ls -xAh'                # Wide listing format
+alias ll='ls -Fls'                # Long listing format
+alias labc='ls -lap'              # Alphabetical sort
+alias lf="ls -l | egrep -v '^d'"  # Files only
+alias ldir="ls -l | egrep '^d'"   # Directories only
 
 # Search files in the current folder
 alias find="find . | grep "
@@ -36,28 +53,28 @@ alias find="find . | grep "
 # Provenance of commands including aliases
 alias which='alias | which --tty-only --read-alias --show-dot --show-tilde'
 
-# Alias's for multiple directory listing commands
-alias la='ls -Alh'                # show hidden files
-alias ls='ls -AFh --color=always' # add colors and file type extensions
-alias lx='ls -lXBh'               # sort by extension
-alias lk='ls -lSrh'               # sort by size
-alias lc='ls -lcrh'               # sort by change time
-alias lu='ls -lurh'               # sort by access time
-alias lr='ls -lRh'                # recursive ls
-alias lt='ls -ltrh'               # sort by date
-alias lm='ls -alh |more'          # pipe through 'more'
-alias lw='ls -xAh'                # wide listing format
-alias ll='ls -Fls'                # long listing format
-alias labc='ls -lap'              # alphabetical sort
-alias lf="ls -l | egrep -v '^d'"  # files only
-alias ldir="ls -l | egrep '^d'"   # directories only
+################################################################################
+# SYNONYMOUS ALIASES
+################################################################################
 
-# Alias to show disk space
-alias diskspace="du -S | sort -n -r | more"
+# Treat Vi as Vim
+alias vi='vim'
 
-# Aliases for multi-versioned commands
-# alias python="python3"
+# Some software relies on 'cc' being 'gcc'
 alias cc="gcc"
 
-# Aliases for specific parameters when running some apps
+################################################################################
+# MULTI-VERSIONED COMMANDS ALIASES
+################################################################################
+
+# alias python="python3"
+
+################################################################################
+# APPLICATION ALIASES
+################################################################################
+
+# Qutebrowser alias for some texture issues
+alias qutebrowser='qutebrowser --qt-flag disable-seccomp-filter-sandbox'
+
+# Spyder alias since web widgets cause crash
 alias spyder="spyder --no-web-widgets"

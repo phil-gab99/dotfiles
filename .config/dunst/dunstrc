@@ -1,3 +1,4 @@
+### -*- conf -*-
 [global]
 ### Display ###
 monitor = 0
