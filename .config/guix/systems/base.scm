@@ -62,7 +62,8 @@
                    (network-manager-service-type config =>
                                                  (network-manager-configuration
                                                   (inherit config)
-                                                  (vpn-plugins (list network-manager-openvpn))))))
+                                                  (vpn-plugins (list network-manager-openvpn
+                                                                     network-manager-openconnect))))))
 
 (define %xorg-libinput-config
   "Section \"InputClass\"

@@ -121,7 +121,8 @@ Override the default ~%desktop-services~ to add ~udev~ rules and apply other con
                      (network-manager-service-type config =>
                                                    (network-manager-configuration
                                                     (inherit config)
-                                                    (vpn-plugins (list network-manager-openvpn))))))
+                                                    (vpn-plugins (list network-manager-openvpn
+                                                                       network-manager-openconnect))))))
 
 #+end_src
 
