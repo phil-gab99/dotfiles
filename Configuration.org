@@ -1696,6 +1696,9 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
   #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
+  # Prolog specific variables
+  export LOCALSZ=32768
+
   # Bash specific variables
   export HISTFILE=$XDG_CACHE_HOME/.bash_history
 

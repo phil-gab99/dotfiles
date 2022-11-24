@@ -22,7 +22,10 @@
   (autoload #'consult-buffer "consult" nil t))
 (global-set-key (kbd "C-x b") #'consult-buffer)
 (with-eval-after-load 'consult
-  ;; (customize-set-variable 'consult-preview-key 'any)
+  (customize-set-variable 'consult-buffer-sources '(consult--source-buffer))
+  (consult-customize consult-buffer
+                     consult-theme
+                     :preview-key nil)
   (define-key minibuffer-local-map (kbd "C-r") #'consult-history))
 
 (straight-use-package 'orderless)

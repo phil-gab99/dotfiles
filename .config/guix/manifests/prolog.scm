@@ -1,3 +1,3 @@
 (packages->manifest
  (list
-  (specification->package "swi-prolog")))
+  (specification->package "gprolog")))

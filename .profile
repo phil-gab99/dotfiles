@@ -112,6 +112,9 @@ export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
 #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
 #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
+# Prolog specific variables
+export LOCALSZ=32768
+
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
