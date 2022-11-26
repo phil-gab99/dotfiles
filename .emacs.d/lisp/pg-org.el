@@ -203,11 +203,7 @@
   (org-display-inline-images)
   (setq-local doom-modeline-minor-modes t
               org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
-              face-remapping-alist '((default (:height 1.75) default)
-                                     (org-table (:height 1.0) org-table)
-                                     (org-verbatim (:height 1.0) org-verbatim)
-                                     (org-code (:height 1.0) org-code)
-                                     (org-block (:height 1.0) org-block)))
+              face-remapping-alist '((default (:height 1.75) default)))
   (org-latex-preview)
   (variable-pitch-mode 1))
 

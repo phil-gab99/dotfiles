@@ -171,11 +171,11 @@
   
   ;; (specification->package "emacs-org-fragtog")
   
+  ;; (specification->package "emacs-djvu")
+  
   ;; (specification->package "emacs-elfeed")
   
   (specification->package "emacs-pdf-tools")
-  
-  ;; (specification->package "emacs-djvu")
   
   (specification->package "ledger")
   ;; (specification->package "emacs-ledger-mode")

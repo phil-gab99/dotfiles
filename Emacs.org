@@ -1679,6 +1679,7 @@ Allows for notification pop-up and mode line count when receiving emails
                   doc-view-mode-hook
                   mu4e-main-mode-hook
                   Man-mode-hook
+                  nov-mode-hook
                   simple-mpc-mode-hook
                   elfeed-search-mode-hook
                   elfeed-show-mode-hook
@@ -2052,7 +2053,6 @@ Displays full documentations in place of the default help function.
     "Defining some behaviours for the major info-mode."
     (auto-fill-mode 0)
     (setq-local face-remapping-alist '((default (:height 1.5) default)
-                                       (fixed-pitch (:height 1.0) fixed-pitch)
                                        (info-menu-header (:height 1.5) info-menu-header)
                                        (info-title-1 (:height 1.05) info-title-1)
                                        (info-title-2 (:height 1.15) info-title-2)
@@ -2080,6 +2080,8 @@ Displays full documentations in place of the default help function.
     (autoload #'visual-fill-column-mode "visual-fill-column" nil t))
   (dolist (mode '(org-mode-hook
                   gfm-view-mode-hook
+                  elfeed-show-mode-hook
+                  nov-mode-hook
                   Info-mode-hook
                   eww-mode-hook))
     (add-hook mode #'pg/docs-visual-fill))
@@ -2120,9 +2122,7 @@ Displays full documentations in place of the default help function.
   (defun pg/eww-mode-setup ()
     (auto-fill-mode 0)
     (visual-line-mode 1)
-    (setq-local face-remapping-alist '((variable-pitch (:height 1.0) variable-pitch)
-                                       (fixed-pitch (:height 1.0) fixed-pitch)
-                                       (default (:height 1.5) default))))
+    (setq-local face-remapping-alist '((default (:height 1.5) default))))
   (add-hook 'eww-mode-hook #'pg/eww-mode-setup)
 
 #+end_src
@@ -3466,7 +3466,7 @@ Some general tools for programming:
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
   (unless (fboundp 'latex-mode)
     (autoload #'latex-mode "tex-mode" nil t))
-  (add-to-list 'auto-mode-alist '("\\.tex$" . latex-mode))
+  (add-to-list 'auto-mode-alist '("\\.tex\\'" . latex-mode))
   (with-eval-after-load 'tex
     (pg/customize-set-variables
      '((latex-run-command . "pdflatex")
@@ -3667,7 +3667,7 @@ Custom syntax highlighting for LMC assembly language.
   (straight-use-package 'mips-mode)
   (unless (fboundp 'mips-mode)
     (autoload #'mips-mode "mips-mode" nil t))
-  (add-to-list 'auto-mode-alist '("\\.asm$" . mips-mode))
+  (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
   (with-eval-after-load 'mips-mode
     (customize-set-variable 'mips-tab-width 4))
 
@@ -3968,7 +3968,7 @@ Custom syntax highlighting for LMC assembly language.
   (straight-use-package 'typescript-mode)
   (unless (fboundp 'typescript-mode)
     (autoload #'typescript-mode "typescript-mode" nil t))
-  (add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'typescript-mode-hook #'lsp-deferred)
@@ -4404,11 +4404,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     (org-display-inline-images)
     (setq-local doom-modeline-minor-modes t
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
-                face-remapping-alist '((default (:height 1.75) default)
-                                       (org-table (:height 1.0) org-table)
-                                       (org-verbatim (:height 1.0) org-verbatim)
-                                       (org-code (:height 1.0) org-code)
-                                       (org-block (:height 1.0) org-block)))
+                face-remapping-alist '((default (:height 1.75) default)))
     (org-latex-preview)
     (variable-pitch-mode 1))
 
@@ -4669,13 +4665,30 @@ Custom pomodoro timer
 
 #+end_src
 
+*** Package | djvu
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
+
+  (straight-use-package 'djvu)
+  (require 'djvu)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-djvu")
+
+#+end_src
+
 *** Package | doc-view
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   (unless (fboundp 'doc-view-mode)
     (autoload #'doc-view-mode "doc-view" nil t))
-  (add-to-list 'auto-mode-alist '("\\.djvu$" . doc-view-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.djvu\\'" . doc-view-mode))
 
 #+end_src
 
@@ -4710,6 +4723,23 @@ Custom pomodoro timer
 
 #+end_src
 
+*** Package | nov
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
+
+  (straight-use-package 'nov)
+  (unless (fboundp 'nov-mode)
+    (autoload #'nov-mode "nov" nil t))
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+  (defun pg/nov-mode-setup ()
+    (auto-fill-mode 0)
+    (visual-line-mode 1)
+    (setq-local face-remapping-alist '((default (:height 1.5) default))))
+  (add-hook 'nov-mode-hook #'pg/nov-mode-setup)
+
+#+end_src
+
 *** Package | pdf-tools
 
 Allows for viewing of pdfs.
@@ -4720,7 +4750,7 @@ Allows for viewing of pdfs.
     (straight-use-package 'pdf-tools))
   (unless (fboundp 'pdf-view-mode)
     (autoload #'pdf-view-mode "pdf-tools" nil t))
-  (add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
 #+end_src
 
@@ -4729,23 +4759,6 @@ Allows for viewing of pdfs.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   (specification->package "emacs-pdf-tools")
-
-#+end_src
-
-*** Package | djvu
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
-
-  (straight-use-package 'djvu)
-  (require 'djvu)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-djvu")
 
 #+end_src
 
@@ -4777,7 +4790,7 @@ Allows for viewing of pdfs.
     (autoload #'dtk "dtk" nil t))
   (add-hook 'dtk-mode-hook #'(lambda ()
                                (setq-local face-remapping-alist
-                                           '((default (:height 1.5) variable-pitch)))))
+                                           '((default (:height 1.5) default)))))
   (with-eval-after-load 'dtk
     (pg/customize-set-variables
      '((dtk-module . "KJV")
@@ -4821,7 +4834,7 @@ Allows for viewing of pdfs.
   (straight-use-package 'ledger-mode)
   (unless (fboundp 'ledger-mode)
     (autoload #'ledger-mode "ledger-mode" nil t))
-  (add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode))
+  (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
   (unless (fboundp 'company-mode)
     (autoload #'company-mode "company" nil t))
   (add-hook 'ledger-mode-hook #'company-mode)

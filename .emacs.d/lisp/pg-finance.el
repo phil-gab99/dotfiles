@@ -4,7 +4,7 @@
 (straight-use-package 'ledger-mode)
 (unless (fboundp 'ledger-mode)
   (autoload #'ledger-mode "ledger-mode" nil t))
-(add-to-list 'auto-mode-alist '("\\.dat$" . ledger-mode))
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 (unless (fboundp 'company-mode)
   (autoload #'company-mode "company" nil t))
 (add-hook 'ledger-mode-hook #'company-mode)

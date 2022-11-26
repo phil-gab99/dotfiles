@@ -1,9 +1,12 @@
 ;;; pg-viewers.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(straight-use-package 'djvu)
+(require 'djvu)
+
 (unless (fboundp 'doc-view-mode)
   (autoload #'doc-view-mode "doc-view" nil t))
-(add-to-list 'auto-mode-alist '("\\.djvu$" . doc-view-mode))
+;; (add-to-list 'auto-mode-alist '("\\.djvu\\'" . doc-view-mode))
 
 (straight-use-package 'elfeed)
 (unless (fboundp 'elfeed)
@@ -22,13 +25,21 @@
                       "https://blog.tecosaur.com/tmio/rss.xml"))
      (elfeed-search-filter . "@6-months-ago"))))
 
+(straight-use-package 'nov)
+(unless (fboundp 'nov-mode)
+  (autoload #'nov-mode "nov" nil t))
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+(defun pg/nov-mode-setup ()
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq-local face-remapping-alist '((default (:height 1.5) default))))
+(add-hook 'nov-mode-hook #'pg/nov-mode-setup)
+
 (unless pg/is-guix-system
   (straight-use-package 'pdf-tools))
 (unless (fboundp 'pdf-view-mode)
   (autoload #'pdf-view-mode "pdf-tools" nil t))
-(add-to-list 'auto-mode-alist '("\\.pdf$" . pdf-view-mode))
-
-(straight-use-package 'djvu)
-(require 'djvu)
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
 (provide 'pg-viewers)

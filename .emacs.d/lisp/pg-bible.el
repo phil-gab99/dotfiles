@@ -6,7 +6,7 @@
   (autoload #'dtk "dtk" nil t))
 (add-hook 'dtk-mode-hook #'(lambda ()
                              (setq-local face-remapping-alist
-                                         '((default (:height 1.5) variable-pitch)))))
+                                         '((default (:height 1.5) default)))))
 (with-eval-after-load 'dtk
   (pg/customize-set-variables
    '((dtk-module . "KJV")

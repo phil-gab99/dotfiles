@@ -8,7 +8,7 @@
 (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 (unless (fboundp 'latex-mode)
   (autoload #'latex-mode "tex-mode" nil t))
-(add-to-list 'auto-mode-alist '("\\.tex$" . latex-mode))
+(add-to-list 'auto-mode-alist '("\\.tex\\'" . latex-mode))
 (with-eval-after-load 'tex
   (pg/customize-set-variables
    '((latex-run-command . "pdflatex")

@@ -41,6 +41,7 @@
                 doc-view-mode-hook
                 mu4e-main-mode-hook
                 Man-mode-hook
+                nov-mode-hook
                 simple-mpc-mode-hook
                 elfeed-search-mode-hook
                 elfeed-show-mode-hook

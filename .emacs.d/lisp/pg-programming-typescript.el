@@ -4,7 +4,7 @@
 (straight-use-package 'typescript-mode)
 (unless (fboundp 'typescript-mode)
   (autoload #'typescript-mode "typescript-mode" nil t))
-(add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 (unless (fboundp 'lsp-deferred)
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (add-hook 'typescript-mode-hook #'lsp-deferred)
