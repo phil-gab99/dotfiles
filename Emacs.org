@@ -4958,12 +4958,12 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
-;;  (unless (fboundp 'telega)
-;;    (autoload #'telega "telega" nil t))
-;;  (with-eval-after-load 'telega
-;;    (require 'telega-alert)
-;;    (require 'telega-dashboard)
-;;    (customize-set-variable 'telega-alert-mode 1))
+  ;; (unless (fboundp 'telega)
+  ;;   (autoload #'telega "telega" nil t))
+  ;; (with-eval-after-load 'telega
+  ;;   (require 'telega-alert)
+  ;;   (require 'telega-dashboard)
+  ;;   (customize-set-variable 'telega-alert-mode 1))
 
 #+end_src
 
@@ -4971,8 +4971,8 @@ Allows for viewing of pdfs.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  (first (lookup-inferior-packages inferior "emacs-telega"))
-  (first (lookup-inferior-packages inferior "emacs-telega-contrib"))
+  ;; (first (lookup-inferior-packages inferior "emacs-telega"))
+  ;; (first (lookup-inferior-packages inferior "emacs-telega-contrib"))
 
 #+end_src
 

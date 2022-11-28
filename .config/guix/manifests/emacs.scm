@@ -184,8 +184,8 @@
   
   ;; (specification->package "emacs-sx")
   
-  (first (lookup-inferior-packages inferior "emacs-telega"))
-  (first (lookup-inferior-packages inferior "emacs-telega-contrib"))
+  ;; (first (lookup-inferior-packages inferior "emacs-telega"))
+  ;; (first (lookup-inferior-packages inferior "emacs-telega-contrib"))
   
   ;; (specification->package "emacs-wttrin")
   
