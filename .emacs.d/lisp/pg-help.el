@@ -41,22 +41,21 @@
   (visual-line-mode 1))
 (add-hook 'Info-mode-hook #'pg/Info-mode-setup)
 
-(defun pg/docs-visual-fill ()
-  "Applies text soft wrap."
-  (pg/customize-set-variables
-   '((visual-fill-column-width . 150)
-     (visual-fill-column-center-text . t)))
-  (visual-fill-column-mode 1))
-
 (straight-use-package 'visual-fill-column)
 (unless (fboundp 'visual-fill-column-mode)
   (autoload #'visual-fill-column-mode "visual-fill-column" nil t))
 (dolist (mode '(org-mode-hook
                 gfm-view-mode-hook
                 elfeed-show-mode-hook
+                mu4e-view-mode-hook
                 nov-mode-hook
                 Info-mode-hook
                 eww-mode-hook))
-  (add-hook mode #'pg/docs-visual-fill))
+  (add-hook mode #'(lambda ()
+                     (visual-fill-column-mode 1))))
+(with-eval-after-load 'visual-fill-column
+  (pg/customize-set-variables
+   '((visual-fill-column-width . 150)
+     (visual-fill-column-center-text . t))))
 
 (provide 'pg-help)
