@@ -20,6 +20,7 @@
                 erc-mode-hook
                 erc-list-menu-mode-hook
                 Info-mode-hook
+                ledger-report-mode-hook
                 ielm-mode-hook
                 eww-mode-hook
                 term-mode-hook
