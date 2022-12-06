@@ -10,7 +10,7 @@
     ("pg-onelight-variant-gold"        . "#eead0e")
     ("pg-onelight-variant-whitebg"     . "#ffffff")
     ("pg-onelight-variant-dark"        . "#000000")
-    ("pg-onelight-variant-doc-box"     . "#1a1a1a")
+    ("pg-onelight-variant-doc-box"     . "#cacaca")
     ("pg-onelight-variant-cursorbg"    . "#4682d9")
     ("pg-onelight-variant-regionbg"    . "#b4eeb4")
     ("pg-onelight-variant-regionds"    . "#828997")
