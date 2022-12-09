@@ -1687,6 +1687,8 @@ Allows for notification pop-up and mode line count when receiving emails
                   elfeed-show-mode-hook
                   treemacs-mode-hook
                   vterm-mode-hook
+                  magit-popup-mode-hook
+                  etc-authors-mode-hook
                   geiser-repl-mode-hook
                   slack-mode-hook
                   shell-mode-hook))

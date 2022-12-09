@@ -49,6 +49,8 @@
                 elfeed-show-mode-hook
                 treemacs-mode-hook
                 vterm-mode-hook
+                magit-popup-mode-hook
+                etc-authors-mode-hook
                 geiser-repl-mode-hook
                 slack-mode-hook
                 shell-mode-hook))
