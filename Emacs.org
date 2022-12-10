@@ -3008,6 +3008,39 @@ Some general tools for programming:
 
 #+end_src
 
+**** Arduino
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-arduino.el
+
+  ;;; pg-programming-arduino.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | arduino-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-arduino.el
+
+  (straight-use-package 'arduino-mode)
+
+  (unless (fboundp 'flycheck-arduino-setup)
+    (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
+  (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
+  (with-eval-after-load 'arduino-mode
+    (customize-set-variable 'arduino-mode-home "~/Projects/Arduino/"))
+
+#+end_src
+
+***** Arduino package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-arduino.el
+
+  (provide 'pg-programming-arduino)
+
+#+end_src
+
 **** C/C++/Objective-C
 
 ***** Package header
@@ -4245,6 +4278,7 @@ Org mode package for writing structured documents and more. Here are some useful
                                  (java . t)
                                  (shell . t)
                                  (plantuml . t)
+                                 (arduino . t)
                                  ;; (jupyter . t)
                                  (python . t)))
 
@@ -5368,7 +5402,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-  ;;; init.el -*- lexical-binding: t; -*-
+    ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -5389,9 +5423,9 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (defun pg/customize-set-variables (custom-sets)
     "Sets the value of custom variables using `customize-set-variable'. The
-    `custom-sets' argument represents a plist where each entry's key is the
-    custom variable one wishes to set and the corresponding value is the value
-    to set to the custom variable."
+      `custom-sets' argument represents a plist where each entry's key is the
+      custom variable one wishes to set and the corresponding value is the value
+      to set to the custom variable."
     (if (mapcar (lambda (setting)
                   (let ((custom (car setting))
                         (value (cdr setting)))
@@ -5443,6 +5477,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-project
                      pg-programming
                      ;; pg-programming-alloy
+                     pg-programming-arduino
                      pg-programming-cc
                      ;; pg-programming-commonlisp
                      pg-programming-css

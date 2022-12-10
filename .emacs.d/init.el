@@ -19,9 +19,9 @@
 
 (defun pg/customize-set-variables (custom-sets)
   "Sets the value of custom variables using `customize-set-variable'. The
-  `custom-sets' argument represents a plist where each entry's key is the
-  custom variable one wishes to set and the corresponding value is the value
-  to set to the custom variable."
+    `custom-sets' argument represents a plist where each entry's key is the
+    custom variable one wishes to set and the corresponding value is the value
+    to set to the custom variable."
   (if (mapcar (lambda (setting)
                 (let ((custom (car setting))
                       (value (cdr setting)))
@@ -73,6 +73,7 @@
                    pg-project
                    pg-programming
                    ;; pg-programming-alloy
+                   pg-programming-arduino
                    pg-programming-cc
                    ;; pg-programming-commonlisp
                    pg-programming-css

@@ -48,6 +48,39 @@
                   "SUBSYSTEM==\"power_supply\", "
                   "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
 
+(define %acm-udev-rule
+  (udev-rule
+   "90-extraacl.rules"
+   (string-append "KERNEL==\"ttyUSB[0-9]*\", "
+                  "TAG+=\"udev-acl\", "
+                  "TAG+=\"uaccess\", "
+                  "OWNER=\"phil-gab99\""
+                  "\n"
+                  "KERNEL==\"ttyACM[0-9]*\", "
+                  "TAG+=\"udev-acl\", "
+                  "TAG+=\"uaccess\", "
+                  "OWNER=\"phil-gab99\"")))
+
+(define %open-ocd-udev-rule
+  (udev-rule
+   "98-openocd.rules"
+   (string-append "ACTION!=\"add|change\", "
+                  "GOTO=\"openocd_rules_end\""
+                  "\n"
+                  "SUBSYSTEM!=\"usb|tty|hidraw\", "
+                  "GOTO=\"openocd_rules_end\""
+                  "\n"
+                  "#Please keep this list sorted by VID:PID"
+                  "\n"
+                  "#CMSIS-DAP compatible adapters"
+                  "ATTRS{product}==\"*CMSIS-DAP*\", "
+                  "MODE=\"664\", "
+                  "GROUP=\"plugdev\""
+                  "\n"
+                  "LABEL=\"openocd_rules_end\"")))
+
+;; Define rest of rules
+
 (define %my-desktop-services
   (modify-services %desktop-services
                    (elogind-service-type config =>
@@ -111,6 +144,9 @@ EndSection
                                            "netdev"    ;; network devices
                                            "kvm"
                                            "tty"
+                                           "dialout"
+                                           "uucp"
+                                           "plugdev"
                                            "input"
                                            "libvirt"
                                            "charge"
@@ -125,6 +161,10 @@ EndSection
     (cons*
      (user-group (system? #t)
                  (name "charge"))
+     (user-group (system? #t)
+                 (name "uucp"))
+     (user-group (system? #t)
+                 (name "plugdev"))
      %base-groups))
 
    ;; Partition mounted on /boot/efi.

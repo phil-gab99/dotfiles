@@ -103,26 +103,65 @@ Add a ~udev~ rule to enable members of the ~charge~ group to control charging th
 
 #+end_src
 
+Add ~udev~ rules for Arduino setup.
+
+#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
+
+  (define %acm-udev-rule
+    (udev-rule
+     "90-extraacl.rules"
+     (string-append "KERNEL==\"ttyUSB[0-9]*\", "
+                    "TAG+=\"udev-acl\", "
+                    "TAG+=\"uaccess\", "
+                    "OWNER=\"phil-gab99\""
+                    "\n"
+                    "KERNEL==\"ttyACM[0-9]*\", "
+                    "TAG+=\"udev-acl\", "
+                    "TAG+=\"uaccess\", "
+                    "OWNER=\"phil-gab99\"")))
+
+  (define %open-ocd-udev-rule
+    (udev-rule
+     "98-openocd.rules"
+     (string-append "ACTION!=\"add|change\", "
+                    "GOTO=\"openocd_rules_end\""
+                    "\n"
+                    "SUBSYSTEM!=\"usb|tty|hidraw\", "
+                    "GOTO=\"openocd_rules_end\""
+                    "\n"
+                    "#Please keep this list sorted by VID:PID"
+                    "\n"
+                    "#CMSIS-DAP compatible adapters"
+                    "ATTRS{product}==\"*CMSIS-DAP*\", "
+                    "MODE=\"664\", "
+                    "GROUP=\"plugdev\""
+                    "\n"
+                    "LABEL=\"openocd_rules_end\"")))
+
+  ;; Define rest of rules
+
+#+end_src
+
 Override the default ~%desktop-services~ to add ~udev~ rules and apply other configuration.
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
-  (define %my-desktop-services
-    (modify-services %desktop-services
-                     (elogind-service-type config =>
-                                           (elogind-configuration
-                                            (inherit config)
-                                            (handle-lid-switch-external-power 'suspend)))
-                     (udev-service-type config =>
-                                        (udev-configuration
-                                         (inherit config)
-                                         (rules (cons* %charge-thresholds-udev-rule
-                                                       (udev-configuration-rules config)))))
-                     (network-manager-service-type config =>
-                                                   (network-manager-configuration
-                                                    (inherit config)
-                                                    (vpn-plugins (list network-manager-openvpn
-                                                                       network-manager-openconnect))))))
+    (define %my-desktop-services
+      (modify-services %desktop-services
+                       (elogind-service-type config =>
+                                             (elogind-configuration
+                                              (inherit config)
+                                              (handle-lid-switch-external-power 'suspend)))
+                       (udev-service-type config =>
+                                          (udev-configuration
+                                           (inherit config)
+                                           (rules (cons* %charge-thresholds-udev-rule
+                                                         (udev-configuration-rules config)))))
+                       (network-manager-service-type config =>
+                                                     (network-manager-configuration
+                                                      (inherit config)
+                                                      (vpn-plugins (list network-manager-openvpn
+                                                                         network-manager-openconnect))))))
 
 #+end_src
 
@@ -182,6 +221,9 @@ Define the ~base-operating-system~ which will be inherited by all machine config
                                              "netdev"    ;; network devices
                                              "kvm"
                                              "tty"
+                                             "dialout"
+                                             "uucp"
+                                             "plugdev"
                                              "input"
                                              "libvirt"
                                              "charge"
@@ -196,6 +238,10 @@ Define the ~base-operating-system~ which will be inherited by all machine config
       (cons*
        (user-group (system? #t)
                    (name "charge"))
+       (user-group (system? #t)
+                   (name "uucp"))
+       (user-group (system? #t)
+                   (name "plugdev"))
        %base-groups))
 
      ;; Partition mounted on /boot/efi.
