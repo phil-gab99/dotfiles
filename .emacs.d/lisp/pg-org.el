@@ -89,7 +89,7 @@
                                (java . t)
                                (shell . t)
                                (plantuml . t)
-                               (arduino . t)
+                               ;; (arduino . t)
                                ;; (jupyter . t)
                                (python . t)))
 

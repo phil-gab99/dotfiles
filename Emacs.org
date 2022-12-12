@@ -4278,7 +4278,7 @@ Org mode package for writing structured documents and more. Here are some useful
                                  (java . t)
                                  (shell . t)
                                  (plantuml . t)
-                                 (arduino . t)
+                                 ;; (arduino . t)
                                  ;; (jupyter . t)
                                  (python . t)))
 
@@ -5477,7 +5477,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-project
                      pg-programming
                      ;; pg-programming-alloy
-                     pg-programming-arduino
+                     ;; pg-programming-arduino
                      pg-programming-cc
                      ;; pg-programming-commonlisp
                      pg-programming-css

@@ -73,7 +73,7 @@
                    pg-project
                    pg-programming
                    ;; pg-programming-alloy
-                   pg-programming-arduino
+                   ;; pg-programming-arduino
                    pg-programming-cc
                    ;; pg-programming-commonlisp
                    pg-programming-css
