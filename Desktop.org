@@ -126,6 +126,7 @@ Workspaces:
                               ("rg-e310" '(5 "HDMI-1"))
                               ("jc-s139" '(5 "HDMI-1"))
                               ("jc-s1139" '(5 "DP-1"))
+                              ("rg-s142" '(5 "HDMI-1"))
                               ("rg-p310" '(5 "DP-1"))
                               ("cm-z240" '(5 "HDMI-1"))
                               ("entertainment" '(5 "HDMI-1"))))

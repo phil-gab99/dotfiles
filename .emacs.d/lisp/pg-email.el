@@ -32,6 +32,7 @@
        (mu4e-compose-format-flowed . t)
        (mu4e-compose-signature-auto-include . nil)
        (message-send-mail-function . ,#'smtpmail-send-it)
+       (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
        (mu4e-maildir-shortcuts . (;; ("/University/Inbox" . 117)
                                   ;; ("/University/Drafts" . 100)
                                   ("/Main/Inbox" . 109)

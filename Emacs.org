@@ -1542,6 +1542,7 @@ After having setup the file, make sure to run the following commands:
          (mu4e-compose-format-flowed . t)
          (mu4e-compose-signature-auto-include . nil)
          (message-send-mail-function . ,#'smtpmail-send-it)
+         (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
          (mu4e-maildir-shortcuts . (;; ("/University/Inbox" . 117)
                                     ;; ("/University/Drafts" . 100)
                                     ("/Main/Inbox" . 109)
@@ -3726,6 +3727,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (packages->manifest
    (list
+    (specification->package "bc")
     (specification->package "perl@5.34")))
 
 #+end_src
@@ -5399,6 +5401,12 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 #+end_src
 
 * Emacs Profile
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/early-init.el
+
+  (customize-set-variable 'package-enable-at-startup nil)
+
+#+end_src
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
