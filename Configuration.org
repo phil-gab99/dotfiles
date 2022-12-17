@@ -3172,6 +3172,7 @@ This is a script I tend to use when correcting student assignments to speed up m
                           *.docx) libreoffice "$f";;
                           *.lmc) emacsclient "$f";;
                           *.hs) emacsclient "$f";;
+                          *.pl) emacsclient "$f";;
                           *.sh) emacsclient "$f";;
                           *.txt) emacsclient "$f";;
                           *.py) emacsclient "$f";;

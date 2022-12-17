@@ -37,6 +37,7 @@ function apply {
                         *.docx) libreoffice "$f";;
                         *.lmc) emacsclient "$f";;
                         *.hs) emacsclient "$f";;
+                        *.pl) emacsclient "$f";;
                         *.sh) emacsclient "$f";;
                         *.txt) emacsclient "$f";;
                         *.py) emacsclient "$f";;
