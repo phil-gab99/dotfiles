@@ -47,26 +47,27 @@
 (unless pg/is-termux 
   (straight-use-package 'openwith)
   (when (require 'openwith nil 'noerror)
-    (customize-set-variable 'large-file-warning-threshold nil)
-    (customize-set-variable 'openwith-associations `((,(openwith-make-extension-regexp '("mpg"
-                                                                                         "mpeg"
-                                                                                         "mp4"
-                                                                                         "avi"
-                                                                                         "wmv"
-                                                                                         "mov"
-                                                                                         "flv"
-                                                                                         "ogm"
-                                                                                         "ogg"
-                                                                                         "mkv"))
-                                                      "mpv"
-                                                      (file))
-                                                     (,(openwith-make-extension-regexp '("odt"
-                                                                                         "ods"))
-                                                      "libreoffice"
-                                                      (file))
-                                                     (,(openwith-make-extension-regexp '("xopp"))
-                                                      "xournalpp"
-                                                      (file))))
+    (pg/customize-set-variables
+     `((large-file-warning-threshold . nil)
+       (openwith-associations . ((,(openwith-make-extension-regexp '("mpg"
+                                                                     "mpeg"
+                                                                     "mp4"
+                                                                     "avi"
+                                                                     "wmv"
+                                                                     "mov"
+                                                                     "flv"
+                                                                     "ogm"
+                                                                     "ogg"
+                                                                     "mkv"))
+                                  "mpv"
+                                  (file))
+                                 (,(openwith-make-extension-regexp '("odt"
+                                                                     "ods"))
+                                  "libreoffice"
+                                  (file))
+                                 (,(openwith-make-extension-regexp '("xopp"))
+                                  "xournalpp"
+                                  (file))))))
     (openwith-mode 1)))
 
 (provide 'pg-file)

@@ -22,13 +22,11 @@
     CUSTOM-SETS argument represents a plist where each entry's key is the custom
     variable one wishes to set and the corresponding value is the value to set to
     the custom variable."
-  (if (mapcar (lambda (setting)
-                (let ((custom (car setting))
-                      (value (cdr setting)))
-                  (customize-set-variable custom value)))
-              custom-sets)
-      t
-    nil))
+  (mapcar (lambda (setting)
+            (let ((custom (car setting))
+                  (value (cdr setting)))
+              (customize-set-variable custom value)))
+          custom-sets))
 
 ;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
