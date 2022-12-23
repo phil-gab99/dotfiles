@@ -31,6 +31,7 @@
        (mu4e-get-mail-command . "mbsync -a")
        (mu4e-compose-format-flowed . t)
        (mu4e-compose-signature-auto-include . nil)
+       (mu4e-sent-messages-behavior . delete)
        (message-send-mail-function . ,#'smtpmail-send-it)
        (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
        (mu4e-maildir-shortcuts . (;; ("/University/Inbox" . 117)

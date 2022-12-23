@@ -1541,6 +1541,7 @@ After having setup the file, make sure to run the following commands:
          (mu4e-get-mail-command . "mbsync -a")
          (mu4e-compose-format-flowed . t)
          (mu4e-compose-signature-auto-include . nil)
+         (mu4e-sent-messages-behavior . delete)
          (message-send-mail-function . ,#'smtpmail-send-it)
          (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
          (mu4e-maildir-shortcuts . (;; ("/University/Inbox" . 117)
@@ -5410,7 +5411,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-    ;;; init.el -*- lexical-binding: t; -*-
+  ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -5431,9 +5432,9 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (defun pg/customize-set-variables (custom-sets)
     "Sets the value of custom variables using `customize-set-variable'. The
-      `custom-sets' argument represents a plist where each entry's key is the
-      custom variable one wishes to set and the corresponding value is the value
-      to set to the custom variable."
+      CUSTOM-SETS argument represents a plist where each entry's key is the custom
+      variable one wishes to set and the corresponding value is the value to set to
+      the custom variable."
     (if (mapcar (lambda (setting)
                   (let ((custom (car setting))
                         (value (cdr setting)))
