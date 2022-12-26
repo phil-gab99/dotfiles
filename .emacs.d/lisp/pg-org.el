@@ -55,6 +55,7 @@
      (org-hide-emphasis-markers . t)
      (org-agenda-start-with-log-mode . t)
      (org-log-done . time)
+     (org-fontify-quote-and-verse-blocks . t)
      (org-log-into-drawer . t)
      (org-deadline-warning-days . 7)
      (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))

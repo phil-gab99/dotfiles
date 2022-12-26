@@ -2710,7 +2710,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   # extra-keys = [['ESC','/','-','HOME','UP','END','PGUP'], \
   #               ['TAB','CTRL','ALT','LEFT','DOWN','RIGHT','PGDN']]
   extra-keys = [['ESC','CTRL','/','UP','-'], \
-  ['TAB','ALT','LEFT','DOWN','RIGHT']]
+                ['TAB','ALT','LEFT','DOWN','RIGHT']]
 
   ### Configuration with additional popup keys (swipe up from an extra key)
   # extra-keys = [[ \
@@ -2865,6 +2865,9 @@ Acting with respect to window manager selected
 
           # Ensure that font folders are loaded correctly
           xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
+
+          # Set screen saver time
+          xset s 7200 7200
 
           # Make Java applications aware this is a non-reparenting window manager.
           export _JAVA_AWT_WM_NONREPARENTING=1

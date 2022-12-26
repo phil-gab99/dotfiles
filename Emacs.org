@@ -731,6 +731,8 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-hide                  ((t ( :foreground ,pg-onedark-variant-black))))
      `(org-level-4               ((t ( :foreground ,pg-onedark-variant-green))))
      `(org-date                  ((t ( :foreground ,pg-onedark-variant-blue))))
+     `(org-quote                 ((t ( :slant italic
+                                       :inherit (variable-pitch)))))
      `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                  fixed-pitch)))))
      `(org-document-title        ((t ( :foreground ,pg-onedark-variant-whitestd
@@ -968,6 +970,8 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-hide                  ((t ( :foreground ,pg-onelight-variant-whitebg))))
      `(org-level-4               ((t ( :foreground ,pg-onelight-variant-green))))
      `(org-date                  ((t ( :foreground ,pg-onelight-variant-blue))))
+     `(org-quote                 ((t ( :slant italic
+                                       :inherit (variable-pitch)))))
      `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                  fixed-pitch)))))
      `(org-document-title        ((t ( :foreground ,pg-onelight-variant-blackstd
@@ -3032,7 +3036,12 @@ Some general tools for programming:
     (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
   (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
   (with-eval-after-load 'arduino-mode
-    (customize-set-variable 'arduino-mode-home "~/Projects/Arduino/"))
+    (pg/customize-set-variables
+     `((arduino-executable . ,(expand-file-name "~/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino/arduino"))
+       (arduino-mode-home . "~/Projects/Arduino/")))
+    (require 'ede-arduino))
+  (with-eval-after-load 'ede-arduino
+    (customize-set-variable 'ede-arduino-arduino-command (expand-file-name "~/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino/arduino")))
 
 #+end_src
 
@@ -4248,6 +4257,7 @@ Org mode package for writing structured documents and more. Here are some useful
        (org-hide-emphasis-markers . t)
        (org-agenda-start-with-log-mode . t)
        (org-log-done . time)
+       (org-fontify-quote-and-verse-blocks . t)
        (org-log-into-drawer . t)
        (org-deadline-warning-days . 7)
        (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
@@ -5488,7 +5498,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-project
                      pg-programming
                      ;; pg-programming-alloy
-                     ;; pg-programming-arduino
+                     pg-programming-arduino
                      pg-programming-cc
                      ;; pg-programming-commonlisp
                      pg-programming-css

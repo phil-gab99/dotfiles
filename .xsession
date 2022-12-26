@@ -8,6 +8,9 @@ case $1 in
         # Ensure that font folders are loaded correctly
         xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
 
+        # Set screen saver time
+        xset s 7200 7200
+
         # Make Java applications aware this is a non-reparenting window manager.
         export _JAVA_AWT_WM_NONREPARENTING=1
 

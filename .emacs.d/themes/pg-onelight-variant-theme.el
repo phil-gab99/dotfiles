@@ -104,6 +104,8 @@
    `(org-hide                  ((t ( :foreground ,pg-onelight-variant-whitebg))))
    `(org-level-4               ((t ( :foreground ,pg-onelight-variant-green))))
    `(org-date                  ((t ( :foreground ,pg-onelight-variant-blue))))
+   `(org-quote                 ((t ( :slant italic
+                                     :inherit (variable-pitch)))))
    `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                fixed-pitch)))))
    `(org-document-title        ((t ( :foreground ,pg-onelight-variant-blackstd
