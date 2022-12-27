@@ -2956,6 +2956,22 @@ This script extract most known archive formats:
 
 #+end_src
 
+** Arduino Flatpak Executable
+
+The script sets up correctly arduino IDE when installed from flatpak
+
+#+begin_src sh
+
+  arduino-flat
+
+#+end_src
+
+#+begin_src sh :tangle ~/.dotfiles/bin/arduino-flat :shebang #!/usr/bin/env sh
+
+  flatpak run --branch=stable --arch=x86_64 cc.arduino.arduinoide "$@"
+
+#+end_src
+
 ** Boot Fix
 
 This is not a script though just a set of commands I need to run when Guix fails to boot properly
