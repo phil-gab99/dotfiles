@@ -279,32 +279,33 @@
                                       (reply-to-html html)))
      (org-msg-recipient-names . nil))))
 
-(straight-use-package 'org-roam)
-(with-eval-after-load 'org
-  (if pg/is-windows
-      (straight-use-package 'emacsql-sqlite3))
-  (require 'org-roam))
-(with-eval-after-load 'org-roam
-  (pg/customize-set-variables
-   `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-     (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
-     (org-roam-capture-templates . (("d" "default" plain
-                                     "%?"
-                                     :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                        "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                     :unnarrowed t)
-                                    ("s" "design" plain
-                                     "%?"
-                                     :if-new (file+head "IFT-6253/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                        "#+title: ift6253-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                     :unnarrowed t)))))
-  (org-roam-setup)
-  (with-eval-after-load 'general
-    (pg/leader-keys
-      "on" '(:ignore t :which-key "notes")
-      "onl" '(org-roam-buffer-toggle :which-key "links")
-      "onf" '(org-roam-node-find :which-key "find/create")
-      "oni" '(org-roam-node-insert :which-key "insert/create"))))
+(unless pg/is-termux
+  (straight-use-package 'org-roam)
+  (with-eval-after-load 'org
+    (if pg/is-windows
+        (straight-use-package 'emacsql-sqlite3))
+    (require 'org-roam))
+  (with-eval-after-load 'org-roam
+    (pg/customize-set-variables
+     `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+       (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
+       (org-roam-capture-templates . (("d" "default" plain
+                                       "%?"
+                                       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                          "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                       :unnarrowed t)
+                                      ("s" "design" plain
+                                       "%?"
+                                       :if-new (file+head "IFT-6253/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                          "#+title: ift6253-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                       :unnarrowed t)))))
+    (org-roam-setup)
+    (with-eval-after-load 'general
+      (pg/leader-keys
+        "on" '(:ignore t :which-key "notes")
+        "onl" '(org-roam-buffer-toggle :which-key "links")
+        "onf" '(org-roam-node-find :which-key "find/create")
+        "oni" '(org-roam-node-insert :which-key "insert/create")))))
 
 (straight-use-package 'org-fragtog)
 (unless (fboundp 'org-fragtog-mode)
