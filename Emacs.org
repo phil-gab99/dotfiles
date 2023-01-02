@@ -121,7 +121,8 @@ Emacs interface for guix package manager.
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  (first (lookup-inferior-packages inferior "emacs-guix"))
+  ;; (first (lookup-inferior-packages inferior "emacs-guix"))
+  (specification->package "emacs-guix")
 
 #+end_src
 
@@ -157,7 +158,8 @@ Scheme REPL
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  (first (lookup-inferior-packages inferior "emacs-geiser"))
+  ;; (first (lookup-inferior-packages inferior "emacs-geiser"))
+  (specification->package "emacs-geiser")
 
 #+end_src
 

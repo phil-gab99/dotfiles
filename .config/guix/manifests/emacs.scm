@@ -20,9 +20,11 @@
   ;; (specification->package "emacs-exwm")
   ;; (specification->package "emacs-desktop-environment")
   
-  (first (lookup-inferior-packages inferior "emacs-guix"))
+  ;; (first (lookup-inferior-packages inferior "emacs-guix"))
+  (specification->package "emacs-guix")
   
-  (first (lookup-inferior-packages inferior "emacs-geiser"))
+  ;; (first (lookup-inferior-packages inferior "emacs-geiser"))
+  (specification->package "emacs-geiser")
   
   ;; (specification->package "emacs-pinentry")
   (specification->package "pinentry-emacs")

@@ -1116,6 +1116,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 #+begin_src conf :tangle ~/.dotfiles/.config/qutebrowser/quickmarks
 
   gn https://github.com/notifications
+  jp https://www.tofugu.com/learn-japanese/
   dot https://github.com/phil-gab99/dotfiles
   ddg https://duckduckgo.com/?q
   gh https://github.com
@@ -2866,8 +2867,9 @@ Acting with respect to window manager selected
           # Ensure that font folders are loaded correctly
           xset +fp $(dirname $(readlink -f ~/.guix-extra-profiles/themes-fonts/themes-fonts/share/fonts/truetype/fonts.dir))
 
-          # Set screen saver time
-          xset s 7200 7200
+          # Set screen behaviours
+          xset dpms 3600 3600 3600
+          xset s off
 
           # Make Java applications aware this is a non-reparenting window manager.
           export _JAVA_AWT_WM_NONREPARENTING=1
