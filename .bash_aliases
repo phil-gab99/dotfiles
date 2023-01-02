@@ -80,4 +80,4 @@ alias qutebrowser='qutebrowser --qt-flag disable-seccomp-filter-sandbox'
 alias spyder="spyder --no-web-widgets"
 
 # Arduino alias as it is not exported by flatpak
-alias arduino="~/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino/arduino"
+alias arduino="~/.local/share/flatpak/exports/bin/cc.arduino.arduinoide"
