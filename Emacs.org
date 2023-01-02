@@ -146,9 +146,9 @@ Scheme REPL
     (add-hook 'geiser-repl-mode-hook #'corfu-mode)
     (with-eval-after-load 'geiser
       (pg/customize-set-variables
-       `((geiser-guile-load-init-file-p . t)
+       `((geiser-guile-load-init-file . t)
          (geiser-repl-company-p . nil)
-         (geiser-guile-manual-lookup-other-window-p . t)
+         (geiser-guile-manual-lookup-other-window . t)
          (geiser-guile-load-path . ("/run/current-system/profile/share/guile/3.0"))
          (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))))
 
