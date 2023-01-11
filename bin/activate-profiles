@@ -17,26 +17,26 @@ for profile in $profiles; do
 
     manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
 
-  if [ -f $manifestPath ]; then
-    echo
-    echo -e "${GREEN}Activating profile:" $manifestPath "${NC}"
-    echo
+    if [ -f $manifestPath ]; then
+        echo
+        echo -e "${GREEN}Activating profile:" $manifestPath "${NC}"
+        echo
 
-    mkdir -p $profilePath
-    guix package --manifest=$manifestPath --profile="$profilePath/$profileName"
+        mkdir -p $profilePath
+        guix package --manifest=$manifestPath --profile="$profilePath/$profileName"
 
-    # Source the new profile
-    GUIX_PROFILE="$profilePath/$profileName"
-    if [ -f $GUIX_PROFILE/etc/profile ]; then
-        . "$GUIX_PROFILE"/etc/profile
+        # Source the new profile
+        GUIX_PROFILE="$profilePath/$profileName"
+        if [ -f $GUIX_PROFILE/etc/profile ]; then
+            . "$GUIX_PROFILE"/etc/profile
+        else
+            echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+            exit 1
+        fi
     else
-        echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+        echo "No profile found at path" $profilePath
         exit 1
     fi
-  else
-    echo "No profile found at path" $profilePath
-    exit 1
-  fi
 done
 
 exit 0

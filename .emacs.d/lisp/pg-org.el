@@ -148,8 +148,7 @@
                                       ("m" "Misc" tags-todo "other")
 
                                       ("s" "Schedule" agenda ""
-                                       ((org-agenda-files org-agenda-files))
-                                       ("~/Documents/Schedule-S6.pdf"))
+                                       ((org-agenda-files org-agenda-files)))
 
                                       ("w" "Work Status"
                                        ((todo "WAIT"
@@ -176,6 +175,10 @@
                                  ("tt" "Task" entry
                                   (file+olp "~/Sync/Agenda/Tasks.org" "Active")
                                   "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+
+                                 ("tr" "Repeat" entry
+                                  (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
+                                  "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
 
                                  ("j" "Meetings")
                                  ("jm" "Meeting" entry
@@ -253,14 +256,14 @@
   (with-eval-after-load 'org-notify
     (org-notify-start)
     (setq org-notify-map nil)
-    (org-notify-add 'default '(:time "1w" :actions notify/window :period "1h" :duration 5))
-    (org-notify-add 'meeting '(:time "1w" :actions email :period "1d"))))
-
-;; (org-notify-add 'appt
-;;                 '(:time "-1s" :period "20s" :duration 10 :actions (-message -ding))
-;;                 '(:time "15m" :period "2m" :duration 100 :actions -notify)
-;;                 '(:time "2h" :period "5m" :actions -message)
-;;                 '(:time "3d" :actions -email))
+    (org-notify-add 'default '( :time "1w"
+                                :actions notify/window
+                                :period "1h"
+                                :duration 5))
+    (org-notify-add 'repeat '( :time "1w"
+                               :actions notify/window
+                               :period "1w"
+                               :duration 5))))
 
 (straight-use-package 'org-msg)
 (unless (fboundp 'org-msg-mode)
@@ -294,10 +297,10 @@
                                        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                           "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                        :unnarrowed t)
-                                      ("s" "design" plain
+                                      ("m" "comp-assist math" plain
                                        "%?"
-                                       :if-new (file+head "IFT-6253/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                          "#+title: ift6253-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                       :if-new (file+head "MAT-1681/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                          "#+title: mat1681-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                        :unnarrowed t)))))
     (org-roam-setup)
     (with-eval-after-load 'general

@@ -6,5 +6,11 @@
 
 config_version: 2
 settings:
+  content.media.audio_capture:
+    https://teams.microsoft.com: true
+  content.media.audio_video_capture:
+    https://teams.microsoft.com: true
+  content.media.video_capture:
+    https://teams.microsoft.com: true
   content.notifications.enabled:
     https://www.reddit.com: false

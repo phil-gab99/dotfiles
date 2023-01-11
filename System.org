@@ -403,8 +403,34 @@ This script deletes the generations of a given profile:
 
 #+begin_src sh :tangle ~/.dotfiles/bin/delete-generations :shebang #!/usr/bin/env sh
 
-  profile=$1
-  guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --delete-generations
+  GREEN='\033[1;32m'
+  RED='\033[1;30m'
+  NC='\033[0m'
+
+  profiles=$*
+  if [[ $# -eq 0 ]]; then
+      profiles="$XDG_CONFIG_HOME/guix/manifests/*.scm";
+  fi
+
+  for profile in $profiles; do
+      # Remove the path and file extension, if any
+      profileName=$(basename $profile)
+      profileName="${profileName%.*}"
+
+      profilePath="$GUIX_EXTRA_PROFILES/$profileName"
+      manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
+
+    if [ -f $manifestPath ]; then
+      echo
+      echo -e "${GREEN}Deleting profile generations:" $profileName "${NC}"
+      echo
+
+      guix package --profile="$profilePath/$profileName" --delete-generations
+    else
+      echo "${RED}No profile found at path" $profilePath "${NC}"
+      exit 1
+    fi
+  done
 
   exit 0
 
@@ -440,26 +466,26 @@ This script accepts a space-separated list of manifest file names (without exten
 
       manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
 
-    if [ -f $manifestPath ]; then
-      echo
-      echo -e "${GREEN}Activating profile:" $manifestPath "${NC}"
-      echo
+      if [ -f $manifestPath ]; then
+          echo
+          echo -e "${GREEN}Activating profile:" $manifestPath "${NC}"
+          echo
 
-      mkdir -p $profilePath
-      guix package --manifest=$manifestPath --profile="$profilePath/$profileName"
+          mkdir -p $profilePath
+          guix package --manifest=$manifestPath --profile="$profilePath/$profileName"
 
-      # Source the new profile
-      GUIX_PROFILE="$profilePath/$profileName"
-      if [ -f $GUIX_PROFILE/etc/profile ]; then
-          . "$GUIX_PROFILE"/etc/profile
+          # Source the new profile
+          GUIX_PROFILE="$profilePath/$profileName"
+          if [ -f $GUIX_PROFILE/etc/profile ]; then
+              . "$GUIX_PROFILE"/etc/profile
+          else
+              echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+              exit 1
+          fi
       else
-          echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
+          echo "No profile found at path" $profilePath
           exit 1
       fi
-    else
-      echo "No profile found at path" $profilePath
-      exit 1
-    fi
   done
 
   exit 0

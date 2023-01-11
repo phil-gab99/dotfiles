@@ -120,7 +120,7 @@ export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
 # Start the shepherd daemon
 if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
-    shepherd -l $XDG_CONFIG_HOME/shepherd/shepherd.log
+    shepherd # -l $XDG_CONFIG_HOME/shepherd/shepherd.log
 fi
 
 # System 76 charge thresholds set to safe charge
