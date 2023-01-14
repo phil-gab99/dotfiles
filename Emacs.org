@@ -186,9 +186,10 @@ Scheme REPL
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-passwords.el
 
-  (require 'auth-source)
-  (with-eval-after-load 'auth-source
-    (customize-set-variable 'auth-sources '("~/.authinfo.gpg")))
+  (unless (not pg/is-linux)
+    (require 'auth-source)
+    (with-eval-after-load 'auth-source
+      (customize-set-variable 'auth-sources '("~/.authinfo.gpg"))))
 
 #+end_src
 

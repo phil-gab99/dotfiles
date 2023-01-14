@@ -1,9 +1,10 @@
 ;;; pg-passwords.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(require 'auth-source)
-(with-eval-after-load 'auth-source
-  (customize-set-variable 'auth-sources '("~/.authinfo.gpg")))
+(unless (not pg/is-linux)
+  (require 'auth-source)
+  (with-eval-after-load 'auth-source
+    (customize-set-variable 'auth-sources '("~/.authinfo.gpg"))))
 
 (unless (or pg/is-termux
             pg/is-windows)
