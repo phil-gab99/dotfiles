@@ -20,6 +20,8 @@
   (defun pg/arduino-sketch-new (sketch)
     "Creates a new Arduino Sketch."
     (interactive (list (read-from-minibuffer "Arduino new sketch file: ")))
+    (unless (featurep 'arduino-mode)
+      (require 'arduino-mode))
     (let* ((sketch-dir (concat arduino-mode-home "Sketches/code/" sketch))
            (sketch-file (concat sketch-dir "/" sketch ".ino")))
       (make-directory sketch-dir)

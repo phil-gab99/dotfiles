@@ -735,6 +735,7 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-level-4               ((t ( :foreground ,pg-onedark-variant-green))))
      `(org-date                  ((t ( :foreground ,pg-onedark-variant-blue))))
      `(org-quote                 ((t ( :slant italic
+                                       :background ,pg-onedark-variant-codeblockbg
                                        :inherit (variable-pitch)))))
      `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                  fixed-pitch)))))
@@ -974,6 +975,7 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-level-4               ((t ( :foreground ,pg-onelight-variant-green))))
      `(org-date                  ((t ( :foreground ,pg-onelight-variant-blue))))
      `(org-quote                 ((t ( :slant italic
+                                       :background ,pg-onelight-variant-codeblockbg
                                        :inherit (variable-pitch)))))
      `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                  fixed-pitch)))))
@@ -1136,9 +1138,9 @@ Theme inspired by the popular Atom One Dark theme.
   (require 'diminish)
 
   (with-eval-after-load 'diminish
-    (dolist (mode '(auto-revert-mode
-                    buffer-face-mode
-                    visual-line-mode))
+    (dolist (mode #'(auto-revert-mode
+                     buffer-face-mode
+                     visual-line-mode))
       (diminish mode)))
 
 #+end_src
@@ -3052,6 +3054,8 @@ Some general tools for programming:
     (defun pg/arduino-sketch-new (sketch)
       "Creates a new Arduino Sketch."
       (interactive (list (read-from-minibuffer "Arduino new sketch file: ")))
+      (unless (featurep 'arduino-mode)
+        (require 'arduino-mode))
       (let* ((sketch-dir (concat arduino-mode-home "Sketches/code/" sketch))
              (sketch-file (concat sketch-dir "/" sketch ".ino")))
         (make-directory sketch-dir)

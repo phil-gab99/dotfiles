@@ -105,6 +105,7 @@
    `(org-level-4               ((t ( :foreground ,pg-onedark-variant-green))))
    `(org-date                  ((t ( :foreground ,pg-onedark-variant-blue))))
    `(org-quote                 ((t ( :slant italic
+                                     :background ,pg-onedark-variant-codeblockbg
                                      :inherit (variable-pitch)))))
    `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                fixed-pitch)))))

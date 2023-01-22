@@ -23,9 +23,9 @@
 (require 'diminish)
 
 (with-eval-after-load 'diminish
-  (dolist (mode '(auto-revert-mode
-                  buffer-face-mode
-                  visual-line-mode))
+  (dolist (mode #'(auto-revert-mode
+                   buffer-face-mode
+                   visual-line-mode))
     (diminish mode)))
 
 (straight-use-package 'all-the-icons)
