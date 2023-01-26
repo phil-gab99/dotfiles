@@ -2,9 +2,9 @@
 ;; Author: Philippe Gabriel
 
 (defun org-screenshot ()
-  "Take a screenshot into a time stamped unique-named file in the `img'
-    directory with respect to the org-buffer's location and insert a link to
-    this file. Requires `imageMagick' for undertaking screenshots."
+  "Take a screenshot into a time stamped unique-named file in the img
+   directory with respect to the org-buffer's location and insert a link to
+   this file. Requires imageMagick for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
