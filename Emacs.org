@@ -1676,7 +1676,7 @@ Allows for notification pop-up and mode line count when receiving emails
                   inferior-python-mode-hook
                   inferior-haskell-mode-hook
                   prolog-inferior-mode-hook
-                  coming-mode-hook
+                  comint-mode-hook
                   helpful-mode-hook
                   gfm-view-mode-hook
                   compilation-mode-hook
@@ -3069,9 +3069,35 @@ Some general tools for programming:
       (pg/customize-set-variables
        `((arduino-executable . ,(expand-file-name "~/bin/arduino-flat"))
          (arduino-mode-home . "~/Projects/Arduino/")))
-      (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)))
+      (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)
+      (with-eval-after-load 'lsp-mode
+        (add-to-list 'lsp-language-id-configuration '(arduino-mode . "arduino"))
+        (lsp-register-client
+         (make-lsp--client
+          :new-connection (lsp-stdio-connection `("arduino-language-server"
+                                                  "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
+                                                  "-cli" ,(expand-file-name "~/Packages/arduino-cli")
+                                                  "-cli-config" ,(expand-file-name "~/.arduino15/arduino-cli.yaml")
+                                                  "-fqbn" "arduino:avr:uno"))
+          :major-modes '(arduino-mode)
+          :server-id 'arduino)))))
 
 #+end_src
+
+***** Package | company-arduino
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-arduino.el
+
+  (unless (or pg/is-termux
+              pg/is-windows)
+    (straight-use-package 'company-arduino)
+    (add-hook 'irony-mode-hook 'company-arduino-turn-on)
+    (unless (fboundp 'irony-mode)
+      (autoload #'irony-mode "irony" nil t))
+    (add-hook 'arduino-mode-hook 'irony-mode)
+    (setq company-arduino-sketch-directory-regex (file-truename "~/Projects/Arduino")))
+
+#+end_Src
 
 ***** Arduino package
 
@@ -3136,11 +3162,17 @@ Some general tools for programming:
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
+  (defun pg/company-c-headers-get-system-path ()
+    "Return the system include path for the current buffer."
+    (let ((default `(,(expand-file-name "~/.guix-extra-profiles/cc/cc/include/"))))
+      (company-arduino-append-include-dirs default t)))
+
   (straight-use-package 'company-c-headers)
   (with-eval-after-load 'company
     (with-eval-after-load 'cc-mode
       (require 'company-c-headers)))
   (with-eval-after-load 'company-c-headers
+    (customize-set-variable 'company-c-headers-path-system 'pg/company-c-headers-get-system-path)
     (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
 
 #+end_src
@@ -3157,6 +3189,27 @@ Some general tools for programming:
                   c++-mode-hook
                   objc-mode-hook))
     (add-hook mode #'lsp-deferred))
+
+#+end_src
+
+***** Package | irony
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
+
+  (straight-use-package 'irony)
+  (dolist (mode '(c-mode-hook
+                  c++-mode-hook
+                  objc-mode-hook))
+    (add-hook mode #'irony-mode))
+  (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
+
+#+end_src
+
+***** Package | company-irony
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
+
+  (straight-use-package 'company-irony)
 
 #+end_src
 
@@ -3223,6 +3276,15 @@ Some general tools for programming:
 
   ;;; pg-programming-css.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | css-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-css.el
+
+  (with-eval-after-load 'css-mode
+    (customize-set-variable 'css-indent-offset 2))
 
 #+end_src
 
@@ -3431,6 +3493,25 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
   (provide 'pg-programming-haskell)
+
+#+end_src
+
+**** HTML
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
+
+  ;;; pg-programming-html.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | mhtml-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
+
+  (add-hook 'mhtml-mode-hook #'lsp-deferred)
 
 #+end_src
 
@@ -4050,6 +4131,8 @@ Custom syntax highlighting for LMC assembly language.
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'typescript-mode-hook #'lsp-deferred)
+  (with-eval-after-load 'typescript-mode
+    (customize-set-variable 'typescript-indent-level 2))
 
 #+end_src
 

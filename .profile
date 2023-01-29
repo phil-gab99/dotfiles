@@ -1,5 +1,5 @@
-# Append user scripts to path
-export PATH="$PATH:$HOME/bin"
+# Append user scripts and other executables to path
+export PATH="$PATH:$HOME/bin:$HOME/Packages"
 
 # Load the default Guix profile
 GUIX_PROFILE="$HOME/.guix-profile"
@@ -52,12 +52,18 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # Some script make use of path to cache directory
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# Make npm apps visible to Path
+export PATH="$PATH:$HOME/.npm/bin"
+
 # Make Flatpak apps visible to launcher
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share/flatpak/exports/share"
 
-# Make Nix apps visible to launcher
+# Make Nix apps visible to launcher and Path
 export PATH="$PATH:$HOME/.nix-profile/bin"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.nix-profile/share"
+
+# Arduino home directory
+export ARDUINO_HOME="$HOME/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino"
 
 # Make applications in other profiles visible to launcher
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/audio/audio/share"

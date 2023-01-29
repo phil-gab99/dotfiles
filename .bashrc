@@ -32,6 +32,9 @@ if [ $? -eq 0 ]; then
 fi
 unset __conda_setup
 
+# Angular CLI autocompletion
+source <(ng completion script)
+
 ################################################################################
 # HISTORY CONTROL
 ################################################################################

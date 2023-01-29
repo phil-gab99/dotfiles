@@ -35,6 +35,26 @@
     (pg/customize-set-variables
      `((arduino-executable . ,(expand-file-name "~/bin/arduino-flat"))
        (arduino-mode-home . "~/Projects/Arduino/")))
-    (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)))
+    (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)
+    (with-eval-after-load 'lsp-mode
+      (add-to-list 'lsp-language-id-configuration '(arduino-mode . "arduino"))
+      (lsp-register-client
+       (make-lsp--client
+        :new-connection (lsp-stdio-connection `("arduino-language-server"
+                                                "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
+                                                "-cli" ,(expand-file-name "~/Packages/arduino-cli")
+                                                "-cli-config" ,(expand-file-name "~/.arduino15/arduino-cli.yaml")
+                                                "-fqbn" "arduino:avr:uno"))
+        :major-modes '(arduino-mode)
+        :server-id 'arduino)))))
+
+(unless (or pg/is-termux
+            pg/is-windows)
+  (straight-use-package 'company-arduino)
+  (add-hook 'irony-mode-hook 'company-arduino-turn-on)
+  (unless (fboundp 'irony-mode)
+    (autoload #'irony-mode "irony" nil t))
+  (add-hook 'arduino-mode-hook 'irony-mode)
+  (setq company-arduino-sketch-directory-regex (file-truename "~/Projects/Arduino")))
 
 (provide 'pg-programming-arduino)

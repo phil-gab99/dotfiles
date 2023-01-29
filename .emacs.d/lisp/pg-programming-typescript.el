@@ -8,6 +8,8 @@
 (unless (fboundp 'lsp-deferred)
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (add-hook 'typescript-mode-hook #'lsp-deferred)
+(with-eval-after-load 'typescript-mode
+  (customize-set-variable 'typescript-indent-level 2))
 
 (with-eval-after-load 'typescript-mode
   (with-eval-after-load 'lsp-mode
