@@ -2,3 +2,5 @@
 ;; Author: Philippe Gabriel
 
 (add-hook 'mhtml-mode-hook #'lsp-deferred)
+
+(provide 'pg-programming-html)

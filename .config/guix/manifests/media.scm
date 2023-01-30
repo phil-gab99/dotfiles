@@ -5,7 +5,7 @@
   (specification->package "scrot")
   (specification->package "xclip")
   (specification->package "libreoffice")
-  ;; (specification->package "gimp")
+  (specification->package "gimp")
   (specification->package "evince")
   (specification->package "simple-scan")
   (specification->package "xdg-desktop-portal-gtk")

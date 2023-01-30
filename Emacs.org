@@ -3362,13 +3362,30 @@ Some general tools for programming:
 
 **** Emacs Lisp
 
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-elisp.el
+
+  ;;; pg-programming-elisp.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
 ***** Package | ielm
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-elisp.el
 
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'ielm-mode-hook #'corfu-mode)
+
+#+end_src
+
+***** Emacs Lisp Package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-elisp.el
+
+  (provide 'pg-programming-elisp)
 
 #+end_src
 
@@ -3512,6 +3529,14 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
 
   (add-hook 'mhtml-mode-hook #'lsp-deferred)
+
+#+end_src
+
+***** HTML package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
+
+  (provide 'pg-programming-html)
 
 #+end_src
 
@@ -5617,9 +5642,11 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      ;; pg-programming-commonlisp
                      pg-programming-css
                      pg-programming-docker
+                     pg-programming-elisp
                      pg-programming-git
                      pg-programming-groovy
                      pg-programming-haskell
+                     pg-programming-html
                      pg-programming-java
                      pg-programming-lmc
                      pg-programming-markdown

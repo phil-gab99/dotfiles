@@ -76,9 +76,11 @@
                    ;; pg-programming-commonlisp
                    pg-programming-css
                    pg-programming-docker
+                   pg-programming-elisp
                    pg-programming-git
                    pg-programming-groovy
                    pg-programming-haskell
+                   pg-programming-html
                    pg-programming-java
                    pg-programming-lmc
                    pg-programming-markdown
