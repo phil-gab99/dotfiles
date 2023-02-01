@@ -153,7 +153,8 @@ animation-charging-framerate = 750
 
 [module/backlight]
 type = internal/backlight
-card = intel_backlight
+card = acpi_video0
+use-actual-brightness = true
 format = | <ramp> <label> |
 label = %percentage%%
 ramp-0 = 🌕

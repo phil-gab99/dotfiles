@@ -2514,7 +2514,8 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
   [module/backlight]
   type = internal/backlight
-  card = intel_backlight
+  card = acpi_video0
+  use-actual-brightness = true
   format = | <ramp> <label> |
   label = %percentage%%
   ramp-0 = 🌕
