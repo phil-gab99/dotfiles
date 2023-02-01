@@ -204,4 +204,9 @@
     (with-eval-after-load 'diminish
       (diminish #'evil-collection-unimpaired-mode))))
 
+(straight-use-package 'editorconfig)
+(unless (fboundp 'editorconfig-mode)
+  (autoload #'editorconfig-mode "editorconfig" nil t))
+(editorconfig-mode 1)
+
 (provide 'pg-editing)

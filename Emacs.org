@@ -1998,6 +1998,17 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+end_src
 
+*** Package | editorconfig
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
+
+  (straight-use-package 'editorconfig)
+  (unless (fboundp 'editorconfig-mode)
+    (autoload #'editorconfig-mode "editorconfig" nil t))
+  (editorconfig-mode 1)
+
+#+end_src
+
 *** Editing experience package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
