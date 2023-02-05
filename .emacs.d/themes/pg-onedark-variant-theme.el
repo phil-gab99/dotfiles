@@ -22,6 +22,7 @@
     ("pg-onedark-variant-modebox"     . "#181a1f")
     ("pg-onedark-variant-comments"    . "#737373")
     ("pg-onedark-variant-codeblockbg" . "#0d0d0d")
+    ("pg-onedark-variant-quotefg"     . "#ffd700")
     ("pg-onedark-variant-code"        . "#ffa500")
     ("pg-onedark-variant-verbatim"    . "#00ff00")
     ("pg-onedark-variant-table"       . "#cdb5cd")
@@ -105,6 +106,7 @@
    `(org-level-4               ((t ( :foreground ,pg-onedark-variant-green))))
    `(org-date                  ((t ( :foreground ,pg-onedark-variant-blue))))
    `(org-quote                 ((t ( :slant italic
+                                     :foreground ,pg-onedark-variant-quotefg
                                      :background ,pg-onedark-variant-codeblockbg
                                      :inherit (variable-pitch)))))
    `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face

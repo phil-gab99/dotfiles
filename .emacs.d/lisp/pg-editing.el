@@ -96,10 +96,9 @@
 
 (require 'abbrev)
 (with-eval-after-load 'abbrev
-  (if (fboundp 'diminish)
-      (diminish #'abbrev-mode)
-    (with-eval-after-load 'diminish
-      (diminish #'abbrev-mode))))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'abbrev-mode))
 
 (straight-use-package 'highlight-indent-guides)
 (unless (fboundp 'highlight-indent-guides-mode)
@@ -110,14 +109,14 @@
    '((highlight-indent-guides-responsive . stack)
      (highlight-indent-guides-method . character))))
 
-(straight-use-package 'smartparens)
-(require 'smartparens)
-(with-eval-after-load 'smartparens
-  (smartparens-global-mode)
-  (if (boundp 'diminish)
-      (diminish #'smartparens-mode)
-    (with-eval-after-load 'diminish
-      (diminish #'smartparens-mode))))
+(straight-use-package 'autopair)
+(unless (fboundp 'autopair-global-mode)
+  (autoload #'autopair-global-mode "autopair" nil t))
+(autopair-global-mode 1)
+(with-eval-after-load 'autopair
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'autopair-mode))
 
 (straight-use-package 'outshine)
 (unless (fboundp 'outshine-mode)
@@ -149,10 +148,9 @@
                 less-css-mode-hook))
   (add-hook mode #'rainbow-mode))
 (with-eval-after-load 'rainbow-mode
-  (if (boundp 'diminish)
-      (diminish #'rainbow-mode)
-    (with-eval-after-load 'diminish
-      (diminish #'rainbow-mode))))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'rainbow-mode))
 
 (straight-use-package 'emojify)
 (require 'emojify)
@@ -199,14 +197,17 @@
   (require 'evil-collection))
 (with-eval-after-load 'evil-collection
   (evil-collection-init)
-  (if (boundp 'diminish)
-      (diminish #'evil-collection-unimpaired-mode)
-    (with-eval-after-load 'diminish
-      (diminish #'evil-collection-unimpaired-mode))))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'evil-collection-unimpaired-mode))
 
 (straight-use-package 'editorconfig)
 (unless (fboundp 'editorconfig-mode)
   (autoload #'editorconfig-mode "editorconfig" nil t))
 (editorconfig-mode 1)
+(with-eval-after-load 'editorconfig
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'editorconfig-mode))
 
 (provide 'pg-editing)

@@ -102,10 +102,9 @@
 (with-eval-after-load 'which-key
   (customize-set-variable 'which-key-idle-delay 1)
   (which-key-mode)
-  (if (fboundp 'diminish)
-      (diminish #'which-key-mode)
-    (with-eval-after-load 'diminish
-      (diminish #'which-key-mode))))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'which-key-mode))
 
 (straight-use-package 'helm)
 (unless (fboundp 'helm-next-line)

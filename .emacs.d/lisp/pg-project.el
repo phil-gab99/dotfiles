@@ -9,10 +9,9 @@
   (when (file-directory-p "~/Projects")
     (customize-set-variable 'projectile-project-search-path '("~/Projects")))
   (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
-  (if (boundp 'diminish)
-      (diminish #'projectile-mode)
-    (with-eval-after-load 'diminish
-      (diminish #'projectile-mode)))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'projectile-mode)
   (with-eval-after-load 'general
     (pg/leader-keys
       "p" '(:ignore t :which-key "project")
@@ -50,10 +49,9 @@
   (set-face-foreground 'git-gutter:added "LightGreen")
   (set-face-foreground 'git-gutter:modified "LightGoldenrod")
   (set-face-foreground 'git-gutter:deleted "LightCoral")
-  (if (fboundp 'diminish)
-      (diminish 'git-gutter-mode)
-    (with-eval-after-load 'diminish
-      (diminish 'git-gutter-mode))))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'git-gutter-mode))
 
 (straight-use-package 'forge)
 (with-eval-after-load 'magit

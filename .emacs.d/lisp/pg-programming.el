@@ -125,10 +125,9 @@
                                    (yas-activate-extra-mode 'fundamental-mode)))
 (with-eval-after-load 'yasnippet
   (yas-global-mode)
-  (if (fboundp 'diminish)
-      (diminish 'yas-minor-mode)
-    (with-eval-after-load 'diminish)
-    (diminish 'yas-minor-mode)))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'yas-minor-mode))
 
 (straight-use-package 'yasnippet-snippets)
 (with-eval-after-load 'yasnippet

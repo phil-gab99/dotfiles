@@ -561,10 +561,9 @@ Displays additional keybindings subsequent to prefix keybindings
   (with-eval-after-load 'which-key
     (customize-set-variable 'which-key-idle-delay 1)
     (which-key-mode)
-    (if (fboundp 'diminish)
-        (diminish #'which-key-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'which-key-mode))))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'which-key-mode))
 
 #+end_src
 
@@ -652,6 +651,7 @@ Theme inspired by the popular Atom One Dark theme.
       ("pg-onedark-variant-modebox"     . "#181a1f")
       ("pg-onedark-variant-comments"    . "#737373")
       ("pg-onedark-variant-codeblockbg" . "#0d0d0d")
+      ("pg-onedark-variant-quotefg"     . "#ffd700")
       ("pg-onedark-variant-code"        . "#ffa500")
       ("pg-onedark-variant-verbatim"    . "#00ff00")
       ("pg-onedark-variant-table"       . "#cdb5cd")
@@ -735,6 +735,7 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-level-4               ((t ( :foreground ,pg-onedark-variant-green))))
      `(org-date                  ((t ( :foreground ,pg-onedark-variant-blue))))
      `(org-quote                 ((t ( :slant italic
+                                       :foreground ,pg-onedark-variant-quotefg
                                        :background ,pg-onedark-variant-codeblockbg
                                        :inherit (variable-pitch)))))
      `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
@@ -892,6 +893,7 @@ Theme inspired by the popular Atom One Dark theme.
       ("pg-onelight-variant-modebox"     . "#7f7f7f")
       ("pg-onelight-variant-comments"    . "#424243")
       ("pg-onelight-variant-codeblockbg" . "#eee9e9")
+      ("pg-onelight-variant-quotefg"     . "#ffd700")
       ("pg-onelight-variant-code"        . "#ffa500")
       ("pg-onelight-variant-verbatim"    . "#00dd00")
       ("pg-onelight-variant-table"       . "#68228b")
@@ -975,6 +977,7 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-level-4               ((t ( :foreground ,pg-onelight-variant-green))))
      `(org-date                  ((t ( :foreground ,pg-onelight-variant-blue))))
      `(org-quote                 ((t ( :slant italic
+                                       :foreground ,pg-onelight-variant-quotefg
                                        :background ,pg-onelight-variant-codeblockbg
                                        :inherit (variable-pitch)))))
      `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
@@ -1139,7 +1142,6 @@ Theme inspired by the popular Atom One Dark theme.
 
   (with-eval-after-load 'diminish
     (dolist (mode #'(auto-revert-mode
-                     buffer-face-mode
                      visual-line-mode))
       (diminish mode)))
 
@@ -1443,79 +1445,6 @@ For organizing the buffer list
 
 #+end_src
 
-*** Email configuration file
-
-After having setup the file, make sure to run the following commands:
-- ~mu init --maildir=~/Mail --my-address=address1@domain1.com --my-address=address2@domain2.com ...~ - For all different addresses
-- ~mu index~ - To index the given addresses
-
-#+begin_src conf :tangle ~/.dotfiles/.mbsyncrc
-
-  # Main hotmail account
-  IMAPAccount hotmail
-  Host outlook.office365.com
-  User pgabriel999@hotmail.com
-  Port 993
-  PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"hotmail.com\\\" :user \\\"pgabriel999\\\")\" | cut -d '\"' -f2"
-  SSLType IMAPS
-  CertificateFile /etc/ssl/certs/ca-certificates.crt
-
-  IMAPStore hotmail-remote
-  Account hotmail
-
-  MaildirStore hotmail-local
-  Subfolders Verbatim
-  Path /home/phil-gab99/Mail/Main/
-  Inbox /home/phil-gab99/Mail/Main/Inbox
-
-  Channel hotmail
-  Far :hotmail-remote:
-  Near :hotmail-local:
-  Patterns *
-  CopyArrivalDate yes
-  Create Both
-  Expunge Both
-  SyncState *
-
-  # University account
-  # IMAPAccount umontreal
-  # Host outlook.office365.com
-  # User philippe.gabriel.1@umontreal.ca
-  # Port 993
-  # PassCmd oauth2ms
-  # SSLType IMAPS
-  # AuthMechs XOAUTH2
-  # CertificateFile /etc/ssl/certs/ca-certificates.crt
-
-  # IMAPStore umontreal-remote
-  # Account umontreal
-
-  # MaildirStore umontreal-local
-  # SubFolders Verbatim
-  # Path /home/phil-gab99/Mail/University/
-  # Inbox /home/phil-gab99/Mail/University/Inbox
-
-  # Channel umontreal
-  # Far :umontreal-remote:
-  # Near :umontreal-local:
-  # Patterns *
-  # CopyArrivalDate yes
-  # Create Both
-  # Expunge Both
-  # SyncState *
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  (specification->package "mu")
-  (specification->package "isync")
-  (specification->package "oauth2ms")
-
-#+end_src
-
 *** Package | mu4e
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-email.el
@@ -1595,6 +1524,16 @@ After having setup the file, make sure to run the following commands:
              ;;                            (mu4e-refile-folder . "/University/Archive")
              ;;                            (mu4e-trash-folder . "/University/Deleted Items")))
              ))))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  (specification->package "mu")
+  (specification->package "isync")
+  ;; (specification->package "oauth2ms")
 
 #+end_src
 
@@ -1780,10 +1719,9 @@ Colors matching delimiters with different colours for distinguishability.
 
   (require 'abbrev)
   (with-eval-after-load 'abbrev
-    (if (fboundp 'diminish)
-        (diminish #'abbrev-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'abbrev-mode))))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'abbrev-mode))
 
 #+end_src
 
@@ -1810,28 +1748,18 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+end_src
 
-*** Package | smartparens
-
-For surrounding delimiter matching and autocompletion.
+*** Package | autopair
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
-  (straight-use-package 'smartparens)
-  (require 'smartparens)
-  (with-eval-after-load 'smartparens
-    (smartparens-global-mode)
-    (if (boundp 'diminish)
-        (diminish #'smartparens-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'smartparens-mode))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-smartparens")
+  (straight-use-package 'autopair)
+  (unless (fboundp 'autopair-global-mode)
+    (autoload #'autopair-global-mode "autopair" nil t))
+  (autopair-global-mode 1)
+  (with-eval-after-load 'autopair
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'autopair-mode))
 
 #+end_src
 
@@ -1889,10 +1817,9 @@ For surrounding delimiter matching and autocompletion.
                   less-css-mode-hook))
     (add-hook mode #'rainbow-mode))
   (with-eval-after-load 'rainbow-mode
-    (if (boundp 'diminish)
-        (diminish #'rainbow-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'rainbow-mode))))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'rainbow-mode))
 
 #+end_src
 
@@ -1983,10 +1910,9 @@ Allows usage of vim-like keybindings for some modes in emacs.
     (require 'evil-collection))
   (with-eval-after-load 'evil-collection
     (evil-collection-init)
-    (if (boundp 'diminish)
-        (diminish #'evil-collection-unimpaired-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'evil-collection-unimpaired-mode))))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'evil-collection-unimpaired-mode))
 
 #+end_src
 
@@ -2006,6 +1932,10 @@ Allows usage of vim-like keybindings for some modes in emacs.
   (unless (fboundp 'editorconfig-mode)
     (autoload #'editorconfig-mode "editorconfig" nil t))
   (editorconfig-mode 1)
+  (with-eval-after-load 'editorconfig
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'editorconfig-mode))
 
 #+end_src
 
@@ -2519,10 +2449,9 @@ Note that the emacs built-in local dir creation can also be used and is more fle
     (when (file-directory-p "~/Projects")
       (customize-set-variable 'projectile-project-search-path '("~/Projects")))
     (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
-    (if (boundp 'diminish)
-        (diminish #'projectile-mode)
-      (with-eval-after-load 'diminish
-        (diminish #'projectile-mode)))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'projectile-mode)
     (with-eval-after-load 'general
       (pg/leader-keys
         "p" '(:ignore t :which-key "project")
@@ -2590,10 +2519,9 @@ Allows for git commands to be applied to the current repository using the comman
     (set-face-foreground 'git-gutter:added "LightGreen")
     (set-face-foreground 'git-gutter:modified "LightGoldenrod")
     (set-face-foreground 'git-gutter:deleted "LightCoral")
-    (if (fboundp 'diminish)
-        (diminish 'git-gutter-mode)
-      (with-eval-after-load 'diminish
-        (diminish 'git-gutter-mode))))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'git-gutter-mode))
 
 #+end_src
 
@@ -2926,10 +2854,9 @@ Allows for code snippets for different languages.
                                      (yas-activate-extra-mode 'fundamental-mode)))
   (with-eval-after-load 'yasnippet
     (yas-global-mode)
-    (if (fboundp 'diminish)
-        (diminish 'yas-minor-mode)
-      (with-eval-after-load 'diminish)
-      (diminish 'yas-minor-mode)))
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'yas-minor-mode))
 
 #+end_src
 
@@ -4607,7 +4534,10 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
                 face-remapping-alist '((default (:height 1.75) default)))
     (org-latex-preview)
-    (variable-pitch-mode 1))
+    (variable-pitch-mode 1)
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
+    (diminish #'buffer-face-mode))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."

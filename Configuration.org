@@ -1756,6 +1756,69 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
 #+end_src
 
+*** isync
+
+After having setup the file, make sure to run the following commands:
+- ~mu init --maildir=~/Mail --my-address=address1@domain1.com --my-address=address2@domain2.com ...~ - For all different addresses
+- ~mu index~ - To index the given addresses
+
+#+begin_src conf :tangle ~/.dotfiles/.mbsyncrc
+
+  # Main hotmail account
+  IMAPAccount hotmail
+  Host outlook.office365.com
+  User pgabriel999@hotmail.com
+  Port 993
+  PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"hotmail.com\\\" :user \\\"pgabriel999\\\")\" | cut -d '\"' -f2"
+  SSLType IMAPS
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+  IMAPStore hotmail-remote
+  Account hotmail
+
+  MaildirStore hotmail-local
+  Subfolders Verbatim
+  Path /home/phil-gab99/Mail/Main/
+  Inbox /home/phil-gab99/Mail/Main/Inbox
+
+  Channel hotmail
+  Far :hotmail-remote:
+  Near :hotmail-local:
+  Patterns *
+  CopyArrivalDate yes
+  Create Both
+  Expunge Both
+  SyncState *
+
+  # University account
+  # IMAPAccount umontreal
+  # Host outlook.office365.com
+  # User philippe.gabriel.1@umontreal.ca
+  # Port 993
+  # PassCmd oauth2ms
+  # SSLType IMAPS
+  # AuthMechs XOAUTH2
+  # CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+  # IMAPStore umontreal-remote
+  # Account umontreal
+
+  # MaildirStore umontreal-local
+  # SubFolders Verbatim
+  # Path /home/phil-gab99/Mail/University/
+  # Inbox /home/phil-gab99/Mail/University/Inbox
+
+  # Channel umontreal
+  # Far :umontreal-remote:
+  # Near :umontreal-local:
+  # Patterns *
+  # CopyArrivalDate yes
+  # Create Both
+  # Expunge Both
+  # SyncState *
+
+#+end_src
+
 *** Mimeapps
 
 #+begin_src conf :tangle ~/.dotfiles/.config/mimeapps.list

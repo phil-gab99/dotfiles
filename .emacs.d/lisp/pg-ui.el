@@ -24,7 +24,6 @@
 
 (with-eval-after-load 'diminish
   (dolist (mode #'(auto-revert-mode
-                   buffer-face-mode
                    visual-line-mode))
     (diminish mode)))
 

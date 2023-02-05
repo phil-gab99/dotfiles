@@ -22,6 +22,7 @@
     ("pg-onelight-variant-modebox"     . "#7f7f7f")
     ("pg-onelight-variant-comments"    . "#424243")
     ("pg-onelight-variant-codeblockbg" . "#eee9e9")
+    ("pg-onelight-variant-quotefg"     . "#ffd700")
     ("pg-onelight-variant-code"        . "#ffa500")
     ("pg-onelight-variant-verbatim"    . "#00dd00")
     ("pg-onelight-variant-table"       . "#68228b")
@@ -105,6 +106,7 @@
    `(org-level-4               ((t ( :foreground ,pg-onelight-variant-green))))
    `(org-date                  ((t ( :foreground ,pg-onelight-variant-blue))))
    `(org-quote                 ((t ( :slant italic
+                                     :foreground ,pg-onelight-variant-quotefg
                                      :background ,pg-onelight-variant-codeblockbg
                                      :inherit (variable-pitch)))))
    `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face

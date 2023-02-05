@@ -65,15 +65,13 @@
   
   (specification->package "mu")
   (specification->package "isync")
-  (specification->package "oauth2ms")
+  ;; (specification->package "oauth2ms")
   
   ;; (specification->package "emacs-mu4e-alert")
   
   ;; (specification->package "emacs-rainbow-delimiters")
   
   ;; (specification->package "emacs-highlight-indent-guides") ;; Old version 0.8.5
-  
-  ;; (specification->package "emacs-smartparens")
   
   ;; (specification->package "emacs-outshine")
   

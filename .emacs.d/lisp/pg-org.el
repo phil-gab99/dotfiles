@@ -210,7 +210,10 @@
               org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
               face-remapping-alist '((default (:height 1.75) default)))
   (org-latex-preview)
-  (variable-pitch-mode 1))
+  (variable-pitch-mode 1)
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'buffer-face-mode))
 
 (defun pg/presentation-end ()
   "Cleanup after ending org presentation."
