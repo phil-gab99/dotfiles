@@ -393,7 +393,7 @@ This script lists the generations of a given profile:
 
 ** Delete Profile Generations
 
-This script deletes the generations of a given profile:
+This script deletes the generations of all profiles and calls the garbage collector, or when a profile is supplied, removes the generatiosn for that given profile
 
 #+begin_src sh
 
@@ -410,6 +410,8 @@ This script deletes the generations of a given profile:
   profiles=$*
   if [[ $# -eq 0 ]]; then
       profiles="$XDG_CONFIG_HOME/guix/manifests/*.scm";
+      guix pull --delete-generations
+      sudo guix system delete-generations 20d
   fi
 
   for profile in $profiles; do
@@ -431,6 +433,8 @@ This script deletes the generations of a given profile:
       exit 1
     fi
   done
+
+  guix gc -F 50G
 
   exit 0
 
