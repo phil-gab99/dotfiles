@@ -13,7 +13,7 @@ if [[ $- != *i* ]]; then
 fi
 
 ################################################################################
-# SOURCED ALIAS'S AND SCRIPTS
+# SOURCED SCRIPTS
 ################################################################################
 
 # Source global definitions
@@ -173,7 +173,7 @@ function __setprompt {
     fi
 
     # Date
-    PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]🕓 $(date +%a) $(date +%b-'%-m')"
+    PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]🕓 $(date +%a) $(date +%b-'%-d')"
     PS1+=" $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
 
     # CPU
@@ -190,8 +190,8 @@ function __setprompt {
     # User and server
     local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
     local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-    if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-        PS1+="(\[${RED}\]\u@\h"
+    if [ $SSH_IP ] || [ $SSH2_IP ] ; then
+        PS1+="(\[${RED}\]\u@\H"
     else
         PS1+="(\[${RED}\]\u"
     fi
