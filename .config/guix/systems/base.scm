@@ -225,9 +225,11 @@ EndSection
      (service virtlog-service-type
               (virtlog-configuration
                (max-clients 1000)))
+     (service bluetooth-service-type
+              (bluetooth-configuration
+               (auto-enable? #t)))
      (extra-special-file "/bin/env"
                          (file-append coreutils "/bin/env"))
      (extra-special-file "/lib64/ld-linux-x86-64.so.2"
                          (file-append glibc "/lib/ld-linux-x86-64.so.2"))
-     (bluetooth-service #:auto-enable? #t)
      %my-desktop-services))))

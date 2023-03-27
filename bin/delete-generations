@@ -30,6 +30,6 @@ for profile in $profiles; do
   fi
 done
 
-guix gc -F 50G
+guix gc -F 60G
 
 exit 0

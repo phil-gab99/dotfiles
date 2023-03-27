@@ -81,7 +81,7 @@ the custom variable."
                    pg-programming-haskell
                    pg-programming-html
                    pg-programming-java
-                   pg-programming-lmc
+                   ;; pg-programming-lmc
                    pg-programming-markdown
                    pg-programming-mips
                    pg-programming-prolog

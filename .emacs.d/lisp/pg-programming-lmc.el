@@ -30,23 +30,23 @@
               comment-end ""
               indent-tabs-mode nil))
 
-(define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
-  "Major mode to edit LMC assembly code."
-  :syntax-table emacs-lisp-mode-syntax-table
-  (set (make-local-variable 'font-lock-defaults)
-       '(lmc-asm-font-lock-keywords))
-  (set (make-local-variable 'indent-line-function)
-       #'lmc-asm-indent-line)
-  (set (make-local-variable 'indent-tabs-mode) nil)
-  (set (make-local-variable 'imenu-generic-expression)
-       lmc-asm-imenu-generic-expression)
-  (set (make-local-variable 'outline-regexp) lmc-asm-outline-regexp)
-  (add-hook 'completion-at-point-functions #'lmc-asm-completion nil t)
-  (set (make-local-variable 'comment-start) "#")
-  (set (make-local-variable 'comment-start-skip)
-       "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
+;; (define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
+;;   "Major mode to edit LMC assembly code."
+;;   :syntax-table emacs-lisp-mode-syntax-table
+;;   (set (make-local-variable 'font-lock-defaults)
+;;        '(lmc-asm-font-lock-keywords))
+;;   (set (make-local-variable 'indent-line-function)
+;;        #'lmc-asm-indent-line)
+;;   (set (make-local-variable 'indent-tabs-mode) nil)
+;;   (set (make-local-variable 'imenu-generic-expression)
+;;        lmc-asm-imenu-generic-expression)
+;;   (set (make-local-variable 'outline-regexp) lmc-asm-outline-regexp)
+;;   (add-hook 'completion-at-point-functions #'lmc-asm-completion nil t)
+;;   (set (make-local-variable 'comment-start) "#")
+;;   (set (make-local-variable 'comment-start-skip)
+;;        "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
 
-(straight-use-package 'lmc)
-(fset #'lmc-asm-mode #'pg/lmc-asm-mode)
+;; (straight-use-package 'lmc)
+;; (fset #'lmc-asm-mode #'pg/lmc-asm-mode)
 
 (provide 'pg-programming-lmc)
