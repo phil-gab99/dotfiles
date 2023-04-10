@@ -159,7 +159,7 @@ Scheme REPL
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; (first (lookup-inferior-packages inferior "emacs-geiser"))
-  (specification->package "emacs-geiser")
+  ;; (specification->package "emacs-geiser")
 
 #+end_src
 

@@ -24,7 +24,7 @@
   (specification->package "emacs-guix")
   
   ;; (first (lookup-inferior-packages inferior "emacs-geiser"))
-  (specification->package "emacs-geiser")
+  ;; (specification->package "emacs-geiser")
   
   ;; (specification->package "emacs-pinentry")
   (specification->package "pinentry-emacs")
