@@ -3,8 +3,8 @@
 
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the img
-   directory with respect to the org-buffer's location and insert a link to
-   this file. Requires imageMagick for undertaking screenshots."
+     directory with respect to the org-buffer's location and insert a link to
+     this file. Requires imageMagick for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
@@ -25,7 +25,7 @@
 
 (defun org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
-    table."
+      table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
 
@@ -90,9 +90,27 @@
                                (java . t)
                                (shell . t)
                                (plantuml . t)
-                               ;; (arduino . t)
-                               ;; (jupyter . t)
                                (python . t)))
+
+  (with-eval-after-load 'arduino-mode
+    (org-babel-do-load-languages
+     'org-babel-load-languages '((arduino . t))))
+
+  (with-eval-after-load 'jupyter
+    (require 'ob-jupyter)
+    (org-babel-do-load-languages
+     'org-babel-load-languages '((jupyter . t)))
+    (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
+
+  (defun pg/babel-ansi ()
+    (when-let ((beg (org-babel-where-is-src-block-result nil nil)))
+      (save-excursion
+        (goto-char beg)
+        (when (looking-at org-babel-result-regexp)
+          (let ((end (org-babel-result-end))
+                (ansi-color-context-region nil))
+            (ansi-color-apply-on-region beg end))))))
+  (add-hook 'org-babel-after-execute-hook #'pg/babel-ansi)
 
   (require 'org-tempo) ;; Allows defined snippets to expand into appropriate code blocks
   (dolist (template '(("sh" . "src sh")
@@ -106,6 +124,7 @@
                       ("el" . "src emacs-lisp")
                       ("hs" . "src haskell")
                       ("py" . "src python")
+                      ("jp" . "src jupyter-python")
                       ("sql" . "src sql")))
     (add-to-list 'org-structure-template-alist template))
 

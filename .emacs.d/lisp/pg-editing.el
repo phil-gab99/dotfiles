@@ -51,6 +51,7 @@
                 vterm-mode-hook
                 magit-popup-mode-hook
                 etc-authors-mode-hook
+                jupyter-repl-mode-hook
                 geiser-repl-mode-hook
                 slack-mode-hook
                 shell-mode-hook))

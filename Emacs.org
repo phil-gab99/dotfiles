@@ -1639,6 +1639,7 @@ Allows for notification pop-up and mode line count when receiving emails
                   vterm-mode-hook
                   magit-popup-mode-hook
                   etc-authors-mode-hook
+                  jupyter-repl-mode-hook
                   geiser-repl-mode-hook
                   slack-mode-hook
                   shell-mode-hook))
@@ -3878,6 +3879,22 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+***** Package | conda
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
+
+  (defun pg/jupyter-refresh-kernelspecs ()
+    "Refresh Jupyter kernelspecs"
+    (interactive)
+    (jupyter-available-kernelspecs t))
+
+  (straight-use-package 'conda)
+  (with-eval-after-load 'conda
+    (conda-env-initialize-interactive-shells)
+    (conda-env-initialize-eshell))
+
+#+end_src
+
 ***** Package | lsp-pyright
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
@@ -3925,11 +3942,11 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-***** TODO Package | jupyter
+***** Package | jupyter
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
-  ;; (straight-use-package 'jupyter)
+  (straight-use-package 'jupyter)
 
 #+end_src
 
@@ -4279,8 +4296,8 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the img
-     directory with respect to the org-buffer's location and insert a link to
-     this file. Requires imageMagick for undertaking screenshots."
+       directory with respect to the org-buffer's location and insert a link to
+       this file. Requires imageMagick for undertaking screenshots."
     (interactive)
     (setq imgpath "./img/")
     (if (not (f-dir-p imgpath))
@@ -4301,7 +4318,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun org-csv-to-table (beg end)
     "Insert a file into the current buffer at point, and convert it to an org
-      table."
+        table."
     (interactive (list (mark) (point)))
     (org-table-convert-region beg end ","))
 
@@ -4366,9 +4383,27 @@ Org mode package for writing structured documents and more. Here are some useful
                                  (java . t)
                                  (shell . t)
                                  (plantuml . t)
-                                 ;; (arduino . t)
-                                 ;; (jupyter . t)
                                  (python . t)))
+
+    (with-eval-after-load 'arduino-mode
+      (org-babel-do-load-languages
+       'org-babel-load-languages '((arduino . t))))
+
+    (with-eval-after-load 'jupyter
+      (require 'ob-jupyter)
+      (org-babel-do-load-languages
+       'org-babel-load-languages '((jupyter . t)))
+      (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
+
+    (defun pg/babel-ansi ()
+      (when-let ((beg (org-babel-where-is-src-block-result nil nil)))
+        (save-excursion
+          (goto-char beg)
+          (when (looking-at org-babel-result-regexp)
+            (let ((end (org-babel-result-end))
+                  (ansi-color-context-region nil))
+              (ansi-color-apply-on-region beg end))))))
+    (add-hook 'org-babel-after-execute-hook #'pg/babel-ansi)
 
     (require 'org-tempo) ;; Allows defined snippets to expand into appropriate code blocks
     (dolist (template '(("sh" . "src sh")
@@ -4382,6 +4417,7 @@ Org mode package for writing structured documents and more. Here are some useful
                         ("el" . "src emacs-lisp")
                         ("hs" . "src haskell")
                         ("py" . "src python")
+                        ("jp" . "src jupyter-python")
                         ("sql" . "src sql")))
       (add-to-list 'org-structure-template-alist template))
 
