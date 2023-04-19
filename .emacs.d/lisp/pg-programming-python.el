@@ -37,5 +37,8 @@
   (customize-set-variable 'dap-python-debugger 'debugpy))
 
 (straight-use-package 'jupyter)
+(add-hook 'jupyter-repl-mode-hook #'company-mode)
+(add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                      (require 'jupyter)))
 
 (provide 'pg-programming-python)

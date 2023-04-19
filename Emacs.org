@@ -3947,6 +3947,9 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (straight-use-package 'jupyter)
+  (add-hook 'jupyter-repl-mode-hook #'company-mode)
+  (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                        (require 'jupyter)))
 
 #+end_src
 
