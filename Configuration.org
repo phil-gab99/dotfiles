@@ -1351,11 +1351,50 @@ To temporarily bypass an alias, precede the command with a ~\~
 #+end_src
 
 *** Conda Configuration
+
 **** Conda Initialization
 
 #+begin_src conf :tangle ~/.dotfiles/.condarc
 
   changeps1: False
+
+#+end_src
+
+**** Environment hooks
+
+***** ift_1016
+
+This environment is used in a course for which I am TA
+
+#+begin_src shell :tangle ~/.dotfiles/.conda/ift_1016/etc/conda/activate.d/env_vars.sh
+
+  export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.conda/envs/ift_1016/lib"
+
+#+end_src
+
+#+begin_src shell :tangle ~/.dotfiles/.conda/ift_1016/etc/conda/deactivate.d/env_vars.sh
+
+  export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
+  unset OLD_LD_LIBRARY_PATH
+
+#+end_src
+
+***** ml_practice
+
+This environment is used for my personal machine learning practice
+
+#+begin_src shell :tangle ~/.dotfiles/.conda/ml_practice/etc/conda/activate.d/env_vars.sh
+
+  export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.conda/envs/ml_practice/lib"
+
+#+end_src
+
+#+begin_src shell :tangle ~/.dotfiles/.conda/ml_practice/etc/conda/deactivate.d/env_vars.sh
+
+  export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
+  unset OLD_LD_LIBRARY_PATH
 
 #+end_src
 

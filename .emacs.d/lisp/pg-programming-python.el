@@ -1,13 +1,22 @@
 ;;; pg-programming-python.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(defun pg/run-ipython ()
+  (interactive)
+  (when (executable-find "ipython")
+    (ansi-term "ipython")))
+
 (unless (fboundp 'lsp-deferred)
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (add-hook 'python-mode-hook #'lsp-deferred)
+(add-hook 'inferior-python-mode-hook #'corfu-mode)
+(define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
+(define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
+
 (with-eval-after-load 'python
   (pg/customize-set-variables
    `((python-fill-docstring-style . django)
-     (python-shell-virtualenv-path . ,(expand-file-name "~/.conda/envs/ift1016/"))
+     (python-shell-virtualenv-root . ,(expand-file-name "~/.conda/envs"))
      (python-indent-offset . 4))))
 
 (defun pg/jupyter-refresh-kernelspecs ()
