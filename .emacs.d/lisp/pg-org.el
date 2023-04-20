@@ -94,12 +94,12 @@
 
   (with-eval-after-load 'arduino-mode
     (org-babel-do-load-languages
-     'org-babel-load-languages '((arduino . t))))
+     'org-babel-load-languages (-concat org-babel-load-languages '((arduino . t)))))
 
   (with-eval-after-load 'jupyter
     (require 'ob-jupyter)
     (org-babel-do-load-languages
-     'org-babel-load-languages '((jupyter . t)))
+     'org-babel-load-languages (-concat org-babel-load-languages '((jupyter . t))))
     (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
 
   (defun pg/babel-ansi ()

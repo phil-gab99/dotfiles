@@ -2,6 +2,7 @@
 ;; Author: Philippe Gabriel
 
 (defun pg/run-ipython ()
+  "Runs an inferior iPython process."
   (interactive)
   (when (executable-find "ipython")
     (ansi-term "ipython")))
@@ -36,7 +37,7 @@
 
 (with-eval-after-load 'lsp-pyright
   (pg/customize-set-variables
-   `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/ift1016/"))
+   `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/"))
      (lsp-pyright-venv-directory . "envs"))))
 
 (with-eval-after-load 'python

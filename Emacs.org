@@ -2083,6 +2083,14 @@ Displays full documentations in place of the default help function.
 
 #+end_src
 
+*** Package | simple-httpd
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
+
+  (straight-use-package 'simple-httpd)
+
+#+end_src
+
 *** Web design package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
@@ -3869,6 +3877,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (defun pg/run-ipython ()
+    "Runs an inferior iPython process."
     (interactive)
     (when (executable-find "ipython")
       (ansi-term "ipython")))
@@ -3915,7 +3924,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (with-eval-after-load 'lsp-pyright
     (pg/customize-set-variables
-     `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/ift1016/"))
+     `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/"))
        (lsp-pyright-venv-directory . "envs"))))
 
 #+end_src
@@ -3939,18 +3948,6 @@ Custom syntax highlighting for LMC assembly language.
   (packages->manifest
    (list
     ;; (specification->package "python")
-    ;; (specification->package "mesa")
-    ;; (specification->package "pciutils")
-    ;; (specification->package "alsa-lib")
-    ;; (specification->package "libsm")
-    ;; (specification->package "libxcomposite")
-    ;; (specification->package "libxrandr")
-    ;; (specification->package "libxrender")
-    ;; (specification->package "libxtst")
-    ;; (specification->package "xcb-util-wm")
-    ;; (specification->package "xcb-util-image")
-    ;; (specification->package "xcb-util-keysyms")
-    ;; (specification->package "xcb-util-renderutil")
     (specification->package "conda")))
 
 #+end_src
@@ -4403,12 +4400,12 @@ Org mode package for writing structured documents and more. Here are some useful
 
     (with-eval-after-load 'arduino-mode
       (org-babel-do-load-languages
-       'org-babel-load-languages '((arduino . t))))
+       'org-babel-load-languages (-concat org-babel-load-languages '((arduino . t)))))
 
     (with-eval-after-load 'jupyter
       (require 'ob-jupyter)
       (org-babel-do-load-languages
-       'org-babel-load-languages '((jupyter . t)))
+       'org-babel-load-languages (-concat org-babel-load-languages '((jupyter . t))))
       (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
 
     (defun pg/babel-ansi ()
