@@ -22,15 +22,17 @@ fi
 # Enable bash programmable completion features in interactive shells
 [ -f /run/current-system/profile/share/bash-completion/bash-completion ] && . /run/current-system/profile/share/bash-completion/bash-completion
 
-# Alias definitions
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
-
 # Anaconda script initializations
-__conda_setup="$('conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/phil-gab99/.guix-extra-profiles/python/python/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
+else
+    [ -f "$GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh" ] && . "$GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh"
 fi
 unset __conda_setup
+
+# Alias definitions
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # Angular CLI autocompletion
 source <(ng completion script)

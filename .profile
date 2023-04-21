@@ -24,9 +24,6 @@ fi
 # Append libraries from Nix user packages to library path
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
-# Append libraries for Anaconda
-export LD_LIBRARY_PATH="$GUIX_EXTRA_PROFILES/python/python/lib"
-
 # Don't use the system-wide PulseAudio configuration
 unset PULSE_CONFIG
 unset PULSE_CLIENTCONFIG
@@ -64,6 +61,9 @@ export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.nix-profile/share"
 
 # Arduino home directory
 export ARDUINO_HOME="$HOME/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino"
+
+# Jupyter config file
+export JUPYTER_CONFIG_DIR=$XDG_CONFIG_HOME/jupyter
 
 # Make applications in other profiles visible to launcher
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/audio/audio/share"
@@ -117,8 +117,8 @@ export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
 # Python specific variables
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
 # [[ -v PYTHONPATH ]] \
-#     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
-#         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+    #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+    #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
 # Prolog specific variables
 export LOCALSZ=32768

@@ -170,15 +170,17 @@ To temporarily bypass an alias, precede the command with a ~\~
   # Enable bash programmable completion features in interactive shells
   [ -f /run/current-system/profile/share/bash-completion/bash-completion ] && . /run/current-system/profile/share/bash-completion/bash-completion
 
-  # Alias definitions
-  [ -f ~/.bash_aliases ] && . ~/.bash_aliases
-
   # Anaconda script initializations
-  __conda_setup="$('conda' 'shell.bash' 'hook' 2> /dev/null)"
+  __conda_setup="$('/home/phil-gab99/.guix-extra-profiles/python/python/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
   if [ $? -eq 0 ]; then
       eval "$__conda_setup"
+  else
+      [ -f "$GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh" ] && . "$GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh"
   fi
   unset __conda_setup
+
+  # Alias definitions
+  [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
   # Angular CLI autocompletion
   source <(ng completion script)
@@ -1360,44 +1362,6 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 #+end_src
 
-**** Environment hooks
-
-***** ift_1016
-
-This environment is used in a course for which I am TA
-
-#+begin_src shell :tangle ~/.dotfiles/.conda/ift_1016/etc/conda/activate.d/env_vars.sh
-
-  export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.conda/envs/ift_1016/lib"
-
-#+end_src
-
-#+begin_src shell :tangle ~/.dotfiles/.conda/ift_1016/etc/conda/deactivate.d/env_vars.sh
-
-  export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
-  unset OLD_LD_LIBRARY_PATH
-
-#+end_src
-
-***** ml_practice
-
-This environment is used for my personal machine learning practice
-
-#+begin_src shell :tangle ~/.dotfiles/.conda/ml_practice/etc/conda/activate.d/env_vars.sh
-
-  export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
-  export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/.conda/envs/ml_practice/lib"
-
-#+end_src
-
-#+begin_src shell :tangle ~/.dotfiles/.conda/ml_practice/etc/conda/deactivate.d/env_vars.sh
-
-  export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
-  unset OLD_LD_LIBRARY_PATH
-
-#+end_src
-
 *** Dunst
 
 #+begin_src conf :tangle ~/.dotfiles/.config/dunst/dunstrc :shebang ### -*- conf -*-
@@ -1657,9 +1621,6 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   # Append libraries from Nix user packages to library path
   export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
-  # Append libraries for Anaconda
-  export LD_LIBRARY_PATH="$GUIX_EXTRA_PROFILES/python/python/lib"
-
   # Don't use the system-wide PulseAudio configuration
   unset PULSE_CONFIG
   unset PULSE_CLIENTCONFIG
@@ -1697,6 +1658,9 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
   # Arduino home directory
   export ARDUINO_HOME="$HOME/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino"
+
+  # Jupyter config file
+  export JUPYTER_CONFIG_DIR=$XDG_CONFIG_HOME/jupyter
 
   # Make applications in other profiles visible to launcher
   export XDG_DATA_DIRS="$XDG_DATA_DIRS:$GUIX_EXTRA_PROFILES/audio/audio/share"
@@ -1750,8 +1714,8 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   # Python specific variables
   export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
   # [[ -v PYTHONPATH ]] \
-  #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
-  #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+      #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+      #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
   # Prolog specific variables
   export LOCALSZ=32768

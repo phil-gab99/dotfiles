@@ -26,6 +26,20 @@
   (jupyter-available-kernelspecs t))
 
 (straight-use-package 'conda)
+(add-hook'conda-postactivate-hook #'(lambda ()
+                                       (setenv "OLD_JUPYTER_PATH" (getenv "JUPYTER_PATH"))
+                                       (if (null (getenv "JUPYTER_PATH"))
+                                           (setenv "JUPYTER_PATH" (concat conda-env-current-path "lib"))
+                                         (setenv "JUPYTER_PATH" (concat (getenv "JUPYTER_PATH") ":" conda-env-current-path "lib")))))
+(add-hook 'conda-predeactivate-hook #'(lambda ()
+                                        (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
+                                        (setenv "JUPYTER_PATH")))
+(pg/customize-set-variables
+ `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
+   (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
+   (conda-env-subdirectory . "envs")))
+;; (unless (getenv "CONDA_DEFAULT_ENV")
+;;   (conda-env-activate "base"))
 (with-eval-after-load 'conda
   (conda-env-initialize-interactive-shells)
   (conda-env-initialize-eshell))
