@@ -3,8 +3,8 @@
 
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the img
-     directory with respect to the org-buffer's location and insert a link to
-     this file. Requires imageMagick for undertaking screenshots."
+         directory with respect to the org-buffer's location and insert a link to
+         this file. Requires imageMagick for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
@@ -25,7 +25,7 @@
 
 (defun org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
-      table."
+          table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
 
@@ -85,22 +85,7 @@
                   (org-level-8 . 1.0)))
     (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
 
-  (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
-   'org-babel-load-languages '((emacs-lisp . t)
-                               (java . t)
-                               (shell . t)
-                               (plantuml . t)
-                               (python . t)))
-
-  (with-eval-after-load 'arduino-mode
-    (org-babel-do-load-languages
-     'org-babel-load-languages (-concat org-babel-load-languages '((arduino . t)))))
-
-  (with-eval-after-load 'jupyter
-    (require 'ob-jupyter)
-    (org-babel-do-load-languages
-     'org-babel-load-languages (-concat org-babel-load-languages '((jupyter . t))))
-    (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
+  (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
   (defun pg/babel-ansi ()
     (when-let ((beg (org-babel-where-is-src-block-result nil nil)))

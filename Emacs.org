@@ -2835,7 +2835,7 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+end_src
 
-*** Package | comment-dwin-2
+*** Package | comment-dwim-2
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
@@ -2845,8 +2845,9 @@ Allows writing textual descriptions for creating uml diagrams
   (global-set-key (kbd "M-/") #'comment-dwim-2)
   (unless (fboundp 'org-comment-dwim-2)
     (autoload #'org-comment-dwim-2 "comment-dwim-2" nil t))
-  (define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2)
-  
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2))
+
 #+end_src
 
 *** Package | yasnippet
@@ -3886,13 +3887,13 @@ Custom syntax highlighting for LMC assembly language.
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'python-mode-hook #'lsp-deferred)
   (add-hook 'inferior-python-mode-hook #'corfu-mode)
-  (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
-  (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
 
   (with-eval-after-load 'python
     (pg/customize-set-variables
      `((python-fill-docstring-style . django)
        (python-shell-virtualenv-root . ,(expand-file-name "~/.conda/envs"))
+       (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
+       (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
        (python-indent-offset . 4))))
 
 #+end_src
@@ -3919,8 +3920,8 @@ Custom syntax highlighting for LMC assembly language.
    `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
      (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
      (conda-env-subdirectory . "envs")))
-  ;; (unless (getenv "CONDA_DEFAULT_ENV")
-  ;;   (conda-env-activate "base"))
+  (unless (getenv "CONDA_DEFAULT_ENV")
+    (conda-env-activate "ml_practice"))
   (with-eval-after-load 'conda
     (conda-env-initialize-interactive-shells)
     (conda-env-initialize-eshell))
@@ -4323,8 +4324,8 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the img
-       directory with respect to the org-buffer's location and insert a link to
-       this file. Requires imageMagick for undertaking screenshots."
+           directory with respect to the org-buffer's location and insert a link to
+           this file. Requires imageMagick for undertaking screenshots."
     (interactive)
     (setq imgpath "./img/")
     (if (not (f-dir-p imgpath))
@@ -4345,7 +4346,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun org-csv-to-table (beg end)
     "Insert a file into the current buffer at point, and convert it to an org
-        table."
+            table."
     (interactive (list (mark) (point)))
     (org-table-convert-region beg end ","))
 
@@ -4405,22 +4406,7 @@ Org mode package for writing structured documents and more. Here are some useful
                     (org-level-8 . 1.0)))
       (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
 
-    (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
-     'org-babel-load-languages '((emacs-lisp . t)
-                                 (java . t)
-                                 (shell . t)
-                                 (plantuml . t)
-                                 (python . t)))
-
-    (with-eval-after-load 'arduino-mode
-      (org-babel-do-load-languages
-       'org-babel-load-languages (-concat org-babel-load-languages '((arduino . t)))))
-
-    (with-eval-after-load 'jupyter
-      (require 'ob-jupyter)
-      (org-babel-do-load-languages
-       'org-babel-load-languages (-concat org-babel-load-languages '((jupyter . t))))
-      (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
+    (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
     (defun pg/babel-ansi ()
       (when-let ((beg (org-babel-where-is-src-block-result nil nil)))
@@ -5672,6 +5658,21 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-music
                      pg-games))
     (require package))
+
+  ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
+  (require 'ob-jupyter)
+  (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
+   'org-babel-load-languages '((emacs-lisp . t)
+                               (java . t)
+                               (shell . t)
+                               (plantuml . t)
+                               (python . t)
+                               (arduino . t)
+                               (jupyter . t)))
+
+  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                       (:session . "py")
+                                                       (:kernel . "python3")))
 
   (setq gc-cons-threshold (* 2 1000 1000))
 

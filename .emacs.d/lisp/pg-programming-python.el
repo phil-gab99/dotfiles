@@ -11,13 +11,13 @@
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (add-hook 'python-mode-hook #'lsp-deferred)
 (add-hook 'inferior-python-mode-hook #'corfu-mode)
-(define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
-(define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
 
 (with-eval-after-load 'python
   (pg/customize-set-variables
    `((python-fill-docstring-style . django)
      (python-shell-virtualenv-root . ,(expand-file-name "~/.conda/envs"))
+     (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
+     (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
      (python-indent-offset . 4))))
 
 (defun pg/jupyter-refresh-kernelspecs ()
@@ -38,8 +38,8 @@
  `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
    (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
    (conda-env-subdirectory . "envs")))
-;; (unless (getenv "CONDA_DEFAULT_ENV")
-;;   (conda-env-activate "base"))
+(unless (getenv "CONDA_DEFAULT_ENV")
+  (conda-env-activate "ml_practice"))
 (with-eval-after-load 'conda
   (conda-env-initialize-interactive-shells)
   (conda-env-initialize-eshell))

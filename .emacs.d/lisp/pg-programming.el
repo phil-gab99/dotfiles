@@ -115,7 +115,8 @@
 (global-set-key (kbd "M-/") #'comment-dwim-2)
 (unless (fboundp 'org-comment-dwim-2)
   (autoload #'org-comment-dwim-2 "comment-dwim-2" nil t))
-(define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2)
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2))
 
 (straight-use-package 'yasnippet)
 (unless (fboundp 'yas-minor-mode)
