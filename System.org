@@ -436,7 +436,7 @@ This script deletes the generations of all profiles and calls the garbage collec
     fi
   done
 
-  guix gc -F 60G
+  guix gc -F 70G
 
   exit 0
 

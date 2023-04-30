@@ -6,7 +6,7 @@
   (straight-use-package '(mu4e :type git
                                :host github
                                :repo "djcb/mu"
-                               :branch "release/1.8"))
+                               :branch "release/1.10"))
   (unless (fboundp 'mu4e)
     (autoload #'mu4e "mu4e" nil t))
   (unless (fboundp 'mu4e-compose-new)
@@ -14,6 +14,7 @@
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
+  (remove-hook 'mu4e-main-mode-hook 'evil-collection-mu4e-update-main-view)
   (with-eval-after-load 'general
     (pg/leader-keys
       "m" '(:ignore t :which-key "email")

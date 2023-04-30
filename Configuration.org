@@ -1141,7 +1141,7 @@ To temporarily bypass an alias, precede the command with a ~\~
   op https://ww1.kissanime.so/info/one-piece
   mal https://myanimelist.net/animelist/Ramenphile
   whatsapp https://web.whatsapp.com
-  amazon https://www.amazon.com
+  amazon https://www.amazon.ca
   msdesk http://mydesk.morganstanley.com
   ta https://www.synchro.umontreal.ca/psc/upprpr9/EMPLOYEE/EMPL/c/NUI_FRAMEWORK.PT_LANDINGPAGE.GBL
   tax https://turbotax.intuit.ca/tax/software
