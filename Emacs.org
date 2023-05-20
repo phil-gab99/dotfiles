@@ -1692,7 +1692,6 @@ Allows for notification pop-up and mode line count when receiving emails
                               "|=|=|" "/=/"))
     (global-ligature-mode))
 
-
 #+end_src
 
 *** Package | rainbow-delimiters
@@ -5094,6 +5093,14 @@ Allows for viewing of pdfs.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
   (straight-use-package 'ement)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-ement")
 
 #+end_src
 

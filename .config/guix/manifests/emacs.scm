@@ -180,6 +180,8 @@
   (specification->package "ledger")
   ;; (specification->package "emacs-ledger-mode")
   
+  ;; (specification->package "emacs-ement")
+  
   ;; (specification->package "emacs-slack") ;; Older commit
   
   ;; (specification->package "emacs-sx")
