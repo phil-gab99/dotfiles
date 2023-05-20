@@ -42,6 +42,7 @@
                 doc-view-mode-hook
                 mu4e-main-mode-hook
                 mu4e-view-mode-hook
+                ement-room-mode-hook
                 Man-mode-hook
                 nov-mode-hook
                 simple-mpc-mode-hook

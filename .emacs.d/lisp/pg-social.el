@@ -12,6 +12,8 @@
      (erc-kill-buffer-on-part . t)
      (erc-auto-query . bury))))
 
+(straight-use-package 'ement)
+
 (straight-use-package 'slack)
 (unless (fboundp 'slack-start)
   (autoload #'slack-start "slack" nil t))

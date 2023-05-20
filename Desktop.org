@@ -660,6 +660,22 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+end_src
 
+** Polkit-gnome
+
+#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/polkit-gnome.scm
+
+  (define polkit-gnome
+    (make <service>
+      #:provides '(polkit-gnome)
+      #:respawn? #t
+      #:start (make-forkexec-constructor '("/home/phil-gab99/.guix-extra-profiles/desktop/desktop/libexec/polkit-gnome-authentication-agent-1"))
+      #:stop (make-kill-destructor)))
+
+  (register-services polkit-gnome)
+  (start polkit-gnome)
+
+#+end_src
+
 * Applications
 
 ** Audio Device Control
@@ -702,7 +718,9 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
   (specification->package "brightnessctl")
   (specification->package "xdg-utils")       ;; For xdg-open, etc
   (specification->package "xdg-dbus-proxy")  ;; For Flatpak
+  (specification->package "xdg-desktop-portal-gtk")
   (specification->package+output "gtk+:bin") ;; For gtk-launch
+  (specification->package "polkit-gnome")
   ;; (specification->package+output "glib:bin") ;; For gio-launch-desktop
   (specification->package "shared-mime-info")
   (specification->package "htop")

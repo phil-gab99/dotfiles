@@ -1631,6 +1631,7 @@ Allows for notification pop-up and mode line count when receiving emails
                   doc-view-mode-hook
                   mu4e-main-mode-hook
                   mu4e-view-mode-hook
+                  ement-room-mode-hook
                   Man-mode-hook
                   nov-mode-hook
                   simple-mpc-mode-hook
@@ -3903,11 +3904,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
-  (defun pg/jupyter-refresh-kernelspecs ()
-    "Refresh Jupyter kernelspecs"
-    (interactive)
-    (jupyter-available-kernelspecs t))
-
   (straight-use-package 'conda)
   (add-hook'conda-postactivate-hook #'(lambda ()
                                          (setenv "OLD_JUPYTER_PATH" (getenv "JUPYTER_PATH"))
@@ -3971,6 +3967,11 @@ Custom syntax highlighting for LMC assembly language.
 ***** Package | jupyter
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
+
+  (defun pg/jupyter-refresh-kernelspecs ()
+    "Refresh Jupyter kernelspecs"
+    (interactive)
+    (jupyter-available-kernelspecs t))
 
   (straight-use-package 'jupyter)
   (add-hook 'jupyter-repl-mode-hook #'company-mode)
@@ -4325,8 +4326,8 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the img
-           directory with respect to the org-buffer's location and insert a link to
-           this file. Requires imageMagick for undertaking screenshots."
+    directory with respect to the org-buffer's location and insert a link to
+    this file. Requires imageMagick for undertaking screenshots."
     (interactive)
     (setq imgpath "./img/")
     (if (not (f-dir-p imgpath))
@@ -4347,9 +4348,24 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun org-csv-to-table (beg end)
     "Insert a file into the current buffer at point, and convert it to an org
-            table."
+    table."
     (interactive (list (mark) (point)))
     (org-table-convert-region beg end ","))
+
+  (setq org-view-html-tmp-dir "/tmp/org-html-preview/")
+
+  (defun org-view-html ()
+    "Views an org source html block in default browser"
+    (interactive)
+    (let ((elem (org-element-at-point))
+          (temp-file-path (concat org-view-html-tmp-dir (number-to-string (random (expt 2 32))) ".html")))
+      (cond ((not (eq 'export-block (car elem)))
+             (message "Not in an export block!"))
+            ((not (string-equal (plist-get (car (cdr elem)) :type) "HTML"))
+             (message "Export block is not HTML!"))
+            (t (progn (f-mkdir org-view-html-tmp-dir)
+                      (f-write (plist-get (car (cdr elem)) :value) 'utf-8 temp-file-path)
+                      (start-process "org-html-preview" nil "xdg-open" temp-file-path))))))
 
   (defun pg/org-babel-tangle-config ()
     "Automatic tangle of org files."
@@ -5070,6 +5086,14 @@ Allows for viewing of pdfs.
        (erc-user . "Philippe Gabriel")
        (erc-kill-buffer-on-part . t)
        (erc-auto-query . bury))))
+
+#+end_src
+
+*** Package | ement
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
+
+  (straight-use-package 'ement)
 
 #+end_src
 

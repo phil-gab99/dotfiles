@@ -20,11 +20,6 @@
      (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
      (python-indent-offset . 4))))
 
-(defun pg/jupyter-refresh-kernelspecs ()
-  "Refresh Jupyter kernelspecs"
-  (interactive)
-  (jupyter-available-kernelspecs t))
-
 (straight-use-package 'conda)
 (add-hook'conda-postactivate-hook #'(lambda ()
                                        (setenv "OLD_JUPYTER_PATH" (getenv "JUPYTER_PATH"))
@@ -59,6 +54,11 @@
     (require 'dap-python)))
 (with-eval-after-load 'dap-python
   (customize-set-variable 'dap-python-debugger 'debugpy))
+
+(defun pg/jupyter-refresh-kernelspecs ()
+  "Refresh Jupyter kernelspecs"
+  (interactive)
+  (jupyter-available-kernelspecs t))
 
 (straight-use-package 'jupyter)
 (add-hook 'jupyter-repl-mode-hook #'company-mode)

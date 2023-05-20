@@ -3,8 +3,8 @@
 
 (defun org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the img
-         directory with respect to the org-buffer's location and insert a link to
-         this file. Requires imageMagick for undertaking screenshots."
+  directory with respect to the org-buffer's location and insert a link to
+  this file. Requires imageMagick for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
@@ -25,9 +25,24 @@
 
 (defun org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
-          table."
+  table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
+
+(setq org-view-html-tmp-dir "/tmp/org-html-preview/")
+
+(defun org-view-html ()
+  "Views an org source html block in default browser"
+  (interactive)
+  (let ((elem (org-element-at-point))
+        (temp-file-path (concat org-view-html-tmp-dir (number-to-string (random (expt 2 32))) ".html")))
+    (cond ((not (eq 'export-block (car elem)))
+           (message "Not in an export block!"))
+          ((not (string-equal (plist-get (car (cdr elem)) :type) "HTML"))
+           (message "Export block is not HTML!"))
+          (t (progn (f-mkdir org-view-html-tmp-dir)
+                    (f-write (plist-get (car (cdr elem)) :value) 'utf-8 temp-file-path)
+                    (start-process "org-html-preview" nil "xdg-open" temp-file-path))))))
 
 (defun pg/org-babel-tangle-config ()
   "Automatic tangle of org files."
