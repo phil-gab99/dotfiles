@@ -5092,7 +5092,22 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
+  (defun pg/ement-connect ()
+    "Connects to matrix client with username and password supplied."
+    (interactive)
+    (unless (fboundp 'ement-connect)
+      (autoload #'ement-connect "ement" nil t))
+    (ement-connect :user-id "@phil-gab99:matrix.org"
+                   :password (pg/lookup-password :host "matrix.org"
+                                                 :user "phil-gab99")))
+
   (straight-use-package 'ement)
+
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "c" '(:ignore t :which-key "comms")
+      "cm" '(:ignore t :which-key "matrix")
+      "cmc" '(pg/ement-connect :which-key "start")))
 
 #+end_src
 
@@ -5117,8 +5132,10 @@ Allows for viewing of pdfs.
        (slack-buffer-emojify . t)))
     (slack-register-team :name "ift6755"
                          :default t
-                         :token (pg/lookup-password :host "ift6755.slack.com" :user "philippe.gabriel.1@umontreal.ca")
-                         :cookie (pg/lookup-password :host "ift6755.slack.com" :user "philippe.gabriel.1@umontreal.ca^cookie")
+                         :token (pg/lookup-password :host "ift6755.slack.com"
+                                                    :user "philippe.gabriel.1@umontreal.ca")
+                         :cookie (pg/lookup-password :host "ift6755.slack.com"
+                                                     :user "philippe.gabriel.1@umontreal.ca^cookie")
                          :subscribed-channels '((general questions random))
                          :modeline-enabled t)
     (with-eval-after-load 'evil
@@ -5133,11 +5150,15 @@ Allows for viewing of pdfs.
         ",md" #'slack-message-delete))
     (with-eval-after-load 'general
       (pg/leader-keys
-        "c" '(:ignore t :which-key "slack")
-        "cs" '(slack-start :which-key "start")
-        "cc" '(slack-channel-select :which-key "channels")
-        "cm" '(slack-im-select :which-key "message")
-        "cr" '(slack-message-add-reaction :which-key "react"))))
+        "csc" '(slack-channel-select :which-key "channels")
+        "csm" '(slack-im-select :which-key "message")
+        "csr" '(slack-message-add-reaction :which-key "react"))))
+
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "c" '(:ignore t :which-key "comms")
+      "cs" '(:ignore t :which-key "slack")
+      "csc" '(slack-start :which-key "start")))
 
 #+end_src
 
