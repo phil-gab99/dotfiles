@@ -12,22 +12,31 @@
      (erc-kill-buffer-on-part . t)
      (erc-auto-query . bury))))
 
+(straight-use-package 'ement)
+
+(unless (fboundp 'ement-connect)
+  (autoload #'ement-connect "ement" nil t))
+
 (defun pg/ement-connect ()
   "Connects to matrix client with username and password supplied."
   (interactive)
-  (unless (fboundp 'ement-connect)
-    (autoload #'ement-connect "ement" nil t))
   (ement-connect :user-id "@phil-gab99:matrix.org"
                  :password (pg/lookup-password :host "matrix.org"
                                                :user "phil-gab99")))
-
-(straight-use-package 'ement)
 
 (with-eval-after-load 'general
   (pg/leader-keys
     "c" '(:ignore t :which-key "comms")
     "cm" '(:ignore t :which-key "matrix")
     "cmc" '(pg/ement-connect :which-key "start")))
+
+(with-eval-after-load 'ement
+  (pg/customize-set-variables
+   '((ement-room-prism . both)
+     (ement-room-sender-headers . t)))
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "cmd" '(ement-disconnect :which-key "disconnect"))))
 
 (straight-use-package 'slack)
 (unless (fboundp 'slack-start)

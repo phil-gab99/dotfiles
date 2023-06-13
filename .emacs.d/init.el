@@ -43,7 +43,8 @@ the custom variable."
 (pg/customize-set-variables
  `((load-prefer-newer . t)
    (use-short-answers . t)
-   (auto-save-list-file-prefix . ,(expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))))
+   (auto-save-list-file-prefix . ,(expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))
+   (help-at-pt-display-when-idle . t)))
 
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 

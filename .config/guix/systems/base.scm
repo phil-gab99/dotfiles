@@ -156,7 +156,7 @@ EndSection
                                            "video")))  ;; control video devices
      %base-user-accounts))
 
-   ;; Add extra groupes
+   ;; Add extra groups
    (groups
     (cons*
      (user-group (system? #t)
