@@ -1,9 +1,11 @@
+(use-modules
+ (shepherd support))
+
 (define udiskie
-  (make <service>
-    #:provides '(udiskie)
-    #:docstring "Runs `udiskie'"
+  (service '(udiskie)
+    #:documentation "Runs `udiskie'"
     #:respawn? #t
     #:start (make-forkexec-constructor '("udiskie" "-t"))
     #:stop (make-kill-destructor)))
 
-(register-services udiskie)
+(register-services (list udiskie))

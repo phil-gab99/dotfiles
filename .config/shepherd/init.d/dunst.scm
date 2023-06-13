@@ -1,9 +1,11 @@
+(use-modules
+ (shepherd support))
+
 (define dunst
-  (make <service>
-    #:provides '(dunst)
-    #:docstring "Runs `dunst'"
+  (service '(dunst)
+    #:documentation "Runs `dunst'"
     #:respawn? #t
     #:start (make-forkexec-constructor '("dunst"))
     #:stop (make-kill-destructor)))
 
-(register-services dunst)
+(register-services (list dunst))

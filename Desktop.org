@@ -99,12 +99,13 @@ Workspaces:
 
   (defun pg/herd-service (service)
     "Starts herd process."
-    (start-process-shell-command "herd start" nil (concat "herd start " service)))
+    (start-process-shell-command service nil service))
+    ;; (start-process-shell-command "herd start" nil (concat "herd start " service)))
 
   (defun pg/set-wallpaper ()
     "Sets desktop wallpaper."
     (interactive)
-    (pg/herd-service "feh"))
+    (pg/herd-service "feh --bg-scale ~/Pictures/wp-color-triangle.png"))
 
   (defun pg/update-displays ()
     "Multiple display management."
@@ -140,11 +141,11 @@ Workspaces:
     (pg/herd-service "xsettingsd")
     (pg/herd-service "dunst")
     (pg/herd-service "nm-applet")
-    (pg/herd-service "syncthing-gtk")
-    (pg/herd-service "xss-lock")
-    (pg/herd-service "udiskie")
+    (pg/herd-service "syncthing-gtk --minimized")
+    (pg/herd-service "xss-lock -- slock")
+    (pg/herd-service "udiskie -t")
     (pg/herd-service "pasystray")
-    (pg/herd-service "xmodmap"))
+    (pg/herd-service "xmodmap ~/.xmodmaprc"))
 
   (unless pg/is-guix-system
     (straight-use-package 'exwm))
@@ -361,10 +362,12 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.scm
 
-  (use-modules ((ice-9 ftw) #:select (scandir)))
+  (use-modules
+   (shepherd service)
+   ((ice-9 ftw) #:select (scandir)))
 
   ;; Run shepherd in background
-  (action 'shepherd 'daemonize)
+  (perform-service-action (lookup-running 'shepherd) 'daemonize)
 
   ;; Load all the files in the directory 'init.d' with a suffix '.scm'.
   (for-each
@@ -380,16 +383,18 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/gpg-agent.scm
 
+  (use-modules
+   (shepherd support))
+
   (define gpg-agent
-    (make <service>
-      #:provides '(gpg-agent)
-      #:docstring "Runs `gpg-agent'"
+    (service '(gpg-agent)
+      #:documentation "Runs `gpg-agent'"
       #:respawn? #t
       #:start (make-system-constructor "gpg-connect-agent /bye")
       #:stop (make-system-destructor "gpgconf --kill gpg-agent")))
 
-  (register-services gpg-agent)
-  (start gpg-agent)
+  (register-services (list gpg-agent))
+  (start-in-the-background '(gpg-agent))
 
 #+end_src
 
@@ -397,16 +402,18 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mcron.scm
 
+  (use-modules
+   (shepherd support))
+
   (define mcron
-    (make <service>
-      #:provides '(mcron)
-      #:docstring "Runs `mcron'"
+    (service '(mcron)
+      #:documentation "Runs `mcron'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("mcron"))
       #:stop (make-kill-destructor)))
 
-  (register-services mcron)
-  (start mcron)
+  (register-services (list mcron))
+  (start-in-the-background '(mcron))
 
 #+end_src
 
@@ -414,16 +421,18 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pulseaudio.scm
 
+  (use-modules
+   (shepherd support))
+
   (define pulseaudio
-    (make <service>
-      #:provides '(pulseaudio)
-      #:docstring "Runs `pulseaudio'"
+    (service '(pulseaudio)
+      #:documentation "Runs `pulseaudio'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("pulseaudio"))
       #:stop (make-kill-destructor)))
 
-  (register-services pulseaudio)
-  (start pulseaudio)
+  (register-services (list pulseaudio))
+  (start-in-the-background '(pulseaudio))
 
 #+end_src
 
@@ -431,12 +440,12 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/ssh-agent.scm
 
-  (use-modules (shepherd support))
+  (use-modules
+   (shepherd support))
 
   (define ssh-agent
-    (make <service>
-      #:provides '(ssh-agent)
-      #:docstring "Run `ssh-agent'"
+    (service '(ssh-agent)
+      #:documentation "Run `ssh-agent'"
       #:respawn? #t
       #:start (lambda ()
                 (let ((socket-dir (string-append %user-runtime-dir "/ssh-agent")))
@@ -448,8 +457,8 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
                    #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
       #:stop (make-kill-destructor)))
 
-  ;; (register-services ssh-agent)
-  ;; (start ssh-agent)
+  ;; (register-services (list ssh-agent))
+  ;; (start-in-the-background '(ssh-agent))
 
 #+end_src
 
@@ -457,15 +466,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/compton.scm
 
+  (use-modules
+   (shepherd support))
+
   (define compton
-    (make <service>
-      #:provides '(compton)
-      #:docstring "Runs `compton'"
+    (service '(compton)
+      #:documentation "Runs `compton'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("compton"))
       #:stop (make-kill-destructor)))
 
-  (register-services compton)
+  (register-services (list compton))
 
 #+end_src
 
@@ -473,15 +484,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xsettingsd.scm
 
+  (use-modules
+   (shepherd support))
+
   (define xsettingsd
-    (make <service>
-      #:provides '(xsettingsd)
-      #:docstring "Runs `xsettingsd'"
+    (service '(xsettingsd)
+      #:documentation "Runs `xsettingsd'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("xsettingsd"))
       #:stop (make-kill-destructor)))
 
-  (register-services xsettingsd)
+  (register-services (list xsettingsd))
 
 #+end_src
 
@@ -489,16 +502,18 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mpd.scm
 
+  (use-modules
+   (shepherd support))
+
   (define mpd
-    (make <service>
-      #:provides '(mpd)
-      #:docstring "Runs `mpd'"
+    (service '(mpd)
+      #:documentation "Runs `mpd'"
       #:respawn? #t
       #:start (make-system-constructor "mpd")
       #:stop (make-system-destructor "mpd --kill")))
 
-  (register-services mpd)
-  ;; (start mpd)
+  (register-services (list mpd))
+  ;; (start-in-the-background '(mpd))
 
 #+end_src
 
@@ -506,15 +521,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/feh.scm
 
+  (use-modules
+   (shepherd support))
+
   (define feh
-    (make <service>
-      #:provides '(feh)
-      #:docstring "Runs `feh'"
+    (service '(feh)
+      #:documentation "Runs `feh'"
       #:respawn? #f
       #:one-shot? #t
       #:start (make-system-constructor "feh --bg-scale ~/Pictures/wp-color-triangle.png")))
 
-  (register-services feh)
+  (register-services (list feh))
 
 #+end_src
 
@@ -522,15 +539,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/dunst.scm
 
+  (use-modules
+   (shepherd support))
+
   (define dunst
-    (make <service>
-      #:provides '(dunst)
-      #:docstring "Runs `dunst'"
+    (service '(dunst)
+      #:documentation "Runs `dunst'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("dunst"))
       #:stop (make-kill-destructor)))
 
-  (register-services dunst)
+  (register-services (list dunst))
 
 #+end_src
 
@@ -538,15 +557,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/nm-applet.scm
 
+  (use-modules
+   (shepherd support))
+
   (define nm-applet
-    (make <service>
-      #:provides '(nm-applet)
-      #:docstring "Runs `nm-applet'"
+    (service '(nm-applet)
+      #:documentation "Runs `nm-applet'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("nm-applet"))
       #:stop (make-kill-destructor)))
 
-  (register-services nm-applet)
+  (register-services (list nm-applet))
 
 #+end_src
 
@@ -554,15 +575,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/udiskie.scm
 
+  (use-modules
+   (shepherd support))
+
   (define udiskie
-    (make <service>
-      #:provides '(udiskie)
-      #:docstring "Runs `udiskie'"
+    (service '(udiskie)
+      #:documentation "Runs `udiskie'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("udiskie" "-t"))
       #:stop (make-kill-destructor)))
 
-  (register-services udiskie)
+  (register-services (list udiskie))
 
 #+end_src
 
@@ -570,15 +593,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pasystray.scm
 
+  (use-modules
+   (shepherd support))
+
   (define pasystray
-    (make <service>
-      #:provides '(pasystray)
-      #:docstring "Runs `pasystray'"
+    (service '(pasystray)
+      #:documentation "Runs `pasystray'"
       #:respawn? #t
       #:start (make-forkexec-constructor '("pasystray"))
       #:stop (make-kill-destructor)))
 
-  (register-services pasystray)
+  (register-services (list pasystray))
 
 #+end_src
 
@@ -586,15 +611,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/autorandr.scm
 
+  (use-modules
+   (shepherd support))
+
   (define autorandr
-    (make <service>
-      #:provides '(autorandr)
-      #:docstring "Runs `autorandr'"
+    (service '(autorandr)
+      #:documentation "Runs `autorandr'"
       #:respawn? #f
       #:one-shot? #t
       #:start (make-system-constructor "autorandr --change --force")))
 
-  (register-services autorandr)
+  (register-services (list autorandr))
 
 #+end_src
 
@@ -602,15 +629,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xmodmap.scm
 
+  (use-modules
+   (shepherd support))
+
   (define xmodmap
-    (make <service>
-      #:provides '(xmodmap)
-      #:docstring "Runs `xmodmap'"
+    (service '(xmodmap)
+      #:documentation "Runs `xmodmap'"
       #:respawn? #f
       #:one-shot? #t
       #:start (make-system-constructor "xmodmap ~/.xmodmaprc")))
 
-  (register-services xmodmap)
+  (register-services (list xmodmap))
 
 #+end_src
 
@@ -618,15 +647,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm
 
+  (use-modules
+   (shepherd support))
+
   (define syncthing
-    (make <service>
-      #:provides '(syncthing)
+    (service '(syncthing)
       #:respawn? #t
-      #:start (make-forkexec-constructor '("syncthing" "-no-browser"))
+      #:start (make-forkexec-constructor '("syncthing" "--no-browser"))
       #:stop (make-kill-destructor)))
 
-  (register-services syncthing)
-  (start syncthing)
+  (register-services (list syncthing))
+  (start-in-the-background '(syncthing))
 
 #+end_src
 
@@ -634,14 +665,16 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm
 
+  (use-modules
+   (shepherd support))
+
   (define syncthing-gtk
-    (make <service>
-      #:provides '(syncthing-gtk)
+    (service '(syncthing-gtk)
       #:respawn? #t
       #:start (make-forkexec-constructor '("syncthing-gtk" "--minimized"))
       #:stop (make-kill-destructor)))
 
-  (register-services syncthing-gtk)
+  (register-services (list syncthing-gtk))
 
 #+end_src
 
@@ -649,14 +682,16 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xss-lock.scm
 
+  (use-modules
+   (shepherd support))
+
   (define xss-lock
-    (make <service>
-      #:provides '(xss-lock)
+    (service '(xss-lock)
       #:respawn? #t
       #:start (make-forkexec-constructor '("xss-lock" "--" "slock"))
       #:stop (make-kill-destructor)))
 
-  (register-services xss-lock)
+  (register-services (list xss-lock))
 
 #+end_src
 
@@ -664,15 +699,17 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/polkit-gnome.scm
 
+  (use-modules
+   (shepherd support))
+
   (define polkit-gnome
-    (make <service>
-      #:provides '(polkit-gnome)
+    (service '(polkit-gnome)
       #:respawn? #t
       #:start (make-forkexec-constructor '("/home/phil-gab99/.guix-extra-profiles/desktop/desktop/libexec/polkit-gnome-authentication-agent-1"))
       #:stop (make-kill-destructor)))
 
-  (register-services polkit-gnome)
-  (start polkit-gnome)
+  (register-services (list polkit-gnome))
+  (start-in-the-background '(polkit-gnome))
 
 #+end_src
 

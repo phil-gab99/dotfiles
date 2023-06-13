@@ -1,9 +1,9 @@
-(use-modules (shepherd support))
+(use-modules
+ (shepherd support))
 
 (define ssh-agent
-  (make <service>
-    #:provides '(ssh-agent)
-    #:docstring "Run `ssh-agent'"
+  (service '(ssh-agent)
+    #:documentation "Run `ssh-agent'"
     #:respawn? #t
     #:start (lambda ()
               (let ((socket-dir (string-append %user-runtime-dir "/ssh-agent")))
@@ -15,5 +15,5 @@
                  #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
     #:stop (make-kill-destructor)))
 
-;; (register-services ssh-agent)
-;; (start ssh-agent)
+;; (register-services (list ssh-agent))
+;; (start-in-the-background '(ssh-agent))

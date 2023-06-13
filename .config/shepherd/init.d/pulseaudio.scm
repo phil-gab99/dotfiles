@@ -1,10 +1,12 @@
+(use-modules
+ (shepherd support))
+
 (define pulseaudio
-  (make <service>
-    #:provides '(pulseaudio)
-    #:docstring "Runs `pulseaudio'"
+  (service '(pulseaudio)
+    #:documentation "Runs `pulseaudio'"
     #:respawn? #t
     #:start (make-forkexec-constructor '("pulseaudio"))
     #:stop (make-kill-destructor)))
 
-(register-services pulseaudio)
-(start pulseaudio)
+(register-services (list pulseaudio))
+(start-in-the-background '(pulseaudio))

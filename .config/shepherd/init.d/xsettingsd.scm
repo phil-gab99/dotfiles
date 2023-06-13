@@ -1,9 +1,11 @@
+(use-modules
+ (shepherd support))
+
 (define xsettingsd
-  (make <service>
-    #:provides '(xsettingsd)
-    #:docstring "Runs `xsettingsd'"
+  (service '(xsettingsd)
+    #:documentation "Runs `xsettingsd'"
     #:respawn? #t
     #:start (make-forkexec-constructor '("xsettingsd"))
     #:stop (make-kill-destructor)))
 
-(register-services xsettingsd)
+(register-services (list xsettingsd))

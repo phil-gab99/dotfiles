@@ -126,10 +126,16 @@ export LOCALSZ=32768
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
+# Shepherd bug 0.10 - shifting to manual service call until fixed
 # Start the shepherd daemon
-if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
-    shepherd # -l $XDG_CONFIG_HOME/shepherd/shepherd.log
-fi
+# if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
+#     shepherd -l $XDG_CONFIG_HOME/shepherd/shepherd.log
+# fi
+gpg-connect-agent /bye
+mcron &
+pulseaudio &
+syncthing --no-browser &
+/home/phil-gab99/.guix-extra-profiles/desktop/desktop/libexec/polkit-gnome-authentication-agent-1 &
 
 # System 76 charge thresholds set to safe charge
 [ -f ~/bin/safe-charge ] && ~/bin/safe-charge

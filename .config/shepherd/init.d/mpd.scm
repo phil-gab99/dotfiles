@@ -1,10 +1,12 @@
+(use-modules
+ (shepherd support))
+
 (define mpd
-  (make <service>
-    #:provides '(mpd)
-    #:docstring "Runs `mpd'"
+  (service '(mpd)
+    #:documentation "Runs `mpd'"
     #:respawn? #t
     #:start (make-system-constructor "mpd")
     #:stop (make-system-destructor "mpd --kill")))
 
-(register-services mpd)
-;; (start mpd)
+(register-services (list mpd))
+;; (start-in-the-background '(mpd))

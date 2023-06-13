@@ -21,12 +21,13 @@
 
 (defun pg/herd-service (service)
   "Starts herd process."
-  (start-process-shell-command "herd start" nil (concat "herd start " service)))
+  (start-process-shell-command service nil service))
+  ;; (start-process-shell-command "herd start" nil (concat "herd start " service)))
 
 (defun pg/set-wallpaper ()
   "Sets desktop wallpaper."
   (interactive)
-  (pg/herd-service "feh"))
+  (pg/herd-service "feh --bg-scale ~/Pictures/wp-color-triangle.png"))
 
 (defun pg/update-displays ()
   "Multiple display management."
@@ -62,11 +63,11 @@
   (pg/herd-service "xsettingsd")
   (pg/herd-service "dunst")
   (pg/herd-service "nm-applet")
-  (pg/herd-service "syncthing-gtk")
-  (pg/herd-service "xss-lock")
-  (pg/herd-service "udiskie")
+  (pg/herd-service "syncthing-gtk --minimized")
+  (pg/herd-service "xss-lock -- slock")
+  (pg/herd-service "udiskie -t")
   (pg/herd-service "pasystray")
-  (pg/herd-service "xmodmap"))
+  (pg/herd-service "xmodmap ~/.xmodmaprc"))
 
 (unless pg/is-guix-system
   (straight-use-package 'exwm))

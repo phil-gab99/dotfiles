@@ -1,9 +1,11 @@
+(use-modules
+ (shepherd support))
+
 (define xmodmap
-  (make <service>
-    #:provides '(xmodmap)
-    #:docstring "Runs `xmodmap'"
+  (service '(xmodmap)
+    #:documentation "Runs `xmodmap'"
     #:respawn? #f
     #:one-shot? #t
     #:start (make-system-constructor "xmodmap ~/.xmodmaprc")))
 
-(register-services xmodmap)
+(register-services (list xmodmap))
