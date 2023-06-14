@@ -2,5 +2,5 @@
   (service '(mpd)
     #:documentation "Runs `mpd'"
     #:respawn? #t
-    #:start (make-system-constructor "mpd")
-    #:stop (make-system-destructor "mpd --kill")))
+    #:start (make-forkexec-constructor '("mpd" "--no-daemon"))
+    #:stop (make-kill-destructor)))
