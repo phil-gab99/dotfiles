@@ -14,6 +14,3 @@
                  `("ssh-agent" "-D" "-a" ,(string-append socket-dir "/socket"))
                  #:log-file (string-append %user-log-dir "/ssh-agent.log"))))
     #:stop (make-kill-destructor)))
-
-;; (register-services (list ssh-agent))
-;; (start-in-the-background '(ssh-agent))

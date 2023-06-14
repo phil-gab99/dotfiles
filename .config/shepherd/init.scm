@@ -12,3 +12,29 @@
  (scandir (string-append (dirname (current-filename)) "/init.d")
           (lambda (file)
             (string-suffix? ".scm" file))))
+
+;; Register services
+(register-services (list autorandr
+                         compton
+                         dunst
+                         feh
+                         gpg-agent
+                         mcron
+                         mpd
+                         nm-applet
+                         pasystray
+                         polkit-gnome
+                         pulseaudio
+                         syncthing
+                         syncthing-gtk
+                         udiskie
+                         xmodmap
+                         xsettingsd
+                         xss-lock))
+
+;; Start services
+(start-in-the-background '(gpg-agent
+                           mcron
+                           polkit-gnome
+                           pulseaudio
+                           syncthing))
