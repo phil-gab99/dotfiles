@@ -1155,6 +1155,15 @@ Theme inspired by the popular Atom One Dark theme.
 
 #+end_src
 
+*** Package | nerd-icons
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
+
+  (straight-use-package 'nerd-icons)
+  (require 'nerd-icons)
+
+#+end_src
+
 *** Package | all-the-icons
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
@@ -1227,16 +1236,25 @@ Customizes the look of the modeline for better aesthetic.
   (straight-use-package 'dashboard)
   (with-eval-after-load 'projectile
     (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
-    (require 'dashboard))
+    (with-eval-after-load 'nerd-icons
+      (require 'dashboard)))
+  (pg/customize-set-variables
+   `((dashboard-items . ((recents . 5)
+                         (projects . 5)
+                         (agenda . 5)))
+     (dashboard-set-heading-icons . t)
+     (dashboard-set-file-icons . t)
+     (dashboard-display-icons-p . t)
+     (dashboard-icon-type . all-the-icons)
+     (dashboard-heading-icons . ((recents . "history")
+                                 (bookmarks . "bookmark")
+                                 (agenda . "calendar")
+                                 (projects . "rocket")
+                                 (registers . "database")))
+     (dashboard-match-agenda-entry . "task")
+     (dashboard-page-separator . "\n\f\n")
+     (dashboard-init-info . ,#'pg/display-startup-time)))
   (with-eval-after-load 'dashboard
-    (pg/customize-set-variables
-     `((dashboard-set-file-icons . t)
-       (dashboard-match-agenda-entry . "task")
-       (dashboard-items . ((recents . 5)
-                           (projects . 5)
-                           (agenda . 5)))
-       (dashboard-page-separator . "\n\f\n")
-       (dashboard-init-info . ,#'pg/display-startup-time)))
     (pg/dashboard-setup-startup-hook))
 
 #+end_src
@@ -2204,17 +2222,31 @@ Keeps a single dired buffer open at a time (to not have multiple buried buffers)
 
 #+end_src
 
+*** Package | nerd-icons-dired
+
+Displays icons in dired-mode.
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
+
+  (straight-use-package 'nerd-icons-dired)
+  (unless pg/is-termux
+    (unless (fboundp 'nerd-icons-dired-mode)
+      (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
+    (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+
+#+end_src
+
 *** Package | all-the-icons-dired
 
 Displays icons in dired-mode.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (straight-use-package 'all-the-icons-dired)
-  (unless pg/is-termux
-    (unless (fboundp 'all-the-icons-dired-mode)
-      (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
-    (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
+  ;; (straight-use-package 'all-the-icons-dired)
+  ;; (unless pg/is-termux
+  ;;   (unless (fboundp 'all-the-icons-dired-mode)
+  ;;     (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
+  ;;   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
 
 #+end_src
 
@@ -3904,23 +3936,24 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (straight-use-package 'conda)
-  (add-hook'conda-postactivate-hook #'(lambda ()
-                                         (setenv "OLD_JUPYTER_PATH" (getenv "JUPYTER_PATH"))
-                                         (if (null (getenv "JUPYTER_PATH"))
-                                             (setenv "JUPYTER_PATH" (concat conda-env-current-path "lib"))
-                                           (setenv "JUPYTER_PATH" (concat (getenv "JUPYTER_PATH") ":" conda-env-current-path "lib")))))
-  (add-hook 'conda-predeactivate-hook #'(lambda ()
-                                          (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
-                                          (setenv "JUPYTER_PATH")))
-  (pg/customize-set-variables
-   `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
-     (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
-     (conda-env-subdirectory . "envs")))
-  (unless (getenv "CONDA_DEFAULT_ENV")
-    (conda-env-activate "ml_practice"))
-  (with-eval-after-load 'conda
-    (conda-env-initialize-interactive-shells)
-    (conda-env-initialize-eshell))
+  (when (executable-find "conda")
+    (add-hook'conda-postactivate-hook #'(lambda ()
+                                          (setenv "OLD_JUPYTER_PATH" (getenv "JUPYTER_PATH"))
+                                          (if (null (getenv "JUPYTER_PATH"))
+                                              (setenv "JUPYTER_PATH" (concat conda-env-current-path "lib"))
+                                            (setenv "JUPYTER_PATH" (concat (getenv "JUPYTER_PATH") ":" conda-env-current-path "lib")))))
+    (add-hook 'conda-predeactivate-hook #'(lambda ()
+                                            (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
+                                            (setenv "JUPYTER_PATH")))
+    (pg/customize-set-variables
+     `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
+       (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
+       (conda-env-subdirectory . "envs")))
+    (unless (getenv "CONDA_DEFAULT_ENV")
+      (conda-env-activate "ml_practice"))
+    (with-eval-after-load 'conda
+      (conda-env-initialize-interactive-shells)
+      (conda-env-initialize-eshell)))
 
 #+end_src
 
@@ -3973,9 +4006,10 @@ Custom syntax highlighting for LMC assembly language.
     (jupyter-available-kernelspecs t))
 
   (straight-use-package 'jupyter)
-  (add-hook 'jupyter-repl-mode-hook #'company-mode)
-  (add-hook 'jupyter-repl-mode-hook #'(lambda ()
-                                        (require 'jupyter)))
+  (unless pg/is-windows
+    (add-hook 'jupyter-repl-mode-hook #'company-mode)
+    (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                          (require 'jupyter))))
 
 #+end_src
 
@@ -4730,10 +4764,10 @@ Helps with note-taking strategies.
 
   (unless pg/is-termux
     (straight-use-package 'org-roam)
-    (with-eval-after-load 'org
-      (if pg/is-windows
-          (straight-use-package 'emacsql-sqlite3))
-      (require 'org-roam))
+   (with-eval-after-load 'org
+     ;; (if pg/is-windows
+     ;;     (straight-use-package 'emacsql-sqlite3))
+     (require 'org-roam))
     (with-eval-after-load 'org-roam
       (pg/customize-set-variables
        `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -4748,7 +4782,7 @@ Helps with note-taking strategies.
                                          :if-new (file+head "MAT-1681/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                                                             "#+title: mat1681-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                          :unnarrowed t)))))
-      (org-roam-setup)
+      (org-roam-db-autosync-enable)
       (with-eval-after-load 'general
         (pg/leader-keys
           "on" '(:ignore t :which-key "notes")
@@ -5568,7 +5602,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
       "st" '(hydra-text-scale/body :which-key "scale text")
       "sw" '(hydra-window-scale/body :which-key "scale window")
       "sx" '(hydra-x-window-scale/body :which-key "scale x window")
-      
+
       "w" '(:ignore t :which-key "window")
       "wm" '(hydra-window-move/body :which-key "move")
       "ws" '(hydra-window-swap/body :which-key "swap")
@@ -5722,19 +5756,20 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (require package))
 
   ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
-  (require 'ob-jupyter)
-  (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
-   'org-babel-load-languages '((emacs-lisp . t)
-                               (java . t)
-                               (shell . t)
-                               (plantuml . t)
-                               (python . t)
-                               (arduino . t)
-                               (jupyter . t)))
+  (unless pg/is-windows
+    (require 'ob-jupyter)
+    (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
+     'org-babel-load-languages '((emacs-lisp . t)
+                                 (java . t)
+                                 (shell . t)
+                                 (plantuml . t)
+                                 (python . t)
+                                 (arduino . t)
+                                 (jupyter . t)))
 
-  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                       (:session . "py")
-                                                       (:kernel . "python3")))
+    (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                         (:session . "py")
+                                                         (:kernel . "python3"))))
 
   (setq gc-cons-threshold (* 2 1000 1000))
 

@@ -306,10 +306,10 @@
 
 (unless pg/is-termux
   (straight-use-package 'org-roam)
-  (with-eval-after-load 'org
-    (if pg/is-windows
-        (straight-use-package 'emacsql-sqlite3))
-    (require 'org-roam))
+ (with-eval-after-load 'org
+   ;; (if pg/is-windows
+   ;;     (straight-use-package 'emacsql-sqlite3))
+   (require 'org-roam))
   (with-eval-after-load 'org-roam
     (pg/customize-set-variables
      `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -324,7 +324,7 @@
                                        :if-new (file+head "MAT-1681/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                                                           "#+title: mat1681-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                        :unnarrowed t)))))
-    (org-roam-setup)
+    (org-roam-db-autosync-enable)
     (with-eval-after-load 'general
       (pg/leader-keys
         "on" '(:ignore t :which-key "notes")

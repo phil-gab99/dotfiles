@@ -105,18 +105,19 @@ the custom variable."
   (require package))
 
 ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
-(require 'ob-jupyter)
-(org-babel-do-load-languages ;; Loads languages to be executed by org-babel
- 'org-babel-load-languages '((emacs-lisp . t)
-                             (java . t)
-                             (shell . t)
-                             (plantuml . t)
-                             (python . t)
-                             (arduino . t)
-                             (jupyter . t)))
+(unless pg/is-windows
+  (require 'ob-jupyter)
+  (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
+   'org-babel-load-languages '((emacs-lisp . t)
+                               (java . t)
+                               (shell . t)
+                               (plantuml . t)
+                               (python . t)
+                               (arduino . t)
+                               (jupyter . t)))
 
-(setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                     (:session . "py")
-                                                     (:kernel . "python3")))
+  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                       (:session . "py")
+                                                       (:kernel . "python3"))))
 
 (setq gc-cons-threshold (* 2 1000 1000))
