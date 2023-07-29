@@ -23,22 +23,33 @@ CUSTOM-SETS argument represents a plist where each entry's key is the custom
 variable one wishes to set and the corresponding value is the value to set to
 the custom variable."
   (mapcar (lambda (setting)
-            (let ((custom (car setting))
-                  (value (cdr setting)))
-              (customize-set-variable custom value)))
-          custom-sets))
+	    (let ((custom (car setting))
+		  (value (cdr setting)))
+	      (customize-set-variable custom value)))
+	  custom-sets))
 
 ;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
-(setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-      pg/is-windows (eq system-type 'windows-nt)
-      pg/is-linux (eq system-type 'gnu/linux)
-      pg/is-guix-system (and pg/is-linux
-                             (string-match-p (regexp-quote "(guix@guix)")
-                                             (shell-command-to-string "cat /proc/version")))
-      pg/exwm-enabled (and (not pg/is-termux)
-                           (display-graphic-p)
-                           pg/is-linux))
+(defvar pg/is-termux
+  (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
+  "Determines whether the current system is an Android based system.")
+(defvar pg/is-windows
+  (eq system-type 'windows-nt)
+  "Determines whether the current system is a Windows based system.")
+(defvar pg/is-linux
+  (eq system-type 'gnu/linux)
+  "Determines whether the current system is a GNU/Linux based system.")
+(defvar pg/is-guix-system
+  (and pg/is-linux
+       (string-match-p (regexp-quote "(guix@guix)")
+		       (shell-command-to-string "cat /proc/version")))
+  "Determines whether the current system is a GNU/Linux based system running the
+  GNU Guix distribution.")
+(defvar pg/exwm-enabled
+  (and (not pg/is-termux)
+       (display-graphic-p)
+       pg/is-linux)
+  "Determines whether the EXWM is currently running.")
 
 (pg/customize-set-variables
  `((load-prefer-newer . t)
@@ -53,55 +64,55 @@ the custom variable."
 (if pg/exwm-enabled (require 'pg-desktop))
 
 (dolist (package '(pg-ui
-                   pg-bindings
-                   pg-org
-                   pg-completion
-                   pg-editing
-                   pg-native-compilation
-                   pg-guix
-                   pg-passwords
-                   pg-keylog
-                   pg-buffer
-                   pg-email
-                   pg-help
-                   pg-web
-                   pg-file
-                   pg-shell
+		   pg-bindings
+		   pg-org
+		   pg-completion
+		   pg-editing
+		   pg-native-compilation
+		   pg-guix
+		   pg-passwords
+		   pg-keylog
+		   pg-buffer
+		   pg-email
+		   pg-help
+		   pg-web
+		   pg-file
+		   pg-shell
 
-                   pg-project
-                   pg-programming
-                   ;; pg-programming-alloy
-                   pg-programming-arduino
-                   pg-programming-cc
-                   ;; pg-programming-commonlisp
-                   pg-programming-css
-                   pg-programming-docker
-                   pg-programming-elisp
-                   pg-programming-git
-                   pg-programming-groovy
-                   pg-programming-haskell
-                   pg-programming-html
-                   pg-programming-java
-                   ;; pg-programming-lmc
-                   pg-programming-markdown
-                   pg-programming-mips
-                   pg-programming-prolog
-                   pg-programming-python
-                   ;; pg-programming-smtlibv2
-                   pg-programming-sql
-                   pg-programming-tex
-                   pg-programming-typescript
-                   ;; pg-programming-vhdl
-                   pg-programming-yaml
+		   pg-project
+		   pg-programming
+		   ;; pg-programming-alloy
+		   pg-programming-arduino
+		   pg-programming-cc
+		   ;; pg-programming-commonlisp
+		   pg-programming-css
+		   pg-programming-docker
+		   pg-programming-elisp
+		   pg-programming-git
+		   pg-programming-groovy
+		   pg-programming-haskell
+		   pg-programming-html
+		   pg-programming-java
+		   ;; pg-programming-lmc
+		   pg-programming-markdown
+		   pg-programming-mips
+		   pg-programming-prolog
+		   pg-programming-python
+		   ;; pg-programming-smtlibv2
+		   pg-programming-sql
+		   pg-programming-tex
+		   pg-programming-typescript
+		   ;; pg-programming-vhdl
+		   pg-programming-yaml
 
-                   pg-notification
-                   pg-viewers
-                   ;; pg-bible
-                   pg-finance
-                   pg-social
-                   pg-weather
-                   pg-music
-                   pg-games))
+		   pg-notification
+		   pg-viewers
+		   ;; pg-bible
+		   pg-finance
+		   pg-social
+		   pg-weather
+		   pg-music
+		   pg-games))
   (require package))
 
 ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
@@ -109,15 +120,15 @@ the custom variable."
   (require 'ob-jupyter)
   (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
    'org-babel-load-languages '((emacs-lisp . t)
-                               (java . t)
-                               (shell . t)
-                               (plantuml . t)
-                               (python . t)
-                               (arduino . t)
-                               (jupyter . t)))
+			       (java . t)
+			       (shell . t)
+			       (plantuml . t)
+			       (python . t)
+			       (arduino . t)
+			       (jupyter . t)))
 
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                       (:session . "py")
-                                                       (:kernel . "python3"))))
+						       (:session . "py")
+						       (:kernel . "python3"))))
 
 (setq gc-cons-threshold (* 2 1000 1000))

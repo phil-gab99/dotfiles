@@ -23,15 +23,11 @@
 (straight-use-package 'magit)
 (unless (fboundp 'magit-status)
   (autoload #'magit-status "magit-status" nil t))
-(with-eval-after-load 'magit-status
-  (unless (featurep 'magit)
-    (require 'magit)))
 (unless (fboundp 'magit-clone)
   (autoload #'magit-clone "magit-clone" nil t))
-(with-eval-after-load 'magit-clone
-  (unless (featurep 'magit)
-    (require 'magit)))
 (with-eval-after-load 'magit
+  (if pg/is-windows
+      (setenv "SSH_ASKPASS" "git-gui--askpass"))
   (customize-set-variable 'magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 (with-eval-after-load 'general
   (pg/leader-keys
@@ -53,13 +49,14 @@
     (autoload #'diminish "diminish" nil t))
   (diminish #'git-gutter-mode))
 
-(straight-use-package 'forge)
-(with-eval-after-load 'magit
-  (require 'forge))
-(with-eval-after-load 'forge
-  (customize-set-variable 'forge-add-default-bindings nil))
-(with-eval-after-load 'general
-  (pg/leader-keys
-    "gf" '(forge-pull :which-key "forge")))
+(unless pg/is-windows
+  (straight-use-package 'forge)
+  (with-eval-after-load 'magit
+    (require 'forge))
+  (with-eval-after-load 'forge
+    (customize-set-variable 'forge-add-default-bindings nil))
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "gf" '(forge-pull :which-key "forge"))))
 
 (provide 'pg-project)

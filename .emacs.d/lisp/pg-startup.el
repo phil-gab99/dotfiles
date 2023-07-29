@@ -1,8 +1,7 @@
 ;;; pg-startup.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(unless pg/is-windows
-  (server-start))
+(server-start)
 
 (unless (featurep 'straight)
   (defvar bootstrap-version)

@@ -307,8 +307,6 @@
 (unless pg/is-termux
   (straight-use-package 'org-roam)
  (with-eval-after-load 'org
-   ;; (if pg/is-windows
-   ;;     (straight-use-package 'emacsql-sqlite3))
    (require 'org-roam))
   (with-eval-after-load 'org-roam
     (pg/customize-set-variables

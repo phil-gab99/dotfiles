@@ -21,8 +21,7 @@ Starting a server for displaying polybar info
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
 
-  (unless pg/is-windows
-    (server-start))
+  (server-start)
 
 #+end_src
 
@@ -2521,15 +2520,11 @@ Allows for git commands to be applied to the current repository using the comman
   (straight-use-package 'magit)
   (unless (fboundp 'magit-status)
     (autoload #'magit-status "magit-status" nil t))
-  (with-eval-after-load 'magit-status
-    (unless (featurep 'magit)
-      (require 'magit)))
   (unless (fboundp 'magit-clone)
     (autoload #'magit-clone "magit-clone" nil t))
-  (with-eval-after-load 'magit-clone
-    (unless (featurep 'magit)
-      (require 'magit)))
   (with-eval-after-load 'magit
+    (if pg/is-windows
+        (setenv "SSH_ASKPASS" "git-gui--askpass"))
     (customize-set-variable 'magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
   (with-eval-after-load 'general
     (pg/leader-keys
@@ -2584,14 +2579,15 @@ Steps to get working:
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
 
-  (straight-use-package 'forge)
-  (with-eval-after-load 'magit
-    (require 'forge))
-  (with-eval-after-load 'forge
-    (customize-set-variable 'forge-add-default-bindings nil))
-  (with-eval-after-load 'general
-    (pg/leader-keys
-      "gf" '(forge-pull :which-key "forge")))
+  (unless pg/is-windows
+    (straight-use-package 'forge)
+    (with-eval-after-load 'magit
+      (require 'forge))
+    (with-eval-after-load 'forge
+      (customize-set-variable 'forge-add-default-bindings nil))
+    (with-eval-after-load 'general
+      (pg/leader-keys
+        "gf" '(forge-pull :which-key "forge"))))
 
 #+end_src
 
@@ -4762,33 +4758,31 @@ Helps with note-taking strategies.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
-  (unless pg/is-termux
-    (straight-use-package 'org-roam)
-   (with-eval-after-load 'org
-     ;; (if pg/is-windows
-     ;;     (straight-use-package 'emacsql-sqlite3))
-     (require 'org-roam))
-    (with-eval-after-load 'org-roam
-      (pg/customize-set-variables
-       `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-         (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
-         (org-roam-capture-templates . (("d" "default" plain
-                                         "%?"
-                                         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                            "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                         :unnarrowed t)
-                                        ("m" "comp-assist math" plain
-                                         "%?"
-                                         :if-new (file+head "MAT-1681/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                            "#+title: mat1681-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                         :unnarrowed t)))))
-      (org-roam-db-autosync-enable)
-      (with-eval-after-load 'general
-        (pg/leader-keys
-          "on" '(:ignore t :which-key "notes")
-          "onl" '(org-roam-buffer-toggle :which-key "links")
-          "onf" '(org-roam-node-find :which-key "find/create")
-          "oni" '(org-roam-node-insert :which-key "insert/create")))))
+    (unless pg/is-termux
+      (straight-use-package 'org-roam)
+     (with-eval-after-load 'org
+       (require 'org-roam))
+      (with-eval-after-load 'org-roam
+        (pg/customize-set-variables
+         `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+           (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
+           (org-roam-capture-templates . (("d" "default" plain
+                                           "%?"
+                                           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                              "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                           :unnarrowed t)
+                                          ("m" "comp-assist math" plain
+                                           "%?"
+                                           :if-new (file+head "MAT-1681/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                              "#+title: mat1681-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                           :unnarrowed t)))))
+        (org-roam-db-autosync-enable)
+        (with-eval-after-load 'general
+          (pg/leader-keys
+            "on" '(:ignore t :which-key "notes")
+            "onl" '(org-roam-buffer-toggle :which-key "links")
+            "onf" '(org-roam-node-find :which-key "find/create")
+            "oni" '(org-roam-node-insert :which-key "insert/create")))))
 
 #+end_src
 
@@ -5674,22 +5668,33 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   variable one wishes to set and the corresponding value is the value to set to
   the custom variable."
     (mapcar (lambda (setting)
-              (let ((custom (car setting))
-                    (value (cdr setting)))
-                (customize-set-variable custom value)))
-            custom-sets))
+	      (let ((custom (car setting))
+		    (value (cdr setting)))
+		(customize-set-variable custom value)))
+	    custom-sets))
 
   ;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
-  (setq pg/is-termux (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
-        pg/is-windows (eq system-type 'windows-nt)
-        pg/is-linux (eq system-type 'gnu/linux)
-        pg/is-guix-system (and pg/is-linux
-                               (string-match-p (regexp-quote "(guix@guix)")
-                                               (shell-command-to-string "cat /proc/version")))
-        pg/exwm-enabled (and (not pg/is-termux)
-                             (display-graphic-p)
-                             pg/is-linux))
+  (defvar pg/is-termux
+    (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
+    "Determines whether the current system is an Android based system.")
+  (defvar pg/is-windows
+    (eq system-type 'windows-nt)
+    "Determines whether the current system is a Windows based system.")
+  (defvar pg/is-linux
+    (eq system-type 'gnu/linux)
+    "Determines whether the current system is a GNU/Linux based system.")
+  (defvar pg/is-guix-system
+    (and pg/is-linux
+	 (string-match-p (regexp-quote "(guix@guix)")
+			 (shell-command-to-string "cat /proc/version")))
+    "Determines whether the current system is a GNU/Linux based system running the
+    GNU Guix distribution.")
+  (defvar pg/exwm-enabled
+    (and (not pg/is-termux)
+	 (display-graphic-p)
+	 pg/is-linux)
+    "Determines whether the EXWM is currently running.")
 
   (pg/customize-set-variables
    `((load-prefer-newer . t)
@@ -5704,55 +5709,55 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   (if pg/exwm-enabled (require 'pg-desktop))
 
   (dolist (package '(pg-ui
-                     pg-bindings
-                     pg-org
-                     pg-completion
-                     pg-editing
-                     pg-native-compilation
-                     pg-guix
-                     pg-passwords
-                     pg-keylog
-                     pg-buffer
-                     pg-email
-                     pg-help
-                     pg-web
-                     pg-file
-                     pg-shell
+		     pg-bindings
+		     pg-org
+		     pg-completion
+		     pg-editing
+		     pg-native-compilation
+		     pg-guix
+		     pg-passwords
+		     pg-keylog
+		     pg-buffer
+		     pg-email
+		     pg-help
+		     pg-web
+		     pg-file
+		     pg-shell
 
-                     pg-project
-                     pg-programming
-                     ;; pg-programming-alloy
-                     pg-programming-arduino
-                     pg-programming-cc
-                     ;; pg-programming-commonlisp
-                     pg-programming-css
-                     pg-programming-docker
-                     pg-programming-elisp
-                     pg-programming-git
-                     pg-programming-groovy
-                     pg-programming-haskell
-                     pg-programming-html
-                     pg-programming-java
-                     ;; pg-programming-lmc
-                     pg-programming-markdown
-                     pg-programming-mips
-                     pg-programming-prolog
-                     pg-programming-python
-                     ;; pg-programming-smtlibv2
-                     pg-programming-sql
-                     pg-programming-tex
-                     pg-programming-typescript
-                     ;; pg-programming-vhdl
-                     pg-programming-yaml
+		     pg-project
+		     pg-programming
+		     ;; pg-programming-alloy
+		     pg-programming-arduino
+		     pg-programming-cc
+		     ;; pg-programming-commonlisp
+		     pg-programming-css
+		     pg-programming-docker
+		     pg-programming-elisp
+		     pg-programming-git
+		     pg-programming-groovy
+		     pg-programming-haskell
+		     pg-programming-html
+		     pg-programming-java
+		     ;; pg-programming-lmc
+		     pg-programming-markdown
+		     pg-programming-mips
+		     pg-programming-prolog
+		     pg-programming-python
+		     ;; pg-programming-smtlibv2
+		     pg-programming-sql
+		     pg-programming-tex
+		     pg-programming-typescript
+		     ;; pg-programming-vhdl
+		     pg-programming-yaml
 
-                     pg-notification
-                     pg-viewers
-                     ;; pg-bible
-                     pg-finance
-                     pg-social
-                     pg-weather
-                     pg-music
-                     pg-games))
+		     pg-notification
+		     pg-viewers
+		     ;; pg-bible
+		     pg-finance
+		     pg-social
+		     pg-weather
+		     pg-music
+		     pg-games))
     (require package))
 
   ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
@@ -5760,16 +5765,16 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (require 'ob-jupyter)
     (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
      'org-babel-load-languages '((emacs-lisp . t)
-                                 (java . t)
-                                 (shell . t)
-                                 (plantuml . t)
-                                 (python . t)
-                                 (arduino . t)
-                                 (jupyter . t)))
+				 (java . t)
+				 (shell . t)
+				 (plantuml . t)
+				 (python . t)
+				 (arduino . t)
+				 (jupyter . t)))
 
     (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-                                                         (:session . "py")
-                                                         (:kernel . "python3"))))
+							 (:session . "py")
+							 (:kernel . "python3"))))
 
   (setq gc-cons-threshold (* 2 1000 1000))
 
