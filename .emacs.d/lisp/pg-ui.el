@@ -19,6 +19,10 @@
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+;; Set fullscreen
+(if pg/is-windows
+   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+
 (straight-use-package 'diminish)
 (require 'diminish)
 

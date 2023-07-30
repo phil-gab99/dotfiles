@@ -1,0 +1,124 @@
+{
+  // Workbench
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.preferredDarkColorTheme": "One Dark Pro",
+  "workbench.iconTheme": "material-icon-theme",
+
+  // Editor
+  "editor.fontFamily": "Jetbrains Mono",
+  "editor.fontLigatures": true,
+  "editor.lineNumbers": "relative",
+  "editor.emptySelectionClipboard": false,
+  "editor.codeLensFontFamily": "Jetbrains Mono",
+
+  // Explorer
+  "explorer.compactFolders": false,
+
+  // SCM
+  "scm.inputFontFamily": "editor",
+
+  // Debug console
+  "debug.console.fontFamily": "Jetbrains Mono",
+
+  // Terminal
+  "terminal.integrated.fontFamily": "Jetbrains Mono",
+
+  // Files
+  "files.associations": {
+    "*.include": "jil",
+    "*.tmpl": "properties",
+    "*pipeline*": "jenkinsfile"
+  },
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false,
+    "**/Thumbs.db": false
+  },
+  "files.insertFinalNewline": true,
+
+  // Security
+  "security.workspace.trust.enabled": false,
+
+  // Notebook
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "right"
+  },
+  "notebook.output.textLineLimit": 500,
+
+  // Python
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.defaultFormatter": "ms-python.python"
+  },
+
+  // JSON
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.indentSize": 2
+  },
+  // JSON schemas for workspace
+  // "json.schemaDownload.enable": false,
+  // "json.schemas": [
+  //   {
+  //     "fileMatch": [
+  //       "devcontainer.json"
+  //     ],
+  //     "url": "file://path/to/.config/devContainer/devContainer.schema.json"
+  //   }
+  // ],
+
+  // One Dark Pro
+  "oneDarkPro.vivid": true,
+
+  // Vim
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "Y"
+      ],
+      "after": [
+        "y",
+        "$"
+      ]
+    },
+    {
+      "before": [
+        "j"
+      ],
+      "after": [
+        "g",
+        "j"
+      ]
+    },
+    {
+      "before": [
+        "k"
+      ],
+      "after": [
+        "g",
+        "k"
+      ]
+    }
+  ],
+  "vim.handleKeys": {
+    "<C-k>": false
+  },
+  "vim.useSystemClipboard": true,
+
+  // Sonarlint
+  // "sonarlint.ls.javaHome": "/path/to/azulzulu-openjk/version",
+
+  // Extensions
+  "extensions.autoCheckUpdates": false,
+  "extensions.autoUpdate": false
+}
