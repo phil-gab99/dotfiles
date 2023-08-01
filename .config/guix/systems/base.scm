@@ -5,6 +5,7 @@
   #:use-module (srfi srfi-1))
 
 (use-package-modules audio
+                     base
                      certs
                      cups
                      dns
@@ -15,6 +16,7 @@
                      gtk
                      linux
                      mtools
+                     ncurses
                      package-management
                      pulseaudio
                      shells
@@ -185,22 +187,24 @@ EndSection
    ;; System packages
    (packages
     (append
-     (list emacs
+     (list bluez
+           bluez-alsa
+           coreutils
+           emacs
            emacs-exwm
            emacs-desktop-environment
-           nss-certs
-           git
-           ntfs-3g
            exfat-utils
            fuse-exfat
-           vim
-           nix
-           pulseaudio
-           xf86-input-libinput
+           git
            gvfs
-           xterm
-           bluez
-           bluez-alsa)
+           ncurses
+           nix
+           nss-certs
+           ntfs-3g
+           pulseaudio
+           vim
+           xf86-input-libinput
+           xterm)
      %base-packages))
 
    ;; System services

@@ -31,8 +31,9 @@
                    visual-line-mode))
     (diminish mode)))
 
-(straight-use-package 'nerd-icons)
-(require 'nerd-icons)
+(unless pg/is-linux
+  (straight-use-package 'nerd-icons)
+  (require 'nerd-icons))
 
 (straight-use-package 'all-the-icons)
 (require 'all-the-icons)
@@ -71,9 +72,10 @@
 
 (straight-use-package 'dashboard)
 (with-eval-after-load 'projectile
-  (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
-  (with-eval-after-load 'nerd-icons
-    (require 'dashboard)))
+  (require 'dashboard)
+  ;; (with-eval-after-load 'nerd-icons
+  ;;   (require 'dashboard))
+  (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook))
 (pg/customize-set-variables
  `((dashboard-items . ((recents . 5)
                        (projects . 5)
@@ -81,12 +83,12 @@
    (dashboard-set-heading-icons . t)
    (dashboard-set-file-icons . t)
    (dashboard-display-icons-p . t)
-   (dashboard-icon-type . all-the-icons)
-   (dashboard-heading-icons . ((recents . "history")
-                               (bookmarks . "bookmark")
-                               (agenda . "calendar")
-                               (projects . "rocket")
-                               (registers . "database")))
+   ;; (dashboard-icon-type . all-the-icons)
+   ;; (dashboard-heading-icons . ((recents . "history")
+   ;;                             (bookmarks . "bookmark")
+   ;;                             (agenda . "calendar")
+   ;;                             (projects . "rocket")
+   ;;                             (registers . "database")))
    (dashboard-match-agenda-entry . "task")
    (dashboard-page-separator . "\n\f\n")
    (dashboard-init-info . ,#'pg/display-startup-time)))

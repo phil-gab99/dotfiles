@@ -255,6 +255,52 @@ To temporarily bypass an alias, precede the command with a ~\~
       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
   }
 
+  # Enable session to send information to vterm via properly escaped sequences
+  function vterm_printf {
+      if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
+          # Tell tmux to pass the escape sequences through
+          printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+      elif [ "${TERM%%-*}" = "screen" ]; then
+          # GNU screen (screen, screen-256color, screen-256color-bce)
+          printf "\eP\e]%s\007\e\\" "$1"
+      else
+          printf "\e]%s\e\\" "$1"
+      fi
+  }
+
+  # Directory tracking in vterm
+  function vterm_prompt_end {
+      vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+  }
+
+  # elisp commands in vterm
+  function vterm_cmd {
+      local vterm_elisp=""
+
+      while [ $# -gt 0 ]; do
+          vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+          shift
+      done
+      vterm_printf "51;E$vterm_elisp"
+  }
+
+  # Completely clear buffer
+  if [ "$INSIDE_EMACS" = 'vterm' ]; then
+      function clear {
+          vterm_printf "51;Evterm-clear-scrollback"
+          tput clear
+      }
+  fi
+
+
+  ################################################################################
+  # ELisp Functions
+  ################################################################################
+
+  function find-file {
+      vterm_cmd find-file "$(realpath "${@:-.}")"
+  }
+
   ################################################################################
   # COLORED PROMPT
   ################################################################################
@@ -373,6 +419,9 @@ To temporarily bypass an alias, precede the command with a ~\~
           PS1+="\[${RED}\]$\[${NOCOLOR}\] " # Root user
       fi
 
+      # vterm
+      PS1=$PS1'\[$(vterm_prompt_end)\]'
+
       # PS2 is used to continue a command using the \ character
       PS2="\[${LIGHTGRAY}\]$\[${NOCOLOR}\] "
 
@@ -390,8 +439,9 @@ To temporarily bypass an alias, precede the command with a ~\~
           PS4="$PS4 [dev] "
       fi
   }
-  PROMPT_COMMAND='__setprompt'
 
+  PROMPT_COMMAND='__setprompt'
+  PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }"'echo -ne "\033]0;${HOSTNAME}:${PWD}\007"'
 #+end_src
 
 *** Browsers

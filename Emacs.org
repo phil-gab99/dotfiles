@@ -1162,8 +1162,9 @@ Theme inspired by the popular Atom One Dark theme.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
-  (straight-use-package 'nerd-icons)
-  (require 'nerd-icons)
+  (unless pg/is-linux
+    (straight-use-package 'nerd-icons)
+    (require 'nerd-icons))
 
 #+end_src
 
@@ -1238,9 +1239,10 @@ Customizes the look of the modeline for better aesthetic.
 
   (straight-use-package 'dashboard)
   (with-eval-after-load 'projectile
-    (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook)
-    (with-eval-after-load 'nerd-icons
-      (require 'dashboard)))
+    (require 'dashboard)
+    ;; (with-eval-after-load 'nerd-icons
+    ;;   (require 'dashboard))
+    (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook))
   (pg/customize-set-variables
    `((dashboard-items . ((recents . 5)
                          (projects . 5)
@@ -1248,12 +1250,12 @@ Customizes the look of the modeline for better aesthetic.
      (dashboard-set-heading-icons . t)
      (dashboard-set-file-icons . t)
      (dashboard-display-icons-p . t)
-     (dashboard-icon-type . all-the-icons)
-     (dashboard-heading-icons . ((recents . "history")
-                                 (bookmarks . "bookmark")
-                                 (agenda . "calendar")
-                                 (projects . "rocket")
-                                 (registers . "database")))
+     ;; (dashboard-icon-type . all-the-icons)
+     ;; (dashboard-heading-icons . ((recents . "history")
+     ;;                             (bookmarks . "bookmark")
+     ;;                             (agenda . "calendar")
+     ;;                             (projects . "rocket")
+     ;;                             (registers . "database")))
      (dashboard-match-agenda-entry . "task")
      (dashboard-page-separator . "\n\f\n")
      (dashboard-init-info . ,#'pg/display-startup-time)))
@@ -2231,11 +2233,12 @@ Displays icons in dired-mode.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (straight-use-package 'nerd-icons-dired)
-  (unless pg/is-termux
-    (unless (fboundp 'nerd-icons-dired-mode)
-      (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
-    (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+  (unless pg/is-linux
+    (straight-use-package 'nerd-icons-dired)
+    (unless pg/is-termux
+      (unless (fboundp 'nerd-icons-dired-mode)
+        (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
+      (add-hook 'dired-mode-hook #'nerd-icons-dired-mode)))
 
 #+end_src
 
@@ -2245,11 +2248,11 @@ Displays icons in dired-mode.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  ;; (straight-use-package 'all-the-icons-dired)
-  ;; (unless pg/is-termux
-  ;;   (unless (fboundp 'all-the-icons-dired-mode)
-  ;;     (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
-  ;;   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
+  (straight-use-package 'all-the-icons-dired)
+  (unless pg/is-termux
+    (unless (fboundp 'all-the-icons-dired-mode)
+      (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
+    (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
 
 #+end_src
 
@@ -3562,7 +3565,7 @@ Some general tools for programming:
      `((lsp-java-configuration-runtimes . [( :name "JavaSE-17"
                                              :path ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")
                                              :default t)])
-       (lsp-java-vmargs . ,(list "-noverify" "--enable-preview"))
+       (lsp-java-vmargs . ,(list "--noverify" "--enable-preview"))
        (lsp-java-java-path . "java")
        (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
 

@@ -29,17 +29,18 @@
     "h" #'dired-single-up-directory
     "l" #'dired-single-buffer))
 
-(straight-use-package 'nerd-icons-dired)
-(unless pg/is-termux
-  (unless (fboundp 'nerd-icons-dired-mode)
-    (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
-  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+(unless pg/is-linux
+  (straight-use-package 'nerd-icons-dired)
+  (unless pg/is-termux
+    (unless (fboundp 'nerd-icons-dired-mode)
+      (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
+    (add-hook 'dired-mode-hook #'nerd-icons-dired-mode)))
 
-;; (straight-use-package 'all-the-icons-dired)
-;; (unless pg/is-termux
-;;   (unless (fboundp 'all-the-icons-dired-mode)
-;;     (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
-;;   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
+(straight-use-package 'all-the-icons-dired)
+(unless pg/is-termux
+  (unless (fboundp 'all-the-icons-dired-mode)
+    (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
+  (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
 
 (straight-use-package 'dired-hide-dotfiles)
 (with-eval-after-load 'dired
