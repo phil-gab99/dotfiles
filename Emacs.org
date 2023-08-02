@@ -253,6 +253,8 @@ Scheme REPL
 
 #+end_src
 
+*Guix Packages*
+
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; (specification->package "emacs-password-store")
@@ -1677,9 +1679,9 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
-  (set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
-  (set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light)
-  (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular)
+  (set-face-attribute 'default nil :font pg/font-fixed :weight 'light :height 120)
+  (set-face-attribute 'fixed-pitch nil :family pg/font-fixed :weight 'light)
+  (set-face-attribute 'variable-pitch nil :family pg/font-variable :weight 'regular)
 
 #+end_src
 
@@ -4390,7 +4392,7 @@ Org mode package for writing structured documents and more. Here are some useful
   
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
-  (defun org-screenshot ()
+  (defun pg/org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the img
     directory with respect to the org-buffer's location and insert a link to
     this file. Requires imageMagick for undertaking screenshots."
@@ -4412,24 +4414,25 @@ Org mode package for writing structured documents and more. Here are some useful
     (insert (concat "[[" filename "]]"))
     (org-display-inline-images))
 
-  (defun org-csv-to-table (beg end)
+  (defun pg/org-csv-to-table (beg end)
     "Insert a file into the current buffer at point, and convert it to an org
     table."
     (interactive (list (mark) (point)))
     (org-table-convert-region beg end ","))
 
-  (setq org-view-html-tmp-dir "/tmp/org-html-preview/")
+  (defconst pg/org-view-html-tmp-dir "/tmp/org-html-preview/"
+    "Directory of temporary html file to view.")
 
-  (defun org-view-html ()
+  (defun pg/org-view-html ()
     "Views an org source html block in default browser"
     (interactive)
     (let ((elem (org-element-at-point))
-          (temp-file-path (concat org-view-html-tmp-dir (number-to-string (random (expt 2 32))) ".html")))
+          (temp-file-path (concat pg/org-view-html-tmp-dir (number-to-string (random (expt 2 32))) ".html")))
       (cond ((not (eq 'export-block (car elem)))
              (message "Not in an export block!"))
             ((not (string-equal (plist-get (car (cdr elem)) :type) "HTML"))
              (message "Export block is not HTML!"))
-            (t (progn (f-mkdir org-view-html-tmp-dir)
+            (t (progn (f-mkdir pg/org-view-html-tmp-dir)
                       (f-write (plist-get (car (cdr elem)) :value) 'utf-8 temp-file-path)
                       (start-process "org-html-preview" nil "xdg-open" temp-file-path))))))
 
@@ -4487,7 +4490,7 @@ Org mode package for writing structured documents and more. Here are some useful
                     (org-level-6 . 1.0)
                     (org-level-7 . 1.0)
                     (org-level-8 . 1.0)))
-      (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
+      (set-face-attribute (car face) nil :font pg/font-variable :weight 'regular :height (cdr face)))
 
     (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
@@ -4525,7 +4528,7 @@ Org mode package for writing structured documents and more. Here are some useful
     (with-eval-after-load 'general
       (pg/leader-keys
         "o" '(:ignore t :which-key "org")
-        "os" '(org-screenshot :which-key "screenshot")
+        "os" '(pg/org-screenshot :which-key "screenshot")
         "oc" '(org-capture :which-key "capture")
         "oa" '(org-agenda :which-key "agenda")
         "ot" '(org-todo-list :which-key "todos")
@@ -5685,8 +5688,16 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
 
-  (push "~/.emacs.d/lisp" load-path)
-  (push "~/.emacs.d/themes" custom-theme-load-path)
+  (push (expand-file-name "lisp" user-emacs-directory) load-path)
+  (push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
+
+  ;; Fonts used
+  (defconst pg/font-fixed
+    "JetBrains Mono"
+    "Fixed pitch font.")
+  (defconst pg/font-variable
+    "Iosevka Aile"
+    "Variable pitch font.")
 
   (defun pg/close-all-buffers ()
     "Closes all emacs buffers."
@@ -5700,10 +5711,10 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (save-buffers-kill-emacs))
 
   (defun pg/customize-set-variables (custom-sets)
-    "Sets the value of custom variables using `customize-set-variable'. The
-  CUSTOM-SETS argument represents a plist where each entry's key is the custom
-  variable one wishes to set and the corresponding value is the value to set to
-  the custom variable."
+    "Sets the value of custom variables using `customize-set-variable'.
+  The CUSTOM-SETS argument represents a plist where each entry's key is the
+  custom variable one wishes to set and the corresponding value is the value to
+  set to the custom variable."
     (mapcar (lambda (setting)
               (let ((custom (car setting))
                     (value (cdr setting)))
@@ -5712,22 +5723,21 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   ;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
-  (defvar pg/is-termux
+  ;; System related constants
+  (defconst pg/is-termux
     (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
     "Determines whether the current system is an Android based system.")
-  (defvar pg/is-windows
-    (eq system-type 'windows-nt)
+  (defconst pg/is-windows (eq system-type 'windows-nt)
     "Determines whether the current system is a Windows based system.")
-  (defvar pg/is-linux
-    (eq system-type 'gnu/linux)
+  (defconst pg/is-linux (eq system-type 'gnu/linux)
     "Determines whether the current system is a GNU/Linux based system.")
-  (defvar pg/is-guix-system
+  (defconst pg/is-guix-system
     (and pg/is-linux
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
     "Determines whether the current system is a GNU/Linux based system running the
-    GNU Guix distribution.")
-  (defvar pg/exwm-enabled
+        GNU Guix distribution.")
+  (defconst pg/exwm-enabled
     (and (not pg/is-termux)
          (display-graphic-p)
          pg/is-linux)

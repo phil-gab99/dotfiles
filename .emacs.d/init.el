@@ -3,8 +3,16 @@
 
 (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
 
-(push "~/.emacs.d/lisp" load-path)
-(push "~/.emacs.d/themes" custom-theme-load-path)
+(push (expand-file-name "lisp" user-emacs-directory) load-path)
+(push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
+
+;; Fonts used
+(defconst pg/font-fixed
+  "JetBrains Mono"
+  "Fixed pitch font.")
+(defconst pg/font-variable
+  "Iosevka Aile"
+  "Variable pitch font.")
 
 (defun pg/close-all-buffers ()
   "Closes all emacs buffers."
@@ -18,10 +26,10 @@
   (save-buffers-kill-emacs))
 
 (defun pg/customize-set-variables (custom-sets)
-  "Sets the value of custom variables using `customize-set-variable'. The
-CUSTOM-SETS argument represents a plist where each entry's key is the custom
-variable one wishes to set and the corresponding value is the value to set to
-the custom variable."
+  "Sets the value of custom variables using `customize-set-variable'.
+The CUSTOM-SETS argument represents a plist where each entry's key is the
+custom variable one wishes to set and the corresponding value is the value to
+set to the custom variable."
   (mapcar (lambda (setting)
             (let ((custom (car setting))
                   (value (cdr setting)))
@@ -30,22 +38,21 @@ the custom variable."
 
 ;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
-(defvar pg/is-termux
+;; System related constants
+(defconst pg/is-termux
   (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
   "Determines whether the current system is an Android based system.")
-(defvar pg/is-windows
-  (eq system-type 'windows-nt)
+(defconst pg/is-windows (eq system-type 'windows-nt)
   "Determines whether the current system is a Windows based system.")
-(defvar pg/is-linux
-  (eq system-type 'gnu/linux)
+(defconst pg/is-linux (eq system-type 'gnu/linux)
   "Determines whether the current system is a GNU/Linux based system.")
-(defvar pg/is-guix-system
+(defconst pg/is-guix-system
   (and pg/is-linux
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
   "Determines whether the current system is a GNU/Linux based system running the
-  GNU Guix distribution.")
-(defvar pg/exwm-enabled
+      GNU Guix distribution.")
+(defconst pg/exwm-enabled
   (and (not pg/is-termux)
        (display-graphic-p)
        pg/is-linux)

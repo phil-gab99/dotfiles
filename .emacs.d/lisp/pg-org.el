@@ -1,7 +1,7 @@
 ;;; pg-org.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(defun org-screenshot ()
+(defun pg/org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the img
   directory with respect to the org-buffer's location and insert a link to
   this file. Requires imageMagick for undertaking screenshots."
@@ -23,24 +23,25 @@
   (insert (concat "[[" filename "]]"))
   (org-display-inline-images))
 
-(defun org-csv-to-table (beg end)
+(defun pg/org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
   table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
 
-(setq org-view-html-tmp-dir "/tmp/org-html-preview/")
+(defconst pg/org-view-html-tmp-dir "/tmp/org-html-preview/"
+  "Directory of temporary html file to view.")
 
-(defun org-view-html ()
+(defun pg/org-view-html ()
   "Views an org source html block in default browser"
   (interactive)
   (let ((elem (org-element-at-point))
-        (temp-file-path (concat org-view-html-tmp-dir (number-to-string (random (expt 2 32))) ".html")))
+        (temp-file-path (concat pg/org-view-html-tmp-dir (number-to-string (random (expt 2 32))) ".html")))
     (cond ((not (eq 'export-block (car elem)))
            (message "Not in an export block!"))
           ((not (string-equal (plist-get (car (cdr elem)) :type) "HTML"))
            (message "Export block is not HTML!"))
-          (t (progn (f-mkdir org-view-html-tmp-dir)
+          (t (progn (f-mkdir pg/org-view-html-tmp-dir)
                     (f-write (plist-get (car (cdr elem)) :value) 'utf-8 temp-file-path)
                     (start-process "org-html-preview" nil "xdg-open" temp-file-path))))))
 
@@ -98,7 +99,7 @@
                   (org-level-6 . 1.0)
                   (org-level-7 . 1.0)
                   (org-level-8 . 1.0)))
-    (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'regular :height (cdr face)))
+    (set-face-attribute (car face) nil :font pg/font-variable :weight 'regular :height (cdr face)))
 
   (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
@@ -136,7 +137,7 @@
   (with-eval-after-load 'general
     (pg/leader-keys
       "o" '(:ignore t :which-key "org")
-      "os" '(org-screenshot :which-key "screenshot")
+      "os" '(pg/org-screenshot :which-key "screenshot")
       "oc" '(org-capture :which-key "capture")
       "oa" '(org-agenda :which-key "agenda")
       "ot" '(org-todo-list :which-key "todos")

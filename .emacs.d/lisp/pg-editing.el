@@ -59,9 +59,9 @@
   (add-hook mode #'(lambda ()
                      (display-line-numbers-mode 0))))
 
-(set-face-attribute 'default nil :font "JetBrains Mono" :weight 'light :height 120)
-(set-face-attribute 'fixed-pitch nil :family "JetBrains Mono" :weight 'light)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'regular)
+(set-face-attribute 'default nil :font pg/font-fixed :weight 'light :height 120)
+(set-face-attribute 'fixed-pitch nil :family pg/font-fixed :weight 'light)
+(set-face-attribute 'variable-pitch nil :family pg/font-variable :weight 'regular)
 
 (straight-use-package '(ligature :type git
                                  :host github
