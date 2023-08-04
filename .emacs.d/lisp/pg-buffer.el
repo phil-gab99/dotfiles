@@ -12,7 +12,6 @@
   (autoload #'bufler "bufler" nil t))
 (global-set-key (kbd "C-x C-b") #'bufler)
 (with-eval-after-load 'bufler
-  (message "bufler has loaded")
   (unless (fboundp 'evil-collection-define-key)
     (autoload #'evil-collection-define-key "evil-collection"))
   (evil-collection-define-key 'normal 'bufler-list-mode-map
@@ -53,7 +52,7 @@
                                         (name-match "**Special**"
                                                     (rx bos "*" (or "Messages" "Warnings" "scratch" "Backtrace" "Pinentry") "*"))
                                         (lambda (buffer)
-                                          (unless (or (funcall (mode-match "Magit" (rx bos "magit-status"))
+                                          (unless (or (funcall (mode-match "Magit" (rx bos (or "magit-status" "magit-diff" "magit-process")))
                                                                buffer)
                                                       (funcall (mode-match "Dired" (rx bos "dired"))
                                                                buffer)

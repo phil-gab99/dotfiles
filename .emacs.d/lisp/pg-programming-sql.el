@@ -11,17 +11,17 @@
                                          (toggle-truncate-lines t)))
 (with-eval-after-load 'sql
   (customize-set-variable 'sql-connection-alist
-                          '((main (sql-product 'postgres)
+                          `((main (sql-product postgres)
                                   (sql-port 5432)
                                   (sql-server "localhost")
                                   (sql-user "phil-gab99")
-                                  (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                                  (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
                                   (sql-database "phil-gab99"))
-                            (school (sql-product 'postgres)
+                            (school (sql-product postgres)
                                     (sql-port 5432)
                                     (sql-server "localhost")
                                     (sql-user "phil-gab99")
-                                    (sql-password (pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                                    (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
                                     (sql-database "ift2935")))))
 
 (with-eval-after-load 'sql

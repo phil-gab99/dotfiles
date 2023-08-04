@@ -2,8 +2,8 @@
 ;; Author: Philippe Gabriel
 
 (define-minor-mode pg/keycast-mode
-  "Show current command and its key binding in the mode line (fix for use with
-  doom-mode-line)."
+  "Show current command and its key binding in the mode line.
+Fix for use with doom-mode-line."
   :global t
   (interactive)
   (if pg/keycast-mode

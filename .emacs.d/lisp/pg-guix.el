@@ -1,7 +1,7 @@
 ;;; pg-guix.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(unless (not pg/is-guix-system)
+(when pg/is-guix-system
   (unless (fboundp 'guix)
     (autoload #'guix "guix" nil t))
   (with-eval-after-load 'general
@@ -10,7 +10,7 @@
       "Gg" '(guix :which-key "guix")
       "Gs" '((lambda () (interactive) (dired "/run/current-system/profile/share/guile/site/3.0/")) :which-key "source"))))
 
-(unless (not pg/is-guix-system)
+(when pg/is-guix-system
   (unless (fboundp 'geiser-guile)
     (autoload #'geiser-guile "geiser" nil t))
   (unless (fboundp 'geiser-repl-clear-buffer)

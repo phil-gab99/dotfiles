@@ -54,9 +54,9 @@
   "Bind the colors list around BODY."
   (declare (indent 0))
   `(let ((class '((class color) (min-colors 89)))
-         ,@ (mapcar (lambda (cons)
-                      (list (intern (car cons)) (cdr cons)))
-                    pg-onedark-variant-colors-alist))
+         ,@(mapcar (lambda (cons)
+                     (list (intern (car cons)) (cdr cons)))
+                   pg-onedark-variant-colors-alist))
      ,@body))
 
 (pg-onedark-variant-with-color-variables
