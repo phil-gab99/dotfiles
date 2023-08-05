@@ -53,9 +53,7 @@ set to the custom variable."
   "Determines whether the current system is a GNU/Linux based system running the
       GNU Guix distribution.")
 (defconst pg/exwm-enabled
-  (and (not pg/is-termux)
-       (display-graphic-p)
-       pg/is-linux)
+  (getenv "EXWM")
   "Determines whether the EXWM is currently running.")
 
 (pg/customize-set-variables

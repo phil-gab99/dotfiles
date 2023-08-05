@@ -20,6 +20,9 @@ case $1 in
 
         exec $1
         ;;
+    startxfce4)
+        exec $1
+        ;;
     *)
         exec $DEFAULT_SESSION
         ;;

@@ -232,6 +232,7 @@ EndSection
      (service bluetooth-service-type
               (bluetooth-configuration
                (auto-enable? #t)))
+     (service xfce-desktop-service-type)
      (extra-special-file "/bin/env"
                          (file-append coreutils "/bin/env"))
      (extra-special-file "/lib64/ld-linux-x86-64.so.2"

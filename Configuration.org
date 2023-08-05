@@ -2970,6 +2970,9 @@ Acting with respect to window manager selected
 
           exec $1
           ;;
+      startxfce4)
+          exec $1
+          ;;
       *)
           exec $DEFAULT_SESSION
           ;;

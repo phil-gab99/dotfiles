@@ -5740,9 +5740,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     "Determines whether the current system is a GNU/Linux based system running the
         GNU Guix distribution.")
   (defconst pg/exwm-enabled
-    (and (not pg/is-termux)
-         (display-graphic-p)
-         pg/is-linux)
+    (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
 
   (pg/customize-set-variables
