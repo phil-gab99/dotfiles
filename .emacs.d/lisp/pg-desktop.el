@@ -59,10 +59,8 @@
   "Initializations."
   (pg/start-panel)
   (pg/herd-service "compton")
-  (pg/herd-service "xsettingsd")
   (pg/herd-service "dunst")
   (pg/herd-service "nm-applet")
-  (pg/herd-service "syncthing-gtk")
   (pg/herd-service "xss-lock")
   (pg/herd-service "udiskie")
   (pg/herd-service "pasystray")

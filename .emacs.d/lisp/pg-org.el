@@ -318,10 +318,10 @@
                                        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                           "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                        :unnarrowed t)
-                                      ("m" "comp-assist math" plain
+                                      ("s" "system admin" plain
                                        "%?"
-                                       :if-new (file+head "MAT-1681/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                          "#+title: mat1681-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                       :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                          "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                        :unnarrowed t)))))
     (org-roam-db-autosync-enable)
     (with-eval-after-load 'general

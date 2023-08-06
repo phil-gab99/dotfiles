@@ -37,4 +37,7 @@
                            mcron
                            polkit-gnome
                            pulseaudio
-                           syncthing))
+                           syncthing
+                           syncthing-gtk
+                           xmodmap
+                           xsettingsd))

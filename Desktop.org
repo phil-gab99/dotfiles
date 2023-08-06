@@ -137,10 +137,8 @@ Workspaces:
     "Initializations."
     (pg/start-panel)
     (pg/herd-service "compton")
-    (pg/herd-service "xsettingsd")
     (pg/herd-service "dunst")
     (pg/herd-service "nm-applet")
-    (pg/herd-service "syncthing-gtk")
     (pg/herd-service "xss-lock")
     (pg/herd-service "udiskie")
     (pg/herd-service "pasystray")
@@ -400,7 +398,10 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
                              mcron
                              polkit-gnome
                              pulseaudio
-                             syncthing))
+                             syncthing
+                             syncthing-gtk
+                             xmodmap
+                             xsettingsd))
 
 #+end_src
 
