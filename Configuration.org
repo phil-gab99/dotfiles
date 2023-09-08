@@ -1816,6 +1816,9 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   # Bash specific variables
   export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
+  # Email address
+  export EMAIL=pgabriel999@hotmail.com
+
   ################################################################################
   # Shepherd
   ################################################################################

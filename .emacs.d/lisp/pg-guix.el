@@ -22,12 +22,16 @@
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'geiser-repl-mode-hook #'corfu-mode)
-  (with-eval-after-load 'geiser
+
+  (with-eval-after-load 'geiser-guile
+    (add-to-list 'geiser-guile-load-path "~/Projects/guix")
     (pg/customize-set-variables
      `((geiser-guile-load-init-file . t)
-       (geiser-repl-company-p . nil)
-       (geiser-guile-manual-lookup-other-window . t)
-       (geiser-guile-load-path . ("/run/current-system/profile/share/guile/3.0"))
+       (geiser-guile-manual-lookup-other-window . t))))
+
+  (with-eval-after-load 'geiser
+    (pg/customize-set-variables
+     `((geiser-repl-company-p . nil)
        (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))))
 
 (provide 'pg-guix)

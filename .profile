@@ -168,6 +168,9 @@ export LOCALSZ=32768
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
+# Email address
+export EMAIL=pgabriel999@hotmail.com
+
 ################################################################################
 # Shepherd
 ################################################################################
