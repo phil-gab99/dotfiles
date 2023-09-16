@@ -15,5 +15,4 @@
 (packages->manifest
  (list
   (specification->package+output "openjdk@17:jdk")
-  (specification->package+output "openjdk@17:doc")
-  (first (lookup-inferior-packages inferior "maven"))))
+  (specification->package+output "openjdk@17:doc")))

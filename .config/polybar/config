@@ -44,6 +44,8 @@ font-0 = "Cantarell:size=13:weight=bold;1"
 font-1 = "Font Awesome:size=14;2"
 font-2 = "Material Icons:size=14;5"
 font-3 = "Fira Mono:size=12;-3"
+font-4 = "Weather Icons:size=16;3"
+font-5 = "DejaVu Sans"
 
 modules-left = exwm-workspace xkeyboard cpu memory
 modules-right = temperature battery backlight date
@@ -67,7 +69,7 @@ format-padding = 1
 [module/xkeyboard]
 type = internal/xkeyboard
 ; blacklist-0 = num lock
-format = |   <label-layout>
+format = |  <label-layout>
 format-prefix-font = 1
 format-prefix-foreground = ${colors.foreground-alt}
 label-layout = %icon% %name%
@@ -77,6 +79,7 @@ label-indicator-margin = 1
 [module/memory]
 type = internal/memory
 interval = 1
+warn-percentage = 95
 format = |  <label> RAM <bar-used>
 label = %gb_used% / %gb_total%
 bar-used-indicator =
@@ -97,7 +100,7 @@ format = | <label> CPU <ramp-coreload>
 ; click-left = emacsclient -e "(proced)"
 label =  %percentage%%
 ramp-coreload-spacing = 0
-;ramp-load-0-foreground = ${colors.foreground-alt}
+; ramp-load-0-foreground = ${colors.foreground-alt}
 ramp-coreload-0 = ▁
 ramp-coreload-1 = ▂
 ramp-coreload-2 = ▃
@@ -155,13 +158,13 @@ animation-charging-framerate = 750
 type = internal/backlight
 card = acpi_video0
 use-actual-brightness = true
-format = | <ramp> <label> |
+format = | <ramp>  <label> |
 label = %percentage%%
-ramp-0 = 🌕
-ramp-1 = 🌔
-ramp-2 = 🌓
-ramp-3 = 🌒
-ramp-4 = 🌑
+ramp-0 = %{T5}%{T-}
+ramp-1 = %{T5}%{T-}
+ramp-2 = %{T5}%{T-}
+ramp-3 = %{T5}%{T-}
+ramp-4 = %{T5}%{T-}
 
 [module/date]
 type = internal/date
