@@ -139,6 +139,8 @@
   
   ;; (specification->package "emacs-haskell-mode")
   
+  ;; (specification->package "emacs-lsp-java")
+  
   ;; (specification->package "emacs-auctex")
   
   ;; (specification->package "emacs-company-auctex")

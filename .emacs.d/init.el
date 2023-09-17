@@ -60,6 +60,9 @@ set to the custom variable."
  `((load-prefer-newer . t)
    (use-short-answers . t)
    (auto-save-list-file-prefix . ,(expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))
+   (warning-suppress-log-types . (lsp-mode))
+   (warning-suppress-types . (lsp-mode))
+   (warning-minimum-level . :error)
    (help-at-pt-display-when-idle . t)))
 
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
