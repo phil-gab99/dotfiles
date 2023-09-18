@@ -27,9 +27,9 @@
 
 (defun pg/customize-set-variables (custom-sets)
   "Sets the value of custom variables using `customize-set-variable'.
-The CUSTOM-SETS argument represents a plist where each entry's key is the
-custom variable one wishes to set and the corresponding value is the value to
-set to the custom variable."
+  The CUSTOM-SETS argument represents a plist where each entry's key is the
+  custom variable one wishes to set and the corresponding value is the value to
+  set to the custom variable."
   (mapcar (lambda (setting)
             (let ((custom (car setting))
                   (value (cdr setting)))
@@ -51,7 +51,7 @@ set to the custom variable."
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
   "Determines whether the current system is a GNU/Linux based system running the
-      GNU Guix distribution.")
+        GNU Guix distribution.")
 (defconst pg/exwm-enabled
   (getenv "EXWM")
   "Determines whether the EXWM is currently running.")
@@ -112,6 +112,7 @@ set to the custom variable."
                    pg-programming-tex
                    pg-programming-typescript
                    ;; pg-programming-vhdl
+                   pg-programming-xml
                    pg-programming-yaml
 
                    pg-notification

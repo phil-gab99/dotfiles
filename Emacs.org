@@ -3525,6 +3525,14 @@ Some general tools for programming:
 
 #+end_src
 
+***** Package | web-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
+
+  (straight-use-package 'web-mode)
+
+#+end_src
+
 ***** HTML package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
@@ -3618,6 +3626,7 @@ Some general tools for programming:
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-javascript.el
 
+  (add-hook 'js-mode-hook #'lsp-deferred)
   (unless (fboundp 'javascript-mode)
     (autoload #'javascript-mode "js" nil t))
   (with-eval-after-load 'js
@@ -4282,6 +4291,33 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
 
   (provide 'pg-programming-vhdl)
+
+#+end_src
+
+**** XML
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-xml.el
+
+  ;;; pg-programming-xml.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | nxml-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-xml.el
+
+  (customize-set-variable 'nxml-slash-auto-complete-flag t)
+
+#+end_src
+
+***** XML package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-xml.el
+
+  (provide 'pg-programming-xml)
 
 #+end_src
 
@@ -5673,7 +5709,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-  ;;; init.el -*- lexical-binding: t; -*-
+    ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -5702,9 +5738,9 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (defun pg/customize-set-variables (custom-sets)
     "Sets the value of custom variables using `customize-set-variable'.
-  The CUSTOM-SETS argument represents a plist where each entry's key is the
-  custom variable one wishes to set and the corresponding value is the value to
-  set to the custom variable."
+    The CUSTOM-SETS argument represents a plist where each entry's key is the
+    custom variable one wishes to set and the corresponding value is the value to
+    set to the custom variable."
     (mapcar (lambda (setting)
               (let ((custom (car setting))
                     (value (cdr setting)))
@@ -5726,7 +5762,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
     "Determines whether the current system is a GNU/Linux based system running the
-        GNU Guix distribution.")
+          GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
@@ -5787,6 +5823,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-tex
                      pg-programming-typescript
                      ;; pg-programming-vhdl
+                     pg-programming-xml
                      pg-programming-yaml
 
                      pg-notification
