@@ -28,6 +28,7 @@
                          syncthing
                          syncthing-gtk
                          udiskie
+                         xfce4-clipman
                          xmodmap
                          xsettingsd
                          xss-lock))
@@ -39,5 +40,6 @@
                            pulseaudio
                            syncthing
                            syncthing-gtk
+                           xfce4-clipman
                            xmodmap
                            xsettingsd))

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 for music in $*; do
     youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
 done

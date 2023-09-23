@@ -369,54 +369,66 @@ To temporarily bypass an alias, precede the command with a ~\~
       fi
 
       # Date
-      PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\]🕓 $(date +%a) $(date +%b-'%-d')"
-      PS1+=" $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])-"
+      PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\] $(date +%a) $(date +%b-'%-d') $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])─"
 
       # CPU
       PS1+="(\[${MAGENTA}\] CPU $(cpu)%"
 
       # Jobs
-      PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]\j"
+      PS1+="\[${LIGHTGRAY}\]: \[${MAGENTA}\]\j"
 
       # Network Connections (for a server - comment out for non-server)
       # PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"
 
-      PS1+="\[${LIGHTGRAY}\])-"
-
-      # User and server
-      local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-      local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-      if [ $SSH_IP ] || [ $SSH2_IP ] ; then
-          PS1+="(\[${RED}\]\u@\H"
-      else
-          PS1+="(\[${RED}\]\u"
-      fi
-
-      # Current directory
-      PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\]📁 \w\[${LIGHTGRAY}\])-"
+      PS1+="\[${LIGHTGRAY}\])─"
 
       # Anaconda environment
-      PS1+="\[${LIGHTGRAY}\](\[${LIGHTRED}\] $CONDA_DEFAULT_ENV\[${LIGHTGRAY}\])-"
+      PS1+="\[${LIGHTGRAY}\](\[${LIGHTRED}\] $CONDA_DEFAULT_ENV\[${LIGHTGRAY}\])─"
 
       # Git branch
       local BRANCH=$(parse_git_branch)
       if [ "$BRANCH" != "" ]; then
-          PS1+="\[${LIGHTGRAY}\](\[${LIGHTGREEN}\]⎇ ${BRANCH}\[${LIGHTGRAY}\])-"
+          PS1+="\[${LIGHTGRAY}\](\[${LIGHTGREEN}\] ${BRANCH}"
+
+          # Unstaged changes
+          if [ "$(git ls-files -dm --exclude-standard 2>/dev/null)" ]; then
+              PS1+="*"
+          fi
+
+          # Untracked files
+          if [ "$(git ls-files -o --exclude-standard 2>/dev/null)" ]; then
+              PS1+="%"
+          fi
+
+          # Staged changes
+          if [ "$(git status -s 2>/dev/null | grep "^[MTADRCU]" 2>/dev/null)" ]; then
+              PS1+="+"
+          fi
+
+          PS1+="\[${LIGHTGRAY}\])─"
       fi
 
       # Total size of files in current directory
-      PS1+="(\[${GREEN}\]$(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]:"
+      PS1+="(\[${GREEN}\] $(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]: "
 
       # Number of files
-      PS1+="\[${GREEN}\]\$(ls -A -1 | wc -l)\[${LIGHTGRAY}\])"
+      PS1+="\[${GREEN}\] $(ls -A | wc -l)\[${LIGHTGRAY}\])"
+
+      PS1+="\n├─"
+
+      # User and server
+      PS1+="(\[${RED}\] \u@\H"
+
+      # Current directory
+      PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\] \w\[${LIGHTGRAY}\])"
 
       # Skip to the next line
-      PS1+="\n└─"
+      PS1+="\n└───"
 
       if [[ $EUID -ne 0 ]]; then
           PS1+="\[${GREEN}\]$\[${NOCOLOR}\] " # Normal user
       else
-          PS1+="\[${RED}\]$\[${NOCOLOR}\] " # Root user
+          PS1+="\[${RED}\]#\[${NOCOLOR}\] " # Root user
       fi
 
       # vterm
@@ -441,7 +453,7 @@ To temporarily bypass an alias, precede the command with a ~\~
   }
 
   PROMPT_COMMAND='__setprompt'
-  PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }"'echo -ne "\033]0;${HOSTNAME}:${PWD}\007"'
+
 #+end_src
 
 *** Browsers
@@ -3080,7 +3092,7 @@ This script extract most known archive formats:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/extract :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/extract :shebang #!/usr/bin/env bash
 
   for archive in "$@"; do
       if [ -f "$archive" ]; then
@@ -3118,7 +3130,7 @@ The script sets up correctly arduino IDE when installed from flatpak
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/arduino-flat :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/arduino-flat :shebang #!/usr/bin/env bash
 
   flatpak run --branch=stable --arch=x86_64 cc.arduino.arduinoide "$@"
 
@@ -3156,7 +3168,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Max Charge*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/max-charge :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/max-charge :shebang #!/usr/bin/env bash
 
   echo 0 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 100 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -3168,7 +3180,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Normal Charge*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/normal-charge :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/normal-charge :shebang #!/usr/bin/env bash
 
   echo 60 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 81 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -3180,7 +3192,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Safe charge*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/safe-charge :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/safe-charge :shebang #!/usr/bin/env bash
 
   echo 50 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 61 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -3200,7 +3212,7 @@ This script sets up email accounts using ~mu~:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/mail-init :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/mail-init :shebang #!/usr/bin/env bash
 
   mu init -m ~/Mail --my-address=pgabriel999@hotmail.com --my-address=philippe.gabriel.1@umontreal.ca
   mu index
@@ -3219,7 +3231,7 @@ This script helps download music from youtube:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/download-music :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/download-music :shebang #!/usr/bin/env bash
 
   for music in $*; do
       youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
@@ -3233,7 +3245,7 @@ This script helps download music from youtube:
 
 This script is used with mcron to schedule password synching
 
-#+begin_src sh :tangle ~/.dotfiles/bin/sync-passwords :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/sync-passwords :shebang #!/usr/bin/env bash
 
   pass git pull
   pass git push
@@ -3264,12 +3276,9 @@ This script pretty prints colon delimited variables such as ~$PATH~:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/echoFormat :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/echoFormat :shebang #!/usr/bin/env bash
 
-  IFS=:
-  for i in $1; do
-      echo $i
-  done
+  echo $1 | sed 's/:/\n/g'
 
   exit 0
 
@@ -3285,7 +3294,7 @@ This script helps save a screenshot to clipboard:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/scrot-clipboard :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/scrot-clipboard :shebang #!/usr/bin/env bash
 
   scrot -s -e 'xclip -selection clipboard -t image/png -i $f && rm -f $f'
 
@@ -3303,7 +3312,7 @@ This is a script I tend to use when correcting student assignments to speed up m
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/collect-assignments :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/collect-assignments :shebang #!/usr/bin/env bash
 
   if [ $# -lt 1 ]
   then
@@ -3394,7 +3403,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/wacom-laptop :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/wacom-laptop :shebang #!/usr/bin/env bash
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" eDP-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" eDP-1
@@ -3405,7 +3414,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/wacom-screen :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/wacom-screen :shebang #!/usr/bin/env bash
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1

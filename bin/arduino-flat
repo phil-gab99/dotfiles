@@ -1,2 +1,2 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 flatpak run --branch=stable --arch=x86_64 cc.arduino.arduinoide "$@"

@@ -1,7 +1,4 @@
-#!/usr/bin/env sh
-IFS=:
-for i in $1; do
-    echo $i
-done
+#!/usr/bin/env bash
+echo $1 | sed 's/:/\n/g'
 
 exit 0
