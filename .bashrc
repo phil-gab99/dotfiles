@@ -221,10 +221,10 @@ function __setprompt {
     fi
 
     # Date
-    PS1+="\n\[${LIGHTGRAY}\]┌─(\[${CYAN}\] $(date +%a) $(date +%b-'%-d') $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\])─"
+    PS1+="\n\[${LIGHTGRAY}\]┌─[\[${CYAN}\] $(date +%a) $(date +%b-'%-d') $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\]]─"
 
     # CPU
-    PS1+="(\[${MAGENTA}\] CPU $(cpu)%"
+    PS1+="[\[${MAGENTA}\] CPU $(cpu)%"
 
     # Jobs
     PS1+="\[${LIGHTGRAY}\]: \[${MAGENTA}\]\j"
@@ -232,15 +232,26 @@ function __setprompt {
     # Network Connections (for a server - comment out for non-server)
     # PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"
 
-    PS1+="\[${LIGHTGRAY}\])─"
+    PS1+="\[${LIGHTGRAY}\]]─"
 
     # Anaconda environment
-    PS1+="\[${LIGHTGRAY}\](\[${LIGHTRED}\] $CONDA_DEFAULT_ENV\[${LIGHTGRAY}\])─"
+    PS1+="\[${LIGHTGRAY}\][\[${LIGHTRED}\] $CONDA_DEFAULT_ENV\[${LIGHTGRAY}\]]─"
 
     # Git branch
     local BRANCH=$(parse_git_branch)
     if [ "$BRANCH" != "" ]; then
-        PS1+="\[${LIGHTGRAY}\](\[${LIGHTGREEN}\] ${BRANCH}"
+        PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] ${BRANCH}"
+
+        # Comparison with upstream
+        count=$(git rev-list --count --left-right @{upstream}..HEAD 2>/dev/null)
+        case "$count" in
+            "") p="";;      # No upstream
+            "0	0") p="=";; # Equal to upstream
+            "0	"*) p=">";; # Ahead of upstream
+            *"	0") p="<";; # Behind upstream
+            *) p="<>";;     # Diverged from upstream
+        esac
+        PS1+="$p"
 
         # Unstaged changes
         if [ "$(git ls-files -dm --exclude-standard 2>/dev/null)" ]; then
@@ -257,28 +268,28 @@ function __setprompt {
             PS1+="+"
         fi
 
-        PS1+="\[${LIGHTGRAY}\])─"
+        PS1+="\[${LIGHTGRAY}\]]─"
     fi
 
     # Total size of files in current directory
-    PS1+="(\[${GREEN}\] $(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]: "
+    PS1+="[\[${GREEN}\] $(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]: "
 
     # Number of files
-    PS1+="\[${GREEN}\] $(ls -A | wc -l)\[${LIGHTGRAY}\])"
+    PS1+="\[${GREEN}\] $(ls -A | wc -l)\[${LIGHTGRAY}\]]"
 
     PS1+="\n├─"
 
     # User and server
-    PS1+="(\[${RED}\] \u@\H"
+    PS1+="[\[${RED}\] \u@\H"
 
     # Current directory
-    PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\] \w\[${LIGHTGRAY}\])"
+    PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\] \w\[${LIGHTGRAY}\]]"
 
     # Skip to the next line
     PS1+="\n└───"
 
     if [[ $EUID -ne 0 ]]; then
-        PS1+="\[${GREEN}\]$\[${NOCOLOR}\] " # Normal user
+        PS1+="\[${GREEN}\]■\[${NOCOLOR}\] " # Normal user
     else
         PS1+="\[${RED}\]#\[${NOCOLOR}\] " # Root user
     fi

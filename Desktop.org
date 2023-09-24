@@ -629,7 +629,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xfce4-clipman.scm
 
-  (define syncthing-gtk
+  (define xfce4-clipman
     (service '(xfce4-clipman)
       #:documentation "Runs `xfce4-clipman"
       #:respawn? #t

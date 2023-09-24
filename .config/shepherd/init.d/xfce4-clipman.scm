@@ -1,4 +1,4 @@
-(define syncthing-gtk
+(define xfce4-clipman
   (service '(xfce4-clipman)
     #:documentation "Runs `xfce4-clipman"
     #:respawn? #t
