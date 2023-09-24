@@ -227,7 +227,7 @@ function __setprompt {
     PS1+="[\[${MAGENTA}\] CPU $(cpu)%"
 
     # Jobs
-    PS1+="\[${LIGHTGRAY}\]: \[${MAGENTA}\]\j"
+    PS1+="\[${LIGHTGRAY}\]: \[${MAGENTA}\] \j"
 
     # Network Connections (for a server - comment out for non-server)
     # PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"

@@ -17,6 +17,8 @@ for i in $GUIX_EXTRA_PROFILES/*; do
     unset profile
 done
 
+unset i
+
 # Load Nix environment
 if [ -f /run/current-system/profile/etc/profile.d/nix.sh ]; then
     . /run/current-system/profile/etc/profile.d/nix.sh
@@ -26,7 +28,7 @@ fi
 # Path variables
 ################################################################################
 
-BINS=(
+paths=(
     # Make user scripts and other executables visible to Path
     "$HOME/bin"
     "$HOME/Packages"
@@ -37,16 +39,15 @@ BINS=(
     # Make Nix apps visible to Path
     "$HOME/.nix-profile/bin"
 )
-for bin in ${BINS[@]}; do
-    PATH="$PATH:$bin"
+for p in ${paths[@]}; do
+    PATH="$PATH:$p"
 done
 export PATH
-unset bin BINS
 
 # Append libraries from Nix user packages to library path
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
-DATA_DIRS=(
+paths=(
     # Make Flatpak apps visible to launcher
     "$HOME/.local/share/flatpak/exports/share"
 
@@ -61,11 +62,10 @@ DATA_DIRS=(
     "$GUIX_EXTRA_PROFILES/media/media/share"
     "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share"
 )
-for data_dir in ${DATA_DIRS[@]}; do
-    XDG_DATA_DIRS="$XDG_DATA_DIRS:$data_dir"
+for p in ${paths[@]}; do
+    XDG_DATA_DIRS="$XDG_DATA_DIRS:$p"
 done
 export XDG_DATA_DIRS
-unset data_dir DATA_DIRS
 
 # Some scripts make use of path to config directory
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -73,7 +73,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # Some script make use of path to cache directory
 export XDG_CACHE_HOME="$HOME/.cache"
 
-MANS=(
+paths=(
     # Make manual pages in other profiles visible   
     "$GUIX_EXTRA_PROFILES/audio/audio/share/man"
     "$GUIX_EXTRA_PROFILES/browsers/browsers/share/man"
@@ -91,13 +91,12 @@ MANS=(
     "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/man"
     "$GUIX_EXTRA_PROFILES/video/video/share/man"
 )
-for man in ${MANS[@]}; do
-    MANPATH="$MANPATH:$man"
+for p in ${paths[@]}; do
+    MANPATH="$MANPATH:$p"
 done
 export MANPATH
-unset man MANS
 
-INFOS=(
+paths=(
     # Make info nodes in other profiles visible
     "$GUIX_EXTRA_PROFILES/audio/audio/share/info"
     "$GUIX_EXTRA_PROFILES/browsers/browsers/share/info"
@@ -112,11 +111,12 @@ INFOS=(
     "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/info"
     "$GUIX_EXTRA_PROFILES/video/video/share/info"                 
 )
-for info in ${INFOS[@]}; do
-    INFOPATH="$INFOPATH:$man"
+for p in ${paths[@]}; do
+    INFOPATH="$INFOPATH:$p"
 done
 export MANPATH
-unset info INFOS
+
+unset p paths
 
 ################################################################################
 # Configuration variables
