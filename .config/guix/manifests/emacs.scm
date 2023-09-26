@@ -149,6 +149,8 @@
   
   ;; (specification->package "emacs-jupyter")
   
+  ;; (specification->package "emacs-scala-mode")
+  
   ;; (specification->package "emacs-typescript-mode")
   
   ;; (specification->package "emacs-yaml-mode")

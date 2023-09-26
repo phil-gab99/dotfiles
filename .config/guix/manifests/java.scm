@@ -1,2 +1,3 @@
-(specification->package+output "openjdk@17:jdk")
-(specification->package+output "openjdk@17:doc")
+(specifications->manifest '("openjdk@17:jdk"
+                            "openjdk@17:doc"
+                            "scala"))

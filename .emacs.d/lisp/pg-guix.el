@@ -26,7 +26,7 @@
   (with-eval-after-load 'geiser-guile
     (add-to-list 'geiser-guile-load-path "~/Projects/guix")
     (pg/customize-set-variables
-     `((geiser-guile-load-init-file . t)
+     `((geiser-guile-load-init-file . nil)
        (geiser-guile-manual-lookup-other-window . t))))
 
   (with-eval-after-load 'geiser

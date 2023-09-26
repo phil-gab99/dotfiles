@@ -3,7 +3,7 @@
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "40e78353a4699b8edb6600d82df648914c9110b9")
+          "15fdeaeb2d4df755811db92cc7c3c7cb19155dec")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -25,7 +25,7 @@
         (url "https://git.sr.ht/~abcdw/rde")
         (branch "master")
         (commit
-          "0b85fece3964906ea886b2f889b7add14e193a1b")
+          "043b3982865e5936acf12f95e0952277141d58d9")
         (introduction
           (make-channel-introduction
             "257cebd587b66e4d865b3537a9a88cccd7107c95"
@@ -41,4 +41,10 @@
           (make-channel-introduction
             "33f86a4b48205c0dc19d7c036c85393f0766f806"
             (openpgp-fingerprint
-              "736A C00E 1254 378B A982  7AF6 9DBE 8265 81B6 4490")))))
+              "736A C00E 1254 378B A982  7AF6 9DBE 8265 81B6 4490"))))
+      (channel
+        (name 'pg-channel)
+        (url "file:///home/phil-gab99/Projects/guix-channel")
+        (branch "master")
+        (commit
+          "392981698aa14bf2b5389d8ad6552306fa13e1a9")))

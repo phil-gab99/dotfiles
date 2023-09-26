@@ -147,7 +147,7 @@ Scheme REPL
     (with-eval-after-load 'geiser-guile
       (add-to-list 'geiser-guile-load-path "~/Projects/guix")
       (pg/customize-set-variables
-       `((geiser-guile-load-init-file . t)
+       `((geiser-guile-load-init-file . nil)
          (geiser-guile-manual-lookup-other-window . t))))
 
     (with-eval-after-load 'geiser
@@ -2757,6 +2757,7 @@ For auto-completions while coding.
     (pg/customize-set-variables
      '((company-minimum-prefix-length . 1)
        (company-idle-delay . 0.0)
+       (company-dabbrev-downcase . nil)
        (company-tooltip-minimum-width . 40)
        (company-tooltip-maximum-width . 60)))
     (with-eval-after-load 'yasnippet
@@ -3592,8 +3593,9 @@ Some general tools for programming:
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/java.scm
 
-  (specification->package+output "openjdk@17:jdk")
-  (specification->package+output "openjdk@17:doc")
+  (specifications->manifest '("openjdk@17:jdk"
+                              "openjdk@17:doc"
+                              "scala"))
 
 #+end_src
 
@@ -4060,6 +4062,41 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
   (provide 'pg-programming-python)
+
+#+end_src
+
+**** Scala
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
+
+  ;;; pg-programming-scala.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | scala-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
+
+  (straight-use-package 'scala-mode)
+
+#+end_src
+
+***** Scala package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
+
+  (provide 'pg-programming-scala)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-scala-mode")
 
 #+end_src
 
@@ -5709,7 +5746,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-    ;;; init.el -*- lexical-binding: t; -*-
+      ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -5738,9 +5775,9 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (defun pg/customize-set-variables (custom-sets)
     "Sets the value of custom variables using `customize-set-variable'.
-    The CUSTOM-SETS argument represents a plist where each entry's key is the
-    custom variable one wishes to set and the corresponding value is the value to
-    set to the custom variable."
+      The CUSTOM-SETS argument represents a plist where each entry's key is the
+      custom variable one wishes to set and the corresponding value is the value to
+      set to the custom variable."
     (mapcar (lambda (setting)
               (let ((custom (car setting))
                     (value (cdr setting)))
@@ -5762,7 +5799,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
     "Determines whether the current system is a GNU/Linux based system running the
-          GNU Guix distribution.")
+            GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
@@ -5817,6 +5854,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-mips
                      pg-programming-prolog
                      pg-programming-python
+                     pg-programming-scala
                      ;; pg-programming-smtlibv2
                      pg-programming-sql
                      pg-programming-javascript

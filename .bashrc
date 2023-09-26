@@ -286,10 +286,13 @@ function __setprompt {
     PS1+="\[${LIGHTGRAY}\]: \[${BROWN}\] \w\[${LIGHTGRAY}\]]"
 
     # Skip to the next line
-    PS1+="\n└───"
+    PS1+="\n└─"
+
+    # Adjust the prompt depending on whether we're in 'guix environment'.
+    [ -n "$GUIX_ENVIRONMENT" ] && PS1+="[\[${YELLOW}\]λ dev\[${LIGHTGRAY}\]]"
 
     if [[ $EUID -ne 0 ]]; then
-        PS1+="\[${GREEN}\]■\[${NOCOLOR}\] " # Normal user
+        PS1+="──\[${GREEN}\]■\[${NOCOLOR}\] " # Normal user
     else
         PS1+="\[${RED}\]#\[${NOCOLOR}\] " # Root user
     fi
@@ -298,21 +301,16 @@ function __setprompt {
     PS1=$PS1'\[$(vterm_prompt_end)\]'
 
     # PS2 is used to continue a command using the \ character
-    PS2="\[${LIGHTGRAY}\]$\[${NOCOLOR}\] "
+    [ -n "$GUIX_ENVIRONMENT" ] && PS2+="[\[${YELLOW}\]λ dev\[${LIGHTGRAY}\]]"
+    PS2="\[${LIGHTGRAY}\]>\[${NOCOLOR}\] "
 
     # PS3 is used to enter a number choice in a script
+    [ -n "$GUIX_ENVIRONMENT" ] && PS3+="[\[${YELLOW}\]λ dev\[${LIGHTGRAY}\]]"
     PS3='Please enter a number from above list: '
 
     # PS4 is used for tracing a script in debug mode
+    [ -n "$GUIX_ENVIRONMENT" ] && PS4+="[\[${YELLOW}\]λ dev\[${LIGHTGRAY}\]]"
     PS4='\[${LIGHTGRAY}\]+\[${NOCOLOR}\] '
-
-    # Adjust the prompt depending on whether we're in 'guix environment'.
-    if [ -n "$GUIX_ENVIRONMENT" ]; then
-        PS1="$PS1 [dev] "
-        PS2="$PS2 [dev] "
-        PS3="$PS3 [dev] "
-        PS4="$PS4 [dev] "
-    fi
 }
 
 PROMPT_COMMAND='__setprompt'

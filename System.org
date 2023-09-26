@@ -8,6 +8,9 @@
 #+begin_src scheme :tangle ~/.dotfiles/.config/guix/base-channels.scm
 
   (list (channel
+         (name 'pg)
+         (url (string-append "file://" (getenv "HOME") "/Projects/guix-channel")))
+        (channel
          (name 'flat)
          (url "https://github.com/flatwhatson/guix-channel.git")
          (introduction
@@ -153,22 +156,22 @@ Override the default ~%desktop-services~ to add ~udev~ rules and apply other con
 
 #+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
 
-    (define %my-desktop-services
-      (modify-services %desktop-services
-                       (elogind-service-type config =>
-                                             (elogind-configuration
-                                              (inherit config)
-                                              (handle-lid-switch-external-power 'suspend)))
-                       (udev-service-type config =>
-                                          (udev-configuration
-                                           (inherit config)
-                                           (rules (cons* %charge-thresholds-udev-rule
-                                                         (udev-configuration-rules config)))))
-                       (network-manager-service-type config =>
-                                                     (network-manager-configuration
-                                                      (inherit config)
-                                                      (vpn-plugins (list network-manager-openvpn
-                                                                         network-manager-openconnect))))))
+  (define %my-desktop-services
+    (modify-services %desktop-services
+                     (elogind-service-type config =>
+                                           (elogind-configuration
+                                            (inherit config)
+                                            (handle-lid-switch-external-power 'suspend)))
+                     (udev-service-type config =>
+                                        (udev-configuration
+                                         (inherit config)
+                                         (rules (cons* %charge-thresholds-udev-rule
+                                                       (udev-configuration-rules config)))))
+                     (network-manager-service-type config =>
+                                                   (network-manager-configuration
+                                                    (inherit config)
+                                                    (vpn-plugins (list network-manager-openvpn
+                                                                       network-manager-openconnect))))))
 
 #+end_src
 

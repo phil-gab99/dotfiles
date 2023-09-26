@@ -70,6 +70,7 @@
   (pg/customize-set-variables
    '((company-minimum-prefix-length . 1)
      (company-idle-delay . 0.0)
+     (company-dabbrev-downcase . nil)
      (company-tooltip-minimum-width . 40)
      (company-tooltip-maximum-width . 60)))
   (with-eval-after-load 'yasnippet

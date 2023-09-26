@@ -1,4 +1,7 @@
 (list (channel
+       (name 'pg)
+       (url (string-append "file://" (getenv "HOME") "/Projects/guix-channel")))
+      (channel
        (name 'flat)
        (url "https://github.com/flatwhatson/guix-channel.git")
        (introduction
