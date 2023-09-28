@@ -1171,9 +1171,8 @@ Theme inspired by the popular Atom One Dark theme.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
-  (unless pg/is-linux
-    (straight-use-package 'nerd-icons)
-    (require 'nerd-icons))
+  (straight-use-package 'nerd-icons)
+  (require 'nerd-icons)
 
 #+end_src
 
@@ -1181,8 +1180,8 @@ Theme inspired by the popular Atom One Dark theme.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
-  (straight-use-package 'all-the-icons)
-  (require 'all-the-icons)
+  ;; (straight-use-package 'all-the-icons)
+  ;; (require 'all-the-icons)
 
 #+end_src
 
@@ -2241,12 +2240,11 @@ Displays icons in dired-mode.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (unless pg/is-linux
-    (straight-use-package 'nerd-icons-dired)
-    (unless pg/is-termux
-      (unless (fboundp 'nerd-icons-dired-mode)
-        (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
-      (add-hook 'dired-mode-hook #'nerd-icons-dired-mode)))
+  (straight-use-package 'nerd-icons-dired)
+  (unless pg/is-termux
+    (unless (fboundp 'nerd-icons-dired-mode)
+      (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
+    (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
 
 #+end_src
 
@@ -2256,11 +2254,11 @@ Displays icons in dired-mode.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (straight-use-package 'all-the-icons-dired)
-  (unless pg/is-termux
-    (unless (fboundp 'all-the-icons-dired-mode)
-      (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
-    (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
+  ;; (straight-use-package 'all-the-icons-dired)
+  ;; (unless pg/is-termux
+  ;;   (unless (fboundp 'all-the-icons-dired-mode)
+  ;;     (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
+  ;;   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
 
 #+end_src
 
@@ -3127,7 +3125,7 @@ Some general tools for programming:
 
   (packages->manifest
    (list
-    (specification->package "gcc-toolchain@10.4.0")
+    (specification->package "gcc-toolchain@11.3.0")
     (specification->package "man-pages")
     (specification->package "texinfo")
     (specification->package "glibc")

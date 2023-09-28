@@ -1,6 +1,6 @@
 (packages->manifest
  (list
-  (specification->package "gcc-toolchain@10.4.0")
+  (specification->package "gcc-toolchain@11.3.0")
   (specification->package "man-pages")
   (specification->package "texinfo")
   (specification->package "glibc")
