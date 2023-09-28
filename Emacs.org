@@ -3595,7 +3595,7 @@ Some general tools for programming:
 
   (specifications->manifest '("openjdk@17:jdk"
                               "openjdk@17:doc"
-                              "scala"))
+                              "sbt"))
 
 #+end_src
 
