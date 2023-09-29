@@ -280,11 +280,11 @@
     (org-notify-start)
     (setq org-notify-map nil)
     (org-notify-add 'default '( :time "1w"
-                                :actions notify/window
+                                :actions (-notify/window)
                                 :period "1h"
                                 :duration 5))
     (org-notify-add 'repeat '( :time "1w"
-                               :actions notify/window
+                               :actions (-notify/window)
                                :period "1w"
                                :duration 5))))
 

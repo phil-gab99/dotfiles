@@ -752,7 +752,7 @@ Theme inspired by the popular Atom One Dark theme.
                                        :weight bold))))
      `(org-document-info         ((t ( :foreground ,pg-onedark-variant-whitestd))))
      `(org-ellipsis              ((t ( :underline nil))))
-     `(org-block                 ((t ( :foreground nil
+     `(org-block                 ((t ( :foreground unspecified
                                        :background ,pg-onedark-variant-codeblockbg
                                        :inherit (fixed-pitch)))))
      `(org-code                  ((t ( :foreground ,pg-onedark-variant-code
@@ -994,7 +994,7 @@ Theme inspired by the popular Atom One Dark theme.
                                       :weight bold))))
     `(org-document-info         ((t ( :foreground ,pg-onelight-variant-blackstd))))
     `(org-ellipsis              ((t ( :underline nil))))
-    `(org-block                 ((t ( :foreground nil
+    `(org-block                 ((t ( :foreground unspecified
                                       :background ,pg-onelight-variant-codeblockbg
                                       :inherit (fixed-pitch)))))
     `(org-code                  ((t ( :foreground ,pg-onelight-variant-code
@@ -4810,11 +4810,11 @@ Handles notifications of scheduled tasks.
       (org-notify-start)
       (setq org-notify-map nil)
       (org-notify-add 'default '( :time "1w"
-                                  :actions notify/window
+                                  :actions (-notify/window)
                                   :period "1h"
                                   :duration 5))
       (org-notify-add 'repeat '( :time "1w"
-                                 :actions notify/window
+                                 :actions (-notify/window)
                                  :period "1w"
                                  :duration 5))))
 
