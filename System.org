@@ -183,8 +183,7 @@ Override the default ~%desktop-services~ to add ~udev~ rules and apply other con
                                    %default-substitute-urls))
                           (authorized-keys
                            (append (list (local-file "signing-key.pub"))
-                                   %default-authorized-guix-keys))))
-      ))
+                                   %default-authorized-guix-keys))))))
 
 #+end_src
 
