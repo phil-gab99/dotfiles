@@ -1716,6 +1716,9 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   # Append libraries from Nix user packages to library path
   export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
+  # Append LD libraries for shared objects libraries
+  export LD_LIBRARY_PATH="$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
+
   paths=(
       # Make Flatpak apps visible to launcher
       "$HOME/.local/share/flatpak/exports/share"

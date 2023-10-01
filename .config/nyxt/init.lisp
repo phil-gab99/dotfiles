@@ -5,10 +5,10 @@
 These handlers are usually used to block/redirect the requests.")
 
 (dolist (file
-	 (list (nyxt-init-file "evil-mode.lisp")
-	       (nyxt-init-file "status.lisp")
-	       (nyxt-init-file "adblock.lisp")
-	       (nyxt-init-file "style.lisp")))
+         (list (nyxt-init-file "evil-mode.lisp")
+      	 (nyxt-init-file "status.lisp")
+      	 (nyxt-init-file "adblock.lisp")
+      	 (nyxt-init-file "style.lisp")))
   (load file))
 
 (load-after-system :nx-search-engines (nyxt-init-file "search-engines.lisp"))
@@ -18,9 +18,9 @@ These handlers are usually used to block/redirect the requests.")
 (define-configuration web-buffer
     ((request-resource-hook
       (reduce #'hooks:add-hook
-	      (mapcar #'make-handler-resource
-		      *request-resource-handlers*)
-	      :initial-value %slot-default%))))
+      	(mapcar #'make-handler-resource
+      		*request-resource-handlers*)
+      	:initial-value %slot-default%))))
 
 (define-configuration browser
   ;; This is for Nyxt to never prompt me about restoring the previous session.

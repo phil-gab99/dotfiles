@@ -13,6 +13,7 @@
   ;; (specification->package "webkitgtk")
   ;; (specification->package "guile")
   (specification->package "pkg-config")
+  (specification->package "zlib")
   (specification->package "glib")
   (specification->package+output "glib:bin")
   ;; (specification->package "check")

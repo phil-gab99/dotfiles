@@ -56,6 +56,7 @@ This base configuration is shared between all of the machines I manage with Guix
   (define-module (systems base)
     #:use-module (gnu)
     #:use-module (gnu packages)
+    #:use-module (guix gexp)
     #:use-module (nongnu packages linux)
     #:use-module (srfi srfi-1))
 
@@ -82,7 +83,8 @@ This base configuration is shared between all of the machines I manage with Guix
                        wm
                        xorg)
 
-  (use-service-modules cups
+  (use-service-modules base
+                       cups
                        desktop
                        docker
                        networking
@@ -158,20 +160,30 @@ Override the default ~%desktop-services~ to add ~udev~ rules and apply other con
 
   (define %my-desktop-services
     (modify-services %desktop-services
-                     (elogind-service-type config =>
-                                           (elogind-configuration
-                                            (inherit config)
-                                            (handle-lid-switch-external-power 'suspend)))
-                     (udev-service-type config =>
-                                        (udev-configuration
-                                         (inherit config)
-                                         (rules (cons* %charge-thresholds-udev-rule
-                                                       (udev-configuration-rules config)))))
-                     (network-manager-service-type config =>
-                                                   (network-manager-configuration
-                                                    (inherit config)
-                                                    (vpn-plugins (list network-manager-openvpn
-                                                                       network-manager-openconnect))))))
+      (elogind-service-type config =>
+                            (elogind-configuration
+                             (inherit config)
+                             (handle-lid-switch-external-power 'suspend)))
+      (udev-service-type config =>
+                         (udev-configuration
+                          (inherit config)
+                          (rules (cons* %charge-thresholds-udev-rule
+                                        (udev-configuration-rules config)))))
+      (network-manager-service-type config =>
+                                    (network-manager-configuration
+                                     (inherit config)
+                                     (vpn-plugins (list network-manager-openvpn
+                                                        network-manager-openconnect))))
+      (guix-service-type config =>
+                         (guix-configuration
+                          (inherit config)
+                          (substitute-urls
+                           (append (list "https://substitutes.nonguix.org")
+                                   %default-substitute-urls))
+                          (authorized-keys
+                           (append (list (local-file (string-append (getenv "XDG_CONFIG_HOME")
+                                                                    "/guix/systems/signing-key.pub")))
+                                   %default-authorized-guix-keys))))))
 
 #+end_src
 
@@ -379,7 +391,7 @@ This script simply lists the active profiles:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/list-profiles :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/list-profiles :shebang #!/usr/bin/env bash
 
   guix package --list-profiles
 
@@ -397,7 +409,7 @@ This script lists the generations of a given profile:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/list-generations :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/list-generations :shebang #!/usr/bin/env bash
 
   profile=$1
   guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
@@ -416,7 +428,7 @@ This script deletes the generations of all profiles and calls the garbage collec
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/delete-generations :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/delete-generations :shebang #!/usr/bin/env bash
 
   GREEN='\033[1;32m'
   RED='\033[1;30m'
@@ -465,7 +477,7 @@ This script accepts a space-separated list of manifest file names (without exten
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/activate-profiles :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/activate-profiles :shebang #!/usr/bin/env bash
 
   GREEN='\033[1;32m'
   RED='\033[1;30m'
@@ -522,7 +534,7 @@ If no profile names are provided, it walks the list of profile directories under
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/update-profiles :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/update-profiles :shebang #!/usr/bin/env bash
 
   GREEN='\033[1;32m'
   NC='\033[0m'
@@ -557,7 +569,7 @@ This script makes it easy to update all channels to the latest commit based on a
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/update-channels :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/update-channels :shebang #!/usr/bin/env bash
 
   guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm
   guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
@@ -576,7 +588,7 @@ This script makes it easy to update the system to the latest configuration based
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/update-system :shebang #!/usr/bin/env sh
+#+begin_src sh :tangle ~/.dotfiles/bin/update-system :shebang #!/usr/bin/env bash
 
   GREEN='\033[1;32m'
   BLUE='\033[1;34m'

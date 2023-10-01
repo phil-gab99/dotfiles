@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 profile=$1
 guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
 

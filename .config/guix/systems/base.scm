@@ -1,6 +1,7 @@
 (define-module (systems base)
   #:use-module (gnu)
   #:use-module (gnu packages)
+  #:use-module (guix gexp)
   #:use-module (nongnu packages linux)
   #:use-module (srfi srfi-1))
 
@@ -27,7 +28,8 @@
                      wm
                      xorg)
 
-(use-service-modules cups
+(use-service-modules base
+                     cups
                      desktop
                      docker
                      networking
@@ -85,20 +87,30 @@
 
 (define %my-desktop-services
   (modify-services %desktop-services
-                   (elogind-service-type config =>
-                                         (elogind-configuration
-                                          (inherit config)
-                                          (handle-lid-switch-external-power 'suspend)))
-                   (udev-service-type config =>
-                                      (udev-configuration
-                                       (inherit config)
-                                       (rules (cons* %charge-thresholds-udev-rule
-                                                     (udev-configuration-rules config)))))
-                   (network-manager-service-type config =>
-                                                 (network-manager-configuration
-                                                  (inherit config)
-                                                  (vpn-plugins (list network-manager-openvpn
-                                                                     network-manager-openconnect))))))
+    (elogind-service-type config =>
+                          (elogind-configuration
+                           (inherit config)
+                           (handle-lid-switch-external-power 'suspend)))
+    (udev-service-type config =>
+                       (udev-configuration
+                        (inherit config)
+                        (rules (cons* %charge-thresholds-udev-rule
+                                      (udev-configuration-rules config)))))
+    (network-manager-service-type config =>
+                                  (network-manager-configuration
+                                   (inherit config)
+                                   (vpn-plugins (list network-manager-openvpn
+                                                      network-manager-openconnect))))
+    (guix-service-type config =>
+                       (guix-configuration
+                        (inherit config)
+                        (substitute-urls
+                         (append (list "https://substitutes.nonguix.org")
+                                 %default-substitute-urls))
+                        (authorized-keys
+                         (append (list (local-file (string-append (getenv "XDG_CONFIG_HOME")
+                                                                  "/guix/systems/signing-key.pub")))
+                                 %default-authorized-guix-keys))))))
 
 (define %xorg-libinput-config
   "Section \"InputClass\"
