@@ -3,6 +3,7 @@
   #:use-module (gnu packages)
   #:use-module (guix gexp)
   #:use-module (nongnu packages linux)
+  #:use-module (nongnu system linux-initrd)
   #:use-module (srfi srfi-1))
 
 (use-package-modules audio
@@ -108,9 +109,9 @@
                          (append (list "https://substitutes.nonguix.org")
                                  %default-substitute-urls))
                         (authorized-keys
-                         (append (list (local-file (string-append (getenv "XDG_CONFIG_HOME")
-                                                                  "/guix/systems/signing-key.pub")))
-                                 %default-authorized-guix-keys))))))
+                         (append (list (local-file "signing-key.pub"))
+                                 %default-authorized-guix-keys))))
+    ))
 
 (define %xorg-libinput-config
   "Section \"InputClass\"
@@ -139,6 +140,7 @@ EndSection
   (operating-system
    ;; Use non-free Linux and firmware
    (kernel linux)
+   (initrd microcode-initrd)
    (firmware (list linux-firmware))
 
    ;; Generic information that may be overriden

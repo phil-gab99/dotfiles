@@ -58,6 +58,7 @@ This base configuration is shared between all of the machines I manage with Guix
     #:use-module (gnu packages)
     #:use-module (guix gexp)
     #:use-module (nongnu packages linux)
+    #:use-module (nongnu system linux-initrd)
     #:use-module (srfi srfi-1))
 
   (use-package-modules audio
@@ -181,9 +182,9 @@ Override the default ~%desktop-services~ to add ~udev~ rules and apply other con
                            (append (list "https://substitutes.nonguix.org")
                                    %default-substitute-urls))
                           (authorized-keys
-                           (append (list (local-file (string-append (getenv "XDG_CONFIG_HOME")
-                                                                    "/guix/systems/signing-key.pub")))
-                                   %default-authorized-guix-keys))))))
+                           (append (list (local-file "signing-key.pub"))
+                                   %default-authorized-guix-keys))))
+      ))
 
 #+end_src
 
@@ -224,6 +225,7 @@ Define the ~base-operating-system~ which will be inherited by all machine config
     (operating-system
      ;; Use non-free Linux and firmware
      (kernel linux)
+     (initrd microcode-initrd)
      (firmware (list linux-firmware))
 
      ;; Generic information that may be overriden
