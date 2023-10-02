@@ -48,7 +48,14 @@ export PATH
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
 # Append LD libraries for shared objects libraries
-export LD_LIBRARY_PATH="$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
+paths=(
+    "/run/current-system/profile/lib"
+    "$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
+)
+for p in ${paths[@]}; do
+    LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}:$p"
+done
+export LD_LIBRARY_PATH
 
 paths=(
     # Make Flatpak apps visible to launcher

@@ -8,8 +8,6 @@
   (specification->package "gmime")
   (specification->package "xapian")
   (specification->package "docker")
-  ;; (specification->package "gtk+")
-  ;; (specification->package "gtk+:bin")
   ;; (specification->package "webkitgtk")
   ;; (specification->package "guile")
   (specification->package "pkg-config")

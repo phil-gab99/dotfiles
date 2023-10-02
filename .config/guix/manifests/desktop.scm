@@ -18,6 +18,8 @@
    (specification->package "xdg-utils")       ;; For xdg-open, etc
    (specification->package "xdg-dbus-proxy")  ;; For Flatpak
    (specification->package "xdg-desktop-portal-gtk")
+   ;; (specification->package "gtk")
+   ;; (specification->package "gtk+")
    (specification->package+output "gtk+:bin") ;; For gtk-launch
    (specification->package "polkit-gnome")
    ;; (specification->package+output "glib:bin") ;; For gio-launch-desktop
