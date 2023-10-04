@@ -53,7 +53,7 @@ paths=(
     "$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
 )
 for p in ${paths[@]}; do
-    LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}:$p"
+    LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$p"
 done
 export LD_LIBRARY_PATH
 
