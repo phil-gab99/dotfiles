@@ -14,9 +14,9 @@
 
 ;; Set frame transparency
 (unless (or pg/is-termux (not pg/exwm-enabled))
-  (set-frame-parameter (selected-frame) 'alpha '(80 . 80))
-  (add-to-list 'default-frame-alist '(alpha . (80 . 80)))
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+  (set-frame-parameter nil 'alpha '90)
+  (add-to-list 'default-frame-alist '(alpha . 90))
+  (set-frame-parameter nil 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 ;; Set fullscreen

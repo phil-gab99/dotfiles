@@ -101,6 +101,7 @@
                    pg-programming-haskell
                    pg-programming-html
                    pg-programming-java
+                   pg-programming-json
                    ;; pg-programming-lmc
                    pg-programming-markdown
                    pg-programming-mips

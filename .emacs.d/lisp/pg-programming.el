@@ -119,6 +119,21 @@
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "M-/") #'org-comment-dwim-2))
 
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (c "https://github.com/tree-sitter/tree-sitter-c")
+        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (gitignore "https://github.com/shunsambongi/tree-sitter-gitignore")
+        (java "https://github.com/tree-sitter/tree-sitter-java")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (scheme "https://github.com/6cdh/tree-sitter-scheme")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+
+(customize-set-variable 'major-mode-remap-alist
+                        '((sh-mode . bash-ts-mode)
+                          (javascript-mode . tsx-ts-mode)))
+
 (straight-use-package 'yasnippet)
 (unless (fboundp 'yas-minor-mode)
   (autoload #'yas-minor-mode "yasnippet" nil t))

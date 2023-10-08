@@ -46,6 +46,7 @@
     ("pg-onelight-variant-parenmatch"  . "#c678dd")
     ("pg-onelight-variant-error"       . "#ff6666")
     ("pg-onelight-variant-warn"        . "#8b5a00")
+    ("pg-onelight-variant-info"        . "#228b22")
     ("pg-onelight-variant-minibuf"     . "#0000ff")
     ("pg-onelight-variant-eviln"       . "#818ff4"))
   "List of One Dark Variant colors.")
@@ -173,13 +174,16 @@
   `(ledger-font-posting-account-face ((t ( :inherit (font-lock-builtin-face)))))
 
   ;; lsp
-  `(lsp-lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
+  `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
+  `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
 
   ;; lsp-ui
   `(lsp-ui-doc-background ((t ( :background ,pg-onelight-variant-doc-box))))
 
   ;; Flycheck
   `(flycheck-warning ((t ( :underline ( :color ,pg-onelight-variant-warn
+                                        :style wave)))))
+  `(flycheck-info    ((t ( :underline ( :color ,pg-onelight-variant-info
                                         :style wave)))))
 
   ;; Tab bar

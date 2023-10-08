@@ -684,6 +684,7 @@ Theme inspired by the popular Atom One Dark theme.
       ("pg-onedark-variant-parenmatch"  . "#c678dd")
       ("pg-onedark-variant-error"       . "#ff6666")
       ("pg-onedark-variant-warn"        . "#f2db05")
+      ("pg-onedark-variant-info"        . "#228b22")
       ("pg-onedark-variant-minibuf"     . "#f0fff0")
       ("pg-onedark-variant-eviln"       . "#818ff4"))
     "List of One Dark Variant colors.")
@@ -811,13 +812,17 @@ Theme inspired by the popular Atom One Dark theme.
      `(ledger-font-posting-account-face ((t ( :inherit (font-lock-builtin-face)))))
 
      ;; lsp
-     `(lsp-lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
+     `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
+     `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
 
      ;; lsp-ui
      `(lsp-ui-doc-background ((t ( :background ,pg-onedark-variant-doc-box))))
 
      ;; Flycheck
      `(flycheck-warning ((t ( :underline ( :color ,pg-onedark-variant-warn
+                                           :style wave
+                                           :position nil)))))
+     `(flycheck-info    ((t ( :underline ( :color ,pg-onedark-variant-info
                                            :style wave)))))
 
      ;; Tab bar
@@ -926,6 +931,7 @@ Theme inspired by the popular Atom One Dark theme.
       ("pg-onelight-variant-parenmatch"  . "#c678dd")
       ("pg-onelight-variant-error"       . "#ff6666")
       ("pg-onelight-variant-warn"        . "#8b5a00")
+      ("pg-onelight-variant-info"        . "#228b22")
       ("pg-onelight-variant-minibuf"     . "#0000ff")
       ("pg-onelight-variant-eviln"       . "#818ff4"))
     "List of One Dark Variant colors.")
@@ -1053,13 +1059,16 @@ Theme inspired by the popular Atom One Dark theme.
     `(ledger-font-posting-account-face ((t ( :inherit (font-lock-builtin-face)))))
 
     ;; lsp
-    `(lsp-lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
+    `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
+    `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
 
     ;; lsp-ui
     `(lsp-ui-doc-background ((t ( :background ,pg-onelight-variant-doc-box))))
 
     ;; Flycheck
     `(flycheck-warning ((t ( :underline ( :color ,pg-onelight-variant-warn
+                                          :style wave)))))
+    `(flycheck-info    ((t ( :underline ( :color ,pg-onelight-variant-info
                                           :style wave)))))
 
     ;; Tab bar
@@ -1135,9 +1144,9 @@ Theme inspired by the popular Atom One Dark theme.
 
   ;; Set frame transparency
   (unless (or pg/is-termux (not pg/exwm-enabled))
-    (set-frame-parameter (selected-frame) 'alpha '(80 . 80))
-    (add-to-list 'default-frame-alist '(alpha . (80 . 80)))
-    (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+    (set-frame-parameter nil 'alpha '90)
+    (add-to-list 'default-frame-alist '(alpha . 90))
+    (set-frame-parameter nil 'fullscreen 'maximized)
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
   ;; Set fullscreen
@@ -2894,6 +2903,27 @@ Allows writing textual descriptions for creating uml diagrams
 
 #+end_src
 
+*** Package | treesitter
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
+
+  (setq treesit-language-source-alist
+        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+          (c "https://github.com/tree-sitter/tree-sitter-c")
+          (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+          (gitignore "https://github.com/shunsambongi/tree-sitter-gitignore")
+          (java "https://github.com/tree-sitter/tree-sitter-java")
+          (python "https://github.com/tree-sitter/tree-sitter-python")
+          (scheme "https://github.com/6cdh/tree-sitter-scheme")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+
+  (customize-set-variable 'major-mode-remap-alist
+                          '((sh-mode . bash-ts-mode)
+                            (javascript-mode . tsx-ts-mode)))
+
+#+end_src
+
 *** Package | yasnippet
 
 Allows for code snippets for different languages.
@@ -3642,6 +3672,33 @@ Some general tools for programming:
 
 #+end_src
 
+**** JSON
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-json.el
+
+  ;;; pg-programming-json.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | json-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-json.el
+
+  (straight-use-package 'json-mode)
+
+#+end_src
+
+***** JSON package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-json.el
+
+  (provide 'pg-programming-json)
+
+#+end_src
+
 **** LaTeX
 
 ***** Package header
@@ -4278,6 +4335,7 @@ Custom syntax highlighting for LMC assembly language.
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'typescript-mode-hook #'lsp-deferred)
+  (add-hook 'tsx-ts-mode-hook #'lsp-deferred)
   (with-eval-after-load 'typescript-mode
     (customize-set-variable 'typescript-indent-level 2))
 
@@ -5882,6 +5940,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-haskell
                      pg-programming-html
                      pg-programming-java
+                     pg-programming-json
                      ;; pg-programming-lmc
                      pg-programming-markdown
                      pg-programming-mips
