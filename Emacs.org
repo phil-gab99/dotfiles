@@ -811,19 +811,19 @@ Theme inspired by the popular Atom One Dark theme.
      `(ledger-font-payee-cleared-face   ((t ( :foreground ,pg-onedark-variant-green))))
      `(ledger-font-posting-account-face ((t ( :inherit (font-lock-builtin-face)))))
 
-     ;; lsp
-     `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
-     `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
-
      ;; lsp-ui
      `(lsp-ui-doc-background ((t ( :background ,pg-onedark-variant-doc-box))))
 
-     ;; Flycheck
+     ;; flycheck
      `(flycheck-warning ((t ( :underline ( :color ,pg-onedark-variant-warn
                                            :style wave
                                            :position nil)))))
      `(flycheck-info    ((t ( :underline ( :color ,pg-onedark-variant-info
                                            :style wave)))))
+
+     ;; lsp
+     `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
+     `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
 
      ;; Tab bar
      `(tab-bar              ((t ( :foreground ,pg-onedark-variant-whitestd
@@ -1058,18 +1058,18 @@ Theme inspired by the popular Atom One Dark theme.
     `(ledger-font-payee-cleared-face   ((t ( :foreground ,pg-onelight-variant-green))))
     `(ledger-font-posting-account-face ((t ( :inherit (font-lock-builtin-face)))))
 
-    ;; lsp
-    `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
-    `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
-
     ;; lsp-ui
     `(lsp-ui-doc-background ((t ( :background ,pg-onelight-variant-doc-box))))
 
-    ;; Flycheck
+    ;; flycheck
     `(flycheck-warning ((t ( :underline ( :color ,pg-onelight-variant-warn
                                           :style wave)))))
     `(flycheck-info    ((t ( :underline ( :color ,pg-onelight-variant-info
                                           :style wave)))))
+
+    ;; lsp
+    `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
+    `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
 
     ;; Tab bar
     `(tab-bar              ((t ( :foreground ,pg-onelight-variant-blackstd
@@ -3949,6 +3949,34 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+**** PHP
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-php.el
+
+  ;;; pg-programming-php.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | php-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-php.el
+
+  (straight-use-package 'php-mode)
+  (customize-set-variable 'php-mode-lineup-cascaded-calls t)
+
+#+end_src
+
+***** PHP package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-php.el
+
+  (provide 'pg-programming-php)
+
+#+end_src
+
 **** Prolog
 
 ***** Package header
@@ -4335,7 +4363,9 @@ Custom syntax highlighting for LMC assembly language.
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'typescript-mode-hook #'lsp-deferred)
-  (add-hook 'tsx-ts-mode-hook #'lsp-deferred)
+  (dolist (fn #'(lsp-deferred
+                 rainbow-mode))
+    (add-hook 'tsx-ts-mode-hook fn))
   (with-eval-after-load 'typescript-mode
     (customize-set-variable 'typescript-indent-level 2))
 
@@ -5944,6 +5974,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      ;; pg-programming-lmc
                      pg-programming-markdown
                      pg-programming-mips
+                     pg-programming-php
                      pg-programming-prolog
                      pg-programming-python
                      pg-programming-scala

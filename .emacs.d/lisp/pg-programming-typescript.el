@@ -8,7 +8,9 @@
 (unless (fboundp 'lsp-deferred)
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (add-hook 'typescript-mode-hook #'lsp-deferred)
-(add-hook 'tsx-ts-mode-hook #'lsp-deferred)
+(dolist (fn #'(lsp-deferred
+               rainbow-mode))
+  (add-hook 'tsx-ts-mode-hook fn))
 (with-eval-after-load 'typescript-mode
   (customize-set-variable 'typescript-indent-level 2))
 

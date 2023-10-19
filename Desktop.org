@@ -692,6 +692,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
   (packages->manifest
    (list
     ;; (specification->package "nyxt")
+    (specification->package "firefox")
     (specification->package "qutebrowser")))
 
 #+end_src

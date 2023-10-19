@@ -173,18 +173,18 @@
   `(ledger-font-payee-cleared-face   ((t ( :foreground ,pg-onelight-variant-green))))
   `(ledger-font-posting-account-face ((t ( :inherit (font-lock-builtin-face)))))
 
-  ;; lsp
-  `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
-  `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
-
   ;; lsp-ui
   `(lsp-ui-doc-background ((t ( :background ,pg-onelight-variant-doc-box))))
 
-  ;; Flycheck
+  ;; flycheck
   `(flycheck-warning ((t ( :underline ( :color ,pg-onelight-variant-warn
                                         :style wave)))))
   `(flycheck-info    ((t ( :underline ( :color ,pg-onelight-variant-info
                                         :style wave)))))
+
+  ;; lsp
+  `(lsp-flycheck-info-unnecessary-face    ((t ( :inherit (flycheck-info)))))
+  `(lsp-flycheck-warning-unnecessary-face ((t ( :inherit (flycheck-warning)))))
 
   ;; Tab bar
   `(tab-bar              ((t ( :foreground ,pg-onelight-variant-blackstd

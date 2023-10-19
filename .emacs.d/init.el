@@ -105,6 +105,7 @@
                    ;; pg-programming-lmc
                    pg-programming-markdown
                    pg-programming-mips
+                   pg-programming-php
                    pg-programming-prolog
                    pg-programming-python
                    pg-programming-scala
