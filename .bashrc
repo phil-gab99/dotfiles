@@ -240,7 +240,7 @@ function __setprompt {
     # Git branch
     local BRANCH=$(parse_git_branch)
     if [ "$BRANCH" != "" ]; then
-        PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] ${BRANCH}"
+        PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
 
         # Comparison with upstream
         count=$(git rev-list --count --left-right @{upstream}..HEAD 2>/dev/null)
@@ -272,10 +272,10 @@ function __setprompt {
     fi
 
     # Total size of files in current directory
-    PS1+="[\[${GREEN}\] $(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]: "
+    PS1+="[\[${GREEN}\] $(ls -lah | command grep -m 1 total | sed 's/total //')\[${LIGHTGRAY}\]: "
 
     # Number of files
-    PS1+="\[${GREEN}\] $(ls -A | wc -l)\[${LIGHTGRAY}\]]"
+    PS1+="\[${GREEN}\] $(ls -A | wc -l)\[${LIGHTGRAY}\]]"
 
     PS1+="\n├─"
 
