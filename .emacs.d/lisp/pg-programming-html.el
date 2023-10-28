@@ -5,4 +5,11 @@
 
 (straight-use-package 'web-mode)
 
+(pg/customize-set-variables
+ `((web-mode-css-indent-offset . 2)
+   (web-mode-code-indent-offset . 2)
+   (web-mode-markup-indent-offset . 2)
+   (web-mode-markup-comment-indent-offset . 2)
+   (web-mode-enable-curly-brace-indentation . t)))
+
 (provide 'pg-programming-html)

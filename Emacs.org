@@ -2159,6 +2159,7 @@ Some settings to manage where emacs stores backup files (such as the =~= backup 
 
   (pg/customize-set-variables
    `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+     (enable-remote-dir-locals . t)
      (auto-save-file-name-transforms . ((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
      (vc-follow-symlinks . t)))
 
@@ -3559,6 +3560,13 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
 
   (straight-use-package 'web-mode)
+
+  (pg/customize-set-variables
+   `((web-mode-css-indent-offset . 2)
+     (web-mode-code-indent-offset . 2)
+     (web-mode-markup-indent-offset . 2)
+     (web-mode-markup-comment-indent-offset . 2)
+     (web-mode-enable-curly-brace-indentation . t)))
 
 #+end_src
 
