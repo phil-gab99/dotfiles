@@ -133,8 +133,6 @@
   
   ;; (specification->package "emacs-docker")
   
-  ;; (specification->package "emacs-dockerfile-mode")
-  
   ;; (specification->package "emacs-git-modes")
   
   ;; (specification->package "emacs-haskell-mode")

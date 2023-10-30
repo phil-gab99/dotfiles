@@ -123,6 +123,7 @@
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
         (c "https://github.com/tree-sitter/tree-sitter-c")
         (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (gitignore "https://github.com/shunsambongi/tree-sitter-gitignore")
         (java "https://github.com/tree-sitter/tree-sitter-java")
         (python "https://github.com/tree-sitter/tree-sitter-python")
@@ -132,6 +133,7 @@
 
 (customize-set-variable 'major-mode-remap-alist
                         '((sh-mode . bash-ts-mode)
+                          (python-mode . python-ts-mode)
                           (javascript-mode . tsx-ts-mode)))
 
 (straight-use-package 'yasnippet)

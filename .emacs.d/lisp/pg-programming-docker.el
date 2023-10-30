@@ -2,7 +2,11 @@
 ;; Author: Philippe Gabriel
 
 (straight-use-package 'docker)
-
-(straight-use-package 'dockerfile-mode)
+(add-to-list 'auto-mode-alist
+             (cons (concat "[/\\]"
+                           "\\(?:Containerfile\\|Dockerfile\\)"
+                           "\\(?:\\.[^/\\]*\\)?\\'")
+                   'dockerfile-ts-mode))
+(add-hook 'dockerfile-ts-mode-hook #'lsp-deferred)
 
 (provide 'pg-programming-docker)

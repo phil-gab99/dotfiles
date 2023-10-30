@@ -2912,6 +2912,7 @@ Allows writing textual descriptions for creating uml diagrams
         '((bash "https://github.com/tree-sitter/tree-sitter-bash")
           (c "https://github.com/tree-sitter/tree-sitter-c")
           (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+          (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
           (gitignore "https://github.com/shunsambongi/tree-sitter-gitignore")
           (java "https://github.com/tree-sitter/tree-sitter-java")
           (python "https://github.com/tree-sitter/tree-sitter-python")
@@ -2921,6 +2922,7 @@ Allows writing textual descriptions for creating uml diagrams
 
   (customize-set-variable 'major-mode-remap-alist
                           '((sh-mode . bash-ts-mode)
+                            (python-mode . python-ts-mode)
                             (javascript-mode . tsx-ts-mode)))
 
 #+end_src
@@ -3348,6 +3350,12 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
 
   (straight-use-package 'docker)
+  (add-to-list 'auto-mode-alist
+               (cons (concat "[/\\]"
+                             "\\(?:Containerfile\\|Dockerfile\\)"
+                             "\\(?:\\.[^/\\]*\\)?\\'")
+                     'dockerfile-ts-mode))
+  (add-hook 'dockerfile-ts-mode-hook #'lsp-deferred)
 
 #+end_src
 
@@ -3356,22 +3364,6 @@ Some general tools for programming:
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; (specification->package "emacs-docker")
-
-#+end_src
-
-***** Package | dockerfile-mode
-     
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
-
-  (straight-use-package 'dockerfile-mode)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-dockerfile-mode")
 
 #+end_src
 
@@ -4045,7 +4037,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
-  (add-hook 'python-mode-hook #'lsp-deferred)
+  (add-hook 'python-mode-ts-hook #'lsp-deferred)
   (add-hook 'inferior-python-mode-hook #'corfu-mode)
 
   (with-eval-after-load 'python
