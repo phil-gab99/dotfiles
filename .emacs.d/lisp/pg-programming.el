@@ -122,12 +122,10 @@
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
         (c "https://github.com/tree-sitter/tree-sitter-c")
-        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (c++ "https://github.com/tree-sitter/tree-sitter-cpp")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
-        (gitignore "https://github.com/shunsambongi/tree-sitter-gitignore")
         (java "https://github.com/tree-sitter/tree-sitter-java")
         (python "https://github.com/tree-sitter/tree-sitter-python")
-        (scheme "https://github.com/6cdh/tree-sitter-scheme")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
 

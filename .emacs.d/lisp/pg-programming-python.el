@@ -9,7 +9,7 @@
 
 (unless (fboundp 'lsp-deferred)
   (autoload #'lsp-deferred "lsp-mode" nil t))
-(add-hook 'python-mode-ts-hook #'lsp-deferred)
+(add-hook 'python-ts-mode-hook #'lsp-deferred)
 (add-hook 'inferior-python-mode-hook #'corfu-mode)
 
 (with-eval-after-load 'python
