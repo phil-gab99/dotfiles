@@ -63,6 +63,8 @@
   (straight-use-package 'vterm))
 (unless (fboundp 'vterm)
   (autoload #'vterm "vterm" nil t))
+(with-eval-after-load 'vterm
+  (customize-set-variable 'vterm-tramp-shells '(("ssh" "/bin/sh"))))
 (with-eval-after-load 'general
   (pg/leader-keys
     "pv" '(vterm :which-key "vterm")))
