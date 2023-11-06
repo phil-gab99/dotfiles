@@ -4982,31 +4982,31 @@ Helps with note-taking strategies.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
-    (unless pg/is-termux
-      (straight-use-package 'org-roam)
-     (with-eval-after-load 'org
-       (require 'org-roam))
-      (with-eval-after-load 'org-roam
-        (pg/customize-set-variables
-         `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-           (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
-           (org-roam-capture-templates . (("d" "default" plain
-                                           "%?"
-                                           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                              "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                           :unnarrowed t)
-                                          ("s" "system admin" plain
-                                           "%?"
-                                           :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                              "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                           :unnarrowed t)))))
-        (org-roam-db-autosync-enable)
-        (with-eval-after-load 'general
-          (pg/leader-keys
-            "on" '(:ignore t :which-key "notes")
-            "onl" '(org-roam-buffer-toggle :which-key "links")
-            "onf" '(org-roam-node-find :which-key "find/create")
-            "oni" '(org-roam-node-insert :which-key "insert/create")))))
+  (unless pg/is-termux
+    (straight-use-package 'org-roam)
+    (with-eval-after-load 'org
+      (require 'org-roam))
+    (with-eval-after-load 'org-roam
+      (pg/customize-set-variables
+       `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+         (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
+         (org-roam-capture-templates . (("d" "default" plain
+                                         "%?"
+                                         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                            "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                         :unnarrowed t)
+                                        ("s" "system admin" plain
+                                         "%?"
+                                         :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                            "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                         :unnarrowed t)))))
+      (org-roam-db-autosync-enable)
+      (with-eval-after-load 'general
+        (pg/leader-keys
+          "on" '(:ignore t :which-key "notes")
+          "onl" '(org-roam-buffer-toggle :which-key "links")
+          "onf" '(org-roam-node-find :which-key "find/create")
+          "oni" '(org-roam-node-insert :which-key "insert/create")))))
 
 #+end_src
 
@@ -6011,7 +6011,8 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
     (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                          (:session . "py")
-                                                         (:kernel . "python3"))))
+                                                         (:kernel . "python3")))
+    (setf (alist-get "jupyter-python" org-src-lang-modes nil nil #'equal) 'python-ts))
 
   (setq gc-cons-threshold (* 2 1000 1000))
 

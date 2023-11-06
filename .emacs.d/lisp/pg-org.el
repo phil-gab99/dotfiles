@@ -307,8 +307,8 @@
 
 (unless pg/is-termux
   (straight-use-package 'org-roam)
- (with-eval-after-load 'org
-   (require 'org-roam))
+  (with-eval-after-load 'org
+    (require 'org-roam))
   (with-eval-after-load 'org-roam
     (pg/customize-set-variables
      `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))

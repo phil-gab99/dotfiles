@@ -142,6 +142,7 @@
 
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:session . "py")
-                                                       (:kernel . "python3"))))
+                                                       (:kernel . "python3")))
+  (setf (alist-get "jupyter-python" org-src-lang-modes nil nil #'equal) 'python-ts))
 
 (setq gc-cons-threshold (* 2 1000 1000))
