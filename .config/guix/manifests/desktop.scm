@@ -22,6 +22,7 @@
    ;; (specification->package "gtk+")
    (specification->package+output "gtk+:bin") ;; For gtk-launch
    (specification->package "polkit-gnome")
+   (specification->package "wol")
    ;; (specification->package+output "glib:bin") ;; For gio-launch-desktop
    (specification->package "shared-mime-info")
    (specification->package "htop")
