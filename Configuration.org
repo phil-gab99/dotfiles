@@ -1219,6 +1219,7 @@ To temporarily bypass an alias, precede the command with a ~\~
   timer https://fullscreentimer.com/
   movies https://movie-web.app/search/movie
   concordia https://www.concordia.ca/
+  tanguay https://oam.fairstone.ca/en/home
 
 #+end_src
 

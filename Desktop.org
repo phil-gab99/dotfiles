@@ -113,7 +113,7 @@ Workspaces:
     ;; Change this with respect to the different screen configuration
     ;; Check arandr for display names
     (customize-set-variable 'exwm-randr-workspace-monitor-plist
-                            (pcase (string-trim (shell-command-to-string "autorandr --detected"))
+                            (pcase (string-trim (shell-command-to-string "autorandr --current"))
                               ("work" '(5 "HDMI-1"))
                               ("work+" '(5 "HDMI-1"))
                               ("jclab" '(5 "HDMI-1"))
@@ -245,7 +245,7 @@ Allows for some of the keybindings to use while in exwm.
 
 ** Multiple monitors
 
-In order to setup exwm for multiple monitors, the ~arandr~ and ~autorandr~ applications can come in handy. Some useful commands to know:
+In order to setup exwm for multiple monitors, tuthe ~arandr~ and ~autorandr~ applications can come in handy. Some useful commands to know:
 - ~autorandr --save profile~ - Saves the current display setup under the name profile
 - ~autorandr --change~ - Changes to the appopriate profile with respect to the current display setup; the profile name can be explicitly given to change to it
 - ~autorandr~ - Displays the created profiles

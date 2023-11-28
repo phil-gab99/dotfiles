@@ -35,7 +35,7 @@
   ;; Change this with respect to the different screen configuration
   ;; Check arandr for display names
   (customize-set-variable 'exwm-randr-workspace-monitor-plist
-                          (pcase (string-trim (shell-command-to-string "autorandr --detected"))
+                          (pcase (string-trim (shell-command-to-string "autorandr --current"))
                             ("work" '(5 "HDMI-1"))
                             ("work+" '(5 "HDMI-1"))
                             ("jclab" '(5 "HDMI-1"))
