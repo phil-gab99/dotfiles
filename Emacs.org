@@ -4111,6 +4111,7 @@ Custom syntax highlighting for LMC assembly language.
   (packages->manifest
    (list
     ;; (specification->package "python")
+    (specification->package "python-pip")
     (specification->package "conda")))
 
 #+end_src
