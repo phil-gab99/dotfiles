@@ -50,6 +50,7 @@
    (specification->package "trash-cli")
    
    (specification->package "virt-manager")
+   (specification->package "dosbox")
    (specification->package "dconf")
    (specification->package "gtksourceview@4")
    (specification->package "virt-viewer")

@@ -14,30 +14,6 @@
   "Iosevka Aile"
   "Variable pitch font.")
 
-(defun pg/close-all-buffers ()
-  "Closes all emacs buffers."
-  (interactive)
-  (mapc 'kill-buffer (buffer-list)))
-
-(defun pg/save-buffers-kill-emacs ()
-  "Closes all emacs buffers before exiting emacs."
-  (interactive)
-  (pg/close-all-buffers)
-  (save-buffers-kill-emacs))
-
-(defun pg/customize-set-variables (custom-sets)
-  "Sets the value of custom variables using `customize-set-variable'.
-    The CUSTOM-SETS argument represents a plist where each entry's key is the
-    custom variable one wishes to set and the corresponding value is the value to
-    set to the custom variable."
-  (mapcar (lambda (setting)
-            (let ((custom (car setting))
-                  (value (cdr setting)))
-              (customize-set-variable custom value)))
-          custom-sets))
-
-;; (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
-
 ;; System related constants
 (defconst pg/is-termux
   (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a")))
@@ -51,10 +27,34 @@
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
   "Determines whether the current system is a GNU/Linux based system running the
-          GNU Guix distribution.")
+            GNU Guix distribution.")
 (defconst pg/exwm-enabled
   (getenv "EXWM")
   "Determines whether the EXWM is currently running.")
+
+(defun pg/close-all-buffers ()
+  "Closes all emacs buffers."
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
+(defun pg/save-buffers-kill-emacs ()
+  "Closes all emacs buffers before exiting emacs."
+  (interactive)
+  (if pg/exwm-enabled (pg/kill-panel))
+  (save-buffers-kill-emacs))
+
+(defun pg/customize-set-variables (custom-sets)
+  "Sets the value of custom variables using `customize-set-variable'.
+The CUSTOM-SETS argument represents a plist where each entry's key is the
+custom variable one wishes to set and the corresponding value is the value to
+set to the custom variable."
+  (mapcar (lambda (setting)
+            (let ((custom (car setting))
+                  (value (cdr setting)))
+              (customize-set-variable custom value)))
+          custom-sets))
+
+(global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
 (pg/customize-set-variables
  `((load-prefer-newer . t)
@@ -96,6 +96,7 @@
                    pg-programming-css
                    pg-programming-docker
                    pg-programming-elisp
+                   pg-programming-gdscript
                    pg-programming-git
                    pg-programming-groovy
                    pg-programming-haskell

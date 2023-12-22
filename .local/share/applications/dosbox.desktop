@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Version=0.74-3
+Name=DOSBox
+Comment=A DOS emulator
+Exec=/home/phil-gab99/.guix-extra-profiles/desktop/desktop/bin/dosbox
+Terminal=false

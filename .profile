@@ -67,7 +67,7 @@ paths=(
     # Make applications in other profiles visible to launcher
     "$GUIX_EXTRA_PROFILES/audio/audio/share"
     "$GUIX_EXTRA_PROFILES/browsers/browsers/share"
-    "$GUIX_EXTRA_PROFILES/games/games/share"
+    "$GUIX_EXTRA_PROFILES/game-dev/game-dev/share"
     "$GUIX_EXTRA_PROFILES/latex/latex/share"
     "$GUIX_EXTRA_PROFILES/media/media/share"
     "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share"
@@ -91,7 +91,6 @@ paths=(
     "$GUIX_EXTRA_PROFILES/cc/cc/share/man"
     "$GUIX_EXTRA_PROFILES/desktop/desktop/share/man"
     "$GUIX_EXTRA_PROFILES/emacs/emacs/share/man"
-    "$GUIX_EXTRA_PROFILES/games/games/share/man"
     "$GUIX_EXTRA_PROFILES/java/java/share/man"
     "$GUIX_EXTRA_PROFILES/latex/latex/share/man"
     "$GUIX_EXTRA_PROFILES/media/media/share/man"
