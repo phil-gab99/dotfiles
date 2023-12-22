@@ -2430,7 +2430,7 @@ After having setup the file, make sure to run the following commands:
   ##################
 
   # Start in fullscreen mode by default.
-  fs=yes
+  fs=no
 
   # force starting with centered window
   #geometry=50%:50%

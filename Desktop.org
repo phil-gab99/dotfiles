@@ -89,7 +89,8 @@ Workspaces:
     (pcase exwm-class-name
       ("qutebrowser" (exwm-layout-hide-mode-line))
       ("mpv" (exwm-layout-hide-mode-line))
-      ("PPSSPPSDL" (exwm-layout-hide-mode-line))
+      ("Godot" (exwm-floating-toggle-floating))
+      ("org.ppsspp.PPSSPP" (exwm-layout-hide-mode-line))
       ("edu-mit-csail-sdg-alloy4whole-Alloy" (exwm-layout-hide-mode-line))))
 
   (defun pg/run-in-background (command)
@@ -209,7 +210,8 @@ Workspaces:
                                                   (interactive)
                                                   (exwm-workspace-switch-create ,i))))
                                             (number-sequence 0 9))))
-       (exwm-manage-configurations . (((string-equal exwm-class-name "Nyxt") char-mode t)))))
+       (exwm-manage-configurations . (((string-equal exwm-class-name "Nyxt") char-mode t)
+                                      ((string-equal exwm-class-name "Godot") char-mode t)))))
     (global-set-key (kbd "C-x B") #'exwm-workspace-switch-to-buffer)
     (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
 
