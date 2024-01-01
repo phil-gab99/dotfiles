@@ -47,6 +47,9 @@ export PATH
 # Append libraries from Nix user packages to library path
 export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
 
+# Allow unfree packages
+export NIXPKGS_ALLOW_UNFREE=1
+
 # Append LD libraries for shared objects libraries
 paths=(
     "/run/current-system/profile/lib"
