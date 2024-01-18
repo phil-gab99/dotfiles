@@ -1874,6 +1874,9 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   # Load .bashrc to get login environment
   [ -f ~/.bashrc ] && . ~/.bashrc
 
+  # Set default brightness
+  [ -f ~/.guix-extra-profiles/desktop/desktop/bin/brightnessctl ] && ~/.guix-extra-profiles/desktop/desktop/bin/brightnessctl set 12
+
 #+end_src
 
 *** Git Profile

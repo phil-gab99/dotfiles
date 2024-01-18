@@ -201,3 +201,6 @@ fi
 
 # Load .bashrc to get login environment
 [ -f ~/.bashrc ] && . ~/.bashrc
+
+# Set default brightness
+[ -f ~/.guix-extra-profiles/desktop/desktop/bin/brightnessctl ] && ~/.guix-extra-profiles/desktop/desktop/bin/brightnessctl set 12
