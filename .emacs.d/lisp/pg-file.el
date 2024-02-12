@@ -77,4 +77,14 @@
                                   (file))))))
     (openwith-mode 1)))
 
+(straight-use-package '(subed :type git
+                              :host github
+                              :repo "sachac/subed"
+                              :files ("subed/*.el")))
+
+(with-eval-after-load 'subed
+  (dolist (mode #'(save-place-local-mode
+                   turn-on-auto-fill))
+    (add-hook 'subed-mode-hook mode)))
+
 (provide 'pg-file)

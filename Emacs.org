@@ -2338,6 +2338,30 @@ Togglable option for hiding dot files.
 
 #+end_src
 
+*** Package | subed
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
+
+  (straight-use-package '(subed :type git
+                                :host github
+                                :repo "sachac/subed"
+                                :files ("subed/*.el")))
+
+  (with-eval-after-load 'subed
+    (dolist (mode #'(save-place-local-mode
+                     turn-on-auto-fill))
+      (add-hook 'subed-mode-hook mode)))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-subed")
+
+#+end_src
+
 *** File management package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el

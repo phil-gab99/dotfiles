@@ -91,6 +91,8 @@
   
   ;; (specification->package "emacs-openwith")
   
+  ;; (specification->package "emacs-subed")
+  
   ;; (specification->package "emacs-eshell-syntax-highlighting")
   
   ;; (specification->package "emacs-esh-autosuggest")
