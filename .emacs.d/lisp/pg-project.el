@@ -12,6 +12,14 @@
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))
   (diminish #'projectile-mode)
+
+  (projectile-register-project-type 'npm '(angular.json)
+                                    :project-file "package.json"
+                                    :compile "npm i && npm run build"
+                                    :run "npm start"
+                                    :test "npm test"
+                                    :test-suffix ".spec")
+
   (with-eval-after-load 'general
     (pg/leader-keys
       "p" '(:ignore t :which-key "project")

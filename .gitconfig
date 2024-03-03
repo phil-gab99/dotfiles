@@ -3,3 +3,5 @@
         email = pgabriel999@hotmail.com
 [github]
         user = phil-gab99
+[init]
+	defaultBranch = main
