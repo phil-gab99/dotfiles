@@ -13,7 +13,7 @@
     (autoload #'diminish "diminish" nil t))
   (diminish #'projectile-mode)
 
-  (projectile-register-project-type 'npm '(angular.json)
+  (projectile-register-project-type 'npm '("angular.json")
                                     :project-file "package.json"
                                     :compile "npm i && npm run build"
                                     :run "npm start"
