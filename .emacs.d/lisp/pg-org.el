@@ -223,6 +223,10 @@
 (with-eval-after-load 'org-bullets
   (customize-set-variable 'org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
+(straight-use-package 'org-contacts)
+(with-eval-after-load 'org-contacts
+  (customize-set-variable 'org-contacts-files `(,(expand-file-name "~/Sync/Social/contacts.org"))))
+
 (defun pg/presentation-setup ()
   "Setup before starting org presentation."
   (org-display-inline-images)

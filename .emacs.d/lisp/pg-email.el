@@ -21,7 +21,6 @@
       "md" '(mu4e :which-key "dashboard")
       "mc" '(mu4e-compose-new :which-key "compose")))
   (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - \n"
-                                                          "[[mailto:philippe.gabriel.1@umontreal.ca][philippe.gabriel.1@umontreal.ca]] | "
                                                           "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)
@@ -35,9 +34,7 @@
        (mu4e-sent-messages-behavior . delete)
        (message-send-mail-function . ,#'smtpmail-send-it)
        (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
-       (mu4e-maildir-shortcuts . (;; ("/University/Inbox" . 117)
-                                  ;; ("/University/Drafts" . 100)
-                                  ("/Main/Inbox" . 109)
+       (mu4e-maildir-shortcuts . (("/Main/Inbox" . 109)
                                   ("/Main/Jobs" . 106)
                                   ("/Main/University" . 115)))
        (mu4e-context-policy . pick-first)))
@@ -45,6 +42,12 @@
                  '( :name "Starred"
                     :query "flag:flagged"
                     :key ?f))
+    (with-eval-after-load 'org-contacts
+      (add-to-list 'mu4e-headers-actions
+                   '("org-contact-add" . mu4e-action-add-org-contact) t)
+      (add-to-list 'mu4e-view-actions
+                   '("org-contact-add" . mu4e-action-add-org-contact) t))
+
     (setq mu4e-contexts
           (list
            (make-mu4e-context :name "Main"

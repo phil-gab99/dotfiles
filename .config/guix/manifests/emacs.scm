@@ -163,6 +163,8 @@
   
   ;; (specification->package "emacs-org-bullets")
   
+  ;; (specification->package "emacs-org-contacts")
+  
   ;; (specification->package "emacs-org-tree-slide")
   
   ;; (specification->package "emacs-ox-reveal")

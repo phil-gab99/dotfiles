@@ -12,8 +12,8 @@
 (mouse-avoidance-mode 'banish)        ;; No mouse allowed
 (global-display-line-numbers-mode 1)  ;; Show line numbers
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-(add-hook 'compilation-filter-hook
-          #'(lambda () (ansi-color-apply-on-region (point-min) (point-max))))
+(require 'ansi-color)
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 (dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
                 org-agenda-mode-hook
