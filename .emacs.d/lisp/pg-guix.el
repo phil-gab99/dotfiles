@@ -4,6 +4,9 @@
 (when pg/is-guix-system
   (unless (fboundp 'guix)
     (autoload #'guix "guix" nil t))
+  (unless (fboundp 'guix-devel-mode)
+    (autoload #'guix-devel-mode "guix" nil t))
+  (add-hook 'scheme-mode-hook #'guix-devel-mode)
   (with-eval-after-load 'general
     (pg/leader-keys
       "G" '(:ignore t :which-key "guix")
