@@ -326,6 +326,16 @@
                                        "%?"
                                        :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                                                           "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                       :unnarrowed t)
+                                      ("c" "comparative study programming languages" plain
+                                       "%?"
+                                       :if-new (file+head "COMP-6411/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                          "#+title: comp6411-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                       :unnarrowed t)
+                                      ("e" "distributed system design" plain
+                                       "%?"
+                                       :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                          "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                        :unnarrowed t)))))
     (org-roam-db-autosync-enable)
     (with-eval-after-load 'general
