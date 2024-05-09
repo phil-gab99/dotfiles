@@ -3292,6 +3292,34 @@ Some general tools for programming:
 
 #+end_src
 
+**** Clojure
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-clojure.el
+
+  ;;; pg-programming-clojure.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | clojure-ts-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-clojure.el
+
+  (straight-use-package 'clojure-ts-mode)
+  (add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-ts-mode))
+
+#+end_src
+
+***** Clojure package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-clojure.el
+
+  (provide 'pg-programming-clojure)
+
+#+end_src
+
 **** Common Lisp
 
 ***** Package header
@@ -6059,6 +6087,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      ;; pg-programming-alloy
                      pg-programming-arduino
                      pg-programming-cc
+                     pg-programming-clojure
                      ;; pg-programming-commonlisp
                      pg-programming-css
                      pg-programming-docker

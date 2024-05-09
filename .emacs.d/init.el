@@ -92,6 +92,7 @@ set to the custom variable."
                    ;; pg-programming-alloy
                    pg-programming-arduino
                    pg-programming-cc
+                   pg-programming-clojure
                    ;; pg-programming-commonlisp
                    pg-programming-css
                    pg-programming-docker
