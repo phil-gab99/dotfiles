@@ -1189,6 +1189,14 @@ Theme inspired by the popular Atom One Dark theme.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-nerd-icons")
+
+#+end_src
+
 *** Package | all-the-icons
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
@@ -1740,6 +1748,14 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-ligature")
+
+#+end_src
+
 *** Package | rainbow-delimiters
 
 Colors matching delimiters with different colours for distinguishability.
@@ -1987,6 +2003,14 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-editorconfig")
+
+#+end_src
+
 *** Editing experience package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
@@ -2135,6 +2159,14 @@ Displays full documentations in place of the default help function.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
 
   (straight-use-package 'simple-httpd)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-simple-httpd")
 
 #+end_src
 
@@ -3147,6 +3179,14 @@ Some general tools for programming:
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-arduino-mode")
+
+#+end_src
+
 ***** Package | company-arduino
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-arduino.el
@@ -3255,6 +3295,14 @@ Some general tools for programming:
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-ccls")
+
+#+end_src
+
 ***** Package | irony
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
@@ -3265,6 +3313,14 @@ Some general tools for programming:
                   objc-mode-hook))
     (add-hook mode #'irony-mode))
   (add-hook 'irony-mode-hook #'irony-cdb-autosetup-compile-options)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-irony-mode")
 
 #+end_src
 
@@ -3280,7 +3336,7 @@ Some general tools for programming:
 
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
-  ;; (specification->package "emacs-ccls")
+  ;; (specification->package "emacs-company-irony")
 
 #+end_src
 
@@ -3309,6 +3365,18 @@ Some general tools for programming:
 
   (straight-use-package 'clojure-ts-mode)
   (add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-ts-mode))
+
+  (unless (fboundp 'lsp-deferred)
+    (autoload #'lsp-deferred "lsp-mode" nil t))
+  (add-hook 'clojure-ts-mode-hook #'lsp-deferred)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-clojure-ts-mode")
 
 #+end_src
 
@@ -3470,6 +3538,45 @@ Some general tools for programming:
 
 #+end_src
 
+**** Erlang
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-erlang.el
+
+  ;;; pg-programming-erlang.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | erlang-ts-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-erlang.el
+
+  (straight-use-package 'erlang)
+
+  (add-hook 'erlang-mode-hook #'lsp-deferred)
+  ;; (add-to-list 'auto-mode-alist '("\\.erl\\'" . erlang-ts-mode))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-erlang")
+  (specification->package "erlang")
+
+#+end_src
+
+***** Emacs Lisp Package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-erlang.el
+
+  (provide 'pg-programming-erlang)
+
+#+end_src
+
 **** GDScript
 ***** Package header
 
@@ -3545,13 +3652,21 @@ Some general tools for programming:
 
 #+end_src
 
-***** Package | groovy-mode
+***** Package | groovy-modes
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
   (straight-use-package '(groovy-emacs-modes :type git
                                              :host github
                                              :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-groovy-modes")
 
 #+end_src
 
@@ -3654,6 +3769,12 @@ Some general tools for programming:
      (web-mode-markup-indent-offset . 2)
      (web-mode-markup-comment-indent-offset . 2)
      (web-mode-enable-curly-brace-indentation . t)))
+
+#+end_src
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-web-mode")
 
 #+end_src
 
@@ -3783,6 +3904,14 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-json.el
 
   (straight-use-package 'json-mode)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-json-mode")
 
 #+end_src
 
@@ -4064,6 +4193,14 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-php-mode")
+
+#+end_src
+
 ***** PHP package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-php.el
@@ -4086,8 +4223,8 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-prolog.el
 
-    (unless (fboundp 'prolog-mode)
-      (autoload #'prolog-mode "prolog" nil t))
+  (unless (fboundp 'prolog-mode)
+    (autoload #'prolog-mode "prolog" nil t))
 
 #+end_src
 
@@ -4267,6 +4404,14 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-scala-mode")
+
+#+end_src
+
 ***** Package | sbt-mode
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
@@ -4283,6 +4428,14 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-sbt-mode")
+
+#+end_src
+
 ***** Package | lsp-metals
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
@@ -4295,6 +4448,14 @@ Custom syntax highlighting for LMC assembly language.
   (unless (fboundp 'lsp)
     (autoload #'lsp-deferred "lsp-mode"))
   (add-hook 'scala-mode-hook #'lsp)
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-lsp-metals")
 
 #+end_src
 
@@ -5778,6 +5939,14 @@ Allows for viewing of pdfs.
     (autoload #'simple-mpc "simple-mpc" nil t))
   (with-eval-after-load 'simple-mpc
     (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
+
+#+end_src
+
+*Guix Packages*
+
+#+begin_src scheme :noweb-ref packages :noweb-sep ""
+
+  ;; (specification->package "emacs-simple-mpc")
 
 #+end_src
 

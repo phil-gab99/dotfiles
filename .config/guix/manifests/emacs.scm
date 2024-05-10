@@ -53,6 +53,8 @@
   
   ;; (specification->package "emacs-diminish")
   
+  ;; (specification->package "emacs-nerd-icons")
+  
   ;; (specification->package "emacs-all-the-icons")
   
   ;; (specification->package "emacs-doom-modeline")
@@ -69,6 +71,8 @@
   
   ;; (specification->package "emacs-mu4e-alert")
   
+  ;; (specification->package "emacs-ligature")
+  
   ;; (specification->package "emacs-rainbow-delimiters")
   
   ;; (specification->package "emacs-highlight-indent-guides") ;; Old version 0.8.5
@@ -83,9 +87,13 @@
   
   ;; (specification->package "emacs-evil-collection")
   
+  ;; (specification->package "emacs-editorconfig")
+  
   ;; (specification->package "emacs-helpful")
   
   ;; (specification->package "emacs-visual-fill-column")
+  
+  ;; (specification->package "emacs-simple-httpd")
   
   ;; (specification->package "emacs-all-the-icons-dired")
   
@@ -129,17 +137,34 @@
   
   ;; (specification->package "emacs-yasnippet-snippets")
   
+  ;; (specification->package "emacs-arduino-mode")
+  
   ;; (specification->package "emacs-ccls")
+  
+  ;; (specification->package "emacs-irony-mode")
+  
+  ;; (specification->package "emacs-company-irony")
+  
+  ;; (specification->package "emacs-clojure-ts-mode")
   
   ;; (specification->package "emacs-sly")
   
   ;; (specification->package "emacs-docker")
   
+  ;; (specification->package "emacs-erlang")
+  (specification->package "erlang")
+  
   ;; (specification->package "emacs-git-modes")
+  
+  ;; (specification->package "emacs-groovy-modes")
   
   ;; (specification->package "emacs-haskell-mode")
   
+  ;; (specification->package "emacs-web-mode")
+  
   ;; (specification->package "emacs-lsp-java")
+  
+  ;; (specification->package "emacs-json-mode")
   
   ;; (specification->package "emacs-auctex")
   
@@ -147,7 +172,15 @@
   
   ;; (specification->package "emacs-markdown-mode")
   
+  ;; (specification->package "emacs-php-mode")
+  
   ;; (specification->package "emacs-jupyter")
+  
+  ;; (specification->package "emacs-scala-mode")
+  
+  ;; (specification->package "emacs-sbt-mode")
+  
+  ;; (specification->package "emacs-lsp-metals")
   
   ;; (specification->package "emacs-scala-mode")
   
@@ -198,6 +231,8 @@
   ;; (specification->package "emacs-emms")
   
   ;; (specification->package "emacs-emms-mode-line-cycle")
+  
+  ;; (specification->package "emacs-simple-mpc")
   
   ;; (specification->package "emacs-general")
   
