@@ -126,7 +126,8 @@
                       ("hs" . "src haskell")
                       ("py" . "src python")
                       ("jp" . "src jupyter-python")
-                      ("sql" . "src sql")))
+                      ("sql" . "src sql")
+                      ("for" . "src fortran")))
     (add-to-list 'org-structure-template-alist template))
 
   (dolist (src '(("als" . alloy)

@@ -388,7 +388,7 @@ To temporarily bypass an alias, precede the command with a ~\~
       # Git branch
       local BRANCH=$(parse_git_branch)
       if [ "$BRANCH" != "" ]; then
-          PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
+          PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
 
           # Comparison with upstream
           count=$(git rev-list --count --left-right @{upstream}..HEAD 2>/dev/null)
@@ -2613,11 +2613,9 @@ After having setup the file, make sure to run the following commands:
 
   module-margin = 1
   font-0 = "Cantarell:size=13:weight=bold;1"
-  font-1 = "Font Awesome:size=14;2"
-  font-2 = "Material Icons:size=14;5"
-  font-3 = "Fira Mono:size=12;-3"
-  font-4 = "Weather Icons:size=16;3"
-  font-5 = "DejaVu Sans"
+  font-1 = "Fira Mono:size=12;-3"
+  font-2 = "Deja Vu Sans"
+  font-3 = "Symbols Nerd Font Mono"
 
   modules-left = exwm-workspace xkeyboard cpu memory
   modules-right = temperature battery backlight date
@@ -2652,7 +2650,7 @@ After having setup the file, make sure to run the following commands:
   type = internal/memory
   interval = 1
   warn-percentage = 95
-  format = |  <label> RAM <bar-used>
+  format = |  <label> RAM <bar-used>
   label = %gb_used% / %gb_total%
   bar-used-indicator =
   bar-used-width = 10
@@ -2670,7 +2668,7 @@ After having setup the file, make sure to run the following commands:
   format = | <label> CPU <ramp-coreload>
   ; format-underline = ${colors.underline-1}
   ; click-left = emacsclient -e "(proced)"
-  label =  %percentage%%
+  label =  %percentage%%
   ramp-coreload-spacing = 0
   ; ramp-load-0-foreground = ${colors.foreground-alt}
   ramp-coreload-0 = ▁
@@ -2732,11 +2730,11 @@ After having setup the file, make sure to run the following commands:
   use-actual-brightness = true
   format = | <ramp>  <label> |
   label = %percentage%%
-  ramp-0 = %{T5}%{T-}
-  ramp-1 = %{T5}%{T-}
-  ramp-2 = %{T5}%{T-}
-  ramp-3 = %{T5}%{T-}
-  ramp-4 = %{T5}%{T-}
+  ramp-0 = %{T3}%{T-}
+  ramp-1 = %{T3}%{T-}
+  ramp-2 = %{T3}%{T-}
+  ramp-3 = %{T3}%{T-}
+  ramp-4 = %{T3}%{T-}
 
   [module/date]
   type = internal/date

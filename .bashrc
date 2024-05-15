@@ -240,7 +240,7 @@ function __setprompt {
     # Git branch
     local BRANCH=$(parse_git_branch)
     if [ "$BRANCH" != "" ]; then
-        PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
+        PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
 
         # Comparison with upstream
         count=$(git rev-list --count --left-right @{upstream}..HEAD 2>/dev/null)
