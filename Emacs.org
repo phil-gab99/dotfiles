@@ -1165,8 +1165,12 @@ Theme inspired by the popular Atom One Dark theme.
   (straight-use-package 'diminish)
   (require 'diminish)
 
-  (with-eval-after-load 'diminish
+  (defun pg/diminish-minor-modes ()
+    "Diminishes some minor modes which affect org tree slides"
+    (unless (fboundp 'diminish)
+      (autoload #'diminish "diminish" nil t))
     (dolist (mode #'(auto-revert-mode
+                     buffer-face-mode
                      visual-line-mode))
       (diminish mode)))
 
@@ -5132,9 +5136,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
                 face-remapping-alist '((default (:height 1.75) default)))
     (org-latex-preview)
     (variable-pitch-mode 1)
-    (unless (fboundp 'diminish)
-      (autoload #'diminish "diminish" nil t))
-    (diminish #'buffer-face-mode))
+    (pg/diminish-minor-modes))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."

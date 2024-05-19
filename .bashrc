@@ -224,13 +224,13 @@ function __setprompt {
     PS1+="\n\[${LIGHTGRAY}\]┌─[\[${CYAN}\] $(date +%a) $(date +%b-'%-d') $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\]]─"
 
     # CPU
-    PS1+="[\[${MAGENTA}\] CPU $(cpu)%"
+    PS1+="[\[${MAGENTA}\] CPU $(cpu)%"
 
     # Jobs
-    PS1+="\[${LIGHTGRAY}\]: \[${MAGENTA}\] \j"
+    PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\] \j"
 
     # Network Connections (for a server - comment out for non-server)
-    # PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"
+    PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\] $(awk 'END {print NR}' /proc/net/tcp)"
 
     PS1+="\[${LIGHTGRAY}\]]─"
 
@@ -239,7 +239,7 @@ function __setprompt {
 
     # Git branch
     local BRANCH=$(parse_git_branch)
-    if [ "$BRANCH" != "" ]; then
+    if [ "$BRANCH" != "" ]; then 
         PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
 
         # Comparison with upstream

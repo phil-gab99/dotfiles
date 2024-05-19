@@ -372,13 +372,13 @@ To temporarily bypass an alias, precede the command with a ~\~
       PS1+="\n\[${LIGHTGRAY}\]┌─[\[${CYAN}\] $(date +%a) $(date +%b-'%-d') $(date +'%-I':%M:%S%P)\[${LIGHTGRAY}\]]─"
 
       # CPU
-      PS1+="[\[${MAGENTA}\] CPU $(cpu)%"
+      PS1+="[\[${MAGENTA}\] CPU $(cpu)%"
 
       # Jobs
-      PS1+="\[${LIGHTGRAY}\]: \[${MAGENTA}\] \j"
+      PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\] \j"
 
       # Network Connections (for a server - comment out for non-server)
-      # PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"
+      PS1+="\[${LIGHTGRAY}\]:\[${MAGENTA}\] $(awk 'END {print NR}' /proc/net/tcp)"
 
       PS1+="\[${LIGHTGRAY}\]]─"
 
@@ -387,7 +387,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
       # Git branch
       local BRANCH=$(parse_git_branch)
-      if [ "$BRANCH" != "" ]; then
+      if [ "$BRANCH" != "" ]; then 
           PS1+="\[${LIGHTGRAY}\][\[${LIGHTGREEN}\] $BRANCH"
 
           # Comparison with upstream
@@ -396,8 +396,8 @@ To temporarily bypass an alias, precede the command with a ~\~
               "") p="";;      # No upstream
               "0	0") p="=";; # Equal to upstream
               "0	"*) p=">";; # Ahead of upstream
-              *"	0") p="<";; # Behind upstream
-              *) p="<>";;     # Diverged from upstream
+              ,*"	0") p="<";; # Behind upstream
+              ,*) p="<>";;     # Diverged from upstream
           esac
           PS1+="$p"
 
@@ -2615,7 +2615,8 @@ After having setup the file, make sure to run the following commands:
   font-0 = "Cantarell:size=13:weight=bold;1"
   font-1 = "Fira Mono:size=12;-3"
   font-2 = "Deja Vu Sans"
-  font-3 = "Symbols Nerd Font Mono"
+  font-3 = "Font Awesome"
+  font-4 = "Symbols Nerd Font Mono"
 
   modules-left = exwm-workspace xkeyboard cpu memory
   modules-right = temperature battery backlight date

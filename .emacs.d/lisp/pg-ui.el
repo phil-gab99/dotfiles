@@ -26,8 +26,12 @@
 (straight-use-package 'diminish)
 (require 'diminish)
 
-(with-eval-after-load 'diminish
+(defun pg/diminish-minor-modes ()
+  "Diminishes some minor modes which affect org tree slides"
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
   (dolist (mode #'(auto-revert-mode
+                   buffer-face-mode
                    visual-line-mode))
     (diminish mode)))
 

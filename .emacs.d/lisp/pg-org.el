@@ -236,9 +236,7 @@
               face-remapping-alist '((default (:height 1.75) default)))
   (org-latex-preview)
   (variable-pitch-mode 1)
-  (unless (fboundp 'diminish)
-    (autoload #'diminish "diminish" nil t))
-  (diminish #'buffer-face-mode))
+  (pg/diminish-minor-modes))
 
 (defun pg/presentation-end ()
   "Cleanup after ending org presentation."

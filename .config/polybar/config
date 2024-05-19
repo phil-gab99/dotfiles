@@ -43,7 +43,8 @@ module-margin = 1
 font-0 = "Cantarell:size=13:weight=bold;1"
 font-1 = "Fira Mono:size=12;-3"
 font-2 = "Deja Vu Sans"
-font-3 = "Symbols Nerd Font Mono"
+font-3 = "Font Awesome"
+font-4 = "Symbols Nerd Font Mono"
 
 modules-left = exwm-workspace xkeyboard cpu memory
 modules-right = temperature battery backlight date
