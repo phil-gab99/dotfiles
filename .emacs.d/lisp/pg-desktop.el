@@ -36,9 +36,10 @@
   ;; Change this with respect to the different screen configuration
   ;; Check arandr for display names
   (customize-set-variable 'exwm-randr-workspace-monitor-plist
-                          (pcase (string-trim (shell-command-to-string "autorandr --current"))
+                          (pcase (string-trim (shell-command-to-string "autorandr --detected"))
                             ("work" '(5 "HDMI-1"))
                             ("work+" '(5 "HDMI-1"))
+                            ("superwork" '(0 "eDP-1" 1 "DP-1-1" 2 "DP-1-2" 3 "DP-1-2" 4 "DP-1-2" 5 "DP-1-3"))
                             ("family" '(5 "HDMI-1"))))
   (pg/set-wallpaper)
   (message "Display config: %s"
