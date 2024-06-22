@@ -5,6 +5,7 @@
  `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
    (enable-remote-dir-locals . t)
    (auto-save-file-name-transforms . ((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+   (safe-local-variable-values . ((projectile-project-compilation-cmd . "./mvnw clean package")))
    (vc-follow-symlinks . t)))
 
 (unless (fboundp 'dired)

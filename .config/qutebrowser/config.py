@@ -124,6 +124,9 @@ c.content.pdfjs = False
 # Type - Bool
 c.content.autoplay = False
 
+# Cookies
+c.content.cookies.accept = 'no-3rdparty'
+
 ################################################################################
 # ADBLOCKING - TODO
 ################################################################################

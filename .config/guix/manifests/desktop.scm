@@ -42,6 +42,7 @@
    
    (specification->package "openssh")
    (specification->package "gnupg")
+   (specification->package "lm-sensors")
    (specification->package "zip")
    (specification->package "unzip")
    (specification->package "p7zip")

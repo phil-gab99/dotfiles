@@ -1115,6 +1115,9 @@ To temporarily bypass an alias, precede the command with a ~\~
   # Type - Bool
   c.content.autoplay = False
 
+  # Cookies
+  c.content.cookies.accept = 'no-3rdparty'
+
   ################################################################################
   # ADBLOCKING - TODO
   ################################################################################
@@ -1726,6 +1729,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   paths=(
       "/run/current-system/profile/lib"
       "$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
+      "$GUIX_EXTRA_PROFILES/cc/cc/lib"
   )
   for p in ${paths[@]}; do
       LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$p"

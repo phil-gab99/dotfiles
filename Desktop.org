@@ -119,7 +119,6 @@ Workspaces:
                               ("work+" '(5 "HDMI-1"))
                               ("superwork" '(0 "eDP-1" 1 "DP-1-1" 2 "DP-1-2" 3 "DP-1-2" 4 "DP-1-2" 5 "DP-1-3"))
                               ("family" '(5 "HDMI-1"))))
-    (pg/set-wallpaper)
     (message "Display config: %s"
              (string-trim (shell-command-to-string "autorandr --current"))))
 
@@ -205,6 +204,7 @@ Workspaces:
     (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
 
     (pg/update-displays)
+    (pg/set-wallpaper)
 
     (exwm-randr-enable)
     (exwm-enable))
@@ -824,6 +824,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
   (specification->package "openssh")
   (specification->package "gnupg")
+  (specification->package "lm-sensors")
   (specification->package "zip")
   (specification->package "unzip")
   (specification->package "p7zip")

@@ -41,7 +41,6 @@
                             ("work+" '(5 "HDMI-1"))
                             ("superwork" '(0 "eDP-1" 1 "DP-1-1" 2 "DP-1-2" 3 "DP-1-2" 4 "DP-1-2" 5 "DP-1-3"))
                             ("family" '(5 "HDMI-1"))))
-  (pg/set-wallpaper)
   (message "Display config: %s"
            (string-trim (shell-command-to-string "autorandr --current"))))
 
@@ -127,6 +126,7 @@
   (define-key exwm-mode-map (kbd "C-q") #'exwm-input-send-next-key)
 
   (pg/update-displays)
+  (pg/set-wallpaper)
 
   (exwm-randr-enable)
   (exwm-enable))

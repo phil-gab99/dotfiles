@@ -27,7 +27,7 @@
    `((lsp-java-configuration-runtimes . [( :name "JavaSE-17"
                                            :path ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")
                                            :default t)])
-     (lsp-java-vmargs . ,(list "--noverify" "--enable-preview"))
+     (lsp-java-vmargs . ,(list "-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "--enable-preview"))
      (lsp-java-java-path . "java")
      (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
 

@@ -20,7 +20,7 @@
       "m" '(:ignore t :which-key "email")
       "md" '(mu4e :which-key "dashboard")
       "mc" '(mu4e-compose-new :which-key "compose")))
-  (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - \n"
+  (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - 40160338 \n"
                                                           "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)

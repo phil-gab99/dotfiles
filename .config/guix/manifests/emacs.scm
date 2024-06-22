@@ -152,7 +152,7 @@
   ;; (specification->package "emacs-docker")
   
   ;; (specification->package "emacs-erlang")
-  (specification->package "erlang")
+  ;; (specification->package "erlang")
   
   ;; (specification->package "emacs-git-modes")
   

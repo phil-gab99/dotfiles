@@ -54,6 +54,7 @@ export NIXPKGS_ALLOW_UNFREE=1
 paths=(
     "/run/current-system/profile/lib"
     "$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
+    "$GUIX_EXTRA_PROFILES/cc/cc/lib"
 )
 for p in ${paths[@]}; do
     LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$p"

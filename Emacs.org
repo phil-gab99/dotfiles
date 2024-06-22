@@ -1523,7 +1523,7 @@ For organizing the buffer list
         "m" '(:ignore t :which-key "email")
         "md" '(mu4e :which-key "dashboard")
         "mc" '(mu4e-compose-new :which-key "compose")))
-    (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - \n"
+    (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - 40160338 \n"
                                                             "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
     (with-eval-after-load 'mu4e
       (require 'mu4e-org)
@@ -2203,6 +2203,7 @@ Some settings to manage where emacs stores backup files (such as the =~= backup 
    `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
      (enable-remote-dir-locals . t)
      (auto-save-file-name-transforms . ((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+     (safe-local-variable-values . ((projectile-project-compilation-cmd . "./mvnw clean package")))
      (vc-follow-symlinks . t)))
 
 #+end_src
@@ -2988,6 +2989,7 @@ Allows writing textual descriptions for creating uml diagrams
         '((bash "https://github.com/tree-sitter/tree-sitter-bash")
           (c "https://github.com/tree-sitter/tree-sitter-c")
           (c++ "https://github.com/tree-sitter/tree-sitter-cpp")
+          (clojure "https://github.com/sogaiu/tree-sitter-clojure")
           (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
           (java "https://github.com/tree-sitter/tree-sitter-java")
           (python "https://github.com/tree-sitter/tree-sitter-python")
@@ -2997,7 +2999,8 @@ Allows writing textual descriptions for creating uml diagrams
   (customize-set-variable 'major-mode-remap-alist
                           '((sh-mode . bash-ts-mode)
                             (python-mode . python-ts-mode)
-                            (javascript-mode . tsx-ts-mode)))
+                            (javascript-mode . tsx-ts-mode)
+                            (clojure-mode . clojure-ts-mode)))
 
 #+end_src
 
@@ -3241,6 +3244,7 @@ Some general tools for programming:
   (packages->manifest
    (list
     (specification->package "gcc-toolchain@11.3.0")
+    (specification->package "libgccjit@11.3.0")
     (specification->package "man-pages")
     (specification->package "texinfo")
     (specification->package "glibc")
@@ -3553,7 +3557,7 @@ Some general tools for programming:
 
 #+end_src
 
-***** Package | erlang-ts-mode
+***** Package | erlang
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-erlang.el
 
@@ -3569,7 +3573,7 @@ Some general tools for programming:
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; (specification->package "emacs-erlang")
-  (specification->package "erlang")
+  ;; (specification->package "erlang")
 
 #+end_src
 
@@ -3831,7 +3835,7 @@ Some general tools for programming:
      `((lsp-java-configuration-runtimes . [( :name "JavaSE-17"
                                              :path ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")
                                              :default t)])
-       (lsp-java-vmargs . ,(list "--noverify" "--enable-preview"))
+       (lsp-java-vmargs . ,(list "-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "--enable-preview"))
        (lsp-java-java-path . "java")
        (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
 
@@ -6165,7 +6169,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-  ;;; init.el -*- lexical-binding: t; -*-
+    ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -6194,7 +6198,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
     "Determines whether the current system is a GNU/Linux based system running the
-              GNU Guix distribution.")
+                GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
@@ -6212,9 +6216,9 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (defun pg/customize-set-variables (custom-sets)
     "Sets the value of custom variables using `customize-set-variable'.
-  The CUSTOM-SETS argument represents a plist where each entry's key is the
-  custom variable one wishes to set and the corresponding value is the value to
-  set to the custom variable."
+    The CUSTOM-SETS argument represents a plist where each entry's key is the
+    custom variable one wishes to set and the corresponding value is the value to
+    set to the custom variable."
     (mapcar (lambda (setting)
               (let ((custom (car setting))
                     (value (cdr setting)))
@@ -6264,6 +6268,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-css
                      pg-programming-docker
                      pg-programming-elisp
+                     pg-programming-erlang
                      pg-programming-gdscript
                      pg-programming-git
                      pg-programming-groovy
