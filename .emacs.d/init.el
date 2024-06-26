@@ -89,6 +89,7 @@
 
                    pg-project
                    pg-programming
+                   pg-programming-ada
                    ;; pg-programming-alloy
                    pg-programming-arduino
                    pg-programming-cc

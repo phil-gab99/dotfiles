@@ -3091,6 +3091,34 @@ Some general tools for programming:
 
 #+end_src
 
+**** Ada
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-ada.el
+
+  ;;; pg-programming-ada.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | ada-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-ada.el
+
+  (straight-use-package 'ada-mode)
+
+#+end_src
+
+
+***** Ada Package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-ada.el
+
+  (provide 'pg-programming-ada)
+
+#+end_src
+
 **** Alloy
 
 ***** Package header
@@ -6260,6 +6288,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
                      pg-project
                      pg-programming
+                     pg-programming-ada
                      ;; pg-programming-alloy
                      pg-programming-arduino
                      pg-programming-cc
