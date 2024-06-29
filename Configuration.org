@@ -1707,6 +1707,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
       # Make user scripts and other executables visible to Path
       "$HOME/bin"
       "$HOME/Packages"
+      "$HOME/.local/bin"
 
       # Make npm apps visible to Path
       "$HOME/.npm/bin"
@@ -1802,7 +1803,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
   for p in ${paths[@]}; do
       INFOPATH="$INFOPATH:$p"
   done
-  export MANPATH
+  export INFOPATH
 
   unset p paths
 

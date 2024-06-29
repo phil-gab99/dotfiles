@@ -32,6 +32,7 @@ paths=(
     # Make user scripts and other executables visible to Path
     "$HOME/bin"
     "$HOME/Packages"
+    "$HOME/.local/bin"
 
     # Make npm apps visible to Path
     "$HOME/.npm/bin"
@@ -127,7 +128,7 @@ paths=(
 for p in ${paths[@]}; do
     INFOPATH="$INFOPATH:$p"
 done
-export MANPATH
+export INFOPATH
 
 unset p paths
 
