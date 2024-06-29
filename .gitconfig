@@ -4,4 +4,4 @@
 [github]
         user = phil-gab99
 [init]
-	defaultBranch = main
+        defaultBranch = main

@@ -1892,6 +1892,8 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
           email = pgabriel999@hotmail.com
   [github]
           user = phil-gab99
+  [init]
+          defaultBranch = main
 
 #+end_src
 
@@ -3303,11 +3305,11 @@ This script pretty prints colon delimited variables such as ~$PATH~:
 
 #+begin_src sh
 
-  echoFormat $PATH
+  pprint $PATH
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/echoFormat :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/bin/pprint :shebang #!/usr/bin/env bash
 
   echo $1 | sed 's/:/\n/g'
 
