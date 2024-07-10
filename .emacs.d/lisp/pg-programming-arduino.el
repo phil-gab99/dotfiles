@@ -3,8 +3,6 @@
 
 (unless (or pg/is-termux
             pg/is-windows)
-  (straight-use-package 'arduino-mode)
-
   (defconst sketch-bare-minimum
     (concat "/**\n * @author Philippe Gabriel\n */\n\n"
             "void setup() {\n  // put your setup code here, to run once:\n}\n\n"
@@ -28,6 +26,7 @@
       (write-region sketch-bare-minimum nil sketch-file nil nil nil t)
       (find-file sketch-file)))
 
+  (straight-use-package 'arduino-mode)
   (unless (fboundp 'flycheck-arduino-setup)
     (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
   (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)

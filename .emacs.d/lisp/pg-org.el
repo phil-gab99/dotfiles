@@ -3,8 +3,8 @@
 
 (defun pg/org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the img
-  directory with respect to the org-buffer's location and insert a link to
-  this file. Requires imageMagick for undertaking screenshots."
+    directory with respect to the org-buffer's location and insert a link to
+    this file. Requires imageMagick for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
@@ -25,7 +25,7 @@
 
 (defun pg/org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
-  table."
+    table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
 
@@ -54,7 +54,6 @@
 (defun pg/org-mode-setup ()
   "Define some behaviours for the major org-mode."
   (org-indent-mode)
-  (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
   (diminish 'org-indent-mode)
@@ -69,7 +68,12 @@
   (pg/customize-set-variables
    `((org-ellipsis . " ▾")
      (org-hide-emphasis-markers . t)
-     (org-agenda-start-with-log-mode . t)
+     (org-auto-align-tags . nil)
+     (org-tags-column . 0)
+     (org-catch-invisible-edits . show-and-error)
+     (org-special-ctrl-a/e . t)
+     (org-insert-heading-respect-content . t)
+     (org-pretty-entities . t)
      (org-log-done . time)
      (org-fontify-quote-and-verse-blocks . t)
      (org-log-into-drawer . t)
@@ -86,10 +90,6 @@
                                       (ps-left-margin 35)
                                       (ps-right-margin 30)))))
 
-  (font-lock-add-keywords 'org-mode ;; Replace '-' with bullets
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region
-                                           (match-beginning 1) (match-end 1) "•"))))))
   (require 'org-indent)
   (dolist (face '((org-level-1 . 1.2)
                   (org-level-2 . 1.1)
@@ -212,17 +212,20 @@
                                   "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
        (org-format-latex-options . ,(plist-put org-format-latex-options :scale 1.5))))))
 
+(with-eval-after-load 'org-agenda
+  (pg/customize-set-variables
+   '((org-agenda-tags-column . 0)
+     (org-agenda-block-separator . ?─)
+     (org-agenda-start-with-log-mode . t)
+     (org-agenda-time-grid . ((daily today require-timed)
+                              (800 1000 1200 1400 1600 1800 2000)
+                              " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+     (org-agenda-current-time-string . "◀── now ─────────────────────────────────────────────────"))))
+
 (straight-use-package 'org-appear)
 (unless (fboundp 'org-appear-mode)
   (autoload #'org-appear-mode "org-appear" nil t))
 (add-hook 'org-mode-hook #'org-appear-mode)
-
-(straight-use-package 'org-bullets)
-(unless (fboundp 'org-bullets-mode)
-  (autoload #'org-bullets-mode "org-bullets" nil t))
-(add-hook 'org-mode-hook #'org-bullets-mode)
-(with-eval-after-load 'org-bullets
-  (customize-set-variable 'org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 (straight-use-package 'org-contacts)
 (with-eval-after-load 'org-contacts
@@ -235,12 +238,10 @@
               org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
               face-remapping-alist '((default (:height 1.75) default)))
   (org-latex-preview)
-  (variable-pitch-mode 1)
   (pg/diminish-minor-modes))
 
 (defun pg/presentation-end ()
   "Cleanup after ending org presentation."
-  (variable-pitch-mode 0)
   (setq-local doom-modeline-minor-modes nil
               org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
               face-remapping-alist '((default variable-pitch default)))
@@ -275,6 +276,10 @@
      (org-export-headline-levels . 6)
      (org-reveal-theme . "league"))))
 
+(straight-use-package 'org-modern)
+(with-eval-after-load 'org
+  (global-org-modern-mode))
+
 (unless pg/is-windows
   (straight-use-package 'org-notify)
   (with-eval-after-load 'org
@@ -298,7 +303,8 @@
 (with-eval-after-load 'org-msg
   (pg/customize-set-variables
    `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
-     (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
+     (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n"
+                                   "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
      (org-msg-startup . "indent inlineimages hidestars")
      (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
      (org-msg-greeting-name-limit . 3)
@@ -309,8 +315,8 @@
      (org-msg-recipient-names . nil))))
 
 (unless pg/is-termux
-  (straight-use-package 'org-roam)
   (with-eval-after-load 'org
+    (straight-use-package 'org-roam)
     (require 'org-roam))
   (with-eval-after-load 'org-roam
     (pg/customize-set-variables

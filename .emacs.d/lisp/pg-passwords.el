@@ -14,7 +14,6 @@
 
 (unless (or pg/is-termux
             pg/is-windows)
-  (straight-use-package 'pinentry)
   (require 'pinentry)
   (with-eval-after-load 'pinentry
     (pinentry-start)))

@@ -115,7 +115,8 @@
   `(org-document-title        ((t ( :foreground ,pg-onelight-variant-blackstd
                                     :weight bold))))
   `(org-document-info         ((t ( :foreground ,pg-onelight-variant-blackstd))))
-  `(org-ellipsis              ((t ( :underline nil))))
+  `(org-ellipsis              ((t ( :underline nil
+                                    :box nil))))
   `(org-block                 ((t ( :foreground unspecified
                                     :background ,pg-onelight-variant-codeblockbg
                                     :inherit (fixed-pitch)))))

@@ -94,7 +94,6 @@
   (autoload #'flycheck-mode "flycheck" nil t))
 (add-hook 'lsp-mode-hook #'flycheck-mode)
 
-(straight-use-package 'dap-mode)
 (with-eval-after-load 'lsp-mode
   (require 'dap-mode))
 (with-eval-after-load 'dap-mode
@@ -152,5 +151,10 @@
 (straight-use-package 'yasnippet-snippets)
 (with-eval-after-load 'yasnippet
   (require 'yasnippet-snippets))
+
+(straight-use-package 'direnv)
+(unless (fboundp 'direnv-mode)
+  (autoload #'direnv-mode "direnv" nil t))
+(direnv-mode)
 
 (provide 'pg-programming)

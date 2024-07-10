@@ -63,9 +63,7 @@
 (set-face-attribute 'fixed-pitch nil :family pg/font-fixed :weight 'light)
 (set-face-attribute 'variable-pitch nil :family pg/font-variable :weight 'regular)
 
-(straight-use-package '(ligature :type git
-                                 :host github
-                                 :repo "mickeynp/ligature.el"))
+(straight-use-package 'ligature)
 (require 'ligature)
 (with-eval-after-load 'ligature
   (ligature-set-ligatures 't
@@ -111,14 +109,45 @@
    '((highlight-indent-guides-responsive . stack)
      (highlight-indent-guides-method . character))))
 
-(straight-use-package 'autopair)
-(unless (fboundp 'autopair-global-mode)
-  (autoload #'autopair-global-mode "autopair" nil t))
-(autopair-global-mode 1)
-(with-eval-after-load 'autopair
-  (unless (fboundp 'diminish)
-    (autoload #'diminish "diminish" nil t))
-  (diminish #'autopair-mode))
+(defvar pg/sp-post-command-count 0
+  "Number of commands called after a pair has been opened.")
+
+(defun pg/sp-create-newline-and-enter-sexp ()
+  "Open a new brace or bracket expression, with relevant newlines and indent. "
+  (newline)
+  (indent-according-to-mode)
+  (previous-line)
+  (indent-according-to-mode))
+
+(defun pg/sp-release-newline-post-command ()
+  "Remove the hook and reset the post-command count."
+  (remove-hook 'post-command-hook 'pg/sp-await-newline-post-command)
+  (setq pg/sp-post-command-count 0))
+
+(defun pg/sp-await-newline-post-command ()
+  "If command is newline, indent and enter sexp."
+  (if (> pg/sp-post-command-count 1)
+      (pg/sp-release-newline-post-command)
+    (progn
+      (setq pg/sp-post-command-count (1+ pg/sp-post-command-count))
+      (when (memq this-command
+                  '(newline newline-and-indent reindent-then-newline-and-indent))
+        (pg/sp-release-newline-post-command)
+        (pg/sp-create-newline-and-enter-sexp)))))
+
+(defun pg/sp-await-newline (id action context)
+  (when (eq action 'insert)
+    (add-hook 'post-command-hook 'pg/sp-await-newline-post-command)))
+
+(straight-use-package 'smartparens)
+(require 'smartparens-config)
+
+(sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode)
+  (sp-local-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
+  (sp-local-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
+  (sp-local-pair "[" nil :post-handlers '(:add pg/sp-await-newline)))
+
+(smartparens-global-mode)
 
 (straight-use-package 'outshine)
 (unless (fboundp 'outshine-mode)

@@ -18,6 +18,9 @@
 (unless (fboundp 'consult-line)
   (autoload #'consult-line "consult" nil t))
 (global-set-key (kbd "C-s") #'consult-line)
+(unless (fboundp 'consult-ripgrep)
+  (autoload #'consult-ripgrep "consult" nil t))
+(global-set-key (kbd "C-M-s") #'consult-ripgrep)
 (unless (fboundp 'consult-buffer)
   (autoload #'consult-buffer "consult" nil t))
 (global-set-key (kbd "C-x b") #'consult-buffer)
@@ -86,16 +89,6 @@
           (which-key--show-keymap "Embark" map nil nil 'no-paging)
           #'which-key--hide-popup-ignore-command)
         embark-become-indicator embark-action-indicator))
-
-(straight-use-package '(embark-consult :host github
-                                       :repo "oantolin/embark"
-                                       :files ("embark-consult.el")))
-(add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
-(with-eval-after-load 'embark
-  (with-eval-after-load 'consult
-    (require 'embark-consult)))
-
-(straight-use-package 'prescient)
 
 (straight-use-package 'which-key)
 (require 'which-key)

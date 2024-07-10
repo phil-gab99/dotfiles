@@ -1,0 +1,1 @@
+/gnu/store/haarmjagpws336s0ckbhzqikxbksx17x-home-dotfiles--config-guix-channels-scm

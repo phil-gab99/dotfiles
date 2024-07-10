@@ -16,11 +16,6 @@
      (TeX-source-correlate-start-server . t)))
   (put 'tex-mode 'derived-mode-parent 'prog-mode))
 
-;; (straight-use-package 'company-auctex)
-;; (with-eval-after-load 'company
-;;   (with-eval-after-load 'tex
-;;     (require 'company-auctex)))
-;; (with-eval-after-load 'company-auctex
-;;   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
+(straight-use-package 'company-auctex)
 
 (provide 'pg-programming-tex)

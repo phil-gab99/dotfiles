@@ -61,8 +61,8 @@
   (interactive)
   (jupyter-available-kernelspecs t))
 
-(straight-use-package 'jupyter)
 (unless pg/is-windows
+  (straight-use-package 'jupyter)
   (add-hook 'jupyter-repl-mode-hook #'company-mode)
   (add-hook 'jupyter-repl-mode-hook #'(lambda ()
                                         (require 'jupyter))))

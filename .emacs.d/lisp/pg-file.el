@@ -37,12 +37,6 @@
     (autoload #'nerd-icons-dired-mode "nerd-icons-dired" nil t))
   (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
 
-;; (straight-use-package 'all-the-icons-dired)
-;; (unless pg/is-termux
-;;   (unless (fboundp 'all-the-icons-dired-mode)
-;;     (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
-;;   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
-
 (straight-use-package 'dired-hide-dotfiles)
 (with-eval-after-load 'dired
   (unless (fboundp 'dired-hide-dotfiles-mode)
@@ -52,7 +46,7 @@
     (evil-collection-define-key 'normal 'dired-mode-map
       "H" #'dired-hide-dotfiles-mode)))
 
-(unless pg/is-termux 
+(unless pg/is-termux
   (straight-use-package 'openwith)
   (when (require 'openwith nil 'noerror)
     (pg/customize-set-variables
@@ -78,11 +72,7 @@
                                   (file))))))
     (openwith-mode 1)))
 
-(straight-use-package '(subed :type git
-                              :host github
-                              :repo "sachac/subed"
-                              :files ("subed/*.el")))
-
+(straight-use-package 'subed)
 (with-eval-after-load 'subed
   (dolist (mode #'(save-place-local-mode
                    turn-on-auto-fill))

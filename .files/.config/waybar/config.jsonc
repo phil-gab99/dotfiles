@@ -1,0 +1,161 @@
+// -*- jsonc -*-
+{
+  "layer": "bottom",
+  "position": "top",
+  "height": 24,
+  "spacing": 4,
+
+  "modules-left": [
+    "sway/workspaces",
+    "sway/mode",
+    "sway/scratchpad",
+    "cpu",
+    "memory"
+  ],
+
+  "modules-center": [
+    "tray"
+  ],
+
+  "modules-right": [
+    "wireplumber",
+    "temperature",
+    "battery",
+    "backlight",
+    "idle_inhibitor"
+    "clock"
+  ],
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "0": "",
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "urgent": ""
+    }
+  },
+  "sway/mode": {
+    "format": " {}",
+    "max-length": 50
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": ["", ""],
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  }
+  "cpu": {
+    "interval": 2,
+    "format": " {usage}% CPU {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+    "format-icons": [
+      "▁",
+      "▂",
+      "▃",
+      "▄",
+      "▅",
+      "▆",
+      "▇",
+      "█"
+    ]
+  },
+  "memory": {
+    "interval": 1,
+    "format": " {used:0.1f}G / {total:0.1f}G RAM"
+  },
+
+  // Implement action on click to set different device
+  "wireplumber": {
+    "format": "{volume}% {icon}",
+    "format-muted": "",
+    "on-click": "pavucontrol",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "tray": {
+    "icon-size": 20,
+    "show-passive-items": true
+  },
+
+  "temperature": {
+    "thermal-zone": 0,
+    "interval": 0.5,
+    "critical-threshold": 60,
+    "format": "{temperatureC}°C {icon}",
+    "format-critical": "{temperatureC}°C! {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "states": {
+      "good": 60,
+      "warning": 25,
+      "critical": 10
+    }
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{percent}% {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:  %F %a %b %d |  %I:%M:%S %p W%U}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions":  {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  }
+}

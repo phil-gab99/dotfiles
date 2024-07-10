@@ -7,6 +7,4 @@
   (setq-local face-remapping-alist '((default (:height 1.5) default))))
 (add-hook 'eww-mode-hook #'pg/eww-mode-setup)
 
-(straight-use-package 'simple-httpd)
-
 (provide 'pg-web)

@@ -27,8 +27,8 @@
   (add-hook 'geiser-repl-mode-hook #'corfu-mode)
 
   (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0/"))
-    (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix"))
+    (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0"))
+    (add-to-list 'geiser-guile-load-path (concat (getenv "HOME") "/.dotfiles"))
     (pg/customize-set-variables
      `((geiser-guile-load-init-file . nil)
        (geiser-guile-manual-lookup-other-window . t))))

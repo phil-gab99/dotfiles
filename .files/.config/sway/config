@@ -1,0 +1,127 @@
+# -*- i3wm-config -*-
+
+set $super Mod4
+
+set $laptop eDP-1
+
+output * bg ~/backgrounds/wp-color-triangle.png fill
+
+input type:keyboard {
+      xkb_layout us
+      xkb_options ctrl:nocaps
+}
+
+input type:touchpad {
+      dwt enabled
+      tap enabled
+      middle_emulation enabled
+      natural_scroll enabled
+}
+
+font pango:JetBrains Mono 12
+
+# Use s-Mouse to drag floating windows
+floating_modifier $super
+
+bindsym $super+Shift+q kill
+bindsym $super+Shift+x exit
+bindsym $super+Shift+r reload
+bindsym $super+Shift+Return exec foot
+bindsym $super+n exec makoctl restore
+bindsym $super+c exec makoctl close
+
+bindsym $super+h focus left
+bindsym $super+j focus down
+bindsym $super+k focus up
+bindsym $super+l focus right
+
+# Move workspace to display
+bindsym $super+Mod1+h move workspace to output left
+bindsym $super+Mod1+l move workspace to output right
+bindsym $super+Mod1+Left move workspace to output left
+bindsym $super+Mod1+Right move workspace to output right
+
+bindsym $super+Shift+h move left 30 px
+bindsym $super+Shift+j move down 30 px
+bindsym $super+Shift+k move up 30 px
+bindsym $super+Shift+l move right 30 px
+
+bindsym $super+f fullscreen toggle
+bindsym $super+Shift+f floating toggle
+bindsym $super+Shift+p sticky toggle
+
+# Change focus between tiling / floating windows
+bindsym $super+Control+space focus mode_toggle
+
+# App Launcher
+bindsym $super+space exec fuzzel
+
+# Defaults
+default_orientation horizontal
+workspace_layout tabbed
+
+# Gaps and Borders
+default_border pixel 1
+gaps outer 0
+gaps inner 6
+smart_borders off
+hide_edge_borders --i3 none
+
+# Workspaces
+set $ws0 0
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+
+workspace $ws0 output $laptop
+workspace $ws1 output $laptop
+workspace $ws2 output $laptop
+workspace $ws3 output $laptop
+workspace $ws4 output $laptop
+workspace $ws5 output $laptop
+
+# Switch workspace
+bindsym $super+grave workspace $ws0
+bindsym $super+1 workspace $ws1
+bindsym $super+2 workspace $ws2
+bindsym $super+3 workspace $ws3
+bindsym $super+4 workspace $ws4
+bindsym $super+5 workspace $ws5
+
+# Brightness and Volume
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+
+# Screenshots
+bindsym Print exec grimshot --notify save output
+bindsym Alt+Print exec grimshot --notify save area
+
+set $bgcolor #232635dd
+set $bordercolor #c792eacc
+
+# Style UI
+client.focused $bordercolor $bgcolor #ffffffff #ffffffff #c792eacc
+client.unfocused $bordercolor #1c1f2bef #ffffffff #ffffffff #c792eacc
+
+exec waybar
+
+# Start shepherd services
+exec herd start mako
+exec herd start nm-applet
+exec herd start gammastep
+exec herd start swayidle
+
+# Autostart applications
+exec emacs
+
+# Set GNOME settings (requires glib:bin)
+exec gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+exec gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
+exec gsettings set org.gnome.desktop.interface font-theme "Iosevka Aile 11"
+
+exec dbus-update-activation --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway

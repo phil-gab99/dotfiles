@@ -19,14 +19,14 @@ Configuration files and scripts for basic gnu/linux profile
   Version=4.5
   Name=Mars
   Comment=A MIPS Simulator
-  Exec=java -jar /home/phil-gab99/Packages/Mars4_5.jar
+  Exec=eval $(guix shell -m $HOME/.config/guix/manifests/java.scm --search-paths) && java -jar /home/phil-gab99/Packages/Mars4_5.jar
   Terminal=false
 
 #+end_src
 
 *** LMC - Little Man Computer
 
-#+begin_src conf :tangle ~/.dotfiles/.local/share/applications/LMC.desktop
+#+begin_src conf :tangle ~/.dotfiles/.files/.local/share/applications/LMC.desktop
 
   [Desktop Entry]
   Type=Application
@@ -44,10 +44,141 @@ Configuration files and scripts for basic gnu/linux profile
 
 **** Bash Profile
 
-#+begin_src shell :tangle ~/.dotfiles/.bash_profile
+#+begin_src shell :tangle ~/.dotfiles/bash_profile
 
-  # Defer to .profile
-  [ -f ~/.profile ] && . ~/.profile
+  ################################################################################
+  # Loading profiles/environments
+  ################################################################################
+
+  # Load Nix environment
+  [ -f /run/current-system/profile/etc/profile.d/nix.sh ] && . /run/current-system/profile/etc/profile.d/nix.sh
+
+  ################################################################################
+  # Path variables
+  ################################################################################
+
+  paths=(
+      # Make user scripts and other executables visible to Path
+      "$HOME/bin"
+      "$HOME/Packages"
+      "$HOME/.local/bin"
+
+      # Make npm apps visible to Path
+      "$HOME/.npm/bin"
+
+      # Make Nix apps visible to Path
+      "$HOME/.nix-profile/bin"
+  )
+  for p in ${paths[@]}; do
+      PATH="$PATH:$p"
+  done
+  export PATH
+
+  # Append libraries from Nix user packages to library path
+  export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
+
+  # Allow unfree packages
+  export NIXPKGS_ALLOW_UNFREE=1
+
+  # Append LD libraries for shared objects libraries
+  paths=(
+      "/run/current-system/profile/lib"
+  )
+  for p in ${paths[@]}; do
+      LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$p"
+  done
+  export LD_LIBRARY_PATH
+
+  paths=(
+      # Make Flatpak apps visible to launcher
+      "$HOME/.local/share/flatpak/exports/share"
+
+      # Make Nix apps visible to launcher and Path
+      "$HOME/.nix-profile/share"
+  )
+  for p in ${paths[@]}; do
+      XDG_DATA_DIRS="$XDG_DATA_DIRS:$p"
+  done
+  export XDG_DATA_DIRS
+
+  # Some scripts make use of path to config directory
+  export XDG_CONFIG_HOME="$HOME/.config"
+
+  # Some scripts make use of path to cache directory
+  export XDG_CACHE_HOME="$HOME/.cache"
+
+  unset p paths
+
+  ################################################################################
+  # Configuration variables
+  ################################################################################
+
+  # Don't use the system-wide PulseAudio configuration
+  unset PULSE_CONFIG PULSE_CLIENTCONFIG
+
+  # Arduino home directory
+  export ARDUINO_HOME="$HOME/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino"
+
+  # Export casting program for qutebrowser
+  export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
+
+  # Make sure we can reach the GPG agent for SSH auth
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+
+  # Make sure `ls` collates dotfiles first (for dired)
+  export LC_COLLATE="C"
+
+  # Many build scripts expect CC to contain the compiler command
+  export CC="gcc"
+
+  # Jupyter config file
+  export JUPYTER_CONFIG_DIR=$XDG_CONFIG_HOME/jupyter
+
+  # We're in Emacs
+  export VISUAL=emacsclient
+  export EDITOR="$VISUAL"
+
+  # Less specific variables
+  export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
+
+  # Guile specific variables
+  export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
+
+  # Python specific variables
+  export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
+  # [[ -v PYTHONPATH ]] \
+      #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+      #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+
+  # Prolog specific variables
+  export LOCALSZ=32768
+
+  # Bash specific variables
+  export HISTFILE=$XDG_CACHE_HOME/.bash_history
+
+  # Email address
+  export EMAIL=pgabriel999@hotmail.com
+
+  # Wayland-specific environment variables
+  export XDG_CURRENT_DESKTOP=sway
+  export XDG_SESSION_TYPE=wayland
+  export RTC_USE_PIPEWIRE=true
+  export SDL_VIDEODRIVER=wayland
+  export MOZ_ENABLE_WAYLAND=1
+  export CLUTTER_BACKEND=wayland
+  export ELM_ENGINE=wayland_egl
+  export ECORE_EVAS_ENGINE=wayland-egl
+  export QT_QPA_PLATFORM=wayland-egl
+
+  ################################################################################
+  # Running Scripts
+  ################################################################################
+
+  # System 76 charge thresholds set to safe charge
+  [ -f ~/bin/safe-charge ] && ~/bin/safe-charge
+
+  # Execute Sway
+  [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && exec sway
 
 #+end_src
 
@@ -55,7 +186,7 @@ Configuration files and scripts for basic gnu/linux profile
 
 To temporarily bypass an alias, precede the command with a ~\~
 
-#+begin_src shell :tangle ~/.dotfiles/.bash_aliases :shebang ### -*- sh -*-
+#+begin_src shell :tangle ~/.dotfiles/.files/.bash_aliases :shebang # -*- sh -*-
 
   ################################################################################
   # GENERAL ALIASES
@@ -144,7 +275,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 **** Bash Terminal Configuration
 
-#+begin_src shell :tangle ~/.dotfiles/.bashrc
+#+begin_src shell :tangle ~/.dotfiles/bashrc
 
   # Export 'SHELL' to child processes.  Programs such as 'screen' honor it and
   # otherwise use /bin/sh.
@@ -171,11 +302,11 @@ To temporarily bypass an alias, precede the command with a ~\~
   [ -f /run/current-system/profile/share/bash-completion/bash-completion ] && . /run/current-system/profile/share/bash-completion/bash-completion
 
   # Anaconda script initializations
-  __conda_setup="$('/home/phil-gab99/.guix-extra-profiles/python/python/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+  __conda_setup="$('$HOME/.guix-home/profile/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
   if [ $? -eq 0 ]; then
       eval "$__conda_setup"
   else
-      [ -f "$GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh" ] && . "$GUIX_EXTRA_PROFILES/python/python/etc/profile.d/conda.sh"
+      [ -f "$HOME/.guix-home/profile/etc/profile.d/conda.sh" ] && . "$HOME/.guix-home/profile/etc/profile.d/conda.sh"
   fi
   unset __conda_setup
 
@@ -183,7 +314,7 @@ To temporarily bypass an alias, precede the command with a ~\~
   [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
   # Angular CLI autocompletion
-  source <(ng completion script)
+  . <(ng completion script)
 
   ################################################################################
   # HISTORY CONTROL
@@ -291,7 +422,6 @@ To temporarily bypass an alias, precede the command with a ~\~
           tput clear
       }
   fi
-
 
   ################################################################################
   # ELisp Functions
@@ -463,6 +593,9 @@ To temporarily bypass an alias, precede the command with a ~\~
 
   PROMPT_COMMAND='__setprompt'
 
+  # Direnv hook script
+  eval "$(direnv hook bash)"
+
 #+end_src
 
 *** Browsers
@@ -471,7 +604,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *init.lisp*
     
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/init.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/init.lisp
 
   (in-package #:nyxt-user)
 
@@ -518,7 +651,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *evil-mode.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/evil-mode.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/evil-mode.lisp
 
   (in-package #:nyxt-user)
 
@@ -732,7 +865,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *status.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/status.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/status.lisp
 
   (in-package #:nyxt-user)
 
@@ -758,7 +891,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *adblock.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/adblock.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/adblock.lisp
 
   (in-package #:nyxt)
 
@@ -776,7 +909,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *style.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/style.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/style.lisp
 
   (in-package #:nyxt-user)
 
@@ -909,7 +1042,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *freestance.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/freestance.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/freestance.lisp
 
   (in-package #:nyxt-user)
 
@@ -921,7 +1054,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *dark-reader.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/dark-reader.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/dark-reader.lisp
 
   (in-package #:nyxt-user)
 
@@ -936,7 +1069,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *search-engines.lisp*
 
-#+begin_src lisp :tangle ~/.dotfiles/.config/nyxt/search-engines.lisp
+#+begin_src lisp :tangle ~/.dotfiles/.archive/.config/nyxt/search-engines.lisp
 
   (in-package #:nyxt-user)
 
@@ -987,7 +1120,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *Main configuration*
 
-#+begin_src python :tangle ~/.dotfiles/.config/qutebrowser/config.py :noweb yes
+#+begin_src python :tangle ~/.dotfiles/.files/.config/qutebrowser/config.py :noweb yes
 
   import sys, os
 
@@ -1192,13 +1325,13 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *Relevant bookmarks*
 
-#+begin_src conf :tangle ~/.dotfiles/.config/qutebrowser/quickmarks
+#+begin_src conf :tangle ~/.dotfiles/.files/.config/qutebrowser/quickmarks
 
-  gn https://github.com/notifications
   jp https://www.tofugu.com/learn-japanese/
   kana https://realkana.com/
   dot https://github.com/phil-gab99/dotfiles
   ddg https://duckduckgo.com/?q
+  cb https://codeberg.org
   gh https://github.com
   bh https://biblehub.com
   yt https://youtube.com
@@ -1229,7 +1362,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 *JMatrix Rules*
 
-#+begin_src conf :tangle ~/.dotfiles/.config/qutebrowser/jmatrix-rules
+#+begin_src conf :tangle ~/.dotfiles/.files/.config/qutebrowser/jmatrix-rules
 
   # WARNING: This file can be overwritten easily with the :jmatrix-write-rules command
   # When data is overwritten, formatting and comments will be lost.
@@ -1434,15 +1567,16 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 **** Conda Initialization
 
-#+begin_src conf :tangle ~/.dotfiles/.condarc
+#+begin_src conf :tangle ~/.dotfiles/.files/.condarc
 
   changeps1: False
+  auto_activate_base: True
 
 #+end_src
 
 *** Dunst
 
-#+begin_src conf :tangle ~/.dotfiles/.config/dunst/dunstrc :shebang ### -*- conf -*-
+#+begin_src conf :tangle ~/.dotfiles/.archive/.config/dunst/dunstrc :shebang # -*- conf -*-
 
   [global]
   ### Display ###
@@ -1653,7 +1787,7 @@ To temporarily bypass an alias, precede the command with a ~\~
 
 Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
-#+begin_src xml :tangle ~/.dotfiles/.config/fontconfig/fonts.conf
+#+begin_src xml :tangle ~/.dotfiles/.archive/.config/fontconfig/fonts.conf
 
   <?xml version="1.0"?>
   <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
@@ -1669,224 +1803,9 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
 #+end_src
 
-*** General Profile
-
-#+begin_src shell :tangle ~/.dotfiles/.profile
-
-  ################################################################################
-  # Loading profiles/environments
-  ################################################################################
-
-  # Load the default Guix profile
-  GUIX_PROFILE="$HOME/.guix-profile"
-  . "$GUIX_PROFILE"/etc/profile
-
-  # Load additional Guix profiles
-  export GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
-  for i in $GUIX_EXTRA_PROFILES/*; do
-      profile=$i/$(basename "$i")
-      if [ -f "$profile"/etc/profile ]; then
-          GUIX_PROFILE="$profile"
-          . "$GUIX_PROFILE"/etc/profile
-      fi
-      unset profile
-  done
-
-  unset i
-
-  # Load Nix environment
-  if [ -f /run/current-system/profile/etc/profile.d/nix.sh ]; then
-      . /run/current-system/profile/etc/profile.d/nix.sh
-  fi
-
-  ################################################################################
-  # Path variables
-  ################################################################################
-
-  paths=(
-      # Make user scripts and other executables visible to Path
-      "$HOME/bin"
-      "$HOME/Packages"
-      "$HOME/.local/bin"
-
-      # Make npm apps visible to Path
-      "$HOME/.npm/bin"
-
-      # Make Nix apps visible to Path
-      "$HOME/.nix-profile/bin"
-  )
-  for p in ${paths[@]}; do
-      PATH="$PATH:$p"
-  done
-  export PATH
-
-  # Append libraries from Nix user packages to library path
-  export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
-
-  # Allow unfree packages
-  export NIXPKGS_ALLOW_UNFREE=1
-
-  # Append LD libraries for shared objects libraries
-  paths=(
-      "/run/current-system/profile/lib"
-      "$GUIX_EXTRA_PROFILES/build-tools/build-tools/lib"
-      "$GUIX_EXTRA_PROFILES/cc/cc/lib"
-  )
-  for p in ${paths[@]}; do
-      LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$p"
-  done
-  export LD_LIBRARY_PATH
-
-  paths=(
-      # Make Flatpak apps visible to launcher
-      "$HOME/.local/share/flatpak/exports/share"
-
-      # Make Nix apps visible to launcher and Path
-      "$HOME/.nix-profile/share"
-
-      # Make applications in other profiles visible to launcher
-      "$GUIX_EXTRA_PROFILES/audio/audio/share"
-      "$GUIX_EXTRA_PROFILES/browsers/browsers/share"
-      "$GUIX_EXTRA_PROFILES/game-dev/game-dev/share"
-      "$GUIX_EXTRA_PROFILES/latex/latex/share"
-      "$GUIX_EXTRA_PROFILES/media/media/share"
-      "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share"
-  )
-  for p in ${paths[@]}; do
-      XDG_DATA_DIRS="$XDG_DATA_DIRS:$p"
-  done
-  export XDG_DATA_DIRS
-
-  # Some scripts make use of path to config directory
-  export XDG_CONFIG_HOME="$HOME/.config"
-
-  # Some script make use of path to cache directory
-  export XDG_CACHE_HOME="$HOME/.cache"
-
-  paths=(
-      # Make manual pages in other profiles visible   
-      "$GUIX_EXTRA_PROFILES/audio/audio/share/man"
-      "$GUIX_EXTRA_PROFILES/browsers/browsers/share/man"
-      "$GUIX_EXTRA_PROFILES/build-tools/build-tools/share/man"
-      "$GUIX_EXTRA_PROFILES/cc/cc/share/man"
-      "$GUIX_EXTRA_PROFILES/desktop/desktop/share/man"
-      "$GUIX_EXTRA_PROFILES/emacs/emacs/share/man"
-      "$GUIX_EXTRA_PROFILES/java/java/share/man"
-      "$GUIX_EXTRA_PROFILES/latex/latex/share/man"
-      "$GUIX_EXTRA_PROFILES/media/media/share/man"
-      "$GUIX_EXTRA_PROFILES/perl/perl/share/man"
-      "$GUIX_EXTRA_PROFILES/prolog/prolog/share/man"
-      "$GUIX_EXTRA_PROFILES/python/python/share/man"
-      "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/man"
-      "$GUIX_EXTRA_PROFILES/video/video/share/man"
-  )
-  for p in ${paths[@]}; do
-      MANPATH="$MANPATH:$p"
-  done
-  export MANPATH
-
-  paths=(
-      # Make info nodes in other profiles visible
-      "$GUIX_EXTRA_PROFILES/audio/audio/share/info"
-      "$GUIX_EXTRA_PROFILES/browsers/browsers/share/info"
-      "$GUIX_EXTRA_PROFILES/build-tools/build-tools/share/info"
-      "$GUIX_EXTRA_PROFILES/cc/cc/share/info"
-      "$GUIX_EXTRA_PROFILES/desktop/desktop/share/info"
-      "$GUIX_EXTRA_PROFILES/emacs/emacs/share/info"
-      "$GUIX_EXTRA_PROFILES/java/java/share/info"
-      "$GUIX_EXTRA_PROFILES/latex/latex/share/info"
-      "$GUIX_EXTRA_PROFILES/media/media/share/info"
-      "$GUIX_EXTRA_PROFILES/python/python/share/info"
-      "$GUIX_EXTRA_PROFILES/themes-fonts/themes-fonts/share/info"
-      "$GUIX_EXTRA_PROFILES/video/video/share/info"                 
-  )
-  for p in ${paths[@]}; do
-      INFOPATH="$INFOPATH:$p"
-  done
-  export INFOPATH
-
-  unset p paths
-
-  ################################################################################
-  # Configuration variables
-  ################################################################################
-
-  # Don't use the system-wide PulseAudio configuration
-  unset PULSE_CONFIG PULSE_CLIENTCONFIG
-
-  # Export java path so that tools pick it up correctly
-  export JAVA_HOME=$(realpath $(dirname $(dirname $(which java))))
-
-  # Arduino home directory
-  export ARDUINO_HOME="$HOME/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino"
-
-  # Export casting program for qutebrowser
-  export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
-
-  # Make sure we can reach the GPG agent for SSH auth
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-
-  # Make sure `ls` collates dotfiles first (for dired)
-  export LC_COLLATE="C"
-
-  # Many build scripts expect CC to contain the compiler command
-  export CC="gcc"
-
-  # Jupyter config file
-  export JUPYTER_CONFIG_DIR=$XDG_CONFIG_HOME/jupyter
-
-  # We're in Emacs
-  export VISUAL=emacsclient
-  export EDITOR="$VISUAL"
-
-  # Less specific variables
-  export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
-
-  # Guile specific variables
-  export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
-
-  # Python specific variables
-  export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
-  # [[ -v PYTHONPATH ]] \
-      #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
-      #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
-
-  # Prolog specific variables
-  export LOCALSZ=32768
-
-  # Bash specific variables
-  export HISTFILE=$XDG_CACHE_HOME/.bash_history
-
-  # Email address
-  export EMAIL=pgabriel999@hotmail.com
-
-  ################################################################################
-  # Shepherd
-  ################################################################################
-
-  # Start the shepherd daemon
-  if [[ ! -S ${XDG_RUNTIME_DIR-$HOME/.cache}/shepherd/socket ]]; then
-      shepherd # -l $XDG_CONFIG_HOME/shepherd/shepherd.log
-  fi
-
-  ################################################################################
-  # Loading scripts
-  ################################################################################
-
-  # System 76 charge thresholds set to safe charge
-  [ -f ~/bin/safe-charge ] && ~/bin/safe-charge
-
-  # Load .bashrc to get login environment
-  [ -f ~/.bashrc ] && . ~/.bashrc
-
-  # Set default brightness
-  [ -f ~/.guix-extra-profiles/desktop/desktop/bin/brightnessctl ] && ~/.guix-extra-profiles/desktop/desktop/bin/brightnessctl set 12
-
-#+end_src
-
 *** Git Profile
 
-#+begin_src conf :tangle ~/.dotfiles/.gitconfig
+#+begin_src conf :tangle ~/.dotfiles/.files/.gitconfig
 
   [user]
           name = Philippe Gabriel
@@ -1900,7 +1819,7 @@ Make sure Emacs can find the font path from the ~themes-fonts~ profile:
 
 *** Guile Repl
 
-#+begin_src scheme :tangle ~/.dotfiles/.guile :shebang ;; -*- scheme -*-
+#+begin_src scheme :tangle ~/.dotfiles/.files/.guile :shebang ;; -*- scheme -*-
 
   (use-modules (ice-9 readline)
                (ice-9 colorized))
@@ -1916,7 +1835,7 @@ After having setup the file, make sure to run the following commands:
 - ~mu init --maildir=~/Mail --my-address=address1@domain1.com --my-address=address2@domain2.com ...~ - For all different addresses
 - ~mu index~ - To index the given addresses
 
-#+begin_src conf :tangle ~/.dotfiles/.mbsyncrc
+#+begin_src conf :tangle ~/.dotfiles/.files/.mbsyncrc
 
   # Main hotmail account
   IMAPAccount hotmail
@@ -1975,7 +1894,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Mimeapps
 
-#+begin_src conf :tangle ~/.dotfiles/.config/mimeapps.list
+#+begin_src conf :tangle ~/.dotfiles/.archive/.config/mimeapps.list
 
   [Default Applications]
   text/html=qutebrowser.desktop
@@ -1996,7 +1915,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Mpd Configuration
 
-#+begin_src conf :tangle ~/.dotfiles/.config/mpd/mpd.conf
+#+begin_src conf :tangle ~/.dotfiles/.archive/.config/mpd/mpd.conf
 
   # An example configuration file for MPD.
   # Read the user manual for documentation: http://www.musicpd.org/doc/user/
@@ -2412,7 +2331,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Mpv Configuration
 
-#+begin_src conf :tangle ~/.dotfiles/.config/mpv/mpv.conf
+#+begin_src conf :tangle ~/.dotfiles/.files/.config/mpv/mpv.conf
 
   # Example mpv configuration file
   #
@@ -2559,7 +2478,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Node Package Manager Configuration
 
-#+begin_src shell :tangle ~/.dotfiles/.npmrc
+#+begin_src shell :tangle ~/.dotfiles/.files/.npmrc
 
   prefix=~/.npm
 
@@ -2567,7 +2486,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Nix Package Repository
 
-#+begin_src fundamental :tangle ~/.dotfiles/.nix-channels
+#+begin_src fundamental :tangle ~/.dotfiles/.files/.nix-channels
 
   https://nixos.org/channels/nixpkgs-unstable nixpkgs
 
@@ -2575,7 +2494,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Polybar
 
-#+begin_src conf :tangle ~/.dotfiles/.config/polybar/config
+#+begin_src conf :tangle ~/.dotfiles/.archive/.config/polybar/config
 
   ; Docs: https://github.com/polybar/polybar
   ;==========================================================
@@ -2758,7 +2677,7 @@ After having setup the file, make sure to run the following commands:
 
 *** Python
 
-#+begin_src python :tangle ~/.dotfiles/.config/python/history.py
+#+begin_src python :tangle ~/.dotfiles/.files/.config/python/history.py
 
   # Enable custom ~/.python_history location on Python interactive console
   # Set PYTHONSTARTUP to this file on ~/.profile or similar for this to work
@@ -2801,7 +2720,7 @@ After having setup the file, make sure to run the following commands:
 
 **** Nano
 
-#+begin_src conf :tangle ~/.dotfiles/.config/nano/nanorc
+#+begin_src conf :tangle ~/.dotfiles/.files/.config/nano/nanorc
 
   # Include all the syntax highlighting modules.
   include /run/current-system/profile/share/nano/*.nanorc
@@ -2810,7 +2729,7 @@ After having setup the file, make sure to run the following commands:
 
 **** Vim
 
-#+begin_src haskell :tangle ~/.dotfiles/.vimrc
+#+begin_src haskell :tangle ~/.dotfiles/.files/.vimrc
 
   " Encoding
   set encoding=utf-8
@@ -2869,7 +2788,7 @@ After having setup the file, make sure to run the following commands:
 
 **** Termux Properties
 
-#+begin_src conf :tangle ~/.dotfiles/.termux/termux.properties
+#+begin_src conf :tangle ~/.dotfiles/.files/.termux/termux.properties
 
   ### After making changes and saving you need to run `termux-reload-settings`
   ### to update the terminal.  All information here can also be found on the
@@ -3025,7 +2944,7 @@ After having setup the file, make sure to run the following commands:
 
 Xsession default values
 
-#+begin_src conf :tangle ~/.dotfiles/.Xdefaults
+#+begin_src conf :tangle ~/.dotfiles/.archive/.Xdefaults
 
   XTerm*utf8: always
   XTerm*metaSendsEscape: true
@@ -3034,7 +2953,7 @@ Xsession default values
 
 *** Xmodmap
 
-#+begin_src conf :tangle ~/.dotfiles/.xmodmaprc
+#+begin_src conf :tangle ~/.dotfiles/.archive/.xmodmaprc
 
   clear lock
   clear control
@@ -3048,7 +2967,7 @@ Xsession default values
 
 Acting with respect to window manager selected
 
-#+begin_src sh :tangle ~/.dotfiles/.xsession
+#+begin_src sh :tangle ~/.dotfiles/.archive/.xsession
 
   DEFAULT_SESSION=exwm
 
@@ -3100,7 +3019,7 @@ The ~xsettingsd~ configuration file. Below is the table for each property:
 | Xft/Hinting                   | integer | Text hinting                   | 0 (no), 1 (yes), -1 (default)              |
 | Xft/RGBA                      | string  | Text subpixel rendering        | none, rgb, bgr, vrgb, vbgr                 |
 
-#+begin_src conf :tangle ~/.dotfiles/.config/xsettingsd/xsettingsd.conf
+#+begin_src conf :tangle ~/.dotfiles/.archive/.config/xsettingsd/xsettingsd.conf
 
   Gtk/DecorationLayout "menu:minimize,maximize,close"
   Gtk/FontName "Cantarell 12"
@@ -3126,7 +3045,7 @@ This script extract most known archive formats:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/extract :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/extract :shebang #!/usr/bin/env bash
 
   for archive in "$@"; do
       if [ -f "$archive" ]; then
@@ -3164,7 +3083,7 @@ The script sets up correctly arduino IDE when installed from flatpak
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/arduino-flat :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/arduino-flat :shebang #!/usr/bin/env bash
 
   flatpak run --branch=stable --arch=x86_64 cc.arduino.arduinoide "$@"
 
@@ -3174,7 +3093,7 @@ The script sets up correctly arduino IDE when installed from flatpak
 
 This is not a script though just a set of commands I need to run when Guix fails to boot properly
 
-#+begin_src sh :tangle ~/.dotfiles/bin/bfix
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/bfix
 
   # Run ls (hd0) or (hd1) and select the appropriate partitions until /boot/grub/ is found
   # Then apply the following (Below is the appropriate values for this machine)
@@ -3202,7 +3121,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Max Charge*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/max-charge :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/max-charge :shebang #!/usr/bin/env bash
 
   echo 0 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 100 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -3214,7 +3133,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Normal Charge*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/normal-charge :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/normal-charge :shebang #!/usr/bin/env bash
 
   echo 60 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 81 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -3226,7 +3145,7 @@ These scripts adjust the charge threshold for a System76 laptop:
 
 *Safe charge*
 
-#+begin_src sh :tangle ~/.dotfiles/bin/safe-charge :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/safe-charge :shebang #!/usr/bin/env bash
 
   echo 50 > /sys/class/power_supply/BAT0/charge_control_start_threshold
   echo 61 > /sys/class/power_supply/BAT0/charge_control_end_threshold
@@ -3246,7 +3165,7 @@ This script sets up email accounts using ~mu~:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/mail-init :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/mail-init :shebang #!/usr/bin/env bash
 
   mu init -m ~/Mail --my-address=pgabriel999@hotmail.com --my-address=philippe.gabriel.1@umontreal.ca
   mu index
@@ -3265,7 +3184,7 @@ This script helps download music from youtube:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/download-music :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/download-music :shebang #!/usr/bin/env bash
 
   for music in $*; do
       youtube-dl -x --audio-format "mp3" -o '~/Music/%(title)s.%(ext)s' $music
@@ -3279,7 +3198,7 @@ This script helps download music from youtube:
 
 This script is used with mcron to schedule password synching
 
-#+begin_src sh :tangle ~/.dotfiles/bin/sync-passwords :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/sync-passwords :shebang #!/usr/bin/env bash
 
   pass git pull
   pass git push
@@ -3292,7 +3211,7 @@ This script is used with mcron to schedule password synching
 
 *Scheduling with mcron*
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/cron/pass-sync.guile
+#+begin_src scheme :tangle ~/.dotfiles/.files/.config/cron/pass-sync.guile
 
   (job
    '(next-hour (range 0 24 4))
@@ -3310,27 +3229,9 @@ This script pretty prints colon delimited variables such as ~$PATH~:
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/pprint :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/pprint :shebang #!/usr/bin/env bash
 
   echo $1 | sed 's/:/\n/g'
-
-  exit 0
-
-#+end_src
-
-** Screenshot to Clipboard
-
-This script helps save a screenshot to clipboard:
-
-#+begin_src sh
-
-  scrot-clipboard
-
-#+end_src
-
-#+begin_src sh :tangle ~/.dotfiles/bin/scrot-clipboard :shebang #!/usr/bin/env bash
-
-  scrot -s -e 'xclip -selection clipboard -t image/png -i $f && rm -f $f'
 
   exit 0
 
@@ -3346,7 +3247,7 @@ This is a script I tend to use when correcting student assignments to speed up m
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/collect-assignments :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/collect-assignments :shebang #!/usr/bin/env bash
 
   if [ $# -lt 1 ]
   then
@@ -3437,7 +3338,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/wacom-laptop :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/wacom-laptop :shebang #!/usr/bin/env bash
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" eDP-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" eDP-1
@@ -3448,7 +3349,7 @@ These are scripts to help quickly configure the screen onto which is mapped the 
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/wacom-screen :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/wacom-screen :shebang #!/usr/bin/env bash
 
   xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
   xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1

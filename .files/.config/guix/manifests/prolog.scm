@@ -1,0 +1,1 @@
+/gnu/store/zn9l201csh8h7zhabc72yh6j1kihk1yn-home-dotfiles--config-guix-manifests-prolog-scm

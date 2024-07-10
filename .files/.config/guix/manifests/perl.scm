@@ -1,0 +1,1 @@
+/gnu/store/00zrrhx2mz0x49qwvrbprn2h0asnj9xi-home-dotfiles--config-guix-manifests-perl-scm

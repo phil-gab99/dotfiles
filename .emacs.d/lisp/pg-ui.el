@@ -38,9 +38,6 @@
 (straight-use-package 'nerd-icons)
 (require 'nerd-icons)
 
-;; (straight-use-package 'all-the-icons)
-;; (require 'all-the-icons)
-
 (straight-use-package 'doom-modeline)
 (require 'doom-modeline)
 (with-eval-after-load 'doom-modeline

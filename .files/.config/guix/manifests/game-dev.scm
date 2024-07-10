@@ -1,0 +1,1 @@
+/gnu/store/9grg74lhghgcw1p6mr9bzv8vcygydv93-home-dotfiles--config-guix-manifests-game-dev-scm

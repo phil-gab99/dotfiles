@@ -1,7 +1,6 @@
 ;;; pg-finance.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(straight-use-package 'ledger-mode)
 (unless (fboundp 'ledger-mode)
   (autoload #'ledger-mode "ledger-mode" nil t))
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))

@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm
-guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
-
-exit 0

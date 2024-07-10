@@ -6,7 +6,6 @@
 
 (unless (fboundp 'doc-view-mode)
   (autoload #'doc-view-mode "doc-view" nil t))
-;; (add-to-list 'auto-mode-alist '("\\.djvu\\'" . doc-view-mode))
 
 (straight-use-package 'elfeed)
 (unless (fboundp 'elfeed)
@@ -36,8 +35,6 @@
   (setq-local face-remapping-alist '((default (:height 1.5) default))))
 (add-hook 'nov-mode-hook #'pg/nov-mode-setup)
 
-(unless pg/is-guix-system
-  (straight-use-package 'pdf-tools))
 (unless (fboundp 'pdf-view-mode)
   (autoload #'pdf-view-mode "pdf-tools" nil t))
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))

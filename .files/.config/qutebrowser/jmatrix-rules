@@ -1,0 +1,196 @@
+# WARNING: This file can be overwritten easily with the :jmatrix-write-rules command
+# When data is overwritten, formatting and comments will be lost.
+# Please exercise caution when editing this file directly, and make sure to keep backups.
+# * cookie css image media script xhr frame other
+
+https-strict: behind-the-scene false
+matrix-off: about-scheme true
+matrix-off: behind-the-scene true
+matrix-off: chrome-extension-scheme true
+matrix-off: chrome-scheme true
+matrix-off: moz-extension-scheme true
+matrix-off: opera-scheme true
+matrix-off: vivaldi-scheme true
+matrix-off: wyciwyg-scheme true
+matrix-off: qute-scheme true
+noscript-spoof: * true
+referrer-spoof: * true
+referrer-spoof: behind-the-scene false
+* * * block
+* * css allow
+* * frame block
+* * image allow
+* 1st-party * allow
+* 1st-party frame allow
+
+# Github
+github.com * script allow
+
+# Youtube
+# youtube.com rr1---sn-t0a7sn7d.googlevideo.com xhr block
+# youtube.com rr1---sn-8qu-t0a6.googlevideo.com xhr block
+# youtube.com rr1---sn-8qu-t0ak.googlevideo.com xhr block
+# youtube.com rr1---sn-t0a7ln7d.googlevideo.com xhr block
+youtube.com rr1---sn-8qu-t0aee.googlevideo.com image block
+youtube.com rr1---sn-8qu-t0aee.googlevideo.com xhr block
+youtube.com rr1---sn-8qu-t0ak.googlevideo.com image block
+youtube.com rr1---sn-8qu-t0a6.googlevideo.com image block
+youtube.com rr2---sn-8qu-t0aee.googlevideo.com xhr block
+youtube.com rr2---sn-t0a7sn7d.googlevideo.com xhr block
+youtube.com rr3---sn-t0a7ln7d.googlevideo.com xhr block
+youtube.com rr3---sn-t0a7sn7d.googlevideo.com xhr block
+youtube.com rr3---sn-8qu-t0aee.googlevideo.com xhr block
+youtube.com rr3---sn-8qu-t0aee.googlevideo.com image block
+# youtube.com rr3---sn-t0a7sn7d.googlevideo.com xhr block
+youtube.com rr4---sn-vgqsknll.googlevideo.com xhr block
+youtube.com rr4---sn-8qu-t0ak.googlevideo.com xhr block
+youtube.com rr4---sn-8qu-t0ay.googlevideo.com xhr block
+youtube.com rr4---sn-8qu-t0ak.googlevideo.com image block
+youtube.com rr4---sn-8qu-t0ay.googlevideo.com image block
+youtube.com rr4---sn-t0a7ln7d.googlevideo.com xhr block
+youtube.com r5---sn-8qu-t0ay.googlevideo.com other block
+youtube.com rr5---sn-t0a7sn7d.googlevideo.com xhr block
+youtube.com rr5---sn-t0a7ln7d.googlevideo.com xhr block
+youtube.com rr5---sn-vgqsrnz7.googlevideo.com xhr block
+youtube.com rr6---sn-8qu-t0ay.googlevideo.com xhr block
+youtube.com rr6---sn-8qu-t0a6.googlevideo.com xhr block
+youtube.com rr7---sn-8qu-t0a6.googlevideo.com xhr block
+youtube.com rr7---sn-8qu-t0ay.googlevideo.com image block
+youtube.com rr7---sn-8qu-t0ay.googlevideo.com xhr block
+youtube.com rr7---sn-8qu-t0a6.googlevideo.com image block
+youtube.com r8---sn-8qu-t0a6.googlevideo.com other allow
+youtube.com rr8---sn-8qu-t0ak.googlevideo.com xhr block
+youtube.com rr8---sn-8qu-t0ak.googlevideo.com image block
+youtube.com rr8---sn-8qu-t0a6.googlevideo.com xhr block
+# youtube.com yt3.ggpht.com image block
+youtube.com tpc.googlesyndication.com image block
+youtube.com tpc.googlesyndication.com script block
+# youtube.com googleads.g.doubleclick.net image block
+# youtube.com googleads.g.doubleclick.net xhr block
+youtube.com jnn-pa.googleapis.com xhr allow
+youtube.com static.doubleclick.net script allow
+youtube.com www.googleadservices.com * block
+youtube.com lh6.googleusercontent.com image block
+# youtube.com fonts.googleapis.com css block
+youtube.com fonts.gstatic.com other allow
+youtube.com lh4.googleusercontent.com image block
+# youtube.com www.gstatic.com image block
+youtube.com www.gstatic.com script allow
+youtube.com www.gstatic.com xhr allow
+youtube.com play.google.com xhr allow
+youtube.com www.google.com script allow
+# youtube.com www.google.com image block
+# youtube.com www.google.ca image block
+youtube.com googlevideo.com xhr allow
+youtube.com s.ytimg.com script allow
+youtube.com s.ytimg.com xhr allow
+youtube.com i.ytimg.com other allow
+youtube.com suggestqueries-clients6.youtube.com script block
+youtube.com ad.doubleclick.net
+
+# Google
+google.com content.googleapis.com frame allow
+google.com content.googleapis.com script allow
+google.com ssl.gstatic.com media allow
+google.com ssl.gstatic.com script allow
+google.com ssl.gstatic.com xhr allow
+google.com translate.googleapis.com script allow
+google.com translate.googleapis.com xhr allow
+google.com translate.googleusercontent.com frame allow
+google.com translate.googleusercontent.com script allow
+google.com www.gstatic.com script allow
+google.com www.gstatic.com xhr allow
+
+# System Crafters
+systemcrafters.cc * * allow
+systemcrafters.net * * allow
+
+# 9anime
+9anime.st * media allow
+9anime.st * xhr allow
+9anime.st * script allow
+9anime.st * frame allow
+9anime.st * css allow
+9anime.st player.min.js * block
+9anime.st descendantmystery.com * block
+# 9anime.st toglooman.com script block
+# 9anime.st dozubatan.cpm script block
+9anime.st 3rd-party * block
+9anime.st outoctillerytor.com * block
+9anime.st pijmdswtxtcg.com * block
+9anime.st el.risingbelouke.com * block
+9anime.st thaudray.com * block
+9anime.st tzegilo.com * block
+9anime.st lc.impavidcircean.com * block
+# 9anime.st gogohd.net * block
+# 9anime.st ssl.p.jwpcdn.com * block
+# 9anime.st ld.heartedicefall.com * block
+9anime.st waust.at * block
+9anime.st whos.amung.us * block
+9anime.st rlxkmkyrvqt.com xhr block 
+9anime.st my.rtmark.net xhr block
+9anime.st offerimage.com xhr block
+9anime.st rlxkmkyrvqt.com frame block
+9anime.st v10.bunnycdn.se frame block
+# 9anime.st v11.bunnycdn.se frame block
+9anime.st offerimage.com image block
+9anime.st inpage-push.com * block
+9anime.st anicli.click xhr block
+# 9anime.st goload.pro * block
+9anime.st api.movcloud.net script block
+9anime.st v6.bunnycdn.se frame block
+9anime.st delivery.taroads.com xhr block
+# 9anime.st ssl.p.jwpcdn.com script block
+9anime.st dmbinqebajoeca.com xhr block
+9anime.st zikroarg.com script block
+
+# Narutospot.tv
+naruspot.tv * frame allow
+naruspot.tv * script allow
+naruspot.tv * media allow
+
+# My Anime List
+myanimelist.net google.com script allow
+
+# Studium
+matrix-off: udemontreal-my.share true
+matrix-off: studium.umontreal.ca true
+# udemontreal-my.sharepoint.com * * allow
+# udemontreal-my.sharepoint.com odspserviceworkerproxy.aspx script allow
+# udemontreal-my.sharepoint.com res-1.cdn.office.net script allow
+# udemontreal-my.sharepoint.com res-2.cdn.office.net script allow
+# udemontreal-my.sharepoint.com res-2.cdn.office.net xhr allow
+# udemontreal-my.sharepoint.com res-2.cdn.office.net other allow
+# udemontreal-my.sharepoint.com browser.pipe.aria.microsoft.com script allow
+# udemontreal-my.sharepoint.com browser.pipe.aria.microsoft.com xhr allow
+# udemontreal-my.sharepoint.com cac-word-view.officeapps.live.com frame allow
+# udemontreal-my.sharepoint.com cac-word-view.officeapps.live.com xhr allow
+# udemontreal-my.sharepoint.com canadaeast1-mediap.svc.ms xhr allow
+# udemontreal-my.sharepoint.com static2.sharepointonline.com other allow
+# udemontreal-my.sharepoint.com ocws.officeapps.live.com xhr allow
+# udemontreal-my.sharepoint.com statica.akamai.odsp.cdn.office.net script allow
+# udemontreal-my.sharepoint.com graph.microsoft.com xhr allow
+# udemontreal-my.sharepoint.com login.windows.net frame allow
+# udemontreal-my.sharepoint.com clh-word-view-15.cdn.office.net script allow
+# udemontreal-my.sharepoint.com chromewebdata script allow
+# udemontreal-my.sharepoint.com udemontreal-my.sharepoint.com script allow
+
+# Facebook
+facebook.com static.xx.fbcdn.net script allow
+
+# amazon.com
+amazon.ca m.media-amazon.com other allow
+amazon.ca m.media-amazon.com xhr allow
+amazon.ca m.media-amazon.com script allow
+amazon.ca m.media-amazon.com media allow
+amazon.ca images-na.ssl-images-amazon.com other allow
+amazon.ca images-na.ssl-images-amazon.com script allow
+
+# LinkedIn
+linkedin.com * script allow
+linkedin.com * media allow
+linkedin.com * image allow
+linkedin.com * xhr allow
+
+# CodeBoot
+codeboot.org * * allow

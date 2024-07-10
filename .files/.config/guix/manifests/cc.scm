@@ -1,0 +1,1 @@
+/gnu/store/vfl59p2pxj68vgnnpkg6n4cfaip4g9m7-home-dotfiles--config-guix-manifests-cc-scm

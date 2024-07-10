@@ -119,15 +119,6 @@ Emacs interface for guix package manager.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (first (lookup-inferior-packages inferior "emacs-guix"))
-  (specification->package "emacs-guix")
-
-#+end_src
-
 *** Package | geiser
 
 Scheme REPL
@@ -148,8 +139,8 @@ Scheme REPL
     (add-hook 'geiser-repl-mode-hook #'corfu-mode)
 
     (with-eval-after-load 'geiser-guile
-      (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0/"))
-      (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix"))
+      (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0"))
+      (add-to-list 'geiser-guile-load-path (concat (getenv "HOME") "/.dotfiles"))
       (pg/customize-set-variables
        `((geiser-guile-load-init-file . nil)
          (geiser-guile-manual-lookup-other-window . t))))
@@ -158,15 +149,6 @@ Scheme REPL
       (pg/customize-set-variables
        `((geiser-repl-company-p . nil)
          (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (first (lookup-inferior-packages inferior "emacs-geiser"))
-  ;; (specification->package "emacs-geiser")
 
 #+end_src
 
@@ -218,19 +200,9 @@ Scheme REPL
 
   (unless (or pg/is-termux
               pg/is-windows)
-    (straight-use-package 'pinentry)
     (require 'pinentry)
     (with-eval-after-load 'pinentry
       (pinentry-start)))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-pinentry")
-  (specification->package "pinentry-emacs")
 
 #+end_src
 
@@ -261,14 +233,6 @@ Scheme REPL
         "af" '(password-store-copy-field :which-key "copy field")))
     (with-eval-after-load 'password-store
       (customize-set-variable 'password-store-time-before-clipboard-restore 60))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-password-store")
 
 #+end_src
 
@@ -329,14 +293,6 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-keycast")
-
-#+end_src
-
 *** Keybind log package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-keylog.el
@@ -381,14 +337,6 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-marginalia")
-
-#+end_src
-
 *** Package | consult
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
@@ -397,6 +345,9 @@ Useful when starting out with the various keybindings and when presenting to an 
   (unless (fboundp 'consult-line)
     (autoload #'consult-line "consult" nil t))
   (global-set-key (kbd "C-s") #'consult-line)
+  (unless (fboundp 'consult-ripgrep)
+    (autoload #'consult-ripgrep "consult" nil t))
+  (global-set-key (kbd "C-M-s") #'consult-ripgrep)
   (unless (fboundp 'consult-buffer)
     (autoload #'consult-buffer "consult" nil t))
   (global-set-key (kbd "C-x b") #'consult-buffer)
@@ -406,14 +357,6 @@ Useful when starting out with the various keybindings and when presenting to an 
                        consult-theme
                        :preview-key nil)
     (define-key minibuffer-local-map (kbd "C-r") #'consult-history))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-consult")
 
 #+end_src
 
@@ -430,14 +373,6 @@ Useful when starting out with the various keybindings and when presenting to an 
        (completion-category-defaults . nil)
        (orderless-skip-highlighting . nil)
        (completion-category-overrides . ((file (styles basic partial-completion)))))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-orderless")
 
 #+end_src
 
@@ -464,14 +399,6 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-corfu")
-
-#+end_src
-
 *** Package | vertico
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
@@ -492,14 +419,6 @@ Useful when starting out with the various keybindings and when presenting to an 
   (with-eval-after-load 'vertico
     (customize-set-variable 'vertico-cycle t)
     (vertico-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-vertico")
 
 #+end_src
 
@@ -524,44 +443,6 @@ Useful when starting out with the various keybindings and when presenting to an 
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-embark")
-
-#+end_src
-
-*** Package | embark-consult
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
-
-  (straight-use-package '(embark-consult :host github
-                                         :repo "oantolin/embark"
-                                         :files ("embark-consult.el")))
-  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
-  (with-eval-after-load 'embark
-    (with-eval-after-load 'consult
-      (require 'embark-consult)))
-
-#+end_src
-
-*** Package | prescient
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
-
-  (straight-use-package 'prescient)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-prescient")
-
-#+end_src
-
 *** Package | which-key
 
 Displays additional keybindings subsequent to prefix keybindings
@@ -576,14 +457,6 @@ Displays additional keybindings subsequent to prefix keybindings
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
     (diminish #'which-key-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-which-key")
 
 #+end_src
 
@@ -603,14 +476,6 @@ Displays additional keybindings subsequent to prefix keybindings
     (with-eval-after-load 'helm
       (define-key helm-map (kbd "C-j") #'helm-next-line)
       (define-key helm-map (kbd "C-k") #'helm-previous-line)))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-helm")
 
 #+end_src
 
@@ -756,7 +621,8 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-document-title        ((t ( :foreground ,pg-onedark-variant-whitestd
                                        :weight bold))))
      `(org-document-info         ((t ( :foreground ,pg-onedark-variant-whitestd))))
-     `(org-ellipsis              ((t ( :underline nil))))
+     `(org-ellipsis              ((t ( :underline nil
+                                       :box nil))))
      `(org-block                 ((t ( :foreground unspecified
                                        :background ,pg-onedark-variant-codeblockbg
                                        :inherit (fixed-pitch)))))
@@ -1003,7 +869,8 @@ Theme inspired by the popular Atom One Dark theme.
     `(org-document-title        ((t ( :foreground ,pg-onelight-variant-blackstd
                                       :weight bold))))
     `(org-document-info         ((t ( :foreground ,pg-onelight-variant-blackstd))))
-    `(org-ellipsis              ((t ( :underline nil))))
+    `(org-ellipsis              ((t ( :underline nil
+                                      :box nil))))
     `(org-block                 ((t ( :foreground unspecified
                                       :background ,pg-onelight-variant-codeblockbg
                                       :inherit (fixed-pitch)))))
@@ -1176,45 +1043,12 @@ Theme inspired by the popular Atom One Dark theme.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-diminish")
-
-#+end_src
-
 *** Package | nerd-icons
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (straight-use-package 'nerd-icons)
   (require 'nerd-icons)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-nerd-icons")
-
-#+end_src
-
-*** Package | all-the-icons
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
-
-  ;; (straight-use-package 'all-the-icons)
-  ;; (require 'all-the-icons)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-all-the-icons")
 
 #+end_src
 
@@ -1235,14 +1069,6 @@ Customizes the look of the modeline for better aesthetic.
        (doom-modeline-buffer-file-name-style . truncate-except-project)
        (doom-modeline-mu4e . t)))
     (doom-modeline-mode 1))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-doom-modeline")
 
 #+end_src
 
@@ -1297,28 +1123,12 @@ Customizes the look of the modeline for better aesthetic.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-dashboard") ;; old version 1.7.0, need 1.8.0
-
-#+end_src
-
 *** Package | page-break-lines
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
   (straight-use-package 'page-break-lines)
   (require 'page-break-lines)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-page-break-lines")
 
 #+end_src
 
@@ -1473,14 +1283,6 @@ For organizing the buffer list
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-perspective")
-
-#+end_src
-
 *** Window management package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-buffer.el
@@ -1506,10 +1308,7 @@ For organizing the buffer list
 
   (unless (or pg/is-termux
               pg/is-windows)
-    (straight-use-package '(mu4e :type git
-                                 :host github
-                                 :repo "djcb/mu"
-                                 :branch "release/1.10"))
+    (push (expand-file-name "packages/mu/mu4e" user-emacs-directory) load-path)
     (unless (fboundp 'mu4e)
       (autoload #'mu4e "mu4e" nil t))
     (unless (fboundp 'mu4e-compose-new)
@@ -1523,8 +1322,6 @@ For organizing the buffer list
         "m" '(:ignore t :which-key "email")
         "md" '(mu4e :which-key "dashboard")
         "mc" '(mu4e-compose-new :which-key "compose")))
-    (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - 40160338 \n"
-                                                            "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
     (with-eval-after-load 'mu4e
       (require 'mu4e-org)
       (pg/customize-set-variables
@@ -1614,14 +1411,6 @@ Allows for notification pop-up and mode line count when receiving emails
       (mu4e-alert-set-default-style 'notifications)
       (mu4e-alert-enable-notifications)
       (mu4e-alert-enable-mode-line-display)))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-mu4e-alert")
 
 #+end_src
 
@@ -1722,9 +1511,7 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
-  (straight-use-package '(ligature :type git
-                                   :host github
-                                   :repo "mickeynp/ligature.el"))
+  (straight-use-package 'ligature)
   (require 'ligature)
   (with-eval-after-load 'ligature
     (ligature-set-ligatures 't
@@ -1752,14 +1539,6 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-ligature")
-
-#+end_src
-
 *** Package | rainbow-delimiters
 
 Colors matching delimiters with different colours for distinguishability.
@@ -1770,14 +1549,6 @@ Colors matching delimiters with different colours for distinguishability.
   (unless (fboundp 'rainbow-delimiters-mode)
     (autoload #'rainbow-delimiters-mode "rainbow-delimiters" nil t))
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-rainbow-delimiters")
 
 #+end_src
 
@@ -1808,26 +1579,49 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-highlight-indent-guides") ;; Old version 0.8.5
-
-#+end_src
-
-*** Package | autopair
+*** Package | smartparens
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
-  (straight-use-package 'autopair)
-  (unless (fboundp 'autopair-global-mode)
-    (autoload #'autopair-global-mode "autopair" nil t))
-  (autopair-global-mode 1)
-  (with-eval-after-load 'autopair
-    (unless (fboundp 'diminish)
-      (autoload #'diminish "diminish" nil t))
-    (diminish #'autopair-mode))
+  (defvar pg/sp-post-command-count 0
+    "Number of commands called after a pair has been opened.")
+
+  (defun pg/sp-create-newline-and-enter-sexp ()
+    "Open a new brace or bracket expression, with relevant newlines and indent. "
+    (newline)
+    (indent-according-to-mode)
+    (previous-line)
+    (indent-according-to-mode))
+
+  (defun pg/sp-release-newline-post-command ()
+    "Remove the hook and reset the post-command count."
+    (remove-hook 'post-command-hook 'pg/sp-await-newline-post-command)
+    (setq pg/sp-post-command-count 0))
+
+  (defun pg/sp-await-newline-post-command ()
+    "If command is newline, indent and enter sexp."
+    (if (> pg/sp-post-command-count 1)
+        (pg/sp-release-newline-post-command)
+      (progn
+        (setq pg/sp-post-command-count (1+ pg/sp-post-command-count))
+        (when (memq this-command
+                    '(newline newline-and-indent reindent-then-newline-and-indent))
+          (pg/sp-release-newline-post-command)
+          (pg/sp-create-newline-and-enter-sexp)))))
+
+  (defun pg/sp-await-newline (id action context)
+    (when (eq action 'insert)
+      (add-hook 'post-command-hook 'pg/sp-await-newline-post-command)))
+
+  (straight-use-package 'smartparens)
+  (require 'smartparens-config)
+
+  (sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode)
+    (sp-local-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
+    (sp-local-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
+    (sp-local-pair "[" nil :post-handlers '(:add pg/sp-await-newline)))
+
+  (smartparens-global-mode)
 
 #+end_src
 
@@ -1839,14 +1633,6 @@ Colors matching delimiters with different colours for distinguishability.
   (unless (fboundp 'outshine-mode)
     (autoload #'outshine-mode "outshine" nil t))
   (add-hook 'prog-mode-hook #'outshine-mode)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-outshine")
 
 #+end_src
 
@@ -1891,14 +1677,6 @@ Colors matching delimiters with different colours for distinguishability.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-rainbow-mode")
-
-#+end_src
-
 *** Package | emojify
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
@@ -1907,14 +1685,6 @@ Colors matching delimiters with different colours for distinguishability.
   (require 'emojify)
   (with-eval-after-load 'emojify
     (global-emojify-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-emojify")
 
 #+end_src
 
@@ -1961,14 +1731,6 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-evil")
-
-#+end_src
-
 *** Package | evil-collection
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
@@ -1984,14 +1746,6 @@ Allows usage of vim-like keybindings for some modes in emacs.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-evil-collection")
-
-#+end_src
-
 *** Package | editorconfig
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
@@ -2004,14 +1758,6 @@ Allows usage of vim-like keybindings for some modes in emacs.
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
     (diminish #'editorconfig-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-editorconfig")
 
 #+end_src
 
@@ -2069,14 +1815,6 @@ Displays full documentations in place of the default help function.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-helpful")
-
-#+end_src
-
 *** Package | Info
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
@@ -2119,14 +1857,6 @@ Displays full documentations in place of the default help function.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-visual-fill-column")
-
-#+end_src
-
 *** Help documentation package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
@@ -2155,22 +1885,6 @@ Displays full documentations in place of the default help function.
     (visual-line-mode 1)
     (setq-local face-remapping-alist '((default (:height 1.5) default))))
   (add-hook 'eww-mode-hook #'pg/eww-mode-setup)
-
-#+end_src
-
-*** Package | simple-httpd
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-web.el
-
-  (straight-use-package 'simple-httpd)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-simple-httpd")
 
 #+end_src
 
@@ -2302,28 +2016,6 @@ Displays icons in dired-mode.
 
 #+end_src
 
-*** Package | all-the-icons-dired
-
-Displays icons in dired-mode.
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
-
-  ;; (straight-use-package 'all-the-icons-dired)
-  ;; (unless pg/is-termux
-  ;;   (unless (fboundp 'all-the-icons-dired-mode)
-  ;;     (autoload #'all-the-icons-dired-mode "all-the-icons-dired" nil t))
-  ;;   (add-hook 'dired-mode-hook #'all-the-icons-dired-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-all-the-icons-dired")
-
-#+end_src
-
 *** Package | dired-hide-dotfiles
 
 Togglable option for hiding dot files.
@@ -2345,7 +2037,7 @@ Togglable option for hiding dot files.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (unless pg/is-termux 
+  (unless pg/is-termux
     (straight-use-package 'openwith)
     (when (require 'openwith nil 'noerror)
       (pg/customize-set-variables
@@ -2373,35 +2065,15 @@ Togglable option for hiding dot files.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-openwith")
-
-#+end_src
-
 *** Package | subed
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (straight-use-package '(subed :type git
-                                :host github
-                                :repo "sachac/subed"
-                                :files ("subed/*.el")))
-
+  (straight-use-package 'subed)
   (with-eval-after-load 'subed
     (dolist (mode #'(save-place-local-mode
                      turn-on-auto-fill))
       (add-hook 'subed-mode-hook mode)))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-subed")
 
 #+end_src
 
@@ -2450,12 +2122,6 @@ Adds more detail to the prompt in eshell with custome themes.
 
 #+end_src
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-eshell-syntax-highlighting")
-
-#+end_src
-
 *** Package | esh-autosuggest
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
@@ -2467,12 +2133,6 @@ Adds more detail to the prompt in eshell with custome themes.
     (add-hook 'eshell-mode-hook #'esh-autosuggest-mode))
   (with-eval-after-load 'esh-autosuggest
     (customize-set-variable 'esh-autosuggest-delay 0.5))
-
-#+end_src
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-esh-autosuggest")
 
 #+end_src
 
@@ -2538,14 +2198,6 @@ Some configurations to the built-in eshell.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  (specification->package "emacs-vterm")
-
-#+end_src
-
 *** Shell customization package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
@@ -2604,14 +2256,6 @@ Note that the emacs built-in local dir creation can also be used and is more fle
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-projectile") ;; old version 2.5.0
-
-#+end_src
-
 *** Package | magit
 
 Allows for git commands to be applied to the current repository using the command ~C-x g~ which invokes a ~git status~ command with some additional information. Typing ~?~ invokes a list of possible commands, typing ~?~ again invokes the help function for the different commands and typing ~?~ a third time invokes the manual for the package.
@@ -2635,14 +2279,6 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-magit")
-
-#+end_src
-
 *** Package | git-gutter
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-project.el
@@ -2663,15 +2299,6 @@ Allows for git commands to be applied to the current repository using the comman
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-git-gutter")
-  ;; (specification->package "emacs-git-gutter-fringe")
-
-#+end_src
-
 *** Package | forge
 
 Adds git forges to magit.
@@ -2689,14 +2316,6 @@ Steps to get working:
     (with-eval-after-load 'general
       (pg/leader-keys
         "gf" '(forge-pull :which-key "forge"))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-forge")
 
 #+end_src
 
@@ -2749,14 +2368,6 @@ The ~lsp-ui-doc-focus-frame~ command allows to access the documentation frame of
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-lsp-mode")
-
-#+end_src
-
 *** Package | lsp-ui
 
 Displays useful doc on hover.
@@ -2775,14 +2386,6 @@ Displays useful doc on hover.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-lsp-ui")
-
-#+end_src
-
 *** Package | lsp-treemacs
 
 Tree views in emacs.
@@ -2798,14 +2401,6 @@ Tree views in emacs.
         "lt" '(treemacs :which-key "tree")
         "lo" '(lsp-treemacs-symbols :which-key "outline")
         "le" '(lsp-treemacs-errors-list :which-key "errors"))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-lsp-treemacs")
 
 #+end_src
 
@@ -2851,14 +2446,6 @@ For auto-completions while coding.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-company")
-
-#+end_src
-
 *** Package | company-box
 
 Includes icons for company mode suggestions.
@@ -2869,14 +2456,6 @@ Includes icons for company mode suggestions.
   (unless (fboundp 'company-box-mode)
     (autoload #'company-box-mode "company-box" nil t))
   (add-hook 'company-mode-hook #'company-box-mode)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-company-box")
 
 #+end_src
 
@@ -2909,21 +2488,12 @@ Syntax checking.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-flycheck")
-
-#+end_src
-
 *** Package | dap-mode
 
 Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.github.io/dap-mode/page/configuration/][here]] for how to setup for different languages.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
-  (straight-use-package 'dap-mode)
   (with-eval-after-load 'lsp-mode
     (require 'dap-mode))
   (with-eval-after-load 'dap-mode
@@ -2931,14 +2501,6 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
      '((dap-mode . 1)
        (dap-ui-mode . 1)
        (dap-ui-controls-mode . 1))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-dap-mode")
 
 #+end_src
 
@@ -2954,15 +2516,6 @@ Allows writing textual descriptions for creating uml diagrams
      `((plantuml-indent-level . 4)
        (plantuml-jar-path . ,(expand-file-name "~/.guix-extra-profiles/emacs/emacs/share/java/plantuml.jar"))
        (plantuml-default-exec-mode jar))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  (specification->package "plantuml")
-  ;; (specification->package "emacs-plantuml-mode")
 
 #+end_src
 
@@ -3025,14 +2578,6 @@ Allows for code snippets for different languages.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-yasnippet")
-
-#+end_src
-
 *** Package | yasnippet-snippets
 
 Collection of code snippets for yasnippet.
@@ -3045,11 +2590,14 @@ Collection of code snippets for yasnippet.
 
 #+end_src
 
-*Guix Packages*
+*** Package | direnv
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
-  ;; (specification->package "emacs-yasnippet-snippets")
+  (straight-use-package 'direnv)
+  (unless (fboundp 'direnv-mode)
+    (autoload #'direnv-mode "direnv" nil t))
+  (direnv-mode)
 
 #+end_src
 
@@ -3062,34 +2610,6 @@ Collection of code snippets for yasnippet.
 #+end_src
 
 *** Languages
-
-Some general tools for programming:
-
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/build-tools.scm
-
-  (packages->manifest
-   (list
-    (specification->package "meson")
-    (specification->package "ninja")
-    (specification->package "autoconf")
-    (specification->package "automake")
-    (specification->package "libtool")
-    (specification->package "gmime")
-    (specification->package "xapian")
-    (specification->package "docker")
-    ;; (specification->package "webkitgtk")
-    ;; (specification->package "guile")
-    (specification->package "pkg-config")
-    (specification->package "zlib")
-    (specification->package "glib")
-    (specification->package+output "glib:bin")
-    ;; (specification->package "check")
-    (specification->package "make")
-    (specification->package "cmake")))
-
-#+end_src
 
 **** Ada
 
@@ -3109,7 +2629,6 @@ Some general tools for programming:
   (straight-use-package 'ada-mode)
 
 #+end_src
-
 
 ***** Ada Package
 
@@ -3167,8 +2686,6 @@ Some general tools for programming:
 
   (unless (or pg/is-termux
               pg/is-windows)
-    (straight-use-package 'arduino-mode)
-
     (defconst sketch-bare-minimum
       (concat "/**\n * @author Philippe Gabriel\n */\n\n"
               "void setup() {\n  // put your setup code here, to run once:\n}\n\n"
@@ -3192,6 +2709,7 @@ Some general tools for programming:
         (write-region sketch-bare-minimum nil sketch-file nil nil nil t)
         (find-file sketch-file)))
 
+    (straight-use-package 'arduino-mode)
     (unless (fboundp 'flycheck-arduino-setup)
       (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
     (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
@@ -3211,14 +2729,6 @@ Some general tools for programming:
                                                   "-fqbn" "arduino:avr:uno"))
           :major-modes '(arduino-mode)
           :server-id 'arduino)))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-arduino-mode")
 
 #+end_src
 
@@ -3262,27 +2772,6 @@ Some general tools for programming:
 
   (with-eval-after-load 'cc-mode
     (customize-set-variable 'company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/cc.scm
-
-  (packages->manifest
-   (list
-    (specification->package "gcc-toolchain@11.3.0")
-    (specification->package "libgccjit@11.3.0")
-    (specification->package "man-pages")
-    (specification->package "texinfo")
-    (specification->package "glibc")
-    (specification->package "llvm")
-    (specification->package "clang")
-    (specification->package "ccls")
-    (specification->package "lld")
-    (specification->package "file")
-    (specification->package "elfutils")
-    (specification->package "go")))
 
 #+end_src
 
@@ -3331,14 +2820,6 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-ccls")
-
-#+end_src
-
 ***** Package | irony
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
@@ -3352,27 +2833,11 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-irony-mode")
-
-#+end_src
-
 ***** Package | company-irony
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
   (straight-use-package 'company-irony)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-company-irony")
 
 #+end_src
 
@@ -3395,24 +2860,14 @@ Some general tools for programming:
 
 #+end_src
 
-***** Package | clojure-ts-mode
+***** Package | clojure-mode
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-clojure.el
 
-  (straight-use-package 'clojure-ts-mode)
-  (add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-ts-mode))
-
+  (straight-use-package 'clojure-mode)
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
-  (add-hook 'clojure-ts-mode-hook #'lsp-deferred)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-clojure-ts-mode")
+  (add-hook 'clojure-mode-hook #'lsp-deferred)
 
 #+end_src
 
@@ -3444,14 +2899,6 @@ Some general tools for programming:
     (autoload #'sly "sly" nil t))
   (with-eval-after-load 'sly
     (customize-set-variable 'inferior-lisp-program "sbcl"))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-sly")
 
 #+end_src
 
@@ -3529,14 +2976,6 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-docker")
-
-#+end_src
-
 ***** Docker package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-docker.el
@@ -3590,22 +3029,11 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-erlang.el
 
   (straight-use-package 'erlang)
-
   (add-hook 'erlang-mode-hook #'lsp-deferred)
-  ;; (add-to-list 'auto-mode-alist '("\\.erl\\'" . erlang-ts-mode))
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-erlang")
-  ;; (specification->package "erlang")
-
-#+end_src
-
-***** Emacs Lisp Package
+***** Erlang Package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-erlang.el
 
@@ -3634,7 +3062,7 @@ Some general tools for programming:
 
 #+end_src
 
-***** Emacs Lisp Package
+***** GDScript Package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gdscript.el
 
@@ -3661,15 +3089,7 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-git-modes")
-
-#+end_src
-
-***** Git package
+***** Git Package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-git.el
 
@@ -3678,7 +3098,6 @@ Some general tools for programming:
 #+end_src
 
 **** Groovy
-
 ***** Package header
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
@@ -3688,7 +3107,7 @@ Some general tools for programming:
 
 #+end_src
 
-***** Package | groovy-modes
+***** Package | groovy-emacs-mode
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
@@ -3698,15 +3117,7 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-groovy-modes")
-
-#+end_src
-
-***** Groovy package
+***** Groovy Package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
@@ -3732,37 +3143,6 @@ Some general tools for programming:
   (straight-use-package 'haskell-mode)
   (with-eval-after-load 'haskell-mode
     (customize-set-variable 'haskell-process-type 'ghci))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/haskell.scm
-
-  (packages->manifest
-   (list
-    (specification->package "ghc@8")
-    (specification->package+output "ghc@8:doc")))
-
-#+end_src
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-haskell-mode")
-
-#+end_src
-
-***** Package | lsp-haskell
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
-
-  ;; (straight-use-package 'lsp-haskell)
-  ;; (with-eval-after-load 'haskell-mode
-  ;;   (require 'lsp-haskell))
-  ;; (with-eval-after-load 'lsp-haskell
-  ;;   (dolist (mode '(haskell-mode-hook
-  ;;                   haskell-literate-mode-hook))
-  ;;     (add-hook mode #'lsp-deferred)))
 
 #+end_src
 
@@ -3798,7 +3178,6 @@ Some general tools for programming:
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
 
   (straight-use-package 'web-mode)
-
   (pg/customize-set-variables
    `((web-mode-css-indent-offset . 2)
      (web-mode-code-indent-offset . 2)
@@ -3808,17 +3187,40 @@ Some general tools for programming:
 
 #+end_src
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-web-mode")
-
-#+end_src
-
 ***** HTML package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
 
   (provide 'pg-programming-html)
+
+#+end_src
+
+**** I3wm Config
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-i3config.el
+
+  ;;; pg-programming-i3config.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | i3wm-Config-Mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-i3config.el
+
+  (straight-use-package 'i3wm-config-mode)
+  (unless (fboundp 'i3wm-config-mode)
+    (autoload #'i3wm-config-mode "i3wm-config-mode" nil t))
+
+#+end_src
+
+***** I3wm Config package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-i3config.el
+
+  (provide 'pg-programming-i3config)
 
 #+end_src
 
@@ -3866,22 +3268,6 @@ Some general tools for programming:
        (lsp-java-vmargs . ,(list "-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "--enable-preview"))
        (lsp-java-java-path . "java")
        (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/java.scm
-
-  (specifications->manifest '("openjdk@17:jdk"
-                              "openjdk@17:doc"
-                              "sbt"))
-
-#+end_src
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-lsp-java")
 
 #+end_src
 
@@ -3943,14 +3329,6 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-json-mode")
-
-#+end_src
-
 ***** JSON package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-json.el
@@ -3991,41 +3369,11 @@ Some general tools for programming:
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/latex.scm
-
-  (packages->manifest
-   (list
-    (specification->package "rubber")
-    (specification->package "texlive")))
-
-#+end_src
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-auctex")
-
-#+end_src
-
-***** HOLD Package | company-auctex
+***** Package | company-auctex
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-tex.el
 
-  ;; (straight-use-package 'company-auctex)
-  ;; (with-eval-after-load 'company
-  ;;   (with-eval-after-load 'tex
-  ;;     (require 'company-auctex)))
-  ;; (with-eval-after-load 'company-auctex
-  ;;   (add-to-list 'company-backends '(company-auctex :with company-yasnippet)))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-company-auctex")
+  (straight-use-package 'company-auctex)
 
 #+end_src
 
@@ -4085,31 +3433,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-***** Package | lmc
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-lmc.el
-
-  ;; (define-derived-mode pg/lmc-asm-mode prog-mode "LMC-Asm"
-  ;;   "Major mode to edit LMC assembly code."
-  ;;   :syntax-table emacs-lisp-mode-syntax-table
-  ;;   (set (make-local-variable 'font-lock-defaults)
-  ;;        '(lmc-asm-font-lock-keywords))
-  ;;   (set (make-local-variable 'indent-line-function)
-  ;;        #'lmc-asm-indent-line)
-  ;;   (set (make-local-variable 'indent-tabs-mode) nil)
-  ;;   (set (make-local-variable 'imenu-generic-expression)
-  ;;        lmc-asm-imenu-generic-expression)
-  ;;   (set (make-local-variable 'outline-regexp) lmc-asm-outline-regexp)
-  ;;   (add-hook 'completion-at-point-functions #'lmc-asm-completion nil t)
-  ;;   (set (make-local-variable 'comment-start) "#")
-  ;;   (set (make-local-variable 'comment-start-skip)
-  ;;        "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)#+ *"))
-
-  ;; (straight-use-package 'lmc)
-  ;; (fset #'lmc-asm-mode #'pg/lmc-asm-mode)
-
-#+end_src
-
 ***** Lmc package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-lmc.el
@@ -4145,14 +3468,6 @@ Custom syntax highlighting for LMC assembly language.
                     (markdown-header-face-5 . 1.1)
                     (markdown-header-face-6 . 1.05)))
       (set-face-attribute (car face) nil :weight 'regular :height (cdr face))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-markdown-mode")
 
 #+end_src
 
@@ -4196,19 +3511,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-**** Perl
-
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/perl.scm
-
-  (packages->manifest
-   (list
-    (specification->package "bc")
-    (specification->package "perl@5.36")))
-
-#+end_src
-
 **** PHP
 
 ***** Package header
@@ -4226,14 +3528,6 @@ Custom syntax highlighting for LMC assembly language.
 
   (straight-use-package 'php-mode)
   (customize-set-variable 'php-mode-lineup-cascaded-calls t)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-php-mode")
 
 #+end_src
 
@@ -4372,18 +3666,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/python.scm
-
-  (packages->manifest
-   (list
-    ;; (specification->package "python")
-    (specification->package "python-pip")
-    (specification->package "conda")))
-
-#+end_src
-
 ***** Package | jupyter
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
@@ -4393,19 +3675,11 @@ Custom syntax highlighting for LMC assembly language.
     (interactive)
     (jupyter-available-kernelspecs t))
 
-  (straight-use-package 'jupyter)
   (unless pg/is-windows
+    (straight-use-package 'jupyter)
     (add-hook 'jupyter-repl-mode-hook #'company-mode)
     (add-hook 'jupyter-repl-mode-hook #'(lambda ()
                                           (require 'jupyter))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-jupyter")
 
 #+end_src
 
@@ -4433,18 +3707,9 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
 
   (straight-use-package 'scala-mode)
-
   (unless (fboundp 'scala-mode)
     (autoload #'scala-mode "scala-mode" nil t))
   (add-to-list 'interpreter-mode-alist '("scala" . scala-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-scala-mode")
 
 #+end_src
 
@@ -4464,34 +3729,17 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-sbt-mode")
-
-#+end_src
-
 ***** Package | lsp-metals
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
 
   (straight-use-package 'lsp-metals)
-
   (pg/customize-set-variables
    `((lsp-metals-server-args . ("-J-Dmetals.allow-multiline-string-formatting=off" "-J-Dmetals.icons=unicode"))
      (lsp-metals-enable-semantic-highlighting . t)))
   (unless (fboundp 'lsp)
     (autoload #'lsp-deferred "lsp-mode"))
   (add-hook 'scala-mode-hook #'lsp)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-lsp-metals")
 
 #+end_src
 
@@ -4508,33 +3756,6 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src scheme :noweb-ref packages :noweb-sep ""
 
   ;; (specification->package "emacs-scala-mode")
-
-#+end_src
-
-**** SMTLibv2
-
-***** Package header
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-smtlibv2.el
-
-  ;;; pg-programming-smtlibv2.el -*- lexical-binding: t; -*-
-  ;; Author: Philippe Gabriel
-
-#+end_src
-
-***** HOLD Package | z3-mode
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-smtlibv2.el
-
-  ;; (straight-use-package 'z3-mode)
-
-#+end_src
-
-***** SMTLibv2 package
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-smtlibv2.el
-
-  (provide 'pg-programming-smtlibv2)
 
 #+end_src
 
@@ -4575,18 +3796,6 @@ Custom syntax highlighting for LMC assembly language.
                                       (sql-user "phil-gab99")
                                       (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
                                       (sql-database "ift2935")))))
-
-#+end_src
-
-
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/sql.scm
-
-  (packages->manifest
-   (list
-    (specification->package "postgresql")
-    (specification->package "sqls")))
 
 #+end_src
 
@@ -4664,22 +3873,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/web-design.scm
-
-  (packages->manifest
-   (list
-    (specification->package "node")))
-
-#+end_src
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-typescript-mode")
-
-#+end_src
-
 ***** Package | dap-node
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-typescript.el
@@ -4697,51 +3890,6 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-typescript.el
 
   (provide 'pg-programming-typescript)
-
-#+end_src
-
-**** VHDL
-
-***** Package header
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
-
-  ;;; pg-programming-vhdl.el -*- lexical-binding: t; -*-
-  ;; Author: Philippe Gabriel
-
-#+end_src
-
-***** TODO Package | vhdl-tools
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
-
-  ;; (unless (fboundp 'flycheck-define-checker)
-  ;;   (autoload #'flycheck-define-checker "flycheck"))
-  ;; (flycheck-define-checker vhdl-tool
-  ;;   "A VHDL syntax checker, type checker and linter using VHDL-Tool."
-  ;;   :command ("vhdl-tool" "client" "lint" "--compact" "--stdin" "-f" source)
-  ;;   :standard-input t
-  ;;   :modes (vhdl-mode)
-  ;;   :error-patterns
-  ;;   ((warning line-start (file-name) ":" line ":" column ":w:" (message) line-end)
-  ;;    (error line-start (file-name) ":" line ":" column ":e:" (message) line-end)))
-
-  ;; (straight-use-package 'vhdl-tools)
-  ;; (with-eval-after-load 'lsp-mode
-  ;;   (require 'vhdl-tools))
-  ;; (with-eval-after-load 'vhdl-tools
-  ;;   (add-hook 'vhdl-mode-hook #'lsp-deferred)
-  ;;   (customize-set-variable 'lsp-vhdl-server-path (expand-file-name "~/.emacs.d/lsp-servers/vhdl-tool"))
-  ;;   (with-eval-after-load 'flycheck
-  ;;     (add-to-list 'flycheck-checkers #'vhdl-tool)))
-
-#+end_src
-
-***** VHDL package
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-vhdl.el
-
-  (provide 'pg-programming-vhdl)
 
 #+end_src
 
@@ -4791,14 +3939,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-yaml-mode")
-
-#+end_src
-
 ***** YAML package
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-yaml.el
@@ -4827,14 +3967,6 @@ Custom syntax highlighting for LMC assembly language.
     (require 'alert)
     (with-eval-after-load 'alert
       (customize-set-variable 'alert-default-style 'notifications)))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-alert")
 
 #+end_src
 
@@ -4871,8 +4003,8 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun pg/org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the img
-    directory with respect to the org-buffer's location and insert a link to
-    this file. Requires imageMagick for undertaking screenshots."
+      directory with respect to the org-buffer's location and insert a link to
+      this file. Requires imageMagick for undertaking screenshots."
     (interactive)
     (setq imgpath "./img/")
     (if (not (f-dir-p imgpath))
@@ -4893,7 +4025,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun pg/org-csv-to-table (beg end)
     "Insert a file into the current buffer at point, and convert it to an org
-    table."
+      table."
     (interactive (list (mark) (point)))
     (org-table-convert-region beg end ","))
 
@@ -4922,7 +4054,6 @@ Org mode package for writing structured documents and more. Here are some useful
   (defun pg/org-mode-setup ()
     "Define some behaviours for the major org-mode."
     (org-indent-mode)
-    (variable-pitch-mode 1)
     (auto-fill-mode 0)
     (visual-line-mode 1)
     (diminish 'org-indent-mode)
@@ -4937,7 +4068,12 @@ Org mode package for writing structured documents and more. Here are some useful
     (pg/customize-set-variables
      `((org-ellipsis . " ▾")
        (org-hide-emphasis-markers . t)
-       (org-agenda-start-with-log-mode . t)
+       (org-auto-align-tags . nil)
+       (org-tags-column . 0)
+       (org-catch-invisible-edits . show-and-error)
+       (org-special-ctrl-a/e . t)
+       (org-insert-heading-respect-content . t)
+       (org-pretty-entities . t)
        (org-log-done . time)
        (org-fontify-quote-and-verse-blocks . t)
        (org-log-into-drawer . t)
@@ -4954,10 +4090,6 @@ Org mode package for writing structured documents and more. Here are some useful
                                         (ps-left-margin 35)
                                         (ps-right-margin 30)))))
 
-    (font-lock-add-keywords 'org-mode ;; Replace '-' with bullets
-                            '(("^ *\\([-]\\) "
-                               (0 (prog1 () (compose-region
-                                             (match-beginning 1) (match-end 1) "•"))))))
     (require 'org-indent)
     (dolist (face '((org-level-1 . 1.2)
                     (org-level-2 . 1.1)
@@ -5082,11 +4214,19 @@ Org mode package for writing structured documents and more. Here are some useful
 
 #+end_src
 
-*Guix Packages*
+*** Package | org-agenda
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
-  ;; (specification->package "emacs-org")
+  (with-eval-after-load 'org-agenda
+    (pg/customize-set-variables
+     '((org-agenda-tags-column . 0)
+       (org-agenda-block-separator . ?─)
+       (org-agenda-start-with-log-mode . t)
+       (org-agenda-time-grid . ((daily today require-timed)
+                                (800 1000 1200 1400 1600 1800 2000)
+                                " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+       (org-agenda-current-time-string . "◀── now ─────────────────────────────────────────────────"))))
 
 #+end_src
 
@@ -5103,37 +4243,6 @@ Toggles visibility of emphasis markers.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-appear")
-
-#+end_src
-
-*** Package | org-bullets
-
-Customizes the heading bullets.
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
-
-  (straight-use-package 'org-bullets)
-  (unless (fboundp 'org-bullets-mode)
-    (autoload #'org-bullets-mode "org-bullets" nil t))
-  (add-hook 'org-mode-hook #'org-bullets-mode)
-  (with-eval-after-load 'org-bullets
-    (customize-set-variable 'org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-bullets")
-
-#+end_src
-
 *** Package | org-contacts
 
 Manages contacts
@@ -5143,14 +4252,6 @@ Manages contacts
   (straight-use-package 'org-contacts)
   (with-eval-after-load 'org-contacts
     (customize-set-variable 'org-contacts-files `(,(expand-file-name "~/Sync/Social/contacts.org"))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-contacts")
 
 #+end_src
 
@@ -5167,12 +4268,10 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
                 face-remapping-alist '((default (:height 1.75) default)))
     (org-latex-preview)
-    (variable-pitch-mode 1)
     (pg/diminish-minor-modes))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."
-    (variable-pitch-mode 0)
     (setq-local doom-modeline-minor-modes nil
                 org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
                 face-remapping-alist '((default variable-pitch default)))
@@ -5199,14 +4298,6 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-tree-slide")
-
-#+end_src
-
 *** Package | ox-reveal
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
@@ -5223,11 +4314,13 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
 #+end_src
 
-*Guix Packages*
+*** Package | org-modern
 
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
-  ;; (specification->package "emacs-ox-reveal")
+  (straight-use-package 'org-modern)
+  (with-eval-after-load 'org
+    (global-org-modern-mode))
 
 #+end_src
 
@@ -5268,7 +4361,8 @@ Allows for markup language when composing email
   (with-eval-after-load 'org-msg
     (pg/customize-set-variables
      `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
-       (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n" mu4e-compose-signature))
+       (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n"
+                                     "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
        (org-msg-startup . "indent inlineimages hidestars")
        (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
        (org-msg-greeting-name-limit . 3)
@@ -5280,14 +4374,6 @@ Allows for markup language when composing email
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-msg")
-
-#+end_src
-
 *** Package | org-roam
 
 Helps with note-taking strategies.
@@ -5295,8 +4381,8 @@ Helps with note-taking strategies.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (unless pg/is-termux
-    (straight-use-package 'org-roam)
     (with-eval-after-load 'org
+      (straight-use-package 'org-roam)
       (require 'org-roam))
     (with-eval-after-load 'org-roam
       (pg/customize-set-variables
@@ -5327,14 +4413,6 @@ Helps with note-taking strategies.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-roam")
-
-#+end_src
-
 *** Package | org-fragtog
 
 Allows display of latex fragments in org files.
@@ -5345,14 +4423,6 @@ Allows display of latex fragments in org files.
   (unless (fboundp 'org-fragtog-mode)
     (autoload #'org-fragtog-mode "org-fragtog" nil t))
   (add-hook 'org-mode-hook #'org-fragtog-mode)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-org-fragtog")
 
 #+end_src
 
@@ -5440,21 +4510,12 @@ Custom pomodoro timer
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-djvu")
-
-#+end_src
-
 *** Package | doc-view
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
   (unless (fboundp 'doc-view-mode)
     (autoload #'doc-view-mode "doc-view" nil t))
-  ;; (add-to-list 'auto-mode-alist '("\\.djvu\\'" . doc-view-mode))
 
 #+end_src
 
@@ -5481,14 +4542,6 @@ Custom pomodoro timer
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-elfeed")
-
-#+end_src
-
 *** Package | nov
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
@@ -5512,19 +4565,9 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-viewers.el
 
-  (unless pg/is-guix-system
-    (straight-use-package 'pdf-tools))
   (unless (fboundp 'pdf-view-mode)
     (autoload #'pdf-view-mode "pdf-tools" nil t))
   (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  (specification->package "emacs-pdf-tools")
 
 #+end_src
 
@@ -5597,7 +4640,6 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-finance.el
 
-  (straight-use-package 'ledger-mode)
   (unless (fboundp 'ledger-mode)
     (autoload #'ledger-mode "ledger-mode" nil t))
   (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
@@ -5609,15 +4651,6 @@ Allows for viewing of pdfs.
      `((ledger-reconcile-default-commodity . "CAD")
        (ledger-binary-path . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/emacs/emacs/bin/ledger"))
        (ledger-clear-whole-transaction . t))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  (specification->package "ledger")
-  ;; (specification->package "emacs-ledger-mode")
 
 #+end_src
 
@@ -5662,7 +4695,6 @@ Allows for viewing of pdfs.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
   (straight-use-package 'ement)
-
   (unless (fboundp 'ement-connect)
     (autoload #'ement-connect "ement" nil t))
 
@@ -5686,14 +4718,6 @@ Allows for viewing of pdfs.
     (with-eval-after-load 'general
       (pg/leader-keys
         "cmd" '(ement-disconnect :which-key "disconnect"))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-ement")
 
 #+end_src
 
@@ -5740,14 +4764,6 @@ Allows for viewing of pdfs.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-slack") ;; Older commit
-
-#+end_src
-
 *** Package | sx
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
@@ -5755,36 +4771,6 @@ Allows for viewing of pdfs.
   (straight-use-package 'sx)
   (unless (fboundp 'sx-search)
     (autoload #'sx-search "sx" nil t))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-sx")
-
-#+end_src
-
-*** Package | telega
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
-
-  ;; (unless (fboundp 'telega)
-  ;;   (autoload #'telega "telega" nil t))
-  ;; (with-eval-after-load 'telega
-  ;;   (require 'telega-alert)
-  ;;   (require 'telega-dashboard)
-  ;;   (customize-set-variable 'telega-alert-mode 1))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (first (lookup-inferior-packages inferior "emacs-telega"))
-  ;; (first (lookup-inferior-packages inferior "emacs-telega-contrib"))
 
 #+end_src
 
@@ -5829,14 +4815,6 @@ Allows for viewing of pdfs.
     (pg/customize-set-variables
      '((wttrin-default-cities . ("montreal"))
        (wttrin-default-accept-language . ("Accept-Language" . "en-US")))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-wttrin")
 
 #+end_src
 
@@ -6070,14 +5048,6 @@ Allows for general custom keybindings definition to create own set of various ke
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-general")
-
-#+end_src
-
 *** Package | hydra
 
 Allows the creation of keymaps for related commands and the ability to repeat terminal commands. Works in conjunction with the ~general~ package.
@@ -6153,14 +5123,6 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-hydra")
-
-#+end_src
-
 *** Package | iso-transl
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-bindings.el
@@ -6192,7 +5154,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-    ;;; init.el -*- lexical-binding: t; -*-
+      ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -6221,7 +5183,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
     "Determines whether the current system is a GNU/Linux based system running the
-                GNU Guix distribution.")
+                  GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
@@ -6239,9 +5201,9 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   (defun pg/customize-set-variables (custom-sets)
     "Sets the value of custom variables using `customize-set-variable'.
-    The CUSTOM-SETS argument represents a plist where each entry's key is the
-    custom variable one wishes to set and the corresponding value is the value to
-    set to the custom variable."
+      The CUSTOM-SETS argument represents a plist where each entry's key is the
+      custom variable one wishes to set and the corresponding value is the value to
+      set to the custom variable."
     (mapcar (lambda (setting)
               (let ((custom (car setting))
                     (value (cdr setting)))
@@ -6298,6 +5260,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-groovy
                      pg-programming-haskell
                      pg-programming-html
+                     pg-programming-i3config
                      pg-programming-java
                      pg-programming-json
                      ;; pg-programming-lmc
@@ -6344,35 +5307,5 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (setf (alist-get "jupyter-python" org-src-lang-modes nil nil #'equal) 'python-ts))
 
   (setq gc-cons-threshold (* 2 1000 1000))
-
-#+end_src
-
-*Guix packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/emacs.scm :noweb yes
-
-  (use-modules
-   (guix inferior)
-   (guix channels)
-   (srfi srfi-1))
-
-  (define channels
-    (list
-     (channel (name 'guix)
-              (url "https://git.savannah.gnu.org/git/guix.git")
-              (commit "36b38bb4f3f4926431ae2a6d6ae79d5ad0d3d079"))))
-
-  (define inferior
-    (inferior-for-channels channels))
-
-  (packages->manifest
-   (list
-    (specification->package "emacs")
-    ;; (specification->package "emacs-native-comp")
-
-    ;; (specification->package "emacs-exwm")
-    ;; (specification->package "emacs-desktop-environment")
-    <<packages>>
-    ))
 
 #+end_src

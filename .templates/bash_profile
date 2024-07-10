@@ -1,0 +1,133 @@
+################################################################################
+# Loading profiles/environments
+################################################################################
+
+# Load Nix environment
+[ -f /run/current-system/profile/etc/profile.d/nix.sh ] && . /run/current-system/profile/etc/profile.d/nix.sh
+
+################################################################################
+# Path variables
+################################################################################
+
+paths=(
+    # Make user scripts and other executables visible to Path
+    "$HOME/bin"
+    "$HOME/Packages"
+    "$HOME/.local/bin"
+
+    # Make npm apps visible to Path
+    "$HOME/.npm/bin"
+
+    # Make Nix apps visible to Path
+    "$HOME/.nix-profile/bin"
+)
+for p in ${paths[@]}; do
+    PATH="$PATH:$p"
+done
+export PATH
+
+# Append libraries from Nix user packages to library path
+export LIBRARY_PATH="$LIBRARY_PATH:$HOME/.nix-profile/lib"
+
+# Allow unfree packages
+export NIXPKGS_ALLOW_UNFREE=1
+
+# Append LD libraries for shared objects libraries
+paths=(
+    "/run/current-system/profile/lib"
+)
+for p in ${paths[@]}; do
+    LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$p"
+done
+export LD_LIBRARY_PATH
+
+paths=(
+    # Make Flatpak apps visible to launcher
+    "$HOME/.local/share/flatpak/exports/share"
+
+    # Make Nix apps visible to launcher and Path
+    "$HOME/.nix-profile/share"
+)
+for p in ${paths[@]}; do
+    XDG_DATA_DIRS="$XDG_DATA_DIRS:$p"
+done
+export XDG_DATA_DIRS
+
+# Some scripts make use of path to config directory
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Some scripts make use of path to cache directory
+export XDG_CACHE_HOME="$HOME/.cache"
+
+unset p paths
+
+################################################################################
+# Configuration variables
+################################################################################
+
+# Don't use the system-wide PulseAudio configuration
+unset PULSE_CONFIG PULSE_CLIENTCONFIG
+
+# Arduino home directory
+export ARDUINO_HOME="$HOME/.local/share/flatpak/app/cc.arduino.arduinoide/current/active/files/Arduino"
+
+# Export casting program for qutebrowser
+export QUTE_CAST_YTDL_PROGRAM="youtube-dl"
+
+# Make sure we can reach the GPG agent for SSH auth
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+
+# Make sure `ls` collates dotfiles first (for dired)
+export LC_COLLATE="C"
+
+# Many build scripts expect CC to contain the compiler command
+export CC="gcc"
+
+# Jupyter config file
+export JUPYTER_CONFIG_DIR=$XDG_CONFIG_HOME/jupyter
+
+# We're in Emacs
+export VISUAL=emacsclient
+export EDITOR="$VISUAL"
+
+# Less specific variables
+export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
+
+# Guile specific variables
+export GUILE_HISTORY=$XDG_CACHE_HOME/.guile_history
+
+# Python specific variables
+export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
+# [[ -v PYTHONPATH ]] \
+    #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
+    #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
+
+# Prolog specific variables
+export LOCALSZ=32768
+
+# Bash specific variables
+export HISTFILE=$XDG_CACHE_HOME/.bash_history
+
+# Email address
+export EMAIL=pgabriel999@hotmail.com
+
+# Wayland-specific environment variables
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+export RTC_USE_PIPEWIRE=true
+export SDL_VIDEODRIVER=wayland
+export MOZ_ENABLE_WAYLAND=1
+export CLUTTER_BACKEND=wayland
+export ELM_ENGINE=wayland_egl
+export ECORE_EVAS_ENGINE=wayland-egl
+export QT_QPA_PLATFORM=wayland-egl
+
+################################################################################
+# Running Scripts
+################################################################################
+
+# System 76 charge thresholds set to safe charge
+[ -f ~/bin/safe-charge ] && ~/bin/safe-charge
+
+# Execute Sway
+[ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && exec sway

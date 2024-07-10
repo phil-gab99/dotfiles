@@ -2,7 +2,6 @@
 ;; Author: Philippe Gabriel
 
 (straight-use-package 'scala-mode)
-
 (unless (fboundp 'scala-mode)
   (autoload #'scala-mode "scala-mode" nil t))
 (add-to-list 'interpreter-mode-alist '("scala" . scala-mode))
@@ -18,7 +17,6 @@
                              minibuffer-local-completion-map))
 
 (straight-use-package 'lsp-metals)
-
 (pg/customize-set-variables
  `((lsp-metals-server-args . ("-J-Dmetals.allow-multiline-string-formatting=off" "-J-Dmetals.icons=unicode"))
    (lsp-metals-enable-semantic-highlighting . t)))

@@ -1,0 +1,71 @@
+# Global Config
+max-history=5
+sort=+time
+
+# Binding Options
+# Supported values: none, dismiss, dismiss-all, 
+# dismiss-group, invoke-default-action & exec <command>
+on-button-left=invoke-default-action
+on-button-middle=dismiss-group
+on-button-right=dismiss
+on-touch=invoke-default-action
+on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
+
+# Style Options
+# Which installed font for notification( any font installed )
+font=JetBrains Mono 8
+# background color of notification( #RRGGBB | #RRGGBBAA )
+background-color=#1C1F26
+# Text color inside the notification( #RRGGBB | #RRGGBBAA )
+text-color=#FFFFFF
+# Set width of notification popup.( value in px )
+width=300
+# maximum height of notification( value in px )
+height=100
+# margin of notification which is margin for the list of notification block
+# (value in px).
+outer-margin=5
+# Margin of each individual notification
+margin=3
+# Set padding on each side to the size specified by directional( value in px )
+padding=5
+#Set popup border size to px pixels.(value in px )
+border-size=1
+# color of border of each notification( #RRGGBB | #RRGGBBAA )
+border-color=#89AAEB
+# bordear radious of each notification(value in px )
+border-radius=2
+# Set popup progress indicator color to color.( value [over|source] ( #RRGGBB | #RRGGBBAA ))
+progress-color=over #5588AAFF
+# Show icons in notifications.( value: 0 | 1 )
+icons=1
+#  Set maximum icon size to px pixels.(value in px)
+max-icon-size=64
+# Paths to search for icons when a notification specifies a name instead of a
+# full path. (value path[:path...] )
+icon-path=/run/current-system/profile/share/icons/hicolor:/home/phil-gab99/.guix-home/profile/share/icons/Adwaita:/home/phil-gab99/.guix-home/profile/share/icons/HighContrast:/home/phil-gab99/.guix-home/profile/share/icons/Papirus-Dark:/home/phil-gab99/.guix-home/profile/share/icons/breeze-dark:/home/phil-gab99/.guix-home/profile/share/icons/hicolor
+#  Position of the icon relative to the displayed text.(value: left | right | top | bottom )
+icon-location=left
+# enable pango - format notification( value 0|1 )
+markup=1
+#  Applications may request an action( value 0|1 )
+actions=1
+# mako will save notifications that have reached their timeout into the history buffer in‐
+# stead of immediately deleting them.
+history=1
+# Set notification format string to format.( value: see format in man 5 mako)
+format= <h1>%a</h1>\n<b>%s</b>\n%b
+#  Set notification text alignment.( value: left|right|center )
+text-alignment=left
+# Set the default timeout to timeout in milliseconds.
+default-timeout=7000
+# If set, mako will ignore the expire timeout(value: 0|1 )
+ignore-timeout=0
+
+# Set maximum number of visible notifications 
+max-visible=5
+
+# Arrange mako at the specified layer, relative to normal windows.(value: background, bottom, top, overlay )
+layer=top
+# Show notifications at the specified position on the output.
+anchor=top-right

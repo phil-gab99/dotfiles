@@ -4,7 +4,6 @@
 (add-hook 'mhtml-mode-hook #'lsp-deferred)
 
 (straight-use-package 'web-mode)
-
 (pg/customize-set-variables
  `((web-mode-css-indent-offset . 2)
    (web-mode-code-indent-offset . 2)

@@ -1,0 +1,1 @@
+/gnu/store/swcd3jw77qm6anqvc3papmnx5zd61gha-home-dotfiles--config-guix-manifests-haskell-scm

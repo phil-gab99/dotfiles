@@ -5,28 +5,11 @@
 
 * Channels
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/base-channels.scm
+#+begin_src scheme :tangle ~/.dotfiles/.files/.config/guix/base-channels.scm
+
+  (use-modules (guix channels))
 
   (list (channel
-         (name 'pg)
-         (url (string-append "file://" (getenv "HOME") "/Projects/guix-channel")))
-        (channel
-         (name 'flat)
-         (url "https://github.com/flatwhatson/guix-channel.git")
-         (introduction
-          (make-channel-introduction
-           "33f86a4b48205c0dc19d7c036c85393f0766f806"
-           (openpgp-fingerprint
-            "736A C00E 1254 378B A982  7AF6 9DBE 8265 81B6 4490"))))
-        (channel
-         (name 'rde)
-         (url "https://git.sr.ht/~abcdw/rde")
-         (introduction
-          (make-channel-introduction
-           "257cebd587b66e4d865b3537a9a88cccd7107c95"
-           (openpgp-fingerprint
-            "2841 9AC6 5038 7440 C7E9  2FFA 2208 D209 58C1 DEB0"))))
-        (channel
          (name 'nonguix)
          (url "https://gitlab.com/nonguix/nonguix")
          (introduction
@@ -51,74 +34,60 @@
 
 This base configuration is shared between all of the machines I manage with Guix.
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/pg/systems/base.scm
 
-  (define-module (systems base)
+  (define-module (pg systems base)
     #:use-module (gnu)
     #:use-module (gnu packages)
+    #:use-module (gnu services)
     #:use-module (guix gexp)
     #:use-module (nongnu packages linux)
     #:use-module (nongnu system linux-initrd)
-    #:use-module (srfi srfi-1))
+    #:use-module (srfi srfi-1)
+    #:export (system-config))
 
-  (use-package-modules audio
-                       base
-                       certs
+  (use-package-modules admin
+                       audio
+                       bash
+                       compression
                        cups
-                       dns
+                       curl
                        emacs
-                       emacs-xyz
                        file-systems
+                       freedesktop
+                       fonts
                        gnome
-                       gtk
+                       gnupg
+                       libusb
                        linux
-                       mtools
-                       ncurses
                        package-management
-                       pulseaudio
-                       shells
+                       ssh
                        version-control
                        vim
-                       virtualization
-                       web-browsers
-                       wm
-                       xorg)
-
-  (use-service-modules base
+                       wm)
+  (use-service-modules avahi
+                       base
                        cups
+                       dbus
                        desktop
                        docker
+                       guix
+                       linux
                        networking
                        nix
                        pm
                        ssh
                        virtualization
                        xorg)
-
-  (use-system-modules nss)
-
-#+end_src
-
-Add a ~udev~ rule to enable members of the ~charge~ group to control charging thresholds.
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
-
-  (define %charge-thresholds-udev-rule
-    (udev-rule
-     "90-charge-thresholds.rules"
-     (string-append "KERNEL==\"BAT0\", "
-                    "SUBSYSTEM==\"power_supply\", "
-                    "RUN+=\"/run/current-system/profile/bin/chgrp charge /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\""
-                    "\n"
-                    "KERNEL==\"BAT0\", "
-                    "SUBSYSTEM==\"power_supply\", "
-                    "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
+  (use-system-modules accounts
+                      pam
+                      nss)
 
 #+end_src
 
 Add ~udev~ rules for Arduino setup.
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/pg/systems/base.scm
 
   (define %acm-udev-rule
     (udev-rule
@@ -155,187 +124,221 @@ Add ~udev~ rules for Arduino setup.
 
 #+end_src
 
-Override the default ~%desktop-services~ to add ~udev~ rules and apply other configuration.
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
-
-  (define %my-desktop-services
-    (modify-services %desktop-services
-      (elogind-service-type config =>
-                            (elogind-configuration
-                             (inherit config)
-                             (handle-lid-switch-external-power 'suspend)))
-      (udev-service-type config =>
-                         (udev-configuration
-                          (inherit config)
-                          (rules (cons* %charge-thresholds-udev-rule
-                                        (udev-configuration-rules config)))))
-      (network-manager-service-type config =>
-                                    (network-manager-configuration
-                                     (inherit config)
-                                     (vpn-plugins (list network-manager-openvpn
-                                                        network-manager-openconnect))))
-      (guix-service-type config =>
-                         (guix-configuration
-                          (inherit config)
-                          (substitute-urls
-                           (append (list "https://substitutes.nonguix.org")
-                                   %default-substitute-urls))
-                          (authorized-keys
-                           (append (list (local-file "signing-key.pub"))
-                                   %default-authorized-guix-keys))))))
-
-#+end_src
-
-Use the ~libinput~ driver for all input devices since it's a bit more modern than the default.
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
-
-  (define %xorg-libinput-config
-    "Section \"InputClass\"
-    Identifier \"Touchpads\"
-
-    Driver \"libinput\"
-    MatchDevicePath \"/dev/input/event*\"
-    MatchIsTouchpad \"on\"
-
-    Option \"Tapping\" \"on\"
-    Option \"TappingDrag\" \"on\"
-    Option \"NaturalScrolling\" \"on\"
-    Option \"DisableWhileTyping\" \"on\"
-    Option \"ScrollMethod\" \"twofinger\"
-    Option \"MiddleEmulation\" \"on\"
-  EndSection
-  Section \"InputClass\"
-    Identifier \"Keyboards\"
-    Driver \"libinput\"
-    MatchDevicePath \"/dev/input/event*\"
-    MatchIsKeyboard \"on\"
-  EndSection
-  ")
-
-#+end_src
-
 Define the ~base-operating-system~ which will be inherited by all machine configurations.
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/base.scm
+#+begin_src scheme :tangle ~/.dotfiles/pg/systems/base.scm
 
-  (define-public base-operating-system
+  (define* (system-config #:key system home)
     (operating-system
+     (inherit system)
+
      ;; Use non-free Linux and firmware
      (kernel linux)
      (initrd microcode-initrd)
-     (firmware (list linux-firmware))
+     (firmware (cons iwlwifi-firmware
+                     %base-firmware))
+
+     (kernel-loadable-modules (list v4l2loopback-linux-module))
 
      ;; Generic information that may be overriden
      (locale "en_CA.utf8")
      (timezone "America/Toronto")
-     (keyboard-layout (keyboard-layout "us"))
-     (host-name "tmp")
+     (host-name (operating-system-host-name system))
 
      ;; Default user
-     (users
-      (cons
-       (user-account (name "phil-gab99")
-                     (comment "Philippe Gabriel")
-                     (group "users")
-                     (home-directory "/home/phil-gab99")
-                     (supplementary-groups '("wheel"     ;; sudo
-                                             "netdev"    ;; network devices
-                                             "kvm"
-                                             "tty"
-                                             "dialout"
-                                             "uucp"
-                                             "plugdev"
-                                             "input"
-                                             "libvirt"
-                                             "charge"
-                                             "docker"
-                                             "lp"        ;; control bluetooth devices
-                                             "audio"     ;; control audio devices
-                                             "video")))  ;; control video devices
-       %base-user-accounts))
+     (users (or (operating-system-users system)
+                (cons
+                 (user-account (name "phil-gab99")
+                               (comment "Philippe Gabriel")
+                               (group "users")
+                               (home-directory "/home/phil-gab99")
+                               (supplementary-groups '("wheel"     ;; sudo
+                                                       "netdev"    ;; network devices
+                                                       "kvm"
+                                                       "tty"
+                                                       "dialout"
+                                                       "uucp"
+                                                       "plugdev"
+                                                       "input"
+                                                       "libvirt"
+                                                       "docker"
+                                                       "realtime"
+                                                       "lp"        ;; control bluetooth devices
+                                                       "audio"     ;; control audio devices
+                                                       "video")))  ;; control video devices
+                 %base-user-accounts)))
 
      ;; Add extra groups
      (groups
-      (cons*
-       (user-group (system? #t)
-                   (name "charge"))
-       (user-group (system? #t)
-                   (name "uucp"))
-       (user-group (system? #t)
-                   (name "plugdev"))
-       %base-groups))
-
-     ;; Partition mounted on /boot/efi.
-     (bootloader (bootloader-configuration
-                  (bootloader grub-efi-removable-bootloader)
-                  (targets (list "/boot/efi"))
-                  (keyboard-layout keyboard-layout)))
-
-     ;; File system to be overridden
-     (file-systems
-      (cons
-       (file-system (mount-point "/tmp")
-                    (device "none")
-                    (type "tmpfs")
-                    (check? #f))
-       %base-file-systems))
+      (append (operating-system-groups system)
+              (cons* (user-group (system? #t) (name "uucp"))
+                     (user-group (system? #t) (name "plugdev"))
+                     (user-group (system? #t) (name "realtime"))
+                     %base-groups)))
 
      ;; System packages
-     (packages
-      (append
-       (list bluez
-             bluez-alsa
-             coreutils
-             emacs
-             emacs-exwm
-             emacs-desktop-environment
-             exfat-utils
-             fuse-exfat
-             git
-             gvfs
-             ncurses
-             nix
-             nss-certs
-             ntfs-3g
-             pulseaudio
-             vim
-             xf86-input-libinput
-             xterm)
-       %base-packages))
+     (packages (cons* bluez
+                      bluez-alsa
+                      brightnessctl
+                      curl
+                      emacs-no-x-toolkit
+                      exfat-utils
+                      flatpak
+                      fuse-exfat
+                      git
+                      gvfs
+                      htop
+                      lm-sensors
+                      net-tools
+                      nix
+                      openssh
+                      udiskie
+                      unzip
+                      vim
+                      zip
+                      %base-packages))
 
      ;; System services
-     (services
-      (cons*
-       (set-xorg-configuration
-        (xorg-configuration
-         (keyboard-layout keyboard-layout)
-         (extra-config (list %xorg-libinput-config))))
-       (service openssh-service-type)
-       (service cups-service-type
-                (cups-configuration
-                 (web-interface? #t)
-                 (extensions
-                  (list cups-filters))))
-       (service nix-service-type)
-       (service docker-service-type)
-       (service libvirt-service-type
-                (libvirt-configuration
-                 (unix-sock-group "libvirt")
-                 (tls-port "16555")))
-       (service virtlog-service-type
-                (virtlog-configuration
-                 (max-clients 1000)))
-       (service bluetooth-service-type
-                (bluetooth-configuration
-                 (auto-enable? #t)))
-       (service xfce-desktop-service-type)
-       (extra-special-file "/bin/env"
-                           (file-append coreutils "/bin/env"))
-       (extra-special-file "/lib64/ld-linux-x86-64.so.2"
-                           (file-append glibc "/lib/ld-linux-x86-64.so.2"))
-       %my-desktop-services))))
+     (services (append
+                (modify-services %base-services
+                                 (delete login-service-type)
+                                 (delete mingetty-service-type)
+                                 (delete console-font-service-type))
+                (operating-system-user-services system)
+                (list
+                 (service guix-home-service-type
+                          (list
+                           (list
+                            (user-account-name (car (operating-system-users system)))
+                            home)))
+
+                 (service elogind-service-type)
+
+                 (service console-font-service-type
+                          (map (lambda (tty)
+                                 (cons tty
+                                       (file-append
+                                        font-terminus
+                                        "/share/consolefonts/ter-132n")))
+                               '("tty1" "tty2" "tty3")))
+
+                 (service greetd-service-type
+                          (greetd-configuration
+                           (greeter-supplementary-groups (list "video" "input"))
+                           (terminals
+                            (list (greetd-terminal-configuration
+                                   (terminal-vt "1")
+                                   (terminal-switch #t)
+                                   (source-profile? #f)
+                                   (default-session-command
+                                     (greetd-wlgreet-sway-session
+                                      (wlgreet-session
+                                       (greetd-wlgreet-session
+                                        (command (file-append bash "/bin/bash"))
+                                        (command-args '("-l"))
+                                        (background '(0.25 0.25 0.25 0.9))
+                                        (headline '(0 0.5 0.5 0.8))
+                                        (prompt '(0.22 1 0.08 1))
+                                        (prompt-error '(1 0 0 1))
+                                        (border '(1 0.84 0 0.5)))))))
+                                  (greetd-terminal-configuration
+                                   (terminal-vt "2")
+                                   (source-profile? #f))
+                                  (greetd-terminal-configuration
+                                   (terminal-vt "3")
+                                   (source-profile? #f))))))
+
+                 (service screen-locker-service-type
+                          (screen-locker-configuration
+                           (name "swaylock")
+                           (program (file-append swaylock "/bin/swaylock"))
+                           (using-pam? #t)
+                           (using-setuid? #f)))
+
+                 (simple-service 'add-nonguix-substitutes
+                                 guix-service-type
+                                 (guix-extension
+                                  (substitute-urls
+                                   (cons "https://substitutes.nonguix.org"
+                                         %default-substitute-urls))
+                                  (authorized-keys
+                                   (cons (plain-file
+                                          "nonguix.pub"
+                                          "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
+                                         %default-authorized-guix-keys))))
+
+                 polkit-wheel-service
+
+                 (service network-manager-service-type
+                          (network-manager-configuration
+                           (vpn-plugins (list network-manager-openvpn
+                                              network-manager-openconnect))))
+                 (service wpa-supplicant-service-type)
+                 (service modem-manager-service-type)
+                 (service bluetooth-service-type
+                          (bluetooth-configuration
+                           (auto-enable? #t)))
+                 (service usb-modeswitch-service-type)
+
+                 (service avahi-service-type)
+                 (service udisks-service-type)
+                 (service upower-service-type)
+                 (service cups-pk-helper-service-type)
+                 (service geoclue-service-type)
+                 (service polkit-service-type)
+                 (service dbus-root-service-type)
+                 fontconfig-file-system-service
+
+                 (service thermald-service-type)
+                 (service tlp-service-type
+                          (tlp-configuration
+                           (cpu-boost-on-ac? #t)
+                           (wifi-pwr-on-bat? #t)))
+
+                 (service pam-limits-service-type
+                          (list
+                           (pam-limits-entry "@realtime" 'both 'rtprio 99)
+                           (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)
+                           (pam-limits-entry "@realtime" 'both 'nice -19)))
+
+                 (service kernel-module-loader-service-type '("v4l2loopback"))
+                 (simple-service 'v4l2loopback-config etc-service-type
+                                 (list `("modprobe.d/v4l2loopback.conf"
+                                         ,(plain-file "v4l2loopback.conf"
+                                                      "options v4l2loopback devices=1 video_nr=2 exclusive_caps=1 card_label=\"OBS Virtual Camera\""))))
+
+                 (service docker-service-type)
+                 (service libvirt-service-type
+                          (libvirt-configuration
+                           (unix-sock-group "libvirt")
+                           (tls-port "16555")))
+                 (service virtlog-service-type
+                          (virtlog-configuration
+                           (max-clients 1000)))
+
+                 (service openssh-service-type
+                          (openssh-configuration
+                           (openssh openssh-sans-x)))
+
+                 (service sane-service-type)
+                 (service cups-service-type
+                          (cups-configuration
+                           (web-interface? #t)
+                           (extensions (list cups-filters))))
+
+                 (service x11-socket-directory-service-type)
+                 
+                 (service ntp-service-type)
+
+                 (service nix-service-type)
+
+                 (simple-service 'mtp udev-service-type (list libmtp)) 
+
+                 (extra-special-file "/bin/env"
+                                     (file-append coreutils "/bin/env"))
+                 (extra-special-file "/lib64/ld-linux-x86-64.so.2"
+                                     (file-append glibc "/lib/ld-linux-x86-64.so.2")))))
+     (name-service-switch %mdns-host-lookup-nss)))
 
 #+end_src
 
@@ -343,36 +346,144 @@ Define the ~base-operating-system~ which will be inherited by all machine config
 
 *** s76-laptop
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/systems/s76-laptop.scm
+#+begin_src scheme :tangle ~/.dotfiles/pg/systems/s76-laptop.scm
 
-  (define-module (systems s76-laptop)
-    #:use-module (systems base)
-    #:use-module (gnu))
+  (define-module (pg systems s76-laptop)
+    #:use-module (pg systems base)
+    #:use-module (pg home services bash)
+    #:use-module (pg home services emacs)
+    #:use-module (pg home services gammastep)
+    #:use-module (pg home services media)
+    #:use-module (pg home services nm-applet)
+    #:use-module (pg home services udiskie)
+    #:use-module (pg home services wayland)
+    #:use-module (gnu)
+    #:use-module (gnu home)
+    #:use-module (gnu home services desktop)
+    #:use-module (gnu home services dotfiles)
+    #:use-module (gnu home services gnupg)
+    #:use-module (gnu home services mcron)
+    #:use-module (gnu home services syncthing))
 
-  (use-package-modules file-systems)
+  (use-package-modules file-systems
+        	             fonts
+        	             gnupg
+        	             gnome
+        	             gnome-xyz
+        	             music
+        	             terminals
+        	             video
+        	             wm
+        	             xdisorg)
+  (use-service-modules base)
 
-  (operating-system
-   (inherit base-operating-system)
+  (define %charge-thresholds-udev-rule
+    (udev-rule
+     "90-charge-thresholds.rules"
+     (string-append "KERNEL==\"BAT0\", "
+        	          "SUBSYSTEM==\"power_supply\", "
+        	          "RUN+=\"/run/current-system/profile/bin/chgrp charge /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\""
+        	          "\n"
+        	          "KERNEL==\"BAT0\", "
+        	          "SUBSYSTEM==\"power_supply\", "
+        	          "RUN+=\"/run/current-system/profile/bin/chmod g+w /sys/class/power_supply/%k/charge_control_start_threshold /sys/class/power_supply/%k/charge_control_end_threshold\"")))
 
-   (host-name "s76-laptop")
+  (system-config
+   #:home
+   (home-environment
+    (services (list (service home-bash-service-type
+        		           (home-bash-configuration
+        		            (bash-profile
+        		             (list
+                                (local-file
+                                 "/home/phil-gab99/.dotfiles/.templates/bash_profile")))
+        		            (bashrc
+        		             (list
+        			      (local-file
+                                 "/home/phil-gab99/.dotfiles/.templates/bashrc")))))
+        	          (service home-dbus-service-type)
+        	          (service home-dotfiles-service-type
+        		           (home-dotfiles-configuration
+        		            (source-directory "/home/phil-gab99/.dotfiles")
+        		            (directories '(".files"))
+                              (excluded '(".*~" ".*\\.swp" "\\.git" "\\.gitignore" "\\.config/guix"))))
+        	          (service home-emacs-service-type)
+        	          (service home-gammastep-service-type)
+        	          (service home-gpg-agent-service-type
+        		           (home-gpg-agent-configuration
+        		            (pinentry-program
+        		             (file-append pinentry-emacs "/bin/pinentry-emacs"))
+        		            (ssh-support? #t)
+        		            (default-cache-ttl 28800)
+        		            (max-cache-ttl 28800)
+        		            (default-cache-ttl-ssh 28800)
+        		            (max-cache-ttl-ssh 28800)))
+        	          (service home-mcron-service-type
+        		           (home-mcron-configuration
+        		            (jobs (list #~(job
+        				           '(next-hour (range 0 24 4))
+        				           "~/bin/sync-passwords")))))
+        	          (service home-media-service-type)
+        	          (service home-nm-applet-service-type)
+        	          (service home-syncthing-service-type)
+        	          (service home-udiskie-service-type)
+        	          (service home-wayland-service-type))))
 
-   (swap-devices
-    (list
-     (swap-space (target
-                  (uuid "007cbe9f-5d70-4ded-bd10-898993e4de74")))))
+   #:system
+   (operating-system
+     (host-name "s76-laptop")
+     (keyboard-layout (keyboard-layout "us")) 
 
-   (file-systems
-    (cons*
-     (file-system (device "/dev/nvme0n1p1")
-                  (mount-point "/boot/efi")
-                  (type "vfat"))
-     (file-system (device "/dev/nvme0n1p2")
-                  (mount-point "/")
-                  (type "ext4"))
-     (file-system (device "/dev/nvme0n1p4")
-                  (mount-point "/home")
-                  (type "ext4"))
-     %base-file-systems)))
+     (swap-devices
+      (list
+       (swap-space (target
+        	          (uuid "007cbe9f-5d70-4ded-bd10-898993e4de74")))))
+
+     ;; Partition mounted on /boot/efi.
+     (bootloader (bootloader-configuration
+        	        (bootloader grub-efi-removable-bootloader)
+        	        (targets (list "/boot/efi"))
+        	        (keyboard-layout keyboard-layout)))
+
+     (file-systems
+      (cons*
+       (file-system (device "/dev/nvme0n1p1")
+        	          (mount-point "/boot/efi")
+        	          (type "vfat"))
+       (file-system (device "/dev/nvme0n1p2")
+        	          (mount-point "/")
+        	          (type "ext4"))
+       (file-system (device "/dev/nvme0n1p4")
+        	          (mount-point "/home")
+        	          (type "ext4"))
+       %base-file-systems))
+
+     (users
+      (cons (user-account (name "phil-gab99")
+        		        (comment "Philippe Gabriel")
+        		        (group "users")
+        		        (home-directory "/home/phil-gab99")
+        		        (supplementary-groups '("wheel"     ;; sudo
+        					        "netdev"    ;; network devices
+        					        "kvm"
+        					        "tty"
+        					        "dialout"
+        					        "uucp"
+        					        "plugdev"
+        					        "input"
+        					        "charge"
+        					        "libvirt"
+        					        "docker"
+        					        "realtime"
+        					        "lp"        ;; control bluetooth devices
+        					        "audio"     ;; control audio devices
+        					        "video")))  ;; control video devices
+            %base-user-accounts))
+
+     (groups (list (user-group (system? #t) (name "charge"))))
+
+     (services (list (udev-rules-service 'charge-thresholds
+        				       %charge-thresholds-udev-rule)))))
 
 #+end_src
 
@@ -382,181 +493,12 @@ Guix profiles get installed under the ~~/.guix-extra-profiles~ path and sourced 
 
 A couple of shell scripts for managing the profiles:
 
-** List Active Profiles
+** Invoke garbage collector
 
-This script simply lists the active profiles:
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/clean-store :shebang #!/bin/env bash
 
-#+begin_src sh
-
-  list-profiles
-
-#+end_src
-
-#+begin_src sh :tangle ~/.dotfiles/bin/list-profiles :shebang #!/usr/bin/env bash
-
-  guix package --list-profiles
-
-  exit 0
-
-#+end_src
-
-** List Profile Generations
-
-This script lists the generations of a given profile:
-
-#+begin_src sh
-
-  list-generations emacs
-
-#+end_src
-
-#+begin_src sh :tangle ~/.dotfiles/bin/list-generations :shebang #!/usr/bin/env bash
-
-  profile=$1
-  guix package --profile=$GUIX_EXTRA_PROFILES/$profile/$profile --list-generations
-
-  exit 0
-
-#+end_src
-
-** Delete Profile Generations
-
-This script deletes the generations of all profiles and calls the garbage collector, or when a profile is supplied, removes the generatiosn for that given profile
-
-#+begin_src sh
-
-  delete-generations emacs
-
-#+end_src
-
-#+begin_src sh :tangle ~/.dotfiles/bin/delete-generations :shebang #!/usr/bin/env bash
-
-  GREEN='\033[1;32m'
-  RED='\033[1;30m'
-  NC='\033[0m'
-
-  profiles=$*
-  if [[ $# -eq 0 ]]; then
-      profiles="$XDG_CONFIG_HOME/guix/manifests/*.scm";
-      guix pull --delete-generations
-      # sudo guix system delete-generations 20d
-  fi
-
-  for profile in $profiles; do
-      # Remove the path and file extension, if any
-      profileName=$(basename $profile)
-      profileName="${profileName%.*}"
-
-      profilePath="$GUIX_EXTRA_PROFILES/$profileName"
-      manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
-
-    if [ -f $manifestPath ]; then
-      echo
-      echo -e "${GREEN}Deleting profile generations:" $profileName "${NC}"
-      echo
-
-      guix package --profile="$profilePath/$profileName" --delete-generations
-    else
-      echo "${RED}No profile found at path" $profilePath "${NC}"
-      exit 1
-    fi
-  done
-
-  guix gc -F 80G
-
-  exit 0
-
-#+end_src
-
-** Activating Profiles
-
-This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs those profiles for the first time:
-
-#+begin_src sh
-
-  activate-profiles desktop emacs
-
-#+end_src
-
-#+begin_src sh :tangle ~/.dotfiles/bin/activate-profiles :shebang #!/usr/bin/env bash
-
-  GREEN='\033[1;32m'
-  RED='\033[1;30m'
-  NC='\033[0m'
-
-  profiles=$*
-  if [[ $# -eq 0 ]]; then
-      profiles="$XDG_CONFIG_HOME/guix/manifests/*.scm";
-  fi
-
-  for profile in $profiles; do
-      # Remove the path and file extension, if any
-      profileName=$(basename $profile)
-      profileName="${profileName%.*}"
-
-      profilePath="$GUIX_EXTRA_PROFILES/$profileName"
-
-      manifestPath=$XDG_CONFIG_HOME/guix/manifests/$profileName.scm
-
-      if [ -f $manifestPath ]; then
-          echo
-          echo -e "${GREEN}Activating profile:" $manifestPath "${NC}"
-          echo
-
-          mkdir -p $profilePath
-          guix package --manifest=$manifestPath --profile="$profilePath/$profileName"
-
-          # Source the new profile
-          GUIX_PROFILE="$profilePath/$profileName"
-          if [ -f $GUIX_PROFILE/etc/profile ]; then
-              . "$GUIX_PROFILE"/etc/profile
-          else
-              echo -e "${RED}Couldn't find profile:" $GUIX_PROFILE/etc/profile "${NC}"
-              exit 1
-          fi
-      else
-          echo "No profile found at path" $profilePath
-          exit 1
-      fi
-  done
-
-  exit 0
-
-#+end_src
-
-** Updating Profiles
-
-This script accepts a space-separated list of manifest file names (without extension) under the ~~/.config/guix/manifests~ folder and then installs any updates to the packages contained within them.
-If no profile names are provided, it walks the list of profile directories under ~~/.guix-extra-profiles~ and updates each one of them:
-
-#+begin_src sh
-
-  update-profiles emacs
-
-#+end_src
-
-#+begin_src sh :tangle ~/.dotfiles/bin/update-profiles :shebang #!/usr/bin/env bash
-
-  GREEN='\033[1;32m'
-  NC='\033[0m'
-
-  profiles=$*
-  if [[ $# -eq 0 ]]; then
-      profiles="$GUIX_EXTRA_PROFILES/*";
-  fi
-
-  for profile in $profiles; do
-    profileName=$(basename $profile)
-    profilePath=$GUIX_EXTRA_PROFILES/$profileName
-
-    echo
-    echo -e "${GREEN}Updating profile:" $profilePath "${NC}"
-    echo
-
-    guix package --profile="$profilePath/$profileName" --manifest="$XDG_CONFIG_HOME/guix/manifests/$profileName.scm" --fallback
-  done
-
-  exit 0
+  guix pull --delete-generations
+  guix gc -F 80
 
 #+end_src
 
@@ -570,9 +512,9 @@ This script makes it easy to update all channels to the latest commit based on a
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/update-channels :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/update-channels :shebang #!/bin/env bash
 
-  guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm
+  guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm --allow-downgrades
   guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
 
   exit 0
@@ -589,7 +531,7 @@ This script makes it easy to update the system to the latest configuration based
 
 #+end_src
 
-#+begin_src sh :tangle ~/.dotfiles/bin/update-system :shebang #!/usr/bin/env bash
+#+begin_src sh :tangle ~/.dotfiles/.files/bin/update-system :shebang #!/bin/env bash
 
   GREEN='\033[1;32m'
   BLUE='\033[1;34m'
@@ -597,7 +539,7 @@ This script makes it easy to update the system to the latest configuration based
 
   echo -e "\n${GREEN}Updating ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
 
-  sudo guix system -L $XDG_CONFIG_HOME/guix --fallback reconfigure $XDG_CONFIG_HOME/guix/systems/$HOSTNAME.scm
+  sudo guix system -L $HOME/.dotfiles --fallback reconfigure $HOME/.dotfiles/pg/systems/$HOSTNAME.scm
 
   exit 0
 

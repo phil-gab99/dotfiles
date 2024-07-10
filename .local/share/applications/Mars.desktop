@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Version=4.5
-Name=Mars
-Comment=A MIPS Simulator
-Exec=java -jar /home/phil-gab99/Packages/Mars4_5.jar
-Terminal=false

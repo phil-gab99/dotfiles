@@ -348,7 +348,7 @@ Some utility functions:
 
 Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-level services that run in the background when logging in.
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.scm
 
   (use-modules
    (shepherd service)
@@ -400,7 +400,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** GPG-Agent
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/gpg-agent.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/gpg-agent.scm
 
   (define gpg-agent
     (service '(gpg-agent)
@@ -413,7 +413,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Mcron
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mcron.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/mcron.scm
 
   (define mcron
     (service '(mcron)
@@ -426,7 +426,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Pulseaudio
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pulseaudio.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/pulseaudio.scm
 
   (define pulseaudio
     (service '(pulseaudio)
@@ -439,7 +439,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** SSH-Agent
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/ssh-agent.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/ssh-agent.scm
 
   (use-modules
    (shepherd support))
@@ -462,7 +462,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Compton
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/compton.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/compton.scm
 
   (define compton
     (service '(compton)
@@ -475,7 +475,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xsettingsd
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xsettingsd.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/xsettingsd.scm
 
   (define xsettingsd
     (service '(xsettingsd)
@@ -488,7 +488,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Mpd
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/mpd.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/mpd.scm
 
   (define mpd
     (service '(mpd)
@@ -501,7 +501,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Feh
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/feh.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/feh.scm
 
   (define feh
     (service '(feh)
@@ -514,7 +514,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Dunst
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/dunst.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/dunst.scm
 
   (define dunst
     (service '(dunst)
@@ -527,7 +527,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Nm-applet
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/nm-applet.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/nm-applet.scm
 
   (define nm-applet
     (service '(nm-applet)
@@ -540,7 +540,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Udiskie
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/udiskie.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/udiskie.scm
 
   (define udiskie
     (service '(udiskie)
@@ -553,7 +553,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Pasystray
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/pasystray.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/pasystray.scm
 
   (define pasystray
     (service '(pasystray)
@@ -566,7 +566,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Autorandr
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/autorandr.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/autorandr.scm
 
   (define autorandr
     (service '(autorandr)
@@ -579,7 +579,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xmodmap
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xmodmap.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/xmodmap.scm
 
   (define xmodmap
     (service '(xmodmap)
@@ -592,7 +592,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Syncthing
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/syncthing.scm
 
   (define syncthing
     (service '(syncthing)
@@ -605,7 +605,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Syncthing-gtk
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/syncthing.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/syncthing.scm
 
   (define syncthing-gtk
     (service '(syncthing-gtk)
@@ -618,7 +618,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xfce4-clipman
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xfce4-clipman.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/xfce4-clipman.scm
 
   (define xfce4-clipman
     (service '(xfce4-clipman)
@@ -631,7 +631,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Xss-lock
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/xss-lock.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/xss-lock.scm
 
   (define xss-lock
     (service '(xss-lock)
@@ -644,7 +644,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
 
 ** Polkit-gnome
 
-#+begin_src scheme :tangle ~/.dotfiles/.config/shepherd/init.d/polkit-gnome.scm
+#+begin_src scheme :tangle ~/.dotfiles/.archive/.config/shepherd/init.d/polkit-gnome.scm
 
   (define polkit-gnome
     (service '(polkit-gnome)
@@ -704,6 +704,7 @@ Using [[https://www.gnu.org/software/shepherd/][GNU Shepherd]] to manage user-le
   ;; (specification->package "gtk+")
   (specification->package+output "gtk+:bin") ;; For gtk-launch
   (specification->package "polkit-gnome")
+  (specification->package "ripgrep")
   (specification->package "wol")
   ;; (specification->package+output "glib:bin") ;; For gio-launch-desktop
   (specification->package "shared-mime-info")

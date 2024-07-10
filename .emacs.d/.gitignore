@@ -38,3 +38,5 @@ kkcrc
 irony
 persist
 tree-sitter
+packages
+*.sqlite

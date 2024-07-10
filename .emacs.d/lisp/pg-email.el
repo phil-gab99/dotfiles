@@ -3,10 +3,7 @@
 
 (unless (or pg/is-termux
             pg/is-windows)
-  (straight-use-package '(mu4e :type git
-                               :host github
-                               :repo "djcb/mu"
-                               :branch "release/1.10"))
+  (push (expand-file-name "packages/mu/mu4e" user-emacs-directory) load-path)
   (unless (fboundp 'mu4e)
     (autoload #'mu4e "mu4e" nil t))
   (unless (fboundp 'mu4e-compose-new)
@@ -20,8 +17,6 @@
       "m" '(:ignore t :which-key "email")
       "md" '(mu4e :which-key "dashboard")
       "mc" '(mu4e-compose-new :which-key "compose")))
-  (customize-set-variable 'mu4e-compose-signature (concat "Philippe Gabriel - 40160338 \n"
-                                                          "[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)
     (pg/customize-set-variables

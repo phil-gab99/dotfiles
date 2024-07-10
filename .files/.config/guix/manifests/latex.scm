@@ -1,0 +1,1 @@
+/gnu/store/lq33rm3r4r8l7592x1fbfls1r3vdgjkg-home-dotfiles--config-guix-manifests-latex-scm

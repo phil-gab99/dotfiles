@@ -13,7 +13,6 @@
      (erc-auto-query . bury))))
 
 (straight-use-package 'ement)
-
 (unless (fboundp 'ement-connect)
   (autoload #'ement-connect "ement" nil t))
 
@@ -78,12 +77,5 @@
 (straight-use-package 'sx)
 (unless (fboundp 'sx-search)
   (autoload #'sx-search "sx" nil t))
-
-;; (unless (fboundp 'telega)
-;;   (autoload #'telega "telega" nil t))
-;; (with-eval-after-load 'telega
-;;   (require 'telega-alert)
-;;   (require 'telega-dashboard)
-;;   (customize-set-variable 'telega-alert-mode 1))
 
 (provide 'pg-social)

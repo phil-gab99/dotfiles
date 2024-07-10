@@ -1,0 +1,1 @@
+/gnu/store/5d8xhhmcxrc8v91llcbn8nknxf02a3w9-home-dotfiles--config-guix-base-channels-scm
