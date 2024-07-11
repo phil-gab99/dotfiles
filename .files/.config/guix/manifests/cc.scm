@@ -1,1 +1,11 @@
-/gnu/store/vfl59p2pxj68vgnnpkg6n4cfaip4g9m7-home-dotfiles--config-guix-manifests-cc-scm
+(use-modules (gnu)
+             (gnu packages)
+             (guix profiles))
+
+(use-package-modules base cpp man)
+
+(packages->manifest
+ (list (specification->package "gcc-toolchain@11.3.0")
+       man-pages
+       glibc
+       ccls))

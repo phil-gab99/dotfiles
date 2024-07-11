@@ -4,11 +4,7 @@
   #:use-module (gnu home services)
   #:export (home-emacs-service-type))
 
-(use-package-modules emacs-xyz
-		     erlang
-                     finance
-                     gnupg
-                     mail)
+(use-package-modules emacs-xyz erlang finance gnupg mail)
 
 (define (home-emacs-profile-service config)
   (list emacs-geiser

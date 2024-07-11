@@ -9,15 +9,12 @@
 (use-package-modules freedesktop)
 (use-service-modules shepherd)
 
-(define (home-udiskie-profile-service config)
-  (list udiskie))
-
 (define (home-udiskie-shepherd-service config)
   (shepherd-service
    (provision '(udiskie))
    (documentation "Run `udiskie'")
    (start #~(make-forkexec-constructor
-             (list #$(file-append udiskie "/bin/udiskie") "-t")
+             (list #$(file-append udiskie "/bin/udiskie") "-t")))
    (stop #~(make-kill-destructor))))
 
 (define (home-udiskie-shepherd-services config)
@@ -27,8 +24,6 @@
   (service-type (name 'home-udiskie)
                 (description "Service for running `udiskie'")
                 (extensions
-                 (list (service-extension home-profile-service-type
-                                          home-udiskie-profile-service)
-                       (service-extension home-shepherd-service-type
+                 (list (service-extension home-shepherd-service-type
                                           home-udiskie-shepherd-services)))
                 (default-value #f)))

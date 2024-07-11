@@ -1,1 +1,8 @@
-/gnu/store/swcd3jw77qm6anqvc3papmnx5zd61gha-home-dotfiles--config-guix-manifests-haskell-scm
+(use-modules (gnu)
+             (guix profiles))
+
+(use-package-modules haskell)
+
+(packages->manifest
+ (list ghc
+       (list ghc "doc")))

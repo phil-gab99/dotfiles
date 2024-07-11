@@ -1021,7 +1021,7 @@ Theme inspired by the popular Atom One Dark theme.
 
   ;; Set fullscreen
   (if pg/is-windows
-     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+      (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 #+end_src
 
@@ -1380,16 +1380,6 @@ For organizing the buffer list
              ;;                            (mu4e-refile-folder . "/University/Archive")
              ;;                            (mu4e-trash-folder . "/University/Deleted Items")))
              ))))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  (specification->package "mu")
-  (specification->package "isync")
-  ;; (specification->package "oauth2ms")
 
 #+end_src
 
@@ -3566,16 +3556,6 @@ Custom syntax highlighting for LMC assembly language.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :tangle ~/.dotfiles/.config/guix/manifests/prolog.scm
-
-  (packages->manifest
-   (list
-    (specification->package "gprolog")))
-
-#+end_src
-
 **** Python
 
 ***** Package header
@@ -3748,14 +3728,6 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
 
   (provide 'pg-programming-scala)
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-scala-mode")
 
 #+end_src
 
@@ -4897,14 +4869,6 @@ Allows for viewing of pdfs.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-emms")
-
-#+end_src
-
 *** Package | emms-mode-line-cycle
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
@@ -4930,14 +4894,6 @@ Allows for viewing of pdfs.
 
 #+end_src
 
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-emms-mode-line-cycle")
-
-#+end_src
-
 *** Package | simple-mpc
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
@@ -4947,14 +4903,6 @@ Allows for viewing of pdfs.
     (autoload #'simple-mpc "simple-mpc" nil t))
   (with-eval-after-load 'simple-mpc
     (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
-
-#+end_src
-
-*Guix Packages*
-
-#+begin_src scheme :noweb-ref packages :noweb-sep ""
-
-  ;; (specification->package "emacs-simple-mpc")
 
 #+end_src
 

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" eDP-1
-xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" eDP-1
-
-echo "Mapped to laptop!"
-
-exit 0

@@ -13,7 +13,7 @@ on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
 
 # Style Options
 # Which installed font for notification( any font installed )
-font=JetBrains Mono 8
+font=JetBrains Mono 12
 # background color of notification( #RRGGBB | #RRGGBBAA )
 background-color=#1C1F26
 # Text color inside the notification( #RRGGBB | #RRGGBBAA )
@@ -54,7 +54,7 @@ actions=1
 # stead of immediately deleting them.
 history=1
 # Set notification format string to format.( value: see format in man 5 mako)
-format= <h1>%a</h1>\n<b>%s</b>\n%b
+format= <b>%a</b>\n<i>%s</i>\n%b
 #  Set notification text alignment.( value: left|right|center )
 text-alignment=left
 # Set the default timeout to timeout in milliseconds.

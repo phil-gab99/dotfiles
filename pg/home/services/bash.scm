@@ -12,10 +12,10 @@
 (define-configuration home-bash-configuration
   (bash-profile
    (text-config '())
-   "File path to .bash_profile")
+   "File template for .bash_profile")
   (bashrc
    (text-config '())
-   "File path to .bash_profile"))
+   "File template .bash_profile"))
 
 (define (home-bash-profile-service config)
   (list bash))

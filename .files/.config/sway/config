@@ -1,10 +1,30 @@
 # -*- i3wm-config -*-
 
 set $super Mod4
-
 set $laptop eDP-1
+set $term foot
+
+# Workspaces
+set $ws0 0
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+
+output DP-5 pos 0 0
+output DP-6 pos 1920 0
+output DP-7 pos 3840 0 transform 270
+output $latptop pos 1920 1080
 
 output * bg ~/backgrounds/wp-color-triangle.png fill
+
+workspace $ws0 output $laptop
+workspace $ws1 output DP-5 $laptop
+workspace $ws2 output DP-6 $laptop
+workspace $ws3 output DP-6 $laptop
+workspace $ws4 output DP-6 $laptop
+workspace $ws5 output DP-7 $laptop
 
 input type:keyboard {
       xkb_layout us
@@ -26,10 +46,18 @@ floating_modifier $super
 bindsym $super+Shift+q kill
 bindsym $super+Shift+x exit
 bindsym $super+Shift+r reload
-bindsym $super+Shift+Return exec foot
+bindsym $super+Return exec $term
 bindsym $super+n exec makoctl restore
-bindsym $super+c exec makoctl close
+bindsym $super+c exec makoctl dismiss
 
+# Scratchpad
+bindsym $super+Shift+minus move scratchpad
+bindsym $super+minus scratchpad show
+
+# App Launcher
+bindsym $super+space exec fuzzel
+
+# Movement
 bindsym $super+h focus left
 bindsym $super+j focus down
 bindsym $super+k focus up
@@ -37,14 +65,33 @@ bindsym $super+l focus right
 
 # Move workspace to display
 bindsym $super+Mod1+h move workspace to output left
+bindsym $super+Mod1+j move workspace to output down
+bindsym $super+Mod1+k move workspace to output up
 bindsym $super+Mod1+l move workspace to output right
-bindsym $super+Mod1+Left move workspace to output left
-bindsym $super+Mod1+Right move workspace to output right
 
-bindsym $super+Shift+h move left 30 px
-bindsym $super+Shift+j move down 30 px
-bindsym $super+Shift+k move up 30 px
-bindsym $super+Shift+l move right 30 px
+bindsym $super+Shift+h move left
+bindsym $super+Shift+j move down
+bindsym $super+Shift+k move up
+bindsym $super+Shift+l move right
+
+# Switch workspace
+bindsym $super+grave workspace $ws0
+bindsym $super+1 workspace $ws1
+bindsym $super+2 workspace $ws2
+bindsym $super+3 workspace $ws3
+bindsym $super+4 workspace $ws4
+bindsym $super+5 workspace $ws5
+
+# Move to workspace
+bindsym $super+Shift+grave move container to workspace $ws0
+bindsym $super+Shift+1 move container to workspace $ws1
+bindsym $super+Shift+2 move container to workspace $ws2
+bindsym $super+Shift+3 move container to workspace $ws3
+bindsym $super+Shift+4 move container to workspace $ws4
+bindsym $super+Shift+5 move container to workspace $ws5
+
+bindsym $super+b splith
+bindsym $super+v splitv
 
 bindsym $super+f fullscreen toggle
 bindsym $super+Shift+f floating toggle
@@ -53,8 +100,14 @@ bindsym $super+Shift+p sticky toggle
 # Change focus between tiling / floating windows
 bindsym $super+Control+space focus mode_toggle
 
-# App Launcher
-bindsym $super+space exec fuzzel
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+    bindsym Escape mode "default"
+}
+bindsym $super+r mode "resize"
 
 # Defaults
 default_orientation horizontal
@@ -67,46 +120,21 @@ gaps inner 6
 smart_borders off
 hide_edge_borders --i3 none
 
-# Workspaces
-set $ws0 0
-set $ws1 1
-set $ws2 2
-set $ws3 3
-set $ws4 4
-set $ws5 5
-
-workspace $ws0 output $laptop
-workspace $ws1 output $laptop
-workspace $ws2 output $laptop
-workspace $ws3 output $laptop
-workspace $ws4 output $laptop
-workspace $ws5 output $laptop
-
-# Switch workspace
-bindsym $super+grave workspace $ws0
-bindsym $super+1 workspace $ws1
-bindsym $super+2 workspace $ws2
-bindsym $super+3 workspace $ws3
-bindsym $super+4 workspace $ws4
-bindsym $super+5 workspace $ws5
-
 # Brightness and Volume
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 
 # Screenshots
 bindsym Print exec grimshot --notify save output
 bindsym Alt+Print exec grimshot --notify save area
 
-set $bgcolor #232635dd
-set $bordercolor #c792eacc
-
 # Style UI
-client.focused $bordercolor $bgcolor #ffffffff #ffffffff #c792eacc
-client.unfocused $bordercolor #1c1f2bef #ffffffff #ffffffff #c792eacc
+client.focused #c792eacc #232635dd #ffffffff #ffffffff #c792eacc
+client.unfocused #c792eacc #1c1f2bef #ffffffff #ffffffff #c792eacc
 
 exec waybar
 

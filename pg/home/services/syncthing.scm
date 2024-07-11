@@ -4,14 +4,16 @@
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
   #:use-module (guix gexp)
-  #:export (home-syncthing-service-type))
+  #:use-module (guix records)
+  #:export (home-syncthing-service-type
+            home-syncthing-configuration))
 
 (use-package-modules syncthing)
 (use-service-modules shepherd)
 
 (define-record-type* <home-syncthing-configuration>
   home-syncthing-configuration
-  home-make-syncthing-configuration
+  make-home-syncthing-configuration
   home-syncthing-configuration?
   (syncthing home-syncthing-configuration-syncthing
              (default syncthing))
@@ -19,18 +21,15 @@
                  (default syncthing-gtk))
   (user home-syncthing-configuration-user
         (default #f))
-  (group home-syncthing-configuration-group
-         (default "users"))
   (home home-syncthing-configuration-home
         (default #f)))
 
 (define (home-syncthing-profile-service config)
-  (list (home-syncthing-configuration-syncthing config)
-        (home-syncthing-configuration-syncthing-gtk config)))
+  (list (home-syncthing-configuration-syncthing-gtk config)))
 
 (define (home-syncthing-shepherd-service config)
   (match-record config <home-syncthing-configuration>
-   (syncthing user group home)
+   (syncthing user home)
    (shepherd-service
     (provision '(syncthing))
     (documentation "Runs syncthing")
@@ -39,7 +38,6 @@
                     "--no-browser"
                     "--no-restart")
               #:user #$user
-              #:group #$group
               #:environment-variables
               (append (list (string-append "HOME="
                                            (or #$home
@@ -56,8 +54,8 @@
     (respawn? #f))))
 
 (define (home-syncthing-gtk-shepherd-service config)
-  (match-record config <syncthing-configuration>
-   (syncthing-gtk user group home)
+  (match-record config <home-syncthing-configuration>
+   (syncthing-gtk user home)
    (shepherd-service
     (provision '(syncthing-gtk))
     (requirement '(syncthing))
@@ -65,28 +63,17 @@
     (start #~(make-forkexec-constructor
               (list #$(file-append syncthing-gtk "/bin/syncthing-gtk")
                     "--minimized")
-              #:user #$user
-              #:group #$group
               #:environment-variables
-              (append (list (string-append "HOME="
-                                           (or #$home
-                                               (passwd:dir (getpw #$user))))
-                            "SSL_CERT_DIR=/etc/ssl/certs"
-                            "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
-                      (filter (negate
-                               (lambda (str)
-                                 (or (string-prefix? "HOME=" str)
-                                     (string-prefix? "SSL_CERT_DIR=" str)
-                                     (string-prefix? "SSL_CERT_FILE=" str))))
-                              (environ)))))
+              (cons "WAYLAND_DISPLAY=wayland-1"
+                    (default-environment-variables))))
     (stop #~(make-kill-destructor))
     (respawn? #f))))
 
 (define (home-syncthing-shepherd-services config)
   (list (home-syncthing-shepherd-service config)
-        (home-syncthing-gtk-shepherd-service)))
+        (home-syncthing-gtk-shepherd-service config)))
 
-(define syncthing-service-type
+(define home-syncthing-service-type
   (service-type (name 'home-syncthing)
                 (description "Syncthing service")
                 (extensions

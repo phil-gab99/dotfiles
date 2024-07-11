@@ -1,1 +1,8 @@
-/gnu/store/lq33rm3r4r8l7592x1fbfls1r3vdgjkg-home-dotfiles--config-guix-manifests-latex-scm
+(use-modules (gnu)
+             (guix profiles))
+
+(use-package-modules tex texlive)
+
+(packages->manifest
+ (list rubber
+       texlive))

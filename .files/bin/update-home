@@ -1,0 +1,10 @@
+#!/bin/env bash
+GREEN='\033[1;32m'
+BLUE='\033[1;34m'
+NC='\033[0m'
+
+echo -e "\n${GREEN}Updating home ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
+
+RUNNING_GUIX_HOME=1 guix home -L $HOME/.dotfiles/\
+                    --fallback\
+                    reconfigure $HOME/.dotfiles/pg/systems/$HOSTNAME.scm

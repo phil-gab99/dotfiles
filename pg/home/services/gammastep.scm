@@ -9,9 +9,6 @@
 (use-package-modules xdisorg)
 (use-service-modules shepherd)
 
-(define (home-gammastep-profile-service config)
-  (list gammastep))
-
 (define (home-gammastep-shepherd-service config)
   (shepherd-service
    (provision '(gammastep))
@@ -31,8 +28,6 @@
   (service-type (name 'home-gammastep)
                 (description "Service for running `gammastep'")
                 (extensions
-                 (list (service-extension home-profile-service-type
-                                          home-gammastep-profile-service)
-                       (service-extension home-shepherd-service-type
+                 (list (service-extension home-shepherd-service-type
                                           home-gammastep-shepherd-services)))
                 (default-value #f)))

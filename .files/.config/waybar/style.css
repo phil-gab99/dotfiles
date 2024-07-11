@@ -45,6 +45,11 @@ window {
   min-width: 25px;
 }
 
+#custom-power {
+  margin: 2px 8px;
+  min-width: 25px;
+}
+
 #clock {
   margin: 2px 2px;
   min-width: 120px;
@@ -56,8 +61,4 @@ window {
 
 #battery.critical {
   color: rgba(238, 46, 36, 1);
-}
-
-#battery.charging {
-  color: rgba(217, 216, 216, 1);
 }

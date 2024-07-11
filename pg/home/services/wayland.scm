@@ -11,41 +11,23 @@
   #:use-module (nongnu packages compression)
   #:export (home-wayland-service-type))
 
-(use-package-modules compression
-                     fonts
-                     freedesktop
-                     glib
-                     gnome
-                     gnome-xyz
-                     imagemagick
-                     kde-frameworks
-                     libreoffice
-                     package-management
-                     password-utils
-                     python-build
-                     qt
-                     rust-apps
-                     shellutils
-                     terminals
-                     video
-                     virtualization
-                     web-browsers
-                     wm
-                     xdisorg
+(use-package-modules compression disk fonts freedesktop glib gnome gnome-xyz
+                     imagemagick kde-frameworks libreoffice package-management
+                     password-utils python-build qt rust-apps shellutils
+                     terminals video virtualization web-browsers wm xdisorg
                      xorg)
 (use-service-modules shepherd)
 
 (define (home-wayland-profile-service config)
   (list sway
         swaylock
-        swayidle
-        swaybg
 
         ;; Top bar
         waybar
 
         ;; Notifications
         mako
+        libnotify
 
         ;; App Launcher
         fuzzel
@@ -100,8 +82,10 @@
         ripgrep
         p7zip
         unrar
+        wofi
 
         ;; Basic Applications
+        wlogout
         libreoffice
         evince
         simple-scan
@@ -128,10 +112,22 @@
    (auto-start? #f)
    (start #~(make-forkexec-constructor
              (list #$(file-append swayidle "/bin/swayidle") "-w"
-                   "timeout" "900" "'swaylock -f -i ~/backgrounds/guix-bg.jpg -s fill --font \"JetBrains Mono\" --indicator-idle-visible'"
-                   "timeout" "900" "'swaymsg \"output * dpms off\"'"
-                   "resume" "'swaymsg \"output * dpms on\"'"
-                   "before-sleep" "'swaylock -f -i ~/backgrounds/guix-bg.jpg -s fill --font \"JetBrains Mono\" --indicator-idle-visible'")
+                   "timeout" "900"
+                   (string-append #$(file-append swaylock "/bin/swaylock")
+                                  "-f -i ~/backgrounds/guix-bg.jpg"
+                                  "-s fill --font 'JetBrains Mono'"
+                                  "--indicator-idle-visible")
+                   "timeout" "900"
+                   (string-append #$(file-append sway "/bin/swaymsg")
+                                  "'output * dpms off'")
+                   "resume"
+                   (string-append #$(file-append sway "/bin/swaymsg")
+                                  "'output * dpms on'")
+                   "before-sleep"
+                   (string-append #$(file-append swaylock "/bin/swaylock")
+                                  "-f -i ~/backgrounds/guix-bg.jpg"
+                                  "-s fill --font 'JetBrains Mono'"
+                                  "--indicator-idle-visible"))
              #:environment-variables
              (cons "WAYLAND_DISPLAY=wayland-1"
                    (default-environment-variables))))
@@ -140,7 +136,6 @@
 (define (home-wayland-shepherd-services config)
   (list (home-mako-shepherd-service config)
         (home-swayidle-shepherd-service config)))
-;; (home-waybar-shepherd-service config)
 
 (define home-wayland-service-type
   (service-type (name 'home-wayland)

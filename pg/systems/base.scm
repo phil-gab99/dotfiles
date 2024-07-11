@@ -8,42 +8,12 @@
   #:use-module (srfi srfi-1)
   #:export (system-config))
 
-(use-package-modules admin
-                     audio
-                     bash
-                     compression
-                     cups
-                     curl
-                     emacs
-                     file-systems
-                     freedesktop
-                     fonts
-                     gnome
-                     gnupg
-                     libusb
-                     linux
-                     package-management
-                     ssh
-                     version-control
-                     vim
-                     wm)
-(use-service-modules avahi
-                     base
-                     cups
-                     dbus
-                     desktop
-                     docker
-                     guix
-                     linux
-                     networking
-                     nix
-                     pm
-                     ssh
-                     virtualization
-                     xorg)
-(use-system-modules accounts
-                    pam
-                    nss)
+(use-package-modules admin audio bash compression cups curl emacs file-systems
+                     freedesktop fonts gnome gnupg libusb linux
+                     package-management python ssh version-control vim wm)
+(use-service-modules avahi base cups dbus desktop docker guix linux networking
+                     nix pm ssh virtualization xorg)
+(use-system-modules accounts pam nss)
 
 (define %acm-udev-rule
   (udev-rule
@@ -76,8 +46,6 @@
                   "\n"
                   "LABEL=\"openocd_rules_end\"")))
 
-;; Define rest of rules
-
 (define* (system-config #:key system home)
   (operating-system
    (inherit system)
@@ -88,9 +56,9 @@
    (firmware (cons iwlwifi-firmware
                    %base-firmware))
 
+   ;; Virtual camera
    (kernel-loadable-modules (list v4l2loopback-linux-module))
 
-   ;; Generic information that may be overriden
    (locale "en_CA.utf8")
    (timezone "America/Toronto")
    (host-name (operating-system-host-name system))
@@ -102,8 +70,8 @@
                              (comment "Philippe Gabriel")
                              (group "users")
                              (home-directory "/home/phil-gab99")
-                             (supplementary-groups '("wheel"     ;; sudo
-                                                     "netdev"    ;; network devices
+                             (supplementary-groups '("wheel"    ;; sudo
+                                                     "netdev"   ;; network devices
                                                      "kvm"
                                                      "tty"
                                                      "dialout"
@@ -113,18 +81,30 @@
                                                      "libvirt"
                                                      "docker"
                                                      "realtime"
-                                                     "lp"        ;; control bluetooth devices
-                                                     "audio"     ;; control audio devices
-                                                     "video")))  ;; control video devices
+                                                     "lp"       ;; control bluetooth devices
+                                                     "audio"    ;; control audio devices
+                                                     "video"))) ;; control video devices
                %base-user-accounts)))
 
-   ;; Add extra groups
    (groups
     (append (operating-system-groups system)
-            (cons* (user-group (system? #t) (name "uucp"))
-                   (user-group (system? #t) (name "plugdev"))
-                   (user-group (system? #t) (name "realtime"))
+            (cons* (user-group
+                    (system? #t)
+                    (name "uucp"))
+                   (user-group
+                    (system? #t)
+                    (name "plugdev"))
+                   (user-group
+                    (system? #t)
+                    (name "realtime"))
                    %base-groups)))
+
+   (sudoers-file
+    (plain-file "sudoers"
+                (string-append (plain-file-content %sudoers-specification)
+                               (user-account-name
+                                (car (operating-system-users system)))
+                               " ALL=(ALL) NOPASSWD: /run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/reboot")))
 
    ;; System packages
    (packages (cons* bluez
@@ -142,6 +122,7 @@
                     net-tools
                     nix
                     openssh
+                    python
                     udiskie
                     unzip
                     vim
@@ -158,9 +139,9 @@
               (list
                (service guix-home-service-type
                         (list
-                         (list
-                          (user-account-name (car (operating-system-users system)))
-                          home)))
+                         (list (user-account-name
+                                (car (operating-system-users system)))
+                               home)))
 
                (service elogind-service-type)
 
@@ -233,7 +214,6 @@
                (service avahi-service-type)
                (service udisks-service-type)
                (service upower-service-type)
-               (service cups-pk-helper-service-type)
                (service geoclue-service-type)
                (service polkit-service-type)
                (service dbus-root-service-type)
@@ -271,6 +251,7 @@
                          (openssh openssh-sans-x)))
 
                (service sane-service-type)
+               (service cups-pk-helper-service-type)
                (service cups-service-type
                         (cups-configuration
                          (web-interface? #t)

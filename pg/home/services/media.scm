@@ -6,10 +6,7 @@
   #:use-module (guix gexp)
   #:export (home-media-service-type))
 
-(use-package-modules linux
-                     mpd
-                     music
-                     video)
+(use-package-modules linux mpd music pulseaudio video)
 (use-service-modules shepherd)
 
 (define (home-media-profile-service config)
@@ -20,6 +17,7 @@
         obs
         obs-pipewire-audio-capture
         obs-wlrobs
+        pavucontrol
         pipewire
         playerctl
         wireplumber
@@ -57,7 +55,7 @@
    (documentation "Runs `playerctld'")
    (provision '(playerctld))
    (start #~(make-forkexec-constructor
-             (list #$(file-append playerctl "/bin/playerctld") "daemon")))
+             (list #$(file-append playerctl "/bin/playerctld"))))
    (stop #~(make-kill-destructor))))
 
 (define (home-mpDris2-shepherd-service config)

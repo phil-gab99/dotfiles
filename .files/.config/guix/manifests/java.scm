@@ -1,1 +1,4 @@
-/gnu/store/xwbfdd2px1rzmnm8cf5729sby9kqyh73-home-dotfiles--config-guix-manifests-java-scm
+(use-modules (gnu packages))
+
+(specifications->manifest '("openjdk@17:jdk"
+                            "openjdk@17:doc"))

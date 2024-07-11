@@ -1,1 +1,8 @@
-/gnu/store/6r7l2f4hixmxd16m97cpqs6a9h4k2p2q-home-dotfiles--config-guix-manifests-sql-scm
+(use-modules (gnu)
+             (guix profiles))
+
+(use-package-modules databases)
+
+(packages->manifest
+ (list postgresql
+       sqls))

@@ -7,11 +7,11 @@
 (use-package-modules emulators)
 
 ;; Retrieve save files under ~/.var/app/org.desmume.DeSmuME/config/desmume/
-;; Retrieve save files under ~/.var/app/org.ppsspp.PPSSPP/config/ppsspp/
 (define (home-games-profile-service config)
   (list desmume
         dosbox-staging
-        ppsspp))
+        ;; ppsspp ;; Outputs error
+        ))
 
 (define home-games-service-type
   (service-type (name 'home-games)

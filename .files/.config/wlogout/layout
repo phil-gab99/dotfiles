@@ -1,0 +1,18 @@
+{
+  "label" : "logout",
+  "action" : "loginctl terminate-user $USER",
+  "text" : "[L]ogout",
+  "keybind" : "l"
+}
+{
+  "label" : "shutdown",
+  "action" : "/run/current-system/profile/sbin/halt",
+  "text" : "[S]hutdown",
+  "keybind" : "s"
+}
+{
+  "label" : "reboot",
+  "action" : "/run/current-system/profile/sbin/reboot",
+  "text" : "[R]eboot",
+  "keybind" : "r"
+}

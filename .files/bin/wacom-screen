@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-xinput map-to-output "Wacom Intuos PT S Pen Pen (0)" HDMI-1
-xinput map-to-output "Wacom Intuos PT S Pen Eraser (0)" HDMI-1
-
-echo "Mapped to HDMI!"
-
-exit 0

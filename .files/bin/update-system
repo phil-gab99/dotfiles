@@ -3,8 +3,10 @@ GREEN='\033[1;32m'
 BLUE='\033[1;34m'
 NC='\033[0m'
 
-echo -e "\n${GREEN}Updating ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
+echo -e "\n${GREEN}Updating system ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
 
-sudo guix system -L $HOME/.dotfiles --fallback reconfigure $HOME/.dotfiles/pg/systems/$HOSTNAME.scm
+sudo guix system -L $HOME/.dotfiles\
+     --fallback\
+     reconfigure $HOME/.dotfiles/pg/systems/$HOSTNAME.scm
 
 exit 0

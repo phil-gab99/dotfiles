@@ -20,7 +20,7 @@ I prefer a system which offers a minimal setup and allows me to better focus on 
 
 I prefer configuring the various tools of my workflow using text-based configurations as opposed to programs which might behave in undesirable ways. This enables me to save my configuration and source control it (as is done in this repository) which then allows me to sync this configuration across multiple devices and experiment on different branches.
 
-The GNU Guix allows me to apply this principle over the entire system, as the system-level and user-level configuration are managed through a text-based configuration following the Guile Scheme language.
+The GNU Guix system allows me to apply this principle over the entire system, as the system-level and user-level configuration are managed through a text-based configuration following the Guile Scheme language.
 
 *** Highly Customizable
 
@@ -28,10 +28,10 @@ I prefer tools which are highly customizable through their configuration. This a
 
 *** Literate Configuration
 
-To ease readability, I have migrated most of my configuration files to a literate configuration using Emacs' Org Mode. Below are the various Org files containing most of my configuration:
+I had started managing all of my configuration using a literate approach (using the ~org-babel-tangle~ function provided by ~org~). This has started to feel more weighty and difficult to manage with my growing configuration and tools. Therefore, I have decided to edit most files directly except those relating to Emacs as my Emacs configuration is probably the biggest configuration in my dotfiles, and so the sectioning of it using a literate approach can help with readability for others who wish to read my configuration.
+
+Below are the org files containing my Emacs configuration:
 
 - [[file:Emacs.org][Emacs]]
 - [[file:Desktop.org][Desktop Environment]]
-- [[file:System.org][Guix System Configuration]]
-- [[file:README.org][General Application Configurations]]
 
