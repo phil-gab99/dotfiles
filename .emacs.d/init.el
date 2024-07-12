@@ -43,27 +43,15 @@
   (if pg/exwm-enabled (pg/kill-panel))
   (save-buffers-kill-emacs))
 
-(defun pg/customize-set-variables (custom-sets)
-  "Sets the value of custom variables using `customize-set-variable'.
-    The CUSTOM-SETS argument represents a plist where each entry's key is the
-    custom variable one wishes to set and the corresponding value is the value to
-    set to the custom variable."
-  (mapcar (lambda (setting)
-            (let ((custom (car setting))
-                  (value (cdr setting)))
-              (customize-set-variable custom value)))
-          custom-sets))
-
 (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
-(pg/customize-set-variables
- `((load-prefer-newer . t)
-   (use-short-answers . t)
-   (auto-save-list-file-prefix . ,(expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))
-   (warning-suppress-log-types . (lsp-mode))
-   (warning-suppress-types . (lsp-mode))
-   (warning-minimum-level . :error)
-   (help-at-pt-display-when-idle . t)))
+(setopt load-prefer-newer t
+        use-short-answers t
+        auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+        warning-suppress-log-types '(lsp-mode)
+        warning-suppress-types '(lsp-mode)
+        warning-minimum-level :error
+        help-at-pt-display-when-idle t)
 
 ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 
@@ -140,7 +128,7 @@
    'org-babel-load-languages '((emacs-lisp . t)
                                (java . t)
                                (shell . t)
-                               (plantuml . t)
+                               ;; (plantuml . t)
                                (python . t)
                                (arduino . t)
                                (jupyter . t)))

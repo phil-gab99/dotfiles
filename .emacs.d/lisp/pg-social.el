@@ -5,12 +5,11 @@
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'erc-mode-hook #'corfu-mode)
-  (pg/customize-set-variables
-   '((erc-server . "irc.libera.chat")
-     (erc-nick . "phil-gab99")
-     (erc-user . "Philippe Gabriel")
-     (erc-kill-buffer-on-part . t)
-     (erc-auto-query . bury))))
+  (setopt erc-server "irc.libera.chat"
+          erc-nick "phil-gab99"
+          erc-user "Philippe Gabriel"
+          erc-kill-buffer-on-part t
+          erc-auto-query bury))
 
 (straight-use-package 'ement)
 (unless (fboundp 'ement-connect)
@@ -30,9 +29,8 @@
     "cmc" '(pg/ement-connect :which-key "start")))
 
 (with-eval-after-load 'ement
-  (pg/customize-set-variables
-   '((ement-room-prism . both)
-     (ement-room-sender-headers . t)))
+  (setopt ement-room-prism 'both
+          ement-room-sender-headers t)
   (with-eval-after-load 'general
     (pg/leader-keys
       "cmd" '(ement-disconnect :which-key "disconnect"))))
@@ -41,9 +39,8 @@
 (unless (fboundp 'slack-start)
   (autoload #'slack-start "slack" nil t))
 (with-eval-after-load 'slack
-  (pg/customize-set-variables
-   '((slack-prefer-current-team . t)
-     (slack-buffer-emojify . t)))
+  (setopt slack-prefer-current-team t
+          slack-buffer-emojify t)
   (slack-register-team :name "ift6755"
                        :default t
                        :token (pg/lookup-password :host "ift6755.slack.com"

@@ -19,20 +19,19 @@
       "mc" '(mu4e-compose-new :which-key "compose")))
   (with-eval-after-load 'mu4e
     (require 'mu4e-org)
-    (pg/customize-set-variables
-     `((mail-user-agent . ,#'mu4e-user-agent)
-       (mu4e-change-filenames-when-moving . t)
-       (mu4e-update-interval . ,(* 10 60))
-       (mu4e-get-mail-command . "mbsync -a")
-       (mu4e-compose-format-flowed . t)
-       (mu4e-compose-signature-auto-include . nil)
-       (mu4e-sent-messages-behavior . delete)
-       (message-send-mail-function . ,#'smtpmail-send-it)
-       (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
-       (mu4e-maildir-shortcuts . (("/Main/Inbox" . 109)
-                                  ("/Main/Jobs" . 106)
-                                  ("/Main/University" . 115)))
-       (mu4e-context-policy . pick-first)))
+    (setopt mail-user-agent #'mu4e-user-agent
+            mu4e-change-filenames-when-moving t
+            mu4e-update-interval (* 10 60)
+            mu4e-get-mail-command "mbsync -a"
+            mu4e-compose-format-flowed t
+            mu4e-compose-signature-auto-include nil
+            mu4e-sent-messages-behavior 'delete
+            message-send-mail-function #'smtpmail-send-it
+            mu4e-attachment-dir (expand-file-name "~/Downloads")
+            mu4e-maildir-shortcuts '(("/Main/Inbox" . 109)
+                                     ("/Main/Jobs" . 106)
+                                     ("/Main/University" . 115))
+            mu4e-context-policy 'pick-first)
     (add-to-list 'mu4e-bookmarks
                  '( :name "Starred"
                     :query "flag:flagged"
@@ -82,9 +81,8 @@
   (with-eval-after-load 'mu4e
     (require 'mu4e-alert))
   (with-eval-after-load 'mu4e-alert
-    (pg/customize-set-variables
-     '((mu4e-alert-notify-repeated-mails . t)
-       (mu4e-alert-email-notification-types . (subjects))))
+    (setopt mu4e-alert-notify-repeated-mails t
+            mu4e-alert-email-notification-types '(subjects))
     (mu4e-alert-set-default-style 'notifications)
     (mu4e-alert-enable-notifications)
     (mu4e-alert-enable-mode-line-display)))

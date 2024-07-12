@@ -8,9 +8,8 @@
   (autoload #'company-mode "company" nil t))
 (add-hook 'ledger-mode-hook #'company-mode)
 (with-eval-after-load 'ledger-mode
-  (pg/customize-set-variables
-   `((ledger-reconcile-default-commodity . "CAD")
-     (ledger-binary-path . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/emacs/emacs/bin/ledger"))
-     (ledger-clear-whole-transaction . t))))
+  (setopt ledger-reconcile-default-commodity "CAD"
+          ledger-binary-path (concat (getenv "HOME") "/.guix-home/profile/bin/ledger")
+          ledger-clear-whole-transaction t))
 
 (provide 'pg-finance)

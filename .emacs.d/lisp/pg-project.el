@@ -7,8 +7,8 @@
 (with-eval-after-load 'projectile
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (when (file-directory-p "~/Projects")
-    (customize-set-variable 'projectile-project-search-path '("~/Projects")))
-  (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
+    (setopt projectile-project-search-path '("~/Projects")))
+  (setopt projectile-switch-project-action #'projectile-dired)
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))
   (diminish #'projectile-mode)
@@ -36,7 +36,7 @@
 (with-eval-after-load 'magit
   (if pg/is-windows
       (setenv "SSH_ASKPASS" "git-gui--askpass"))
-  (customize-set-variable 'magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  (setopt magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 (with-eval-after-load 'general
   (pg/leader-keys
     "g" '(:ignore t :which-key "git")
@@ -62,7 +62,7 @@
   (with-eval-after-load 'magit
     (require 'forge))
   (with-eval-after-load 'forge
-    (customize-set-variable 'forge-add-default-bindings nil))
+    (setopt forge-add-default-bindings nil))
   (with-eval-after-load 'general
     (pg/leader-keys
       "gf" '(forge-pull :which-key "forge"))))

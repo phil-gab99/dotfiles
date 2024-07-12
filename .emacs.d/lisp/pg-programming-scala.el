@@ -17,9 +17,8 @@
                              minibuffer-local-completion-map))
 
 (straight-use-package 'lsp-metals)
-(pg/customize-set-variables
- `((lsp-metals-server-args . ("-J-Dmetals.allow-multiline-string-formatting=off" "-J-Dmetals.icons=unicode"))
-   (lsp-metals-enable-semantic-highlighting . t)))
+(setopt lsp-metals-server-args '("-J-Dmetals.allow-multiline-string-formatting=off" "-J-Dmetals.icons=unicode")
+        lsp-metals-enable-semantic-highlighting t)
 (unless (fboundp 'lsp)
   (autoload #'lsp-deferred "lsp-mode"))
 (add-hook 'scala-mode-hook #'lsp)

@@ -5,6 +5,6 @@
 (unless (fboundp 'sly)
   (autoload #'sly "sly" nil t))
 (with-eval-after-load 'sly
-  (customize-set-variable 'inferior-lisp-program "sbcl"))
+  (setopt inferior-lisp-program "sbcl"))
 
 (provide 'pg-programming-commonlisp)

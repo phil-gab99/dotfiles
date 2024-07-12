@@ -73,7 +73,7 @@ Some settings specific to the ~emacs-native-comp~ version of emacs
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-native-compilation.el
 
   (when (featurep 'native-compile)
-    (customize-set-variable 'native-comp-async-report-warnings-errors nil)                         ;; Silence compiler warnings
+    (setopt native-comp-async-report-warnings-errors nil)                                          ;; Silence compiler warnings
     (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))) ;; Set directory for cache storage
 
 #+end_src
@@ -141,14 +141,12 @@ Scheme REPL
     (with-eval-after-load 'geiser-guile
       (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0"))
       (add-to-list 'geiser-guile-load-path (concat (getenv "HOME") "/.dotfiles"))
-      (pg/customize-set-variables
-       `((geiser-guile-load-init-file . nil)
-         (geiser-guile-manual-lookup-other-window . t))))
+      (setopt geiser-guile-load-init-file nil
+              geiser-guile-manual-lookup-other-window t))
 
     (with-eval-after-load 'geiser
-      (pg/customize-set-variables
-       `((geiser-repl-company-p . nil)
-         (geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))))
+      (setopt geiser-repl-company-p nil
+              geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))
 
 #+end_src
 
@@ -178,7 +176,7 @@ Scheme REPL
   (when pg/is-linux
     (require 'auth-source)
     (with-eval-after-load 'auth-source
-      (customize-set-variable 'auth-sources '("~/.authinfo.gpg"))))
+      (setopt auth-sources '("~/.authinfo.gpg"))))
 
 #+end_src
 
@@ -190,7 +188,7 @@ Scheme REPL
               pg/is-windows)
     (require 'epg-config)
     (with-eval-after-load 'epg-config
-      (customize-set-variable 'epg-pinentry-mode 'loopback)))
+      (setopt epg-pinentry-mode 'loopback)))
 
 #+end_src
 
@@ -212,7 +210,7 @@ Scheme REPL
 
   (require 'password-cache)
   (with-eval-after-load 'password-cache
-    (customize-set-variable 'password-cache-expiry (* 60 60 2)))
+    (setopt password-cache-expiry (* 60 60 2)))
 
 #+end_src
 
@@ -232,7 +230,7 @@ Scheme REPL
         "ac" '(password-store-copy :which-key "copy")
         "af" '(password-store-copy-field :which-key "copy field")))
     (with-eval-after-load 'password-store
-      (customize-set-variable 'password-store-time-before-clipboard-restore 60))
+      (setopt password-store-time-before-clipboard-restore 60))
 
 #+end_src
 
@@ -286,7 +284,7 @@ Useful when starting out with the various keybindings and when presenting to an 
   (straight-use-package 'keycast)
   (require 'keycast)
   (with-eval-after-load 'keycast
-    (customize-set-variable 'keycast-mode-line-format "%2s%k%c%2s")
+    (setopt keycast-mode-line-format "%2s%k%c%2s")
     (fset #'keycast-mode #'pg/keycast-mode)
     (keycast-mode)
     (add-to-list 'global-mode-string '("" keycast-mode-line)))
@@ -330,9 +328,9 @@ Useful when starting out with the various keybindings and when presenting to an 
   (with-eval-after-load 'vertico
     (require 'marginalia))
   (with-eval-after-load 'marginalia
-    (customize-set-variable 'marginalia-annotators '(marginalia-annotators-heavy
-                                                     marginalia-annotators-light
-                                                     nil))
+    (setopt marginalia-annotators '(marginalia-annotators-heavy
+                                    marginalia-annotators-light
+                                    nil))
     (marginalia-mode))
 
 #+end_src
@@ -352,7 +350,7 @@ Useful when starting out with the various keybindings and when presenting to an 
     (autoload #'consult-buffer "consult" nil t))
   (global-set-key (kbd "C-x b") #'consult-buffer)
   (with-eval-after-load 'consult
-    (customize-set-variable 'consult-buffer-sources '(consult--source-buffer))
+    (setopt consult-buffer-sources '(consult--source-buffer))
     (consult-customize consult-buffer
                        consult-theme
                        :preview-key nil)
@@ -368,11 +366,10 @@ Useful when starting out with the various keybindings and when presenting to an 
   (with-eval-after-load 'vertico
     (require 'orderless))
   (with-eval-after-load 'orderless
-    (pg/customize-set-variables
-     '((completion-styles . (orderless))
-       (completion-category-defaults . nil)
-       (orderless-skip-highlighting . nil)
-       (completion-category-overrides . ((file (styles basic partial-completion)))))))
+    (setopt completion-styles '(orderless)
+            completion-category-defaults nil
+            orderless-skip-highlighting nil
+            completion-category-overrides '((file (styles basic partial-completion)))))
 
 #+end_src
 
@@ -395,7 +392,7 @@ Useful when starting out with the various keybindings and when presenting to an 
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (with-eval-after-load 'corfu
-    (customize-set-variable 'corfu-cycle t))
+    (setopt corfu-cycle t))
 
 #+end_src
 
@@ -417,7 +414,7 @@ Useful when starting out with the various keybindings and when presenting to an 
       (define-key vertico-map (kbd "C-j") #'vertico-next)
       (define-key vertico-map (kbd "C-k") #'vertico-previous)))
   (with-eval-after-load 'vertico
-    (customize-set-variable 'vertico-cycle t)
+    (setopt vertico-cycle t)
     (vertico-mode))
 
 #+end_src
@@ -433,7 +430,7 @@ Useful when starting out with the various keybindings and when presenting to an 
     (global-set-key (kbd "C-S-a") #'embark-act)
     (define-key minibuffer-local-map (kbd "C-d") #'embark-act))
   (with-eval-after-load 'embark
-    (customize-set-variable 'embark-confirm-act-all nil)
+    (setopt embark-confirm-act-all nil)
     (setq embark-action-indicator
           (lambda
             (map)
@@ -452,7 +449,7 @@ Displays additional keybindings subsequent to prefix keybindings
   (straight-use-package 'which-key)
   (require 'which-key)
   (with-eval-after-load 'which-key
-    (customize-set-variable 'which-key-idle-delay 1)
+    (setopt which-key-idle-delay 1)
     (which-key-mode)
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
@@ -1061,13 +1058,12 @@ Customizes the look of the modeline for better aesthetic.
   (straight-use-package 'doom-modeline)
   (require 'doom-modeline)
   (with-eval-after-load 'doom-modeline
-    (pg/customize-set-variables
-     '((doom-modeline-height . 17)
-       (doom-modeline-modal-icon . nil)
-       (doom-modeline-enable-word-count . t)
-       (doom-modeline-indent-info . t)
-       (doom-modeline-buffer-file-name-style . truncate-except-project)
-       (doom-modeline-mu4e . t)))
+    (setopt doom-modeline-height 17
+            doom-modeline-modal-icon nil
+            doom-modeline-enable-word-count t
+            doom-modeline-indent-info t
+            doom-modeline-buffer-file-name-style 'truncate-except-project
+            doom-modeline-mu4e t)
     (doom-modeline-mode 1))
 
 #+end_src
@@ -1099,25 +1095,16 @@ Customizes the look of the modeline for better aesthetic.
   (straight-use-package 'dashboard)
   (with-eval-after-load 'projectile
     (require 'dashboard)
-    ;; (with-eval-after-load 'nerd-icons
-    ;;   (require 'dashboard))
     (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook))
-  (pg/customize-set-variables
-   `((dashboard-items . ((recents . 5)
-                         (projects . 5)
-                         (agenda . 5)))
-     (dashboard-set-heading-icons . t)
-     (dashboard-set-file-icons . t)
-     (dashboard-display-icons-p . t)
-     ;; (dashboard-icon-type . all-the-icons)
-     ;; (dashboard-heading-icons . ((recents . "history")
-     ;;                             (bookmarks . "bookmark")
-     ;;                             (agenda . "calendar")
-     ;;                             (projects . "rocket")
-     ;;                             (registers . "database")))
-     (dashboard-match-agenda-entry . "task")
-     (dashboard-page-separator . "\n\f\n")
-     (dashboard-init-info . ,#'pg/display-startup-time)))
+  (setopt dashboard-items '((recents . 5)
+                            (projects . 5)
+                            (agenda . 5))
+          dashboard-set-heading-icons t
+          dashboard-set-file-icons t
+          dashboard-display-icons-p t
+          dashboard-match-agenda-entry "task"
+          dashboard-page-separator "\n\f\n"
+          dashboard-init-info #'pg/display-startup-time)
   (with-eval-after-load 'dashboard
     (pg/dashboard-setup-startup-hook))
 
@@ -1175,52 +1162,9 @@ Customizes the look of the modeline for better aesthetic.
     (unless (fboundp 'evil-collection-define-key)
       (autoload #'evil-collection-define-key "evil-collection"))
     (evil-collection-define-key 'normal 'bufler-list-mode-map
-      (kbd "RET")   #'bufler-list-buffer-switch
+      (kbd "RET") #'bufler-list-buffer-switch
       (kbd "M-RET") #'bufler-list-buffer-peek
-      "D"           #'bufler-list-buffer-kill)
-    (customize-set-variable 'bufler-groups
-                            (bufler-defgroups
-
-                              ;; Subgroup collecting all named workspaces.
-                              (group (auto-workspace))
-
-                              ;; Subgroup collecting buffers in a projectile project.
-                              (group (auto-projectile))
-
-                              ;; Grouping browser windows
-                              (group
-                               (group-or "Browsers"
-                                         (name-match "Qutebrowser" (rx bos "qutebrowser"))
-                                         (name-match "Firefox" (rx bos "firefox"))))
-
-                              (group
-                               (group-or "Chat"
-                                         (name-match "Discord" (rx bos "discord"))
-                                         (mode-match "Slack" (rx bos "slack-"))))
-
-                              (group
-                               ;; Subgroup collecting all `help-mode' and `info-mode' buffers.
-                               (group-or "Help/Info"
-                                         (mode-match "*Help*" (rx bos (or "help-" "helpful-")))
-                                         (mode-match "*Info*" (rx bos "info-"))))
-
-                              (group
-                               ;; Subgroup collecting all special buffers (i.e. ones that are not
-                               ;; file-backed), except `magit-status-mode' buffers (which are allowed to fall
-                               ;; through to other groups, so they end up grouped with their project buffers).
-                               (group-and "*Special*"
-                                          (name-match "**Special**"
-                                                      (rx bos "*" (or "Messages" "Warnings" "scratch" "Backtrace" "Pinentry") "*"))
-                                          (lambda (buffer)
-                                            (unless (or (funcall (mode-match "Magit" (rx bos (or "magit-status" "magit-diff" "magit-process")))
-                                                                 buffer)
-                                                        (funcall (mode-match "Dired" (rx bos "dired"))
-                                                                 buffer)
-                                                        (funcall (auto-file) buffer))
-                                              "*Special*"))))
-
-                              ;; Group remaining buffers by major mode.
-                              (auto-mode))))
+      "D" #'bufler-list-buffer-kill))
 
 #+end_src
 
@@ -1246,7 +1190,7 @@ For window configurations
 
   (require 'tab-bar)
   (with-eval-after-load 'tab-bar
-    (customize-set-variable 'tab-bar-show 1)
+    (setopt tab-bar-show 1)
     (tab-bar-mode)
     (with-eval-after-load 'general
       (pg/leader-keys
@@ -1268,7 +1212,7 @@ For organizing the buffer list
   (straight-use-package 'perspective)
   (require 'perspective)
   (with-eval-after-load 'perspective
-    (customize-set-variable 'persp-suppress-no-prefix-key-warning t)
+    (setopt persp-suppress-no-prefix-key-warning t)
     (global-set-key (kbd "C-x k") #'persp-kill-buffer*)
     (unless (equal persp-mode t)
       (persp-mode))
@@ -1324,20 +1268,19 @@ For organizing the buffer list
         "mc" '(mu4e-compose-new :which-key "compose")))
     (with-eval-after-load 'mu4e
       (require 'mu4e-org)
-      (pg/customize-set-variables
-       `((mail-user-agent . ,#'mu4e-user-agent)
-         (mu4e-change-filenames-when-moving . t)
-         (mu4e-update-interval . ,(* 10 60))
-         (mu4e-get-mail-command . "mbsync -a")
-         (mu4e-compose-format-flowed . t)
-         (mu4e-compose-signature-auto-include . nil)
-         (mu4e-sent-messages-behavior . delete)
-         (message-send-mail-function . ,#'smtpmail-send-it)
-         (mu4e-attachment-dir . ,(expand-file-name "~/Downloads"))
-         (mu4e-maildir-shortcuts . (("/Main/Inbox" . 109)
-                                    ("/Main/Jobs" . 106)
-                                    ("/Main/University" . 115)))
-         (mu4e-context-policy . pick-first)))
+      (setopt mail-user-agent #'mu4e-user-agent
+              mu4e-change-filenames-when-moving t
+              mu4e-update-interval (* 10 60)
+              mu4e-get-mail-command "mbsync -a"
+              mu4e-compose-format-flowed t
+              mu4e-compose-signature-auto-include nil
+              mu4e-sent-messages-behavior 'delete
+              message-send-mail-function #'smtpmail-send-it
+              mu4e-attachment-dir (expand-file-name "~/Downloads")
+              mu4e-maildir-shortcuts '(("/Main/Inbox" . 109)
+                                       ("/Main/Jobs" . 106)
+                                       ("/Main/University" . 115))
+              mu4e-context-policy 'pick-first)
       (add-to-list 'mu4e-bookmarks
                    '( :name "Starred"
                       :query "flag:flagged"
@@ -1395,9 +1338,8 @@ Allows for notification pop-up and mode line count when receiving emails
     (with-eval-after-load 'mu4e
       (require 'mu4e-alert))
     (with-eval-after-load 'mu4e-alert
-      (pg/customize-set-variables
-       '((mu4e-alert-notify-repeated-mails . t)
-         (mu4e-alert-email-notification-types . (subjects))))
+      (setopt mu4e-alert-notify-repeated-mails t
+              mu4e-alert-email-notification-types '(subjects))
       (mu4e-alert-set-default-style 'notifications)
       (mu4e-alert-enable-notifications)
       (mu4e-alert-enable-mode-line-display)))
@@ -1563,9 +1505,8 @@ Colors matching delimiters with different colours for distinguishability.
     (autoload #'highlight-indent-guides-mode "rainbow-delimiters" nil t))
   (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
   (with-eval-after-load 'highlight-indent-guides
-    (pg/customize-set-variables
-     '((highlight-indent-guides-responsive . stack)
-       (highlight-indent-guides-method . character))))
+    (setopt highlight-indent-guides-responsive 'stack
+            highlight-indent-guides-method 'character))
 
 #+end_src
 
@@ -1701,17 +1642,16 @@ Allows usage of vim-like keybindings for some modes in emacs.
       (add-to-list 'evil-emacs-state-modes mode)))
 
   (straight-use-package 'evil)
-  (customize-set-variable 'evil-want-keybinding nil)
+  (setopt evil-want-keybinding nil)
   (add-hook 'evil-mode-hook #'pg/evil-hook)
   (require 'evil)
   (with-eval-after-load 'evil
-    (pg/customize-set-variables
-     `((evil-want-integration . t)
-       (evil-want-C-u-scroll . t)
-       (evil-want-C-i-jump . nil)
-       (evil-want-Y-yank-to-eol . t)
-       (evil-want-fine-undo . t)
-       (evil-undo-system . ,#'undo-redo)))
+    (setopt evil-want-integration t
+            evil-want-C-u-scroll t
+            evil-want-C-i-jump nil
+            evil-want-Y-yank-to-eol t
+            evil-want-fine-undo t
+            evil-undo-system #'undo-redo)
     (unless (fboundp 'evil-normal-state)
       (autoload #'evil-normal-state "evil-states"))
     (define-key evil-insert-state-map (kbd "C-g") #'evil-normal-state)
@@ -1841,9 +1781,8 @@ Displays full documentations in place of the default help function.
     (add-hook mode #'(lambda ()
                        (visual-fill-column-mode 1))))
   (with-eval-after-load 'visual-fill-column
-    (pg/customize-set-variables
-     '((visual-fill-column-width . 150)
-       (visual-fill-column-center-text . t))))
+    (setopt visual-fill-column-width 150
+            visual-fill-column-center-text t))
 
 #+end_src
 
@@ -1903,12 +1842,11 @@ Some settings to manage where emacs stores backup files (such as the =~= backup 
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-file.el
 
-  (pg/customize-set-variables
-   `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
-     (enable-remote-dir-locals . t)
-     (auto-save-file-name-transforms . ((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
-     (safe-local-variable-values . ((projectile-project-compilation-cmd . "./mvnw clean package")))
-     (vc-follow-symlinks . t)))
+  (setopt backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
+          enable-remote-dir-locals t
+          auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t))
+          safe-local-variable-values '((projectile-project-compilation-cmd . "./mvnw clean package"))
+          vc-follow-symlinks t)
 
 #+end_src
 
@@ -1965,7 +1903,7 @@ Keybindings for other useful operations:
     (autoload #'dired-jump "dired" nil t))
   (global-set-key (kbd "C-x C-j") #'dired-jump)
   (with-eval-after-load 'dired
-    (customize-set-variable 'dired-listing-switches "-Alh --group-directories-first"))
+    (setopt dired-listing-switches "-Alh --group-directories-first"))
 
 #+end_src
 
@@ -2030,28 +1968,27 @@ Togglable option for hiding dot files.
   (unless pg/is-termux
     (straight-use-package 'openwith)
     (when (require 'openwith nil 'noerror)
-      (pg/customize-set-variables
-       `((large-file-warning-threshold . nil)
-         (openwith-associations . ((,(openwith-make-extension-regexp '("mpg"
-                                                                       "mpeg"
-                                                                       "mp4"
-                                                                       "avi"
-                                                                       "wmv"
-                                                                       "mov"
-                                                                       "flv"
-                                                                       "ogm"
-                                                                       "ogg"
-                                                                       "mkv"))
-                                    "mpv"
-                                    (file))
-                                   (,(openwith-make-extension-regexp '("odt"
-                                                                       "ods"))
-                                    "libreoffice"
-                                    (file))
-                                   (,(openwith-make-extension-regexp '("xopp"))
-                                    "xournalpp"
-                                    (file))))))
-      (openwith-mode 1)))
+      (setopt large-file-warning-threshold nil
+              openwith-associations `((,(openwith-make-extension-regexp '("mpg"
+                                                                          "mpeg"
+                                                                          "mp4"
+                                                                          "avi"
+                                                                          "wmv"
+                                                                          "mov"
+                                                                          "flv"
+                                                                          "ogm"
+                                                                          "ogg"
+                                                                          "mkv"))
+                                       "mpv"
+                                       (file))
+                                      (,(openwith-make-extension-regexp '("odt"
+                                                                          "ods"))
+                                       "libreoffice"
+                                       (file))
+                                      (,(openwith-make-extension-regexp '("xopp"))
+                                       "xournalpp"
+                                       (file)))))
+    (openwith-mode 1))
 
 #+end_src
 
@@ -2108,7 +2045,7 @@ Adds more detail to the prompt in eshell with custome themes.
   (with-eval-after-load 'eshell
     (require 'eshell-syntax-highlighting))
   (with-eval-after-load 'eshell-syntax-highlighting
-    (customize-set-variable 'eshell-syntax-highlighting-global-mode t))
+    (setopt eshell-syntax-highlighting-global-mode t))
 
 #+end_src
 
@@ -2122,7 +2059,7 @@ Adds more detail to the prompt in eshell with custome themes.
       (autoload #'esh-autosuggest-mode "esh-autosuggest" nil t))
     (add-hook 'eshell-mode-hook #'esh-autosuggest-mode))
   (with-eval-after-load 'esh-autosuggest
-    (customize-set-variable 'esh-autosuggest-delay 0.5))
+    (setopt esh-autosuggest-delay 0.5))
 
 #+end_src
 
@@ -2144,9 +2081,8 @@ Some configurations to the built-in eshell.
 
     (require 'em-hist)
     (with-eval-after-load 'em-hist
-      (pg/customize-set-variables
-       '((eshell-history-size . 10000)
-         (eshell-hist-ignoredups . t)))
+      (setopt eshell-history-size 10000
+              eshell-hist-ignoredups t)
       (require 'esh-cmd)
       (with-eval-after-load 'esh-cmd
         (add-hook 'eshell-pre-command-hook #'eshell-save-some-history)))
@@ -2154,9 +2090,8 @@ Some configurations to the built-in eshell.
     (require 'esh-mode)
     (with-eval-after-load 'esh-mode
       (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-      (pg/customize-set-variables
-       '((eshell-buffer-maximum-lines . 10000)
-         (eshell-scroll-to-bottom-on-input . t)))))
+      (setopt eshell-buffer-maximum-lines 10000
+              eshell-scroll-to-bottom-on-input t)))
 
   (require 'esh-mode)
   (with-eval-after-load 'esh-mode
@@ -2165,7 +2100,7 @@ Some configurations to the built-in eshell.
     (autoload #'eshell "eshell" nil t))
   (with-eval-after-load 'eshell
     (require 'em-tramp)
-    (customize-set-variable 'eshell-prefer-lisp-functions t))
+    (setopt eshell-prefer-lisp-functions t))
   (with-eval-after-load 'general
     (pg/leader-keys
       "pe" '(eshell :which-key "eshell")))
@@ -2181,7 +2116,7 @@ Some configurations to the built-in eshell.
   (unless (fboundp 'vterm)
     (autoload #'vterm "vterm" nil t))
   (with-eval-after-load 'vterm
-    (customize-set-variable 'vterm-tramp-shells '(("ssh" "/bin/sh"))))
+    (setopt vterm-tramp-shells '(("ssh" "/bin/sh"))))
   (with-eval-after-load 'general
     (pg/leader-keys
       "pv" '(vterm :which-key "vterm")))
@@ -2223,8 +2158,8 @@ Note that the emacs built-in local dir creation can also be used and is more fle
   (with-eval-after-load 'projectile
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (when (file-directory-p "~/Projects")
-      (customize-set-variable 'projectile-project-search-path '("~/Projects")))
-    (customize-set-variable 'projectile-switch-project-action #'projectile-dired)
+      (setopt projectile-project-search-path '("~/Projects")))
+    (setopt projectile-switch-project-action #'projectile-dired)
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
     (diminish #'projectile-mode)
@@ -2260,7 +2195,7 @@ Allows for git commands to be applied to the current repository using the comman
   (with-eval-after-load 'magit
     (if pg/is-windows
         (setenv "SSH_ASKPASS" "git-gui--askpass"))
-    (customize-set-variable 'magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+    (setopt magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
   (with-eval-after-load 'general
     (pg/leader-keys
       "g" '(:ignore t :which-key "git")
@@ -2302,7 +2237,7 @@ Steps to get working:
     (with-eval-after-load 'magit
       (require 'forge))
     (with-eval-after-load 'forge
-      (customize-set-variable 'forge-add-default-bindings nil))
+      (setopt forge-add-default-bindings nil))
     (with-eval-after-load 'general
       (pg/leader-keys
         "gf" '(forge-pull :which-key "forge"))))
@@ -2348,9 +2283,8 @@ The ~lsp-ui-doc-focus-frame~ command allows to access the documentation frame of
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (with-eval-after-load 'lsp
     (require 'lsp-completion)
-    (pg/customize-set-variables
-     '((lsp-completion-provider . :none)
-       (lsp-keymap-prefix . "C-c l")))
+    (setopt lsp-completion-provider :none
+            lsp-keymap-prefix "C-c l")
     (lsp-enable-which-key-integration t))
   (with-eval-after-load 'general
     (pg/leader-keys
@@ -2369,10 +2303,9 @@ Displays useful doc on hover.
     (autoload #'lsp-ui-mode "lsp-ui" nil t))
   (add-hook 'lsp-mode-hook #'lsp-ui-mode)
   (with-eval-after-load 'lsp-ui
-    (pg/customize-set-variables
-     '((lsp-ui-doc-position . bottom)
-       (lsp-ui-doc-show-with-cursor . t)
-       (lsp-ui-doc-include-signature . t))))
+    (setopt lsp-ui-doc-position 'bottom
+            lsp-ui-doc-show-with-cursor t
+            lsp-ui-doc-include-signature t))
 
 #+end_src
 
@@ -2425,14 +2358,13 @@ For auto-completions while coding.
       (autoload #'company-indent-or-complete-common "company" nil t))
     (define-key lsp-mode-map (kbd "<tab>") #'company-indent-or-complete-common))
   (with-eval-after-load 'company
-    (pg/customize-set-variables
-     '((company-minimum-prefix-length . 1)
-       (company-idle-delay . 0.0)
-       (company-dabbrev-downcase . nil)
-       (company-tooltip-minimum-width . 40)
-       (company-tooltip-maximum-width . 60)))
+    (setopt company-minimum-prefix-length 1
+            company-idle-delay 0.0
+            company-dabbrev-downcase nil
+            company-tooltip-minimum-width 40
+            company-tooltip-maximum-width 60)
     (with-eval-after-load 'yasnippet
-      (customize-set-variable 'company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+      (setopt company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
 #+end_src
 
@@ -2461,7 +2393,7 @@ Remembers autocomplete selections.
     (with-eval-after-load 'prescient
       (require 'company-prescient)))
   (with-eval-after-load 'company-prescient
-    (customize-set-variable 'company-prescient-mode 1))
+    (setopt company-prescient-mode 1))
 
 #+end_src
 
@@ -2487,10 +2419,9 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
   (with-eval-after-load 'lsp-mode
     (require 'dap-mode))
   (with-eval-after-load 'dap-mode
-    (pg/customize-set-variables
-     '((dap-mode . 1)
-       (dap-ui-mode . 1)
-       (dap-ui-controls-mode . 1))))
+    (setopt dap-mode 1
+            dap-ui-mode 1
+            dap-ui-controls-mode 1))
 
 #+end_src
 
@@ -2502,10 +2433,9 @@ Allows writing textual descriptions for creating uml diagrams
 
   (straight-use-package 'plantuml-mode)
   (with-eval-after-load 'plantuml-mode
-    (pg/customize-set-variables
-     `((plantuml-indent-level . 4)
-       (plantuml-jar-path . ,(expand-file-name "~/.guix-extra-profiles/emacs/emacs/share/java/plantuml.jar"))
-       (plantuml-default-exec-mode jar))))
+    (setopt plantuml-indent-level 4
+            ;; plantuml-jar-path (expand-file-name "~/.guix-home/share/java/plantuml.jar")
+            plantuml-default-exec-mode 'jar))
 
 #+end_src
 
@@ -2539,11 +2469,10 @@ Allows writing textual descriptions for creating uml diagrams
           (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
 
-  (customize-set-variable 'major-mode-remap-alist
-                          '((sh-mode . bash-ts-mode)
-                            (python-mode . python-ts-mode)
-                            (javascript-mode . tsx-ts-mode)
-                            (clojure-mode . clojure-ts-mode)))
+  (setopt major-mode-remap-alist '((sh-mode . bash-ts-mode)
+                                   (python-mode . python-ts-mode)
+                                   (javascript-mode . tsx-ts-mode)
+                                   (clojure-mode . clojure-ts-mode)))
 
 #+end_src
 
@@ -2647,7 +2576,7 @@ Collection of code snippets for yasnippet.
   ;; (add-hook 'alloy-mode-hook #'(lambda ()
   ;;                                (setq indent-tabs-mode nil)))
   ;; (with-eval-after-load 'alloy-mode
-  ;;   (customize-set-variable 'alloy-base-offset 4))
+  ;;   (setopt alloy-base-offset 4))
 
 #+end_src
 
@@ -2704,16 +2633,15 @@ Collection of code snippets for yasnippet.
       (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
     (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
     (with-eval-after-load 'arduino-mode
-      (pg/customize-set-variables
-       `((arduino-executable . ,(expand-file-name "~/bin/arduino-flat"))
-         (arduino-mode-home . "~/Projects/Arduino/")))
+      (setopt arduino-executable (expand-file-name "~/bin/arduino-flat")
+              arduino-mode-home "~/Projects/Arduino/")
       (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)
       (with-eval-after-load 'lsp-mode
         (add-to-list 'lsp-language-id-configuration '(arduino-mode . "arduino"))
         (lsp-register-client
          (make-lsp--client
           :new-connection (lsp-stdio-connection `("arduino-language-server"
-                                                  "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
+                                                  ;; "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
                                                   "-cli" ,(expand-file-name "~/Packages/arduino-cli")
                                                   "-cli-config" ,(expand-file-name "~/.arduino15/arduino-cli.yaml")
                                                   "-fqbn" "arduino:avr:uno"))
@@ -2760,8 +2688,9 @@ Collection of code snippets for yasnippet.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
+  ;; TODO: Get guix shell path with direnv
   (with-eval-after-load 'cc-mode
-    (customize-set-variable 'company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
+    (setopt company-clang-executable (concat (getenv "GUIX_EXTRA_PROFILES") "/cc/cc/bin/clang")))
 
 #+end_src
 
@@ -2772,7 +2701,7 @@ Collection of code snippets for yasnippet.
   (with-eval-after-load 'cc-mode
     (require 'cc-vars))
   (with-eval-after-load 'cc-vars
-    (customize-set-variable 'c-basic-offset 4))
+    (setopt c-basic-offset 4))
 
 #+end_src
 
@@ -2790,7 +2719,7 @@ Collection of code snippets for yasnippet.
     (with-eval-after-load 'cc-mode
       (require 'company-c-headers)))
   (with-eval-after-load 'company-c-headers
-    (customize-set-variable 'company-c-headers-path-system 'pg/company-c-headers-get-system-path)
+    (setopt company-c-headers-path-system 'pg/company-c-headers-get-system-path)
     (add-to-list 'company-backends '(company-c-headers :with company-yasnippet)))
 
 #+end_src
@@ -2888,7 +2817,7 @@ Collection of code snippets for yasnippet.
   (unless (fboundp 'sly)
     (autoload #'sly "sly" nil t))
   (with-eval-after-load 'sly
-    (customize-set-variable 'inferior-lisp-program "sbcl"))
+    (setopt inferior-lisp-program "sbcl"))
 
 #+end_src
 
@@ -2916,7 +2845,7 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-css.el
 
   (with-eval-after-load 'css-mode
-    (customize-set-variable 'css-indent-offset 2))
+    (setopt css-indent-offset 2))
 
 #+end_src
 
@@ -3046,9 +2975,8 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gdscript.el
 
   (straight-use-package 'gdscript-mode)
-  (pg/customize-set-variables
-   '((lsp-gdscript-port . 6008)
-     (gdscript-use-tab-indents . nil)))
+  (setopt lsp-gdscript-port 6008
+          gdscript-use-tab-indents nil)
 
 #+end_src
 
@@ -3132,7 +3060,7 @@ Collection of code snippets for yasnippet.
 
   (straight-use-package 'haskell-mode)
   (with-eval-after-load 'haskell-mode
-    (customize-set-variable 'haskell-process-type 'ghci))
+    (setopt haskell-process-type 'ghci))
 
 #+end_src
 
@@ -3168,12 +3096,11 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-html.el
 
   (straight-use-package 'web-mode)
-  (pg/customize-set-variables
-   `((web-mode-css-indent-offset . 2)
-     (web-mode-code-indent-offset . 2)
-     (web-mode-markup-indent-offset . 2)
-     (web-mode-markup-comment-indent-offset . 2)
-     (web-mode-enable-curly-brace-indentation . t)))
+  (setopt web-mode-css-indent-offset 2
+          web-mode-code-indent-offset 2
+          web-mode-markup-indent-offset 2
+          web-mode-markup-comment-indent-offset 2
+          web-mode-enable-curly-brace-indentation t)
 
 #+end_src
 
@@ -3251,13 +3178,12 @@ Collection of code snippets for yasnippet.
                        lsp-java-boot))
       (require feature))
     (define-key lsp-mode-map (kbd "C-<return>") #'lsp-execute-code-action)
-    (pg/customize-set-variables
-     `((lsp-java-configuration-runtimes . [( :name "JavaSE-17"
-                                             :path ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")
-                                             :default t)])
-       (lsp-java-vmargs . ,(list "-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "--enable-preview"))
-       (lsp-java-java-path . "java")
-       (lsp-java-import-gradle-java-home . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/java/java")))))
+    (setopt lsp-java-configuration-runtimes `[( :name "JavaSE-17"
+                                                :path ,(getenv "JAVA_HOME")
+                                                :default t)]
+            lsp-java-vmargs (list "-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "--enable-preview")
+            lsp-java-java-path "java"
+            lsp-java-import-gradle-java-home (getenv "JAVA_HOME")))
 
 #+end_src
 
@@ -3288,7 +3214,7 @@ Collection of code snippets for yasnippet.
   (unless (fboundp 'javascript-mode)
     (autoload #'javascript-mode "js" nil t))
   (with-eval-after-load 'js
-    (customize-set-variable 'js-indent-level 2))
+    (setopt js-indent-level 2))
 
 #+end_src
 
@@ -3351,10 +3277,9 @@ Collection of code snippets for yasnippet.
     (autoload #'latex-mode "tex-mode" nil t))
   (add-to-list 'auto-mode-alist '("\\.tex\\'" . latex-mode))
   (with-eval-after-load 'tex
-    (pg/customize-set-variables
-     '((latex-run-command . "pdflatex")
-       (TeX-view-program-selection . ((output-pdf "PDF Tools")))
-       (TeX-source-correlate-start-server . t)))
+    (setopt latex-run-command "pdflatex"
+            TeX-view-program-selection '((output-pdf "PDF Tools"))
+            TeX-source-correlate-start-server t)
     (put 'tex-mode 'derived-mode-parent 'prog-mode))
 
 #+end_src
@@ -3489,7 +3414,7 @@ Custom syntax highlighting for LMC assembly language.
     (autoload #'mips-mode "mips-mode" nil t))
   (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
   (with-eval-after-load 'mips-mode
-    (customize-set-variable 'mips-tab-width 4))
+    (setopt mips-tab-width 4))
 
 #+end_src
 
@@ -3517,7 +3442,7 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-php.el
 
   (straight-use-package 'php-mode)
-  (customize-set-variable 'php-mode-lineup-cascaded-calls t)
+  (setopt php-mode-lineup-cascaded-calls t)
 
 #+end_src
 
@@ -3583,12 +3508,11 @@ Custom syntax highlighting for LMC assembly language.
   (add-hook 'inferior-python-mode-hook #'corfu-mode)
 
   (with-eval-after-load 'python
-    (pg/customize-set-variables
-     `((python-fill-docstring-style . django)
-       (python-shell-virtualenv-root . ,(expand-file-name "~/.conda/envs"))
-       (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
-       (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
-       (python-indent-offset . 4))))
+    (setopt python-fill-docstring-style 'django
+            python-shell-virtualenv-root (expand-file-name "~/.conda/envs")
+            python-indent-offset 4)
+    (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
+    (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol))
 
 #+end_src
 
@@ -3606,10 +3530,9 @@ Custom syntax highlighting for LMC assembly language.
     (add-hook 'conda-predeactivate-hook #'(lambda ()
                                             (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
                                             (setenv "JUPYTER_PATH")))
-    (pg/customize-set-variables
-     `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
-       (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
-       (conda-env-subdirectory . "envs")))
+    (setopt conda-anaconda-home (string-replace "/bin/conda" "" (executable-find "conda"))
+            conda-env-home-directory (expand-file-name "~/.conda/")
+            conda-env-subdirectory "envs")
     (unless (getenv "CONDA_DEFAULT_ENV")
       (conda-env-activate "ml_practice"))
     (with-eval-after-load 'conda
@@ -3628,9 +3551,8 @@ Custom syntax highlighting for LMC assembly language.
       (require 'lsp-pyright)))
 
   (with-eval-after-load 'lsp-pyright
-    (pg/customize-set-variables
-     `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/"))
-       (lsp-pyright-venv-directory . "envs"))))
+    (setopt lsp-pyright-venv-path (expand-file-name "~/.conda/envs/")
+            lsp-pyright-venv-directory "envs"))
 
 #+end_src
 
@@ -3642,7 +3564,7 @@ Custom syntax highlighting for LMC assembly language.
     (with-eval-after-load 'lsp-mode
       (require 'dap-python)))
   (with-eval-after-load 'dap-python
-    (customize-set-variable 'dap-python-debugger 'debugpy))
+    (setopt dap-python-debugger 'debugpy))
 
 #+end_src
 
@@ -3714,9 +3636,8 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-scala.el
 
   (straight-use-package 'lsp-metals)
-  (pg/customize-set-variables
-   `((lsp-metals-server-args . ("-J-Dmetals.allow-multiline-string-formatting=off" "-J-Dmetals.icons=unicode"))
-     (lsp-metals-enable-semantic-highlighting . t)))
+  (setopt lsp-metals-server-args '("-J-Dmetals.allow-multiline-string-formatting=off" "-J-Dmetals.icons=unicode")
+          lsp-metals-enable-semantic-highlighting t)
   (unless (fboundp 'lsp)
     (autoload #'lsp-deferred "lsp-mode"))
   (add-hook 'scala-mode-hook #'lsp)
@@ -3755,19 +3676,19 @@ Custom syntax highlighting for LMC assembly language.
   (add-hook 'sql-interactive-mode-hook #'(lambda ()
                                            (toggle-truncate-lines t)))
   (with-eval-after-load 'sql
-    (customize-set-variable 'sql-connection-alist
-                            `((main (sql-product postgres)
-                                    (sql-port 5432)
-                                    (sql-server "localhost")
-                                    (sql-user "phil-gab99")
-                                    (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-                                    (sql-database "phil-gab99"))
-                              (school (sql-product postgres)
-                                      (sql-port 5432)
-                                      (sql-server "localhost")
-                                      (sql-user "phil-gab99")
-                                      (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-                                      (sql-database "ift2935")))))
+    (setopt sql-connection-alist
+            `((main (sql-product postgres)
+                    (sql-port 5432)
+                    (sql-server "localhost")
+                    (sql-user "phil-gab99")
+                    (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                    (sql-database "phil-gab99"))
+              (school (sql-product postgres)
+                      (sql-port 5432)
+                      (sql-server "localhost")
+                      (sql-user "phil-gab99")
+                      (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                      (sql-database "ift2935")))))
 
 #+end_src
 
@@ -3779,19 +3700,19 @@ Custom syntax highlighting for LMC assembly language.
     (with-eval-after-load 'lsp-mode
       (require 'lsp-sqls)))
   (with-eval-after-load 'lsp-sqls
-    (customize-set-variable 'lsp-sqls-connections
-                            `(,(cl-pairlis '(driver dataSourceName)
-                                           `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                                                     (pg/lookup-password :host "localhost"
-                                                                                         :user "phil-gab99"
-                                                                                         :port 5432)
-                                                                     " dbname=phil-gab99 sslmode=disable")))
-                              ,(cl-pairlis '(driver dataSourceName)
-                                           `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                                                     (pg/lookup-password :host "localhost"
-                                                                                         :user "phil-gab99"
-                                                                                         :port 5432)
-                                                                     " dbname=ift2935 sslmode=disable"))))))
+    (setopt lsp-sqls-connections
+            `(,(cl-pairlis '(driver dataSourceName)
+                           `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
+                                                     (pg/lookup-password :host "localhost"
+                                                                         :user "phil-gab99"
+                                                                         :port 5432)
+                                                     " dbname=phil-gab99 sslmode=disable")))
+              ,(cl-pairlis '(driver dataSourceName)
+                           `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
+                                                     (pg/lookup-password :host "localhost"
+                                                                         :user "phil-gab99"
+                                                                         :port 5432)
+                                                     " dbname=ift2935 sslmode=disable"))))))
 
 #+end_src
 
@@ -3841,7 +3762,7 @@ Custom syntax highlighting for LMC assembly language.
                  rainbow-mode))
     (add-hook 'tsx-ts-mode-hook fn))
   (with-eval-after-load 'typescript-mode
-    (customize-set-variable 'typescript-indent-level 2))
+    (setopt typescript-indent-level 2))
 
 #+end_src
 
@@ -3880,7 +3801,7 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-xml.el
 
-  (customize-set-variable 'nxml-slash-auto-complete-flag t)
+  (setopt nxml-slash-auto-complete-flag t)
 
 #+end_src
 
@@ -3938,7 +3859,7 @@ Custom syntax highlighting for LMC assembly language.
     (straight-use-package 'alert)
     (require 'alert)
     (with-eval-after-load 'alert
-      (customize-set-variable 'alert-default-style 'notifications)))
+      (setopt alert-default-style 'notifications)))
 
 #+end_src
 
@@ -4037,30 +3958,29 @@ Org mode package for writing structured documents and more. Here are some useful
   (add-hook 'org-mode-hook #'(lambda ()
                                (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
   (with-eval-after-load 'org
-    (pg/customize-set-variables
-     `((org-ellipsis . " ▾")
-       (org-hide-emphasis-markers . t)
-       (org-auto-align-tags . nil)
-       (org-tags-column . 0)
-       (org-catch-invisible-edits . show-and-error)
-       (org-special-ctrl-a/e . t)
-       (org-insert-heading-respect-content . t)
-       (org-pretty-entities . t)
-       (org-log-done . time)
-       (org-fontify-quote-and-verse-blocks . t)
-       (org-log-into-drawer . t)
-       (org-deadline-warning-days . 7)
-       (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
-       (org-plantuml-jar-path . "~/.guix-extra-profiles/emacs/emacs/share/java/plantuml.jar")
-       (org-babel-python-command . "python3")
-       (org-confirm-babel-evaluate . nil)
-       (org-agenda-exporter-settings . ((ps-left-header (org-agenda-write-buffer-name))
-                                        (ps-right-header ("/pagenumberstring load" ,(lambda ()
-                                                                                      (format-time-string "%d/%m/%Y"))))
-                                        (ps-font-size (12 . 11))
-                                        (ps-top-margin 55)
-                                        (ps-left-margin 35)
-                                        (ps-right-margin 30)))))
+    (setopt org-ellipsis " ▾"
+            org-hide-emphasis-markers t
+            org-auto-align-tags nil
+            org-tags-column 0
+            org-catch-invisible-edits 'show-and-error
+            org-special-ctrl-a/e t
+            org-insert-heading-respect-content t
+            org-pretty-entities t
+            org-log-done 'time
+            org-fontify-quote-and-verse-blocks t
+            org-log-into-drawer t
+            org-deadline-warning-days 7
+            org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
+            ;; org-plantuml-jar-path (expand-file-name "~/.guix-home/profile/share/java/plantuml.jar")
+            org-babel-python-command "python3"
+            org-confirm-babel-evaluate nil
+            org-agenda-exporter-settings `((ps-left-header (org-agenda-write-buffer-name))
+                                           (ps-right-header ("/pagenumberstring load" ,(lambda ()
+                                                                                         (format-time-string "%d/%m/%Y"))))
+                                           (ps-font-size (12 . 11))
+                                           (ps-top-margin 55)
+                                           (ps-left-margin 35)
+                                           (ps-right-margin 30)))
 
     (require 'org-indent)
     (dolist (face '((org-level-1 . 1.2)
@@ -4119,70 +4039,69 @@ Org mode package for writing structured documents and more. Here are some useful
         "olb" '(org-mark-ring-goto :which-key "back")))
 
     (unless pg/is-termux
-      (pg/customize-set-variables
-       `((org-agenda-files . ("~/Sync/Agenda/"))
-         (org-link-frame-setup . ((vm . vm-visit-folder-other-frame)
-                                  (vm-imap . vm-visit-imap-folder-other-frame)
-                                  (gnus . org-gnus-no-new-news)
-                                  (file . find-file)
-                                  (wl . wl-other-frame)))
-         (org-agenda-custom-commands . (("d" "Dashboard"
-                                         ((agenda ""
-                                                  ((org-deadline-warning-days 7)))
-                                          (todo "TODO"
-                                                ((org-agenda-overriding-header "Tasks")))
-                                          (tags-todo "agenda/ACTIVE"
-                                                     ((org-agenda-overriding-header "Active Tasks")))))
+      (setopt org-agenda-files '("~/Sync/Agenda/")
+              org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                                     (vm-imap . vm-visit-imap-folder-other-frame)
+                                     (gnus . org-gnus-no-new-news)
+                                     (file . find-file)
+                                     (wl . wl-other-frame))
+              org-agenda-custom-commands '(("d" "Dashboard"
+                                            ((agenda ""
+                                                     ((org-deadline-warning-days 7)))
+                                             (todo "TODO"
+                                                   ((org-agenda-overriding-header "Tasks")))
+                                             (tags-todo "agenda/ACTIVE"
+                                                        ((org-agenda-overriding-header "Active Tasks")))))
 
-                                        ("Z" "TODOs"
-                                         ((todo "TODO"
-                                                ((org-agenda-overriding-header "Todos")))))
+                                           ("Z" "TODOs"
+                                            ((todo "TODO"
+                                                   ((org-agenda-overriding-header "Todos")))))
 
-                                        ("m" "Misc" tags-todo "other")
+                                           ("m" "Misc" tags-todo "other")
 
-                                        ("s" "Schedule" agenda ""
-                                         ((org-agenda-files org-agenda-files)))
+                                           ("s" "Schedule" agenda ""
+                                            ((org-agenda-files org-agenda-files)))
 
-                                        ("w" "Work Status"
-                                         ((todo "WAIT"
-                                                ((org-agenda-overriding-header "Waiting")
-                                                 (org-agenda-files org-agenda-files)))
-                                          (todo "REVIEW"
-                                                ((org-agenda-overriding-header "In Review")
-                                                 (org-agenda-files org-agenda-files)))
-                                          (todo "HOLD"
-                                                ((org-agenda-overriding-header "On Hold")
-                                                 (org-agenda-todo-list-sublevels nil)
-                                                 (org-agenda-files org-agenda-files)))
-                                          (todo "ACTIVE"
-                                                ((org-agenda-overriding-header "Active")
-                                                 (org-agenda-files org-agenda-files)))
-                                          (todo "COMPLETED"
-                                                ((org-agenda-overriding-header "Completed")
-                                                 (org-agenda-files org-agenda-files)))
-                                          (todo "CANC"
-                                                ((org-agenda-overriding-header "Cancelled")
-                                                 (org-agenda-files org-agenda-files)))))))
-         (org-capture-templates . (("t" "Tasks / Projects")
+                                           ("w" "Work Status"
+                                            ((todo "WAIT"
+                                                   ((org-agenda-overriding-header "Waiting")
+                                                    (org-agenda-files org-agenda-files)))
+                                             (todo "REVIEW"
+                                                   ((org-agenda-overriding-header "In Review")
+                                                    (org-agenda-files org-agenda-files)))
+                                             (todo "HOLD"
+                                                   ((org-agenda-overriding-header "On Hold")
+                                                    (org-agenda-todo-list-sublevels nil)
+                                                    (org-agenda-files org-agenda-files)))
+                                             (todo "ACTIVE"
+                                                   ((org-agenda-overriding-header "Active")
+                                                    (org-agenda-files org-agenda-files)))
+                                             (todo "COMPLETED"
+                                                   ((org-agenda-overriding-header "Completed")
+                                                    (org-agenda-files org-agenda-files)))
+                                             (todo "CANC"
+                                                   ((org-agenda-overriding-header "Cancelled")
+                                                    (org-agenda-files org-agenda-files))))))
+              org-capture-templates '(("t" "Tasks / Projects")
 
-                                   ("tt" "Task" entry
-                                    (file+olp "~/Sync/Agenda/Tasks.org" "Active")
-                                    "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+                                      ("tt" "Task" entry
+                                       (file+olp "~/Sync/Agenda/Tasks.org" "Active")
+                                       "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
-                                   ("tr" "Repeat" entry
-                                    (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
-                                    "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
+                                      ("tr" "Repeat" entry
+                                       (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
+                                       "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
 
-                                   ("j" "Meetings")
-                                   ("jm" "Meeting" entry
-                                    (file+olp "~/Sync/Agenda/Tasks.org" "Waiting")
-                                    "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
+                                      ("j" "Meetings")
+                                      ("jm" "Meeting" entry
+                                       (file+olp "~/Sync/Agenda/Tasks.org" "Waiting")
+                                       "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
-                                   ("m" "Email Workflow")
-                                   ("mr" "Follow Up" entry
-                                    (file+olp "~/Sync/Agenda/Mail.org" "Follow up")
-                                    "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
-         (org-format-latex-options . ,(plist-put org-format-latex-options :scale 1.5))))))
+                                      ("m" "Email Workflow")
+                                      ("mr" "Follow Up" entry
+                                       (file+olp "~/Sync/Agenda/Mail.org" "Follow up")
+                                       "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))
+              org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
 
 #+end_src
 
@@ -4191,14 +4110,13 @@ Org mode package for writing structured documents and more. Here are some useful
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (with-eval-after-load 'org-agenda
-    (pg/customize-set-variables
-     '((org-agenda-tags-column . 0)
-       (org-agenda-block-separator . ?─)
-       (org-agenda-start-with-log-mode . t)
-       (org-agenda-time-grid . ((daily today require-timed)
-                                (800 1000 1200 1400 1600 1800 2000)
-                                " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
-       (org-agenda-current-time-string . "◀── now ─────────────────────────────────────────────────"))))
+    (setopt org-agenda-tags-column 0
+            org-agenda-block-separator ?─
+            org-agenda-start-with-log-mode t
+            org-agenda-time-grid '((daily today require-timed)
+                                   (800 1000 1200 1400 1600 1800 2000)
+                                   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+            org-agenda-current-time-string "◀── now ─────────────────────────────────────────────────"))
 
 #+end_src
 
@@ -4223,7 +4141,7 @@ Manages contacts
 
   (straight-use-package 'org-contacts)
   (with-eval-after-load 'org-contacts
-    (customize-set-variable 'org-contacts-files `(,(expand-file-name "~/Sync/Social/contacts.org"))))
+    (setopt org-contacts-files (list (expand-file-name "~/Sync/Social/contacts.org"))))
 
 #+end_src
 
@@ -4261,12 +4179,11 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
       (add-hook command #'org-latex-preview))
     (add-hook 'org-tree-slide-play-hook #'pg/presentation-setup)
     (add-hook 'org-tree-slide-stop-hook #'pg/presentation-end)
-    (pg/customize-set-variables
-     '((org-tree-slide-activate-message . "Presentation started")
-       (org-tree-slide-deactivate-message . "Presentation ended")
-       (org-tree-slide-breadcrumbs . " > ")
-       (org-tree-slide-header . t)
-       (org-image-actual-width . nil))))
+    (setopt org-tree-slide-activate-message "Presentation started"
+            org-tree-slide-deactivate-message "Presentation ended"
+            org-tree-slide-breadcrumbs " > "
+            org-tree-slide-header t
+            org-image-actual-width nil))
 
 #+end_src
 
@@ -4278,11 +4195,10 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
   (unless (fboundp 'org-reveal-export-to-html)
     (autoload #'org-reveal-export-to-html "ox-reveal" nil t))
   (with-eval-after-load 'ox-reveal
-    (pg/customize-set-variables
-     '((org-reveal-root . "https://cdn.jsdelivr.net/npm/reveal.js")
-       (org-reveal-hlevel . 1)
-       (org-export-headline-levels . 6)
-       (org-reveal-theme . "league"))))
+    (setopt org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+            org-reveal-hlevel 1
+            org-export-headline-levels 6
+            org-reveal-theme "league"))
 
 #+end_src
 
@@ -4292,6 +4208,9 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
 
   (straight-use-package 'org-modern)
   (with-eval-after-load 'org
+    (setopt org-modern-list '((?+ . "○")
+                              (?- . "◉")
+                              (?* . "▪")))
     (global-org-modern-mode))
 
 #+end_src
@@ -4331,18 +4250,17 @@ Allows for markup language when composing email
     (autoload #'org-msg-mode "org-msg" nil t))
   (add-hook 'mu4e-compose-pre-hook #'org-msg-mode)
   (with-eval-after-load 'org-msg
-    (pg/customize-set-variables
-     `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
-       (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n"
-                                     "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
-       (org-msg-startup . "indent inlineimages hidestars")
-       (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
-       (org-msg-greeting-name-limit . 3)
-       (org-message-convert-citation . t)
-       (org-msg-default-alternatives . ((new html)
-                                        (reply-to-text html)
-                                        (reply-to-html html)))
-       (org-msg-recipient-names . nil))))
+    (setopt org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t"
+            org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n"
+                                      "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]")
+            org-msg-startup "indent inlineimages hidestars"
+            org-msg-greeting-fmt "\nBonjour/Hi %s,\n\n"
+            org-msg-greeting-name-limit 3
+            org-message-convert-citation t
+            org-msg-default-alternatives '((new html)
+                                           (reply-to-text html)
+                                           (reply-to-html html))
+            org-msg-recipient-names nil))
 
 #+end_src
 
@@ -4357,24 +4275,23 @@ Helps with note-taking strategies.
       (straight-use-package 'org-roam)
       (require 'org-roam))
     (with-eval-after-load 'org-roam
-      (pg/customize-set-variables
-       `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-         (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
-         (org-roam-capture-templates . (("d" "default" plain
-                                         "%?"
-                                         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                            "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                         :unnarrowed t)
-                                        ("a" "system admin" plain
-                                         "%?"
-                                         :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                            "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                         :unnarrowed t)
-                                        ("s" "distributed system design" plain
-                                         "%?"
-                                         :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                            "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                         :unnarrowed t)))))
+      (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+              org-roam-directory (expand-file-name "~/Documents/Notes")
+              org-roam-capture-templates '(("d" "default" plain
+                                            "%?"
+                                            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                               "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                            :unnarrowed t)
+                                           ("a" "system admin" plain
+                                            "%?"
+                                            :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                               "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                            :unnarrowed t)
+                                           ("s" "distributed system design" plain
+                                            "%?"
+                                            :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                               "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                            :unnarrowed t)))
       (org-roam-db-autosync-enable)
       (with-eval-after-load 'general
         (pg/leader-keys
@@ -4499,18 +4416,17 @@ Custom pomodoro timer
   (unless (fboundp 'elfeed)
     (autoload #'elfeed "elfeed" nil t))
   (with-eval-after-load 'elfeed
-    (pg/customize-set-variables
-     '((elfeed-feeds . ("https://www.gnu.org/software/guile/news/feed.xml"
-                        "https://planet.emacslife.com/atom.xml"
-                        "https://oneofus.la/have-emacs-will-hack/feed.xml"
-                        "http://oremacs.com/atom.xml"
-                        "https://updates.orgmode.org/feed/changes"
-                        "http://pragmaticemacs.com/feed/"
-                        "https://www.reddit.com/r/GUIX.rss"
-                        "https://www.reddit.com/r/emacs.rss"
-                        "https://www.reddit.com/r/orgmode.rss"
-                        "https://blog.tecosaur.com/tmio/rss.xml"))
-       (elfeed-search-filter . "@6-months-ago"))))
+    (setopt elfeed-feeds '("https://www.gnu.org/software/guile/news/feed.xml"
+                           "https://planet.emacslife.com/atom.xml"
+                           "https://oneofus.la/have-emacs-will-hack/feed.xml"
+                           "http://oremacs.com/atom.xml"
+                           "https://updates.orgmode.org/feed/changes"
+                           "http://pragmaticemacs.com/feed/"
+                           "https://www.reddit.com/r/GUIX.rss"
+                           "https://www.reddit.com/r/emacs.rss"
+                           "https://www.reddit.com/r/orgmode.rss"
+                           "https://blog.tecosaur.com/tmio/rss.xml")
+            elfeed-search-filter "@6-months-ago"))
 
 #+end_src
 
@@ -4573,10 +4489,9 @@ Allows for viewing of pdfs.
                                (setq-local face-remapping-alist
                                            '((default (:height 1.5) default)))))
   (with-eval-after-load 'dtk
-    (pg/customize-set-variables
-     '((dtk-module . "KJV")
-       (dtk-module-category . "Biblical Texts")
-       (dtk-word-wrap . t)))
+    (setopt dtk-module "KJV"
+            dtk-module-category "Biblical Texts"
+            dtk-word-wrap t)
     (with-eval-after-load 'evil
       (evil-define-key 'normal 'dtk-mode-map
         (kbd "C-j") #'dtk-forward-verse
@@ -4619,10 +4534,9 @@ Allows for viewing of pdfs.
     (autoload #'company-mode "company" nil t))
   (add-hook 'ledger-mode-hook #'company-mode)
   (with-eval-after-load 'ledger-mode
-    (pg/customize-set-variables
-     `((ledger-reconcile-default-commodity . "CAD")
-       (ledger-binary-path . ,(concat (getenv "GUIX_EXTRA_PROFILES") "/emacs/emacs/bin/ledger"))
-       (ledger-clear-whole-transaction . t))))
+    (setopt ledger-reconcile-default-commodity "CAD"
+            ledger-binary-path (concat (getenv "HOME") "/.guix-home/profile/bin/ledger")
+            ledger-clear-whole-transaction t))
 
 #+end_src
 
@@ -4653,12 +4567,11 @@ Allows for viewing of pdfs.
     (unless (fboundp 'corfu-mode)
       (autoload #'corfu-mode "corfu" nil t))
     (add-hook 'erc-mode-hook #'corfu-mode)
-    (pg/customize-set-variables
-     '((erc-server . "irc.libera.chat")
-       (erc-nick . "phil-gab99")
-       (erc-user . "Philippe Gabriel")
-       (erc-kill-buffer-on-part . t)
-       (erc-auto-query . bury))))
+    (setopt erc-server "irc.libera.chat"
+            erc-nick "phil-gab99"
+            erc-user "Philippe Gabriel"
+            erc-kill-buffer-on-part t
+            erc-auto-query bury))
 
 #+end_src
 
@@ -4684,9 +4597,8 @@ Allows for viewing of pdfs.
       "cmc" '(pg/ement-connect :which-key "start")))
 
   (with-eval-after-load 'ement
-    (pg/customize-set-variables
-     '((ement-room-prism . both)
-       (ement-room-sender-headers . t)))
+    (setopt ement-room-prism 'both
+            ement-room-sender-headers t)
     (with-eval-after-load 'general
       (pg/leader-keys
         "cmd" '(ement-disconnect :which-key "disconnect"))))
@@ -4701,9 +4613,8 @@ Allows for viewing of pdfs.
   (unless (fboundp 'slack-start)
     (autoload #'slack-start "slack" nil t))
   (with-eval-after-load 'slack
-    (pg/customize-set-variables
-     '((slack-prefer-current-team . t)
-       (slack-buffer-emojify . t)))
+    (setopt slack-prefer-current-team t
+            slack-buffer-emojify t)
     (slack-register-team :name "ift6755"
                          :default t
                          :token (pg/lookup-password :host "ift6755.slack.com"
@@ -4784,9 +4695,8 @@ Allows for viewing of pdfs.
     (autoload #'wttrin "wttrin" nil t))
   (with-eval-after-load 'wttrin
     (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
-    (pg/customize-set-variables
-     '((wttrin-default-cities . ("montreal"))
-       (wttrin-default-accept-language . ("Accept-Language" . "en-US")))))
+    (setopt wttrin-default-cities '("montreal")
+            wttrin-default-accept-language '("Accept-Language" . "en-US")))
 
 #+end_src
 
@@ -4853,11 +4763,10 @@ Allows for viewing of pdfs.
     (require 'emms-setup)
     (require 'emms-player-mpd)
     (add-hook 'emms-playlist-cleared #'emms-player-mpd-clear)
-    (pg/customize-set-variables
-     `((emms-source-file-default-directory . ,(expand-file-name "~/Music"))
-       (emms-player-mpd-music-directory . ,(expand-file-name "~/Music"))
-       (emms-player-list . (emms-player-mpd))
-       (emms-volume-change-function ,#'emms-volume-mpd-change)))
+    (setopt emms-source-file-default-directory (expand-file-name "~/Music")
+            emms-player-mpd-music-directory (expand-file-name "~/Music")
+            emms-player-list (emms-player-mpd)
+            emms-volume-change-function #'emms-volume-mpd-change)
     (emms-all)
     (emms-default-players)
     (add-to-list 'emms-player-list 'emms-player-mpd)
@@ -4887,7 +4796,7 @@ Allows for viewing of pdfs.
   (with-eval-after-load 'emms-mode-line-cycle
     (require 'emms-mode-line-icon)
     (fset #'emms-mode-line-cycle--icon-function #'pg/emms-mode-line-cycle--icon-function)
-    (customize-set-variable 'emms-mode-line-cycle-use-icon-p t)
+    (setopt emms-mode-line-cycle-use-icon-p t)
     (emms-mode-line 1)
     (emms-playing-time 1)
     (emms-mode-line-cycle 1))
@@ -4933,9 +4842,8 @@ Allows for viewing of pdfs.
   (unless (fboundp 'sudoku)
     (autoload #'sudoku "sudoku" nil t))
   (with-eval-after-load 'sudoku
-    (pg/customize-set-variables
-     '((sudoku-style . unicode)
-       (sudoku-level . hard))))
+    (setopt sudoku-style 'unicode
+            sudoku-level 'hard))
 
 #+end_src
 
@@ -5096,7 +5004,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   ;;; early-init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
-  (customize-set-variable 'package-enable-at-startup nil)
+  (setopt package-enable-at-startup nil)
 
 #+end_src
 
@@ -5147,27 +5055,15 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (if pg/exwm-enabled (pg/kill-panel))
     (save-buffers-kill-emacs))
 
-  (defun pg/customize-set-variables (custom-sets)
-    "Sets the value of custom variables using `customize-set-variable'.
-      The CUSTOM-SETS argument represents a plist where each entry's key is the
-      custom variable one wishes to set and the corresponding value is the value to
-      set to the custom variable."
-    (mapcar (lambda (setting)
-              (let ((custom (car setting))
-                    (value (cdr setting)))
-                (customize-set-variable custom value)))
-            custom-sets))
-
   (global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
 
-  (pg/customize-set-variables
-   `((load-prefer-newer . t)
-     (use-short-answers . t)
-     (auto-save-list-file-prefix . ,(expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory))
-     (warning-suppress-log-types . (lsp-mode))
-     (warning-suppress-types . (lsp-mode))
-     (warning-minimum-level . :error)
-     (help-at-pt-display-when-idle . t)))
+  (setopt load-prefer-newer t
+          use-short-answers t
+          auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+          warning-suppress-log-types '(lsp-mode)
+          warning-suppress-types '(lsp-mode)
+          warning-minimum-level :error
+          help-at-pt-display-when-idle t)
 
   ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 
@@ -5244,7 +5140,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
      'org-babel-load-languages '((emacs-lisp . t)
                                  (java . t)
                                  (shell . t)
-                                 (plantuml . t)
+                                 ;; (plantuml . t)
                                  (python . t)
                                  (arduino . t)
                                  (jupyter . t)))

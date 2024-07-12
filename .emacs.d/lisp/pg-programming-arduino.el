@@ -31,16 +31,15 @@
     (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
   (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
   (with-eval-after-load 'arduino-mode
-    (pg/customize-set-variables
-     `((arduino-executable . ,(expand-file-name "~/bin/arduino-flat"))
-       (arduino-mode-home . "~/Projects/Arduino/")))
+    (setopt arduino-executable (expand-file-name "~/bin/arduino-flat")
+            arduino-mode-home "~/Projects/Arduino/")
     (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)
     (with-eval-after-load 'lsp-mode
       (add-to-list 'lsp-language-id-configuration '(arduino-mode . "arduino"))
       (lsp-register-client
        (make-lsp--client
         :new-connection (lsp-stdio-connection `("arduino-language-server"
-                                                "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
+                                                ;; "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
                                                 "-cli" ,(expand-file-name "~/Packages/arduino-cli")
                                                 "-cli-config" ,(expand-file-name "~/.arduino15/arduino-cli.yaml")
                                                 "-fqbn" "arduino:avr:uno"))

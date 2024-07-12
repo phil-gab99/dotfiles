@@ -16,8 +16,7 @@
   (autoload #'wttrin "wttrin" nil t))
 (with-eval-after-load 'wttrin
   (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
-  (pg/customize-set-variables
-   '((wttrin-default-cities . ("montreal"))
-     (wttrin-default-accept-language . ("Accept-Language" . "en-US")))))
+  (setopt wttrin-default-cities '("montreal")
+          wttrin-default-accept-language '("Accept-Language" . "en-US")))
 
 (provide 'pg-weather)

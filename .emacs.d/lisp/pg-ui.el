@@ -41,13 +41,12 @@
 (straight-use-package 'doom-modeline)
 (require 'doom-modeline)
 (with-eval-after-load 'doom-modeline
-  (pg/customize-set-variables
-   '((doom-modeline-height . 17)
-     (doom-modeline-modal-icon . nil)
-     (doom-modeline-enable-word-count . t)
-     (doom-modeline-indent-info . t)
-     (doom-modeline-buffer-file-name-style . truncate-except-project)
-     (doom-modeline-mu4e . t)))
+  (setopt doom-modeline-height 17
+          doom-modeline-modal-icon nil
+          doom-modeline-enable-word-count t
+          doom-modeline-indent-info t
+          doom-modeline-buffer-file-name-style 'truncate-except-project
+          doom-modeline-mu4e t)
   (doom-modeline-mode 1))
 
 (defun pg/dashboard-setup-startup-hook ()
@@ -73,25 +72,16 @@
 (straight-use-package 'dashboard)
 (with-eval-after-load 'projectile
   (require 'dashboard)
-  ;; (with-eval-after-load 'nerd-icons
-  ;;   (require 'dashboard))
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook))
-(pg/customize-set-variables
- `((dashboard-items . ((recents . 5)
-                       (projects . 5)
-                       (agenda . 5)))
-   (dashboard-set-heading-icons . t)
-   (dashboard-set-file-icons . t)
-   (dashboard-display-icons-p . t)
-   ;; (dashboard-icon-type . all-the-icons)
-   ;; (dashboard-heading-icons . ((recents . "history")
-   ;;                             (bookmarks . "bookmark")
-   ;;                             (agenda . "calendar")
-   ;;                             (projects . "rocket")
-   ;;                             (registers . "database")))
-   (dashboard-match-agenda-entry . "task")
-   (dashboard-page-separator . "\n\f\n")
-   (dashboard-init-info . ,#'pg/display-startup-time)))
+(setopt dashboard-items '((recents . 5)
+                          (projects . 5)
+                          (agenda . 5))
+        dashboard-set-heading-icons t
+        dashboard-set-file-icons t
+        dashboard-display-icons-p t
+        dashboard-match-agenda-entry "task"
+        dashboard-page-separator "\n\f\n"
+        dashboard-init-info #'pg/display-startup-time)
 (with-eval-after-load 'dashboard
   (pg/dashboard-setup-startup-hook))
 

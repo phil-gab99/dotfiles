@@ -8,10 +8,9 @@
                              (setq-local face-remapping-alist
                                          '((default (:height 1.5) default)))))
 (with-eval-after-load 'dtk
-  (pg/customize-set-variables
-   '((dtk-module . "KJV")
-     (dtk-module-category . "Biblical Texts")
-     (dtk-word-wrap . t)))
+  (setopt dtk-module "KJV"
+          dtk-module-category "Biblical Texts"
+          dtk-word-wrap t)
   (with-eval-after-load 'evil
     (evil-define-key 'normal 'dtk-mode-map
       (kbd "C-j") #'dtk-forward-verse

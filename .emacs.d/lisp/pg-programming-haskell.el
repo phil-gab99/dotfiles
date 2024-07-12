@@ -3,6 +3,6 @@
 
 (straight-use-package 'haskell-mode)
 (with-eval-after-load 'haskell-mode
-  (customize-set-variable 'haskell-process-type 'ghci))
+  (setopt haskell-process-type 'ghci))
 
 (provide 'pg-programming-haskell)

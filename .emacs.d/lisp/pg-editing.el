@@ -105,9 +105,8 @@
   (autoload #'highlight-indent-guides-mode "rainbow-delimiters" nil t))
 (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
 (with-eval-after-load 'highlight-indent-guides
-  (pg/customize-set-variables
-   '((highlight-indent-guides-responsive . stack)
-     (highlight-indent-guides-method . character))))
+  (setopt highlight-indent-guides-responsive 'stack
+          highlight-indent-guides-method 'character))
 
 (defvar pg/sp-post-command-count 0
   "Number of commands called after a pair has been opened.")
@@ -205,17 +204,16 @@
     (add-to-list 'evil-emacs-state-modes mode)))
 
 (straight-use-package 'evil)
-(customize-set-variable 'evil-want-keybinding nil)
+(setopt evil-want-keybinding nil)
 (add-hook 'evil-mode-hook #'pg/evil-hook)
 (require 'evil)
 (with-eval-after-load 'evil
-  (pg/customize-set-variables
-   `((evil-want-integration . t)
-     (evil-want-C-u-scroll . t)
-     (evil-want-C-i-jump . nil)
-     (evil-want-Y-yank-to-eol . t)
-     (evil-want-fine-undo . t)
-     (evil-undo-system . ,#'undo-redo)))
+  (setopt evil-want-integration t
+          evil-want-C-u-scroll t
+          evil-want-C-i-jump nil
+          evil-want-Y-yank-to-eol t
+          evil-want-fine-undo t
+          evil-undo-system #'undo-redo)
   (unless (fboundp 'evil-normal-state)
     (autoload #'evil-normal-state "evil-states"))
   (define-key evil-insert-state-map (kbd "C-g") #'evil-normal-state)

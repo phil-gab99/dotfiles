@@ -14,9 +14,8 @@
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (with-eval-after-load 'lsp
   (require 'lsp-completion)
-  (pg/customize-set-variables
-   '((lsp-completion-provider . :none)
-     (lsp-keymap-prefix . "C-c l")))
+  (setopt lsp-completion-provider :none
+          lsp-keymap-prefix "C-c l")
   (lsp-enable-which-key-integration t))
 (with-eval-after-load 'general
   (pg/leader-keys
@@ -27,10 +26,9 @@
   (autoload #'lsp-ui-mode "lsp-ui" nil t))
 (add-hook 'lsp-mode-hook #'lsp-ui-mode)
 (with-eval-after-load 'lsp-ui
-  (pg/customize-set-variables
-   '((lsp-ui-doc-position . bottom)
-     (lsp-ui-doc-show-with-cursor . t)
-     (lsp-ui-doc-include-signature . t))))
+  (setopt lsp-ui-doc-position 'bottom
+          lsp-ui-doc-show-with-cursor t
+          lsp-ui-doc-include-signature t))
 
 (straight-use-package 'lsp-treemacs)
 (with-eval-after-load 'lsp-mode
@@ -67,14 +65,13 @@
     (autoload #'company-indent-or-complete-common "company" nil t))
   (define-key lsp-mode-map (kbd "<tab>") #'company-indent-or-complete-common))
 (with-eval-after-load 'company
-  (pg/customize-set-variables
-   '((company-minimum-prefix-length . 1)
-     (company-idle-delay . 0.0)
-     (company-dabbrev-downcase . nil)
-     (company-tooltip-minimum-width . 40)
-     (company-tooltip-maximum-width . 60)))
+  (setopt company-minimum-prefix-length 1
+          company-idle-delay 0.0
+          company-dabbrev-downcase nil
+          company-tooltip-minimum-width 40
+          company-tooltip-maximum-width 60)
   (with-eval-after-load 'yasnippet
-    (customize-set-variable 'company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+    (setopt company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
 (straight-use-package 'company-box)
 (unless (fboundp 'company-box-mode)
@@ -87,7 +84,7 @@
   (with-eval-after-load 'prescient
     (require 'company-prescient)))
 (with-eval-after-load 'company-prescient
-  (customize-set-variable 'company-prescient-mode 1))
+  (setopt company-prescient-mode 1))
 
 (straight-use-package 'flycheck)
 (unless (fboundp 'flycheck-mode)
@@ -97,17 +94,15 @@
 (with-eval-after-load 'lsp-mode
   (require 'dap-mode))
 (with-eval-after-load 'dap-mode
-  (pg/customize-set-variables
-   '((dap-mode . 1)
-     (dap-ui-mode . 1)
-     (dap-ui-controls-mode . 1))))
+  (setopt dap-mode 1
+          dap-ui-mode 1
+          dap-ui-controls-mode 1))
 
 (straight-use-package 'plantuml-mode)
 (with-eval-after-load 'plantuml-mode
-  (pg/customize-set-variables
-   `((plantuml-indent-level . 4)
-     (plantuml-jar-path . ,(expand-file-name "~/.guix-extra-profiles/emacs/emacs/share/java/plantuml.jar"))
-     (plantuml-default-exec-mode jar))))
+  (setopt plantuml-indent-level 4
+          ;; plantuml-jar-path (expand-file-name "~/.guix-home/share/java/plantuml.jar")
+          plantuml-default-exec-mode 'jar))
 
 (straight-use-package 'comment-dwim-2)
 (unless (fboundp 'comment-dwim-2)
@@ -129,11 +124,10 @@
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
 
-(customize-set-variable 'major-mode-remap-alist
-                        '((sh-mode . bash-ts-mode)
-                          (python-mode . python-ts-mode)
-                          (javascript-mode . tsx-ts-mode)
-                          (clojure-mode . clojure-ts-mode)))
+(setopt major-mode-remap-alist '((sh-mode . bash-ts-mode)
+                                 (python-mode . python-ts-mode)
+                                 (javascript-mode . tsx-ts-mode)
+                                 (clojure-mode . clojure-ts-mode)))
 
 (straight-use-package 'yasnippet)
 (unless (fboundp 'yas-minor-mode)

@@ -13,12 +13,11 @@
 (add-hook 'inferior-python-mode-hook #'corfu-mode)
 
 (with-eval-after-load 'python
-  (pg/customize-set-variables
-   `((python-fill-docstring-style . django)
-     (python-shell-virtualenv-root . ,(expand-file-name "~/.conda/envs"))
-     (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
-     (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol)
-     (python-indent-offset . 4))))
+  (setopt python-fill-docstring-style 'django
+          python-shell-virtualenv-root (expand-file-name "~/.conda/envs")
+          python-indent-offset 4)
+  (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
+  (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol))
 
 (straight-use-package 'conda)
 (when (executable-find "conda")
@@ -30,10 +29,9 @@
   (add-hook 'conda-predeactivate-hook #'(lambda ()
                                           (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
                                           (setenv "JUPYTER_PATH")))
-  (pg/customize-set-variables
-   `((conda-anaconda-home . ,(string-replace "/bin/conda" "" (executable-find "conda")))
-     (conda-env-home-directory . ,(expand-file-name "~/.conda/"))
-     (conda-env-subdirectory . "envs")))
+  (setopt conda-anaconda-home (string-replace "/bin/conda" "" (executable-find "conda"))
+          conda-env-home-directory (expand-file-name "~/.conda/")
+          conda-env-subdirectory "envs")
   (unless (getenv "CONDA_DEFAULT_ENV")
     (conda-env-activate "ml_practice"))
   (with-eval-after-load 'conda
@@ -46,15 +44,14 @@
     (require 'lsp-pyright)))
 
 (with-eval-after-load 'lsp-pyright
-  (pg/customize-set-variables
-   `((lsp-pyright-venv-path . ,(expand-file-name "~/.conda/envs/"))
-     (lsp-pyright-venv-directory . "envs"))))
+  (setopt lsp-pyright-venv-path (expand-file-name "~/.conda/envs/")
+          lsp-pyright-venv-directory "envs"))
 
 (with-eval-after-load 'python
   (with-eval-after-load 'lsp-mode
     (require 'dap-python)))
 (with-eval-after-load 'dap-python
-  (customize-set-variable 'dap-python-debugger 'debugpy))
+  (setopt dap-python-debugger 'debugpy))
 
 (defun pg/jupyter-refresh-kernelspecs ()
   "Refresh Jupyter kernelspecs"

@@ -10,10 +10,9 @@
   (autoload #'latex-mode "tex-mode" nil t))
 (add-to-list 'auto-mode-alist '("\\.tex\\'" . latex-mode))
 (with-eval-after-load 'tex
-  (pg/customize-set-variables
-   '((latex-run-command . "pdflatex")
-     (TeX-view-program-selection . ((output-pdf "PDF Tools")))
-     (TeX-source-correlate-start-server . t)))
+  (setopt latex-run-command "pdflatex"
+          TeX-view-program-selection '((output-pdf "PDF Tools"))
+          TeX-source-correlate-start-server t)
   (put 'tex-mode 'derived-mode-parent 'prog-mode))
 
 (straight-use-package 'company-auctex)

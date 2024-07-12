@@ -5,9 +5,8 @@
 (unless (fboundp 'sudoku)
   (autoload #'sudoku "sudoku" nil t))
 (with-eval-after-load 'sudoku
-  (pg/customize-set-variables
-   '((sudoku-style . unicode)
-     (sudoku-level . hard))))
+  (setopt sudoku-style 'unicode
+          sudoku-level 'hard))
 
 (straight-use-package 'sokoban)
 (unless (fboundp 'sokoban)

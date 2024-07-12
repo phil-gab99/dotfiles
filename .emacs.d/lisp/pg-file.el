@@ -1,12 +1,11 @@
 ;;; pg-file.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(pg/customize-set-variables
- `((backup-directory-alist . (("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
-   (enable-remote-dir-locals . t)
-   (auto-save-file-name-transforms . ((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
-   (safe-local-variable-values . ((projectile-project-compilation-cmd . "./mvnw clean package")))
-   (vc-follow-symlinks . t)))
+(setopt backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
+        enable-remote-dir-locals t
+        auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t))
+        safe-local-variable-values '((projectile-project-compilation-cmd . "./mvnw clean package"))
+        vc-follow-symlinks t)
 
 (unless (fboundp 'dired)
   (autoload #'dired "dired" nil t))
@@ -14,7 +13,7 @@
   (autoload #'dired-jump "dired" nil t))
 (global-set-key (kbd "C-x C-j") #'dired-jump)
 (with-eval-after-load 'dired
-  (customize-set-variable 'dired-listing-switches "-Alh --group-directories-first"))
+  (setopt dired-listing-switches "-Alh --group-directories-first"))
 
 (straight-use-package 'dired-single)
 (with-eval-after-load 'dired
@@ -49,28 +48,27 @@
 (unless pg/is-termux
   (straight-use-package 'openwith)
   (when (require 'openwith nil 'noerror)
-    (pg/customize-set-variables
-     `((large-file-warning-threshold . nil)
-       (openwith-associations . ((,(openwith-make-extension-regexp '("mpg"
-                                                                     "mpeg"
-                                                                     "mp4"
-                                                                     "avi"
-                                                                     "wmv"
-                                                                     "mov"
-                                                                     "flv"
-                                                                     "ogm"
-                                                                     "ogg"
-                                                                     "mkv"))
-                                  "mpv"
-                                  (file))
-                                 (,(openwith-make-extension-regexp '("odt"
-                                                                     "ods"))
-                                  "libreoffice"
-                                  (file))
-                                 (,(openwith-make-extension-regexp '("xopp"))
-                                  "xournalpp"
-                                  (file))))))
-    (openwith-mode 1)))
+    (setopt large-file-warning-threshold nil
+            openwith-associations `((,(openwith-make-extension-regexp '("mpg"
+                                                                        "mpeg"
+                                                                        "mp4"
+                                                                        "avi"
+                                                                        "wmv"
+                                                                        "mov"
+                                                                        "flv"
+                                                                        "ogm"
+                                                                        "ogg"
+                                                                        "mkv"))
+                                     "mpv"
+                                     (file))
+                                    (,(openwith-make-extension-regexp '("odt"
+                                                                        "ods"))
+                                     "libreoffice"
+                                     (file))
+                                    (,(openwith-make-extension-regexp '("xopp"))
+                                     "xournalpp"
+                                     (file)))))
+  (openwith-mode 1))
 
 (straight-use-package 'subed)
 (with-eval-after-load 'subed

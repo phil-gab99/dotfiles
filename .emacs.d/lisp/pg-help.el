@@ -54,8 +54,7 @@
   (add-hook mode #'(lambda ()
                      (visual-fill-column-mode 1))))
 (with-eval-after-load 'visual-fill-column
-  (pg/customize-set-variables
-   '((visual-fill-column-width . 150)
-     (visual-fill-column-center-text . t))))
+  (setopt visual-fill-column-width 150
+          visual-fill-column-center-text t))
 
 (provide 'pg-help)

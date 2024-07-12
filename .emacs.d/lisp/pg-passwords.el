@@ -4,13 +4,13 @@
 (when pg/is-linux
   (require 'auth-source)
   (with-eval-after-load 'auth-source
-    (customize-set-variable 'auth-sources '("~/.authinfo.gpg"))))
+    (setopt auth-sources '("~/.authinfo.gpg"))))
 
 (unless (or pg/is-termux
             pg/is-windows)
   (require 'epg-config)
   (with-eval-after-load 'epg-config
-    (customize-set-variable 'epg-pinentry-mode 'loopback)))
+    (setopt epg-pinentry-mode 'loopback)))
 
 (unless (or pg/is-termux
             pg/is-windows)
@@ -20,7 +20,7 @@
 
 (require 'password-cache)
 (with-eval-after-load 'password-cache
-  (customize-set-variable 'password-cache-expiry (* 60 60 2)))
+  (setopt password-cache-expiry (* 60 60 2)))
 
 (unless pg/is-windows
   (straight-use-package 'password-store)
@@ -34,7 +34,7 @@
       "ac" '(password-store-copy :which-key "copy")
       "af" '(password-store-copy-field :which-key "copy field")))
   (with-eval-after-load 'password-store
-    (customize-set-variable 'password-store-time-before-clipboard-restore 60))
+    (setopt password-store-time-before-clipboard-restore 60))
 
 (defun pg/lookup-password (&rest keys)
   "Looks up passwords from authinfo entries."

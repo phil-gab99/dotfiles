@@ -6,6 +6,6 @@
   (autoload #'mips-mode "mips-mode" nil t))
 (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
 (with-eval-after-load 'mips-mode
-  (customize-set-variable 'mips-tab-width 4))
+  (setopt mips-tab-width 4))
 
 (provide 'pg-programming-mips)

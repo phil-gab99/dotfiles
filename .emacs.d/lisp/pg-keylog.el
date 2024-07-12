@@ -13,7 +13,7 @@ Fix for use with doom-mode-line."
 (straight-use-package 'keycast)
 (require 'keycast)
 (with-eval-after-load 'keycast
-  (customize-set-variable 'keycast-mode-line-format "%2s%k%c%2s")
+  (setopt keycast-mode-line-format "%2s%k%c%2s")
   (fset #'keycast-mode #'pg/keycast-mode)
   (keycast-mode)
   (add-to-list 'global-mode-string '("" keycast-mode-line)))

@@ -2,6 +2,6 @@
 ;; Author: Philippe Gabriel
 
 (straight-use-package 'php-mode)
-(customize-set-variable 'php-mode-lineup-cascaded-calls t)
+(setopt php-mode-lineup-cascaded-calls t)
 
 (provide 'pg-programming-php)

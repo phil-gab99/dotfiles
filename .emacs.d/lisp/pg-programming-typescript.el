@@ -12,7 +12,7 @@
                rainbow-mode))
   (add-hook 'tsx-ts-mode-hook fn))
 (with-eval-after-load 'typescript-mode
-  (customize-set-variable 'typescript-indent-level 2))
+  (setopt typescript-indent-level 2))
 
 (with-eval-after-load 'typescript-mode
   (with-eval-after-load 'lsp-mode

@@ -65,30 +65,29 @@
 (add-hook 'org-mode-hook #'(lambda ()
                              (add-hook 'after-save-hook #'pg/org-babel-tangle-config)))
 (with-eval-after-load 'org
-  (pg/customize-set-variables
-   `((org-ellipsis . " ▾")
-     (org-hide-emphasis-markers . t)
-     (org-auto-align-tags . nil)
-     (org-tags-column . 0)
-     (org-catch-invisible-edits . show-and-error)
-     (org-special-ctrl-a/e . t)
-     (org-insert-heading-respect-content . t)
-     (org-pretty-entities . t)
-     (org-log-done . time)
-     (org-fontify-quote-and-verse-blocks . t)
-     (org-log-into-drawer . t)
-     (org-deadline-warning-days . 7)
-     (org-todo-keywords . ((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)")))
-     (org-plantuml-jar-path . "~/.guix-extra-profiles/emacs/emacs/share/java/plantuml.jar")
-     (org-babel-python-command . "python3")
-     (org-confirm-babel-evaluate . nil)
-     (org-agenda-exporter-settings . ((ps-left-header (org-agenda-write-buffer-name))
-                                      (ps-right-header ("/pagenumberstring load" ,(lambda ()
-                                                                                    (format-time-string "%d/%m/%Y"))))
-                                      (ps-font-size (12 . 11))
-                                      (ps-top-margin 55)
-                                      (ps-left-margin 35)
-                                      (ps-right-margin 30)))))
+  (setopt org-ellipsis " ▾"
+          org-hide-emphasis-markers t
+          org-auto-align-tags nil
+          org-tags-column 0
+          org-catch-invisible-edits 'show-and-error
+          org-special-ctrl-a/e t
+          org-insert-heading-respect-content t
+          org-pretty-entities t
+          org-log-done 'time
+          org-fontify-quote-and-verse-blocks t
+          org-log-into-drawer t
+          org-deadline-warning-days 7
+          org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
+          ;; org-plantuml-jar-path (expand-file-name "~/.guix-home/profile/share/java/plantuml.jar")
+          org-babel-python-command "python3"
+          org-confirm-babel-evaluate nil
+          org-agenda-exporter-settings `((ps-left-header (org-agenda-write-buffer-name))
+                                         (ps-right-header ("/pagenumberstring load" ,(lambda ()
+                                                                                       (format-time-string "%d/%m/%Y"))))
+                                         (ps-font-size (12 . 11))
+                                         (ps-top-margin 55)
+                                         (ps-left-margin 35)
+                                         (ps-right-margin 30)))
 
   (require 'org-indent)
   (dolist (face '((org-level-1 . 1.2)
@@ -147,80 +146,78 @@
       "olb" '(org-mark-ring-goto :which-key "back")))
 
   (unless pg/is-termux
-    (pg/customize-set-variables
-     `((org-agenda-files . ("~/Sync/Agenda/"))
-       (org-link-frame-setup . ((vm . vm-visit-folder-other-frame)
-                                (vm-imap . vm-visit-imap-folder-other-frame)
-                                (gnus . org-gnus-no-new-news)
-                                (file . find-file)
-                                (wl . wl-other-frame)))
-       (org-agenda-custom-commands . (("d" "Dashboard"
-                                       ((agenda ""
-                                                ((org-deadline-warning-days 7)))
-                                        (todo "TODO"
-                                              ((org-agenda-overriding-header "Tasks")))
-                                        (tags-todo "agenda/ACTIVE"
-                                                   ((org-agenda-overriding-header "Active Tasks")))))
+    (setopt org-agenda-files '("~/Sync/Agenda/")
+            org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                                   (vm-imap . vm-visit-imap-folder-other-frame)
+                                   (gnus . org-gnus-no-new-news)
+                                   (file . find-file)
+                                   (wl . wl-other-frame))
+            org-agenda-custom-commands '(("d" "Dashboard"
+                                          ((agenda ""
+                                                   ((org-deadline-warning-days 7)))
+                                           (todo "TODO"
+                                                 ((org-agenda-overriding-header "Tasks")))
+                                           (tags-todo "agenda/ACTIVE"
+                                                      ((org-agenda-overriding-header "Active Tasks")))))
 
-                                      ("Z" "TODOs"
-                                       ((todo "TODO"
-                                              ((org-agenda-overriding-header "Todos")))))
+                                         ("Z" "TODOs"
+                                          ((todo "TODO"
+                                                 ((org-agenda-overriding-header "Todos")))))
 
-                                      ("m" "Misc" tags-todo "other")
+                                         ("m" "Misc" tags-todo "other")
 
-                                      ("s" "Schedule" agenda ""
-                                       ((org-agenda-files org-agenda-files)))
+                                         ("s" "Schedule" agenda ""
+                                          ((org-agenda-files org-agenda-files)))
 
-                                      ("w" "Work Status"
-                                       ((todo "WAIT"
-                                              ((org-agenda-overriding-header "Waiting")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "REVIEW"
-                                              ((org-agenda-overriding-header "In Review")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "HOLD"
-                                              ((org-agenda-overriding-header "On Hold")
-                                               (org-agenda-todo-list-sublevels nil)
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "ACTIVE"
-                                              ((org-agenda-overriding-header "Active")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "COMPLETED"
-                                              ((org-agenda-overriding-header "Completed")
-                                               (org-agenda-files org-agenda-files)))
-                                        (todo "CANC"
-                                              ((org-agenda-overriding-header "Cancelled")
-                                               (org-agenda-files org-agenda-files)))))))
-       (org-capture-templates . (("t" "Tasks / Projects")
+                                         ("w" "Work Status"
+                                          ((todo "WAIT"
+                                                 ((org-agenda-overriding-header "Waiting")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "REVIEW"
+                                                 ((org-agenda-overriding-header "In Review")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "HOLD"
+                                                 ((org-agenda-overriding-header "On Hold")
+                                                  (org-agenda-todo-list-sublevels nil)
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "ACTIVE"
+                                                 ((org-agenda-overriding-header "Active")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "COMPLETED"
+                                                 ((org-agenda-overriding-header "Completed")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "CANC"
+                                                 ((org-agenda-overriding-header "Cancelled")
+                                                  (org-agenda-files org-agenda-files))))))
+            org-capture-templates '(("t" "Tasks / Projects")
 
-                                 ("tt" "Task" entry
-                                  (file+olp "~/Sync/Agenda/Tasks.org" "Active")
-                                  "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
+                                    ("tt" "Task" entry
+                                     (file+olp "~/Sync/Agenda/Tasks.org" "Active")
+                                     "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
-                                 ("tr" "Repeat" entry
-                                  (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
-                                  "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
+                                    ("tr" "Repeat" entry
+                                     (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
+                                     "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
 
-                                 ("j" "Meetings")
-                                 ("jm" "Meeting" entry
-                                  (file+olp "~/Sync/Agenda/Tasks.org" "Waiting")
-                                  "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
+                                    ("j" "Meetings")
+                                    ("jm" "Meeting" entry
+                                     (file+olp "~/Sync/Agenda/Tasks.org" "Waiting")
+                                     "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
-                                 ("m" "Email Workflow")
-                                 ("mr" "Follow Up" entry
-                                  (file+olp "~/Sync/Agenda/Mail.org" "Follow up")
-                                  "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1)))
-       (org-format-latex-options . ,(plist-put org-format-latex-options :scale 1.5))))))
+                                    ("m" "Email Workflow")
+                                    ("mr" "Follow Up" entry
+                                     (file+olp "~/Sync/Agenda/Mail.org" "Follow up")
+                                     "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))
+            org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
 
 (with-eval-after-load 'org-agenda
-  (pg/customize-set-variables
-   '((org-agenda-tags-column . 0)
-     (org-agenda-block-separator . ?─)
-     (org-agenda-start-with-log-mode . t)
-     (org-agenda-time-grid . ((daily today require-timed)
-                              (800 1000 1200 1400 1600 1800 2000)
-                              " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
-     (org-agenda-current-time-string . "◀── now ─────────────────────────────────────────────────"))))
+  (setopt org-agenda-tags-column 0
+          org-agenda-block-separator ?─
+          org-agenda-start-with-log-mode t
+          org-agenda-time-grid '((daily today require-timed)
+                                 (800 1000 1200 1400 1600 1800 2000)
+                                 " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+          org-agenda-current-time-string "◀── now ─────────────────────────────────────────────────"))
 
 (straight-use-package 'org-appear)
 (unless (fboundp 'org-appear-mode)
@@ -229,7 +226,7 @@
 
 (straight-use-package 'org-contacts)
 (with-eval-after-load 'org-contacts
-  (customize-set-variable 'org-contacts-files `(,(expand-file-name "~/Sync/Social/contacts.org"))))
+  (setopt org-contacts-files (list (expand-file-name "~/Sync/Social/contacts.org"))))
 
 (defun pg/presentation-setup ()
   "Setup before starting org presentation."
@@ -259,25 +256,26 @@
     (add-hook command #'org-latex-preview))
   (add-hook 'org-tree-slide-play-hook #'pg/presentation-setup)
   (add-hook 'org-tree-slide-stop-hook #'pg/presentation-end)
-  (pg/customize-set-variables
-   '((org-tree-slide-activate-message . "Presentation started")
-     (org-tree-slide-deactivate-message . "Presentation ended")
-     (org-tree-slide-breadcrumbs . " > ")
-     (org-tree-slide-header . t)
-     (org-image-actual-width . nil))))
+  (setopt org-tree-slide-activate-message "Presentation started"
+          org-tree-slide-deactivate-message "Presentation ended"
+          org-tree-slide-breadcrumbs " > "
+          org-tree-slide-header t
+          org-image-actual-width nil))
 
 (straight-use-package 'ox-reveal)
 (unless (fboundp 'org-reveal-export-to-html)
   (autoload #'org-reveal-export-to-html "ox-reveal" nil t))
 (with-eval-after-load 'ox-reveal
-  (pg/customize-set-variables
-   '((org-reveal-root . "https://cdn.jsdelivr.net/npm/reveal.js")
-     (org-reveal-hlevel . 1)
-     (org-export-headline-levels . 6)
-     (org-reveal-theme . "league"))))
+  (setopt org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+          org-reveal-hlevel 1
+          org-export-headline-levels 6
+          org-reveal-theme "league"))
 
 (straight-use-package 'org-modern)
 (with-eval-after-load 'org
+  (setopt org-modern-list '((?+ . "○")
+                            (?- . "◉")
+                            (?* . "▪")))
   (global-org-modern-mode))
 
 (unless pg/is-windows
@@ -301,42 +299,40 @@
   (autoload #'org-msg-mode "org-msg" nil t))
 (add-hook 'mu4e-compose-pre-hook #'org-msg-mode)
 (with-eval-after-load 'org-msg
-  (pg/customize-set-variables
-   `((org-msg-options . "html-postamble:nil toc:nil author:nil num:nil \\n:t")
-     (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n"
-                                   "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]"))
-     (org-msg-startup . "indent inlineimages hidestars")
-     (org-msg-greeting-fmt . "\nBonjour/Hi %s,\n\n")
-     (org-msg-greeting-name-limit . 3)
-     (org-message-convert-citation . t)
-     (org-msg-default-alternatives . ((new html)
-                                      (reply-to-text html)
-                                      (reply-to-html html)))
-     (org-msg-recipient-names . nil))))
+  (setopt org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t"
+          org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n"
+                                    "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]")
+          org-msg-startup "indent inlineimages hidestars"
+          org-msg-greeting-fmt "\nBonjour/Hi %s,\n\n"
+          org-msg-greeting-name-limit 3
+          org-message-convert-citation t
+          org-msg-default-alternatives '((new html)
+                                         (reply-to-text html)
+                                         (reply-to-html html))
+          org-msg-recipient-names nil))
 
 (unless pg/is-termux
   (with-eval-after-load 'org
     (straight-use-package 'org-roam)
     (require 'org-roam))
   (with-eval-after-load 'org-roam
-    (pg/customize-set-variables
-     `((org-roam-node-display-template . ,(concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-       (org-roam-directory . ,(expand-file-name "~/Documents/Notes"))
-       (org-roam-capture-templates . (("d" "default" plain
-                                       "%?"
-                                       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                          "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                       :unnarrowed t)
-                                      ("a" "system admin" plain
-                                       "%?"
-                                       :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                          "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                       :unnarrowed t)
-                                      ("s" "distributed system design" plain
-                                       "%?"
-                                       :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                          "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                       :unnarrowed t)))))
+    (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+            org-roam-directory (expand-file-name "~/Documents/Notes")
+            org-roam-capture-templates '(("d" "default" plain
+                                          "%?"
+                                          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)
+                                         ("a" "system admin" plain
+                                          "%?"
+                                          :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)
+                                         ("s" "distributed system design" plain
+                                          "%?"
+                                          :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)))
     (org-roam-db-autosync-enable)
     (with-eval-after-load 'general
       (pg/leader-keys
