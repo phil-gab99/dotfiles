@@ -21,6 +21,10 @@ button:focus, button:active, button:hover {
   outline-style: none;
 }
 
+#lock {
+  background-image: image(url("/home/phil-gab99/.guix-home/profile/share/wlogout/icons/lock.png"));
+}
+
 #logout {
   background-image: image(url("/home/phil-gab99/.guix-home/profile/share/wlogout/icons/logout.png"));
 }
@@ -31,4 +35,12 @@ button:focus, button:active, button:hover {
 
 #reboot {
   background-image: image(url("/home/phil-gab99/.guix-home/profile/share/wlogout/icons/reboot.png"));
+}
+
+#suspend {
+  background-image: image(url("/home/phil-gab99/.guix-home/profile/share/wlogout/icons/suspend.png"));
+}
+
+#hibernate {
+  background-image: image(url("/home/phil-gab99/.guix-home/profile/share/wlogout/icons/hibernate.png"));
 }

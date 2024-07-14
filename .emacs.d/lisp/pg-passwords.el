@@ -4,7 +4,8 @@
 (when pg/is-linux
   (require 'auth-source)
   (with-eval-after-load 'auth-source
-    (setopt auth-sources '("~/.authinfo.gpg"))))
+    (setopt auth-sources (list (concat (plist-get pg/user :home)
+                                       "/.authinfo.gpg")))))
 
 (unless (or pg/is-termux
             pg/is-windows)

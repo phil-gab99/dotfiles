@@ -92,7 +92,7 @@
 (straight-use-package 'which-key)
 (require 'which-key)
 (with-eval-after-load 'which-key
-  (setopt which-key-idle-delay 1)
+  (setopt which-key-idle-delay 1.0)
   (which-key-mode)
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))

@@ -1,3 +1,4 @@
+# -*- sh -*-
 ################################################################################
 # Loading profiles/environments
 ################################################################################
@@ -53,13 +54,20 @@ for p in ${paths[@]}; do
 done
 export XDG_DATA_DIRS
 
-# Some scripts make use of path to config directory
-export XDG_CONFIG_HOME="$HOME/.config"
-
-# Some scripts make use of path to cache directory
-export XDG_CACHE_HOME="$HOME/.cache"
-
 unset p paths
+
+################################################################################
+# XDG User Directories Specification
+################################################################################
+
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_PUBLICSHARE_DIR="$HOME/Public"
+export XDG_TEMPLATES_DIR="$HOME/Templates"
+export XDG_VIDEOS_DIR="$HOME/Videos"
 
 ################################################################################
 # Configuration variables
@@ -115,11 +123,8 @@ export EMAIL=pgabriel999@hotmail.com
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
 export RTC_USE_PIPEWIRE=true
-export SDL_VIDEODRIVER=wayland
 export MOZ_ENABLE_WAYLAND=1
 export CLUTTER_BACKEND=wayland
-export ELM_ENGINE=wayland_egl
-export ECORE_EVAS_ENGINE=wayland-egl
 export QT_QPA_PLATFORM=wayland-egl
 
 ################################################################################
@@ -130,4 +135,4 @@ export QT_QPA_PLATFORM=wayland-egl
 [ -f ~/bin/safe-charge ] && ~/bin/safe-charge
 
 # Execute Sway
-[ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && exec sway
+[ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && sway

@@ -11,7 +11,6 @@
 
 (define (home-media-profile-service config)
   (list ffmpeg
-        mpdris2
         mpv
         mpv-mpris
         obs
@@ -58,10 +57,19 @@
              (list #$(file-append playerctl "/bin/playerctld"))))
    (stop #~(make-kill-destructor))))
 
+(define (home-mpd-shepherd-service config)
+  (shepherd-service
+   (documentation "Runs `mpd'")
+   (provision '(mpd))
+   (start #~(make-forkexec-constructor
+             (list #$(file-append mpd "/bin/mpd") "--no-daemon")))
+   (stop #~(make-kill-destructor))))
+
 (define (home-mpDris2-shepherd-service config)
   (shepherd-service
    (documentation "Runs `mpDris2'")
    (provision '(mpDris2))
+   (requirement '(mpd))
    (start #~(make-forkexec-constructor
              (list #$(file-append mpdris2 "/bin/mpDris2"))))
    (stop #~(make-kill-destructor))))
@@ -71,6 +79,7 @@
         (home-pipewire-pulseaudio-shepherd-service config)
         (home-wireplumber-shepherd-service config)
         (home-playerctld-shepherd-service config)
+        (home-mpd-shepherd-service config)
         (home-mpDris2-shepherd-service config)))
 
 (define home-pipewire-asoundrc

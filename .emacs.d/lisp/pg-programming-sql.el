@@ -14,14 +14,14 @@
           `((main (sql-product postgres)
                   (sql-port 5432)
                   (sql-server "localhost")
-                  (sql-user "phil-gab99")
-                  (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-                  (sql-database "phil-gab99"))
+                  (sql-user (plist-get pg/user :user))
+                  (sql-password ,(pg/lookup-password :host "localhost" :user (plist-get pg/user :user) :port 5432))
+                  (sql-database (plist-get pg/user :user)))
             (school (sql-product postgres)
                     (sql-port 5432)
                     (sql-server "localhost")
-                    (sql-user "phil-gab99")
-                    (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                    (sql-user (plist-get pg/user :user))
+                    (sql-password ,(pg/lookup-password :host "localhost" :user (plist-get pg/user :user) :port 5432))
                     (sql-database "ift2935")))))
 
 (with-eval-after-load 'sql
@@ -30,17 +30,22 @@
 (with-eval-after-load 'lsp-sqls
   (setopt lsp-sqls-connections
           `(,(cl-pairlis '(driver dataSourceName)
-                         `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                                   (pg/lookup-password :host "localhost"
-                                                                       :user "phil-gab99"
-                                                                       :port 5432)
-                                                   " dbname=phil-gab99 sslmode=disable")))
+                         `("postgresql" ,(concat "host=127.0.0.1 port=5432 user="
+                                                 (plist-get pg/user :user)
+                                                 "password="
+                                                 (pg/lookup-password :host "localhost"
+                                                                     :user (plist-get pg/user :user)
+                                                                     :port 5432)
+                                                 " dbname="(plist-get pg/user :user)
+                                                 " sslmode=disable")))
             ,(cl-pairlis '(driver dataSourceName)
-                         `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                                   (pg/lookup-password :host "localhost"
-                                                                       :user "phil-gab99"
-                                                                       :port 5432)
-                                                   " dbname=ift2935 sslmode=disable"))))))
+                         `("postgresql" ,(concat "host=127.0.0.1 port=5432 user="
+                                                 (plist-get pg/user :user)
+                                                 "password="
+                                                 (pg/lookup-password :host "localhost"
+                                                                     :user (plist-get pg/user :user)
+                                                                     :port 5432)
+                                                 " dbname=ift2935 sslmode=disable"))))))
 
 (straight-use-package 'sql-indent)
 (with-eval-after-load 'sql

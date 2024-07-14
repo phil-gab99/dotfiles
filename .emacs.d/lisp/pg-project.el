@@ -6,9 +6,8 @@
 (add-hook 'lsp-mode-hook #'projectile-mode)
 (with-eval-after-load 'projectile
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (when (file-directory-p "~/Projects")
-    (setopt projectile-project-search-path '("~/Projects")))
-  (setopt projectile-switch-project-action #'projectile-dired)
+  (setopt projectile-project-search-path (list (concat (plist-get pg/user :home) "/Workspace"))
+          projectile-switch-project-action #'projectile-dired)
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))
   (diminish #'projectile-mode)

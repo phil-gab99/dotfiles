@@ -10,8 +10,7 @@
   (with-eval-after-load 'general
     (pg/leader-keys
       "G" '(:ignore t :which-key "guix")
-      "Gg" '(guix :which-key "guix")
-      "Gs" '((lambda () (interactive) (dired "/run/current-system/profile/share/guile/site/3.0/")) :which-key "source"))))
+      "Gg" '(guix :which-key "guix"))))
 
 (when pg/is-guix-system
   (unless (fboundp 'geiser-guile)
@@ -27,13 +26,13 @@
   (add-hook 'geiser-repl-mode-hook #'corfu-mode)
 
   (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0"))
-    (add-to-list 'geiser-guile-load-path (concat (getenv "HOME") "/.dotfiles"))
+    (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :config) "/guix/current/share/guile/site/3.0"))
+    (add-to-list 'geiser-guile-load-path (plist-get pg/user :dotfiles))
     (setopt geiser-guile-load-init-file nil
             geiser-guile-manual-lookup-other-window t))
 
   (with-eval-after-load 'geiser
     (setopt geiser-repl-company-p nil
-            geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))
+            geiser-repl-history-filename (concat (plist-get pg/user :cache) "/.geiser_history"))))
 
 (provide 'pg-guix)

@@ -9,7 +9,7 @@
 (add-hook 'ledger-mode-hook #'company-mode)
 (with-eval-after-load 'ledger-mode
   (setopt ledger-reconcile-default-commodity "CAD"
-          ledger-binary-path (concat (getenv "HOME") "/.guix-home/profile/bin/ledger")
+          ledger-binary-path (concat (plist-get pg/user :guix-home-profile) "/bin/ledger")
           ledger-clear-whole-transaction t))
 
 (provide 'pg-finance)

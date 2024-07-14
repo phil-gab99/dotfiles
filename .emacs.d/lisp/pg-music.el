@@ -1,39 +1,6 @@
 ;;; pg-music.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(defun pg/start-mpd ()
-  "Start MPD, connects to it and syncs the metadata cache."
-  (interactive)
-  (shell-command "herd start mpd")
-  (pg/update-mpd-db)
-  (emms-player-mpd-connect)
-  (emms-cache-set-from-mpd-all)
-  (emms-smart-browse)
-  (message "MPD Started!"))
-
-(defun pg/kill-mpd ()
-  "Stops playback and kill the music daemon."
-  (interactive)
-  (emms-stop)
-  (emms-smart-browse)
-  (emms-player-mpd-disconnect)
-  (shell-command "herd stop mpd")
-  (message "MPD Killed!"))
-
-(defun pg/update-mpd-db ()
-  "Updates the MPD database synchronously."
-  (interactive)
-  (pg/call-mpc nil "update")
-  (message "MPD Database Updated!"))
-
-(defun pg/call-mpc (destination mpc-args)
-  "Call mpc with `call-process'.
-      DESTINATION will be passed to `call-process' and MPC-ARGS will be
-      passed to the mpc program."
-  (if (not (listp mpc-args))
-      (setq mpc-args (list mpc-args)))
-  (apply 'call-process "mpc" nil destination nil mpc-args))
-
 (straight-use-package 'emms)
 (unless (fboundp 'emms-smart-browse)
   (autoload #'emms-smart-browse "emms" nil t))
@@ -41,9 +8,9 @@
   (require 'emms-setup)
   (require 'emms-player-mpd)
   (add-hook 'emms-playlist-cleared #'emms-player-mpd-clear)
-  (setopt emms-source-file-default-directory (expand-file-name "~/Music")
-          emms-player-mpd-music-directory (expand-file-name "~/Music")
-          emms-player-list (emms-player-mpd)
+  (setopt emms-source-file-default-directory (plist-get pg/user :music)
+          emms-player-mpd-music-directory (plist-get pg/user :music)
+          emms-player-list '(emms-player-mpd)
           emms-volume-change-function #'emms-volume-mpd-change)
   (emms-all)
   (emms-default-players)
@@ -72,11 +39,5 @@
   (emms-mode-line 1)
   (emms-playing-time 1)
   (emms-mode-line-cycle 1))
-
-(straight-use-package 'simple-mpc)
-(unless (fboundp 'simple-mpc)
-  (autoload #'simple-mpc "simple-mpc" nil t))
-(with-eval-after-load 'simple-mpc
-  (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
 
 (provide 'pg-music)

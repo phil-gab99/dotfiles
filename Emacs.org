@@ -114,8 +114,7 @@ Emacs interface for guix package manager.
     (with-eval-after-load 'general
       (pg/leader-keys
         "G" '(:ignore t :which-key "guix")
-        "Gg" '(guix :which-key "guix")
-        "Gs" '((lambda () (interactive) (dired "/run/current-system/profile/share/guile/site/3.0/")) :which-key "source"))))
+        "Gg" '(guix :which-key "guix"))))
 
 #+end_src
 
@@ -139,14 +138,14 @@ Scheme REPL
     (add-hook 'geiser-repl-mode-hook #'corfu-mode)
 
     (with-eval-after-load 'geiser-guile
-      (add-to-list 'geiser-guile-load-path (concat (getenv "XDG_CONFIG_HOME") "/guix/current/share/guile/site/3.0"))
-      (add-to-list 'geiser-guile-load-path (concat (getenv "HOME") "/.dotfiles"))
+      (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :config) "/guix/current/share/guile/site/3.0"))
+      (add-to-list 'geiser-guile-load-path (plist-get pg/user :dotfiles))
       (setopt geiser-guile-load-init-file nil
               geiser-guile-manual-lookup-other-window t))
 
     (with-eval-after-load 'geiser
       (setopt geiser-repl-company-p nil
-              geiser-repl-history-filename . ,(concat (getenv "XDG_CACHE_HOME") "/.geiser_history"))))
+              geiser-repl-history-filename (concat (plist-get pg/user :cache) "/.geiser_history"))))
 
 #+end_src
 
@@ -176,7 +175,8 @@ Scheme REPL
   (when pg/is-linux
     (require 'auth-source)
     (with-eval-after-load 'auth-source
-      (setopt auth-sources '("~/.authinfo.gpg"))))
+      (setopt auth-sources (list (concat (plist-get pg/user :home)
+                                         "/.authinfo.gpg")))))
 
 #+end_src
 
@@ -449,7 +449,7 @@ Displays additional keybindings subsequent to prefix keybindings
   (straight-use-package 'which-key)
   (require 'which-key)
   (with-eval-after-load 'which-key
-    (setopt which-key-idle-delay 1)
+    (setopt which-key-idle-delay 1.0)
     (which-key-mode)
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
@@ -1029,14 +1029,12 @@ Theme inspired by the popular Atom One Dark theme.
   (straight-use-package 'diminish)
   (require 'diminish)
 
-  (defun pg/diminish-minor-modes ()
-    "Diminishes some minor modes which affect org tree slides"
-    (unless (fboundp 'diminish)
-      (autoload #'diminish "diminish" nil t))
-    (dolist (mode #'(auto-revert-mode
-                     buffer-face-mode
-                     visual-line-mode))
-      (diminish mode)))
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (dolist (mode #'(auto-revert-mode
+                   buffer-face-mode
+                   visual-line-mode))
+    (diminish mode))
 
 #+end_src
 
@@ -1276,7 +1274,7 @@ For organizing the buffer list
               mu4e-compose-signature-auto-include nil
               mu4e-sent-messages-behavior 'delete
               message-send-mail-function #'smtpmail-send-it
-              mu4e-attachment-dir (expand-file-name "~/Downloads")
+              mu4e-attachment-dir (plist-get pg/user :download)
               mu4e-maildir-shortcuts '(("/Main/Inbox" . 109)
                                        ("/Main/Jobs" . 106)
                                        ("/Main/University" . 115))
@@ -1297,10 +1295,10 @@ For organizing the buffer list
                                 :match-func (lambda (msg)
                                               (when msg
                                                 (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
-                                :vars '((user-mail-address . "pgabriel999@hotmail.com")
-                                        (user-full-name . "Philippe Gabriel")
+                                :vars `((user-mail-address . ,(plist-get pg/user :email))
+                                        (user-full-name . ,(plist-get pg/user :name))
                                         (smtpmail-smtp-server . "smtp.office365.com")
-                                        (smtpmail-smtp-user . "pgabriel999@hotmail.com")
+                                        (smtpmail-smtp-user . ,(plist-get pg/user :email))
                                         (smtpmail-smtp-service . 587)
                                         (smtpmail-stream-type . starttls)
                                         (mu4e-drafts-folder . "/Main/Drafts")
@@ -1433,9 +1431,9 @@ Allows for notification pop-up and mode line count when receiving emails
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-editing.el
 
-  (set-face-attribute 'default nil :font pg/font-fixed :weight 'light :height 120)
-  (set-face-attribute 'fixed-pitch nil :family pg/font-fixed :weight 'light)
-  (set-face-attribute 'variable-pitch nil :family pg/font-variable :weight 'regular)
+  (set-face-attribute 'default nil :font (plist-get pg/user :font-fixed) :weight 'light :height 120)
+  (set-face-attribute 'fixed-pitch nil :family (plist-get pg/user :font-fixed) :weight 'light)
+  (set-face-attribute 'variable-pitch nil :family (plist-get pg/user :font-variable) :weight 'regular)
 
 #+end_src
 
@@ -1547,12 +1545,16 @@ Colors matching delimiters with different colours for distinguishability.
   (straight-use-package 'smartparens)
   (require 'smartparens-config)
 
-  (sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode)
+  (sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode css-mode scss-mode)
     (sp-local-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
     (sp-local-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
     (sp-local-pair "[" nil :post-handlers '(:add pg/sp-await-newline)))
 
   (smartparens-global-mode)
+
+  (unless (fboundp 'diminish)
+    (autoload #'diminish "diminish" nil t))
+  (diminish #'smartparens-mode)
 
 #+end_src
 
@@ -2157,9 +2159,8 @@ Note that the emacs built-in local dir creation can also be used and is more fle
   (add-hook 'lsp-mode-hook #'projectile-mode)
   (with-eval-after-load 'projectile
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (when (file-directory-p "~/Projects")
-      (setopt projectile-project-search-path '("~/Projects")))
-    (setopt projectile-switch-project-action #'projectile-dired)
+    (setopt projectile-project-search-path (list (concat (plist-get pg/user :home) "/Workspace"))
+            projectile-switch-project-action #'projectile-dired)
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
     (diminish #'projectile-mode)
@@ -2492,8 +2493,7 @@ Allows for code snippets for different languages.
     (yas-global-mode)
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
-    (diminish #'yas-minor-mode)
-    (add-to-list 'yas-snippet-dirs "~/Projects/guix/etc/snippets/yas"))
+    (diminish #'yas-minor-mode))
 
 #+end_src
 
@@ -2633,8 +2633,8 @@ Collection of code snippets for yasnippet.
       (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
     (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
     (with-eval-after-load 'arduino-mode
-      (setopt arduino-executable (expand-file-name "~/bin/arduino-flat")
-              arduino-mode-home "~/Projects/Arduino/")
+      (setopt arduino-executable (concat (plist-get pg/user :home) "/bin/arduino-flat")
+              arduino-mode-home (concat (plist-get pg/user :home) "/Workspace/Arduino/"))
       (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)
       (with-eval-after-load 'lsp-mode
         (add-to-list 'lsp-language-id-configuration '(arduino-mode . "arduino"))
@@ -2642,8 +2642,8 @@ Collection of code snippets for yasnippet.
          (make-lsp--client
           :new-connection (lsp-stdio-connection `("arduino-language-server"
                                                   ;; "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
-                                                  "-cli" ,(expand-file-name "~/Packages/arduino-cli")
-                                                  "-cli-config" ,(expand-file-name "~/.arduino15/arduino-cli.yaml")
+                                                  "-cli" ,(concat (plist-get pg/user :home) "/Packages/arduino-cli")
+                                                  "-cli-config" ,(concat (plist-get pg/user :home) "/.arduino15/arduino-cli.yaml")
                                                   "-fqbn" "arduino:avr:uno"))
           :major-modes '(arduino-mode)
           :server-id 'arduino)))))
@@ -2661,7 +2661,7 @@ Collection of code snippets for yasnippet.
     (unless (fboundp 'irony-mode)
       (autoload #'irony-mode "irony" nil t))
     (add-hook 'arduino-mode-hook 'irony-mode)
-    (setq company-arduino-sketch-directory-regex (file-truename "~/Projects/Arduino")))
+    (setq company-arduino-sketch-directory-regex (concat (plist-get pg/user :home) "/Workspace/Arduino")))
 
 #+end_Src
 
@@ -2709,6 +2709,7 @@ Collection of code snippets for yasnippet.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-cc.el
 
+  ;; TODO: Find fix with direnv
   (defun pg/company-c-headers-get-system-path ()
     "Return the system include path for the current buffer."
     (let ((default `(,(expand-file-name "~/.guix-extra-profiles/cc/cc/include/"))))
@@ -3509,7 +3510,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (with-eval-after-load 'python
     (setopt python-fill-docstring-style 'django
-            python-shell-virtualenv-root (expand-file-name "~/.conda/envs")
+            python-shell-virtualenv-root (concat (plist-get pg/user :home) "/.conda/envs")
             python-indent-offset 4)
     (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
     (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol))
@@ -3531,7 +3532,7 @@ Custom syntax highlighting for LMC assembly language.
                                             (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
                                             (setenv "JUPYTER_PATH")))
     (setopt conda-anaconda-home (string-replace "/bin/conda" "" (executable-find "conda"))
-            conda-env-home-directory (expand-file-name "~/.conda/")
+            conda-env-home-directory (concat (plist-get pg/user :home) "/.conda")
             conda-env-subdirectory "envs")
     (unless (getenv "CONDA_DEFAULT_ENV")
       (conda-env-activate "ml_practice"))
@@ -3551,7 +3552,7 @@ Custom syntax highlighting for LMC assembly language.
       (require 'lsp-pyright)))
 
   (with-eval-after-load 'lsp-pyright
-    (setopt lsp-pyright-venv-path (expand-file-name "~/.conda/envs/")
+    (setopt lsp-pyright-venv-path (concat (plist-get pg/user :home) "/.conda/envs")
             lsp-pyright-venv-directory "envs"))
 
 #+end_src
@@ -3680,14 +3681,14 @@ Custom syntax highlighting for LMC assembly language.
             `((main (sql-product postgres)
                     (sql-port 5432)
                     (sql-server "localhost")
-                    (sql-user "phil-gab99")
-                    (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
-                    (sql-database "phil-gab99"))
+                    (sql-user (plist-get pg/user :user))
+                    (sql-password ,(pg/lookup-password :host "localhost" :user (plist-get pg/user :user) :port 5432))
+                    (sql-database (plist-get pg/user :user)))
               (school (sql-product postgres)
                       (sql-port 5432)
                       (sql-server "localhost")
-                      (sql-user "phil-gab99")
-                      (sql-password ,(pg/lookup-password :host "localhost" :user "phil-gab99" :port 5432))
+                      (sql-user (plist-get pg/user :user))
+                      (sql-password ,(pg/lookup-password :host "localhost" :user (plist-get pg/user :user) :port 5432))
                       (sql-database "ift2935")))))
 
 #+end_src
@@ -3702,17 +3703,22 @@ Custom syntax highlighting for LMC assembly language.
   (with-eval-after-load 'lsp-sqls
     (setopt lsp-sqls-connections
             `(,(cl-pairlis '(driver dataSourceName)
-                           `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                                     (pg/lookup-password :host "localhost"
-                                                                         :user "phil-gab99"
-                                                                         :port 5432)
-                                                     " dbname=phil-gab99 sslmode=disable")))
+                           `("postgresql" ,(concat "host=127.0.0.1 port=5432 user="
+                                                   (plist-get pg/user :user)
+                                                   "password="
+                                                   (pg/lookup-password :host "localhost"
+                                                                       :user (plist-get pg/user :user)
+                                                                       :port 5432)
+                                                   " dbname="(plist-get pg/user :user)
+                                                   " sslmode=disable")))
               ,(cl-pairlis '(driver dataSourceName)
-                           `(("postgresql") ,(concat "host=127.0.0.1 port=5432 user=phil-gab99 password="
-                                                     (pg/lookup-password :host "localhost"
-                                                                         :user "phil-gab99"
-                                                                         :port 5432)
-                                                     " dbname=ift2935 sslmode=disable"))))))
+                           `("postgresql" ,(concat "host=127.0.0.1 port=5432 user="
+                                                   (plist-get pg/user :user)
+                                                   "password="
+                                                   (pg/lookup-password :host "localhost"
+                                                                       :user (plist-get pg/user :user)
+                                                                       :port 5432)
+                                                   " dbname=ift2935 sslmode=disable"))))))
 
 #+end_src
 
@@ -3991,7 +3997,7 @@ Org mode package for writing structured documents and more. Here are some useful
                     (org-level-6 . 1.0)
                     (org-level-7 . 1.0)
                     (org-level-8 . 1.0)))
-      (set-face-attribute (car face) nil :font pg/font-variable :weight 'regular :height (cdr face)))
+      (set-face-attribute (car face) nil :font (plist-get pg/user :font-variable) :weight 'regular :height (cdr face)))
 
     (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
@@ -4009,7 +4015,7 @@ Org mode package for writing structured documents and more. Here are some useful
     (dolist (template '(("sh" . "src sh")
                         ("java" . "src java")
                         ("als" . "src alloy")
-                        ("puml" . "src plantuml")
+                        ;; ("puml" . "src plantuml")
                         ("vhd" . "src vhdl")
                         ("asm" . "src mips")
                         ("lmc" . "src lmc-java")
@@ -4039,7 +4045,7 @@ Org mode package for writing structured documents and more. Here are some useful
         "olb" '(org-mark-ring-goto :which-key "back")))
 
     (unless pg/is-termux
-      (setopt org-agenda-files '("~/Sync/Agenda/")
+      (setopt org-agenda-files (list (concat (plist-get pg/user :home) "/Sync/Agenda/"))
               org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                                      (vm-imap . vm-visit-imap-folder-other-frame)
                                      (gnus . org-gnus-no-new-news)
@@ -4082,24 +4088,24 @@ Org mode package for writing structured documents and more. Here are some useful
                                              (todo "CANC"
                                                    ((org-agenda-overriding-header "Cancelled")
                                                     (org-agenda-files org-agenda-files))))))
-              org-capture-templates '(("t" "Tasks / Projects")
+              org-capture-templates `(("t" "Tasks / Projects")
 
                                       ("tt" "Task" entry
-                                       (file+olp "~/Sync/Agenda/Tasks.org" "Active")
+                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
                                        "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
                                       ("tr" "Repeat" entry
-                                       (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
+                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Repeat")
                                        "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
 
                                       ("j" "Meetings")
                                       ("jm" "Meeting" entry
-                                       (file+olp "~/Sync/Agenda/Tasks.org" "Waiting")
+                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Waiting")
                                        "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
                                       ("m" "Email Workflow")
                                       ("mr" "Follow Up" entry
-                                       (file+olp "~/Sync/Agenda/Mail.org" "Follow up")
+                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Follow up")
                                        "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))
               org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
 
@@ -4112,7 +4118,6 @@ Org mode package for writing structured documents and more. Here are some useful
   (with-eval-after-load 'org-agenda
     (setopt org-agenda-tags-column 0
             org-agenda-block-separator ?─
-            org-agenda-start-with-log-mode t
             org-agenda-time-grid '((daily today require-timed)
                                    (800 1000 1200 1400 1600 1800 2000)
                                    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
@@ -4157,8 +4162,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     (setq-local doom-modeline-minor-modes t
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
                 face-remapping-alist '((default (:height 1.75) default)))
-    (org-latex-preview)
-    (pg/diminish-minor-modes))
+    (org-latex-preview))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."
@@ -4276,7 +4280,7 @@ Helps with note-taking strategies.
       (require 'org-roam))
     (with-eval-after-load 'org-roam
       (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-              org-roam-directory (expand-file-name "~/Documents/Notes")
+              org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
               org-roam-capture-templates '(("d" "default" plain
                                             "%?"
                                             :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -4535,7 +4539,7 @@ Allows for viewing of pdfs.
   (add-hook 'ledger-mode-hook #'company-mode)
   (with-eval-after-load 'ledger-mode
     (setopt ledger-reconcile-default-commodity "CAD"
-            ledger-binary-path (concat (getenv "HOME") "/.guix-home/profile/bin/ledger")
+            ledger-binary-path (concat (plist-get pg/user :guix-home-profile) "/bin/ledger")
             ledger-clear-whole-transaction t))
 
 #+end_src
@@ -4568,8 +4572,8 @@ Allows for viewing of pdfs.
       (autoload #'corfu-mode "corfu" nil t))
     (add-hook 'erc-mode-hook #'corfu-mode)
     (setopt erc-server "irc.libera.chat"
-            erc-nick "phil-gab99"
-            erc-user "Philippe Gabriel"
+            erc-nick (plist-get pg/user :user)
+            erc-user (plist-get pg/user :name)
             erc-kill-buffer-on-part t
             erc-auto-query bury))
 
@@ -4586,9 +4590,9 @@ Allows for viewing of pdfs.
   (defun pg/ement-connect ()
     "Connects to matrix client with username and password supplied."
     (interactive)
-    (ement-connect :user-id "@phil-gab99:matrix.org"
+    (ement-connect :user-id (concat "@" (plist-get pg/user :user) ":matrix.org")
                    :password (pg/lookup-password :host "matrix.org"
-                                                 :user "phil-gab99")))
+                                                 :user (plist-get pg/user :user))))
 
   (with-eval-after-load 'general
     (pg/leader-keys
@@ -4618,9 +4622,9 @@ Allows for viewing of pdfs.
     (slack-register-team :name "ift6755"
                          :default t
                          :token (pg/lookup-password :host "ift6755.slack.com"
-                                                    :user "philippe.gabriel.1@umontreal.ca")
+                                                    :user (plist-get pg/user :email-udem))
                          :cookie (pg/lookup-password :host "ift6755.slack.com"
-                                                     :user "philippe.gabriel.1@umontreal.ca^cookie")
+                                                     :user (concat (plist-get pg/user :email-udem) "^cookie"))
                          :subscribed-channels '((general questions random))
                          :modeline-enabled t)
     (with-eval-after-load 'evil
@@ -4695,7 +4699,7 @@ Allows for viewing of pdfs.
     (autoload #'wttrin "wttrin" nil t))
   (with-eval-after-load 'wttrin
     (fset #'wttrin-fetch-raw-string #'pg/wttrin-fetch-raw-string)
-    (setopt wttrin-default-cities '("montreal")
+    (setopt wttrin-default-cities (list (plist-get pg/user :city))
             wttrin-default-accept-language '("Accept-Language" . "en-US")))
 
 #+end_src
@@ -4723,39 +4727,6 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
 
-  (defun pg/start-mpd ()
-    "Start MPD, connects to it and syncs the metadata cache."
-    (interactive)
-    (shell-command "herd start mpd")
-    (pg/update-mpd-db)
-    (emms-player-mpd-connect)
-    (emms-cache-set-from-mpd-all)
-    (emms-smart-browse)
-    (message "MPD Started!"))
-
-  (defun pg/kill-mpd ()
-    "Stops playback and kill the music daemon."
-    (interactive)
-    (emms-stop)
-    (emms-smart-browse)
-    (emms-player-mpd-disconnect)
-    (shell-command "herd stop mpd")
-    (message "MPD Killed!"))
-
-  (defun pg/update-mpd-db ()
-    "Updates the MPD database synchronously."
-    (interactive)
-    (pg/call-mpc nil "update")
-    (message "MPD Database Updated!"))
-
-  (defun pg/call-mpc (destination mpc-args)
-    "Call mpc with `call-process'.
-        DESTINATION will be passed to `call-process' and MPC-ARGS will be
-        passed to the mpc program."
-    (if (not (listp mpc-args))
-        (setq mpc-args (list mpc-args)))
-    (apply 'call-process "mpc" nil destination nil mpc-args))
-
   (straight-use-package 'emms)
   (unless (fboundp 'emms-smart-browse)
     (autoload #'emms-smart-browse "emms" nil t))
@@ -4763,9 +4734,9 @@ Allows for viewing of pdfs.
     (require 'emms-setup)
     (require 'emms-player-mpd)
     (add-hook 'emms-playlist-cleared #'emms-player-mpd-clear)
-    (setopt emms-source-file-default-directory (expand-file-name "~/Music")
-            emms-player-mpd-music-directory (expand-file-name "~/Music")
-            emms-player-list (emms-player-mpd)
+    (setopt emms-source-file-default-directory (plist-get pg/user :music)
+            emms-player-mpd-music-directory (plist-get pg/user :music)
+            emms-player-list '(emms-player-mpd)
             emms-volume-change-function #'emms-volume-mpd-change)
     (emms-all)
     (emms-default-players)
@@ -4800,18 +4771,6 @@ Allows for viewing of pdfs.
     (emms-mode-line 1)
     (emms-playing-time 1)
     (emms-mode-line-cycle 1))
-
-#+end_src
-
-*** Package | simple-mpc
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-music.el
-
-  (straight-use-package 'simple-mpc)
-  (unless (fboundp 'simple-mpc)
-    (autoload #'simple-mpc "simple-mpc" nil t))
-  (with-eval-after-load 'simple-mpc
-    (define-key simple-mpc-mode-map (kbd "<XF86AudioPlay>") #'simple-mpc-toggle))
 
 #+end_src
 
@@ -5010,7 +4969,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/init.el
 
-      ;;; init.el -*- lexical-binding: t; -*-
+  ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
   (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
@@ -5018,13 +4977,23 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   (push (expand-file-name "lisp" user-emacs-directory) load-path)
   (push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
 
-  ;; Fonts used
-  (defconst pg/font-fixed
-    "JetBrains Mono"
-    "Fixed pitch font.")
-  (defconst pg/font-variable
-    "Iosevka Aile"
-    "Variable pitch font.")
+  (defconst pg/user
+    `( :user "phil-gab99"
+       :name "Philippe Gabriel"
+       :email "pgabriel999@hotmail.com"
+       :email-udem "philippe.gabriel.1@umontreal.ca"
+       :city "montreal"
+       :font-fixed "JetBrains Mono"
+       :font-variable "Iosevka Aile"
+       :home ,(or (getenv "HOME") "/home/phil-gab99")
+       :cache ,(or (getenv "XDG_CACHE_HOME") "/home/phil-gab99/.cache")
+       :config ,(or (getenv "XDG_CONFIG_HOME") "/home/phil-gab99/.config")
+       :documents ,(or (getenv "XDG_DOCUMENTS_DIR") "/home/phil-gab99/Documents")
+       :download ,(or (getenv "XDG_DOWNLOAD_DIR") "/home/phil-gab99/Downloads")
+       :music ,(or (getenv "XDG_MUSIC_DIR") "/home/phil-gab99/Music")
+       :dotfiles "/home/phil-gab99/.dotfiles"
+       :guix-home-profile "/home/phil-gab99/.guix-home/profile")
+    "Plist holding user details")
 
   ;; System related constants
   (defconst pg/is-termux
@@ -5038,8 +5007,8 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (and pg/is-linux
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
-    "Determines whether the current system is a GNU/Linux based system running the
-                  GNU Guix distribution.")
+    "Determines whether the current system is a GNU/Linux based system running
+    the GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
@@ -5060,12 +5029,10 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   (setopt load-prefer-newer t
           use-short-answers t
           auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-          warning-suppress-log-types '(lsp-mode)
-          warning-suppress-types '(lsp-mode)
+          ;; warning-suppress-log-types '(lsp-mode)
+          ;; warning-suppress-types '(lsp-mode)
           warning-minimum-level :error
           help-at-pt-display-when-idle t)
-
-  ;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 
   (require 'pg-startup)
 

@@ -27,7 +27,7 @@
             mu4e-compose-signature-auto-include nil
             mu4e-sent-messages-behavior 'delete
             message-send-mail-function #'smtpmail-send-it
-            mu4e-attachment-dir (expand-file-name "~/Downloads")
+            mu4e-attachment-dir (plist-get pg/user :download)
             mu4e-maildir-shortcuts '(("/Main/Inbox" . 109)
                                      ("/Main/Jobs" . 106)
                                      ("/Main/University" . 115))
@@ -48,10 +48,10 @@
                               :match-func (lambda (msg)
                                             (when msg
                                               (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
-                              :vars '((user-mail-address . "pgabriel999@hotmail.com")
-                                      (user-full-name . "Philippe Gabriel")
+                              :vars `((user-mail-address . ,(plist-get pg/user :email))
+                                      (user-full-name . ,(plist-get pg/user :name))
                                       (smtpmail-smtp-server . "smtp.office365.com")
-                                      (smtpmail-smtp-user . "pgabriel999@hotmail.com")
+                                      (smtpmail-smtp-user . ,(plist-get pg/user :email))
                                       (smtpmail-smtp-service . 587)
                                       (smtpmail-stream-type . starttls)
                                       (mu4e-drafts-folder . "/Main/Drafts")

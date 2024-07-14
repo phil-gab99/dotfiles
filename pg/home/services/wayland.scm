@@ -11,11 +11,11 @@
   #:use-module (nongnu packages compression)
   #:export (home-wayland-service-type))
 
-(use-package-modules compression disk fonts freedesktop glib gnome gnome-xyz
-                     imagemagick kde-frameworks libreoffice package-management
-                     password-utils python-build qt rust-apps shellutils
-                     terminals video virtualization web-browsers wm xdisorg
-                     xorg)
+(use-package-modules admin compression disk fonts freedesktop glib gnome
+                     gnome-xyz imagemagick kde-frameworks libcanberra
+                     libreoffice package-management password-utils python-build
+                     qt rust-apps shellutils terminals video virtualization
+                     web-browsers wm xdisorg xorg)
 (use-service-modules shepherd)
 
 (define (home-wayland-profile-service config)
@@ -47,6 +47,7 @@
         gnome-themes-extra
         matcha-theme
         papirus-icon-theme
+        sound-theme-freedesktop
 
         ;; Terminal emulator
         foot
@@ -83,6 +84,7 @@
         p7zip
         unrar
         wofi
+        tree
 
         ;; Basic Applications
         wlogout
@@ -110,27 +112,25 @@
    (requirement '(dbus))
    (documentation "Runs `swayidle'")
    (auto-start? #f)
-   (start #~(make-forkexec-constructor
-             (list #$(file-append swayidle "/bin/swayidle") "-w"
-                   "timeout" "900"
-                   (string-append #$(file-append swaylock "/bin/swaylock")
-                                  "-f -i ~/backgrounds/guix-bg.jpg"
-                                  "-s fill --font 'JetBrains Mono'"
-                                  "--indicator-idle-visible")
-                   "timeout" "900"
-                   (string-append #$(file-append sway "/bin/swaymsg")
-                                  "'output * dpms off'")
-                   "resume"
-                   (string-append #$(file-append sway "/bin/swaymsg")
-                                  "'output * dpms on'")
-                   "before-sleep"
-                   (string-append #$(file-append swaylock "/bin/swaylock")
-                                  "-f -i ~/backgrounds/guix-bg.jpg"
-                                  "-s fill --font 'JetBrains Mono'"
-                                  "--indicator-idle-visible"))
-             #:environment-variables
-             (cons "WAYLAND_DISPLAY=wayland-1"
-                   (default-environment-variables))))
+   (start (let ((cmd-swayidle (file-append swayidle "/bin/swayidle"))
+                (cmd-swaylock (file-append swaylock "/bin/swaylock"))
+                (cmd-swaymsg (file-append sway "/bin/swaymsg")))
+            #~(make-forkexec-constructor
+               (list #$cmd-swayidle "-w"
+                     ;; "timeout" "300" #$cmd-swaylock
+                     "timeout" "300"
+                     (string-append "'" #$cmd-swaymsg " \"output * power off\"'")
+                     "resume"
+                     (string-append "'" #$cmd-swaymsg " \"output * power on\"'")
+                     "before-sleep" #$cmd-swaylock)
+               #:log-file
+               (string-append (or (getenv "XDG_STATE_HOME")
+                                  (format #f "~a/.local/state"
+                                          (getenv "HOME")))
+                              "/shepherd/swayidle.log")
+               #:environment-variables
+               (cons "WAYLAND_DISPLAY=wayland-1"
+                     (default-environment-variables)))))
    (stop #~(make-kill-destructor))))
 
 (define (home-wayland-shepherd-services config)

@@ -59,9 +59,9 @@
   (add-hook mode #'(lambda ()
                      (display-line-numbers-mode 0))))
 
-(set-face-attribute 'default nil :font pg/font-fixed :weight 'light :height 120)
-(set-face-attribute 'fixed-pitch nil :family pg/font-fixed :weight 'light)
-(set-face-attribute 'variable-pitch nil :family pg/font-variable :weight 'regular)
+(set-face-attribute 'default nil :font (plist-get pg/user :font-fixed) :weight 'light :height 120)
+(set-face-attribute 'fixed-pitch nil :family (plist-get pg/user :font-fixed) :weight 'light)
+(set-face-attribute 'variable-pitch nil :family (plist-get pg/user :font-variable) :weight 'regular)
 
 (straight-use-package 'ligature)
 (require 'ligature)
@@ -141,12 +141,16 @@
 (straight-use-package 'smartparens)
 (require 'smartparens-config)
 
-(sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode)
+(sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode css-mode scss-mode)
   (sp-local-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
   (sp-local-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
   (sp-local-pair "[" nil :post-handlers '(:add pg/sp-await-newline)))
 
 (smartparens-global-mode)
+
+(unless (fboundp 'diminish)
+  (autoload #'diminish "diminish" nil t))
+(diminish #'smartparens-mode)
 
 (straight-use-package 'outshine)
 (unless (fboundp 'outshine-mode)

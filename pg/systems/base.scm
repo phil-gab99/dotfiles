@@ -16,35 +16,33 @@
 (use-system-modules accounts pam nss)
 
 (define %acm-udev-rule
-  (udev-rule
-   "90-extraacl.rules"
-   (string-append "KERNEL==\"ttyUSB[0-9]*\", "
-                  "TAG+=\"udev-acl\", "
-                  "TAG+=\"uaccess\", "
-                  "OWNER=\"phil-gab99\""
-                  "\n"
-                  "KERNEL==\"ttyACM[0-9]*\", "
-                  "TAG+=\"udev-acl\", "
-                  "TAG+=\"uaccess\", "
-                  "OWNER=\"phil-gab99\"")))
+  (udev-rule "90-extraacl.rules"
+             (string-append "KERNEL==\"ttyUSB[0-9]*\", "
+                            "TAG+=\"udev-acl\", "
+                            "TAG+=\"uaccess\", "
+                            "OWNER=\"phil-gab99\""
+                            "\n"
+                            "KERNEL==\"ttyACM[0-9]*\", "
+                            "TAG+=\"udev-acl\", "
+                            "TAG+=\"uaccess\", "
+                            "OWNER=\"phil-gab99\"")))
 
 (define %open-ocd-udev-rule
-  (udev-rule
-   "98-openocd.rules"
-   (string-append "ACTION!=\"add|change\", "
-                  "GOTO=\"openocd_rules_end\""
-                  "\n"
-                  "SUBSYSTEM!=\"usb|tty|hidraw\", "
-                  "GOTO=\"openocd_rules_end\""
-                  "\n"
-                  "#Please keep this list sorted by VID:PID"
-                  "\n"
-                  "#CMSIS-DAP compatible adapters"
-                  "ATTRS{product}==\"*CMSIS-DAP*\", "
-                  "MODE=\"664\", "
-                  "GROUP=\"plugdev\""
-                  "\n"
-                  "LABEL=\"openocd_rules_end\"")))
+  (udev-rule "98-openocd.rules"
+             (string-append "ACTION!=\"add|change\", "
+                            "GOTO=\"openocd_rules_end\""
+                            "\n"
+                            "SUBSYSTEM!=\"usb|tty|hidraw\", "
+                            "GOTO=\"openocd_rules_end\""
+                            "\n"
+                            "#Please keep this list sorted by VID:PID"
+                            "\n"
+                            "#CMSIS-DAP compatible adapters"
+                            "ATTRS{product}==\"*CMSIS-DAP*\", "
+                            "MODE=\"664\", "
+                            "GROUP=\"plugdev\""
+                            "\n"
+                            "LABEL=\"openocd_rules_end\"")))
 
 (define* (system-config #:key system home)
   (operating-system
@@ -101,10 +99,11 @@
 
    (sudoers-file
     (plain-file "sudoers"
-                (string-append (plain-file-content %sudoers-specification)
+                (string-append "\nDefaults verifypw = any\n"
+                               (plain-file-content %sudoers-specification)
                                (user-account-name
                                 (car (operating-system-users system)))
-                               " ALL=(ALL) NOPASSWD: /run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/reboot")))
+                               " ALL=(ALL) NOPASSWD:/run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/reboot")))
 
    ;; System packages
    (packages (cons* bluez

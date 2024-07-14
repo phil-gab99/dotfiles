@@ -14,7 +14,8 @@
   #:use-module (gnu home services desktop)
   #:use-module (gnu home services dotfiles)
   #:use-module (gnu home services gnupg)
-  #:use-module (gnu home services mcron))
+  #:use-module (gnu home services mcron)
+  #:use-module (guix gexp))
 
 (use-package-modules file-systems fonts gnome gnome-xyz gnupg music terminals
                      video wm xdisorg)
@@ -56,20 +57,34 @@
 (define %user-dotfiles
   (string-append (user-account-home-directory %user) "/.dotfiles"))
 
-(define home
+(define %pass-sync-job
+  #~(job '(next-hour (range 0 24 4))
+         #$(program-file
+            "pass-sync.scm"
+            #~(begin
+                (use-modules (guix build utils))
+                (setenv "PATH"
+                        (string-append (getenv "PATH")
+                                       ":"
+                                       #$(user-account-home-directory %user)
+                                       "/.guix-home/profile/bin:"
+                                       #$(user-account-home-directory %user)
+                                       "/bin"))
+                (invoke "sync-passwords")))))
+
+(define %home
   (home-environment
    (services (list (service home-bash-service-type
       		            (home-bash-configuration
       		             (bash-profile
-      		              (list
-                               (local-file
-                                (string-append %user-dotfiles
-                                               "/.templates/bash_profile"))))
+                              (string-append %user-dotfiles
+                                             "/.templates/bash_profile"))
       		             (bashrc
-      		              (list
-      			       (local-file
-                                (string-append %user-dotfiles
-                                               "/.templates/bashrc"))))))
+                              (string-append %user-dotfiles
+                                             "/.templates/bashrc"))
+                             (bash-logout
+                              (string-append %user-dotfiles
+                                             "/.templates/bash_logout"))))
       	           (service home-dbus-service-type)
       	           (service home-dotfiles-service-type
       		            (home-dotfiles-configuration
@@ -89,11 +104,7 @@
       		             (max-cache-ttl-ssh 28800)))
       	           (service home-mcron-service-type
       		            (home-mcron-configuration
-      		             (jobs
-                              (list #~(job '(next-hour (range 0 24 4))
-                                           #$(string-append
-                                              (user-account-home-directory %user)
-                                              "/bin/sync-passwords"))))))
+      		             (jobs (list %pass-sync-job))))
       	           (service home-media-service-type)
       	           (service home-nm-applet-service-type)
       	           (service home-syncthing-service-type
@@ -103,7 +114,7 @@
       	           (service home-udiskie-service-type)
       	           (service home-wayland-service-type)))))
 
-(define system
+(define %system
   (operating-system
     (host-name "s76-laptop")
     (keyboard-layout (keyboard-layout "us")) 
@@ -116,7 +127,7 @@
 
     (swap-devices
      (list
-      (swap-space (target "/dev/nvme0n1p3"))))
+      (swap-space (target (uuid "007cbe9f-5d70-4ded-bd10-898993e4de74")))))
 
     (file-systems
      (cons* (file-system (device "/dev/nvme0n1p1")
@@ -146,6 +157,6 @@
       				        %charge-thresholds-udev-rule)))))
 
 (if (getenv "RUNNING_GUIX_HOME")
-    home
-    (system-config #:home home
-                   #:system system))
+    %home
+    (system-config #:home %home
+                   #:system %system))

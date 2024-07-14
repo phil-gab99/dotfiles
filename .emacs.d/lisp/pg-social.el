@@ -6,8 +6,8 @@
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'erc-mode-hook #'corfu-mode)
   (setopt erc-server "irc.libera.chat"
-          erc-nick "phil-gab99"
-          erc-user "Philippe Gabriel"
+          erc-nick (plist-get pg/user :user)
+          erc-user (plist-get pg/user :name)
           erc-kill-buffer-on-part t
           erc-auto-query bury))
 
@@ -18,9 +18,9 @@
 (defun pg/ement-connect ()
   "Connects to matrix client with username and password supplied."
   (interactive)
-  (ement-connect :user-id "@phil-gab99:matrix.org"
+  (ement-connect :user-id (concat "@" (plist-get pg/user :user) ":matrix.org")
                  :password (pg/lookup-password :host "matrix.org"
-                                               :user "phil-gab99")))
+                                               :user (plist-get pg/user :user))))
 
 (with-eval-after-load 'general
   (pg/leader-keys
@@ -44,9 +44,9 @@
   (slack-register-team :name "ift6755"
                        :default t
                        :token (pg/lookup-password :host "ift6755.slack.com"
-                                                  :user "philippe.gabriel.1@umontreal.ca")
+                                                  :user (plist-get pg/user :email-udem))
                        :cookie (pg/lookup-password :host "ift6755.slack.com"
-                                                   :user "philippe.gabriel.1@umontreal.ca^cookie")
+                                                   :user (concat (plist-get pg/user :email-udem) "^cookie"))
                        :subscribed-channels '((general questions random))
                        :modeline-enabled t)
   (with-eval-after-load 'evil

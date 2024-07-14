@@ -10,6 +10,7 @@
 (with-eval-after-load 'cc-vars
   (setopt c-basic-offset 4))
 
+;; TODO: Find fix with direnv
 (defun pg/company-c-headers-get-system-path ()
   "Return the system include path for the current buffer."
   (let ((default `(,(expand-file-name "~/.guix-extra-profiles/cc/cc/include/"))))

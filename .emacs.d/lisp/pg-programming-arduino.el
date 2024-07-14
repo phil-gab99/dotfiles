@@ -31,8 +31,8 @@
     (autoload #'flycheck-arduino-setup "flycheck-arduino" nil t))
   (add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
   (with-eval-after-load 'arduino-mode
-    (setopt arduino-executable (expand-file-name "~/bin/arduino-flat")
-            arduino-mode-home "~/Projects/Arduino/")
+    (setopt arduino-executable (concat (plist-get pg/user :home) "/bin/arduino-flat")
+            arduino-mode-home (concat (plist-get pg/user :home) "/Workspace/Arduino/"))
     (define-key arduino-mode-map (kbd "C-c RET") #'pg/arduino-serial-monitor)
     (with-eval-after-load 'lsp-mode
       (add-to-list 'lsp-language-id-configuration '(arduino-mode . "arduino"))
@@ -40,8 +40,8 @@
        (make-lsp--client
         :new-connection (lsp-stdio-connection `("arduino-language-server"
                                                 ;; "-clangd" ,(concat (getenv "GUIX_EXTRA_PROFILES") "cc/cc/bin/clangd")
-                                                "-cli" ,(expand-file-name "~/Packages/arduino-cli")
-                                                "-cli-config" ,(expand-file-name "~/.arduino15/arduino-cli.yaml")
+                                                "-cli" ,(concat (plist-get pg/user :home) "/Packages/arduino-cli")
+                                                "-cli-config" ,(concat (plist-get pg/user :home) "/.arduino15/arduino-cli.yaml")
                                                 "-fqbn" "arduino:avr:uno"))
         :major-modes '(arduino-mode)
         :server-id 'arduino)))))
@@ -53,6 +53,6 @@
   (unless (fboundp 'irony-mode)
     (autoload #'irony-mode "irony" nil t))
   (add-hook 'arduino-mode-hook 'irony-mode)
-  (setq company-arduino-sketch-directory-regex (file-truename "~/Projects/Arduino")))
+  (setq company-arduino-sketch-directory-regex (concat (plist-get pg/user :home) "/Workspace/Arduino")))
 
 (provide 'pg-programming-arduino)

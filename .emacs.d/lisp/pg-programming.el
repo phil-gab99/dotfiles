@@ -139,8 +139,7 @@
   (yas-global-mode)
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))
-  (diminish #'yas-minor-mode)
-  (add-to-list 'yas-snippet-dirs "~/Projects/guix/etc/snippets/yas"))
+  (diminish #'yas-minor-mode))
 
 (straight-use-package 'yasnippet-snippets)
 (with-eval-after-load 'yasnippet

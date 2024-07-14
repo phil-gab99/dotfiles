@@ -98,7 +98,7 @@
                   (org-level-6 . 1.0)
                   (org-level-7 . 1.0)
                   (org-level-8 . 1.0)))
-    (set-face-attribute (car face) nil :font pg/font-variable :weight 'regular :height (cdr face)))
+    (set-face-attribute (car face) nil :font (plist-get pg/user :font-variable) :weight 'regular :height (cdr face)))
 
   (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
@@ -116,7 +116,7 @@
   (dolist (template '(("sh" . "src sh")
                       ("java" . "src java")
                       ("als" . "src alloy")
-                      ("puml" . "src plantuml")
+                      ;; ("puml" . "src plantuml")
                       ("vhd" . "src vhdl")
                       ("asm" . "src mips")
                       ("lmc" . "src lmc-java")
@@ -146,7 +146,7 @@
       "olb" '(org-mark-ring-goto :which-key "back")))
 
   (unless pg/is-termux
-    (setopt org-agenda-files '("~/Sync/Agenda/")
+    (setopt org-agenda-files (list (concat (plist-get pg/user :home) "/Sync/Agenda/"))
             org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                                    (vm-imap . vm-visit-imap-folder-other-frame)
                                    (gnus . org-gnus-no-new-news)
@@ -189,31 +189,30 @@
                                            (todo "CANC"
                                                  ((org-agenda-overriding-header "Cancelled")
                                                   (org-agenda-files org-agenda-files))))))
-            org-capture-templates '(("t" "Tasks / Projects")
+            org-capture-templates `(("t" "Tasks / Projects")
 
                                     ("tt" "Task" entry
-                                     (file+olp "~/Sync/Agenda/Tasks.org" "Active")
+                                     (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
                                      "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
 
                                     ("tr" "Repeat" entry
-                                     (file+olp "~/Sync/Agenda/Tasks.org" "Repeat")
+                                     (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Repeat")
                                      "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
 
                                     ("j" "Meetings")
                                     ("jm" "Meeting" entry
-                                     (file+olp "~/Sync/Agenda/Tasks.org" "Waiting")
+                                     (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Waiting")
                                      "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
 
                                     ("m" "Email Workflow")
                                     ("mr" "Follow Up" entry
-                                     (file+olp "~/Sync/Agenda/Mail.org" "Follow up")
+                                     (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Follow up")
                                      "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))
             org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
 
 (with-eval-after-load 'org-agenda
   (setopt org-agenda-tags-column 0
           org-agenda-block-separator ?─
-          org-agenda-start-with-log-mode t
           org-agenda-time-grid '((daily today require-timed)
                                  (800 1000 1200 1400 1600 1800 2000)
                                  " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
@@ -234,8 +233,7 @@
   (setq-local doom-modeline-minor-modes t
               org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
               face-remapping-alist '((default (:height 1.75) default)))
-  (org-latex-preview)
-  (pg/diminish-minor-modes))
+  (org-latex-preview))
 
 (defun pg/presentation-end ()
   "Cleanup after ending org presentation."
@@ -317,7 +315,7 @@
     (require 'org-roam))
   (with-eval-after-load 'org-roam
     (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-            org-roam-directory (expand-file-name "~/Documents/Notes")
+            org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
             org-roam-capture-templates '(("d" "default" plain
                                           "%?"
                                           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"

@@ -6,13 +6,23 @@
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
 
-;; Fonts used
-(defconst pg/font-fixed
-  "JetBrains Mono"
-  "Fixed pitch font.")
-(defconst pg/font-variable
-  "Iosevka Aile"
-  "Variable pitch font.")
+(defconst pg/user
+  `( :user "phil-gab99"
+     :name "Philippe Gabriel"
+     :email "pgabriel999@hotmail.com"
+     :email-udem "philippe.gabriel.1@umontreal.ca"
+     :city "montreal"
+     :font-fixed "JetBrains Mono"
+     :font-variable "Iosevka Aile"
+     :home ,(or (getenv "HOME") "/home/phil-gab99")
+     :cache ,(or (getenv "XDG_CACHE_HOME") "/home/phil-gab99/.cache")
+     :config ,(or (getenv "XDG_CONFIG_HOME") "/home/phil-gab99/.config")
+     :documents ,(or (getenv "XDG_DOCUMENTS_DIR") "/home/phil-gab99/Documents")
+     :download ,(or (getenv "XDG_DOWNLOAD_DIR") "/home/phil-gab99/Downloads")
+     :music ,(or (getenv "XDG_MUSIC_DIR") "/home/phil-gab99/Music")
+     :dotfiles "/home/phil-gab99/.dotfiles"
+     :guix-home-profile "/home/phil-gab99/.guix-home/profile")
+  "Plist holding user details")
 
 ;; System related constants
 (defconst pg/is-termux
@@ -26,8 +36,8 @@
   (and pg/is-linux
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
-  "Determines whether the current system is a GNU/Linux based system running the
-                GNU Guix distribution.")
+  "Determines whether the current system is a GNU/Linux based system running
+  the GNU Guix distribution.")
 (defconst pg/exwm-enabled
   (getenv "EXWM")
   "Determines whether the EXWM is currently running.")
@@ -48,12 +58,10 @@
 (setopt load-prefer-newer t
         use-short-answers t
         auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-        warning-suppress-log-types '(lsp-mode)
-        warning-suppress-types '(lsp-mode)
+        ;; warning-suppress-log-types '(lsp-mode)
+        ;; warning-suppress-types '(lsp-mode)
         warning-minimum-level :error
         help-at-pt-display-when-idle t)
-
-;; (byte-recompile-directory (expand-file-name "~/.emacs.d/lisp") 0)
 
 (require 'pg-startup)
 

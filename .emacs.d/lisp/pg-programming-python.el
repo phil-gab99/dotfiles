@@ -14,7 +14,7 @@
 
 (with-eval-after-load 'python
   (setopt python-fill-docstring-style 'django
-          python-shell-virtualenv-root (expand-file-name "~/.conda/envs")
+          python-shell-virtualenv-root (concat (plist-get pg/user :home) "/.conda/envs")
           python-indent-offset 4)
   (define-key python-mode-map (kbd "C-c C-i") #'pg/run-ipython)
   (define-key inferior-python-mode-map (kbd "TAB") #'complete-symbol))
@@ -30,7 +30,7 @@
                                           (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
                                           (setenv "JUPYTER_PATH")))
   (setopt conda-anaconda-home (string-replace "/bin/conda" "" (executable-find "conda"))
-          conda-env-home-directory (expand-file-name "~/.conda/")
+          conda-env-home-directory (concat (plist-get pg/user :home) "/.conda")
           conda-env-subdirectory "envs")
   (unless (getenv "CONDA_DEFAULT_ENV")
     (conda-env-activate "ml_practice"))
@@ -44,7 +44,7 @@
     (require 'lsp-pyright)))
 
 (with-eval-after-load 'lsp-pyright
-  (setopt lsp-pyright-venv-path (expand-file-name "~/.conda/envs/")
+  (setopt lsp-pyright-venv-path (concat (plist-get pg/user :home) "/.conda/envs")
           lsp-pyright-venv-directory "envs"))
 
 (with-eval-after-load 'python

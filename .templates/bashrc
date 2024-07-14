@@ -1,3 +1,4 @@
+# -*- sh -*-
 # Export 'SHELL' to child processes.  Programs such as 'screen' honor it and
 # otherwise use /bin/sh.
 export SHELL

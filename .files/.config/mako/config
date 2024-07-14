@@ -9,7 +9,7 @@ on-button-left=invoke-default-action
 on-button-middle=dismiss-group
 on-button-right=dismiss
 on-touch=invoke-default-action
-on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
+on-notify=exec mpv /home/phil-gab99/.guix-home/profile/share/sounds/freedesktop/stereo/message.oga
 
 # Style Options
 # Which installed font for notification( any font installed )
@@ -43,7 +43,7 @@ icons=1
 max-icon-size=64
 # Paths to search for icons when a notification specifies a name instead of a
 # full path. (value path[:path...] )
-icon-path=/run/current-system/profile/share/icons/hicolor:/home/phil-gab99/.guix-home/profile/share/icons/Adwaita:/home/phil-gab99/.guix-home/profile/share/icons/HighContrast:/home/phil-gab99/.guix-home/profile/share/icons/Papirus-Dark:/home/phil-gab99/.guix-home/profile/share/icons/breeze-dark:/home/phil-gab99/.guix-home/profile/share/icons/hicolor
+icon-path=/home/phil-gab99/.guix-home/profile/share/icons/Papirus
 #  Position of the icon relative to the displayed text.(value: left | right | top | bottom )
 icon-location=left
 # enable pango - format notification( value 0|1 )
@@ -54,7 +54,7 @@ actions=1
 # stead of immediately deleting them.
 history=1
 # Set notification format string to format.( value: see format in man 5 mako)
-format= <b>%a</b>\n<i>%s</i>\n%b
+format= <b>%s</b>\n%b
 #  Set notification text alignment.( value: left|right|center )
 text-alignment=left
 # Set the default timeout to timeout in milliseconds.

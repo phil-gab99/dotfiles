@@ -3,32 +3,29 @@
   #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (guix gexp)
+  #:use-module (guix records)
+  #:use-module (ice-9 textual-ports)
   #:export (home-bash-service-type
             home-bash-configuration))
 
 (use-package-modules bash)
 (use-service-modules configuration)
 
-(define-configuration home-bash-configuration
-  (bash-profile
-   (text-config '())
-   "File template for .bash_profile")
-  (bashrc
-   (text-config '())
-   "File template .bash_profile"))
+(define-record-type* <home-bash-configuration>
+  home-bash-configuration
+  make-home-bash-configuration
+  home-bash-configuration?
+  (bash-profile home-bash-configuration-bash-profile
+                (default #f))
+  (bashrc home-bash-configuration-bashrc
+          (default #f))
+  (bash-logout home-bash-configuration-bash-logout
+               (default #f)))
 
 (define (home-bash-profile-service config)
   (list bash))
 
 (define (home-bash-files-service config)
-  (define (filter-fields field)
-    (filter-configuration-fields home-bash-configuration-fields
-                                 (list field)))
-  (define (serialize-field field)
-    (serialize-configuration
-     config
-     (filter-fields field)))
-
   `((".bash_profile"
      ,(mixed-text-file "bash_profile"
                        "\
@@ -36,16 +33,27 @@
 # /etc/profile will be sourced by bash automatically
 # Set up the home environment profile.
 [ -f ~/.profile ] && . ~/.profile
-
 # Honor per-interactive-shell startup file
-[ -f ~/.bashrc ] && . ~/.bashrc"
-                       (serialize-field 'bash-profile)))
+[ -f ~/.bashrc ] && . ~/.bashrc
+"
+                       (if (home-bash-configuration-bash-profile config)
+                           (call-with-input-file
+                               (home-bash-configuration-bash-profile config)
+                             get-string-all))))
     (".bashrc"
-     ,(mixed-text-file "bashrc"
-                       (serialize-field 'bashrc)
-                       "\
-# Source the system-wide file.
-[ -f /etc/bashrc ] && . /etc/bashrc"))))
+     ,(plain-file "bashrc"
+                  (if (home-bash-configuration-bashrc config)
+                      (call-with-input-file
+                          (home-bash-configuration-bashrc config)
+                        get-string-all)
+                      "")))
+    (".bash_logout"
+     ,(plain-file "bash-logout"
+                  (if (home-bash-configuration-bash-logout config)
+                      (call-with-input-file
+                          (home-bash-configuration-bash-logout config)
+                        get-string-all)
+                      "")))))
 
 (define home-bash-service-type
   (service-type (name 'home-bash)
