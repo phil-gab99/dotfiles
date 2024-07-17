@@ -276,7 +276,8 @@
 (with-eval-after-load 'org
   (setopt org-modern-list '((?+ . "○")
                             (?- . "◉")
-                            (?* . "▪")))
+                            (?* . "▪"))
+          org-modern-table nil)
   (global-org-modern-mode))
 
 (unless pg/is-windows

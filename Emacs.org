@@ -4249,7 +4249,8 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
   (with-eval-after-load 'org
     (setopt org-modern-list '((?+ . "○")
                               (?- . "◉")
-                              (?* . "▪")))
+                              (?* . "▪"))
+            org-modern-table nil)
     (global-org-modern-mode))
 
 #+end_src
