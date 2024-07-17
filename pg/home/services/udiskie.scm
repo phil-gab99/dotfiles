@@ -15,7 +15,8 @@
    (documentation "Run `udiskie'")
    (start #~(make-forkexec-constructor
              (list #$(file-append udiskie "/bin/udiskie") "-t")))
-   (stop #~(make-kill-destructor))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
 
 (define (home-udiskie-shepherd-services config)
   (list (home-udiskie-shepherd-service config)))

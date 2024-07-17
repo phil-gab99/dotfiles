@@ -12,12 +12,19 @@
     (autoload #'diminish "diminish" nil t))
   (diminish #'projectile-mode)
 
-  (projectile-register-project-type 'npm '("angular.json")
-                                    :project-file "package.json"
-                                    :compile "npm i && npm run build"
-                                    :run "npm start"
-                                    :test "npm test"
-                                    :test-suffix ".spec")
+  (projectile-update-project-type 'angular
+                                  :marker-files '("angular.json")
+                                  :project-file "package.json"
+                                  :compile "npm run build"
+                                  :install "npm install"
+                                  :run "npm start"
+                                  :test "npm test")
+
+  (projectile-update-project-type 'maven
+                                  :compile "./mvnw clean compile"
+                                  :test "./mvnw test"
+                                  :install "./mvwn clean install"
+                                  :package "./mvnw clean package")
 
   (with-eval-after-load 'general
     (pg/leader-keys

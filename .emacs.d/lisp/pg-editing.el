@@ -141,10 +141,11 @@
 (straight-use-package 'smartparens)
 (require 'smartparens-config)
 
-(sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode css-mode scss-mode)
-  (sp-local-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
-  (sp-local-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
-  (sp-local-pair "[" nil :post-handlers '(:add pg/sp-await-newline)))
+(sp-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
+(sp-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
+(sp-pair "[" nil :post-handlers '(:add pg/sp-await-newline))
+
+;; (sp-local-pair 'nxml-mode "<" nil :actions nil)
 
 (smartparens-global-mode)
 

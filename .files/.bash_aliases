@@ -11,7 +11,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
 
 # Alias to show disk space
-alias diskspace="du -S | sort -n -r | more"
+alias diskspace="du -S | sort -n -r | less"
 
 ################################################################################
 # MODIFIED COMMANDS ALIASES
@@ -53,6 +53,10 @@ alias find="find . | grep "
 # Provenance of commands including aliases
 alias which='alias | which --tty-only --read-alias --show-dot --show-tilde'
 
+# System halt and reboot
+alias halt='sudo /run/current-system/profile/sbin/halt'
+alias reboot='sudo /run/current-system/profile/sbin/reboot'
+
 ################################################################################
 # SYNONYMOUS ALIASES
 ################################################################################
@@ -67,7 +71,7 @@ alias cc="gcc"
 # MULTI-VERSIONED COMMANDS ALIASES
 ################################################################################
 
-# alias python="python3"
+alias python="python3"
 
 ################################################################################
 # APPLICATION ALIASES

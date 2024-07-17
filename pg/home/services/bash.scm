@@ -34,7 +34,7 @@
 # Set up the home environment profile.
 [ -f ~/.profile ] && . ~/.profile
 # Honor per-interactive-shell startup file
-[ -f ~/.bashrc ] && . ~/.bashrc
+[ -f ~/.bashrc ] && . ~/.bashrc 
 "
                        (if (home-bash-configuration-bash-profile config)
                            (call-with-input-file

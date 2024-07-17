@@ -3,7 +3,6 @@
 
 (unless (or pg/is-termux
             pg/is-windows)
-  (push (expand-file-name "packages/mu/mu4e" user-emacs-directory) load-path)
   (unless (fboundp 'mu4e)
     (autoload #'mu4e "mu4e" nil t))
   (unless (fboundp 'mu4e-compose-new)

@@ -125,7 +125,7 @@
   `(org-verbatim              ((t ( :foreground ,pg-onelight-variant-verbatim
                                     :inherit (fixed-pitch)))))
   `(org-table                 ((t ( :foreground ,pg-onelight-variant-table
-                                    :inherit (shaodw
+                                    :inherit (shadow
                                               fixed-pitch)))))
   `(org-indent                ((t ( :inherit (org-hide
                                               fixed-pitch)))))

@@ -66,8 +66,7 @@
               #:environment-variables
               (cons "WAYLAND_DISPLAY=wayland-1"
                     (default-environment-variables))))
-    (stop #~(make-kill-destructor))
-    (respawn? #f))))
+    (stop #~(make-kill-destructor)))))
 
 (define (home-syncthing-shepherd-services config)
   (list (home-syncthing-shepherd-service config)

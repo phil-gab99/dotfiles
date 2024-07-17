@@ -54,6 +54,7 @@
 (defun pg/org-mode-setup ()
   "Define some behaviours for the major org-mode."
   (org-indent-mode)
+  (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
   (diminish 'org-indent-mode)
@@ -233,10 +234,12 @@
   (setq-local doom-modeline-minor-modes t
               org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
               face-remapping-alist '((default (:height 1.75) default)))
-  (org-latex-preview))
+  (org-latex-preview)
+  (variable-pitch-mode 1))
 
 (defun pg/presentation-end ()
   "Cleanup after ending org presentation."
+  (variable-pitch-mode 0)
   (setq-local doom-modeline-minor-modes nil
               org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
               face-remapping-alist '((default variable-pitch default)))

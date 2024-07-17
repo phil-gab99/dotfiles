@@ -12,13 +12,13 @@
 }
 {
   "label": "shutdown",
-  "action": "sudo halt",
+  "action": "sudo /run/current-system/profile/sbin/halt",
   "text": "[S]hutdown",
   "keybind": "s"
 }
 {
   "label": "reboot",
-  "action": "sudo reboot",
+  "action": "sudo /run/current-system/profile/sbin/reboot",
   "text": "[R]eboot",
   "keybind": "r"
 }

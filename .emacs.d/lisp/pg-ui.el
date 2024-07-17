@@ -28,13 +28,24 @@
 
 (unless (fboundp 'diminish)
   (autoload #'diminish "diminish" nil t))
-(dolist (mode #'(auto-revert-mode
-                 buffer-face-mode
-                 visual-line-mode))
-  (diminish mode))
+(with-eval-after-load 'face-remap
+  (diminish #'buffer-face-mode))
+(with-eval-after-load 'simple
+  (diminish #'visual-line-mode))
+(with-eval-after-load 'autorevert
+  (diminish #'auto-revert-mode))
 
 (straight-use-package 'nerd-icons)
 (require 'nerd-icons)
+
+(defun pg/strip-file-name (file-path)
+  "Strips hashes or dates at the beginning of file names. Presumes they are of
+      length 10 at least"
+  (let* ((tokens (s-split "/" file-path))
+         (dirs (butlast tokens))
+         (file-name (car (last tokens))))
+    (s-join "/" (append dirs
+                        (list (replace-regexp-in-string "^[0-9a-zA-Z]\\{10,\\}-" "-" file-name))))))
 
 (straight-use-package 'doom-modeline)
 (require 'doom-modeline)
@@ -43,6 +54,7 @@
           doom-modeline-modal-icon nil
           doom-modeline-enable-word-count t
           doom-modeline-indent-info t
+          doom-modeline-buffer-file-name-function #'pg/strip-file-name
           doom-modeline-buffer-file-name-style 'truncate-except-project
           doom-modeline-mu4e t)
   (doom-modeline-mode 1))
@@ -75,6 +87,7 @@
                           (projects . 5)
                           (agenda . 5))
         dashboard-set-heading-icons t
+        dashboard-projects-backend 'projectile
         dashboard-set-file-icons t
         dashboard-display-icons-p t
         dashboard-match-agenda-entry "task"

@@ -20,8 +20,8 @@ fi
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc
 
-# Enable bash programmable completion features in interactive shells
-[ -f /run/current-system/profile/share/bash-completion/bash-completion ] && . /run/current-system/profile/share/bash-completion/bash-completion
+# Alias definitions
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # Anaconda script initializations
 __conda_setup="$('$HOME/.guix-home/profile/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -29,11 +29,9 @@ if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     [ -f "$HOME/.guix-home/profile/etc/profile.d/conda.sh" ] && . "$HOME/.guix-home/profile/etc/profile.d/conda.sh"
+    conda activate base
 fi
 unset __conda_setup
-
-# Alias definitions
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # Angular CLI autocompletion
 . <(ng completion script)

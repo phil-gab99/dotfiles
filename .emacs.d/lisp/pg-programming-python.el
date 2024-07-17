@@ -29,7 +29,7 @@
   (add-hook 'conda-predeactivate-hook #'(lambda ()
                                           (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
                                           (setenv "JUPYTER_PATH")))
-  (setopt conda-anaconda-home (string-replace "/bin/conda" "" (executable-find "conda"))
+  (setopt conda-anaconda-home (concat (plist-get pg/user :guix-home-profile))
           conda-env-home-directory (concat (plist-get pg/user :home) "/.conda")
           conda-env-subdirectory "envs")
   (unless (getenv "CONDA_DEFAULT_ENV")

@@ -29,7 +29,8 @@
    (requirement '(dbus))
    (start #~(make-forkexec-constructor
              (list #$(file-append pipewire "/bin/pipewire"))))
-   (stop #~(make-kill-destructor))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
 
 (define (home-pipewire-pulseaudio-shepherd-service config)
   (shepherd-service
@@ -55,7 +56,8 @@
    (provision '(playerctld))
    (start #~(make-forkexec-constructor
              (list #$(file-append playerctl "/bin/playerctld"))))
-   (stop #~(make-kill-destructor))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
 
 (define (home-mpd-shepherd-service config)
   (shepherd-service
@@ -63,7 +65,8 @@
    (provision '(mpd))
    (start #~(make-forkexec-constructor
              (list #$(file-append mpd "/bin/mpd") "--no-daemon")))
-   (stop #~(make-kill-destructor))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
 
 (define (home-mpDris2-shepherd-service config)
   (shepherd-service

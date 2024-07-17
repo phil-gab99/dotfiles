@@ -8,7 +8,7 @@
   #:use-module (pg home services nm-applet)
   #:use-module (pg home services syncthing)
   #:use-module (pg home services udiskie)
-  #:use-module (pg home services wayland)
+  #:use-module (pg home services wm)
   #:use-module (gnu)
   #:use-module (gnu home)
   #:use-module (gnu home services desktop)
@@ -112,7 +112,7 @@
                              (user (user-account-name %user))
                              (home (user-account-home-directory %user))))
       	           (service home-udiskie-service-type)
-      	           (service home-wayland-service-type)))))
+      	           (service home-wm-service-type)))))
 
 (define %system
   (operating-system

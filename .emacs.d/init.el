@@ -36,8 +36,8 @@
   (and pg/is-linux
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
-  "Determines whether the current system is a GNU/Linux based system running
-  the GNU Guix distribution.")
+  "Determines whether the current system is a GNU/Linux based system running the
+  GNU Guix distribution.")
 (defconst pg/exwm-enabled
   (getenv "EXWM")
   "Determines whether the EXWM is currently running.")

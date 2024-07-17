@@ -2,9 +2,24 @@
   #:use-module (gnu)
   #:use-module (gnu services)
   #:use-module (gnu home services)
+  #:use-module (gnu home services shepherd)
+  #:use-module (guix inferior)
+  #:use-module (guix channels)
+  #:use-module (srfi srfi-1)
   #:export (home-emacs-service-type))
 
-(use-package-modules emacs-xyz erlang finance gnupg mail)
+(use-package-modules emacs emacs-xyz erlang finance gnupg mail)
+(use-service-modules shepherd)
+
+(define channels ;; Old revision for mu
+  (list (channel
+         (name 'guix)
+         (url "https://git.savannah.gnu.org/git/guix.git")
+         (commit
+          "c26ed5d6b971af11894015979f1e260df571a2be"))))
+
+(define inferior
+  (inferior-for-channels channels))
 
 (define (home-emacs-profile-service config)
   (list emacs-geiser
@@ -37,9 +52,8 @@
         ;; emacs-perspective
 
         isync
-        ;; emacs-mu4e
         ;; emacs-mu4e-alert
-        mu
+        (first (lookup-inferior-packages inferior "mu"))
 
         ;; emacs-editorconfig
         ;; emacs-emojify
@@ -179,6 +193,19 @@
 (define (home-emacs-environment-variables-service config)
   '(("EMACSLOADPATH" . "$HOME/.guix-home/profile/share/emacs/site-lisp:$EMACSLOADPATH")))
 
+(define (home-emacs-shepherd-service config)
+  (shepherd-service
+   (documentation "Runs `emacs' as a daemon")
+   (provision '(emacs))
+   (start #~(make-forkexec-constructor
+             (list #$(file-append emacs-no-x-toolkit "/bin/emacs")
+                   "--fg-daemon")))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
+
+(define (home-emacs-shepherd-services config)
+  (list (home-emacs-shepherd-service config)))
+
 (define home-emacs-service-type
   (service-type (name 'home-emacs)
                 (description "Various emacs packages")
@@ -186,5 +213,7 @@
                  (list (service-extension home-profile-service-type
                                           home-emacs-profile-service)
 		       (service-extension home-environment-variables-service-type
-					  home-emacs-environment-variables-service)))
+					  home-emacs-environment-variables-service)
+                       (service-extension home-shepherd-service-type
+                                          home-emacs-shepherd-services)))
                 (default-value #f)))

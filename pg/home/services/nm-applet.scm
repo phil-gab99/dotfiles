@@ -22,7 +22,8 @@
              #:environment-variables
              (cons "WAYLAND_DISPLAY=wayland-1"
                    (default-environment-variables))))
-   (stop #~(make-kill-destructor))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
 
 (define (home-nm-applet-shepherd-services config)
   (list (home-nm-applet-shepherd-service config)))

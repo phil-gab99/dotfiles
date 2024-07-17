@@ -103,7 +103,7 @@
                                (plain-file-content %sudoers-specification)
                                (user-account-name
                                 (car (operating-system-users system)))
-                               " ALL=(ALL) NOPASSWD:/run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/reboot")))
+                               " ALL=(root) NOPASSWD:/run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/reboot")))
 
    ;; System packages
    (packages (cons* bluez

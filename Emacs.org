@@ -15,16 +15,6 @@ Below is a sectioned configuration of emacs. Each code blocks gets written out t
 
 #+end_src
 
-** Server Initialization
-
-Starting a server for displaying polybar info
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-startup.el
-
-  (server-start)
-
-#+end_src
-
 ** Package Initialization
 
 Some initializations are first set up.
@@ -628,7 +618,7 @@ Theme inspired by the popular Atom One Dark theme.
      `(org-verbatim              ((t ( :foreground ,pg-onedark-variant-verbatim
                                        :inherit (fixed-pitch)))))
      `(org-table                 ((t ( :foreground ,pg-onedark-variant-table
-                                       :inherit (shaodw
+                                       :inherit (shadow
                                                  fixed-pitch)))))
      `(org-indent                ((t ( :inherit (org-hide
                                                  fixed-pitch)))))
@@ -876,7 +866,7 @@ Theme inspired by the popular Atom One Dark theme.
     `(org-verbatim              ((t ( :foreground ,pg-onelight-variant-verbatim
                                       :inherit (fixed-pitch)))))
     `(org-table                 ((t ( :foreground ,pg-onelight-variant-table
-                                      :inherit (shaodw
+                                      :inherit (shadow
                                                 fixed-pitch)))))
     `(org-indent                ((t ( :inherit (org-hide
                                                 fixed-pitch)))))
@@ -1031,10 +1021,12 @@ Theme inspired by the popular Atom One Dark theme.
 
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))
-  (dolist (mode #'(auto-revert-mode
-                   buffer-face-mode
-                   visual-line-mode))
-    (diminish mode))
+  (with-eval-after-load 'face-remap
+    (diminish #'buffer-face-mode))
+  (with-eval-after-load 'simple
+    (diminish #'visual-line-mode))
+  (with-eval-after-load 'autorevert
+    (diminish #'auto-revert-mode))
 
 #+end_src
 
@@ -1053,6 +1045,15 @@ Customizes the look of the modeline for better aesthetic.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-ui.el
 
+  (defun pg/strip-file-name (file-path)
+    "Strips hashes or dates at the beginning of file names. Presumes they are of
+        length 10 at least"
+    (let* ((tokens (s-split "/" file-path))
+           (dirs (butlast tokens))
+           (file-name (car (last tokens))))
+      (s-join "/" (append dirs
+                          (list (replace-regexp-in-string "^[0-9a-zA-Z]\\{10,\\}-" "-" file-name))))))
+
   (straight-use-package 'doom-modeline)
   (require 'doom-modeline)
   (with-eval-after-load 'doom-modeline
@@ -1060,6 +1061,7 @@ Customizes the look of the modeline for better aesthetic.
             doom-modeline-modal-icon nil
             doom-modeline-enable-word-count t
             doom-modeline-indent-info t
+            doom-modeline-buffer-file-name-function #'pg/strip-file-name
             doom-modeline-buffer-file-name-style 'truncate-except-project
             doom-modeline-mu4e t)
     (doom-modeline-mode 1))
@@ -1098,6 +1100,7 @@ Customizes the look of the modeline for better aesthetic.
                             (projects . 5)
                             (agenda . 5))
           dashboard-set-heading-icons t
+          dashboard-projects-backend 'projectile
           dashboard-set-file-icons t
           dashboard-display-icons-p t
           dashboard-match-agenda-entry "task"
@@ -1250,7 +1253,6 @@ For organizing the buffer list
 
   (unless (or pg/is-termux
               pg/is-windows)
-    (push (expand-file-name "packages/mu/mu4e" user-emacs-directory) load-path)
     (unless (fboundp 'mu4e)
       (autoload #'mu4e "mu4e" nil t))
     (unless (fboundp 'mu4e-compose-new)
@@ -1545,10 +1547,11 @@ Colors matching delimiters with different colours for distinguishability.
   (straight-use-package 'smartparens)
   (require 'smartparens-config)
 
-  (sp-with-modes '(csharp-mode js-mode awk-mode java-mode c-mode c++mode tsx-ts-mode json-mode css-mode scss-mode)
-    (sp-local-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
-    (sp-local-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
-    (sp-local-pair "[" nil :post-handlers '(:add pg/sp-await-newline)))
+  (sp-pair "(" nil :post-handlers '(:add pg/sp-await-newline))
+  (sp-pair "{" nil :post-handlers '(:add pg/sp-await-newline))
+  (sp-pair "[" nil :post-handlers '(:add pg/sp-await-newline))
+
+  ;; (sp-local-pair 'nxml-mode "<" nil :actions nil)
 
   (smartparens-global-mode)
 
@@ -1847,7 +1850,6 @@ Some settings to manage where emacs stores backup files (such as the =~= backup 
   (setopt backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
           enable-remote-dir-locals t
           auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t))
-          safe-local-variable-values '((projectile-project-compilation-cmd . "./mvnw clean package"))
           vc-follow-symlinks t)
 
 #+end_src
@@ -2165,12 +2167,19 @@ Note that the emacs built-in local dir creation can also be used and is more fle
       (autoload #'diminish "diminish" nil t))
     (diminish #'projectile-mode)
 
-    (projectile-register-project-type 'npm '("angular.json")
-                                      :project-file "package.json"
-                                      :compile "npm i && npm run build"
-                                      :run "npm start"
-                                      :test "npm test"
-                                      :test-suffix ".spec")
+    (projectile-update-project-type 'angular
+                                    :marker-files '("angular.json")
+                                    :project-file "package.json"
+                                    :compile "npm run build"
+                                    :install "npm install"
+                                    :run "npm start"
+                                    :test "npm test")
+
+    (projectile-update-project-type 'maven
+                                    :compile "./mvnw clean compile"
+                                    :test "./mvnw test"
+                                    :install "./mvwn clean install"
+                                    :package "./mvnw clean package")
 
     (with-eval-after-load 'general
       (pg/leader-keys
@@ -3531,7 +3540,7 @@ Custom syntax highlighting for LMC assembly language.
     (add-hook 'conda-predeactivate-hook #'(lambda ()
                                             (setenv "JUPYTER_PATH" (getenv "OLD_JUPYTER_PATH"))
                                             (setenv "JUPYTER_PATH")))
-    (setopt conda-anaconda-home (string-replace "/bin/conda" "" (executable-find "conda"))
+    (setopt conda-anaconda-home (concat (plist-get pg/user :guix-home-profile))
             conda-env-home-directory (concat (plist-get pg/user :home) "/.conda")
             conda-env-subdirectory "envs")
     (unless (getenv "CONDA_DEFAULT_ENV")
@@ -3807,7 +3816,30 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-xml.el
 
-  (setopt nxml-slash-auto-complete-flag t)
+  (defun pg/close-tag ()
+    (interactive)
+    (insert ">")
+    (save-excursion (pg/close-tag-maybe)))
+
+  (defun pg/close-tag-maybe ()
+    (when (looking-back "<[^/]*>")
+      (nxml-finish-element)
+      (delete-char -1)))
+
+  (defun pg/newline-and-indent-maybe ()
+    (interactive)
+    (if (not (and (looking-back "<[^/]*>\s*")
+                  (looking-at "\s*</[^/]*>")))
+        (newline)
+      (newline)
+      (newline)
+      (indent-according-to-mode)
+      (previous-line)
+      (indent-according-to-mode)))
+
+  (with-eval-after-load 'nxml-mode
+    (define-key nxml-mode-map (kbd ">") #'pg/close-tag)
+    (define-key nxml-mode-map (kbd "RET") #'pg/newline-and-indent-maybe))
 
 #+end_src
 
@@ -3953,6 +3985,7 @@ Org mode package for writing structured documents and more. Here are some useful
   (defun pg/org-mode-setup ()
     "Define some behaviours for the major org-mode."
     (org-indent-mode)
+    (variable-pitch-mode 1)
     (auto-fill-mode 0)
     (visual-line-mode 1)
     (diminish 'org-indent-mode)
@@ -4162,10 +4195,12 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     (setq-local doom-modeline-minor-modes t
                 org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
                 face-remapping-alist '((default (:height 1.75) default)))
-    (org-latex-preview))
+    (org-latex-preview)
+    (variable-pitch-mode 1))
 
   (defun pg/presentation-end ()
     "Cleanup after ending org presentation."
+    (variable-pitch-mode 0)
     (setq-local doom-modeline-minor-modes nil
                 org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
                 face-remapping-alist '((default variable-pitch default)))
@@ -5007,8 +5042,8 @@ Allows the creation of keymaps for related commands and the ability to repeat te
     (and pg/is-linux
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
-    "Determines whether the current system is a GNU/Linux based system running
-    the GNU Guix distribution.")
+    "Determines whether the current system is a GNU/Linux based system running the
+    GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
