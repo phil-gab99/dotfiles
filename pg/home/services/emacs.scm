@@ -5,6 +5,7 @@
   #:use-module (gnu home services shepherd)
   #:use-module (guix inferior)
   #:use-module (guix channels)
+  ;; #:use-module (guix transformations)
   #:use-module (srfi srfi-1)
   #:export (home-emacs-service-type))
 
@@ -44,7 +45,7 @@
 
         ;; emacs-dashboard
         ;; emacs-diminish
-        ;; emacs-doom-modeline     Error with emacs-compat
+        ;; emacs-doom-modeline
         ;; emacs-page-break-lines
         ;; emacs-nerd-icons
 
@@ -53,6 +54,9 @@
 
         isync
         ;; emacs-mu4e-alert
+        ;; ((options->transformation
+        ;;   '((with-version . "mu=1.10.9")))
+        ;;  mu)
         (first (lookup-inferior-packages inferior "mu"))
 
         ;; emacs-editorconfig

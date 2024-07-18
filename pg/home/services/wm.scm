@@ -53,6 +53,9 @@
         ;; Terminal emulator
         foot
 
+        ;; Network
+        network-manager-applet
+
         ;; Compatibility for older Xorg applications
         xorg-server-xwayland
 
@@ -97,6 +100,19 @@
         evince
         simple-scan))
 
+(define (home-gammastep-shepherd-service config)
+  (shepherd-service
+   (provision '(gammastep))
+   (documentation "Run `gammastep-indicator'")
+   (auto-start? #f)
+   (start #~(make-forkexec-constructor
+             (list #$(file-append gammastep "/bin/gammastep-indicator"))
+             #:environment-variables
+             (cons "WAYLAND_DISPLAY=wayland-1"
+                   (default-environment-variables))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
+
 (define (home-mako-shepherd-service config)
   (shepherd-service
    (provision '(mako))
@@ -111,8 +127,33 @@
    (stop #~(make-kill-destructor))
    (respawn? #f)))
 
+(define (home-nm-applet-shepherd-service config)
+  (shepherd-service
+   (provision '(nm-applet))
+   (documentation "Run `nm-applet'")
+   (auto-start? #f)
+   (start #~(make-forkexec-constructor
+             (list #$(file-append network-manager-applet "/bin/nm-applet"))
+             #:environment-variables
+             (cons "WAYLAND_DISPLAY=wayland-1"
+                   (default-environment-variables))))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
+
+(define (home-udiskie-shepherd-service config)
+  (shepherd-service
+   (provision '(udiskie))
+   (documentation "Run `udiskie'")
+   (start #~(make-forkexec-constructor
+             (list #$(file-append udiskie "/bin/udiskie") "-t")))
+   (stop #~(make-kill-destructor))
+   (respawn? #f)))
+
 (define (home-wm-shepherd-services config)
-  (list (home-mako-shepherd-service config)))
+  (list (home-gammastep-shepherd-service config)
+        (home-mako-shepherd-service config)
+        (home-nm-applet-shepherd-service config)
+        (home-udiskie-shepherd-service config)))
 
 (define home-wm-service-type
   (service-type (name 'home-wm)

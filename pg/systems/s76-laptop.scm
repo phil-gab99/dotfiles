@@ -2,12 +2,9 @@
   #:use-module (pg systems base)
   #:use-module (pg home services bash)
   #:use-module (pg home services emacs)
-  #:use-module (pg home services games)
-  #:use-module (pg home services gammastep)
+  #:use-module (pg home services emulators)
   #:use-module (pg home services media)
-  #:use-module (pg home services nm-applet)
   #:use-module (pg home services syncthing)
-  #:use-module (pg home services udiskie)
   #:use-module (pg home services wm)
   #:use-module (gnu)
   #:use-module (gnu home)
@@ -91,8 +88,7 @@
       		             (source-directory %user-dotfiles)
       		             (directories '(".files"))))
       	           (service home-emacs-service-type)
-      	           (service home-gammastep-service-type)
-                   (service home-games-service-type)
+                   (service home-emulators-service-type)
       	           (service home-gpg-agent-service-type
       		            (home-gpg-agent-configuration
       		             (pinentry-program
@@ -106,12 +102,10 @@
       		            (home-mcron-configuration
       		             (jobs (list %pass-sync-job))))
       	           (service home-media-service-type)
-      	           (service home-nm-applet-service-type)
       	           (service home-syncthing-service-type
                             (home-syncthing-configuration
                              (user (user-account-name %user))
                              (home (user-account-home-directory %user))))
-      	           (service home-udiskie-service-type)
       	           (service home-wm-service-type)))))
 
 (define %system
