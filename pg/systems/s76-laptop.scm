@@ -78,10 +78,7 @@
                                              "/.templates/bash_profile"))
       		             (bashrc
                               (string-append %user-dotfiles
-                                             "/.templates/bashrc"))
-                             (bash-logout
-                              (string-append %user-dotfiles
-                                             "/.templates/bash_logout"))))
+                                             "/.templates/bashrc"))))
       	           (service home-dbus-service-type)
       	           (service home-dotfiles-service-type
       		            (home-dotfiles-configuration

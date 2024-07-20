@@ -24,6 +24,8 @@
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'geiser-repl-mode-hook #'corfu-mode)
+  (add-hook 'geiser-repl-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
 
   (with-eval-after-load 'geiser-guile
     (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :config) "/guix/current/share/guile/site/3.0"))

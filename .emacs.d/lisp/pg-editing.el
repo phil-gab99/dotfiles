@@ -15,47 +15,10 @@
 (require 'ansi-color)
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
-(dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
-                org-agenda-mode-hook
-                erc-mode-hook
-                erc-list-menu-mode-hook
-                Info-mode-hook
-                ledger-report-mode-hook
-                ielm-mode-hook
-                eww-mode-hook
-                term-mode-hook
-                inferior-python-mode-hook
-                inferior-haskell-mode-hook
-                prolog-inferior-mode-hook
-                comint-mode-hook
-                helpful-mode-hook
-                gfm-view-mode-hook
-                compilation-mode-hook
-                dashboard-mode-hook
-                eshell-mode-hook
-                sql-interactive-mode-hook
-                pdf-view-mode-hook
-                telega-root-mode-hook
-                telega-chat-mode
-                telega-image-mode
-                sokoban-mode-hook
-                doc-view-mode-hook
-                mu4e-main-mode-hook
-                mu4e-view-mode-hook
-                ement-room-mode-hook
+(dolist (mode '(compilation-mode-hook
                 Man-mode-hook
-                nov-mode-hook
-                simple-mpc-mode-hook
-                elfeed-search-mode-hook
-                elfeed-show-mode-hook
-                treemacs-mode-hook
-                vterm-mode-hook
-                magit-popup-mode-hook
-                etc-authors-mode-hook
-                jupyter-repl-mode-hook
-                geiser-repl-mode-hook
-                slack-mode-hook
-                shell-mode-hook))
+                comint-mode-hook
+                etc-authors-mode-hook))
   (add-hook mode #'(lambda ()
                      (display-line-numbers-mode 0))))
 

@@ -6,10 +6,16 @@
 
 (unless (fboundp 'doc-view-mode)
   (autoload #'doc-view-mode "doc-view" nil t))
+(add-hook 'doc-view-mode-hook #'(lambda ()
+                                  (display-line-numbers-mode 0)))
 
 (straight-use-package 'elfeed)
 (unless (fboundp 'elfeed)
   (autoload #'elfeed "elfeed" nil t))
+(add-hook 'elfeed-search-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
+(add-hook 'elfeed-show-mode-hook #'(lambda ()
+                                     (display-line-numbers-mode 0)))
 (with-eval-after-load 'elfeed
   (setopt elfeed-feeds '("https://www.gnu.org/software/guile/news/feed.xml"
                          "https://planet.emacslife.com/atom.xml"
@@ -27,7 +33,8 @@
 (unless (fboundp 'nov-mode)
   (autoload #'nov-mode "nov" nil t))
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-
+(add-hook 'nov-mode-hook #'(lambda ()
+                             (display-line-numbers-mode 0)))
 (defun pg/nov-mode-setup ()
   (auto-fill-mode 0)
   (visual-line-mode 1)
@@ -36,6 +43,8 @@
 
 (unless (fboundp 'pdf-view-mode)
   (autoload #'pdf-view-mode "pdf-tools" nil t))
+(add-hook 'pdf-view-mode-hook #'(lambda ()
+                                  (display-line-numbers-mode 0)))
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
 (provide 'pg-viewers)

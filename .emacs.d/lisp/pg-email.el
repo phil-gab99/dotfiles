@@ -9,6 +9,10 @@
     (autoload #'mu4e-compose-new "mu4e" nil t))
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
+  (add-hook 'mu4e-main-mode-hook #'(lambda ()
+                                     (display-line-numbers-mode 0)))
+  (add-hook 'mu4e-view-mode-hook #'(lambda ()
+                                     (display-line-numbers-mode 0)))
   (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
   (remove-hook 'mu4e-main-mode-hook 'evil-collection-mu4e-update-main-view)
   (with-eval-after-load 'general

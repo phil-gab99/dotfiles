@@ -33,6 +33,8 @@
 (straight-use-package 'lsp-treemacs)
 (with-eval-after-load 'lsp-mode
   (require 'lsp-treemacs))
+(add-hook 'treemacs-mode-hook #'(lambda ()
+                                  (display-line-numbers-mode 0)))
 (with-eval-after-load 'lsp-treemacs
   (with-eval-after-load 'general
     (pg/leader-keys

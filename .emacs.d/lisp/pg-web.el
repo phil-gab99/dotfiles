@@ -3,6 +3,7 @@
 
 (defun pg/eww-mode-setup ()
   (auto-fill-mode 0)
+  (display-line-numbers-mode 0)
   (visual-line-mode 1)
   (setq-local face-remapping-alist '((default (:height 1.5) default))))
 (add-hook 'eww-mode-hook #'pg/eww-mode-setup)

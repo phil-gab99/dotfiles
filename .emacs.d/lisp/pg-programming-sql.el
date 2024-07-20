@@ -8,6 +8,7 @@
   (autoload #'sqlind-minor-mode "sql-indent" nil t))
 (add-hook 'sql-mode-hook #'sqlind-minor-mode)
 (add-hook 'sql-interactive-mode-hook #'(lambda ()
+                                         (display-line-numbers-mode 0)
                                          (toggle-truncate-lines t)))
 (with-eval-after-load 'sql
   (setopt sql-connection-alist

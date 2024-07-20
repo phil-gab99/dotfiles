@@ -39,6 +39,8 @@
   (autoload #'magit-status "magit-status" nil t))
 (unless (fboundp 'magit-clone)
   (autoload #'magit-clone "magit-clone" nil t))
+(add-hook 'magit-popup-mode-hook #'(lambda ()
+                                     (display-line-numbers-mode 0)))
 (with-eval-after-load 'magit
   (if pg/is-windows
       (setenv "SSH_ASKPASS" "git-gui--askpass"))

@@ -58,13 +58,12 @@
 (setopt load-prefer-newer t
         use-short-answers t
         auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-        ;; warning-suppress-log-types '(lsp-mode)
-        ;; warning-suppress-types '(lsp-mode)
+        warning-suppress-log-types '((lsp-mode))
+        warning-suppress-types '((lsp-mode))
         warning-minimum-level :error
         help-at-pt-display-when-idle t)
 
 (require 'pg-startup)
-
 (if pg/exwm-enabled (require 'pg-desktop))
 
 (dolist (package '(pg-ui

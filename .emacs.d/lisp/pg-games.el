@@ -13,6 +13,8 @@
   (autoload #'sokoban "sokoban" nil t))
 (unless (fboundp 'sokoban-goto-level)
   (autoload #'sokoban-goto-level "sokoban" nil t))
+(add-hook 'sokoban-mode-hook #'(lambda ()
+                                 (display-line-numbers-mode 0)))
 (with-eval-after-load 'sokoban
   (with-eval-after-load 'evil
     (evil-define-key 'normal sokoban-mode-map

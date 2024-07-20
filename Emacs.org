@@ -126,6 +126,8 @@ Scheme REPL
     (unless (fboundp 'corfu-mode)
       (autoload #'corfu-mode "corfu" nil t))
     (add-hook 'geiser-repl-mode-hook #'corfu-mode)
+    (add-hook 'geiser-repl-mode-hook #'(lambda ()
+                                         (display-line-numbers-mode 0)))
 
     (with-eval-after-load 'geiser-guile
       (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :config) "/guix/current/share/guile/site/3.0"))
@@ -1092,6 +1094,8 @@ Customizes the look of the modeline for better aesthetic.
           (format "Emacs started in %.2f" time)
         (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
+  (add-hook 'dashboard-mode-hook #'(lambda ()
+                                     (display-line-numbers-mode 0)))
   (straight-use-package 'dashboard)
   (with-eval-after-load 'projectile
     (require 'dashboard)
@@ -1259,6 +1263,10 @@ For organizing the buffer list
       (autoload #'mu4e-compose-new "mu4e" nil t))
     (unless (fboundp 'corfu-mode)
       (autoload #'corfu-mode "corfu" nil t))
+    (add-hook 'mu4e-main-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
+    (add-hook 'mu4e-view-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
     (add-hook 'mu4e-compose-mode-hook #'corfu-mode)
     (remove-hook 'mu4e-main-mode-hook 'evil-collection-mu4e-update-main-view)
     (with-eval-after-load 'general
@@ -1383,47 +1391,10 @@ Allows for notification pop-up and mode line count when receiving emails
   (require 'ansi-color)
   (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
-  (dolist (mode '(org-mode-hook         ;; Disable line numbers for some modes
-                  org-agenda-mode-hook
-                  erc-mode-hook
-                  erc-list-menu-mode-hook
-                  Info-mode-hook
-                  ledger-report-mode-hook
-                  ielm-mode-hook
-                  eww-mode-hook
-                  term-mode-hook
-                  inferior-python-mode-hook
-                  inferior-haskell-mode-hook
-                  prolog-inferior-mode-hook
-                  comint-mode-hook
-                  helpful-mode-hook
-                  gfm-view-mode-hook
-                  compilation-mode-hook
-                  dashboard-mode-hook
-                  eshell-mode-hook
-                  sql-interactive-mode-hook
-                  pdf-view-mode-hook
-                  telega-root-mode-hook
-                  telega-chat-mode
-                  telega-image-mode
-                  sokoban-mode-hook
-                  doc-view-mode-hook
-                  mu4e-main-mode-hook
-                  mu4e-view-mode-hook
-                  ement-room-mode-hook
+  (dolist (mode '(compilation-mode-hook
                   Man-mode-hook
-                  nov-mode-hook
-                  simple-mpc-mode-hook
-                  elfeed-search-mode-hook
-                  elfeed-show-mode-hook
-                  treemacs-mode-hook
-                  vterm-mode-hook
-                  magit-popup-mode-hook
-                  etc-authors-mode-hook
-                  jupyter-repl-mode-hook
-                  geiser-repl-mode-hook
-                  slack-mode-hook
-                  shell-mode-hook))
+                  comint-mode-hook
+                  etc-authors-mode-hook))
     (add-hook mode #'(lambda ()
                        (display-line-numbers-mode 0))))
 
@@ -1721,6 +1692,8 @@ Displays full documentations in place of the default help function.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-help.el
 
+  (add-hook 'helpful-mode-hook #'(lambda ()
+                                   (display-line-numbers-mode 0)))
   (straight-use-package 'helpful)
   (unless (fboundp 'helpful-callable)
     (autoload #'helpful-callable "helpful" nil t))
@@ -1757,6 +1730,7 @@ Displays full documentations in place of the default help function.
   (defun pg/Info-mode-setup ()
     "Defining some behaviours for the major info-mode."
     (auto-fill-mode 0)
+    (display-line-numbers-mode 0)
     (setq-local face-remapping-alist '((default (:height 1.5) default)
                                        (info-menu-header (:height 1.5) info-menu-header)
                                        (info-title-1 (:height 1.05) info-title-1)
@@ -1816,6 +1790,7 @@ Displays full documentations in place of the default help function.
 
   (defun pg/eww-mode-setup ()
     (auto-fill-mode 0)
+    (display-line-numbers-mode 0)
     (visual-line-mode 1)
     (setq-local face-remapping-alist '((default (:height 1.5) default))))
   (add-hook 'eww-mode-hook #'pg/eww-mode-setup)
@@ -2095,8 +2070,10 @@ Some configurations to the built-in eshell.
     (with-eval-after-load 'esh-mode
       (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
       (setopt eshell-buffer-maximum-lines 10000
-              eshell-scroll-to-bottom-on-input t)))
+              eshell-scroll-to-bottom-on-input 'all)))
 
+  (add-hook 'eshell-mode-hook #'(lambda ()
+                                  (display-line-numbers-mode 0)))
   (require 'esh-mode)
   (with-eval-after-load 'esh-mode
     (add-hook 'eshell-first-time-mode-hook #'pg/configure-eshell))
@@ -2119,8 +2096,10 @@ Some configurations to the built-in eshell.
     (straight-use-package 'vterm))
   (unless (fboundp 'vterm)
     (autoload #'vterm "vterm" nil t))
+  (add-hook 'vterm-mode-hook #'(lambda ()
+                                 (display-line-numbers-mode 0)))
   (with-eval-after-load 'vterm
-    (setopt vterm-tramp-shells '(("ssh" "/bin/sh"))))
+    (setopt vterm-tramp-shells `(("ssh" ,(executable-find "sh")))))
   (with-eval-after-load 'general
     (pg/leader-keys
       "pv" '(vterm :which-key "vterm")))
@@ -2202,6 +2181,8 @@ Allows for git commands to be applied to the current repository using the comman
     (autoload #'magit-status "magit-status" nil t))
   (unless (fboundp 'magit-clone)
     (autoload #'magit-clone "magit-clone" nil t))
+  (add-hook 'magit-popup-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
   (with-eval-after-load 'magit
     (if pg/is-windows
         (setenv "SSH_ASKPASS" "git-gui--askpass"))
@@ -2328,6 +2309,8 @@ Tree views in emacs.
   (straight-use-package 'lsp-treemacs)
   (with-eval-after-load 'lsp-mode
     (require 'lsp-treemacs))
+  (add-hook 'treemacs-mode-hook #'(lambda ()
+                                    (display-line-numbers-mode 0)))
   (with-eval-after-load 'lsp-treemacs
     (with-eval-after-load 'general
       (pg/leader-keys
@@ -2931,6 +2914,8 @@ Collection of code snippets for yasnippet.
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
   (add-hook 'ielm-mode-hook #'corfu-mode)
+  (add-hook 'ielm-mode-hook #'(lambda ()
+                                (display-line-numbers-mode 0)))
 
 #+end_src
 
@@ -3068,6 +3053,8 @@ Collection of code snippets for yasnippet.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-haskell.el
 
+  (add-hook 'inferior-haskell-mode-hook #'(lambda ()
+                                            (display-line-numbers-mode 0)))
   (straight-use-package 'haskell-mode)
   (with-eval-after-load 'haskell-mode
     (setopt haskell-process-type 'ghci))
@@ -3383,6 +3370,7 @@ Custom syntax highlighting for LMC assembly language.
 
   (straight-use-package 'markdown-mode)
   (add-hook 'gfm-view-mode-hook (lambda ()
+                                  (display-line-numbers-mode 0)
                                   (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                                                      (markdown-code-face (:height 1.0) org-code)))))
   (with-eval-after-load 'markdown-mode
@@ -3478,6 +3466,8 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-prolog.el
 
+  (add-hook 'prolog-inferior-mode-hook #'(lambda ()
+                                           (display-line-numbers-mode 0)))
   (unless (fboundp 'prolog-mode)
     (autoload #'prolog-mode "prolog" nil t))
 
@@ -3516,6 +3506,8 @@ Custom syntax highlighting for LMC assembly language.
     (autoload #'lsp-deferred "lsp-mode" nil t))
   (add-hook 'python-ts-mode-hook #'lsp-deferred)
   (add-hook 'inferior-python-mode-hook #'corfu-mode)
+  (add-hook 'inferior-python-mode-hook #'(lambda ()
+                                           (display-line-numbers-mode 0)))
 
   (with-eval-after-load 'python
     (setopt python-fill-docstring-style 'django
@@ -3591,6 +3583,7 @@ Custom syntax highlighting for LMC assembly language.
     (straight-use-package 'jupyter)
     (add-hook 'jupyter-repl-mode-hook #'company-mode)
     (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                          (display-line-numbers-mode 0)
                                           (require 'jupyter))))
 
 #+end_src
@@ -3684,6 +3677,7 @@ Custom syntax highlighting for LMC assembly language.
     (autoload #'sqlind-minor-mode "sql-indent" nil t))
   (add-hook 'sql-mode-hook #'sqlind-minor-mode)
   (add-hook 'sql-interactive-mode-hook #'(lambda ()
+                                           (display-line-numbers-mode 0)
                                            (toggle-truncate-lines t)))
   (with-eval-after-load 'sql
     (setopt sql-connection-alist
@@ -3933,9 +3927,9 @@ Org mode package for writing structured documents and more. Here are some useful
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
   (defun pg/org-screenshot ()
-    "Take a screenshot into a time stamped unique-named file in the img
-      directory with respect to the org-buffer's location and insert a link to
-      this file. Requires imageMagick for undertaking screenshots."
+    "Take a screenshot into a time stamped unique-named file in the img directory
+  with respect to the org-buffer's location and insert a link to this
+  file. Requires imageMagick for undertaking screenshots."
     (interactive)
     (setq imgpath "./img/")
     (if (not (f-dir-p imgpath))
@@ -3956,7 +3950,7 @@ Org mode package for writing structured documents and more. Here are some useful
 
   (defun pg/org-csv-to-table (beg end)
     "Insert a file into the current buffer at point, and convert it to an org
-      table."
+  table."
     (interactive (list (mark) (point)))
     (org-table-convert-region beg end ","))
 
@@ -3988,6 +3982,7 @@ Org mode package for writing structured documents and more. Here are some useful
     (variable-pitch-mode 1)
     (auto-fill-mode 0)
     (visual-line-mode 1)
+    (display-line-numbers-mode 0)
     (diminish 'org-indent-mode)
     (setq-local evil-auto-indent nil))
 
@@ -4148,6 +4143,8 @@ Org mode package for writing structured documents and more. Here are some useful
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
+  (add-hook 'org-agenda-mode-hook #'(lambda ()
+                                      (display-line-numbers-mode 0)))
   (with-eval-after-load 'org-agenda
     (setopt org-agenda-tags-column 0
             org-agenda-block-separator ?─
@@ -4310,35 +4307,34 @@ Helps with note-taking strategies.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-org.el
 
-  (unless pg/is-termux
-    (with-eval-after-load 'org
-      (straight-use-package 'org-roam)
-      (require 'org-roam))
-    (with-eval-after-load 'org-roam
-      (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-              org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
-              org-roam-capture-templates '(("d" "default" plain
-                                            "%?"
-                                            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                               "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                            :unnarrowed t)
-                                           ("a" "system admin" plain
-                                            "%?"
-                                            :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                               "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                            :unnarrowed t)
-                                           ("s" "distributed system design" plain
-                                            "%?"
-                                            :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                               "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                            :unnarrowed t)))
-      (org-roam-db-autosync-enable)
-      (with-eval-after-load 'general
-        (pg/leader-keys
-          "on" '(:ignore t :which-key "notes")
-          "onl" '(org-roam-buffer-toggle :which-key "links")
-          "onf" '(org-roam-node-find :which-key "find/create")
-          "oni" '(org-roam-node-insert :which-key "insert/create")))))
+  (with-eval-after-load 'org
+    (straight-use-package 'org-roam)
+    (require 'org-roam))
+  (with-eval-after-load 'org-roam
+    (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+            org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
+            org-roam-capture-templates '(("d" "default" plain
+                                          "%?"
+                                          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)
+                                         ("a" "system admin" plain
+                                          "%?"
+                                          :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)
+                                         ("s" "distributed system design" plain
+                                          "%?"
+                                          :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)))
+    (org-roam-db-autosync-enable)
+    (with-eval-after-load 'general
+      (pg/leader-keys
+        "on" '(:ignore t :which-key "notes")
+        "onl" '(org-roam-buffer-toggle :which-key "links")
+        "onf" '(org-roam-node-find :which-key "find/create")
+        "oni" '(org-roam-node-insert :which-key "insert/create"))))
 
 #+end_src
 
@@ -4445,6 +4441,8 @@ Custom pomodoro timer
 
   (unless (fboundp 'doc-view-mode)
     (autoload #'doc-view-mode "doc-view" nil t))
+  (add-hook 'doc-view-mode-hook #'(lambda ()
+                                    (display-line-numbers-mode 0)))
 
 #+end_src
 
@@ -4455,6 +4453,10 @@ Custom pomodoro timer
   (straight-use-package 'elfeed)
   (unless (fboundp 'elfeed)
     (autoload #'elfeed "elfeed" nil t))
+  (add-hook 'elfeed-search-mode-hook #'(lambda ()
+                                         (display-line-numbers-mode 0)))
+  (add-hook 'elfeed-show-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
   (with-eval-after-load 'elfeed
     (setopt elfeed-feeds '("https://www.gnu.org/software/guile/news/feed.xml"
                            "https://planet.emacslife.com/atom.xml"
@@ -4478,7 +4480,8 @@ Custom pomodoro timer
   (unless (fboundp 'nov-mode)
     (autoload #'nov-mode "nov" nil t))
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-
+  (add-hook 'nov-mode-hook #'(lambda ()
+                               (display-line-numbers-mode 0)))
   (defun pg/nov-mode-setup ()
     (auto-fill-mode 0)
     (visual-line-mode 1)
@@ -4495,6 +4498,8 @@ Allows for viewing of pdfs.
 
   (unless (fboundp 'pdf-view-mode)
     (autoload #'pdf-view-mode "pdf-tools" nil t))
+  (add-hook 'pdf-view-mode-hook #'(lambda ()
+                                    (display-line-numbers-mode 0)))
   (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
 #+end_src
@@ -4573,6 +4578,8 @@ Allows for viewing of pdfs.
   (unless (fboundp 'company-mode)
     (autoload #'company-mode "company" nil t))
   (add-hook 'ledger-mode-hook #'company-mode)
+  (add-hook 'ledger-report-mode-hook #'(lambda ()
+                                         (display-line-numbers-mode 0)))
   (with-eval-after-load 'ledger-mode
     (setopt ledger-reconcile-default-commodity "CAD"
             ledger-binary-path (concat (plist-get pg/user :guix-home-profile) "/bin/ledger")
@@ -4603,6 +4610,10 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
+  (dolist (hook '(erc-mode-hook
+                  erc-list-menu-mode-hook))
+    (add-hook mode #'(lambda ()
+                       (display-line-numbers-mode 0))))
   (with-eval-after-load 'erc
     (unless (fboundp 'corfu-mode)
       (autoload #'corfu-mode "corfu" nil t))
@@ -4619,16 +4630,18 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
-  (straight-use-package 'ement)
-  (unless (fboundp 'ement-connect)
-    (autoload #'ement-connect "ement" nil t))
-
   (defun pg/ement-connect ()
     "Connects to matrix client with username and password supplied."
     (interactive)
     (ement-connect :user-id (concat "@" (plist-get pg/user :user) ":matrix.org")
                    :password (pg/lookup-password :host "matrix.org"
                                                  :user (plist-get pg/user :user))))
+
+  (straight-use-package 'ement)
+  (unless (fboundp 'ement-connect)
+    (autoload #'ement-connect "ement" nil t))
+  (add-hook 'ement-room-mode-hook #'(lambda ()
+                                      (display-line-numbers-mode 0)))
 
   (with-eval-after-load 'general
     (pg/leader-keys
@@ -4652,6 +4665,8 @@ Allows for viewing of pdfs.
   (straight-use-package 'slack)
   (unless (fboundp 'slack-start)
     (autoload #'slack-start "slack" nil t))
+  (add-hook 'slack-mode-hook #'(lambda ()
+                                 (display-line-numbers-mode 0)))
   (with-eval-after-load 'slack
     (setopt slack-prefer-current-team t
             slack-buffer-emojify t)
@@ -4851,6 +4866,8 @@ Allows for viewing of pdfs.
     (autoload #'sokoban "sokoban" nil t))
   (unless (fboundp 'sokoban-goto-level)
     (autoload #'sokoban-goto-level "sokoban" nil t))
+  (add-hook 'sokoban-mode-hook #'(lambda ()
+                                   (display-line-numbers-mode 0)))
   (with-eval-after-load 'sokoban
     (with-eval-after-load 'evil
       (evil-define-key 'normal sokoban-mode-map
@@ -5065,13 +5082,12 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   (setopt load-prefer-newer t
           use-short-answers t
           auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-          ;; warning-suppress-log-types '(lsp-mode)
-          ;; warning-suppress-types '(lsp-mode)
+          warning-suppress-log-types '((lsp-mode))
+          warning-suppress-types '((lsp-mode))
           warning-minimum-level :error
           help-at-pt-display-when-idle t)
 
   (require 'pg-startup)
-
   (if pg/exwm-enabled (require 'pg-desktop))
 
   (dolist (package '(pg-ui

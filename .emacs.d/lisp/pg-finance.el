@@ -7,6 +7,8 @@
 (unless (fboundp 'company-mode)
   (autoload #'company-mode "company" nil t))
 (add-hook 'ledger-mode-hook #'company-mode)
+(add-hook 'ledger-report-mode-hook #'(lambda ()
+                                       (display-line-numbers-mode 0)))
 (with-eval-after-load 'ledger-mode
   (setopt ledger-reconcile-default-commodity "CAD"
           ledger-binary-path (concat (plist-get pg/user :guix-home-profile) "/bin/ledger")

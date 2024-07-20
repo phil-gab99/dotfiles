@@ -1,6 +1,10 @@
 ;;; pg-social.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(dolist (hook '(erc-mode-hook
+                erc-list-menu-mode-hook))
+  (add-hook mode #'(lambda ()
+                     (display-line-numbers-mode 0))))
 (with-eval-after-load 'erc
   (unless (fboundp 'corfu-mode)
     (autoload #'corfu-mode "corfu" nil t))
@@ -11,16 +15,18 @@
           erc-kill-buffer-on-part t
           erc-auto-query bury))
 
-(straight-use-package 'ement)
-(unless (fboundp 'ement-connect)
-  (autoload #'ement-connect "ement" nil t))
-
 (defun pg/ement-connect ()
   "Connects to matrix client with username and password supplied."
   (interactive)
   (ement-connect :user-id (concat "@" (plist-get pg/user :user) ":matrix.org")
                  :password (pg/lookup-password :host "matrix.org"
                                                :user (plist-get pg/user :user))))
+
+(straight-use-package 'ement)
+(unless (fboundp 'ement-connect)
+  (autoload #'ement-connect "ement" nil t))
+(add-hook 'ement-room-mode-hook #'(lambda ()
+                                    (display-line-numbers-mode 0)))
 
 (with-eval-after-load 'general
   (pg/leader-keys
@@ -38,6 +44,8 @@
 (straight-use-package 'slack)
 (unless (fboundp 'slack-start)
   (autoload #'slack-start "slack" nil t))
+(add-hook 'slack-mode-hook #'(lambda ()
+                               (display-line-numbers-mode 0)))
 (with-eval-after-load 'slack
   (setopt slack-prefer-current-team t
           slack-buffer-emojify t)

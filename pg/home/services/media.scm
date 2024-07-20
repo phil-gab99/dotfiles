@@ -54,6 +54,7 @@
   (shepherd-service
    (documentation "Runs `playerctld'")
    (provision '(playerctld))
+   (requirement '(dbus))
    (start #~(make-forkexec-constructor
              (list #$(file-append playerctl "/bin/playerctld"))))
    (stop #~(make-kill-destructor))

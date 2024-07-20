@@ -11,6 +11,8 @@
   (autoload #'lsp-deferred "lsp-mode" nil t))
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
 (add-hook 'inferior-python-mode-hook #'corfu-mode)
+(add-hook 'inferior-python-mode-hook #'(lambda ()
+                                         (display-line-numbers-mode 0)))
 
 (with-eval-after-load 'python
   (setopt python-fill-docstring-style 'django
@@ -62,6 +64,7 @@
   (straight-use-package 'jupyter)
   (add-hook 'jupyter-repl-mode-hook #'company-mode)
   (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                        (display-line-numbers-mode 0)
                                         (require 'jupyter))))
 
 (provide 'pg-programming-python)

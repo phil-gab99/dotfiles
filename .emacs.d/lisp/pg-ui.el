@@ -79,6 +79,8 @@
         (format "Emacs started in %.2f" time)
       (format "%d packages loaded in %.2f seconds with %d garbage collections" package-count time gcs-done))))
 
+(add-hook 'dashboard-mode-hook #'(lambda ()
+                                   (display-line-numbers-mode 0)))
 (straight-use-package 'dashboard)
 (with-eval-after-load 'projectile
   (require 'dashboard)

@@ -2,9 +2,9 @@
 ;; Author: Philippe Gabriel
 
 (defun pg/org-screenshot ()
-  "Take a screenshot into a time stamped unique-named file in the img
-    directory with respect to the org-buffer's location and insert a link to
-    this file. Requires imageMagick for undertaking screenshots."
+  "Take a screenshot into a time stamped unique-named file in the img directory
+with respect to the org-buffer's location and insert a link to this
+file. Requires imageMagick for undertaking screenshots."
   (interactive)
   (setq imgpath "./img/")
   (if (not (f-dir-p imgpath))
@@ -25,7 +25,7 @@
 
 (defun pg/org-csv-to-table (beg end)
   "Insert a file into the current buffer at point, and convert it to an org
-    table."
+table."
   (interactive (list (mark) (point)))
   (org-table-convert-region beg end ","))
 
@@ -57,6 +57,7 @@
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
+  (display-line-numbers-mode 0)
   (diminish 'org-indent-mode)
   (setq-local evil-auto-indent nil))
 
@@ -211,6 +212,8 @@
                                      "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))
             org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
 
+(add-hook 'org-agenda-mode-hook #'(lambda ()
+                                    (display-line-numbers-mode 0)))
 (with-eval-after-load 'org-agenda
   (setopt org-agenda-tags-column 0
           org-agenda-block-separator ?─
@@ -313,35 +316,34 @@
                                          (reply-to-html html))
           org-msg-recipient-names nil))
 
-(unless pg/is-termux
-  (with-eval-after-load 'org
-    (straight-use-package 'org-roam)
-    (require 'org-roam))
-  (with-eval-after-load 'org-roam
-    (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-            org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
-            org-roam-capture-templates '(("d" "default" plain
-                                          "%?"
-                                          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                          :unnarrowed t)
-                                         ("a" "system admin" plain
-                                          "%?"
-                                          :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                          :unnarrowed t)
-                                         ("s" "distributed system design" plain
-                                          "%?"
-                                          :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                          :unnarrowed t)))
-    (org-roam-db-autosync-enable)
-    (with-eval-after-load 'general
-      (pg/leader-keys
-        "on" '(:ignore t :which-key "notes")
-        "onl" '(org-roam-buffer-toggle :which-key "links")
-        "onf" '(org-roam-node-find :which-key "find/create")
-        "oni" '(org-roam-node-insert :which-key "insert/create")))))
+(with-eval-after-load 'org
+  (straight-use-package 'org-roam)
+  (require 'org-roam))
+(with-eval-after-load 'org-roam
+  (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
+          org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
+          org-roam-capture-templates '(("d" "default" plain
+                                        "%?"
+                                        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :unnarrowed t)
+                                       ("a" "system admin" plain
+                                        "%?"
+                                        :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :unnarrowed t)
+                                       ("s" "distributed system design" plain
+                                        "%?"
+                                        :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :unnarrowed t)))
+  (org-roam-db-autosync-enable)
+  (with-eval-after-load 'general
+    (pg/leader-keys
+      "on" '(:ignore t :which-key "notes")
+      "onl" '(org-roam-buffer-toggle :which-key "links")
+      "onf" '(org-roam-node-find :which-key "find/create")
+      "oni" '(org-roam-node-insert :which-key "insert/create"))))
 
 (straight-use-package 'org-fragtog)
 (unless (fboundp 'org-fragtog-mode)

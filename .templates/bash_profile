@@ -102,9 +102,6 @@ export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/history.py
     #     && export PYTHONPATH="$PYTHONPATH:$HOME/.nix-profile/lib/python3.9/site-packages" \
     #         || export PYTHONPATH="$HOME/.nix-profile/lib/python3.9/site-packages"
 
-# Prolog specific variables
-export LOCALSZ=32768
-
 # Bash specific variables
 export HISTFILE=$XDG_CACHE_HOME/.bash_history
 
@@ -127,4 +124,15 @@ export QT_QPA_PLATFORM=wayland-egl
 [ -f ~/bin/safe-charge ] && ~/bin/safe-charge
 
 # Execute Sway
-[ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && sway
+[ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && SWAYLOGIN=1 && sway
+
+# Clean up shepherd in Sway session
+if [ -n "$SWAYLOGIN" ] && [ -S /run/user/$(id -u)/shepherd/socket ] ; then
+    services=$(herd status | grep '+' | sed 's/\+//' | tr -d ' ')
+    for s in ${services[@]}; do
+        [ "$s" != "root" ] && herd stop "$s"
+    done
+
+    herd status
+    herd stop root
+fi

@@ -1,6 +1,8 @@
 ;;; pg-help.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(add-hook 'helpful-mode-hook #'(lambda ()
+                                 (display-line-numbers-mode 0)))
 (straight-use-package 'helpful)
 (unless (fboundp 'helpful-callable)
   (autoload #'helpful-callable "helpful" nil t))
@@ -31,6 +33,7 @@
 (defun pg/Info-mode-setup ()
   "Defining some behaviours for the major info-mode."
   (auto-fill-mode 0)
+  (display-line-numbers-mode 0)
   (setq-local face-remapping-alist '((default (:height 1.5) default)
                                      (info-menu-header (:height 1.5) info-menu-header)
                                      (info-title-1 (:height 1.05) info-title-1)

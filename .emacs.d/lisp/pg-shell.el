@@ -43,8 +43,10 @@
   (with-eval-after-load 'esh-mode
     (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
     (setopt eshell-buffer-maximum-lines 10000
-            eshell-scroll-to-bottom-on-input t)))
+            eshell-scroll-to-bottom-on-input 'all)))
 
+(add-hook 'eshell-mode-hook #'(lambda ()
+                                (display-line-numbers-mode 0)))
 (require 'esh-mode)
 (with-eval-after-load 'esh-mode
   (add-hook 'eshell-first-time-mode-hook #'pg/configure-eshell))
@@ -61,8 +63,10 @@
   (straight-use-package 'vterm))
 (unless (fboundp 'vterm)
   (autoload #'vterm "vterm" nil t))
+(add-hook 'vterm-mode-hook #'(lambda ()
+                               (display-line-numbers-mode 0)))
 (with-eval-after-load 'vterm
-  (setopt vterm-tramp-shells '(("ssh" "/bin/sh"))))
+  (setopt vterm-tramp-shells `(("ssh" ,(executable-find "sh")))))
 (with-eval-after-load 'general
   (pg/leader-keys
     "pv" '(vterm :which-key "vterm")))
