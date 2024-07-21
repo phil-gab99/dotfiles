@@ -1,15 +1,13 @@
 (define-module (pg home services syncthing)
-  #:use-module (gnu)
-  #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu packages syncthing)
+  #:use-module (gnu services)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:export (home-syncthing-service-type
             home-syncthing-configuration))
-
-(use-package-modules syncthing)
-(use-service-modules shepherd)
 
 (define-record-type* <home-syncthing-configuration>
   home-syncthing-configuration

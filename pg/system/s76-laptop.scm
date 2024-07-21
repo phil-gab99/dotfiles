@@ -1,23 +1,17 @@
-(define-module (pg systems s76-laptop)
-  #:use-module (pg systems base)
-  #:use-module (pg home services bash)
-  #:use-module (pg home services emacs)
-  #:use-module (pg home services emulators)
-  #:use-module (pg home services media)
-  #:use-module (pg home services syncthing)
-  #:use-module (pg home services wm)
+(define-module (pg system s76-laptop)
   #:use-module (gnu)
+  #:use-module (gnu bootloader grub)
   #:use-module (gnu home)
-  #:use-module (gnu home services desktop)
-  #:use-module (gnu home services dotfiles)
-  #:use-module (gnu home services gnupg)
-  #:use-module (gnu home services mcron)
-  #:use-module (guix gexp))
+  #:use-module (gnu system)
+  #:use-module (guix gexp)
+  #:use-module (pg))
 
-(use-package-modules file-systems fonts gnome gnome-xyz gnupg music terminals
-                     video wm xdisorg)
-(use-service-modules base)
-(use-system-modules accounts)
+(use-home-service-modules desktop dotfiles gnupg mcron)
+(use-package-modules gnupg)
+(use-service-modules base guix)
+(use-system-modules accounts file-systems keyboard shadow)
+(use-pg-home-service-modules bash emacs emulators media syncthing wm)
+(use-pg-system-modules base)
 
 (define %charge-thresholds-udev-rule
   (udev-rule
@@ -144,10 +138,12 @@
             (system? #t)
             (name "charge"))))
 
-    (services (list (udev-rules-service 'charge-thresholds
+    (services (list (service guix-home-service-type
+                             (list
+                              (list (user-account-name %user) %home)))
+                    (udev-rules-service 'charge-thresholds
       				        %charge-thresholds-udev-rule)))))
 
 (if (getenv "RUNNING_GUIX_HOME")
     %home
-    (system-config #:home %home
-                   #:system %system))
+    (system-config #:system %system))

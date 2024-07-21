@@ -7,6 +7,6 @@ echo -e "\n${GREEN}Updating system ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
 
 sudo guix system -L $HOME/.dotfiles\
      --fallback\
-     reconfigure $HOME/.dotfiles/pg/systems/$HOSTNAME.scm
+     reconfigure $HOME/.dotfiles/pg/system/$HOSTNAME.scm
 
 exit 0

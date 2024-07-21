@@ -1,10 +1,8 @@
 (define-module (pg home services emulators)
-  #:use-module (gnu)
-  #:use-module (gnu services)
   #:use-module (gnu home services)
+  #:use-module (gnu packages emulators)
+  #:use-module (gnu services)
   #:export (home-emulators-service-type))
-
-(use-package-modules emulators)
 
 (define (home-emulators-profile-service config)
   (list desmume

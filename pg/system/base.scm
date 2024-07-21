@@ -1,19 +1,19 @@
-(define-module (pg systems base)
+(define-module (pg system base)
   #:use-module (gnu)
-  #:use-module (gnu packages)
   #:use-module (gnu services)
+  #:use-module (gnu system)
   #:use-module (guix gexp)
+  #:use-module (guix store)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
-  #:use-module (srfi srfi-1)
   #:export (system-config))
 
-(use-package-modules admin audio bash compression cups curl emacs file-systems
-                     freedesktop fonts gnome gnupg libusb linux
-                     package-management python ssh version-control vim wm)
-(use-service-modules avahi base cups dbus desktop docker guix linux networking
-                     nix pm ssh virtualization xorg)
-(use-system-modules accounts pam nss)
+(use-package-modules admin audio base bash compression cups curl emacs
+                     file-systems fonts gnome libusb linux package-management
+                     python ssh version-control vim wm)
+(use-service-modules avahi base cups dbus desktop docker linux networking nix pm
+                     ssh virtualization xorg)
+(use-system-modules nss pam shadow)
 
 (define %acm-udev-rule
   (udev-rule "90-extraacl.rules"
@@ -44,7 +44,7 @@
                             "\n"
                             "LABEL=\"openocd_rules_end\"")))
 
-(define* (system-config #:key system home)
+(define* (system-config #:key system)
   (operating-system
    (inherit system)
 
@@ -123,7 +123,6 @@
                     nix
                     openssh
                     python
-                    udiskie
                     unzip
                     vim
                     zip
@@ -137,12 +136,6 @@
                                (delete console-font-service-type))
               (operating-system-user-services system)
               (list
-               (service guix-home-service-type
-                        (list
-                         (list (user-account-name
-                                (car (operating-system-users system)))
-                               home)))
-
                (service elogind-service-type)
 
                (service console-font-service-type
@@ -194,7 +187,7 @@
                                        %default-substitute-urls))
                                 (authorized-keys
                                  (cons (plain-file
-                                        "nonguix.pub"
+                                        "substitutes.nonguix.org.pub"
                                         "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
                                        %default-authorized-guix-keys))))
 

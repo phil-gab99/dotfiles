@@ -1,13 +1,15 @@
 (define-module (pg home services media)
-  #:use-module (gnu)
-  #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages mpd)
+  #:use-module (gnu packages music)
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages video)
+  #:use-module (gnu services)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:export (home-media-service-type))
-
-(use-package-modules linux mpd music pulseaudio video)
-(use-service-modules shepherd)
 
 (define (home-media-profile-service config)
   (list ffmpeg

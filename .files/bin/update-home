@@ -7,4 +7,6 @@ echo -e "\n${GREEN}Updating home ${BLUE}$HOSTNAME${GREEN}...${NC}\n"
 
 RUNNING_GUIX_HOME=1 guix home -L $HOME/.dotfiles/\
                     --fallback\
-                    reconfigure $HOME/.dotfiles/pg/systems/$HOSTNAME.scm
+                    reconfigure $HOME/.dotfiles/pg/system/$HOSTNAME.scm
+
+exit 0

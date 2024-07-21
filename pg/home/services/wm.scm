@@ -1,18 +1,14 @@
 (define-module (pg home services wm)
   #:use-module (gnu)
-  #:use-module (gnu packages)
-  #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:use-module (ice-9 format)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim)
   #:use-module (nongnu packages compression)
   #:export (home-wm-service-type))
 
-(use-package-modules admin compression databases disk fonts freedesktop glib
-                     gnome gnome-xyz imagemagick kde-frameworks libcanberra
+(use-package-modules admin compression databases fonts freedesktop glib gnome
+                     gnome-xyz imagemagick kde-frameworks libcanberra
                      libreoffice package-management password-utils python-build
                      qt rust-apps shellutils terminals video virtualization
                      web-browsers wm xdisorg xorg)

@@ -45,7 +45,7 @@
          (dirs (butlast tokens))
          (file-name (car (last tokens))))
     (s-join "/" (append dirs
-                        (list (replace-regexp-in-string "^[0-9a-zA-Z]\\{10,\\}-" "-" file-name))))))
+                        (list (replace-regexp-in-string "^[0-9a-zA-Z]\\{10,\\}-" "...-" file-name))))))
 
 (straight-use-package 'doom-modeline)
 (require 'doom-modeline)

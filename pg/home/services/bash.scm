@@ -1,15 +1,12 @@
 (define-module (pg home services bash)
-  #:use-module (gnu)
-  #:use-module (gnu services)
   #:use-module (gnu home services)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (ice-9 textual-ports)
   #:export (home-bash-service-type
             home-bash-configuration))
-
-(use-package-modules bash)
-(use-service-modules configuration)
 
 (define-record-type* <home-bash-configuration>
   home-bash-configuration

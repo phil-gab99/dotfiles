@@ -1,16 +1,19 @@
 (define-module (pg home services emacs)
-  #:use-module (gnu)
-  #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
-  #:use-module (guix inferior)
+  #:use-module (gnu packages emacs)
+  #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu packages erlang)
+  #:use-module (gnu packages finance)
+  #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages mail)
+  #:use-module (gnu services)
+  #:use-module (gnu services shepherd)
   #:use-module (guix channels)
-  ;; #:use-module (guix transformations)
+  #:use-module (guix gexp)
+  #:use-module (guix inferior)
   #:use-module (srfi srfi-1)
   #:export (home-emacs-service-type))
-
-(use-package-modules emacs emacs-xyz erlang finance gnupg mail)
-(use-service-modules shepherd)
 
 (define channels ;; Old revision for mu
   (list (channel
@@ -54,9 +57,6 @@
 
         isync
         ;; emacs-mu4e-alert
-        ;; ((options->transformation
-        ;;   '((with-version . "mu=1.10.9")))
-        ;;  mu)
         (first (lookup-inferior-packages inferior "mu"))
 
         ;; emacs-editorconfig
