@@ -11,6 +11,7 @@
 
 (define (home-media-profile-service config)
   (list ffmpeg
+        mpd-mpc
         mpv
         mpv-mpris
         obs

@@ -5038,14 +5038,14 @@ Allows the creation of keymaps for related commands and the ability to repeat te
        :city "montreal"
        :font-fixed "JetBrains Mono"
        :font-variable "Iosevka Aile"
-       :home ,(or (getenv "HOME") "/home/phil-gab99")
-       :cache ,(or (getenv "XDG_CACHE_HOME") "/home/phil-gab99/.cache")
-       :config ,(or (getenv "XDG_CONFIG_HOME") "/home/phil-gab99/.config")
-       :documents ,(or (getenv "XDG_DOCUMENTS_DIR") "/home/phil-gab99/Documents")
-       :download ,(or (getenv "XDG_DOWNLOAD_DIR") "/home/phil-gab99/Downloads")
-       :music ,(or (getenv "XDG_MUSIC_DIR") "/home/phil-gab99/Music")
-       :dotfiles "/home/phil-gab99/.dotfiles"
-       :guix-home-profile "/home/phil-gab99/.guix-home/profile")
+       :home ,(or (getenv "HOME") (expand-file-name "~"))
+       :cache ,(or (getenv "XDG_CACHE_HOME") (expand-file-name ".cache" "~"))
+       :config ,(or (getenv "XDG_CONFIG_HOME") (expand-file-name ".config" "~"))
+       :documents ,(or (getenv "XDG_DOCUMENTS_DIR") (expand-file-name "Documents" "~"))
+       :download ,(or (getenv "XDG_DOWNLOAD_DIR") (expand-file-name "Downloads" "~"))
+       :music ,(or (getenv "XDG_MUSIC_DIR") (expand-file-name "Music" "~"))
+       :dotfiles ,(expand-file-name ".dotfiles" "~")
+       :guix-home-profile ,(expand-file-name ".guix-home/profile" "~"))
     "Plist holding user details")
 
   ;; System related constants

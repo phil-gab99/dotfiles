@@ -51,8 +51,9 @@
    ;; Use non-free Linux and firmware
    (kernel linux)
    (initrd microcode-initrd)
-   (firmware (cons iwlwifi-firmware
-                   %base-firmware))
+   (firmware (cons* iwlwifi-firmware
+                    ibt-hw-firmware
+                    %base-firmware))
 
    ;; Virtual camera
    (kernel-loadable-modules (list v4l2loopback-linux-module))
