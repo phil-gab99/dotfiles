@@ -56,3 +56,27 @@ Installing packages:
   nix-env -iA nixpkgs.nodejs-12_x # For a specific version
 
 #+end_src
+
+** Guix
+
+*** Build environments
+
+Typical build environments with ~guix shell~
+
+#+begin_src sh
+
+  $ guix shell -CNWD $PACKAGE --no-grafts nss-certs
+  # -C - Isolated container
+  # -N - Share host network namespace
+  # -W - Provide guix inside container
+  # -D - Include dependencies of $PACKAGE in environment but not $PACKAGE itself
+  # --no-grafts - Do not put security grafts onto package and deps, to speed up build
+  # --no-substitutes - Do not use binary substitutes from configured substitute servers
+
+  # Drops us in container
+  [env]$ guix build <package> --no-substitutes
+
+  # Install package to test it
+  [env]$ guix package -i /gnu/store/...-<package>-<version>
+
+#+end_src

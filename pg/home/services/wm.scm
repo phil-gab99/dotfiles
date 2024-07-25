@@ -8,10 +8,10 @@
   #:export (home-wm-service-type))
 
 (use-package-modules admin compression databases fonts freedesktop glib gnome
-                     gnome-xyz imagemagick kde-frameworks libcanberra
-                     libreoffice package-management password-utils python-build
-                     qt rust-apps shellutils terminals video virtualization
-                     web-browsers wm xdisorg xorg)
+                     gnome-xyz kde-frameworks libcanberra libreoffice
+                     package-management password-utils python-build qt rust-apps
+                     shellutils terminals video virtualization web-browsers wm
+                     xdisorg xorg)
 (use-service-modules shepherd)
 
 (define (home-wm-profile-service config)
@@ -82,7 +82,6 @@
         password-store
 
         ;; General CLI utilities
-        imagemagick
         ripgrep
         p7zip
         unrar

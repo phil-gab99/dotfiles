@@ -9,21 +9,9 @@
   #:use-module (gnu packages mail)
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
-  #:use-module (guix channels)
   #:use-module (guix gexp)
-  #:use-module (guix inferior)
-  #:use-module (srfi srfi-1)
+  #:use-module (pg packages mail)
   #:export (home-emacs-service-type))
-
-(define channels ;; Old revision for mu
-  (list (channel
-         (name 'guix)
-         (url "https://git.savannah.gnu.org/git/guix.git")
-         (commit
-          "c26ed5d6b971af11894015979f1e260df571a2be"))))
-
-(define inferior
-  (inferior-for-channels channels))
 
 (define (home-emacs-profile-service config)
   (list emacs-geiser
@@ -57,7 +45,7 @@
 
         isync
         ;; emacs-mu4e-alert
-        (first (lookup-inferior-packages inferior "mu"))
+        mu-stable
 
         ;; emacs-editorconfig
         ;; emacs-emojify

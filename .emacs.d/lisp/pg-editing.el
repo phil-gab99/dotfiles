@@ -8,7 +8,7 @@
               fill-column 80)         ;; 80 caracter column indicator
 (show-paren-mode 1)                   ;; Enable delimiters matching
 (save-place-mode 1)                   ;; Remembers last cursor placement in file
-(column-number-mode)                  ;; Show column numbers
+(column-number-mode 1)                ;; Show column numbers
 (mouse-avoidance-mode 'banish)        ;; No mouse allowed
 (global-display-line-numbers-mode 1)  ;; Show line numbers
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)

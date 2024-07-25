@@ -1,7 +1,7 @@
 ;;; pg-social.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(dolist (hook '(erc-mode-hook
+(dolist (mode '(erc-mode-hook
                 erc-list-menu-mode-hook))
   (add-hook mode #'(lambda ()
                      (display-line-numbers-mode 0))))

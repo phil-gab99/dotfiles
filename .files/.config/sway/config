@@ -12,12 +12,12 @@ set $ws3 3
 set $ws4 4
 set $ws5 5
 
+output * bg ~/backgrounds/wp-color-triangle.png fill
+
 output DP-5 pos 0 0
 output DP-6 pos 1920 0
 output DP-7 pos 3840 0 transform 270
 output $latptop pos 1920 1080
-
-output * bg ~/backgrounds/wp-color-triangle.png fill
 
 workspace $ws0 output $laptop
 workspace $ws1 output DP-5 $laptop
@@ -28,7 +28,7 @@ workspace $ws5 output DP-7 $laptop
 
 input type:keyboard {
       xkb_layout us
-      xkb_options ctrl:nocaps
+      xkb_options ctrl:nocaps,compose:rctrl
 }
 
 input type:touchpad {

@@ -1384,7 +1384,7 @@ Allows for notification pop-up and mode line count when receiving emails
                 fill-column 80)         ;; 80 caracter column indicator
   (show-paren-mode 1)                   ;; Enable delimiters matching
   (save-place-mode 1)                   ;; Remembers last cursor placement in file
-  (column-number-mode)                  ;; Show column numbers
+  (column-number-mode 1)                ;; Show column numbers
   (mouse-avoidance-mode 'banish)        ;; No mouse allowed
   (global-display-line-numbers-mode 1)  ;; Show line numbers
   (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
@@ -3944,7 +3944,7 @@ Org mode package for writing structured documents and more. Here are some useful
                         (buffer-string)))
                     "_"
                     (format-time-string "%Y%m%d_%H%M%S_"))) ".png"))
-    (call-process "import" nil nil nil filename)
+    (call-process "grimshot" nil nil nil "--notify" "save" "area" filename)
     (insert (concat "[[" filename "]]"))
     (org-display-inline-images))
 
@@ -4610,7 +4610,7 @@ Allows for viewing of pdfs.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-social.el
 
-  (dolist (hook '(erc-mode-hook
+  (dolist (mode '(erc-mode-hook
                   erc-list-menu-mode-hook))
     (add-hook mode #'(lambda ()
                        (display-line-numbers-mode 0))))

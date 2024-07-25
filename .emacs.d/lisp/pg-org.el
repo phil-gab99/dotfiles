@@ -19,7 +19,7 @@ file. Requires imageMagick for undertaking screenshots."
                       (buffer-string)))
                   "_"
                   (format-time-string "%Y%m%d_%H%M%S_"))) ".png"))
-  (call-process "import" nil nil nil filename)
+  (call-process "grimshot" nil nil nil "--notify" "save" "area" filename)
   (insert (concat "[[" filename "]]"))
   (org-display-inline-images))
 
