@@ -110,11 +110,12 @@ export EMAIL=pgabriel999@hotmail.com
 
 # Wayland-specific environment variables
 export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
 export RTC_USE_PIPEWIRE=true
 export MOZ_ENABLE_WAYLAND=1
 export CLUTTER_BACKEND=wayland
-export QT_QPA_PLATFORM=wayland-egl
+export QT_QPA_PLATFORM=wayland
 
 ################################################################################
 # Running Scripts

@@ -138,9 +138,13 @@
 (define (home-udiskie-shepherd-service config)
   (shepherd-service
    (provision '(udiskie))
+   (requirement '(dbus))
    (documentation "Run `udiskie'")
    (start #~(make-forkexec-constructor
-             (list #$(file-append udiskie "/bin/udiskie") "-t")))
+             (list #$(file-append udiskie "/bin/udiskie") "-t")
+             #:environment-variables
+             (cons "WAYLAND_DISPLAY=wayland-1"
+                   (default-environment-variables))))
    (stop #~(make-kill-destructor))
    (respawn? #f)))
 

@@ -100,12 +100,6 @@
           dap-ui-mode 1
           dap-ui-controls-mode 1))
 
-(straight-use-package 'plantuml-mode)
-(with-eval-after-load 'plantuml-mode
-  (setopt plantuml-indent-level 4
-          ;; plantuml-jar-path (expand-file-name "~/.guix-home/share/java/plantuml.jar")
-          plantuml-default-exec-mode 'jar))
-
 (straight-use-package 'comment-dwim-2)
 (unless (fboundp 'comment-dwim-2)
   (autoload #'comment-dwim-2 "comment-dwim-2" nil t))

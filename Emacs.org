@@ -1002,9 +1002,11 @@ Theme inspired by the popular Atom One Dark theme.
   (menu-bar-mode 0)                  ;; Disable menu bar
 
   ;; Set frame transparency
-  (unless (or pg/is-termux (not pg/exwm-enabled))
-    (set-frame-parameter nil 'alpha '90)
-    (add-to-list 'default-frame-alist '(alpha . 90))
+  (unless pg/is-termux
+    (set-frame-parameter nil 'alpha-background '80)
+    (add-to-list 'default-frame-alist '(alpha-background . 80)))
+
+  (when pg/exwm-enabled
     (set-frame-parameter nil 'fullscreen 'maximized)
     (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
@@ -1107,7 +1109,6 @@ Customizes the look of the modeline for better aesthetic.
           dashboard-projects-backend 'projectile
           dashboard-set-file-icons t
           dashboard-display-icons-p t
-          dashboard-match-agenda-entry "task"
           dashboard-page-separator "\n\f\n"
           dashboard-init-info #'pg/display-startup-time)
   (with-eval-after-load 'dashboard
@@ -2415,20 +2416,6 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
     (setopt dap-mode 1
             dap-ui-mode 1
             dap-ui-controls-mode 1))
-
-#+end_src
-
-*** Package | plantuml-mode
-
-Allows writing textual descriptions for creating uml diagrams
-
-#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
-
-  (straight-use-package 'plantuml-mode)
-  (with-eval-after-load 'plantuml-mode
-    (setopt plantuml-indent-level 4
-            ;; plantuml-jar-path (expand-file-name "~/.guix-home/share/java/plantuml.jar")
-            plantuml-default-exec-mode 'jar))
 
 #+end_src
 
@@ -3994,8 +3981,6 @@ Org mode package for writing structured documents and more. Here are some useful
   (with-eval-after-load 'org
     (setopt org-ellipsis " ▾"
             org-hide-emphasis-markers t
-            org-auto-align-tags nil
-            org-tags-column 0
             org-catch-invisible-edits 'show-and-error
             org-special-ctrl-a/e t
             org-insert-heading-respect-content t
@@ -4003,18 +3988,37 @@ Org mode package for writing structured documents and more. Here are some useful
             org-log-done 'time
             org-fontify-quote-and-verse-blocks t
             org-log-into-drawer t
+            org-capture-templates `(("t" "Tasks / Projects")
+
+                                    ("tt" "Task" entry
+                                     (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
+                                     "* TODO%? \nSCHEDULED: %U\n  %a\n  %i" :empty-lines 1)
+                                    ("td" "Deliverable" entry
+                                     (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
+                                     "* TODO%? \nDEADLINE: %U\n  %a\n  %i" :empty-lines 1))
             org-deadline-warning-days 7
+            org-scheduled-delay-days 7
             org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
-            ;; org-plantuml-jar-path (expand-file-name "~/.guix-home/profile/share/java/plantuml.jar")
+            org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+            org-tags-column 0
+            org-tag-alist '(("@home" . ?H)
+                            ("@work" . ?W)
+                            ("@condo" . ?C)
+                            ("@store" . ?S)
+                            ("@university" . ?U)
+
+                            ("@laptop" . ?L)
+                            ("@phone" . ?P)
+                            ("@server" . ?V)
+
+                            ("@programming" . ?p)
+                            ("@study" . ?s)
+                            ("@config" . ?c)
+                            ("@calls" . ?a)
+                            ("@email" . ?e)
+                            ("@errands" . ?r))
             org-babel-python-command "python3"
-            org-confirm-babel-evaluate nil
-            org-agenda-exporter-settings `((ps-left-header (org-agenda-write-buffer-name))
-                                           (ps-right-header ("/pagenumberstring load" ,(lambda ()
-                                                                                         (format-time-string "%d/%m/%Y"))))
-                                           (ps-font-size (12 . 11))
-                                           (ps-top-margin 55)
-                                           (ps-left-margin 35)
-                                           (ps-right-margin 30)))
+            org-confirm-babel-evaluate nil)
 
     (require 'org-indent)
     (dolist (face '((org-level-1 . 1.2)
@@ -4043,7 +4047,6 @@ Org mode package for writing structured documents and more. Here are some useful
     (dolist (template '(("sh" . "src sh")
                         ("java" . "src java")
                         ("als" . "src alloy")
-                        ;; ("puml" . "src plantuml")
                         ("vhd" . "src vhdl")
                         ("asm" . "src mips")
                         ("lmc" . "src lmc-java")
@@ -4056,11 +4059,6 @@ Org mode package for writing structured documents and more. Here are some useful
                         ("for" . "src fortran")))
       (add-to-list 'org-structure-template-alist template))
 
-    (dolist (src '(("als" . alloy)
-                   ("lmc-java" . lmc-java)
-                   ("plantuml" . plantuml)))
-      (add-to-list 'org-src-lang-modes src))
-
     (with-eval-after-load 'general
       (pg/leader-keys
         "o" '(:ignore t :which-key "org")
@@ -4070,72 +4068,7 @@ Org mode package for writing structured documents and more. Here are some useful
         "ot" '(org-todo-list :which-key "todos")
         "ol" '(:ignore t :which-key "links")
         "olo" '(org-open-at-point :which-key "open")
-        "olb" '(org-mark-ring-goto :which-key "back")))
-
-    (unless pg/is-termux
-      (setopt org-agenda-files (list (concat (plist-get pg/user :home) "/Sync/Agenda/"))
-              org-link-frame-setup '((vm . vm-visit-folder-other-frame)
-                                     (vm-imap . vm-visit-imap-folder-other-frame)
-                                     (gnus . org-gnus-no-new-news)
-                                     (file . find-file)
-                                     (wl . wl-other-frame))
-              org-agenda-custom-commands '(("d" "Dashboard"
-                                            ((agenda ""
-                                                     ((org-deadline-warning-days 7)))
-                                             (todo "TODO"
-                                                   ((org-agenda-overriding-header "Tasks")))
-                                             (tags-todo "agenda/ACTIVE"
-                                                        ((org-agenda-overriding-header "Active Tasks")))))
-
-                                           ("Z" "TODOs"
-                                            ((todo "TODO"
-                                                   ((org-agenda-overriding-header "Todos")))))
-
-                                           ("m" "Misc" tags-todo "other")
-
-                                           ("s" "Schedule" agenda ""
-                                            ((org-agenda-files org-agenda-files)))
-
-                                           ("w" "Work Status"
-                                            ((todo "WAIT"
-                                                   ((org-agenda-overriding-header "Waiting")
-                                                    (org-agenda-files org-agenda-files)))
-                                             (todo "REVIEW"
-                                                   ((org-agenda-overriding-header "In Review")
-                                                    (org-agenda-files org-agenda-files)))
-                                             (todo "HOLD"
-                                                   ((org-agenda-overriding-header "On Hold")
-                                                    (org-agenda-todo-list-sublevels nil)
-                                                    (org-agenda-files org-agenda-files)))
-                                             (todo "ACTIVE"
-                                                   ((org-agenda-overriding-header "Active")
-                                                    (org-agenda-files org-agenda-files)))
-                                             (todo "COMPLETED"
-                                                   ((org-agenda-overriding-header "Completed")
-                                                    (org-agenda-files org-agenda-files)))
-                                             (todo "CANC"
-                                                   ((org-agenda-overriding-header "Cancelled")
-                                                    (org-agenda-files org-agenda-files))))))
-              org-capture-templates `(("t" "Tasks / Projects")
-
-                                      ("tt" "Task" entry
-                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                       "* TODO %? :task:\nDEADLINE: %U\n  %a\n  %i" :empty-lines 1)
-
-                                      ("tr" "Repeat" entry
-                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Repeat")
-                                       "* TODO %? :task:\n%^{notify|repeat}p" :empty-lines 1)
-
-                                      ("j" "Meetings")
-                                      ("jm" "Meeting" entry
-                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Waiting")
-                                       "* TODO %? \nSCHEDULED: %U\n" :empty-lines 1)
-
-                                      ("m" "Email Workflow")
-                                      ("mr" "Follow Up" entry
-                                       (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Follow up")
-                                       "* TODO %a\nDEADLINE: %U%?\n %i" :empty-lines 1))
-              org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
+        "olb" '(org-mark-ring-goto :which-key "back"))))
 
 #+end_src
 
@@ -4148,10 +4081,55 @@ Org mode package for writing structured documents and more. Here are some useful
   (with-eval-after-load 'org-agenda
     (setopt org-agenda-tags-column 0
             org-agenda-block-separator ?─
+            org-agenda-files (list (concat (plist-get pg/user :home) "/Sync/Agenda/"))
             org-agenda-time-grid '((daily today require-timed)
                                    (800 1000 1200 1400 1600 1800 2000)
                                    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-            org-agenda-current-time-string "◀── now ─────────────────────────────────────────────────"))
+            org-agenda-current-time-string "◀── now ─────────────────────────────────────────────────"
+            org-agenda-exporter-settings `((ps-left-header (org-agenda-write-buffer-name))
+                                           (ps-right-header ("/pagenumberstring load" ,(lambda ()
+                                                                                         (format-time-string "%d/%m/%Y"))))
+                                           (ps-font-size (12 . 11))
+                                           (ps-top-margin 55)
+                                           (ps-left-margin 35)
+                                           (ps-right-margin 30))
+            org-agenda-custom-commands '(("d" "Dashboard"
+                                          ((agenda ""
+                                                   ((org-deadline-warning-days 7)))
+                                           (todo "TODO"
+                                                 ((org-agenda-overriding-header "Tasks")))
+                                           (tags-todo "agenda/ACTIVE"
+                                                      ((org-agenda-overriding-header "Active Tasks")))))
+
+                                         ("Z" "TODOs"
+                                          ((todo "TODO"
+                                                 ((org-agenda-overriding-header "Todos")))))
+
+                                         ("m" "Misc" tags-todo "other")
+
+                                         ("s" "Schedule" agenda ""
+                                          ((org-agenda-files org-agenda-files)))
+
+                                         ("w" "Work Status"
+                                          ((todo "WAIT"
+                                                 ((org-agenda-overriding-header "Waiting")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "REVIEW"
+                                                 ((org-agenda-overriding-header "In Review")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "HOLD"
+                                                 ((org-agenda-overriding-header "On Hold")
+                                                  (org-agenda-todo-list-sublevels nil)
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "ACTIVE"
+                                                 ((org-agenda-overriding-header "Active")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "COMPLETED"
+                                                 ((org-agenda-overriding-header "Completed")
+                                                  (org-agenda-files org-agenda-files)))
+                                           (todo "CANC"
+                                                 ((org-agenda-overriding-header "Cancelled")
+                                                  (org-agenda-files org-agenda-files))))))))
 
 #+end_src
 
@@ -5159,7 +5137,6 @@ Allows the creation of keymaps for related commands and the ability to repeat te
      'org-babel-load-languages '((emacs-lisp . t)
                                  (java . t)
                                  (shell . t)
-                                 ;; (plantuml . t)
                                  (python . t)
                                  (arduino . t)
                                  (jupyter . t)))

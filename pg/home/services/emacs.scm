@@ -14,7 +14,9 @@
   #:export (home-emacs-service-type))
 
 (define (home-emacs-profile-service config)
-  (list emacs-geiser
+  (list emacs-pgtk
+
+        emacs-geiser
         emacs-geiser-guile
         emacs-guix
 
@@ -190,7 +192,7 @@
    (documentation "Runs `emacs' as a daemon")
    (provision '(emacs))
    (start #~(make-forkexec-constructor
-             (list #$(file-append emacs-no-x-toolkit "/bin/emacs")
+             (list #$(file-append emacs-pgtk "/bin/emacs")
                    "--fg-daemon")))
    (stop #~(make-kill-destructor))
    (respawn? #f)))

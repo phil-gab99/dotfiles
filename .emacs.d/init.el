@@ -135,7 +135,6 @@
    'org-babel-load-languages '((emacs-lisp . t)
                                (java . t)
                                (shell . t)
-                               ;; (plantuml . t)
                                (python . t)
                                (arduino . t)
                                (jupyter . t)))

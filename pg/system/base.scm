@@ -60,7 +60,6 @@
 
    (locale "en_CA.utf8")
    (timezone "America/Toronto")
-   (host-name (operating-system-host-name system))
 
    ;; Default user
    (users (or (operating-system-users system)
@@ -121,6 +120,7 @@
                     lm-sensors
                     net-tools
                     nix
+                    ntfs-3g
                     openssh
                     python
                     unzip

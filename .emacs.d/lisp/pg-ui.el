@@ -13,9 +13,11 @@
 (menu-bar-mode 0)                  ;; Disable menu bar
 
 ;; Set frame transparency
-(unless (or pg/is-termux (not pg/exwm-enabled))
-  (set-frame-parameter nil 'alpha '90)
-  (add-to-list 'default-frame-alist '(alpha . 90))
+(unless pg/is-termux
+  (set-frame-parameter nil 'alpha-background '80)
+  (add-to-list 'default-frame-alist '(alpha-background . 80)))
+
+(when pg/exwm-enabled
   (set-frame-parameter nil 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
@@ -92,7 +94,6 @@
         dashboard-projects-backend 'projectile
         dashboard-set-file-icons t
         dashboard-display-icons-p t
-        dashboard-match-agenda-entry "task"
         dashboard-page-separator "\n\f\n"
         dashboard-init-info #'pg/display-startup-time)
 (with-eval-after-load 'dashboard
