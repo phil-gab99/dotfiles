@@ -55,16 +55,16 @@
 (with-eval-after-load 'dap-python
   (setopt dap-python-debugger 'debugpy))
 
-(defun pg/jupyter-refresh-kernelspecs ()
-  "Refresh Jupyter kernelspecs"
-  (interactive)
-  (jupyter-available-kernelspecs t))
+;; (defun pg/jupyter-refresh-kernelspecs ()
+;;   "Refresh Jupyter kernelspecs"
+;;   (interactive)
+;;   (jupyter-available-kernelspecs t))
 
-(unless pg/is-windows
-  (straight-use-package 'jupyter)
-  (add-hook 'jupyter-repl-mode-hook #'company-mode)
-  (add-hook 'jupyter-repl-mode-hook #'(lambda ()
-                                        (display-line-numbers-mode 0)
-                                        (require 'jupyter))))
+;; (unless pg/is-windows
+;;   (straight-use-package 'jupyter)
+;;   (add-hook 'jupyter-repl-mode-hook #'company-mode)
+;;   (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+;;                                         (display-line-numbers-mode 0)
+;;                                         (require 'jupyter))))
 
 (provide 'pg-programming-python)
