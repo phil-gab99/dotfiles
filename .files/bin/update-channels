@@ -1,5 +1,5 @@
 #!/bin/env bash
-guix pull --channels=$XDG_CONFIG_HOME/guix/base-channels.scm --allow-downgrades
-guix describe --format=channels > $XDG_CONFIG_HOME/guix/channels.scm
+guix pull --channels=$HOME/.dotfiles/.files/.config/guix/base-channels.scm
+guix describe --format=channels >$XDG_CONFIG_HOME/guix/channels.scm
 
 exit 0
