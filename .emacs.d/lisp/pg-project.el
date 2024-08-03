@@ -6,7 +6,12 @@
 (add-hook 'lsp-mode-hook #'projectile-mode)
 (with-eval-after-load 'projectile
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (setopt projectile-project-search-path (list (concat (plist-get pg/user :home) "/Workspace"))
+  (setopt projectile-project-search-path (list (concat (plist-get pg/user :home)
+                                                       "/Workspace"))
+          projectile-ignored-projects (list "/d/d1/shared/Notes"
+                                            (concat (plist-get pg/user :documents)
+                                                    "/Notes")
+                                            (plist-get pg/user :dotfiles))
           projectile-switch-project-action #'projectile-dired)
   (unless (fboundp 'diminish)
     (autoload #'diminish "diminish" nil t))

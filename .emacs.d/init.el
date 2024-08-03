@@ -1,8 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
-
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
 
@@ -22,7 +20,7 @@
      :music ,(or (getenv "XDG_MUSIC_DIR") (expand-file-name "Music" "~"))
      :dotfiles ,(expand-file-name ".dotfiles" "~")
      :guix-home-profile ,(expand-file-name ".guix-home/profile" "~"))
-  "Plist holding user details")
+  "Plist holding user details.")
 
 ;; System related constants
 (defconst pg/is-termux
@@ -37,7 +35,7 @@
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
   "Determines whether the current system is a GNU/Linux based system running the
-  GNU Guix distribution.")
+    GNU Guix distribution.")
 (defconst pg/exwm-enabled
   (getenv "EXWM")
   "Determines whether the EXWM is currently running.")
@@ -53,15 +51,27 @@
   (if pg/exwm-enabled (pg/kill-panel))
   (save-buffers-kill-emacs))
 
-(global-set-key (kbd "C-x C-c") #'pg/save-buffers-kill-emacs)
+(defmacro pg/set-global-key (binding command)
+  "Set binding to global keymap with respect to emacs version."
+  (if (version< emacs-version "29")
+      `(global-set-key (kbd ,binding) #',command)
+    `(keymap-global-set ,binding #',command)))
 
-(setopt load-prefer-newer t
-        use-short-answers t
-        auto-save-list-file-prefix (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
-        warning-suppress-log-types '((lsp-mode))
-        warning-suppress-types '((lsp-mode))
-        warning-minimum-level :error
-        help-at-pt-display-when-idle t)
+(defmacro pg/set-custom (pairs)
+  "Sets custom variables with respect to value depending on emacs version.
+
+PAIRS is an alist of custom variables mapped to their desired value."
+  (if (not (version< emacs-version "29"))
+      (flatten-list `(setopt ,pairs))
+    (macroexp-progn
+     (mapcar (lambda (pair)
+               `(customize-set-variable ',(car pair) ,(cdr pair)))
+             pairs))))
+
+(cond (pg/is-termux  (require 'pg-termux-config))
+      (pg/is-windows (require 'pg-windows-config))
+      (pg/is-guix-system (require 'pg-guix-config))
+      (pg/is-linux-system (require 'pg-linux-config)))
 
 (require 'pg-startup)
 (if pg/exwm-enabled (require 'pg-desktop))
@@ -71,7 +81,6 @@
                    pg-org
                    pg-completion
                    pg-editing
-                   pg-native-compilation
                    pg-guix
                    pg-passwords
                    pg-keylog
@@ -130,7 +139,8 @@
 
 ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
 (unless pg/is-windows
-  (require 'ob-jupyter)
+  (with-eval-after-load 'jupyter
+    (require 'ob-jupyter))
   (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
    'org-babel-load-languages '((emacs-lisp . t)
                                (java . t)
