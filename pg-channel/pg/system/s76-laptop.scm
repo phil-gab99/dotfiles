@@ -4,6 +4,8 @@
   #:use-module (gnu home)
   #:use-module (gnu system)
   #:use-module (guix gexp)
+  #:use-module (nongnu packages linux)
+  #:use-module (nongnu system linux-initrd)
   #:use-module (pg))
 
 (use-home-service-modules desktop dotfiles gnupg mcron)
@@ -104,6 +106,13 @@
     (host-name "s76-laptop")
     (keyboard-layout (keyboard-layout "us")) 
 
+    ;; Use non-free Linux and firmware
+    (kernel linux)
+    (initrd microcode-initrd)
+    (firmware (cons* iwlwifi-firmware
+                     ibt-hw-firmware
+                     %base-firmware))
+
     ;; Partition mounted on /boot/efi.
     (bootloader (bootloader-configuration
       	         (bootloader grub-efi-removable-bootloader)
@@ -134,9 +143,19 @@
            %base-user-accounts))
 
     (groups
-     (list (user-group
-            (system? #t)
-            (name "charge"))))
+     (cons* (user-group
+             (system? #t)
+             (name "charge"))
+            (user-group
+             (system? #t)
+             (name "uucp"))
+            (user-group
+             (system? #t)
+             (name "plugdev"))
+            (user-group
+             (system? #t)
+             (name "realtime"))
+            %base-groups))
 
     (services (list (service guix-home-service-type
                              (list

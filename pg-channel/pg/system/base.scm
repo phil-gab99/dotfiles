@@ -4,8 +4,6 @@
   #:use-module (gnu system)
   #:use-module (guix gexp)
   #:use-module (guix store)
-  #:use-module (nongnu packages linux)
-  #:use-module (nongnu system linux-initrd)
   #:export (system-config))
 
 (use-package-modules admin audio base bash compression cups curl emacs
@@ -48,13 +46,6 @@
   (operating-system
    (inherit system)
 
-   ;; Use non-free Linux and firmware
-   (kernel linux)
-   (initrd microcode-initrd)
-   (firmware (cons* iwlwifi-firmware
-                    ibt-hw-firmware
-                    %base-firmware))
-
    ;; Virtual camera
    (kernel-loadable-modules (list v4l2loopback-linux-module))
 
@@ -84,18 +75,17 @@
                                                      "video"))) ;; control video devices
                %base-user-accounts)))
 
-   (groups
-    (append (operating-system-groups system)
-            (cons* (user-group
-                    (system? #t)
-                    (name "uucp"))
-                   (user-group
-                    (system? #t)
-                    (name "plugdev"))
-                   (user-group
-                    (system? #t)
-                    (name "realtime"))
-                   %base-groups)))
+   (groups (or (operating-system-groups system)
+               (cons* (user-group
+                       (system? #t)
+                       (name "uucp"))
+                      (user-group
+                       (system? #t)
+                       (name "plugdev"))
+                      (user-group
+                       (system? #t)
+                       (name "realtime"))
+                      %base-groups)))
 
    (sudoers-file
     (plain-file "sudoers"

@@ -142,9 +142,10 @@ exec waybar
 exec swayidle
 
 # Start shepherd services
+exec herd start gammastep
 exec herd start mako
 exec herd start nm-applet
-exec herd start gammastep
+exec herd start udiskie
 
 # Set GNOME settings (requires glib:bin)
 exec gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"

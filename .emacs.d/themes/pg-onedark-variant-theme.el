@@ -108,7 +108,6 @@
    `(org-date                  ((t ( :foreground ,pg-onedark-variant-blue))))
    `(org-quote                 ((t ( :slant italic
                                      :foreground ,pg-onedark-variant-quotefg
-                                     :background ,pg-onedark-variant-codeblockbg
                                      :inherit (variable-pitch)))))
    `(org-document-info-keyword ((t ( :inherit (font-lock-comment-face
                                                fixed-pitch)))))

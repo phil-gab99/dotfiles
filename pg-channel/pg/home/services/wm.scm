@@ -8,7 +8,7 @@
   #:export (home-wm-service-type))
 
 (use-package-modules admin compression databases fonts freedesktop glib gnome
-                     gnome-xyz kde-frameworks libcanberra libreoffice
+                     gnome-xyz gtk kde-frameworks libcanberra libreoffice
                      package-management password-utils python-build qt rust-apps
                      shellutils terminals video virtualization web-browsers wm
                      xdisorg xorg)
@@ -62,6 +62,7 @@
         xdg-utils
         xdg-dbus-proxy
         shared-mime-info
+        (list gtk+ "bin")
         (list glib "bin")
         v4l-utils
 
@@ -140,6 +141,7 @@
    (provision '(udiskie))
    (requirement '(dbus))
    (documentation "Run `udiskie'")
+   (auto-start? #f)
    (start #~(make-forkexec-constructor
              (list #$(file-append udiskie "/bin/udiskie") "-t")
              #:environment-variables

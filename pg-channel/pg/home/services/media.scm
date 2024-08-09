@@ -1,6 +1,7 @@
 (define-module (pg home services media)
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu packages gstreamer)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages mpd)
   #:use-module (gnu packages music)
@@ -13,6 +14,14 @@
 
 (define (home-media-profile-service config)
   (list ffmpeg
+        gstreamer
+        gst-libav
+        gst-plugins-bad
+        gst-plugins-base
+        gst-plugins-good
+        gst-plugins-ugly
+        intel-vaapi-driver
+        libva-utils
         mpd-mpc
         mpv
         mpv-mpris

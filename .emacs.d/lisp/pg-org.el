@@ -53,7 +53,7 @@ table."
 
 (defun pg/org-mode-setup ()
   "Define some behaviours for the major org-mode."
-  (org-indent-mode)
+  (org-indent-mode 1)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
@@ -71,7 +71,7 @@ table."
           org-hide-emphasis-markers t
           org-catch-invisible-edits 'show-and-error
           org-special-ctrl-a/e t
-          org-insert-heading-respect-content t
+          org-insert-heading-respect-content nil
           org-pretty-entities t
           org-log-done 'time
           org-fontify-quote-and-verse-blocks t
@@ -108,7 +108,8 @@ table."
           org-babel-python-command "python3"
           org-confirm-babel-evaluate nil)
 
-  (require 'org-indent)
+  (unless (featurep 'org-indent)
+    (require 'org-indent))
   (dolist (face '((org-level-1 . 1.2)
                   (org-level-2 . 1.1)
                   (org-level-3 . 1.05)
@@ -177,41 +178,27 @@ table."
                                          (ps-right-margin 30))
           org-agenda-custom-commands '(("d" "Dashboard"
                                         ((agenda ""
-                                                 ((org-deadline-warning-days 7)))
+                                                 ((org-agenda-span 'day)
+                                                  (org-deadline-warning-days 7)))
                                          (todo "TODO"
-                                               ((org-agenda-overriding-header "Tasks")))
-                                         (tags-todo "agenda/ACTIVE"
-                                                    ((org-agenda-overriding-header "Active Tasks")))))
+                                               ((org-agenda-overriding-header "Tasks")))))
 
-                                       ("Z" "TODOs"
-                                        ((todo "TODO"
-                                               ((org-agenda-overriding-header "Todos")))))
-
-                                       ("m" "Misc" tags-todo "other")
-
-                                       ("s" "Schedule" agenda ""
-                                        ((org-agenda-files org-agenda-files)))
+                                       ("s" "Schedule" agenda "")
 
                                        ("w" "Work Status"
                                         ((todo "WAIT"
-                                               ((org-agenda-overriding-header "Waiting")
-                                                (org-agenda-files org-agenda-files)))
+                                               ((org-agenda-overriding-header "Waiting")))
                                          (todo "REVIEW"
-                                               ((org-agenda-overriding-header "In Review")
-                                                (org-agenda-files org-agenda-files)))
+                                               ((org-agenda-overriding-header "In Review")))
                                          (todo "HOLD"
                                                ((org-agenda-overriding-header "On Hold")
-                                                (org-agenda-todo-list-sublevels nil)
-                                                (org-agenda-files org-agenda-files)))
+                                                (org-agenda-todo-list-sublevels nil)))
                                          (todo "ACTIVE"
-                                               ((org-agenda-overriding-header "Active")
-                                                (org-agenda-files org-agenda-files)))
+                                               ((org-agenda-overriding-header "Active")))
                                          (todo "COMPLETED"
-                                               ((org-agenda-overriding-header "Completed")
-                                                (org-agenda-files org-agenda-files)))
+                                               ((org-agenda-overriding-header "Completed")))
                                          (todo "CANC"
-                                               ((org-agenda-overriding-header "Cancelled")
-                                                (org-agenda-files org-agenda-files))))))))
+                                               ((org-agenda-overriding-header "Cancelled"))))))))
 
 (straight-use-package 'org-appear)
 (unless (fboundp 'org-appear-mode)
@@ -268,9 +255,10 @@ table."
 
 (straight-use-package 'org-modern)
 (with-eval-after-load 'org
-  (setopt org-modern-list '((?+ . "○")
-                            (?- . "◉")
+  (setopt org-modern-list '((?- . "◉")
+                            (?+ . "○")
                             (?* . "▪"))
+          org-modern-replace-stars "▣□◈◇✵"
           org-modern-table nil)
   (global-org-modern-mode))
 
