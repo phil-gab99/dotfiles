@@ -34,8 +34,7 @@
   (setopt conda-anaconda-home (concat (plist-get pg/user :guix-home-profile))
           conda-env-home-directory (concat (plist-get pg/user :home) "/.conda")
           conda-env-subdirectory "envs")
-  (unless (getenv "CONDA_DEFAULT_ENV")
-    (conda-env-activate "ml_practice"))
+  (conda-env-activate "ml_practice")
   (with-eval-after-load 'conda
     (conda-env-initialize-interactive-shells)
     (conda-env-initialize-eshell)))
@@ -55,16 +54,16 @@
 (with-eval-after-load 'dap-python
   (setopt dap-python-debugger 'debugpy))
 
-;; (defun pg/jupyter-refresh-kernelspecs ()
-;;   "Refresh Jupyter kernelspecs"
-;;   (interactive)
-;;   (jupyter-available-kernelspecs t))
+(defun pg/jupyter-refresh-kernelspecs ()
+  "Refresh Jupyter kernelspecs"
+  (interactive)
+  (jupyter-available-kernelspecs t))
 
-;; (unless pg/is-windows
-;;   (straight-use-package 'jupyter)
-;;   (add-hook 'jupyter-repl-mode-hook #'company-mode)
-;;   (add-hook 'jupyter-repl-mode-hook #'(lambda ()
-;;                                         (display-line-numbers-mode 0)
-;;                                         (require 'jupyter))))
+(unless pg/is-windows
+  (straight-use-package 'jupyter)
+  (add-hook 'jupyter-repl-mode-hook #'company-mode)
+  (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                        (display-line-numbers-mode 0)
+                                        (require 'jupyter))))
 
 (provide 'pg-programming-python)

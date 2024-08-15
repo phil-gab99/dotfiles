@@ -269,6 +269,7 @@ table."
   (with-eval-after-load 'org-notify
     (org-notify-start)
     (setq org-notify-map nil)
+    (setopt org-notify-timestamp-types '(:deadline :scheduled))
     (org-notify-add 'default '( :time "1w"
                                 :actions (-notify/window)
                                 :period "1h"

@@ -2001,6 +2001,15 @@ Togglable option for hiding dot files.
 
 #+end_src
 
+*** Package | term
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-shell.el
+
+  (add-hook 'term-mode-hook #'(lambda ()
+                                (display-line-numbers-mode 0)))
+
+#+end_src
+
 *** Package | eshell-git-prompt
 
 Adds more detail to the prompt in eshell with custome themes.
@@ -3520,8 +3529,7 @@ Custom syntax highlighting for LMC assembly language.
     (setopt conda-anaconda-home (concat (plist-get pg/user :guix-home-profile))
             conda-env-home-directory (concat (plist-get pg/user :home) "/.conda")
             conda-env-subdirectory "envs")
-    (unless (getenv "CONDA_DEFAULT_ENV")
-      (conda-env-activate "ml_practice"))
+    (conda-env-activate "ml_practice")
     (with-eval-after-load 'conda
       (conda-env-initialize-interactive-shells)
       (conda-env-initialize-eshell)))
@@ -3559,17 +3567,17 @@ Custom syntax highlighting for LMC assembly language.
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-python.el
 
-  ;; (defun pg/jupyter-refresh-kernelspecs ()
-  ;;   "Refresh Jupyter kernelspecs"
-  ;;   (interactive)
-  ;;   (jupyter-available-kernelspecs t))
+  (defun pg/jupyter-refresh-kernelspecs ()
+    "Refresh Jupyter kernelspecs"
+    (interactive)
+    (jupyter-available-kernelspecs t))
 
-  ;; (unless pg/is-windows
-  ;;   (straight-use-package 'jupyter)
-  ;;   (add-hook 'jupyter-repl-mode-hook #'company-mode)
-  ;;   (add-hook 'jupyter-repl-mode-hook #'(lambda ()
-  ;;                                         (display-line-numbers-mode 0)
-  ;;                                         (require 'jupyter))))
+  (unless pg/is-windows
+    (straight-use-package 'jupyter)
+    (add-hook 'jupyter-repl-mode-hook #'company-mode)
+    (add-hook 'jupyter-repl-mode-hook #'(lambda ()
+                                          (display-line-numbers-mode 0)
+                                          (require 'jupyter))))
 
 #+end_src
 
@@ -4229,6 +4237,7 @@ Handles notifications of scheduled tasks.
     (with-eval-after-load 'org-notify
       (org-notify-start)
       (setq org-notify-map nil)
+      (setopt org-notify-timestamp-types '(:deadline :scheduled))
       (org-notify-add 'default '( :time "1w"
                                   :actions (-notify/window)
                                   :period "1h"
@@ -5118,15 +5127,14 @@ Allows the creation of keymaps for related commands and the ability to repeat te
 
   ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
   (unless pg/is-windows
-    ;; (require 'ob-jupyter)
+    (require 'ob-jupyter)
     (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
      'org-babel-load-languages '((emacs-lisp . t)
                                  (java . t)
                                  (shell . t)
                                  (python . t)
                                  (arduino . t)
-                                 ;; (jupyter . t)
-                                 ))
+                                 (jupyter . t)))
 
     (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                          (:session . "py")

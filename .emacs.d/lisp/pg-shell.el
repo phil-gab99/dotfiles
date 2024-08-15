@@ -1,6 +1,9 @@
 ;;; pg-shell.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
+(add-hook 'term-mode-hook #'(lambda ()
+                              (display-line-numbers-mode 0)))
+
 (straight-use-package 'eshell-git-prompt)
 (with-eval-after-load 'eshell
   (require 'eshell-git-prompt))

@@ -130,15 +130,14 @@
 
 ;; This section needs to be at the end so that Emacs doesn't complain about packages not being on load path
 (unless pg/is-windows
-  ;; (require 'ob-jupyter)
+  (require 'ob-jupyter)
   (org-babel-do-load-languages ;; Loads languages to be executed by org-babel
    'org-babel-load-languages '((emacs-lisp . t)
                                (java . t)
                                (shell . t)
                                (python . t)
                                (arduino . t)
-                               ;; (jupyter . t)
-                               ))
+                               (jupyter . t)))
 
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:session . "py")

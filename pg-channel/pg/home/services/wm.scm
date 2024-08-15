@@ -10,8 +10,7 @@
 (use-package-modules admin compression databases fonts freedesktop glib gnome
                      gnome-xyz gtk kde-frameworks libcanberra libreoffice
                      package-management password-utils python-build qt rust-apps
-                     shellutils terminals video virtualization web-browsers wm
-                     xdisorg xorg)
+                     shellutils terminals video web-browsers wm xdisorg xorg)
 (use-service-modules shepherd)
 
 (define (home-wm-profile-service config)
@@ -77,7 +76,7 @@
         qutebrowser
 
         ;; VMs
-        virt-manager
+        gnome-boxes
 
         ;; Authentication
         password-store
