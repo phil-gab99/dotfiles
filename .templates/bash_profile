@@ -121,8 +121,8 @@ export QT_QPA_PLATFORM=wayland
 # Running Scripts
 ################################################################################
 
-# System 76 charge thresholds set to safe charge
-[ -f ~/bin/safe-charge ] && ~/bin/safe-charge
+# System 76 charge thresholds set to normal charge levels
+[ -f ~/bin/normal-charge ] && ~/bin/normal-charge
 
 # Execute Sway
 [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] && SWAYLOGIN=1 && sway

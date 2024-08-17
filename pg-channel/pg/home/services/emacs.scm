@@ -208,6 +208,7 @@
                                           home-emacs-profile-service)
 		       (service-extension home-environment-variables-service-type
 					  home-emacs-environment-variables-service)
-                       (service-extension home-shepherd-service-type
-                                          home-emacs-shepherd-services)))
+                       ;; (service-extension home-shepherd-service-type
+                       ;;                    home-emacs-shepherd-services)
+                       ))
                 (default-value #f)))

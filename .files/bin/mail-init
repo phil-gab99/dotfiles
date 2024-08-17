@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mu init -m ~/Mail --my-address=pgabriel999@hotmail.com --my-address=philippe.gabriel.1@umontreal.ca
+mu init -m ~/Mail --my-address=pgabriel999@hotmail.com
 mu index
 
 exit 0

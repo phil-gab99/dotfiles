@@ -15,4 +15,7 @@
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage)))
 
+(unless server-mode
+  (server-start))
+
 (provide 'pg-startup)

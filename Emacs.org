@@ -35,6 +35,9 @@ Some initializations are first set up.
           (eval-print-last-sexp)))
       (load bootstrap-file nil 'nomessage)))
 
+  (unless server-mode
+    (server-start))
+
 #+end_src
 
 ** Startup package
@@ -3998,10 +4001,10 @@ Org mode package for writing structured documents and more. Here are some useful
 
                                     ("tt" "Task" entry
                                      (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                     "* TODO%? \nSCHEDULED: %U\n  %a\n  %i" :empty-lines 1)
+                                     "* TODO%? \nSCHEDULED: %T\n  %a\n  %i" :empty-lines 1)
                                     ("td" "Deliverable" entry
                                      (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                     "* TODO%? \nDEADLINE: %U\n  %a\n  %i" :empty-lines 1))
+                                     "* TODO%? \nDEADLINE: %T\n  %a\n  %i" :empty-lines 1))
             org-deadline-warning-days 7
             org-scheduled-delay-days 7
             org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
@@ -4024,8 +4027,18 @@ Org mode package for writing structured documents and more. Here are some useful
                             ("@email" . ?e)
                             ("@errands" . ?r))
             org-babel-python-command "python3"
-            org-confirm-babel-evaluate nil)
+            org-confirm-babel-evaluate nil
+            org-latex-src-block-backend 'minted
+            org-latex-minted-options '(("breaklines" "true")
+                                       ("breakanywhere" "true"))
+            org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                    "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                    "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+    (dolist (package '(("" "minted" nil)
+                       ("margin=0.75in" "geometry" nil)))
+      (add-to-list 'org-latex-packages-alist package))
+    
     (unless (featurep 'org-indent)
       (require 'org-indent))
     (dolist (face '((org-level-1 . 1.2)
@@ -4219,6 +4232,9 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
                               (?+ . "○")
                               (?* . "▪"))
             org-modern-replace-stars "▣□◈◇✵"
+            org-modern-checkbox '((?X . "")
+                                  (?- . "")
+                                  (?  . ""))
             org-modern-table nil)
     (global-org-modern-mode))
 

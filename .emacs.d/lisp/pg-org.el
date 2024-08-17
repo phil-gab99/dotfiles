@@ -80,10 +80,10 @@ table."
 
                                   ("tt" "Task" entry
                                    (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                   "* TODO%? \nSCHEDULED: %U\n  %a\n  %i" :empty-lines 1)
+                                   "* TODO%? \nSCHEDULED: %T\n  %a\n  %i" :empty-lines 1)
                                   ("td" "Deliverable" entry
                                    (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                   "* TODO%? \nDEADLINE: %U\n  %a\n  %i" :empty-lines 1))
+                                   "* TODO%? \nDEADLINE: %T\n  %a\n  %i" :empty-lines 1))
           org-deadline-warning-days 7
           org-scheduled-delay-days 7
           org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
@@ -106,8 +106,18 @@ table."
                           ("@email" . ?e)
                           ("@errands" . ?r))
           org-babel-python-command "python3"
-          org-confirm-babel-evaluate nil)
+          org-confirm-babel-evaluate nil
+          org-latex-src-block-backend 'minted
+          org-latex-minted-options '(("breaklines" "true")
+                                     ("breakanywhere" "true"))
+          org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                  "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                  "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+  (dolist (package '(("" "minted" nil)
+                     ("margin=0.75in" "geometry" nil)))
+    (add-to-list 'org-latex-packages-alist package))
+  
   (unless (featurep 'org-indent)
     (require 'org-indent))
   (dolist (face '((org-level-1 . 1.2)
@@ -259,6 +269,9 @@ table."
                             (?+ . "○")
                             (?* . "▪"))
           org-modern-replace-stars "▣□◈◇✵"
+          org-modern-checkbox '((?X . "")
+                                (?- . "")
+                                (?  . ""))
           org-modern-table nil)
   (global-org-modern-mode))
 
