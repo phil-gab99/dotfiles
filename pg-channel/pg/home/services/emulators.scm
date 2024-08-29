@@ -7,6 +7,7 @@
 (define (home-emulators-profile-service config)
   (list desmume
         dosbox-staging
+        ;; pcsxr ;; Outputs error at build time
         ;; ppsspp ;; Outputs error
         ))
 

@@ -80,10 +80,10 @@ table."
 
                                   ("tt" "Task" entry
                                    (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                   "* TODO%? \nSCHEDULED: %T\n  %a\n  %i" :empty-lines 1)
+                                   "* TODO%? \nSCHEDULED: %T\n%a\n%i" :empty-lines 1)
                                   ("td" "Deliverable" entry
                                    (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                   "* TODO%? \nDEADLINE: %T\n  %a\n  %i" :empty-lines 1))
+                                   "* TODO%? \nDEADLINE: %T\n%a\n%i" :empty-lines 1))
           org-deadline-warning-days 7
           org-scheduled-delay-days 7
           org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
@@ -269,6 +269,7 @@ table."
                             (?+ . "○")
                             (?* . "▪"))
           org-modern-replace-stars "▣□◈◇✵"
+          org-modern-star 'replace
           org-modern-checkbox '((?X . "")
                                 (?- . "")
                                 (?  . ""))
@@ -325,10 +326,15 @@ table."
                                         :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                                                            "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                         :unnarrowed t)
-                                       ("s" "distributed system design" plain
+                                       ("m" "machine learning" plain
                                         "%?"
-                                        :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                           "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :if-new (file+head "COMP-6321/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: comp6321-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :unnarrowed t)
+                                       ("p" "program and problem solving" plain
+                                        "%?"
+                                        :if-new (file+head "COMP-6481/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: comp6481-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                         :unnarrowed t)))
   (org-roam-db-autosync-enable)
   (with-eval-after-load 'general

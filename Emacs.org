@@ -1316,23 +1316,7 @@ For organizing the buffer list
                                         (mu4e-drafts-folder . "/Main/Drafts")
                                         (mu4e-sent-folder . "/Main/Sent")
                                         (mu4e-refile-folder . "/Main/Archive")
-                                        (mu4e-trash-folder . "/Main/Deleted")))
-             ;; (make-mu4e-context :name "University"
-             ;;                    :match-func (lambda (msg)
-             ;;                                  (when msg
-             ;;                                    (string-prefix-p "/University"
-             ;;                                                     (mu4e-message-field msg :maildir))))
-             ;;                    :vars '((user-mail-address . "philippe.gabriel.1@umontreal.ca")
-             ;;                            (user-full-name . "Philippe Gabriel")
-             ;;                            (smtpmail-smtp-server . "smtp.office365.com")
-             ;;                            (smtpmail-smtp-user . "philippe.gabriel.1@umontreal.ca")
-             ;;                            (smtpmail-smtp-service . 587)
-             ;;                            (smtpmail-stream-type . starttls)
-             ;;                            (mu4e-drafts-folder . "/University/Drafts")
-             ;;                            (mu4e-sent-folder . "/University/Sent Items")
-             ;;                            (mu4e-refile-folder . "/University/Archive")
-             ;;                            (mu4e-trash-folder . "/University/Deleted Items")))
-             ))))
+                                        (mu4e-trash-folder . "/Main/Deleted")))))))
 
 #+end_src
 
@@ -1739,7 +1723,6 @@ Displays full documentations in place of the default help function.
                                        (info-title-2 (:height 1.15) info-title-2)
                                        (info-title-3 (:height 1.15) info-title-3)
                                        (info-title-4 (:height 2.0) info-title-4)))
-    (variable-pitch-mode 1)
     (visual-line-mode 1))
   (add-hook 'Info-mode-hook #'pg/Info-mode-setup)
 
@@ -4001,10 +3984,10 @@ Org mode package for writing structured documents and more. Here are some useful
 
                                     ("tt" "Task" entry
                                      (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                     "* TODO%? \nSCHEDULED: %T\n  %a\n  %i" :empty-lines 1)
+                                     "* TODO%? \nSCHEDULED: %T\n%a\n%i" :empty-lines 1)
                                     ("td" "Deliverable" entry
                                      (file+olp ,(concat (plist-get pg/user :home) "/Sync/Agenda/Tasks.org") "Active")
-                                     "* TODO%? \nDEADLINE: %T\n  %a\n  %i" :empty-lines 1))
+                                     "* TODO%? \nDEADLINE: %T\n%a\n%i" :empty-lines 1))
             org-deadline-warning-days 7
             org-scheduled-delay-days 7
             org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
@@ -4232,6 +4215,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
                               (?+ . "○")
                               (?* . "▪"))
             org-modern-replace-stars "▣□◈◇✵"
+            org-modern-star 'replace
             org-modern-checkbox '((?X . "")
                                   (?- . "")
                                   (?  . ""))
@@ -4312,10 +4296,15 @@ Helps with note-taking strategies.
                                           :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
                                                              "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                           :unnarrowed t)
-                                         ("s" "distributed system design" plain
+                                         ("m" "machine learning" plain
                                           "%?"
-                                          :if-new (file+head "COMP-6231/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: comp6231-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :if-new (file+head "COMP-6321/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: comp6321-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :unnarrowed t)
+                                         ("p" "program and problem solving" plain
+                                          "%?"
+                                          :if-new (file+head "COMP-6481/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: comp6481-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                           :unnarrowed t)))
     (org-roam-db-autosync-enable)
     (with-eval-after-load 'general

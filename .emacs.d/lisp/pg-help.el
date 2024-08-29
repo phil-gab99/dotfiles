@@ -40,7 +40,6 @@
                                      (info-title-2 (:height 1.15) info-title-2)
                                      (info-title-3 (:height 1.15) info-title-3)
                                      (info-title-4 (:height 2.0) info-title-4)))
-  (variable-pitch-mode 1)
   (visual-line-mode 1))
 (add-hook 'Info-mode-hook #'pg/Info-mode-setup)
 
