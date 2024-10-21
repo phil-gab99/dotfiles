@@ -31,9 +31,7 @@
             mu4e-sent-messages-behavior 'delete
             message-send-mail-function #'smtpmail-send-it
             mu4e-attachment-dir (plist-get pg/user :download)
-            mu4e-maildir-shortcuts '(("/Main/Inbox" . 109)
-                                     ("/Main/Jobs" . 106)
-                                     ("/Main/University" . 115))
+            mu4e-maildir-shortcuts '(("/Main/Inbox" . 109))
             mu4e-context-policy 'pick-first)
     (add-to-list 'mu4e-bookmarks
                  '( :name "Starred"
@@ -53,14 +51,15 @@
                                               (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
                               :vars `((user-mail-address . ,(plist-get pg/user :email))
                                       (user-full-name . ,(plist-get pg/user :name))
-                                      (smtpmail-smtp-server . "smtp.office365.com")
+                                      (smtpmail-smtp-server . "smtp.gmail.com")
+                                      (smtpmail-auth-credentials (expand-file-name "~/.authinfo.gpg"))
                                       (smtpmail-smtp-user . ,(plist-get pg/user :email))
                                       (smtpmail-smtp-service . 587)
                                       (smtpmail-stream-type . starttls)
                                       (mu4e-drafts-folder . "/Main/Drafts")
                                       (mu4e-sent-folder . "/Main/Sent")
                                       (mu4e-refile-folder . "/Main/Archive")
-                                      (mu4e-trash-folder . "/Main/Deleted")))))))
+                                      (mu4e-trash-folder . "/Main/Trash")))))))
 
 (unless (or pg/is-termux
             pg/is-windows)

@@ -134,7 +134,7 @@ Scheme REPL
 
     (with-eval-after-load 'geiser-guile
       (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :config) "/guix/current/share/guile/site/3.0"))
-      (add-to-list 'geiser-guile-load-path (plist-get pg/user :dotfiles))
+      (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :dotfiles) "/pg-channel"))
       (setopt geiser-guile-load-init-file nil
               geiser-guile-manual-lookup-other-window t))
 
@@ -1287,9 +1287,7 @@ For organizing the buffer list
               mu4e-sent-messages-behavior 'delete
               message-send-mail-function #'smtpmail-send-it
               mu4e-attachment-dir (plist-get pg/user :download)
-              mu4e-maildir-shortcuts '(("/Main/Inbox" . 109)
-                                       ("/Main/Jobs" . 106)
-                                       ("/Main/University" . 115))
+              mu4e-maildir-shortcuts '(("/Main/Inbox" . 109))
               mu4e-context-policy 'pick-first)
       (add-to-list 'mu4e-bookmarks
                    '( :name "Starred"
@@ -1309,14 +1307,15 @@ For organizing the buffer list
                                                 (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
                                 :vars `((user-mail-address . ,(plist-get pg/user :email))
                                         (user-full-name . ,(plist-get pg/user :name))
-                                        (smtpmail-smtp-server . "smtp.office365.com")
+                                        (smtpmail-smtp-server . "smtp.gmail.com")
+                                        (smtpmail-auth-credentials (expand-file-name "~/.authinfo.gpg"))
                                         (smtpmail-smtp-user . ,(plist-get pg/user :email))
                                         (smtpmail-smtp-service . 587)
                                         (smtpmail-stream-type . starttls)
                                         (mu4e-drafts-folder . "/Main/Drafts")
                                         (mu4e-sent-folder . "/Main/Sent")
                                         (mu4e-refile-folder . "/Main/Archive")
-                                        (mu4e-trash-folder . "/Main/Deleted")))))))
+                                        (mu4e-trash-folder . "/Main/Trash")))))))
 
 #+end_src
 
@@ -2134,8 +2133,12 @@ Note that the emacs built-in local dir creation can also be used and is more fle
   (add-hook 'lsp-mode-hook #'projectile-mode)
   (with-eval-after-load 'projectile
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (setopt projectile-project-search-path (list (concat (plist-get pg/user :home) "/Workspace"))
-            projectile-switch-project-action #'projectile-dired)
+    (setopt projectile-switch-project-action #'projectile-dired
+            projectile-ignored-projects `("/d/d1/shared/Notes"
+                                          "/d/d1/shared/Workspace"
+                                          ,(concat
+                                            (plist-get pg/user :documents)
+                                            "/Notes")))
     (unless (fboundp 'diminish)
       (autoload #'diminish "diminish" nil t))
     (diminish #'projectile-mode)
@@ -3254,6 +3257,9 @@ Collection of code snippets for yasnippet.
     (autoload #'latex-mode "tex-mode" nil t))
   (add-to-list 'auto-mode-alist '("\\.tex\\'" . latex-mode))
   (with-eval-after-load 'tex
+    (setcdr (assoc "LaTeX" TeX-command-list)
+            '("%`%l%(mode) -shell-escape%' %t"
+              TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX"))
     (setopt latex-run-command "pdflatex"
             TeX-view-program-selection '((output-pdf "PDF Tools"))
             TeX-source-correlate-start-server t)
@@ -3460,6 +3466,37 @@ Custom syntax highlighting for LMC assembly language.
   (provide 'pg-programming-prolog)
 
 #+end_src
+
+**** Pseudocode
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-pseudocode.el
+
+    ;;; pg-programming-pseudocode.el -*- lexical-binding: t; -*-
+
+#+end_src
+
+***** Package | pseudocode-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-pseudocode.el
+
+  (straight-use-package '(pseudocode-mode :type git
+                                          :host github
+                                          :repo "jsalzbergedu/pseudocode-mode"))
+  
+  (add-to-list 'auto-mode-alist '("\\.psc\\'" . pseudocode-mode))
+
+#+end_src
+
+***** Pseudocode package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-pseudocode.el
+
+  (provide 'pg-programming-pseudocode)
+
+#+end_src
+
 
 **** Python
 
@@ -3991,7 +4028,7 @@ Org mode package for writing structured documents and more. Here are some useful
             org-deadline-warning-days 7
             org-scheduled-delay-days 7
             org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
-            org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+            org-format-latex-options (plist-put org-format-latex-options :scale 1)
             org-tags-column 0
             org-tag-alist '(("@home" . ?H)
                             ("@work" . ?W)
@@ -4019,7 +4056,8 @@ Org mode package for writing structured documents and more. Here are some useful
                                     "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
     (dolist (package '(("" "minted" nil)
-                       ("margin=0.75in" "geometry" nil)))
+                       ("margin=0.75in" "geometry" nil)
+                       ("" "tabularx" nil)))
       (add-to-list 'org-latex-packages-alist package))
     
     (unless (featurep 'org-indent)
@@ -4157,7 +4195,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     "Setup before starting org presentation."
     (org-display-inline-images)
     (setq-local doom-modeline-minor-modes t
-                org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
+                org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
                 face-remapping-alist '((default (:height 1.75) default)))
     (org-latex-preview)
     (variable-pitch-mode 1))
@@ -4166,7 +4204,7 @@ Allows for creation of slideshow presentations in emacs with org mode. The ~org-
     "Cleanup after ending org presentation."
     (variable-pitch-mode 0)
     (setq-local doom-modeline-minor-modes nil
-                org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+                org-format-latex-options (plist-put org-format-latex-options :scale 1)
                 face-remapping-alist '((default variable-pitch default)))
     (org-latex-preview))
 
@@ -4285,7 +4323,7 @@ Helps with note-taking strategies.
     (require 'org-roam))
   (with-eval-after-load 'org-roam
     (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-            org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
+            org-roam-directory (plist-get pg/user :org-roam)
             org-roam-capture-templates '(("d" "default" plain
                                           "%?"
                                           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
@@ -5011,7 +5049,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   (defconst pg/user
     `( :user "phil-gab99"
        :name "Philippe Gabriel"
-       :email "pgabriel999@hotmail.com"
+       :email "Philippe.Gabriel.73@gmail.com"
        :email-udem "philippe.gabriel.1@umontreal.ca"
        :city "montreal"
        :font-fixed "JetBrains Mono"
@@ -5023,6 +5061,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
        :download ,(or (getenv "XDG_DOWNLOAD_DIR") (expand-file-name "Downloads" "~"))
        :music ,(or (getenv "XDG_MUSIC_DIR") (expand-file-name "Music" "~"))
        :dotfiles ,(expand-file-name ".dotfiles" "~")
+       :org-roam "/d/d1/shared/Notes"
        :guix-home-profile ,(expand-file-name ".guix-home/profile" "~"))
     "Plist holding user details")
 
@@ -5109,6 +5148,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-mips
                      pg-programming-php
                      pg-programming-prolog
+                     pg-programming-pseudocode
                      pg-programming-python
                      pg-programming-scala
                      ;; pg-programming-smtlibv2

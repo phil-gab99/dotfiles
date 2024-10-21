@@ -9,7 +9,7 @@
 (defconst pg/user
   `( :user "phil-gab99"
      :name "Philippe Gabriel"
-     :email "pgabriel999@hotmail.com"
+     :email "Philippe.Gabriel.73@gmail.com"
      :email-udem "philippe.gabriel.1@umontreal.ca"
      :city "montreal"
      :font-fixed "JetBrains Mono"
@@ -21,6 +21,7 @@
      :download ,(or (getenv "XDG_DOWNLOAD_DIR") (expand-file-name "Downloads" "~"))
      :music ,(or (getenv "XDG_MUSIC_DIR") (expand-file-name "Music" "~"))
      :dotfiles ,(expand-file-name ".dotfiles" "~")
+     :org-roam "/d/d1/shared/Notes"
      :guix-home-profile ,(expand-file-name ".guix-home/profile" "~"))
   "Plist holding user details")
 
@@ -107,6 +108,7 @@
                    pg-programming-mips
                    pg-programming-php
                    pg-programming-prolog
+                   pg-programming-pseudocode
                    pg-programming-python
                    pg-programming-scala
                    ;; pg-programming-smtlibv2

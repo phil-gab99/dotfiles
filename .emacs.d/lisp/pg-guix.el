@@ -29,7 +29,7 @@
 
   (with-eval-after-load 'geiser-guile
     (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :config) "/guix/current/share/guile/site/3.0"))
-    (add-to-list 'geiser-guile-load-path (plist-get pg/user :dotfiles))
+    (add-to-list 'geiser-guile-load-path (concat (plist-get pg/user :dotfiles) "/pg-channel"))
     (setopt geiser-guile-load-init-file nil
             geiser-guile-manual-lookup-other-window t))
 

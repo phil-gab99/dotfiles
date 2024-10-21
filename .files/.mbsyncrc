@@ -1,23 +1,50 @@
 # Main hotmail account
-IMAPAccount hotmail
-Host outlook.office365.com
-User pgabriel999@hotmail.com
-Port 993
-PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"hotmail.com\\\" :user \\\"pgabriel999\\\")\" | cut -d '\"' -f2"
+# IMAPAccount hotmail
+# Host outlook.office365.com
+# User pgabriel999@hotmail.com
+# Port 993
+# PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"hotmail.com\\\" :user \\\"pgabriel999\\\")\" | cut -d '\"' -f2"
+# AuthMechs XOAUTH2
+# SSLType IMAPS
+# CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# IMAPStore hotmail-remote
+# Account hotmail
+
+# MaildirStore hotmail-local
+# Subfolders Verbatim
+# Path /home/phil-gab99/Mail/Main/
+# Inbox /home/phil-gab99/Mail/Main/Inbox
+
+# Channel hotmail
+# Far :hotmail-remote:
+# Near :hotmail-local:
+# Patterns *
+# CopyArrivalDate yes
+# Create Both
+# Expunge Both
+# SyncState *
+
+# Main gmail account
+IMAPAccount gmail
+Host imap.gmail.com
+User Philippe.Gabriel.73@gmail.com
+PassCmd "emacsclient -e \"(pg/lookup-password :host \\\"gmail.com\\\" :user \\\"Philippe.Gabriel.73\\\")\" | cut -d '\"' -f2"
+# AuthMechs XOAUTH2
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore hotmail-remote
-Account hotmail
+IMAPStore gmail-remote
+Account gmail
 
-MaildirStore hotmail-local
+MaildirStore gmail-local
 Subfolders Verbatim
 Path /home/phil-gab99/Mail/Main/
 Inbox /home/phil-gab99/Mail/Main/Inbox
 
-Channel hotmail
-Far :hotmail-remote:
-Near :hotmail-local:
+Channel gmail
+Far :gmail-remote:
+Near :gmail-local:
 Patterns *
 CopyArrivalDate yes
 Create Both

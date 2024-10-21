@@ -48,9 +48,6 @@
         ;; Terminal emulator
         foot
 
-        ;; Network
-        network-manager-applet
-
         ;; Compatibility for older Xorg applications
         xorg-server-xwayland
 

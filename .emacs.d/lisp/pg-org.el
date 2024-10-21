@@ -87,7 +87,7 @@ table."
           org-deadline-warning-days 7
           org-scheduled-delay-days 7
           org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k)"))
-          org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+          org-format-latex-options (plist-put org-format-latex-options :scale 1)
           org-tags-column 0
           org-tag-alist '(("@home" . ?H)
                           ("@work" . ?W)
@@ -115,7 +115,8 @@ table."
                                   "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
   (dolist (package '(("" "minted" nil)
-                     ("margin=0.75in" "geometry" nil)))
+                     ("margin=0.75in" "geometry" nil)
+                     ("" "tabularx" nil)))
     (add-to-list 'org-latex-packages-alist package))
   
   (unless (featurep 'org-indent)
@@ -223,7 +224,7 @@ table."
   "Setup before starting org presentation."
   (org-display-inline-images)
   (setq-local doom-modeline-minor-modes t
-              org-format-latex-options (plist-put org-format-latex-options :scale 2.5)
+              org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
               face-remapping-alist '((default (:height 1.75) default)))
   (org-latex-preview)
   (variable-pitch-mode 1))
@@ -232,7 +233,7 @@ table."
   "Cleanup after ending org presentation."
   (variable-pitch-mode 0)
   (setq-local doom-modeline-minor-modes nil
-              org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+              org-format-latex-options (plist-put org-format-latex-options :scale 1)
               face-remapping-alist '((default variable-pitch default)))
   (org-latex-preview))
 
@@ -315,7 +316,7 @@ table."
   (require 'org-roam))
 (with-eval-after-load 'org-roam
   (setopt org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-          org-roam-directory (concat (plist-get pg/user :documents) "/Notes")
+          org-roam-directory (plist-get pg/user :org-roam)
           org-roam-capture-templates '(("d" "default" plain
                                         "%?"
                                         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"

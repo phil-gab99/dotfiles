@@ -10,6 +10,9 @@
   (autoload #'latex-mode "tex-mode" nil t))
 (add-to-list 'auto-mode-alist '("\\.tex\\'" . latex-mode))
 (with-eval-after-load 'tex
+  (setcdr (assoc "LaTeX" TeX-command-list)
+          '("%`%l%(mode) -shell-escape%' %t"
+            TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX"))
   (setopt latex-run-command "pdflatex"
           TeX-view-program-selection '((output-pdf "PDF Tools"))
           TeX-source-correlate-start-server t)
