@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+pass "$1" | grep "$2" | cut -d ':' -f 2 | xargs
+
+exit 0

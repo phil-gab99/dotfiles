@@ -10,6 +10,7 @@
   `( :user "phil-gab99"
      :name "Philippe Gabriel"
      :email "Philippe.Gabriel.73@gmail.com"
+     :email-sens "Philippe.Gabriel.Sens@gmail.com"
      :email-udem "philippe.gabriel.1@umontreal.ca"
      :city "montreal"
      :font-fixed "JetBrains Mono"

@@ -41,3 +41,4 @@ tree-sitter
 packages
 *.sqlite
 projects
+multisession

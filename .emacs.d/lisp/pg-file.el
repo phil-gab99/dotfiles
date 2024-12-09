@@ -12,7 +12,8 @@
   (autoload #'dired-jump "dired" nil t))
 (global-set-key (kbd "C-x C-j") #'dired-jump)
 (with-eval-after-load 'dired
-  (setopt dired-listing-switches "-Alh --group-directories-first"))
+  (setopt dired-listing-switches "-Alh --group-directories-first"
+          dired-dwim-target t))
 
 (straight-use-package 'dired-single)
 (with-eval-after-load 'dired

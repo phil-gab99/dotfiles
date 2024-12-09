@@ -300,8 +300,6 @@ table."
 (add-hook 'mu4e-compose-pre-hook #'org-msg-mode)
 (with-eval-after-load 'org-msg
   (setopt org-msg-options "html-postamble:nil toc:nil author:nil num:nil \\n:t"
-          org-msg-signature (concat "\n\nCordialement/Regards,\n\n*--*\n"
-                                    "Philippe Gabriel - 40160338 \n[[mailto:pgabriel999@hotmail.com][pgabriel999@hotmail.com]]")
           org-msg-startup "indent inlineimages hidestars"
           org-msg-greeting-fmt "\nBonjour/Hi %s,\n\n"
           org-msg-greeting-name-limit 3

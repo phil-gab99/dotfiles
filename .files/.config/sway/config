@@ -16,8 +16,8 @@ output * bg ~/backgrounds/wp-color-triangle.png fill
 
 output DP-5 pos 0 0
 output DP-6 pos 1920 0
-output DP-7 pos 3840 0 transform 270
 output $latptop pos 1920 1080
+output DP-7 pos 3840 0 transform 270
 
 workspace $ws0 output $laptop
 workspace $ws1 output DP-5 $laptop

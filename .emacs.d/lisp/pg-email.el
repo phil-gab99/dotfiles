@@ -30,8 +30,9 @@
             mu4e-compose-signature-auto-include nil
             mu4e-sent-messages-behavior 'delete
             message-send-mail-function #'smtpmail-send-it
+            send-mail-function #'smtpmail-send-it
             mu4e-attachment-dir (plist-get pg/user :download)
-            mu4e-maildir-shortcuts '(("/Main/Inbox" . 109))
+            mu4e-maildir-shortcuts '(("/Main/Inbox" . ?m))
             mu4e-context-policy 'pick-first)
     (add-to-list 'mu4e-bookmarks
                  '( :name "Starred"
@@ -51,15 +52,38 @@
                                               (string-prefix-p "/Main" (mu4e-message-field msg :maildir))))
                               :vars `((user-mail-address . ,(plist-get pg/user :email))
                                       (user-full-name . ,(plist-get pg/user :name))
+                                      (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n"
+                                                                    "Philippe Gabriel - 40160338 \n[[mailto:"
+                                                                    (plist-get pg/user :email) "]["
+                                                                    (plist-get pg/user :email) "]]"))
+                                      (smtpmail-auth-credentials . ,(expand-file-name "~/.authinfo.gpg"))
                                       (smtpmail-smtp-server . "smtp.gmail.com")
-                                      (smtpmail-auth-credentials (expand-file-name "~/.authinfo.gpg"))
                                       (smtpmail-smtp-user . ,(plist-get pg/user :email))
                                       (smtpmail-smtp-service . 587)
                                       (smtpmail-stream-type . starttls)
-                                      (mu4e-drafts-folder . "/Main/Drafts")
-                                      (mu4e-sent-folder . "/Main/Sent")
-                                      (mu4e-refile-folder . "/Main/Archive")
-                                      (mu4e-trash-folder . "/Main/Trash")))))))
+                                      (mu4e-drafts-folder . "/Main/[Gmail]/Drafts")
+                                      (mu4e-sent-folder . "/Main/[Gmail]/Sent Mail")
+                                      (mu4e-refile-folder . "/Main/[Gmail]/Archive")
+                                      (mu4e-trash-folder . "/Main/[Gmail]/Trash")))
+           (make-mu4e-context :name "Sens"
+                              :match-func (lambda (msg)
+                                            (when msg
+                                              (string-prefix-p "/Sens" (mu4e-message-field msg :maildir))))
+                              :vars `((user-mail-address . ,(plist-get pg/user :email-sens))
+                                      (user-full-name . ,(plist-get pg/user :name))
+                                      (org-msg-signature . ,(concat "\n\nCordialement/Regards,\n\n*--*\n"
+                                                                    "Philippe Gabriel - 40160338 \n[[mailto:"
+                                                                    (plist-get pg/user :email-sens) "]["
+                                                                    (plist-get pg/user :email-sens) "]]"))
+                                      (smtpmail-auth-credentials . ,(expand-file-name "~/.authinfo.gpg"))
+                                      (smtpmail-smtp-server . "smtp.gmail.com")
+                                      (smtpmail-smtp-user . ,(plist-get pg/user :email-sens))
+                                      (smtpmail-smtp-service . 587)
+                                      (smtpmail-stream-type . starttls)
+                                      (mu4e-drafts-folder . "/Sens/[Gmail]/Drafts")
+                                      (mu4e-sent-folder . "/Sens/[Gmail]/Sent Mail")
+                                      (mu4e-refile-folder . "/Sens/[Gmail]/Archive")
+                                      (mu4e-trash-folder . "/Sens/[Gmail]/Trash")))))))
 
 (unless (or pg/is-termux
             pg/is-windows)
