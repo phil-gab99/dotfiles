@@ -59,6 +59,348 @@ Installing packages:
 
 ** Guix
 
+*** Guix Shell
+
+- ~-C~ - Run within an isolated container, current working directory is mapped inside container
+- ~-N~ - Share the network namespace with the host system
+- ~-F~ - When used with ~-C~, emulates the Filesystem Hierarchy Standard (FHS)
+- ~-D~ - Include package dependencies, not the package itself
+- ~-W~ - Provide guix inside the container
+- ~-m FILE~ - Environment for the packages in the manifest file ~FILE~
+- ~-f FILE~ - Environment for the package in the scheme file ~FILE~ that is lastly evaluated
+- ~-u USER~ - Use the username ~USER~ instead of current user in container
+- ~-E REGEXP~ - Preserve environment variables matching ~REGEXP~, generally used with ~--pure~ or ~-C~
+- ~--expose=SOURCE[=TARGET]~ - Exposes ~SOURCE~ to target in container as read-only
+- ~--share=SOURCE[=TARGET]~ - Exposes ~SOURCE~ to target in container as writable
+- ~--no-cwd~ - Cause the current working directory to not be automatically shared
+- ~--pure~ - Environment variables are unset, search paths only contain package inputs
+
+*** Guix Build
+
+- ~-f FILE~ - Environment for the package in the scheme file ~FILE~ that is lastly evaluated
+- ~-n~ - Dry run, do not build the derivations
+- ~--no-substitutes~ - Do no use substitutes for build products, build locally instead of using pre-build binaries
+
+**** XWindows Sharing
+
+#+begin_src sh
+
+  guix shell -CN\
+       -E '^DISPLAY$'\
+       -E '^XAUTHORITY'\
+       --expose=$XAUTHORITY\
+       --expose=/etc/ssl/certs
+
+#+end_src
+
+**** File System Sharing
+
+#+begin_src sh
+
+  guix shell -C --no-cwd -U Foo
+
+#+end_src
+
+**** Firefox example
+
+#+begin_src sh
+
+  guix shell -CN\
+       -E '^DISPLAY$'\
+       -E '^XAUTHORITY$'\
+       --expose=$XAUTHORITY\
+       -E '^DBUS_'\
+       --expose=/var/run/dbus\
+       --expose=/etc/ssl/certs/\
+       --expose=/dev/dri\
+       --share=/dev/snd/seq\
+       --share=/dev/shm\
+       --expose=/sys/class/input\
+       --expose=/sys/devices\
+       --expose=/sys/dev\
+       --expose=/sys/bus/pci\
+       --expose=/run/user/"$(id -u)"/pulse\
+       -E 'XDG_RUNTIME_DIR'\
+       --share=$HOME/.config/pulse\
+       --share=$HOME/.mozilla\
+       --share=$HOME/Downloads\
+       --no-cwd\
+       firefox intel-vaapi-driver dbus-glib pciutils alsa-lib pulseaudio\
+       -- firefox &>/dev/null &
+
+#+end_src
+
+**** Age of Conquest IV example
+
+Taken from https://www.futurile.net/2023/04/29/guix-shell-virtual-environments-containers/
+
+#+begin_src scheme
+
+  #!/usr/bin/env bash
+  set -ex
+  exec guix shell -v 3 -CNF\
+       -E '^DISPLAY$'\
+       -E '^XAUTHORITY$'\
+       --expose=$XAUTHORITY\
+       -E '^DBUS_'\
+       --expose=/var/run/dbus\
+       --expose=/dev/dri\
+       --share=/dev/snd/seq\
+       --share=/dev/shm\
+       --expose=/sys/class/input\
+       --expose=/sys/devices\
+       --expose=/sys/dev\
+       --expose=/sys/bus/pci\
+       --expose=/run/user/"$(id -u)"/pulse\
+       -E 'XDG_RUNTIME_DIR'\
+       --manifest="$0"
+  !#
+
+  (use-modules (gnu))
+  (manifest
+   (map (lambda (spec)
+          (apply package->manifest-entry
+                 (cond
+                  ((pair? spec) (let ((pkg (car spec))
+                                      (output (cadr spec)))
+                                  (list
+                                   (if (string? pkg)
+                                       (specification->package pkg)
+                                       pkg)
+                                   output)))
+                  ((string? spec) (list (specification->package spec)))
+                  (else (list spec)))))
+        `("bash"
+          "coreutils"
+          "glibc"
+          (,(@@ (gnu packages gcc) gcc) "lib")
+          "firefox"
+          "intel-vaapi-driver"
+          "openjdk"
+          "mesa"
+          "sed"
+          "gawk"
+          "libxrender"
+          "libxtst"
+          "zlib"
+          "bzip2"
+          "lbzip2"
+          "alsa-lib"
+          "pulseaudio"
+          "nss-certs"
+          "util-linux"))
+
+#+end_src
+
+#+begin_src sh
+
+  $ ./guix-conquest.sh
+  [env]$ export LD_LIBRARY_PATH=/lib:/usr/lib
+  [env]$ cd com.ageofconquest.app.user.aoc/
+  [env]$ ./conquest
+
+#+end_src
+
+*** Development Environments
+
+**** Working on a package
+
+#+begin_src sh
+
+  $ git clone <remote>
+  $ guix shell -CD <package>
+  [env]$ # Work on package
+
+#+end_src
+
+Generally best to use ~guix.scm~ for customizing builds when working on a package - Example for developing functionality for tmux
+
+#+begin_src scheme
+
+  (use-modules (gnu packages tmux)
+               (gnu packages autotools)
+               (gnu packages texinfo)
+               (gnu packages pkg-config)
+               (gnu packages bison)
+               (gnu packages version-control)
+               (gnu packages bash)
+               (guix)
+               (guix packages)
+               (guix git)
+               (guix git-download)
+               (ice-9 popen)
+               (ice-9 rdelim))
+
+  (define %git-commit
+    (read-string
+     (open-pipe "git show HEAD | head -1 | cut -d ' ' -f 2" OPEN_READ)))
+
+  (package
+    (inherit tmux)
+    (version (git-version "3.4-git" "HEAD" %git-commit))
+    (source (git-checkout (url (dirname (current-filename)))))
+    (synopsis "Terminal multiplexer - built from source")
+    (native-inputs (modify-inputs (package-native-inputs tmux)
+                                  (prepend autoconf
+                                           automake
+                                           pkg-config
+                                           bison
+                                           texinfo
+                                           bash)))
+    (inputs (modify-inputs (package-inputs tmux)
+                           (append git))))
+
+#+end_src
+
+#+begin_src sh
+
+  $ git clone https://github.com/tmux/tmux.git
+  $ guix shell -CD -E '^TERM$' -f guix.scm
+  [env]$ ./autogen.sh
+  [env]$ ./configure
+  [env]$ make
+  [env]$ ./tmux
+
+#+end_src
+
+Note that this uses the package definition already defined in guix and adds onto it
+- If developing a package not packaged in guix, would need to create custom package definition for the package being developed
+
+***** Building local changes
+
+#+begin_src sh
+
+  $ guix shell -CWD -f guix.scm coreutils
+  [env]$ guix build -f guix.scm --no-substitutes -n
+  # Dry run option can be omitted for when wanting to build locally
+  [env]$ guix build -f guix.scm --no-substitutes
+
+#+end_src
+
+***** Testing local changes
+
+#+begin_src sh
+
+  # Giving a regex of '$' allows to preserve all environment variables
+  $ guix shell -CW -E $ coreutils
+
+  # Two options for testing
+
+  # Option 1
+  [env]$ guix package -i git      # Install git
+  [env]$ guix package -f guix.scm # Install from file
+
+  # Option 2
+  [env]$ guix package -i /gnu/store/...tmux-path # Install path of build
+
+  # After either option is used to install the package
+  [env]$ $HOME/.guix-profile/bin/tmux -V # Can test the app
+
+#+end_src
+
+**** Development Environment
+
+Three options for build environment
+1. Simple manifest file
+2. Hybrid manifest file
+3. Developer tooling package
+
+***** Example hybrid manifest for tmux
+
+#+begin_src scheme
+
+  #!/usr/bin/env bash
+  set -ex
+  exec guix shell -CN\
+       -E '^DISPLAY$'\
+       -E '^XAUTHORITY$' --expose=$XAUTHORITY\
+       -E 'XDG_RUNTIME_DIR' --expose=$XDG_RUNTIME_DIR\
+       --share=$HOME/.vim\
+       -D -f guix.scm -m "$0"
+  !#
+
+  (use-modules (gnu))
+  (manifest
+   (map (lambda (spec)
+          (apply package->manifest-entry
+                 (cond
+                  ((pair? spec) (let ((pkg (car spec))
+                                      (output (cadr spec)))
+                                  (list (if (string? pkg)
+                                            (specification->package pkg)
+                                            pkg)
+                                        output)))
+                  ((string? spec) (list (specification->package spec)))
+                  (else (list spec)))))
+        `("bash"
+          "coreutils"
+          "util-linux"
+          "findutils"
+          "nss-certs"
+          "git"
+          "vim"
+          "which"
+          "lesspipe"
+          "exa"
+          "patman")))
+
+#+end_src
+
+#+begin_src sh
+
+  $ cd <project>
+  $ ./guix-dev-env.sh
+  [env]$ vim <file> # Can start developing using vim
+
+#+end_src
+
+Once changes are done, can go ahead with build and test environment
+
+#+begin_src sh
+
+  $ guix shell -CW -E $ coreutils
+
+#+end_src
+
+***** Reproducible development environment
+
+Create a guix channels file with desired channels and pinned commits, and source control it along ~guix.scm~ or ~manifest.scm~ or hybrid manifest
+
+#+begin_src scheme
+
+  (use-modules (guix channels))
+
+  (list (channel
+         (name 'guix)
+         (url "https://git.savannah.gnu.org/git/guix.git")
+         (branch "master")
+         (commit
+          "efc26826400762207cde9f23802cfe75a737963c")
+         (introduction
+          (make-channel-introduction
+           "9edb3f66fd807b096b48283debdcddccfea34bad"
+           (openpgp-fingerprint
+            "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
+
+#+end_src
+
+Then use ~guix time-machine~ to use packages from a specific channel commit
+
+#+begin_src sh
+
+  $ guix time-machine -C channels.scm --\
+    shell -CWND -E ^TERM$ -f guix.scm openssl nss-certs coreutils bash git
+  [env]$ guix build -f guix.scm --no-substitutes --no-grafts # Develop software
+
+#+end_src
+
+
+*** Guix Data Service
+
+Allows to look for specific guix commits associated with packages and other information surrounding the growth of guix
+
+http://data.guix.gnu.org/
+
 *** Build environments
 
 Typical build environments with ~guix shell~
