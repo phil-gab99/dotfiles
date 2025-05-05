@@ -7,16 +7,21 @@
   #:use-module (nongnu packages compression)
   #:export (home-wm-service-type))
 
-(use-package-modules admin compression databases fonts freedesktop glib gnome
-                     gnome-xyz gtk kde-frameworks libcanberra libreoffice
-                     package-management password-utils python-build qt rust-apps
-                     shellutils terminals video web-browsers wm xdisorg xorg)
+(use-package-modules admin commencement compression databases fonts freedesktop
+                     glib gnome gnome-xyz gtk kde-frameworks libcanberra
+                     libreoffice man package-management password-utils
+                     python-build qt rust-apps shellutils terminals video
+                     web-browsers wm xdisorg xorg)
 (use-service-modules shepherd)
 
 (define (home-wm-profile-service config)
   (list sway
         swayidle
         swaylock
+
+        ;; GCC tools miscellaneous use
+        gcc-toolchain
+        man-pages
 
         ;; Top bar
         waybar
@@ -58,6 +63,7 @@
         xdg-utils
         xdg-dbus-proxy
         shared-mime-info
+        gtk+
         (list gtk+ "bin")
         (list glib "bin")
         v4l-utils
@@ -69,6 +75,7 @@
         direnv
 
         ;; Browsers
+        ;; (specification->package "qtwayland@5")
         qtwayland
         qutebrowser
 

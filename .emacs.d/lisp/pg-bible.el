@@ -12,7 +12,7 @@
           dtk-module-category "Biblical Texts"
           dtk-word-wrap t)
   (with-eval-after-load 'evil
-    (evil-define-key 'normal 'dtk-mode-map
+    (evil-define-key 'normal dtk-mode-map
       (kbd "C-j") #'dtk-forward-verse
       (kbd "C-k") #'dtk-backward-verse
       (kbd "C-f") #'dtk-forward-chapter

@@ -457,17 +457,9 @@ Displays additional keybindings subsequent to prefix keybindings
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-completion.el
 
   (straight-use-package 'helm)
-  (unless (fboundp 'helm-next-line)
-    (autoload #'helm-next-line "helm" nil t))
-  (unless (fboundp 'helm-previous-line)
-    (autoload #'helm-previous-line "helm" nil t))
-  (if (boundp 'helm-map)
-      (progn
-        (define-key helm-map (kbd "C-j") #'helm-next-line)
-        (define-key helm-map (kbd "C-k") #'helm-previous-line))
-    (with-eval-after-load 'helm
-      (define-key helm-map (kbd "C-j") #'helm-next-line)
-      (define-key helm-map (kbd "C-k") #'helm-previous-line)))
+  (with-eval-after-load 'helm
+    (define-key helm-map (kbd "C-j") #'helm-next-line)
+    (define-key helm-map (kbd "C-k") #'helm-previous-line))
 
 #+end_src
 
@@ -1100,7 +1092,7 @@ Customizes the look of the modeline for better aesthetic.
   (add-hook 'dashboard-mode-hook #'(lambda ()
                                      (display-line-numbers-mode 0)))
   (straight-use-package 'dashboard)
-  (with-eval-after-load 'projectile
+  (with-eval-after-load 'project
     (require 'dashboard)
     (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook))
   (setopt dashboard-items '((recents . 5)
@@ -1397,8 +1389,10 @@ Allows for notification pop-up and mode line count when receiving emails
   (mouse-avoidance-mode 'banish)        ;; No mouse allowed
   (global-display-line-numbers-mode 1)  ;; Show line numbers
   (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+  (add-hook 'prog-mode-hook #'(lambda ()
+                                (outline-minor-mode 0)))
   (require 'ansi-color)
-  (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
   (dolist (mode '(compilation-mode-hook
                   Man-mode-hook
@@ -1522,7 +1516,7 @@ Colors matching delimiters with different colours for distinguishability.
 
   (defun pg/sp-await-newline (id action context)
     (when (eq action 'insert)
-      (add-hook 'post-command-hook 'pg/sp-await-newline-post-command)))
+      (add-hook 'post-command-hook #'pg/sp-await-newline-post-command)))
 
   (straight-use-package 'smartparens)
   (require 'smartparens-config)
@@ -2182,6 +2176,10 @@ Note that the emacs built-in local dir creation can also be used and is more fle
                                     :install "./mvwn clean install"
                                     :package "./mvnw clean package")
 
+    (projectile-update-project-type 'gradlew
+                                    :compile "./gradlew --stacktrace --info clean build"
+                                    :test "./gradlew --stacktrace --info test")
+
     (with-eval-after-load 'general
       (pg/leader-keys
         "p" '(:ignore t :which-key "project")
@@ -2315,9 +2313,12 @@ Displays useful doc on hover.
   (unless (fboundp 'lsp-ui-mode)
     (autoload #'lsp-ui-mode "lsp-ui" nil t))
   (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+  (unless (fboundp 'lsp-ui-doc-glance)
+    (autoload #'lsp-ui-doc-glance "lsp-ui-doc" nil t))
   (with-eval-after-load 'lsp-ui
     (setopt lsp-ui-doc-position 'bottom
             lsp-ui-doc-show-with-cursor t
+            lsp-ui-doc-show-with-mouse nil
             lsp-ui-doc-include-signature t))
 
 #+end_src
@@ -2334,11 +2335,26 @@ Tree views in emacs.
   (add-hook 'treemacs-mode-hook #'(lambda ()
                                     (display-line-numbers-mode 0)))
   (with-eval-after-load 'lsp-treemacs
+    (setopt lsp-treemacs-error-list-expand-depth 1000
+            lsp-treemacs-error-list-current-project-only t)
     (with-eval-after-load 'general
       (pg/leader-keys
         "lt" '(treemacs :which-key "tree")
         "lo" '(lsp-treemacs-symbols :which-key "outline")
         "le" '(lsp-treemacs-errors-list :which-key "errors"))))
+
+#+end_src
+
+*** Package | lsp-sonarlint
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
+
+  (straight-use-package 'lsp-sonarlint)
+  (with-eval-after-load 'lsp-mode
+    (require 'lsp-sonarlint))
+
+  (with-eval-after-load 'lsp-sonarlint
+    (setopt lsp-sonarlint-auto-download t))
 
 #+end_src
 
@@ -2377,9 +2393,8 @@ For auto-completions while coding.
             company-idle-delay 0.0
             company-dabbrev-downcase nil
             company-tooltip-minimum-width 40
-            company-tooltip-maximum-width 60)
-    (with-eval-after-load 'yasnippet
-      (setopt company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+            company-tooltip-maximum-width 60
+            company-backends '((:separate company-capf company-yasnippet))))
 
 #+end_src
 
@@ -2463,6 +2478,7 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
         '((bash "https://github.com/tree-sitter/tree-sitter-bash")
           (c "https://github.com/tree-sitter/tree-sitter-c")
           (c++ "https://github.com/tree-sitter/tree-sitter-cpp")
+          (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp" "master" "src")
           (clojure "https://github.com/sogaiu/tree-sitter-clojure")
           (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
           (java "https://github.com/tree-sitter/tree-sitter-java")
@@ -2471,9 +2487,12 @@ Debugger Adaptor Protocol for IDE debugging commands. See [[https://emacs-lsp.gi
           (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
 
   (setopt major-mode-remap-alist '((sh-mode . bash-ts-mode)
-                                   (python-mode . python-ts-mode)
+                                   (clojure-mode . clojure-ts-mode)
+                                   ;; (csharp-mode . csharp-ts-mode) ;; Not working
+                                   (java-mode . java-ts-mode)
                                    (javascript-mode . tsx-ts-mode)
-                                   (clojure-mode . clojure-ts-mode)))
+                                   (typescript-mode . tsx-ts-mode)
+                                   (python-mode . python-ts-mode)))
 
 #+end_src
 
@@ -2509,14 +2528,32 @@ Collection of code snippets for yasnippet.
 
 #+end_src
 
+*** Package | envrc
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
+
+  (defun pg/reload-dir-locals ()
+    (interactive)
+    (let ((enable-local-variables :all))
+      (hack-dir-local-variables-non-file-buffer)))
+
+  (straight-use-package 'envrc)
+  (unless (fboundp 'envrc-global-mode)
+    (autoload #'envrc-global-mode "envrc" nil t))
+  (envrc-global-mode 1)
+  (add-hook 'envrc-mode-hook #'pg/reload-dir-locals)
+
+#+end_src
+
 *** Package | direnv
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming.el
 
-  (straight-use-package 'direnv)
-  (unless (fboundp 'direnv-mode)
-    (autoload #'direnv-mode "direnv" nil t))
-  (direnv-mode)
+  ;; (straight-use-package 'direnv)
+  ;; (unless (fboundp 'direnv-mode)
+  ;;   (autoload #'direnv-mode "direnv" nil t))
+  ;; (direnv-mode 1)
+  ;; (add-hook 'direnv-mode-hook #'lsp-workspace-restart)
 
 #+end_src
 
@@ -2657,10 +2694,10 @@ Collection of code snippets for yasnippet.
   (unless (or pg/is-termux
               pg/is-windows)
     (straight-use-package 'company-arduino)
-    (add-hook 'irony-mode-hook 'company-arduino-turn-on)
+    (add-hook 'irony-mode-hook #'company-arduino-turn-on)
     (unless (fboundp 'irony-mode)
       (autoload #'irony-mode "irony" nil t))
-    (add-hook 'arduino-mode-hook 'irony-mode)
+    (add-hook 'arduino-mode-hook #'irony-mode)
     (setq company-arduino-sketch-directory-regex (concat (plist-get pg/user :home) "/Workspace/Arduino")))
 
 #+end_Src
@@ -2978,6 +3015,7 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gdscript.el
 
   (straight-use-package 'gdscript-mode)
+  (add-hook 'gdscript-mode-hook #'lsp-deferred)
   (setopt lsp-gdscript-port 6008
           gdscript-use-tab-indents nil)
 
@@ -2988,6 +3026,41 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gdscript.el
 
   (provide 'pg-programming-gdscript)
+
+#+end_src
+
+**** Gherkin
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gherkin.el
+
+  ;;; pg-programming-gherkin.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | feature-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gherkin.el
+
+  (defun pg/disable-lsp-completion ()
+    (setq-local lsp-completion-enable nil))
+
+  (straight-use-package 'feature-mode)
+  (dolist (fn #'(lsp-deferred
+                 company-mode
+                 pg/disable-lsp-completion))
+    (add-hook 'feature-mode-hook fn))
+  (add-to-list 'auto-mode-alist '("\\.feature\\'" . feature-mode))
+
+#+end_src
+
+***** Gherkin Package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-gherkin.el
+
+  (provide 'pg-programming-gherkin)
 
 #+end_src
 
@@ -3028,13 +3101,39 @@ Collection of code snippets for yasnippet.
 
 #+end_src
 
-***** Package | groovy-emacs-mode
+***** Package | groovy-emacs-modes
 
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-groovy.el
 
   (straight-use-package '(groovy-emacs-modes :type git
                                              :host github
                                              :repo "Groovy-Emacs-Modes/groovy-emacs-modes"))
+
+  (add-to-list 'safe-local-variable-values
+               '(eval . (setq lsp-groovy-classpath (seq-concatenate
+                                                     #'vector
+                                                     (mapcar #'file-name-parent-directory
+                                                             (file-expand-wildcards
+                                                              (concat
+                                                               (getenv "GRADLE_HOME")
+                                                               "/caches/modules-2/files-2.1/*/*/*/*/*.jar")))
+                                                     (file-expand-wildcards
+                                                      (concat
+                                                       (getenv "GRADLE_HOME")
+                                                       "/wrapper/dists/*/*/*/lib"))
+                                                     (file-expand-wildcards
+                                                      (concat
+                                                       (getenv "GRADLE_HOME")
+                                                       "/wrapper/dists/*/*/*/lib/plugins"))
+                                                     (file-expand-wildcards
+                                                      (concat
+                                                       (getenv "GRADLE_HOME")
+                                                       "/wrapper/dists/*/*/*/lib/agents"))))))
+
+  (add-hook 'groovy-mode-hook #'lsp-deferred)
+
+  (with-eval-after-load 'groovy-mode
+    (setopt groovy-indent-offset 2))
 
 #+end_src
 
@@ -3168,27 +3267,97 @@ Collection of code snippets for yasnippet.
       (progn (run-hooks 'prog-mode-hook)
              (lsp-deferred))))
 
+  (defun pg/generate-serial-version-uid ()
+    "Generates the serialVersionUID for a class implementing
+java.lang.Serializable. Relies on a WORKSPACE environment variable which points
+to the root of a java project. Also relies on the use of `lsp-java' for
+generating class files of visited files."
+    (interactive)
+    (let* ((file-path (buffer-file-name)) 
+           (class-name (s-replace-all
+                       '(("/" . "."))
+                       (substring (f-no-ext file-path)
+                                  (+ 5 (s-index-of "java" file-path)))))
+           (class-dir (s-prepend (getenv "WORKSPACE") "/bin/"))
+           (class-path (s-split
+                        "\n"
+                        (s-trim (shell-command-to-string (s-prepend "ls "
+                                                                    class-dir)))))
+           (serial-cmd (shell-command-to-string
+                        (concat "serialver -classpath \""
+                                (s-join ":" (mapcar (lambda (target)
+                                                      (s-prepend class-dir target))
+                                                    class-path))
+                                "\" "
+                                class-name)))
+           (serializablep (s-index-of "private" serial-cmd)))
+      (if (not serializablep)
+          (message serial-cmd)
+        (with-current-buffer (current-buffer)
+          (save-excursion
+            (beginning-of-buffer)
+            (or (search-forward "class" nil t)
+                (search-forward "interface" nil t)
+                (search-forward "record" nil t))
+            (forward-line 1)
+            (insert (substring serial-cmd serializablep))
+            (forward-line -1)
+            (company-indent-or-complete-common (point)))))))
+
+  (add-to-list 'safe-local-variable-values
+               '(eval . (setq lsp-java-import-gradle-user-home (getenv "GRADLE_USER_HOME")
+                              lsp-java-import-gradle-home (getenv "GRADLE_HOME")
+                              lsp-java-import-gradle-java-home (getenv "JAVA_HOME")
+                              lsp-java-java-path (concat (getenv "JAVA_HOME") "/bin/java")
+                              lsp-java-configuration-runtimes `[( :name "JavaSE-17"
+                                                                  :path ,(getenv "JAVA_HOME")
+                                                                  :default t)]
+                              lsp-java-vmargs (list "-noverify"
+                                                    "-Xmx1G"
+                                                    "-XX:+UseG1GC"
+                                                    "-XX:+UseStringDeduplication"
+                                                    "--enable-preview"
+                                                    (concat
+                                                     "-javaagent:"
+                                                     (car (file-expand-wildcards
+                                                           (concat
+                                                            (getenv "GRADLE_HOME")
+                                                            "/caches/modules-2/files-2\.1/org\.projectlombok/lombok/[0-9\.]+/[a-zA-Z0-9]+/lombok-[0-9\.]+\.jar")
+                                                           nil t)))))))
+
   (straight-use-package 'lsp-java)
   (unless (fboundp 'lsp-deferred)
     (autoload #'lsp-deferred "lsp-mode" nil t))
-  (add-hook 'java-mode-hook #'lsp-deferred)
-  (unless (fboundp 'lsp-java-boot-lens-mode)
-    (autoload #'lsp-java-boot-lens-mode "lsp-java-boot" nil t))
-  (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
+  (add-hook 'java-ts-mode-hook #'lsp-deferred)
+  (setq lsp-java-compile-null-analysis-mode "automatic")
+  (setopt lsp-java-boot-enabled nil)
+  ;; (unless (fboundp 'lsp-java-boot-lens-mode)
+  ;;   (autoload #'lsp-java-boot-lens-mode "lsp-java-boot" nil t))
+  ;; (add-hook 'java-ts-mode-hook #'lsp-java-boot-lens-mode)
+
   (with-eval-after-load 'lsp-mode
     (require 'lsp-java))
   (with-eval-after-load 'lsp-java
     (add-hook 'find-file-hook #'pg/spring-boot-properties)
-    (dolist (feature '(dap-java
+    (dolist (feature '(helm
+                       dap-java
                        lsp-java-boot))
       (require feature))
-    (define-key lsp-mode-map (kbd "C-<return>") #'lsp-execute-code-action)
-    (setopt lsp-java-configuration-runtimes `[( :name "JavaSE-17"
-                                                :path ,(getenv "JAVA_HOME")
-                                                :default t)]
-            lsp-java-vmargs (list "-noverify" "-Xmx1G" "-XX:+UseG1GC" "-XX:+UseStringDeduplication" "--enable-preview")
-            lsp-java-java-path "java"
-            lsp-java-import-gradle-java-home (getenv "JAVA_HOME")))
+    (define-key lsp-mode-map (kbd "M-<return>") #'lsp-execute-code-action)
+    (setopt lsp-java-completion-import-order ["java" "javax" "jakarta" "org" "io" "lombok" "com"]
+            lsp-java-completion-favorite-static-members ["org.junit.Assert.*"
+                                                         "org.junit.Assume.*"
+                                                         "org.junit.jupiter.api.Assertions.*"
+                                                         "org.junit.jupiter.api.Assumptions.*"
+                                                         "org.junit.jupiter.api.DynamicContainer.*"
+                                                         "org.junit.jupiter.api.DynamicTest.*"
+                                                         "org.mockito.Mockito.*"
+                                                         "org.mockito.ArgumentMatchers.*"
+                                                         "org.mockito.Answers.*"
+                                                         "org.hamcrest.Matchers.*"
+                                                         "org.springframework.test.web.servlet.result.MockMvcResultMatchers.*"
+                                                         "org.springframework.test.web.servlet.result.MockMvcResultHandlers.*"
+                                                         "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*"]))
 
 #+end_src
 
@@ -3228,6 +3397,33 @@ Collection of code snippets for yasnippet.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-javascript.el
 
   (provide 'pg-programming-javascript)
+
+#+end_src
+
+**** Jenkinsfile
+
+***** Package header
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-jenkinsfile.el
+
+  ;;; pg-programming-jenkinsfile.el -*- lexical-binding: t; -*-
+  ;; Author: Philippe Gabriel
+
+#+end_src
+
+***** Package | jenkinsfile-mode
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-jenkinsfile.el
+
+  (straight-use-package 'jenkinsfile-mode)
+
+#+end_src
+
+***** Jenkinsfile package
+
+#+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-jenkinsfile.el
+
+  (provide 'pg-programming-jenkinsfile)
 
 #+end_src
 
@@ -3380,10 +3576,10 @@ Custom syntax highlighting for LMC assembly language.
 #+begin_src emacs-lisp :tangle ~/.dotfiles/.emacs.d/lisp/pg-programming-markdown.el
 
   (straight-use-package 'markdown-mode)
-  (add-hook 'gfm-view-mode-hook (lambda ()
-                                  (display-line-numbers-mode 0)
-                                  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                                                     (markdown-code-face (:height 1.0) org-code)))))
+  (add-hook 'gfm-view-mode-hook #'(lambda ()
+                                    (display-line-numbers-mode 0)
+                                    (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                                                       (markdown-code-face (:height 1.0) org-code)))))
   (with-eval-after-load 'markdown-mode
     (dolist (face '((markdown-header-face-1 . 1.9)
                     (markdown-header-face-2 . 1.7)
@@ -3811,6 +4007,11 @@ Custom syntax highlighting for LMC assembly language.
   (dolist (fn #'(lsp-deferred
                  rainbow-mode))
     (add-hook 'tsx-ts-mode-hook fn))
+  (setopt lsp-typescript-preferences-quote-style "single"
+          lsp-typescript-references-code-lens-enabled t
+          lsp-typescript-preferences-import-module-specifier "non-relative"
+          lsp-typescript-update-imports-on-file-move-enabled "never")
+
   (with-eval-after-load 'typescript-mode
     (setopt typescript-indent-level 2))
 
@@ -4352,20 +4553,15 @@ Helps with note-taking strategies.
                                           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                              "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                           :unnarrowed t)
-                                         ("a" "system admin" plain
+                                         ("m" "software comprehension and maintenance" plain
                                           "%?"
-                                          :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :if-new (file+head "SOEN-6431/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: soen6431-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                           :unnarrowed t)
-                                         ("m" "machine learning" plain
+                                         ("p" "software engineering processes" plain
                                           "%?"
-                                          :if-new (file+head "COMP-6321/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: comp6321-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                          :unnarrowed t)
-                                         ("p" "program and problem solving" plain
-                                          "%?"
-                                          :if-new (file+head "COMP-6481/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                             "#+title: comp6481-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                          :if-new (file+head "SOEN-6011/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                             "#+title: soen6011-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                           :unnarrowed t)))
     (org-roam-db-autosync-enable)
     (with-eval-after-load 'general
@@ -4577,7 +4773,7 @@ Allows for viewing of pdfs.
             dtk-module-category "Biblical Texts"
             dtk-word-wrap t)
     (with-eval-after-load 'evil
-      (evil-define-key 'normal 'dtk-mode-map
+      (evil-define-key 'normal dtk-mode-map
         (kbd "C-j") #'dtk-forward-verse
         (kbd "C-k") #'dtk-backward-verse
         (kbd "C-f") #'dtk-forward-chapter
@@ -5056,6 +5252,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   ;; Author: Philippe Gabriel
 
   (setopt package-enable-at-startup nil)
+  (setenv "LSP_USE_PLISTS" "true")
 
 #+end_src
 
@@ -5064,7 +5261,8 @@ Allows the creation of keymaps for related commands and the ability to repeat te
   ;;; init.el -*- lexical-binding: t; -*-
   ;; Author: Philippe Gabriel
 
-  (setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
+  (setq gc-cons-threshold (* 100 1000 1000) ;; Sets garbage collection threshold high enough
+        read-process-output-max (* 1024 1024))
 
   (push (expand-file-name "lisp" user-emacs-directory) load-path)
   (push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
@@ -5102,7 +5300,7 @@ Allows the creation of keymaps for related commands and the ability to repeat te
          (string-match-p (regexp-quote "(guix@guix)")
                          (shell-command-to-string "cat /proc/version")))
     "Determines whether the current system is a GNU/Linux based system running the
-    GNU Guix distribution.")
+        GNU Guix distribution.")
   (defconst pg/exwm-enabled
     (getenv "EXWM")
     "Determines whether the EXWM is currently running.")
@@ -5160,12 +5358,15 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-elisp
                      pg-programming-erlang
                      pg-programming-gdscript
+                     pg-programming-gherkin
                      pg-programming-git
                      pg-programming-groovy
                      pg-programming-haskell
                      pg-programming-html
                      pg-programming-i3config
                      pg-programming-java
+                     pg-programming-javascript
+                     pg-programming-jenkinsfile
                      pg-programming-json
                      ;; pg-programming-lmc
                      pg-programming-markdown
@@ -5177,7 +5378,6 @@ Allows the creation of keymaps for related commands and the ability to repeat te
                      pg-programming-scala
                      ;; pg-programming-smtlibv2
                      pg-programming-sql
-                     pg-programming-javascript
                      pg-programming-tex
                      pg-programming-typescript
                      ;; pg-programming-vhdl

@@ -25,9 +25,12 @@
 (unless (fboundp 'lsp-ui-mode)
   (autoload #'lsp-ui-mode "lsp-ui" nil t))
 (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+(unless (fboundp 'lsp-ui-doc-glance)
+  (autoload #'lsp-ui-doc-glance "lsp-ui-doc" nil t))
 (with-eval-after-load 'lsp-ui
   (setopt lsp-ui-doc-position 'bottom
           lsp-ui-doc-show-with-cursor t
+          lsp-ui-doc-show-with-mouse nil
           lsp-ui-doc-include-signature t))
 
 (straight-use-package 'lsp-treemacs)
@@ -36,11 +39,20 @@
 (add-hook 'treemacs-mode-hook #'(lambda ()
                                   (display-line-numbers-mode 0)))
 (with-eval-after-load 'lsp-treemacs
+  (setopt lsp-treemacs-error-list-expand-depth 1000
+          lsp-treemacs-error-list-current-project-only t)
   (with-eval-after-load 'general
     (pg/leader-keys
       "lt" '(treemacs :which-key "tree")
       "lo" '(lsp-treemacs-symbols :which-key "outline")
       "le" '(lsp-treemacs-errors-list :which-key "errors"))))
+
+(straight-use-package 'lsp-sonarlint)
+(with-eval-after-load 'lsp-mode
+  (require 'lsp-sonarlint))
+
+(with-eval-after-load 'lsp-sonarlint
+  (setopt lsp-sonarlint-auto-download t))
 
 (defvar company-mode/enable-yas t
   "Enable yasnippet for all backends.")
@@ -71,9 +83,8 @@
           company-idle-delay 0.0
           company-dabbrev-downcase nil
           company-tooltip-minimum-width 40
-          company-tooltip-maximum-width 60)
-  (with-eval-after-load 'yasnippet
-    (setopt company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+          company-tooltip-maximum-width 60
+          company-backends '((:separate company-capf company-yasnippet))))
 
 (straight-use-package 'company-box)
 (unless (fboundp 'company-box-mode)
@@ -113,6 +124,7 @@
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")
         (c "https://github.com/tree-sitter/tree-sitter-c")
         (c++ "https://github.com/tree-sitter/tree-sitter-cpp")
+        (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp" "master" "src")
         (clojure "https://github.com/sogaiu/tree-sitter-clojure")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (java "https://github.com/tree-sitter/tree-sitter-java")
@@ -121,9 +133,12 @@
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
 
 (setopt major-mode-remap-alist '((sh-mode . bash-ts-mode)
-                                 (python-mode . python-ts-mode)
+                                 (clojure-mode . clojure-ts-mode)
+                                 ;; (csharp-mode . csharp-ts-mode) ;; Not working
+                                 (java-mode . java-ts-mode)
                                  (javascript-mode . tsx-ts-mode)
-                                 (clojure-mode . clojure-ts-mode)))
+                                 (typescript-mode . tsx-ts-mode)
+                                 (python-mode . python-ts-mode)))
 
 (straight-use-package 'yasnippet)
 (unless (fboundp 'yas-minor-mode)
@@ -141,9 +156,21 @@
 (with-eval-after-load 'yasnippet
   (require 'yasnippet-snippets))
 
-(straight-use-package 'direnv)
-(unless (fboundp 'direnv-mode)
-  (autoload #'direnv-mode "direnv" nil t))
-(direnv-mode)
+(defun pg/reload-dir-locals ()
+  (interactive)
+  (let ((enable-local-variables :all))
+    (hack-dir-local-variables-non-file-buffer)))
+
+(straight-use-package 'envrc)
+(unless (fboundp 'envrc-global-mode)
+  (autoload #'envrc-global-mode "envrc" nil t))
+(envrc-global-mode 1)
+(add-hook 'envrc-mode-hook #'pg/reload-dir-locals)
+
+;; (straight-use-package 'direnv)
+;; (unless (fboundp 'direnv-mode)
+;;   (autoload #'direnv-mode "direnv" nil t))
+;; (direnv-mode 1)
+;; (add-hook 'direnv-mode-hook #'lsp-workspace-restart)
 
 (provide 'pg-programming)

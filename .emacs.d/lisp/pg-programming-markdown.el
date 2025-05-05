@@ -2,10 +2,10 @@
 ;; Author: Philippe Gabriel
 
 (straight-use-package 'markdown-mode)
-(add-hook 'gfm-view-mode-hook (lambda ()
-                                (display-line-numbers-mode 0)
-                                (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                                                   (markdown-code-face (:height 1.0) org-code)))))
+(add-hook 'gfm-view-mode-hook #'(lambda ()
+                                  (display-line-numbers-mode 0)
+                                  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                                                     (markdown-code-face (:height 1.0) org-code)))))
 (with-eval-after-load 'markdown-mode
   (dolist (face '((markdown-header-face-1 . 1.9)
                   (markdown-header-face-2 . 1.7)

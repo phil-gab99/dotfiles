@@ -173,13 +173,11 @@
                                guix-service-type
                                (guix-extension
                                 (substitute-urls
-                                 (cons "https://substitutes.nonguix.org"
-                                       %default-substitute-urls))
+                                 '("https://substitutes.nonguix.org"))
                                 (authorized-keys
-                                 (cons (plain-file
+                                 (list (plain-file
                                         "substitutes.nonguix.org.pub"
-                                        "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
-                                       %default-authorized-guix-keys))))
+                                        "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")))))
 
                polkit-wheel-service
 

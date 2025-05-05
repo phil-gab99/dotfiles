@@ -11,6 +11,11 @@
 (dolist (fn #'(lsp-deferred
                rainbow-mode))
   (add-hook 'tsx-ts-mode-hook fn))
+(setopt lsp-typescript-preferences-quote-style "single"
+        lsp-typescript-references-code-lens-enabled t
+        lsp-typescript-preferences-import-module-specifier "non-relative"
+        lsp-typescript-update-imports-on-file-move-enabled "never")
+
 (with-eval-after-load 'typescript-mode
   (setopt typescript-indent-level 2))
 

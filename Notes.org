@@ -59,27 +59,8 @@ Installing packages:
 
 ** Guix
 
-*** Guix Shell
-
-- ~-C~ - Run within an isolated container, current working directory is mapped inside container
-- ~-N~ - Share the network namespace with the host system
-- ~-F~ - When used with ~-C~, emulates the Filesystem Hierarchy Standard (FHS)
-- ~-D~ - Include package dependencies, not the package itself
-- ~-W~ - Provide guix inside the container
-- ~-m FILE~ - Environment for the packages in the manifest file ~FILE~
-- ~-f FILE~ - Environment for the package in the scheme file ~FILE~ that is lastly evaluated
-- ~-u USER~ - Use the username ~USER~ instead of current user in container
-- ~-E REGEXP~ - Preserve environment variables matching ~REGEXP~, generally used with ~--pure~ or ~-C~
-- ~--expose=SOURCE[=TARGET]~ - Exposes ~SOURCE~ to target in container as read-only
-- ~--share=SOURCE[=TARGET]~ - Exposes ~SOURCE~ to target in container as writable
-- ~--no-cwd~ - Cause the current working directory to not be automatically shared
-- ~--pure~ - Environment variables are unset, search paths only contain package inputs
-
-*** Guix Build
-
-- ~-f FILE~ - Environment for the package in the scheme file ~FILE~ that is lastly evaluated
-- ~-n~ - Dry run, do not build the derivations
-- ~--no-substitutes~ - Do no use substitutes for build products, build locally instead of using pre-build binaries
+[[info:guix#invoking guix shell][Guix Shell]]
+[[info:guix#invoking guix build][Guix Build]]
 
 **** XWindows Sharing
 
@@ -394,12 +375,25 @@ Then use ~guix time-machine~ to use packages from a specific channel commit
 
 #+end_src
 
-
 *** Guix Data Service
 
 Allows to look for specific guix commits associated with packages and other information surrounding the growth of guix
 
 http://data.guix.gnu.org/
+
+*** Packaging
+
+**** Building an existing package
+
+#+begin_src sh
+
+  $ guix shell -CNWD hello --no-grafts nss-certs
+  [env]$ guix build hello --no-substitutes --no-grafts # Builds the package
+  [env]$ guix package -i /gnu/store/...-hello-...      # Install package and test
+  [env]$ guix gc --delete /gnu/store/...-hello-...     # Delete from store
+  [env]$ guix build hello --no-substitutes --no-grafts # Rebuild package after tweaks for example
+
+#+end_src
 
 *** Build environments
 

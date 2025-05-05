@@ -99,16 +99,8 @@
   (diminish #'which-key-mode))
 
 (straight-use-package 'helm)
-(unless (fboundp 'helm-next-line)
-  (autoload #'helm-next-line "helm" nil t))
-(unless (fboundp 'helm-previous-line)
-  (autoload #'helm-previous-line "helm" nil t))
-(if (boundp 'helm-map)
-    (progn
-      (define-key helm-map (kbd "C-j") #'helm-next-line)
-      (define-key helm-map (kbd "C-k") #'helm-previous-line))
-  (with-eval-after-load 'helm
-    (define-key helm-map (kbd "C-j") #'helm-next-line)
-    (define-key helm-map (kbd "C-k") #'helm-previous-line)))
+(with-eval-after-load 'helm
+  (define-key helm-map (kbd "C-j") #'helm-next-line)
+  (define-key helm-map (kbd "C-k") #'helm-previous-line))
 
 (provide 'pg-completion)

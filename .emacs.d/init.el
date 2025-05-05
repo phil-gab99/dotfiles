@@ -1,7 +1,8 @@
 ;;; init.el -*- lexical-binding: t; -*-
 ;; Author: Philippe Gabriel
 
-(setq gc-cons-threshold (* 50 1000 1000)) ;; Sets garbage collection threshold high enough
+(setq gc-cons-threshold (* 100 1000 1000) ;; Sets garbage collection threshold high enough
+      read-process-output-max (* 1024 1024))
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 (push (expand-file-name "themes" user-emacs-directory) custom-theme-load-path)
@@ -39,7 +40,7 @@
        (string-match-p (regexp-quote "(guix@guix)")
                        (shell-command-to-string "cat /proc/version")))
   "Determines whether the current system is a GNU/Linux based system running the
-  GNU Guix distribution.")
+      GNU Guix distribution.")
 (defconst pg/exwm-enabled
   (getenv "EXWM")
   "Determines whether the EXWM is currently running.")
@@ -97,12 +98,15 @@
                    pg-programming-elisp
                    pg-programming-erlang
                    pg-programming-gdscript
+                   pg-programming-gherkin
                    pg-programming-git
                    pg-programming-groovy
                    pg-programming-haskell
                    pg-programming-html
                    pg-programming-i3config
                    pg-programming-java
+                   pg-programming-javascript
+                   pg-programming-jenkinsfile
                    pg-programming-json
                    ;; pg-programming-lmc
                    pg-programming-markdown
@@ -114,7 +118,6 @@
                    pg-programming-scala
                    ;; pg-programming-smtlibv2
                    pg-programming-sql
-                   pg-programming-javascript
                    pg-programming-tex
                    pg-programming-typescript
                    ;; pg-programming-vhdl

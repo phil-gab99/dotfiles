@@ -320,20 +320,15 @@ table."
                                         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                                            "#+title: ${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                         :unnarrowed t)
-                                       ("a" "system admin" plain
+                                       ("m" "software comprehension and maintenance" plain
                                         "%?"
-                                        :if-new (file+head "IFT-3830/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                           "#+title: ift3830-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :if-new (file+head "SOEN-6431/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: soen6431-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                         :unnarrowed t)
-                                       ("m" "machine learning" plain
+                                       ("p" "software engineering processes" plain
                                         "%?"
-                                        :if-new (file+head "COMP-6321/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                           "#+title: comp6321-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
-                                        :unnarrowed t)
-                                       ("p" "program and problem solving" plain
-                                        "%?"
-                                        :if-new (file+head "COMP-6481/notes/%<%Y%m%d%H%M%S>-${slug}.org"
-                                                           "#+title: comp6481-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
+                                        :if-new (file+head "SOEN-6011/notes/%<%Y%m%d%H%M%S>-${slug}.org"
+                                                           "#+title: soen6011-${title}\n#+STARTUP: latexpreview inlineimages\n#+date: %U\n")
                                         :unnarrowed t)))
   (org-roam-db-autosync-enable)
   (with-eval-after-load 'general

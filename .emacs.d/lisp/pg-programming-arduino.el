@@ -49,10 +49,10 @@
 (unless (or pg/is-termux
             pg/is-windows)
   (straight-use-package 'company-arduino)
-  (add-hook 'irony-mode-hook 'company-arduino-turn-on)
+  (add-hook 'irony-mode-hook #'company-arduino-turn-on)
   (unless (fboundp 'irony-mode)
     (autoload #'irony-mode "irony" nil t))
-  (add-hook 'arduino-mode-hook 'irony-mode)
+  (add-hook 'arduino-mode-hook #'irony-mode)
   (setq company-arduino-sketch-directory-regex (concat (plist-get pg/user :home) "/Workspace/Arduino")))
 
 (provide 'pg-programming-arduino)

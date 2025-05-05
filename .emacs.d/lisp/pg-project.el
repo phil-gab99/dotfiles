@@ -30,6 +30,10 @@
                                   :install "./mvwn clean install"
                                   :package "./mvnw clean package")
 
+  (projectile-update-project-type 'gradlew
+                                  :compile "./gradlew --stacktrace --info clean build"
+                                  :test "./gradlew --stacktrace --info test")
+
   (with-eval-after-load 'general
     (pg/leader-keys
       "p" '(:ignore t :which-key "project")

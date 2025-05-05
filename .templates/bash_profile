@@ -32,6 +32,7 @@ export NIXPKGS_ALLOW_UNFREE=1
 
 # Append LD libraries for shared objects libraries
 paths=(
+    "$HOME/.guix-home/profile/lib"
     "/run/current-system/profile/lib"
 )
 for p in ${paths[@]}; do

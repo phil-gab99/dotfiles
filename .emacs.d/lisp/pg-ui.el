@@ -84,7 +84,7 @@
 (add-hook 'dashboard-mode-hook #'(lambda ()
                                    (display-line-numbers-mode 0)))
 (straight-use-package 'dashboard)
-(with-eval-after-load 'projectile
+(with-eval-after-load 'project
   (require 'dashboard)
   (fset #'dashboard-setup-startup-hook #'pg/dashboard-setup-startup-hook))
 (setopt dashboard-items '((recents . 5)

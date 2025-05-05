@@ -1,3 +1,7 @@
-(use-modules (gnu packages))
+(use-modules (gnu packages game-development)
+             (gnu packages gimp)
+             (guix profiles))
 
-(specifications->manifest '("godot@3"))
+(packages->manifest
+ (list gimp
+       godot))

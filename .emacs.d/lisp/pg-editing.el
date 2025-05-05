@@ -12,8 +12,10 @@
 (mouse-avoidance-mode 'banish)        ;; No mouse allowed
 (global-display-line-numbers-mode 1)  ;; Show line numbers
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'prog-mode-hook #'(lambda ()
+                              (outline-minor-mode 0)))
 (require 'ansi-color)
-(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+(add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
 (dolist (mode '(compilation-mode-hook
                 Man-mode-hook
@@ -99,7 +101,7 @@
 
 (defun pg/sp-await-newline (id action context)
   (when (eq action 'insert)
-    (add-hook 'post-command-hook 'pg/sp-await-newline-post-command)))
+    (add-hook 'post-command-hook #'pg/sp-await-newline-post-command)))
 
 (straight-use-package 'smartparens)
 (require 'smartparens-config)
